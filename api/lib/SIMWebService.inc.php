@@ -432,9 +432,9 @@ class SIMWebService
 				mysql_select_db("CaprinoDesarrollo",$conexion2) or die("Problemas en la seleccion de la base de datos");
 
 				$array_prioridad_almacen_cercano = array ("1"=>"Unicentro","6"=>"Galerias","29"=>"Titan","22"=>"Gran Estacion");
-				$sql_pto_vta = mysql_query( "SELECT * FROM PuntoVenta Where Publicar = 'S' and IDPuntoVenta not in (1,6,29,22,10) Order By IDCiudad ASC");
+				$sql_pto_vta = db_query( "SELECT * FROM PuntoVenta Where Publicar = 'S' and IDPuntoVenta not in (1,6,29,22,10) Order By IDCiudad ASC");
 				
-				while($r_pto_vta = mysql_fetch_array( $sql_pto_vta)){
+				while($r_pto_vta = db_fetch_array( $sql_pto_vta)){
 					$array_prioridad_almacen_cercano[$r_pto_vta["IDPuntoVenta"]] = $r_pto_vta["Nombre"];
 				}
 
@@ -453,8 +453,8 @@ class SIMWebService
 					$id_tallas_rel="";
 
 					$sql_ref_alamacen = "Select * From Referencia Where Numero  = '".$datos_referencia["Referencia"]."' or NumeroAnterior = '".$datos_referencia["Referencia"]."'";
-					$qry_ref_almacen = mysql_query($sql_ref_alamacen);
-					$row_ref_almacen = mysql_fetch_array($qry_ref_almacen);
+					$qry_ref_almacen = db_query($sql_ref_alamacen);
+					$row_ref_almacen = db_fetch_array($qry_ref_almacen);
 					$id_referencia = $row_ref_almacen["IDReferencia"];
 					if((int)$id_referencia<=0){
 						$PedidoValido="N";
@@ -464,8 +464,8 @@ class SIMWebService
 
 
 					//Consulto las otra tallas posibles ya que una talla esta creada mas de una vez
-					$sql_tallas_rel = mysql_query("Select * From Talla Where Descripcion = '".$datos_referencia[Talla]."'");
-					while($row_talla = mysql_fetch_array($sql_tallas_rel)):
+					$sql_tallas_rel = db_query("Select * From Talla Where Descripcion = '".$datos_referencia[Talla]."'");
+					while($row_talla = db_fetch_array($sql_tallas_rel)):
 						$array_tallas_rel []=$row_talla[IDTalla];
 					endwhile;
 
@@ -484,17 +484,17 @@ class SIMWebService
 													PVR.IDPuntoVenta not in (21) and
 													Existencias >0 and
 													IDReferencia = '".$id_referencia."' and IDTalla in (".$id_tallas_rel.") and CE.Publicar = 'S'";
-								$qry_pto_ref_inv = mysql_query($sql_pto_ref_inv);
+								$qry_pto_ref_inv = db_query($sql_pto_ref_inv);
 								$mayor_existencia = 0;
-								while($row_pto_ref_inv = mysql_fetch_array($qry_pto_ref_inv)){
+								while($row_pto_ref_inv = db_fetch_array($qry_pto_ref_inv)){
 									if($row_pto_ref_inv["Existencias"]>0):
 										if($row_pto_ref_inv["Existencias"]>$mayor_existencia):
 											$mayor_existencia=$row_pto_ref_inv["Existencias"];
 											$id_pto_vta_esp = $row_pto_ref_inv["IDPuntoVentaReferencia"];
 											$id_codif_esp = 	$row_pto_ref_inv["IDCodificacionEspecifica"];
 											$sql_pto_existencia = "Select * From PuntoVentaReferencia Where IDPuntoVentaReferencia = '".$row_pto_ref_inv["IDPuntoVentaReferencia"]."'";
-											$qry_pto_existencia = mysql_query($sql_pto_existencia);
-											$row_pto_existencia = mysql_fetch_array($qry_pto_existencia);
+											$qry_pto_existencia = db_query($sql_pto_existencia);
+											$row_pto_existencia = db_fetch_array($qry_pto_existencia);
 											$id_almacen_traslado = 	$row_pto_existencia["IDPuntoVenta"];
 										endif;
 									endif;
@@ -505,11 +505,11 @@ class SIMWebService
 								if ((int)$mayor_existencia<=1):
 									foreach($array_prioridad_almacen as $id_pto => $nom_pto ):
 										$sql_pto_ref = "Select * From PuntoVentaReferencia PVR Where IDReferencia = '".$id_referencia."' and IDPuntoVenta = '".$id_pto."'";
-										$qry_pto_ref = mysql_query($sql_pto_ref);
-										$row_pto_ref = mysql_fetch_array($qry_pto_ref);
+										$qry_pto_ref = db_query($sql_pto_ref);
+										$row_pto_ref = db_fetch_array($qry_pto_ref);
 										$sql_codif_esp = "Select  * From CodificacionEspecifica Where IDPuntoVentaReferencia = '".$row_pto_ref["IDPuntoVentaReferencia"]."' and IDTalla in (".$id_tallas_rel.") and Publicar = 'S'";
-										$qry_codif_esp = mysql_query($sql_codif_esp);
-										$row_codif_esp = mysql_fetch_array($qry_codif_esp);
+										$qry_codif_esp = db_query($sql_codif_esp);
+										$row_codif_esp = db_fetch_array($qry_codif_esp);
 										if ($row_codif_esp["Existencias"]>0){
 											$id_almacen_traslado = $id_pto;
 											$id_codif_esp = 	$row_codif_esp["IDCodificacionEspecifica"];
@@ -522,17 +522,17 @@ class SIMWebService
 								if(!empty($id_almacen_traslado)):
 										// Realizo el movimiento de traslado en el almacen
 										$frm['IDEstadoTraslado'] = 1;
-										$sql_id_traslado = mysql_query("Select max(IDTraslado) as Siguiente From Traslado Where 1");
-										$row_id_traslado = mysql_fetch_array($sql_id_traslado);
+										$sql_id_traslado = db_query("Select max(IDTraslado) as Siguiente From Traslado Where 1");
+										$row_id_traslado = db_fetch_array($sql_id_traslado);
 										$next_id_traslado =  (int)$row_id_traslado["Siguiente"]+1;
 
 										$sql_traslado = "Insert Into Traslado (	IDTraslado, IDPuntoVentaOrigen, IDPuntoVentaDestino, IDEstadoTraslado, Observaciones, Fecha, UsuarioTrCr, FechaTrCr)
 														Values ('".$next_id_traslado."','".$id_almacen_traslado."','16','1','Venta Tienda Virtual',NOW(),'VentaTiendaVirtual',NOW())";
-										mysql_query($sql_traslado);
+										db_query($sql_traslado);
 
 										//guardar en detalletraslado
-										$sql_id_traslado_detalle = mysql_query("Select max(IDDetalleTraslado) as SiguienteDetalle From DetalleTraslado Where 1");
-										$row_id_traslado_detalle = mysql_fetch_array($sql_id_traslado_detalle);
+										$sql_id_traslado_detalle = db_query("Select max(IDDetalleTraslado) as SiguienteDetalle From DetalleTraslado Where 1");
+										$row_id_traslado_detalle = db_fetch_array($sql_id_traslado_detalle);
 										$iddetalle =  (int)$row_id_traslado_detalle["SiguienteDetalle"]+1;
 
 										$Codificacion = $id_codif_esp;
@@ -540,7 +540,7 @@ class SIMWebService
 
 										$sql_insert = "INSERT INTO DetalleTraslado (IDDetalleTraslado, IDTraslado,IDPuntoVentaOrigen, IDCodificacionEspecifica, Cantidad, NumeroTarjeta, UsuarioTrCr, FechaTrCr ) ";
 										$sql_insert .= "VALUES ('$iddetalle','".$next_id_traslado."','".$id_almacen_traslado."','$Codificacion','$Cantidad','$NumeroTarjeta','VentaTiendaVirtual',NOW())";
-										mysql_query($sql_insert);
+										db_query($sql_insert);
 
 										//$mail_tienda = "Select * From PuntoVenta";
 										$html .= "
@@ -548,8 +548,8 @@ class SIMWebService
 										Le informamos que se realizó un traslado autom&aacute;tico de la siguiente referencia a Vta  Fca por una compra de tienda virtual
 										\r\n\r\n";
 
-										$sql_pto_vta_orig = mysql_query( "SELECT * FROM PuntoVenta Where IDPuntoVenta = '".$id_almacen_traslado."' ");
-										$r_pto_vta_orig = mysql_fetch_array( $sql_pto_vta_orig);
+										$sql_pto_vta_orig = db_query( "SELECT * FROM PuntoVenta Where IDPuntoVenta = '".$id_almacen_traslado."' ");
+										$r_pto_vta_orig = db_fetch_array( $sql_pto_vta_orig);
 
 										$html .= "
 											Punto Venta Origen: ".$r_pto_vta_orig["Nombre"]."\r\n
@@ -588,7 +588,7 @@ class SIMWebService
 				foreach ($array_bonos as $datos_bono){
 					if(!empty($datos_bono["IDBonoFidelizacion"])):
 							$sql_bono_redimido="Update BonoFidelizacion set  Estado = 'W', FechaTrEd = NOW(), UsuarioTrEd = 'Web' Where IDBonoFidelizacion = '".$datos_bono["IDBonoFidelizacion"]."' Limit 1";
-							mysql_query($sql_bono_redimido);
+							db_query($sql_bono_redimido);
 					endif;					
 				}
 

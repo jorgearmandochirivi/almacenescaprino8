@@ -47,8 +47,8 @@ foreach ($array_tarjetas as $num_tarjeta) {
 			mysql_select_db("Caprino2013", $conexion2) or die("Problemas en la selección de la base de datos");
 			foreach ($array_tarjeta as $cod_tarjeta) {
 				$sqltarjeta = "SELECT CodigoTarjeta,Valor FROM DetallePedidoTarjeta WHERE CodigoTarjeta = '" . $cod_tarjeta . "' and Estado = 'Redimido' LIMIT 1";
-				$Qrytarjeta = mysql_query($sqltarjeta, $conexion2) or die("Problemas en conexion2:" . mysql_error());
-				$DatosTarjeta = mysql_fetch_array($Qrytarjeta);
+				$Qrytarjeta = db_query($sqltarjeta, $conexion2) or die("Problemas en conexion2:" . mysqli_error());
+				$DatosTarjeta = db_fetch_array($Qrytarjeta);
 				if ($DatosTarjeta["CodigoTarjeta"] != "") {
 					$tarjetaExiste = "S";
 					$r_bono["CodigoTarjeta"] = $num_tarjeta;
