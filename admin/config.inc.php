@@ -34,6 +34,8 @@ $libdir   = $dirroot."lib/";
 $DB_DEBUG = true;
 $DB_DIE_ON_FAIL = true;
 
+
+
 require($libdir."stdlib.inc.php");
 require($libdir."dblib.inc.php");
 require($libdir."passlib.php");

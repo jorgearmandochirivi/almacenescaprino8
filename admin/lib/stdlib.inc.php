@@ -94,11 +94,11 @@ function Verifica_SesionCliente(){
 	if (!isset($COOKIE_CLIENTE)){
 		header ("Location: login.php?msg=1$url_vars");
 	}//if (!isset($COOKIE_CLIENTE))
-	else{
+	else{	
 		//Limpio las sesiones que tengan mas de $tiemposession minutos
 
 		$limpiaqry=db_query("delete from Sesion_Cliente where DATE_ADD(Inicio, INTERVAL $tiemposessioninter MINUTE)<now()");
-		//Ahora sigue Buscar mi sesion
+		//Ahora sigue Buscar mi sesion		
 		$findsesionqry=db_query("select Datos from Sesion_Cliente where IDSesion='$COOKIE_CLIENTE'");
 		if (!db_num_rows($findsesionqry)){
 			//No hay ningun registro en la BD, osea que expiro

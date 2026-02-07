@@ -1,8 +1,7 @@
 <?php
 	include ("admin/config.inc.php");
 
-	Encabezado();
-
+	
 
 switch($msg){
 	case 1:
@@ -54,7 +53,7 @@ Where User = '$login' AND Password ='$pass' AND Autorizado = 'S' ";
 							$sql_punto = "SELECT * FROM PuntoVenta WHERE IP = '" . $IP . "' AND IDPuntoVenta = '" . $datos_user_obj->IDPuntoVenta . "' ";
 							$qry_punto = db_query( $sql_punto );
 
-
+					
 
 							if( db_num_rows( $qry_punto ) == 0 && $datos_user_obj->Nivel <> 0 && ($datos_user_obj->IDPuntoVenta!=29 && $datos_user_obj->IDPuntoVenta!=1 && $datos_user_obj->IDPuntoVenta!=22 && $datos_user_obj->IDPuntoVenta!=14 && $datos_user_obj->IDPuntoVenta!=10 && $datos_user_obj->IDPuntoVenta!=24 && $datos_user_obj->IDPuntoVenta!=6 && $datos_user_obj->IDPuntoVenta!=25 && $datos_user_obj->IDPuntoVenta!=16) && $IP <> "190.85.198.43" && $IP <> "190.85.198.41" && $IP <> "186.82.253.17" && $IP <> "190.146.231.50" && $IP <> "192.168.0.180" && $IP <> "127.0.0.1" &&  $IP <> "190.85.198.43" &&  $IP <> "186.116.156.45")
 							{
@@ -105,8 +104,7 @@ Where User = '$login' AND Password ='$pass' AND Autorizado = 'S' ";
 								mail ( "jaimer@calzadocaprino.com, mapereira@calzadocaprino.com,currego@calzadocaprino.com,medellin@calzadocaprino.com" , "Ingreso no autorizado al almacen " . $datos_user_obj->IDPuntoVenta . " ( " . $r_punto_usuario["Nombre"] . " ) " , $subject, $cabeceras );
 								exit;
 							}//end if
-
-
+							
 							$Usuario=array("Nivel"=>$datos_user_obj->Nivel,"IDUsuario"=>$datos_user_obj->IDEmpleado,"Nombre"=>$datos_user_obj->Nombre,"User"=>$user,"flag"=>"TRUE","IVA"=>$iva,"IDPuntoVenta"=>$datos_user_obj->IDPuntoVenta);
 
 							$usuariosave= addslashes(serialize($Usuario));
@@ -114,17 +112,17 @@ Where User = '$login' AND Password ='$pass' AND Autorizado = 'S' ";
 							$newsesion=md5(uniqid(date("Y-m-d",time())));
 
 							$fecha=date("Y-m-d H-i-s",time());
-
 							$guardarqry = db_query("insert into Sesion_Cliente values ('$newsesion','$datos_user_obj->IDEmpleado','$fecha','$usuariosave')");
-
-
 							//INSERTAR LOG DE ACCESO
-							insertlog_acceso( $datos_user_obj->IDEmpleado,$datos_user_obj->IDPuntoVenta,$datos_user_obj->Nombre . " " . $login );
+							insertlog_acceso( $datos_user_obj->IDEmpleado,$datos_user_obj->IDPuntoVenta,$datos_user_obj->Nombre . " " . $login );							
 
+							
 							//SET COOKIE
 							setcookie("COOKIE_CLIENTE",$newsesion);
+
 							//insertlog($datos_user_obj->IDEmpleado,"Login",$datos_user_obj->IDEmpleado,"Ingreso","Ingreso ".$datos_user_obj->Nombre." ".$datos_user_obj->Apellidos." al Modulo Administrativo");
 
+							
 							header("Location: $redirect");
 
 					}//if ($pass!=$userdata->password)

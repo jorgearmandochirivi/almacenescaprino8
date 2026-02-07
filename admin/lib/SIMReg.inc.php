@@ -2,9 +2,9 @@
 class SIMReg
 {
 	//datos a encapsular
-	static $_params = array();
+	static array $_params = array();
 	
-	function setFromStructure( $params )
+	static function setFromStructure( array $params ): bool
 	{
 		foreach( $params as $prop => $value )
 			self::$_params[ $prop ] = $value;
@@ -12,15 +12,15 @@ class SIMReg
 		return true;		
 	}
 	
-	function set( $name , $value )
+	static function set( string $name , mixed $value ): bool
 	{
 		self::$_params[ $name ] = $value;
 		return true;
 	}
 	
-	function get( $name )
+	static function get( string $name ): mixed
 	{
-		return self::$_params[ $name ];
+		return self::$_params[ $name ] ?? null;
 	}
 }
 ?>

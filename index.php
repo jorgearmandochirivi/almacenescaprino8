@@ -1,13 +1,16 @@
 <?php
 include("admin/config.inc.php");
 Encabezado();
+
 $datos = Verifica_SesionCliente();
+
 //	print_r($datos);
 $Nombre_Usuario = usr_datos($datos["IDUsuario"]);
 $ID_Usuario = $datos["IDUsuario"];
 $Nivel =  $datos["Nivel"];
 $IVA = $datos["IVA"];
 $IDPuntoVenta = $datos["IDPuntoVenta"];
+
 
 SIMReg::set("IDPuntoVenta", $IDPuntoVenta);
 
@@ -17,6 +20,9 @@ $r_punto = db_fetch_object($qry_punto);
 
 
 include("admin/jscripts/tabs.php");
+
+
+
 ?>
 <html>
 
