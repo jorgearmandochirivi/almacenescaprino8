@@ -19,58 +19,58 @@ if($permisos[0] >= 2)
 			
 			case "list" :	
 			
-				if (!empty($_GET[puntoventa]))
-					$condiciones.=" and G.IDPuntoVenta = '".$_GET[puntoventa]."'";
+				if (!empty($_GET['puntoventa']))
+					$condiciones.=" and G.IDPuntoVenta = '".$_GET['puntoventa']."'";
 
-				if (!empty($_GET[Tipo]))
-					$condiciones.=" and G.TipoRegistro = '".$_GET[Tipo]."'";
+				if (!empty($_GET['Tipo']))
+					$condiciones.=" and G.TipoRegistro = '".$_GET['Tipo']."'";
 
-				if (!empty($_GET[TipoReproceso]))
-					$condiciones.=" and G.".$_GET[TipoReproceso]." = 'S'";
+				if (!empty($_GET['TipoReproceso']))
+					$condiciones.=" and G.".$_GET['TipoReproceso']." = 'S'";
 
-				if (!empty($_GET[IDEstadoGarantia]))
-					$condiciones.=" and G.IDEstadoGarantia = '".$_GET[IDEstadoGarantia]."'";
+				if (!empty($_GET['IDEstadoGarantia']))
+					$condiciones.=" and G.IDEstadoGarantia = '".$_GET['IDEstadoGarantia']."'";
 
-				if (!empty($_GET[limit1]) && !empty($_GET[limit2]))
-					$condiciones.=" and G.FechaTrCr between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+				if (!empty($_GET['limit1']) && !empty($_GET['limit2']))
+					$condiciones.=" and G.FechaTrCr between '".$_GET['limit1']."' and '".$_GET['limit2']."'";
 
-				if (!empty($_GET[TipoContrafuerte]))
+				if (!empty($_GET['TipoContrafuerte']))
 					$condiciones.=" and G.TipoContrafuerte = 'S'";
 
-				if (!empty($_GET[TipoCuero]))
+				if (!empty($_GET['TipoCuero']))
 					$condiciones.=" and G.TipoCuero = 'S'";
 					
-				if (!empty($_GET[TipoPlantilla]))
+				if (!empty($_GET['TipoPlantilla']))
 					$condiciones.=" and G.TipoPlantilla = 'S'";
 					
-				if (!empty($_GET[TipoCremallera]))
+				if (!empty($_GET['TipoCremallera']))
 					$condiciones.=" and G.TipoCremallera = 'S'";
 					
-				if (!empty($_GET[TipoDespegue]))
+				if (!empty($_GET['TipoDespegue']))
 					$condiciones.=" and G.TipoDespegue = 'S'";
 					
-				if (!empty($_GET[TipoCambrion]))
+				if (!empty($_GET['TipoCambrion']))
 					$condiciones.=" and G.TipoCambrion = 'S'";
 					
-				if (!empty($_GET[TipoTacon]))
+				if (!empty($_GET['TipoTacon']))
 					$condiciones.=" and G.TipoTacon = 'S'";
 					
-				if (!empty($_GET[TipoCerco]))
+				if (!empty($_GET['TipoCerco']))
 					$condiciones.=" and G.TipoCerco = 'S'";
 					
-				if (!empty($_GET[TipoCardado]))
+				if (!empty($_GET['TipoCardado']))
 					$condiciones.=" and G.TipoCardado = 'S'";
 					
-				if (!empty($_GET[TipoSuela]))
+				if (!empty($_GET['TipoSuela']))
 					$condiciones.=" and G.TipoSuela = 'S'";
 					
-				if (!empty($_GET[TipoGuarnicion]))
+				if (!empty($_GET['TipoGuarnicion']))
 					$condiciones.=" and G.TipoGuarnicion = 'S'";
 					
-				if (!empty($_GET[TipoPuntera]))
+				if (!empty($_GET['TipoPuntera']))
 					$condiciones.=" and G.TipoPuntera = 'S'";
 					
-				if (!empty($_GET[TipoHerraje]))				
+				if (!empty($_GET['TipoHerraje']))				
 					$condiciones.=" and G.TipoHerraje = 'S'";
 
 
@@ -80,67 +80,67 @@ if($permisos[0] >= 2)
 							 FROM Garantia G, EstadoGarantia EG,  Cliente C, Factura F
 							 WHERE G.IDFactura = F.IDFactura and C.IDCliente = F.IDCliente and
 							 	   EG.IDEstadoGarantia = G.IDEstadoGarantia
-								   AND G.IDPuntoVenta = '".$datos[IDPuntoVenta]."'
+								   AND G.IDPuntoVenta = '".$datos['IDPuntoVenta']."'
 							 	   $condiciones
 							ORDER BY IDGarantia DESC";
 
 			
 			//consulto totales para el resumen
 			$result_garantia=db_query($sql);
-			$totales[contador_garantia]=0;
-			$totales[contador_tipo_garantia]=0;
-			$totales[contador_tipo_servicio]=0;
-			$totales[contador_tipo_reproceso]=0;
-			$totales[contador_contrafuerte]=0;
-			$totales[contador_cuero]=0;
-			$totales[contador_plantilla]=0;
-			$totales[contador_cremallera]=0;
-			$totales[contador_despegue]=0;
-			$totales[contador_cambrion]=0;
-			$totales[contador_tacon]=0;
-			$totales[contador_cerco]=0;
-			$totales[contador_cardado]=0;
-			$totales[contador_suela_rota]=0;
-			$totales[contador_guarnicion]=0;
-			$totales[contador_puntera]=0;
-			$totales[contador_herraje]=0;
+			$totales['contador_garantia']=0;
+			$totales['contador_tipo_garantia']=0;
+			$totales['contador_tipo_servicio']=0;
+			$totales['contador_tipo_reproceso']=0;
+			$totales['contador_contrafuerte']=0;
+			$totales['contador_cuero']=0;
+			$totales['contador_plantilla']=0;
+			$totales['contador_cremallera']=0;
+			$totales['contador_despegue']=0;
+			$totales['contador_cambrion']=0;
+			$totales['contador_tacon']=0;
+			$totales['contador_cerco']=0;
+			$totales['contador_cardado']=0;
+			$totales['contador_suela_rota']=0;
+			$totales['contador_guarnicion']=0;
+			$totales['contador_puntera']=0;
+			$totales['contador_herraje']=0;
 			while($row_garantia=db_fetch_array($result_garantia)){
-				$totales[contador_garantia]++;
-				if ($row_garantia[TipoRegistro]=="Garantia")
-					$totales[contador_tipo_garantia]++;
-				elseif($row_garantia[TipoRegistro]=="Servicio")	
-					$totales[contador_tipo_servicio]++;	
-				elseif($row_garantia[TipoRegistro]=="Reproceso")	
-					$totales[contador_tipo_reproceso]++;
+				$totales['contador_garantia']++;
+				if ($row_garantia['TipoRegistro']=="Garantia")
+					$totales['contador_tipo_garantia']++;
+				elseif($row_garantia['TipoRegistro']=="Servicio")	
+					$totales['contador_tipo_servicio']++;	
+				elseif($row_garantia['TipoRegistro']=="Reproceso")	
+					$totales['contador_tipo_reproceso']++;
 				
-				if ($row_garantia[TipoContrafuerte]=="S")	
-					$totales[contador_contrafuerte]++;
-				if ($row_garantia[TipoCuero]=="S")	
-					$totales[contador_cuero]++;
-				if ($row_garantia[TipoPlantilla]=="S")	
-					$totales[contador_plantilla]++;
-				if ($row_garantia[TipoCremallera]=="S")	
-					$totales[contador_cremallera]++;
-				if ($row_garantia[TipoDespegue]=="S")	
-					$totales[contador_despegue]++;
-				if ($row_garantia[TipoCambrion]=="S")	
-					$totales[contador_cambrion]++;
-				if ($row_garantia[TipoTacon]=="S")	
-					$totales[contador_tacon]++;
-				if ($row_garantia[TipoOtro]!="")	
-					$totales[contador_otros]++;
-				if ($row_garantia[TipoCerco]=="S")	
-					$totales[contador_cerco]++;
-				if ($row_garantia[TipoCardado]=="S")	
-					$totales[contador_cardado]++;
-				if ($row_garantia[TipoSuela]=="S")	
-					$totales[contador_suela_rota]++;
-				if ($row_garantia[TipoGuarnicion]=="S")	
-					$totales[contador_guarnicion]++;
-				if ($row_garantia[TipoPuntera]=="S")	
-					$totales[contador_puntera]++;
-				if ($row_garantia[TipoHerraje]=="S")	
-					$totales[contador_herraje]++;
+				if ($row_garantia['TipoContrafuerte']=="S")	
+					$totales['contador_contrafuerte']++;
+				if ($row_garantia['TipoCuero']=="S")	
+					$totales['contador_cuero']++;
+				if ($row_garantia['TipoPlantilla']=="S")	
+					$totales['contador_plantilla']++;
+				if ($row_garantia['TipoCremallera']=="S")	
+					$totales['contador_cremallera']++;
+				if ($row_garantia['TipoDespegue']=="S")	
+					$totales['contador_despegue']++;
+				if ($row_garantia['TipoCambrion']=="S")	
+					$totales['contador_cambrion']++;
+				if ($row_garantia['TipoTacon']=="S")	
+					$totales['contador_tacon']++;
+				if ($row_garantia['TipoOtro']!="")	
+					$totales['contador_otros']++;
+				if ($row_garantia['TipoCerco']=="S")	
+					$totales['contador_cerco']++;
+				if ($row_garantia['TipoCardado']=="S")	
+					$totales['contador_cardado']++;
+				if ($row_garantia['TipoSuela']=="S")	
+					$totales['contador_suela_rota']++;
+				if ($row_garantia['TipoGuarnicion']=="S")	
+					$totales['contador_guarnicion']++;
+				if ($row_garantia['TipoPuntera']=="S")	
+					$totales['contador_puntera']++;
+				if ($row_garantia['TipoHerraje']=="S")	
+					$totales['contador_herraje']++;
 					
 					
 					
@@ -224,19 +224,19 @@ if(empty($sql))
           </tr>
 	      <tr>
 	        <td> Garantias</td>
-	        <td>&nbsp;<?php echo $totales[contador_garantia]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_garantia']; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
           </tr>
 	      <tr>
 	        <td> Tipo: Garantias</td>
-	        <td>&nbsp;<?php echo $totales[contador_tipo_garantia]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_tipo_garantia']; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
           </tr>
 	      <tr>
 	        <td> Tipo: Servicios Y reprocesos</td>
-	        <td>&nbsp;<?php echo $totales[contador_tipo_reproceso]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_tipo_reproceso']; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
           </tr>
@@ -245,45 +245,45 @@ if(empty($sql))
           </tr>
 	      <tr>
 	        <td>Contrafuerte</td>
-	        <td>&nbsp;<?php echo $totales[contador_contrafuerte]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_contrafuerte']; ?></td>
 	        <td>Tacon</td>
-	        <td>&nbsp;<?php echo $totales[contador_tacon]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_tacon']; ?></td>
           </tr>
 	      <tr>
 	        <td>Cuero</td>
-	        <td>&nbsp;<?php echo $totales[contador_cuero]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cuero']; ?></td>
 	        <td>Cerco</td>
-	        <td>&nbsp;<?php echo $totales[contador_cerco]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cerco']; ?></td>
           </tr>
 	      <tr>
 	        <td>Plantilla estructural</td>
-	        <td>&nbsp;<?php echo $totales[contador_plantilla]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_plantilla']; ?></td>
 	        <td>Cardado</td>
-	        <td>&nbsp;<?php echo $totales[contador_cardado]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cardado']; ?></td>
           </tr>
 	      <tr>
 	        <td>Cremallera</td>
-	        <td>&nbsp;<?php echo $totales[contador_cremallera]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cremallera']; ?></td>
 	        <td>Suela rota</td>
-	        <td>&nbsp;<?php echo $totales[contador_suela_rota]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_suela_rota']; ?></td>
           </tr>
 	      <tr>
 	        <td>Despegue</td>
-	        <td>&nbsp;<?php echo $totales[contador_despegue]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_despegue']; ?></td>
 	        <td>Guarnicion</td>
-	        <td>&nbsp;<?php echo $totales[contador_guarnicion]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_guarnicion']; ?></td>
           </tr>
 	      <tr>
 	        <td>Cambrion</td>
-	        <td>&nbsp;<?php echo $totales[contador_cambrion]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cambrion']; ?></td>
 	        <td>Puntera</td>
-	        <td>&nbsp;<?php echo $totales[contador_puntera]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_puntera']; ?></td>
           </tr>
 	      <tr>
 	        <td>Herraje</td>
-	        <td>&nbsp;<?php echo $totales[contador_herraje]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_herraje']; ?></td>
 	        <td>Otros</td>
-	        <td>&nbsp;<?php echo $totales[contador_otros]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_otros']; ?></td>
         </tr>
       </table></td>
   </tr>
@@ -308,20 +308,20 @@ if(empty($sql))
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
 				data : [
-						"<?php echo $totales[contador_contrafuerte]; ?>",
-						"<?php echo $totales[contador_cuero]; ?>",
-						"<?php echo $totales[contador_plantilla]; ?>",
-						"<?php echo $totales[contador_cremallera]; ?>",
-						"<?php echo $totales[contador_despegue]; ?>",
-						"<?php echo $totales[contador_cambrion]; ?>",
-						"<?php echo $totales[contador_tacon]; ?>",
-						"<?php echo $totales[contador_cerco]; ?>",
-						"<?php echo $totales[contador_cardado]; ?>",
-						"<?php echo $totales[contador_suela_rota]; ?>",
-						"<?php echo $totales[contador_guarnicion]; ?>",
-						"<?php echo $totales[contador_puntera]; ?>",
-						"<?php echo $totales[contador_herraje]; ?>",
-						"<?php echo $totales[contador_otros]; ?>",
+						"<?php echo $totales['contador_contrafuerte']; ?>",
+						"<?php echo $totales['contador_cuero']; ?>",
+						"<?php echo $totales['contador_plantilla']; ?>",
+						"<?php echo $totales['contador_cremallera']; ?>",
+						"<?php echo $totales['contador_despegue']; ?>",
+						"<?php echo $totales['contador_cambrion']; ?>",
+						"<?php echo $totales['contador_tacon']; ?>",
+						"<?php echo $totales['contador_cerco']; ?>",
+						"<?php echo $totales['contador_cardado']; ?>",
+						"<?php echo $totales['contador_suela_rota']; ?>",
+						"<?php echo $totales['contador_guarnicion']; ?>",
+						"<?php echo $totales['contador_puntera']; ?>",
+						"<?php echo $totales['contador_herraje']; ?>",
+						"<?php echo $totales['contador_otros']; ?>",
 						]
 			},
 		]
@@ -339,19 +339,19 @@ if(empty($sql))
 
 		var pieData = [
 				{
-					value: <?php echo $totales[contador_tipo_garantia]; ?>,
+					value: <?php echo $totales['contador_tipo_garantia']; ?>,
 					color:"#F7464A",
 					highlight: "#FF5A5E",
 					label: "Garantia"
 				},
 				{
-					value: <?php echo $totales[contador_tipo_servicio]; ?>,
+					value: <?php echo $totales['contador_tipo_servicio']; ?>,
 					color: "#46BFBD",
 					highlight: "#5AD3D1",
 					label: "Servicios"
 				},
 				{
-					value: <?php echo $totales[contador_tipo_reproceso]; ?>,
+					value: <?php echo $totales['contador_tipo_reproceso']; ?>,
 					color: "#46BFBD",
 					highlight: "#5AD3D1",
 					label: "Reprocesos"
@@ -384,15 +384,15 @@ if(empty($sql))
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Numero&nbsp;
-						    <?php if($_GET['order_by']=="Nombre")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+					    <?php if($_GET['order_by']=="Nombre"){ ?><img src="images/<?php echo $img;?>" border=0><?php } ?></a> </td>
 						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Cliente</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
-						    <?php if($_GET['order_by']=="Codigo")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+					    <?php if($_GET['order_by']=="Codigo"){ ?><img src="images/<?php echo $img;?>" border=0><?php } ?></a></td>
 						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Producto&nbsp;
-						    <?php if($_GET['order_by']=="Publicar")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+					    <?php if($_GET['order_by']=="Publicar"){ ?><img src="images/<?php echo $img;?>" border=0><?php } ?></a> </td>
 						<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Factura&nbsp;
-						  <?php if($_GET['order_by']=="FechaFacturaBono")<?php 
-						  <img src="images/<?php echo $img;?>" alt="" border=0>
-						  <?php };?>
+					  <?php if($_GET['order_by']=="FechaFacturaBono"){ ?>
+					  <img src="images/<?php echo $img;?>" alt="" border=0>
+					  <?php } ?>
 						  </a></td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Fecha</td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
@@ -537,7 +537,7 @@ Punto de venta
 				    <option value="">Seleccione</option>
 				    <?php
 							$sql_puntos = "SELECT P.* FROM PuntoVenta P ";
-							$sql_puntos .= "WHERE 1 and IDPuntoVenta = '".$datos[IDPuntoVenta]."' Order By Nombre";
+							$sql_puntos .= "WHERE 1 and IDPuntoVenta = '".$datos['IDPuntoVenta']."' Order By Nombre";
 							
 							$query_puntos = db_query( $sql_puntos );
 						
@@ -598,66 +598,66 @@ y
                     </tr>
                     <tr>
                       <td class="row2">Contrafuerte</td>
-                      <td class="row2"><input type="checkbox" name="TipoContrafuerte" id="TipoContrafuerte" value="S" <?php if ($_GET[TipoContrafuerte]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoContrafuerte" id="TipoContrafuerte" value="S" <?php if ($_GET['TipoContrafuerte']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpContrafuerte" id="tmpContrafuerte" value="<?php echo $r->TipoContrafuerte; ?>"></td>
                       <td class="row2" >Despegue</td>
                       <td class="row2" >
                         
-                        <input type="checkbox" name="TipoDespegue" id="TipoDespegue" value="S" <?php if ($_GET[TipoDespegue]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoDespegue" id="TipoDespegue" value="S" <?php if ($_GET['TipoDespegue']=="S"){ echo "checked"; } ?>  />
                           <input type="hidden" name="tmpTipoDespegue" id="tmpTipoDespegue" value="<?php echo $r->TipoDespegue; ?>">
                       </td>
                       <td class="row2">Cardado</td>
-                      <td class="row2"><input type="checkbox" name="TipoCardado" id="TipoCardado" value="S" <?php if ($_GET[TipoCardado]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCardado" id="TipoCardado" value="S" <?php if ($_GET['TipoCardado']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCardado" id="tmpTipoCardado" value="<?php echo $r->TipoCardado; ?>"></td>
                     </tr>
                     <tr>
                       <td class="row2">Cuero</td>
-                      <td class="row2"><input type="checkbox" name="TipoCuero" id="TipoCuero" value="S" <?php if ($_GET[TipoCuero]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCuero" id="TipoCuero" value="S" <?php if ($_GET['TipoCuero']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCuero" id="tmpTipoCuero" value="<?php echo $r->TipoCuero; ?>"></td>
                       <td class="row2">Cambrion</td>
                       <td class="row2">
                         
-                        <input type="checkbox" name="TipoCambrion" id="TipoCambrion" value="S" <?php if ($_GET[TipoCambrion]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoCambrion" id="TipoCambrion" value="S" <?php if ($_GET['TipoCambrion']=="S"){ echo "checked"; } ?>  />
                           <input type="hidden" name="tmpTipoCambrion" id="tmpTipoCambrion" value="<?php echo $r->TipoCambrion; ?>">
                       </td>
                       <td class="row2">Suela Rota</td>
-                      <td class="row2"><input type="checkbox" name="TipoSuela" id="TipoSuela" value="S" <?php if ($_GET[TipoSuela]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoSuela" id="TipoSuela" value="S" <?php if ($_GET['TipoSuela']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoSuela" id="tmpTipoSuela" value="<?php echo $r->TipoRemonta; ?>"></td>
                     </tr>
                     <tr>
                       <td class="row2">Plantilla estructural</td>
-                      <td class="row2"><input type="checkbox" name="TipoPlantilla" id="TipoPlantilla" value="S" <?php if ($_GET[TipoPlantilla]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoPlantilla" id="TipoPlantilla" value="S" <?php if ($_GET['TipoPlantilla']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoPlantilla" id="tmpTipoPlantilla" value="<?php echo $r->TipoPlantilla; ?>"></td>
                       <td class="row2">Tacon</td>
                       <td class="row2">
-                        <input type="checkbox" name="TipoTacon" id="TipoTacon" value="S" <?php if ($_GET[TipoTacon]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoTacon" id="TipoTacon" value="S" <?php if ($_GET['TipoTacon']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoTacon" id="tmpTipoTacon" value="<?php echo $r->TipoTacon; ?>">
                       </td>
                       <td class="row2">Guarnicion</td>
                       <td class="row2"><span class="row2">
-                        <input type="checkbox" name="TipoGuarnicion" id="TipoGuarnicion" value="S" <?php if ($_GET[TipoGuarnicion]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoGuarnicion" id="TipoGuarnicion" value="S" <?php if ($_GET['TipoGuarnicion']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoGuarnicion" id="tmpTipoGuarnicion" value="<?php echo $r->TipoGuarnicion; ?>">
                       </span></td>
                     </tr>
                     <tr>
                       <td height="27" class="row2">Cremallera</td>
-                      <td class="row2"><input type="checkbox" name="TipoCremallera" id="TipoCremallera" value="S" <?php if ($_GET[TipoCremallera]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCremallera" id="TipoCremallera" value="S" <?php if ($_GET['TipoCremallera']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCremallera" id="tmpTipoCremallera" value="<?php echo $r->TipoCremallera; ?>"></td>
                       <td class="row2">Cerco</td>
                       <td class="row2">
                         
-                        <input type="checkbox" name="TipoCerco" id="TipoCerco" value="S" <?php if ($_GET[TipoCerco]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoCerco" id="TipoCerco" value="S" <?php if ($_GET['TipoCerco']=="S"){ echo "checked"; } ?>  />
                           <input type="hidden" name="tmpTipoCerco" id="tmpTipoCerco" value="<?php echo $r->TipoCerco; ?>">
                       </td>
                       <td class="row2">Puntera</td>
                       <td class="row2"><span class="row2">
-                        <input type="checkbox" name="TipoPuntera" id="TipoPuntera" value="S" <?php if ($_GET[TipoPuntera]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoPuntera" id="TipoPuntera" value="S" <?php if ($_GET['TipoPuntera']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoPuntera" id="tmpTipoPuntera" value="<?php echo $r->TipoPuntera; ?>">
                       </span></td>
                     </tr>
                     <tr>
                       <td class="row2">Herraje</td>
-                      <td class="row2"><input type="checkbox" name="TipoHerraje" id="TipoHerraje" value="S" <?php if ($_GET[TipoHerraje]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoHerraje" id="TipoHerraje" value="S" <?php if ($_GET['TipoHerraje']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoHerraje" id="tmpTipoHerraje" value="<?php echo $r->TipoHerraje; ?>"></td>
                       <td class="row2" >&nbsp;</td>
                       <td class="row2">&nbsp;</td>

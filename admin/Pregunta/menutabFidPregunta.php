@@ -20,7 +20,7 @@ function TABoff()
 {
 	for(i=1;i<=2;i++)
 	{
-       if(i != <?php echo $TABsel;?>){
+       if(i != <%=$TABsel%>){
      		var TAB = "TB" + i;
 	    	document.getElementById(TAB).bgColor = clrIn;
 		}

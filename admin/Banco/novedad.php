@@ -1,5 +1,4 @@
-<body>
-	<?php
+<body> <?
 
 $TitleMod ="Novedades Bancos";
 
@@ -78,160 +77,169 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	
 	$qid = db_query(" SELECT * FROM PuntoVentaBanco WHERE IDPuntoVenta = '$IDPuntoVenta' ");
 
-?><br>
-	<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
-
-<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="550">
+?>
+<table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
+		<tr>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td></td>
+		</tr>
+</table>
+<br>
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	
+<table cellpadding=1 cellspacing=0 class=bordertable align=center width=500>
 	<tr>
-		<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" />
-		</td>
-		<td class="tbtbot"><b></b>
-			<span class="gen">
-				<?php echo $TitleMod ?> <?php echo $r->$Key ?>
-			</span>
-			<span class="gen">
-				<?php echo $info ?>
-			</span>
-		</td>
-		<td class="tbtr">
-			<img src="images/spacer.gif" alt="" width="124" height="22" />
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
+	</tr>
+	<?
+	//INFORMACION DEL DIA QUE SE SELECCIONA 
+	?>
+	<tr>
+		<td align=center class=row2>
+			<br>
 		</td>
 	</tr>
-</table>
 	
-<table class="forumline" width="550" cellspacing="1" border="0" align="center">
+	
+	<?
+	//INFORMACION DE TOTAL VENDIDO EL DIA QUE SE SELECCIONA
+	?>
 	<tr>
-		<td>
-			<table width=100% border=0 cellspacing=1 cellpadding=0 class=texto class="forumline" >
-				
-				<tr>
-					<td class="forumlink" colspan="2">
-						<table width=100% border=0 cellspacing=0 cellpadding=0>
-						<?php
-							
-							$Fechainicio = $Fecha." "."00:00:00";
-							$Fechafin = $Fecha." "."23:59:59";
-							
-							$sql_factura = "SELECT sum(ValorTotal) as Total 
-											FROM Factura 
-											WHERE FechaFactura >= '$Fechainicio' AND FechaFactura <= '$Fechafin' 
-											AND IDPuntoVenta = '$IDPuntoVenta'";
-							
-							$query_factura = db_query($sql_factura);
-							
-							while( $r_factura = db_fetch_object( $query_factura ) )
-							{
-								
-						?>
-							<tr>
-								<td width="30%" align="right" class=col1><b>Total Vendido</b></td>
-								<td align="left" class=col2>
-									<?php echo "$ ".number_format( $r_factura->Total )?>
-								</td>
-							</tr>
-						<?php		
-							
-							}//end while( $r_factura = db_fetch_object( $query_factura ) )
-						?>
-						</table>
-					</td>
-				</tr>
-			<?php
-			//INFORMACION DE TOTAL VENDIDO EL DIA QUE SE SELECCIONA
-			?>
-			
-				<tr>
-					<td class="forumlink" colspan="2">
-						<table width=100% border=0 cellspacing=0 cellpadding=0>
-							<tr >
-								<td width="30%" align="center" class="titulodetablas"><b>Banco</b></td>
-								<td align="center" class="titulodetablas">
-									<b>Valor</b>
-								</td>
-							</tr>
-							<?php
-								$sql_novedad = "SELECT NB.* 
-												FROM NovedadBanco NB, PuntoVentaBanco PB 
-												WHERE NB.Fecha = '$Fecha' AND NB.IDPuntoVentaBanco = PB.IDPuntoVentaBanco
-												AND PB.IDPuntoVenta = '$IDPuntoVenta'";
-								
-								$query_novedad = db_query($sql_novedad);
-								
-								while( $r_novedad = db_fetch_object( $query_novedad ) )
-								{
-									
-							?>
-							<tr>
-								<td width="30%" align="center" class=col1list><?=get_field("Banco","Nombre","IDBanco",get_field("PuntoVentaBanco","IDBanco","IDPuntoVentaBanco",$r_novedad->IDPuntoVentaBanco))?></td>
-								<td align="center" class=col1list>
-									<?php echo number_format( $r_novedad->Valor )?>
-								</td>
-							</tr>
-							<?php		
-								
-								}//end while( $r_novedad = db_fetch_object( $query_novedad ) )
-							?>
-						</table>
-					</td>
-				</tr>
-				
-				<?php
-				//INFORMACION DEL DIA QUE SE SELECCIONA 
-				?>
-			
-				<tr>
-					<td class="navpic" colspan="2">
-						Ingrese los Valores Correspondientes a la novedad
-					</td>
-				</tr>
-				<?php
-				while( $r = db_fetch_object( $qid ) )
-				{
+		<td align=center class=row2>
+			<table width=500 border=0 cellspacing=1 cellpadding=1 class=bordertable bgcolor="ffffff">
+				<?
+					
+					$Fechainicio = $Fecha." "."00:00:00";
+					$Fechafin = $Fecha." "."23:59:59";
+					
+					$sql_factura = "SELECT sum(ValorTotal) as Total 
+									FROM Factura 
+									WHERE FechaFactura >= '$Fechainicio' AND FechaFactura <= '$Fechafin' 
+									AND IDPuntoVenta = '$IDPuntoVenta'";
+					
+					$query_factura = db_query($sql_factura);
+					
+					while( $r_factura = db_fetch_object( $query_factura ) )
+					{
+						
 				?>
 				<tr>
-							<td>
-						<table width=100% border=0 cellspacing=0 cellpadding=0 class=texto>
-							<tr>
-								<td class="col1" width="30%"><?php echo get_field( "Banco","Nombre","IDBanco", $r->IDBanco )."-<b>".get_field( "FormaPago","Descripcion","IDFormaPago", $r->IDFormaPago)."</b>"?></td>
-								<td class="col2">
-									<input type=text class=input name="valor[<?php echo $r->IDBanco?>]" value="">
-									<input type=hidden name="Banco[<?php echo $r->IDBanco?>]" value="<?php echo $r->IDBanco?>">
-								</td>
-							</tr>
-						</table>
+					<td width="30%" align="right" class=rowtable><b>Total Vendido</b></td>
+					<td align="left" class=rowtablesoft>
+						<?echo "$ ".number_format( $r_factura->Total )?>
 					</td>
-						</tr>
-				<?php
-				}//end while( $r = db_fetch_object( $qid ) )
+				</tr>
+				<?		
+					
+					}//end while( $r_factura = db_fetch_object( $query_factura ) )
 				?>
-				
+			</table>
+		</td>
+	</tr>
+	<?
+	//INFORMACION DE TOTAL VENDIDO EL DIA QUE SE SELECCIONA
+	?>
+	
+	<tr>
+		<td align=center class=row2>
+			<table width=500 border=0 cellspacing=1 cellpadding=1 class=bordertable bgcolor="ffffff">
 				<tr>
-					<td class="navpic" align="center" colspan="2">
-						<input type="hidden" name="Fecha" value="<?=$Fecha?>">
-						<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
-						<input type="hidden" name="action" value="<?=$newmode?>">
-						<input type="submit" name="submit" class="input" value="<?=$submit_caption?>">
+					<td width="30%" align="center"><b>Banco</b></td>
+					<td align="center">
+						<b>Valor</b>
+					</td>
+				</tr>
+				<?
+					$sql_novedad = "SELECT NB.* 
+									FROM NovedadBanco NB, PuntoVentaBanco PB 
+									WHERE NB.Fecha = '$Fecha' AND NB.IDPuntoVentaBanco = PB.IDPuntoVentaBanco
+									AND PB.IDPuntoVenta = '$IDPuntoVenta'";
+					
+					$query_novedad = db_query($sql_novedad);
+					
+					while( $r_novedad = db_fetch_object( $query_novedad ) )
+					{
+						
+				?>
+				<tr>
+					<td width="30%" align="center" class=rowtable><?php echo get_field("Banco","Nombre","IDBanco",get_field("PuntoVentaBanco","IDBanco","IDPuntoVentaBanco",$r_novedad->IDPuntoVentaBanco))?></td>
+					<td align="center" class=rowtable>
+						<?echo "$ ".number_format( $r_novedad->Valor )?>
+					</td>
+				</tr>
+				<?		
+					
+					}//end while( $r_novedad = db_fetch_object( $query_novedad ) )
+				?>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align=center class=row2>
+			<br>
+		</td>
+	</tr>
+	<?
+	//INFORMACION DEL DIA QUE SE SELECCIONA 
+	?>
+	
+	<tr>
+		<td class="row1">
+			<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
+				<tr>
+					<td width="30%" align="center"><b>Banco</b></td>
+					<td align="center">
+						<b>Valor</b>
 					</td>
 				</tr>
 			</table>
 		</td>
 	</tr>
+	<?
+	while( $r = db_fetch_object( $qid ) )
+	{
+	?>
+	<tr>
+		<td>
+			<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
+				<tr class=row2>
+					<td width="30%"><?echo get_field( "Banco","Nombre","IDBanco", $r->IDBanco )?></td>
+					<td>
+						<input type=text class=input name="valor[<?echo $r->IDBanco?>]" value="">
+						<input type=hidden name="Banco[<?echo $r->IDBanco?>]" value="<?echo $r->IDBanco?>">
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<?
+	}//end while( $r = db_fetch_object( $qid ) )
+	?>
+	
+	<tr>
+		<td class="row1" align="center">
+			<input type="hidden" name="Fecha" value="<?php echo $Fecha?>">
+			<input type="hidden" name="IDPuntoVenta" value="<?php echo $IDPuntoVenta?>">
+			<input type="hidden" name="action" value="<?php echo $newmode?>">
+			<input type="submit" name="submit" class="input" value="<?php echo $submit_caption?>">
+		</td>
+	</tr>
+	
 </table>
 </form>
-<?php
+<?
 }// End function print_form()
 
 /*******************************************************************************************
 		funcion Listar
 *******************************************************************************************/
 	function list_r($sql=""){
-		Global $TitleMod,$MOD,$Table,$Key,$listar,$IDPuntoVenta;
+		Global $TitleMod,$MOD,$Table,$Key,$listar;
 	if(empty($sql))
-	 	$sql =  " SELECT N.* FROM NovedadBanco N, PuntoVentaBanco PV 
-	 				WHERE PV.IDPuntoVenta = '$IDPuntoVenta'
-	 				AND PV.IDPuntoVentaBanco = N.IDPuntoVentaBanco ORDER BY Fecha DESC ";
-	 	
+	 	$sql =  "SELECT * FROM $Table ORDER BY Fecha DESC";
+
+		
 		$nav = new buildNav;
 		$nav->offset = 'offset';
    		$nav->number_type = 'number';
@@ -248,120 +256,108 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		
 		$info = $nav->show_info(); 
 ?>
-<br>
-<form name="frm1" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data">
-<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="550">
-	
+<table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" />
-		</td>
-		<td class="tbtbot"><b></b>
-			<span class="gen">
-				Crear Novedad
-			</span>
-		</td>
-		<td class="tbtr">
-			<img src="images/spacer.gif" alt="" width="124" height="22" />
-		</td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<td></td>
 	</tr>
 </table>
 
-<table width=550 border=0 cellspacing=1 align="center" cellpadding=0  class="forumline" >
+<br><br>
+
+<table cellspacing='1' cellpadding='2' border='0' align='center' width='500' class='bordertable'>
+	<form name="frm1" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data">
+	<tr>
+		<td class="titlemedium" colspan=2>Crear Novedad		</td>
+	</tr>
+	<tr>
+		<td class="rowtable">
+			Punto de Venta
+		</td>
+		<td class="row1">
+			<?php echo formpopup("PuntoVenta","Nombre","Nombre","IDPuntoVenta",$r->IDPuntoVenta,"input\" id=\"IDPuntoVenta"); ?>
+		</td>
+	</tr>
 	
 	<tr>
-		<td colspan="2" >
-			<table width=100% border=0 cellspacing=1 cellpadding=0  class="forumline">
-						<tr>
-						<td class="rowtable">
-							Fecha
-						</td>
-						<td class="row1">
-						
-							<input type="text" class="input" name="Fecha" size="19" value='<?=fecha()?>' readonly>
-							<script language="JavaScript1.2">
-								<!--
-									if (!document.layers)
-										document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm1.Fecha,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
-								//-->
-							</script>
-						
-						</td>
-				</tr>
-						<tr>
-					<td class="row1" colspan="2" align="center"><input type="hidden" value="<?=$IDPuntoVenta?>" name="IDPuntoVenta"><input type="hidden" name="action" value="add">
-						<input type="submit" class="input" name="submit" value="Crear Novedad">
-					</td>
-				</tr>
-			</table>
-		</tr>
-	</td>
+		<td class="rowtable">
+			Fecha
+		</td>
+		<td class="row1">
+		
+			<input type="text" class="input" name="Fecha" size="19" value='<?php echo fecha()?>' readonly>
+			<script language="JavaScript1.2">
+				<!--
+					if (!document.layers)
+						document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm1.Fecha,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
+				//-->
+			</script>
+		
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="row1" colspan="2" align="center">
+			<input type="hidden" name="action" value="add">
+			<input type="submit" class="input" name="submit" value="Crear Novedad">
+		</td>
+	</tr>
+	</form>
 </table>
-</form>
-
-<?php
-	if($rows > 0){
+<?
+		if($rows > 0){
 ?>		
 <br>
-
-<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="550">
-	
-	<tr>
-		<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" />
-		</td>
-		<td class="tbtbot"><b></b>
-			<span class="gen">
-				Novedades - <?php echo $info;;?>
-			</span>
-		</td>
-		<td class="tbtr">
-			<img src="images/spacer.gif" alt="" width="124" height="22" />
-		</td>
-	</tr>
-</table>
-
-<table width=550 border=0 cellspacing=1 align="center" cellpadding=0  class="forumline" >
-	<tr>
-		<td colspan="2" >
-			<?php filtrar();?>	
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" >
-			<table width=100% border=0 cellspacing=1 cellpadding=0  class="forumline">
+<table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
+		<tr>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
+		</tr>
+		<?filtrar();?>	
+		<tr>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
+		</tr>
+		<tr>
+			<td class=texto bgcolor=#DBEAF5 nowrap>
+			<?
+				print $pages;
+			?>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<table width=100% border=0 cellspacing=1 cellpadding=0>
 				<tr>
-					<td>
-						<table width=100% border=0 cellspacing=1 cellpadding=0>
-							<tr>
-									<td class=rowform nowrap bgcolor=#DBEAF5>Punto de Venta</td>
-									<td class=rowform nowrap bgcolor=#DBEAF5>Banco</td>
-								<td class=rowform nowrap bgcolor=#DBEAF5>Fecha</td>
-									<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Valor</td>
-								</tr>
-							<?php while($r = db_fetch_object($result)){
+						<td class=rowform nowrap bgcolor=#DBEAF5>Punto de Venta</td>
+						<td class=rowform nowrap bgcolor=#DBEAF5>Banco</td>
+						<td class=rowform nowrap bgcolor=#DBEAF5>Forma de Pago</td>
+						<td class=rowform nowrap bgcolor=#DBEAF5>Fecha</td>
+						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Valor</td>
+					</tr>
+				<?php while($r = db_fetch_object($result)){
+				?>
+  				<tr>
+						<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",get_field("PuntoVentaBanco","IDPuntoVenta","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
+						<td nowrap class=row1><?php echo get_field("Banco","Nombre","IDBanco",get_field("PuntoVentaBanco","IDBanco","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
+						<td nowrap class=row1><?php echo get_field("FormaPago","Descripcion","IDFormapago",get_field("PuntoVentaBanco","IDFormaPago","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
+						<td nowrap class=row1><?php echo formatofecha( $r->Fecha )?></td>
+						<td align=center valign=middle nowrap width=60 class=row2><?php echo "$ ".number_format($r->Valor) ?>&nbsp;&nbsp;</td>
+					</tr>
+				<?php } // END for
+				?>
+				<tr>
+					<td class=texto bgcolor=#DBEAF5 colspan=5 nowrap>
+						<?
+							print $pages;
 							?>
-			  				<tr>
-									<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",get_field("PuntoVentaBanco","IDPuntoVenta","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
-									<td nowrap class=row1><?php echo get_field("Banco","Nombre","IDBanco",get_field("PuntoVentaBanco","IDBanco","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
-								<td nowrap class=row1><?php echo formatofecha( $r->Fecha )?></td>
-									<td align=center valign=middle nowrap width=60 class=row2><?php echo "$ ".number_format($r->Valor) ?>&nbsp;&nbsp;</td>
-								</tr>
-							<?php } // END for
-							?>
-							<tr>
-								<td class=texto bgcolor=#DBEAF5 colspan=4 nowrap>
-									<?php
-										print $pages;
-										?>
-								</td>
-							</tr>		
-						</table>
 					</td>
-				</tr>
+				</tr>		
 			</table>
 		</td>
-	</tr>
-</table>
-<?php
+		</tr>
+</table>	
+
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -373,40 +369,35 @@ else
 	function filtrar(){
 	Global $dblink,$total_records,$row,$numtoshow,$MOD;
 ?>
-	<form name="frm" action="./" method="get" onsubmit="return valbuscar(document.frm)">
+	<form name="frm" action="./" method="get" >
 		<tr>
 			<td class="rowform" align="center" colspan=8>
 				<select name="field" id="Buscar por" class="popup">
 					<option value="">Buscar Por</option>
-					<option value="FechaInicio">Fecha Publicacion</option>
-					<option value="Nombre">Nombre</option>
-					<option value="Contacto">Contacto</option>
-					<option value="Lugar">Lugar</option>
-					<option value="Hora">Hora</option>
+					<option value="Banco.Nombre">Banco</option>
+					<option value="PuntoVenta.Nombre">PuntoVenta</option>
+					
 				</select> 
 				<input type="text" size="20" name="QryString" id="Buscar Por" class="post"> 
 				Entre <input type=text readonly size=10 class=input name=limit1>
 				<script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
-							document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit1,\"yyyy-mm-dd\")' width=16 height=16 border=0>")	
+							document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit1,\"yyyy-mm-dd\")' width=16 height=16 border=0>")	
 					//-->
 				</script>
 				 y <input type=text size=10 readonly class=input name=limit2> 
 				<script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
-							document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit2,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
+							document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit2,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 					//-->
 				</script>
 				<br>
 				ordenar por 
 				<select name="order_by" class="popup">
-					<option value="FechaInicio">Fecha Publicacion</option>
-					<option value="Descripcion">Descripcion</option>
-					<option value="Contacto">Contacto</option>
-					<option value="Lugar">Lugar</option>
-					<option value="Hora">Hora</option>
+					<option value="Banco.Nombre">Banco</option>
+					<option value="PuntoVenta.Nombre">PuntoVenta</option>
 				</select> 
 				de forma 
 				<select name="in_order" class="popup">
@@ -422,14 +413,14 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="Fecha">
 				<input type="hidden" name="action" value="list">
-				<input type="hidden" name="tjoin" value="Gerencia">
+				<input type="hidden" name="tjoin" value="PuntoVentaBanco">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>
 		</tr>
 	</form>
-<?php
+<?		
 	}//End function filtrar
 ?>

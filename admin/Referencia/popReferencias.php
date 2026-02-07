@@ -1,11 +1,11 @@
-<?php
+<%
 	include("../config.inc.php");
 	Encabezado();
 	$datos = Verifica_Sesion();
 	$Nombre_Usuario = usr_datos($datos["IDUsuario"]);
 	$ID_Usuario = $datos["IDUsuario"];
 	$Nivel =  $datos["Nivel"];
-  ?>
+%>
 <html>
 
 	<head>
@@ -18,11 +18,11 @@
 	<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
 		<table width="100%" cellpadding="3" cellspacing="0" border="0" align=center>
 			<tr>
-				<th background="titlegrad.jpg" align="left"><strong><font color="white"><?php pv($app_title);;?> :: Referemcias</font></strong></th>
+				<th background="titlegrad.jpg" align="left"><strong><font color="white"><%pv($app_title);%> :: Referemcias</font></strong></th>
 			</tr>
 		</table>
 		<link rel="stylesheet" href="../styles.css?1" type="text/css">
-		<?php
+		<%
 
 $TitleMod ="Referencias";
 $MOD = "breferencia";
@@ -96,13 +96,13 @@ return $qry_string;
 		$info = $nav->show_info(); 
 	
 	} // if(!empty($sql)){ 
-  ?>
+%>
 
 		<table width="350" border="0" cellspacing="1" cellpadding="0" align=center>
 			<tr>
 				<td>
 					<table width="100%" border="0" cellspacing="1" cellpadding="1" class=bordertable align=center> 
-						<?php
+						<%
 						for ($y = 1; $y <= $rows; $y++) {
 						
 							if($y % 2 == 0)
@@ -122,7 +122,7 @@ return $qry_string;
 						  	
 						  	//$r_codificacion = db_fetch_object( $query_tallas );
 						  	
-						?>
+						%>
 						
 						<tr>
 							<td  class="titlemedium" nowrap align="center">Referencia</td>
@@ -133,28 +133,28 @@ return $qry_string;
 						
 						<tr>
 							<td class="<?=$class?>" nowrap>
-									<?php echo $r->Numero ?>
+									<% echo $r->Numero %>
 							</td>
 							<td class="<?=$class?>">
-								<?php echo $r->Nombre ?>
+								<% echo $r->Nombre %>
 							</td>
 							<td class="<?=$class?>" align="left">
-								<?php echo $r->Descripcion ?>
+								<% echo $r->Descripcion %>
 							</td>
 							<td class="<?=$class?>" align="center">
-								<?php echo get_field("Linea","Nombre","IDLinea",$r->IDLinea);;?>
+								<%echo get_field("Linea","Nombre","IDLinea",$r->IDLinea);%>
 							</td>
 						</tr>
 						
 						<tr>
 							<td  class="<?=$class?>" colspan="4" nowrap align="left"><b>TALLAS</b><br>
-								<?php
+								<?
 								if(db_num_rows( $query_tallas ) > 0)
 								{
 								?>	
 									<table width=90% align=center>
 										<tr>
-											<?php
+											<?
 												$numcols = 6;
 												$contador = 1;
 												while( $r_tallas = db_fetch_object( $query_tallas ) )
@@ -210,7 +210,7 @@ return $qry_string;
 													echo "<td>NO HAY TALLAS DISPONIBLES</td>";
 											?>
 									</table>
-								<?php
+								<?
 								}
 								else
 									echo "NO HAY TALLAS DISPONIBLES";
@@ -219,9 +219,9 @@ return $qry_string;
 						</tr>
 						
 						
-						<?php
+						<%
 						} // END for
-						?>
+						%>
 						<form action="<?=$PHP_SELF?>" method=get>
 							<tr>
 								<td class="rowtable" colspan="3" nowrap>Por
@@ -232,8 +232,8 @@ return $qry_string;
 									<input class="text" type="text" size="18" name="QryString">
 									<input type="hidden" name="action" value="list">
 									<input type="hidden" name="mod" value="busuario">
-									<input type="hidden" name="cont" value="<?php echo $cont;?>">
-									<input type="hidden" name="IDPuntoVenta" value="<?php echo $IDPuntoVenta;?>">
+									<input type="hidden" name="cont" value="<%=$cont%>">
+									<input type="hidden" name="IDPuntoVenta" value="<%=$IDPuntoVenta%>">
 									<input type="submit" name="submit" value="Buscar" class="submit">
 <input type="hidden" name="modulo" value="<?=$modulo?>" >
 								</td>
@@ -244,7 +244,7 @@ return $qry_string;
 				</td>
 		</tr>
 		</table>
-		<?php 			
+		<% 			
 }// Enf function list()				
-?></body>
+%></body>
 </html>

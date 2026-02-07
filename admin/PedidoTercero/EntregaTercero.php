@@ -1,5 +1,5 @@
 
-<body> <?php
+<body> <?
 
 
 require($libdir."filelib.php");
@@ -51,7 +51,7 @@ if($permisos[0] >= 2)
 			<script>
             	alert("Datos Guardados con exito");
             </script>
-			<?php
+			<?
 			print_form($frm["IDPedidoTercero"],"update","Actualizar $TitleMod","Realizar Cambios");
 
 			break;
@@ -102,9 +102,9 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
-			<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
@@ -131,7 +131,7 @@ if ($_GET["tab"]=="verificacion" && !empty($id)){
 
 <div id="DetallePedido">
 
-<form name="frm" id="frmPedidoTerceroActualiza" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){ ?> onsubmit="return EvaluaReg(this,Check)" <?php } ?>>
+<form name="frm" id="frmPedidoTerceroActualiza" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <? if($newmode!="delete"){ ?> onsubmit="return EvaluaReg(this,Check)" <?} ?>>
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=center width="70%" >
 	<tr>
@@ -201,7 +201,7 @@ if ($_GET["tab"]=="verificacion" && !empty($id)){
       </td>
 	  </tr>
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -834,9 +834,9 @@ _
               <input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
               <input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
               <input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-              <input type=hidden name=ID value="<?php echo $r->$Key ?>">
+              <input type=hidden name=ID value="<? echo $r->$Key ?>">
               <input type=hidden name=action value="actualiza_datos_verificacion">
-              <input type=submit name=submit value="<?php  echo "Guardar";  ?>" class=submit>
+              <input type=submit name=submit value="<?  echo "Guardar";  ?>" class=submit>
 
 
 
@@ -860,7 +860,7 @@ _
 
 
 
-<?php
+<?
 }// End function print_form()
 
 /*******************************************************************************************
@@ -898,11 +898,11 @@ _
 
 							?>
 
-<?php
+<?
 				if($rows > 0){
 		?>
 
-<?php
+<?
 	}// End if$rows
 	else
 		echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";

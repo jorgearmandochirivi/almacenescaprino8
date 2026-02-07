@@ -1,4 +1,4 @@
-<body> <?php
+<body> <?
 
 $TitleMod ="SugeridoPedido";
 
@@ -68,7 +68,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;
 				<img src=images/folderopen.gif border=0> 
 					<a href="./?mod=Sugerido">
 						Administrar Pedidos Sugeridos
@@ -81,7 +81,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 <br><br>
 	<table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
+			<td class="maintitle" bgcolor="#9daac6"><b><? echo $TitleMod ?></b></td>
 		</tr>
 		<tr>
 			<td>
@@ -137,7 +137,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 									</tr>
 									<tr>
 										<td class=row2 colspan="4" width="500" >
-											<?php verdetallesugerido($id);?>
+											<?verdetallesugerido($id);?>
 										</td>
 									</tr>
 									<tr>
@@ -155,7 +155,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 			</td>
 		</tr>
 	</table>	
-<?php
+<?
 }// Enf function print_form()				
 
 /*******************************************************************************************
@@ -210,11 +210,11 @@ function verdetallesugerido($id)
 		
 			<tr>
 				<td class=rowform align=center>
-				<?php
+				<?
 					echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_referencias->IDPuntoVentaReferencia));	
 				?>
 				</td>
-				<?php
+				<?
 					foreach($r_detalle as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -232,7 +232,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					Existencias
 				</td>
-				<?php
+				<?
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -247,7 +247,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					M&aacute;ximo
 				</td>
-				<?php
+				<?
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -262,7 +262,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					Minimo
 				</td>
-				<?php
+				<?
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -277,7 +277,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					Pedido
 				</td>
-				<?php
+				<?
 					foreach($r_codificacion as $talla)
 					{
 						
@@ -298,7 +298,7 @@ function verdetallesugerido($id)
 				<td class="rowform" align=center>
 					SUGERIDO
 				</td>
-				<?php
+				<?
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -313,7 +313,7 @@ function verdetallesugerido($id)
 					
 				</td>	
 			</tr>
-	<?php
+	<?
 	
 	$r_detalle = array();
 	$r_codificacion = array();
@@ -323,7 +323,7 @@ function verdetallesugerido($id)
 	}//end while( $r_referencias = db_fetch_object( $query_referencias ) )
 	?>
 
-<?php
+<?
 }// end function verdetallesugerido($id)
 
 
@@ -364,15 +364,15 @@ function verdetallesugerido($id)
 <br>
 <table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
 		</tr>
-<?php filtrar();?>	
+<?filtrar();?>	
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
+			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=16 nowrap>
-<?php
+<?
 	print $pages;
 ?>
 </td>
@@ -382,34 +382,34 @@ function verdetallesugerido($id)
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Fecha&nbsp;<?php if($_GET['order_by']=="Fecha")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Punto de Venta<?php if($_GET['order_by']=="IDPuntoVenta")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroSugerido&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">NumeroSugerido&nbsp;<?php if($_GET['order_by']=="NumeroSugerido")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Estado&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Estado&nbsp;<?php if($_GET['order_by']=="Estado")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Publicar&nbsp;<?php if($_GET['order_by']=="Publicar")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Fecha&nbsp;<% if($_GET['order_by']=="Fecha"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Punto de Venta<% if($_GET['order_by']=="IDPuntoVenta"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroSugerido&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">NumeroSugerido&nbsp;<% if($_GET['order_by']=="NumeroSugerido"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Estado&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Estado&nbsp;<% if($_GET['order_by']=="Estado"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Publicar&nbsp;<% if($_GET['order_by']=="Publicar"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 
-<?php while($r = db_fetch_object($result)){
+<? while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<?php echo "?mod=".$MOD."&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<? echo "?mod=".$MOD."&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap class=row1><?php echo $r->Fecha ?></td>
-						<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td> <td nowrap class=row1><?php echo $r->NumeroSugerido ?></td>
-						<td nowrap class=row1><?php echo get_field("EstadoPedido","Descripcion","IDEstadoPedido",$r->IDEstadoPedido )?></td>
-						<td nowrap class=row1><?php echo $r->Publicar ?></td>
+						<td nowrap class=row1><? echo $r->Fecha ?></td>
+						<td nowrap class=row1><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td> <td nowrap class=row1><? echo $r->NumeroSugerido ?></td>
+						<td nowrap class=row1><? echo get_field("EstadoPedido","Descripcion","IDEstadoPedido",$r->IDEstadoPedido )?></td>
+						<td nowrap class=row1><? echo $r->Publicar ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<?php } // END for
+<? } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=7 nowrap>
-	<?php
+	<?
 		print $pages;
 		?>
 </td>
@@ -418,7 +418,7 @@ function verdetallesugerido($id)
 		</tr>
 </table>	
 
-<?php
+<? 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -487,6 +487,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?php
+<?		
 	}//End function filtrar
 ?>

@@ -1,4 +1,4 @@
-<?php
+<%
 	include("../config.inc.php");
 	Encabezado();
 	$datos = Verifica_Sesion();
@@ -8,11 +8,11 @@
 	$Nivel =  $datos["Nivel"];
 
  	 	
-  ?>
+%>
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=ISO-8859-1">
-		<title><?php pv($app_title);;?> Ajustes</title>
+		<title><%pv($app_title);%> Ajustes</title>
 		<link href="../styles.css" rel="stylesheet" media="screen">
 	
 	<script>
@@ -47,7 +47,7 @@
 	<body bgcolor="#ffffff">
 	<table width="100%" cellpadding="3" cellspacing="0" border="0" class="content">
 	<tr>
-		<td class="navpic"  align="left"><strong><font ><?php pv($app_title);;?></font></strong></td>
+		<td class="navpic"  align="left"><strong><font ><%pv($app_title);%></font></strong></td>
 	</tr>
 	<tr>
 		<td class="col2"  align="left">
@@ -58,7 +58,7 @@
 	</table>
 		<form name=form method="Post" action="">
 			<div align="center">
-				<?php
+				<?
 				
 				$sql_referencias = "SELECT R.IDReferencia, R.Numero, PVR.IDPuntoVentaReferencia,P.ValorVenta as ValorVenta, P.Descuento
 										FROM Referencia R, PuntoVentaReferencia PVR, Precio P

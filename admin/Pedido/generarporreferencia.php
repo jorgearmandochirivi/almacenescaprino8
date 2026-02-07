@@ -1,5 +1,5 @@
 <body>
-	<?php
+	<?
 
 $TitleMod ="Generar Pedido Sugerido";
 
@@ -198,7 +198,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;
 				<img src=images/folderopen.gif border=0> 
 					<a href="./?mod=Sugerido">
 						Administrar Pedidos Sugeridos
@@ -211,7 +211,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 <br><br>
 	<table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
+			<td class="maintitle" bgcolor="#9daac6"><b><? echo $TitleMod ?></b></td>
 		</tr>
 		<tr>
 			<td>
@@ -264,7 +264,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 									</tr>
 									<tr>
 										<td class=row2 colspan="4">
-											<?php verdetallesugerido($id);?>
+											<?verdetallesugerido($id);?>
 										</td>
 									</tr>
 									<tr>
@@ -282,7 +282,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 			</td>
 		</tr>
 	</table>	
-<?php
+<?
 }// Enf function print_form()				
 
 /*******************************************************************************************
@@ -305,7 +305,7 @@ function verdetallesugerido($id)
 	$i=0;
 ?>
 	<table width=100% cellpadding=1 cellspacing=0 class=text bgcolor=#ffffff>
-<?php
+<?
 	while( $r_referencias = db_fetch_object( $query_referencias ) )
 	{
 		
@@ -337,11 +337,11 @@ function verdetallesugerido($id)
 		
 			<tr>
 				<td class=rowform align=center>
-				<?php
+				<?
 					echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_referencias->IDPuntoVentaReferencia));	
 				?>
 				</td>
-				<?php
+				<?
 					foreach($r_detalle as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -359,7 +359,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					Existencias
 				</td>
-				<?php
+				<?
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -374,7 +374,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					M&aacute;ximo
 				</td>
-				<?php
+				<?
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -389,7 +389,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					Minimo
 				</td>
-				<?php
+				<?
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -404,7 +404,7 @@ function verdetallesugerido($id)
 				<td class="rowform" align=center>
 					SUGERIDO
 				</td>
-				<?php
+				<?
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -419,7 +419,7 @@ function verdetallesugerido($id)
 					
 				</td>	
 			</tr>
-	<?php
+	<?
 	
 	$r_detalle = array();
 	$r_codificacion = array();
@@ -427,6 +427,6 @@ function verdetallesugerido($id)
 	}//end while( $r_referencias = db_fetch_object( $query_referencias ) )
 	?>
 	</table>
-<?php
+<?
 }// end function verdetallesugerido($id)
 ?>

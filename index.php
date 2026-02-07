@@ -473,7 +473,7 @@ include("admin/jscripts/tabs.php");
 									/******************* FIN PQR ******************/
 							} // End switch
 
-							mysql_close($dblink);
+							// mysql_close($dblink);
 							//  echo "seccion cerrada;"
 
 							?>

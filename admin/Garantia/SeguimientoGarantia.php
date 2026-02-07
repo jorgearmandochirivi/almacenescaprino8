@@ -945,12 +945,12 @@ function Comprobar(formulario)
 								<td class=navpic nowrap bgcolor=#DBEAF5>Numero</td>
 								<td class=navpic nowrap bgcolor=#DBEAF5>Tipo</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Cliente
-									    <?php if($_GET['order_by']=="IDCliente")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									    <?php if($_GET['order_by']=="IDCliente"){ ?><img src="images/<?php echo $img;?>" border=0><?php } ?></a> </td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Ref</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Talla</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Tipo</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Factura&nbsp;
-									    <?php if($_GET['order_by']=="FechaFacturaBono")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									    <?php if($_GET['order_by']=="FechaFacturaBono"){ ?><img src="images/<?php echo $img;?>" border=0><?php } ?></a> </td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Fecha Ingreso</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Almacen Compra</td>

@@ -1,4 +1,4 @@
-<body> <?php
+<body> <?
 
 
 $TitleMod ="Costo Referencia";
@@ -81,8 +81,8 @@ var Check = new Array('Descripcion','Publicar');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgColor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
 			<td></td>
 		</tr>
 </table>
@@ -91,7 +91,7 @@ var Check = new Array('Descripcion','Publicar');
 
 
 
-<?php
+<?
 }// End function print_form()
 
 /*******************************************************************************************
@@ -136,13 +136,13 @@ var Check = new Array('Descripcion','Publicar');
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgColor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
 		<td></td>
 	</tr>
 </table>
 
-<?php
+<?
 		if($rows > 0){
 ?>		
 
@@ -151,15 +151,15 @@ var Check = new Array('Descripcion','Publicar');
 <br>
 <table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgColor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
+			<td class=titlemedium bgColor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
 		</tr>
-<?php filtrar();?>	
+<?filtrar();?>	
 <tr>
 			<td class=titlemedium  bgColor=#9daac6>Resultado</td>
 		</tr>
 <tr>
 <td class=texto bgColor=#DBEAF5 colspan=12 nowrap>
-<?php
+<?
 	print $pages;
 ?>
 </td>
@@ -179,7 +179,7 @@ var Check = new Array('Descripcion','Publicar');
 						<td class=rowform nowrap bgColor=#DBEAF5>Costo inventario vendido</td>
 					</tr>
 
-<?php 
+<? 
 	$id_pto_venta_anterior=""; 
 	$id_proveedor_anterior="";
 	$id_tiporef_anterior=""; 
@@ -317,13 +317,13 @@ var Check = new Array('Descripcion','Publicar');
 ?>
   	
 <tr>
-  <td nowrap class=row1><?php echo $r->NombrePuntoVenta ?></td>
-  <td nowrap class=row1><?php echo $r->NombreProveedor ?></td>
-  <td nowrap class=row1><?php echo get_field("TipoReferencia","Descripcion","IDTipoReferencia",$r->IDTipoReferencia)?></td>
-  <td nowrap class=row1 align="center"><?php echo $r->Sexo ?></td>
-<td nowrap class=row1><?php echo get_field("Referencia","Numero","IDReferencia",$r->IDReferencia);  ?></td>
-<td nowrap class=row1 align="left"><?php echo $r->Fecha ?></td> 
-<td nowrap class=row1 align="right">$<?php  $costo=(int)$r->Costo;
+  <td nowrap class=row1><? echo $r->NombrePuntoVenta ?></td>
+  <td nowrap class=row1><? echo $r->NombreProveedor ?></td>
+  <td nowrap class=row1><?echo get_field("TipoReferencia","Descripcion","IDTipoReferencia",$r->IDTipoReferencia)?></td>
+  <td nowrap class=row1 align="center"><? echo $r->Sexo ?></td>
+<td nowrap class=row1><? echo get_field("Referencia","Numero","IDReferencia",$r->IDReferencia);  ?></td>
+<td nowrap class=row1 align="left"><? echo $r->Fecha ?></td> 
+<td nowrap class=row1 align="right">$<?  $costo=(int)$r->Costo;
 	$total_costo_tienda+=$costo;
 	
 	$total_costo_ref+=$costo;
@@ -362,7 +362,7 @@ var Check = new Array('Descripcion','Publicar');
     
 
    
-<?php 
+<? 
 $contador_costo++;
 endif; //if((int)$cantidad_referencia>0):	
 } // END for
@@ -420,7 +420,7 @@ endif; //if((int)$cantidad_referencia>0):
 
 <tr>
 <td class=texto bgColor=#DBEAF5 colspan=9 nowrap>
-	<?php
+	<?
 		print $pages;
 		?>
 </td>
@@ -429,7 +429,7 @@ endif; //if((int)$cantidad_referencia>0):
   </tr>
 </table>	
 
-<?php
+<? 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -448,7 +448,7 @@ else
 				Punto de venta: 
 				<select name="IDPuntoVenta" id="IDPuntoVenta" class="input">
                 	<option value="">[Seleccione]</option>
-				<?php 
+				<? 
 				$sql_punto_venta = "Select * From PuntoVenta Where 1 order by Nombre asc";
 				$result_punto_venta = db_query($sql_punto_venta);
 				while($row_punto_venta = db_fetch_array($result_punto_venta)): ?>
@@ -458,7 +458,7 @@ else
                 <br>Proveedor: 
 				<select name="IDProveedor" id="IDProveedor" class="input">
                 	<option value="">[Seleccione]</option>
-				<?php 
+				<? 
 				$sql_proveedor = "Select * From Proveedor Where 1 order by Nombre asc";
 				$result_proveedor = db_query($sql_proveedor);
 				while($row_proveedor = db_fetch_array($result_proveedor)): ?>
@@ -476,7 +476,7 @@ else
                 Tipologia: 
                <select name="IDTipoReferencia" id="IDTipoReferencia" class="input">
                 	<option value="">[Seleccione]</option>
-				<?php 
+				<? 
 				$sql_tiporef = "Select * From TipoReferencia Where 1 order by Descripcion asc";
 				$result_tiporef = db_query($sql_tiporef);
 				while($row_tiporef = db_fetch_array($result_tiporef)): ?>
@@ -505,6 +505,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?php
+<?		
 	}//End function filtrar
 ?>

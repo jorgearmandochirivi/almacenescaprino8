@@ -1,4 +1,4 @@
-<body> <?php
+<body> <?
 
 $TitleMod ="Opciones";
 
@@ -71,26 +71,26 @@ function list_r($puntoventa){
 		<td class=nav width="76%">&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/folderopen.gif" border="0" > 
 			<a href="./?mod=Fidelizacion">Administrar Preguntas</a> </td>
 		<td>
-		<td><a href="./?mod=<?php echo $MOD;?>&action=add&idPregunta=<?=$idPregunta ?>"><img src='images/botNreg.gif' border='0'></a></td>
+		<td><a href="./?mod=<%=$MOD%>&action=add&idPregunta=<?=$idPregunta ?>"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
 
 
 	
 <br>
-<?php
+<?
 	$TABsel = 2;
 	$IDFidPregunta = $idPregunta;
  	include("Pregunta/menutabFidPregunta.php");
 ?>	
 <table width=500 cellpadding=0 cellspacing=0 align=left class=bordertable>
 	<tr>
-        <td class=maintitle  bgcolor=#9daac6>Se encontraron <?php echo $rows;;?> opciones</td>
+        <td class=maintitle  bgcolor=#9daac6>Se encontraron <% echo $rows;%> opciones</td>
     </tr>
     <tr>
 		<td class="maintitle" bgcolor="#9daac6">
 
-<?php
+<?
 if($rows > 0){
 ?>	
 
@@ -100,30 +100,30 @@ if($rows > 0){
 
                 <tr>
                     <td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-                    <td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Opcion</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="Opcion")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+                    <td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Opcion</a><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;<% if($_GET['order_by']=="Opcion"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
                     <td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
                 </tr>
             
-            <?php 
+            <? 
                 while($r = db_fetch_object($qry))
                 {
             ?>
                 
                 <tr>
                     <td align=center valign=middle nowrap width=50 class=row2>
-                        &nbsp;<a href='<?php echo "?mod=$MOD&action=edit&idPregunta=" . $idPregunta . "&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+                        &nbsp;<a href='<? echo "?mod=$MOD&action=edit&idPregunta=" . $idPregunta . "&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
                     </td>
-                    <td nowrap class=row1><?php echo substr( $r->Opcion, 0, 100 ) ?></td>
+                    <td nowrap class=row1><? echo substr( $r->Opcion, 0, 100 ) ?></td>
                     <td align=center valign=middle nowrap width=60 class=row2>
-                        &nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&idPregunta=" . $idPregunta . "&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+                        &nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&idPregunta=" . $idPregunta . "&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
                     </td>
                 </tr>
-            <?php
+            <?
                 } // END for
             ?>
             </table>
 
-<?php
+<?
 
 }// End if$rows
 else
@@ -136,7 +136,7 @@ else
 	</tr>
 </table>	
 
-<?php
+<?
 }// Enf function list()		
 
 
@@ -159,14 +159,14 @@ var Check = new Array('Opcion');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
-			<td><a href="./?mod=<?php echo $MOD;?>&action=add&idPregunta=<?=$idPregunta?>"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+			<td><a href="./?mod=<%=$MOD%>&action=add&idPregunta=<?=$idPregunta?>"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
 <br>
-<?php
+<?
 	$TABsel = 2;
 	$IDFidPregunta = $idPregunta;
  	include("Pregunta/menutabFidPregunta.php");
@@ -174,9 +174,9 @@ var Check = new Array('Opcion');
 
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align="left" >
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?> onSubmit="return EvaluaReg(this,Check)" <?php }?>>
+<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?> onSubmit="return EvaluaReg(this,Check)" <?}?>>
     <tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -187,12 +187,12 @@ var Check = new Array('Opcion');
 						<tr>
 			<td colspan=2 align=center class=row2>
             	<input type=hidden name=IDFidOpcion value="<?=$r->IDFidOpcion ?>">
-                <input type=hidden name=ID value="<?php echo $r->$Key ?>">
+                <input type=hidden name=ID value="<? echo $r->$Key ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
 				<input type=hidden name=idPregunta value=<?=$idPregunta?>>
 				<input type=hidden name=idnot value=<?=$idPregunta ?>>
 				<input type=hidden name=IDFidPregunta value=<?=$idPregunta?>>
-				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
+				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
 			</td>
 				</tr>
 			</table>
@@ -201,7 +201,7 @@ var Check = new Array('Opcion');
 </form>    
 </table>
 
-<?php
+<?
 }// End function print_form()
 
 

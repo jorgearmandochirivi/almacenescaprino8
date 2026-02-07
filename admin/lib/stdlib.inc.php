@@ -132,9 +132,8 @@ function makeurl_string()
   {
     global $REQUEST_METHOD, $HTTP_GET_VARS, $HTTP_POST_VARS;
     $cgi = $REQUEST_METHOD == 'GET' ? $HTTP_GET_VARS : $HTTP_POST_VARS;
-    reset ($cgi);
 
-    while (list($key, $value) = each($cgi)) {
+    foreach ($cgi as $key => $value) {
       if ($key != "row"  && !empty($value) && $key != "Submit")
         $query_string .= "&" . $key . "=" . $value;
     }
@@ -174,13 +173,13 @@ function formradiogroup($options,$value,$name) {
 
 	$radiogroup = "";
 
-	while(list($key,$val) = each($options)) {
+	foreach($options as $key => $val) {
 		$radiogroup .= "<input type=\"radio\" name=\"".$name."\" value=\"".$val."\"";
 		if (!empty($value)) {
 			$radiogroup .= (($val==$value) ? " checked" : "");
 		}
 		$radiogroup .= "> ".$key;
-	}  // end while
+	}  // end foreach
 	return $radiogroup;
 }
 
@@ -202,13 +201,13 @@ function formcheckgroup($options,$selection,$name) {
 
 	$checkgroup = "";
 	//print_r($selection);
-	while(list($key,$val) = each($options)) {
+	foreach($options as $key => $val) {
 		$checkgroup .= "<input type=\"checkbox\" name=\"".$name."\" value=\"".$val."\"";
 		if (!empty($selection)) {
 			$checkgroup .= (inarray($val,$selection) ? " checked" : "");
 		}
 		$checkgroup .= "> ".$key."<br>";
-	}  // end while
+	}  // end foreach
 	return $checkgroup;
 }
 
@@ -269,13 +268,13 @@ function formpopuparray($options,$selection,$name) {
 
 	$checkgroup = "<select name='$name' class=inputSelect><option value=''>[Seleccione]</option>";
 
-	while(list($key,$val) = each($options)) {
+	foreach($options as $key => $val) {
 	$checkgroup .= "<option value=\"".$key."\"";
 	if (!empty($selection) && $selection == $key)
 	$checkgroup .= " selected";
 
 	$checkgroup .= "> ".$val."</option>";
-	} // end while
+	} // end foreach
 
 	$checkgroup .= "</select>";
 
@@ -404,18 +403,18 @@ function hora(){
 
 function vars_LOG($frm){
 	GLOBAL $Nombre_Usuario,$Table,$Key;
-	$sql= "SELECT UsuarioTrCr,FechaTrCr,UsuarioTrEd,FechaTrEd FROM $Table WHERE $Key = '$_POST[ID]'";
+	$sql= "SELECT UsuarioTrCr,FechaTrCr,UsuarioTrEd,FechaTrEd FROM $Table WHERE $Key = '{$_POST['ID']}'";
 	$qry=db_query($sql);
 	$r = db_fetch_object($qry);
 
 	$now=fecha()." ".hora();
-	if($_POST[action]=="insert"){
+	if(isset($_POST['action']) && $_POST['action']=="insert"){
 		$frm['UsuarioTrCr']=$Nombre_Usuario;
 		$frm['FechaTrCr']=$now;
 		$frm['UsuarioTrEd']=$r->UsuarioTrEd;
 		$frm['FechaTrEd']=$r->FechaTrEd;
 	}
-	if($_POST[action]=="update"){
+	if(isset($_POST['action']) && $_POST['action']=="update"){
 		$frm['UsuarioTrEd']=$Nombre_Usuario;
 		$frm['FechaTrEd']=$now;
 		$frm['UsuarioTrCr']=$r->UsuarioTrCr;

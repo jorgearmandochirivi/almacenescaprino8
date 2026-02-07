@@ -399,11 +399,11 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Numero&nbsp;
-						    <?php if($_GET['order_by']=="Nombre")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+					    <?php if($_GET['order_by']=="Nombre"){ ?><img src="images/<?php echo $img;?>" border=0><?php } ?></a> </td>
 						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Fecha</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
-						    <?php if($_GET['order_by']=="Descripcion")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+					    <?php if($_GET['order_by']=="Descripcion"){ ?><img src="images/<?php echo $img;?>" border=0><?php } ?></a></td>
 						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Tipo&nbsp;
-						    <?php if($_GET['order_by']=="Publicar")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+					    <?php if($_GET['order_by']=="Publicar"){ ?><img src="images/<?php echo $img;?>" border=0><?php } ?></a> </td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Fuente</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Cliente</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Motivo</td>

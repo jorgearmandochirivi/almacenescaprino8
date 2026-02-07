@@ -1,4 +1,4 @@
-<body> <?php
+<body> <?
 
 $TitleMod ="Ajustes de Inventario";
 
@@ -177,7 +177,7 @@ else
 	<br>
 	<table class="bordertable" width="600" cellspacing="1" border="0" align="center">
 		<tr>
-			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
+			<td class="maintitle" bgcolor="#9daac6"><b><? echo $TitleMod ?></b></td>
 		</tr>
 	</table>
 
@@ -185,7 +185,7 @@ else
 	<table class="forumline" width="600" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
-		<?php
+		<?
 			filtrar();
 		?>
 	</td>
@@ -194,7 +194,7 @@ else
 	<td>
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" >
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="bordertable" >
-			<tr><?php
+			<tr><?
 			if( empty( $frm[IDAjuste] ) )
 				?>
 				<td class="row1" nowrap>Almacen</td>
@@ -203,7 +203,7 @@ else
 
 
 				<tr>
-					<?php
+					<?
 					if( empty( $frm[IDAjuste] ) )
 						$frm[IDAjuste] = get_maxID( "Ajuste WHERE IDPuntoVenta = '$IDPuntoVenta'","IDAjuste" );
 					?>
@@ -223,11 +223,11 @@ else
 					</table>
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 					<tr>
-						<td class=navpic align="center" nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=".$MOD."&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; ?>' style="text-decoration: none;">REFERENCIA</a><a style="text-decoration: none;" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="Referencia.Numero"){?><img src="images/<?php echo $img;?>" border=0><?php }?></a></td>
+						<td class=navpic align="center" nowrap bgcolor=#DBEAF5><a href='<? echo "?mod=".$MOD."&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; ?>' style="text-decoration: none;">REFERENCIA</a><a style="text-decoration: none;" href='<? echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<? if($_GET['order_by']=="Referencia.Numero"){?><img src="images/<%=$img%>" border=0><?}?></a></td>
 							<td class=navpic nowrap bgcolor=#DBEAF5 align="center" colspan = "<?=$colspan+1?>">TALLAS</td>
 						</tr>
 
-				<?php
+				<?
 				foreach( $array_referencias as $key => $valor ){
 
 					$class = repetition()?"row1list":"row2list";
@@ -237,12 +237,12 @@ else
 
 					<tr>
 						<td nowrap class="<?=$class?>"></td>
-						<?php
+						<?
 						foreach( $array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos )
 						{
 						?>
-						<td nowrap class="<?=$class?>"><b><?php echo get_field("Talla","Descripcion","IDTalla",$datos[IDTalla]); ?></b></td>
-						<?php
+						<td nowrap class="<?=$class?>"><b><? echo get_field("Talla","Descripcion","IDTalla",$datos[IDTalla]); ?></b></td>
+						<?
 						}
 						//anadir las columnas que falten (DISENO)
 						for( $i = 0; $i<$columnasmas; $i++ )
@@ -250,7 +250,7 @@ else
 						?>
 							<td nowrap class="<?=$class?>">
 							</td>
-						<?php
+						<?
 						}//end for
 						?>
 						<td class="<?=$class?>">
@@ -258,31 +258,31 @@ else
 					</tr>
 
 					<tr>
-						<td nowrap class="<?=$class?>"><?php echo $LaReferencia = get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$valor[IDPuntoVentaReferencia]))?></td>
-						<?php
+						<td nowrap class="<?=$class?>"><? echo $LaReferencia = get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$valor[IDPuntoVentaReferencia]))?></td>
+						<?
 						$TIngreso = 0;
 						foreach( $array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos )
 						{
 						?>
 							<td nowrap class="<?=$class?>">
-								<?php
+								<?
 								echo $datos[Existencias]."<br>";
 								?>
 								<input type="hidden" name="Cantidad[<?=$datos[IDPendientes]?>]" value="<?=$datos[CantidadPendiente]?>">
 								<input type="hidden" name="IDCodificacionEspecifica[<?=$datos[IDCodificacionEspecifica]?>]" value="<?=$datos[IDCodificacionEspecifica]?>">
-								<?php
+								<?
 									$pend = $datos[IDCodificacionEspecifica];
 									$Ingr = $_POST[Ingreso];
 									$TIngreso += $Ingr[$pend];
 									$TPares += $Ingr[$pend];
 								?>
-								<input type="text" size="5" name="Ingreso[<?=$datos[IDCodificacionEspecifica]?>]"  value="<?php echo $Ingr[$pend] ?>">
+								<input type="text" size="5" name="Ingreso[<?=$datos[IDCodificacionEspecifica]?>]"  value="<? echo $Ingr[$pend] ?>">
 								<input type="hidden" name="IDCodificacionEspecifica[<?=$datos[IDCodificacionEspecifica]?>]" value="<?=$datos[IDCodificacionEspecifica]?>">
 								<input type="hidden" name="Referencia[<?=$datos[IDCodificacionEspecifica]?>]" value="<?=$LaReferencia?>">
 								<input type="hidden" name="Tallas[<?=$datos[IDCodificacionEspecifica]?>]" value="<?=$datos[IDTalla]?>">
 							</td>
 
-						<?php
+						<?
 						}
 						//anadir las columnas que falten (DISENO)
 						for( $i = 0; $i<$columnasmas; $i++ )
@@ -290,14 +290,14 @@ else
 						?>
 							<td nowrap class="<?=$class?>">
 							</td>
-						<?php
+						<?
 						}//end for
 						?>
 						<td class="<?=$class?>">
 							<input type="text" readonly size="5" name="TIngreso" value="<?=$TIngreso?>" value="">
 						</td>
 					</tr>
-						<?php } // END for
+						<? } // END for
 						if( $TPares > 0 )
 						{
 				?>
@@ -306,18 +306,18 @@ else
 							Total Pares a ingresar = <?=$TPares?>
 							</td>
 						</tr>
-						<?php
+						<?
 						}
 						?>
 						<tr>
 							<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="center">
-							<?php
+							<?
 								print $pages;
 							?>
 							<input type="hidden" name="action" value="<?=$newmode?>">
 							<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
 							<input type="hidden" name="Referencias" value="<?=$frm['Referencias']?>">
-							<?php
+							<%
 							if( $newmode == "entrada" )
 							{
 								$caption = "Realizar Ajuste";
@@ -326,8 +326,8 @@ else
 							{
 								$caption = "Comfirmar Ajuste";
 							}
-							?>
-							<input type="submit" class="button" name="enviar" value="<?php echo $caption;?>">
+							%>
+							<input type="submit" class="button" name="enviar" value="<%=$caption%>">
 						</td>
 							<td></td>
 
@@ -338,7 +338,7 @@ else
 			</td>
 		</tr>
 	</table>
-	<?php
+	<?
 }// End if$rows
 
 }// Enf function list()
@@ -435,7 +435,7 @@ else
 		</tr>
         <tr>
         	<td>
-	<?php
+	<?
 
 	filtrar();
 
@@ -444,7 +444,7 @@ else
       	</tr>
   	</table>
     <br><br><br>
-	<?php
+	<?
 
 	if( empty( $IDPuntoVenta ) )
 	{
@@ -457,19 +457,19 @@ else
 		<tr>
 		<td width="117">Puntos de Venta	</td>
 		<td><select name="IDPuntoVenta" onChange="document.frm.submit();" >
-				<option value="">Seleccione Un Punto de Venta</option><?php
+				<option value="">Seleccione Un Punto de Venta</option><%
 			$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
 			while($punto = db_fetch_object($qry_punto)){
 				 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 			}
-		?>
+		%>
 			</select>
 			<input type=hidden name=mod value=<?=$MOD?>
 			</td>
 	</tr>
 		</form>
 	</table>
-	<?php
+	<?
 
 		verajustes( $IDPuntoVentaBuscar );
 
@@ -482,12 +482,12 @@ else
 		<tr>
 		<td width="117">Puntos de Venta	</td>
 		<td><select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-				<option value="">Seleccione Un Punto de Venta</option><?php
+				<option value="">Seleccione Un Punto de Venta</option><%
 			$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
 			while($punto = db_fetch_object($qry_punto)){
 				 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 			}
-		?>
+		%>
 			</select>
 			</td>
 	</tr>
@@ -495,13 +495,13 @@ else
 	<br><br>
 	<table class="bordertable" width="600" cellspacing="1" border="0" align="center">
 		<tr>
-			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
+			<td class="maintitle" bgcolor="#9daac6"><b><? echo $TitleMod ?></b></td>
 		</tr>
 		<td>
 			<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="setSelectOptions(document.frm.Referencias);return EvaluaReg(this,Check)">
 				<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto  >
 
-					<tr><?php
+					<tr><?
 					if( empty( $frm[IDAjuste] ) )
 						$frm[IDAjuste] = get_maxID( "Ajuste WHERE IDPuntoVenta = '$IDPuntoVenta'","IDAjuste" );
 						?>
@@ -556,7 +556,7 @@ else
 		</td>
 		</tr>
 	</table>
-<?php
+<?
 	}//end else
 }// Enf function previoentrada()
 
@@ -606,21 +606,21 @@ else
 			$order="ASC";
 		}
 
-							?><?php
+							?><?
 	if($rows > 0){
 ?><br>
 	<br>
 	<br>
 	<table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
 		</tr>
 	<tr>
-			<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
+			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
 		</tr>
 	<tr>
 	<td class=texto bgcolor=#DBEAF5 colspan=11 nowrap>
-	<?php
+	<?
 		print $pages;
 	?>
 	</td>
@@ -636,7 +636,7 @@ else
 						<td class=rowform nowrap bgcolor=#DBEAF5>Usuario</td>
 					</tr>
 
-				<?php
+				<?
 				while($r = db_fetch_object($result)){
 				?>
 
@@ -646,19 +646,19 @@ else
 							<img src='images/edit.gif' border='0'>
 							</a>
 						</a>
-						<td nowrap class=row1><?php echo $r->NumeroAjuste?></td>
+						<td nowrap class=row1><? echo $r->NumeroAjuste?></td>
 						<td nowrap class=row1><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta)?></td>
 						<td nowrap class=row1>
-							<?php //echo $r->FechaAjuste
+							<? //echo $r->FechaAjuste
 									echo $r->FechaTrCr;
 							?></td>
-						<td nowrap class=row1><?php echo $r->UsuarioTrCr?></td>
+						<td nowrap class=row1><? echo $r->UsuarioTrCr?></td>
 					</tr>
-				<?php } // END for
+				<? } // END for
 				?>
 					<tr>
 						<td class=texto bgcolor=#DBEAF5 colspan=6 nowrap>
-							<?php
+							<?
 								print $pages;
 							?>
 						</td>
@@ -667,7 +667,7 @@ else
 			</td>
 		</tr>
 	</table>
-	<?php
+	<?
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -687,12 +687,12 @@ else
 		<tr>
 			<td class="rowform" align="center" colspan=8>
 				<select name="IDPuntoVentaBuscar"  >
-                    <option value="">Seleccione Un Punto de Venta</option><?php
+                    <option value="">Seleccione Un Punto de Venta</option><%
                 $qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
                 while($punto = db_fetch_object($qry_punto)){
                      echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
                 }
-            ?>
+            %>
                 </select>
 
 
@@ -704,6 +704,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?php
+<?
 	}//End function filtrar
 ?>

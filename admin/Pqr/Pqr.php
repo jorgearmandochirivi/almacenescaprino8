@@ -1,5 +1,5 @@
 <body> 
-<?php
+<?
 
 //$resp="Señor Daniel, Reciba un cordial Saludo. Analizando su caso le comentamos que los Productos caprino cuentan con un tiempo de garantía de 90 días hábiles para cualquier inconveniente por problemas de fabricación que presente el producto. Su compra es realizada el 22 de septiembre del año pasado donde la garantía a esta fecha ya expiro, para este tipo de situaciones a nuestros clientes les ofrecemos un servicio de remonta que cuesta $80.000 dependiendo del estado del producto. Como bien Usted envío el zapato para análisis,pero en producción como le Informo la Administradora del punto de venta, nos indican que por el uso del zapato no se comprometen a repararlo por temor a que el zapato cambie de talla y que el cuero no resista nuevamente ser montado en la horma. Por tal razón nos es imposible prestarle el servicio para esta ocasión. Cordialmente, Diana Carolina Restrepo";
 //envia_respuesta_cliente(40,$resp);
@@ -17,7 +17,7 @@ require($libdir."filelib.php");
 
 ?>
 
- <?php
+ <?
 
 $permisos = get_permiso($ID_Usuario,$m,$Table);
 if($permisos[0] >= 2)
@@ -185,17 +185,17 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
-			<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
-<form name="frm" action="<?=$PHP_SELF?>" method="post"  enctype="multipart/form-data" <?php if($newmode!="delete"){?> onSubmit="return EvaluaReg(this,Check)" <?php }?>>
+<form name="frm" action="<?=$PHP_SELF?>" method="post"  enctype="multipart/form-data" <?if($newmode!="delete"){?> onSubmit="return EvaluaReg(this,Check)" <?}?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -230,13 +230,13 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
           </tr>
           <tr class=row2>
             <td>Motivo</td>
-            <td colspan="3"><?php echo formpopup("MotivoPqr","Nombre","Nombre","IDMotivoPqr",$r->IDMotivoPqr,"input\" id=\"Motivo Pqr"); ?></td>
+            <td colspan="3"><? echo formpopup("MotivoPqr","Nombre","Nombre","IDMotivoPqr",$r->IDMotivoPqr,"input\" id=\"Motivo Pqr"); ?></td>
           </tr>
           <tr class=row2>
             <td>Tipo</td>
-            <td><?php echo formpopup("TipoPqr","Nombre","Nombre","IDTipoPqr",$r->IDTipoPqr,"input\" id=\"Tipo Pqr"); ?></td>
+            <td><? echo formpopup("TipoPqr","Nombre","Nombre","IDTipoPqr",$r->IDTipoPqr,"input\" id=\"Tipo Pqr"); ?></td>
             <td>Fuente</td>
-            <td><?php echo formpopup("FuentePqr","Nombre","Nombre","IDFuentePqr",$r->IDFuentePqr,"input\" id=\"Fuente Pqr"); ?></td>
+            <td><? echo formpopup("FuentePqr","Nombre","Nombre","IDFuentePqr",$r->IDFuentePqr,"input\" id=\"Fuente Pqr"); ?></td>
           </tr>
           <tr class=row2>
 						  <td>Referencia</td>
@@ -244,7 +244,7 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 						  <td>Archivo</td>
 						  <td><?php if (!empty($r->Archivo1)): ?>
 						    <a target="_blank" href="<?php echo "../files/pqr/". $r->Archivo1; ?>" ><?php echo $r->Archivo1; ?></a>
-						    <!--<a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto1&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>-->
+						    <!--<a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto1&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>-->
 						    <input type="hidden" name="Archivo1" id="Archivo1" class=input value="<?php echo $r->Archivo1; ?>">
 						    <?php else: ?>
 						    <input type="file" name="Archivo1" id="Archivo1" class=input>
@@ -252,7 +252,7 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 		  </tr>
           <tr class=row2>
             <td>Area</td>
-            <td><?php echo formpopup("AreaPqr","Nombre","Nombre","IDAreaPqr",$r->IDAreaPqr,"input\" id=\"Area Pqr"); ?></td>
+            <td><? echo formpopup("AreaPqr","Nombre","Nombre","IDAreaPqr",$r->IDAreaPqr,"input\" id=\"Area Pqr"); ?></td>
             <td>Creado por</td>
             <td><?php echo  $datos_empleado = get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado). " " . get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado); 
 						$id_pto_vta = get_field("Empleado","IDPuntoVenta","IDEmpleado",$r->IDEmpleado);
@@ -261,15 +261,15 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
           </tr>
           <tr class=row2>
             <td>Estado</td>
-            <td><?php echo formpopup("PqrEstado","Nombre","Nombre","IDPqrEstado",$r->IDPqrEstado,"input\" id=\"Estado Pqr"); ?></td>
+            <td><? echo formpopup("PqrEstado","Nombre","Nombre","IDPqrEstado",$r->IDPqrEstado,"input\" id=\"Estado Pqr"); ?></td>
             <td>Solucion Final</td>
-            <td><?php echo formpopup("PqrSolucion","Nombre","Nombre","IDPqrSolucion",$r->IDPqrSolucion,"input\" id=\"IDPqrSolucion"); ?></td>
+            <td><? echo formpopup("PqrSolucion","Nombre","Nombre","IDPqrSolucion",$r->IDPqrSolucion,"input\" id=\"IDPqrSolucion"); ?></td>
           </tr>
           <tr class=row2>
             <td colspan="4">Descripcion</td>
           </tr>
           <tr class=row2>
-            <td colspan="4"><textarea name="Descripcion" class="" title="Descripcion" id="Descripcion" cols="80" rows="8" <?php if($newmode=="update") echo "readonly"; ?> ><?php echo $r->Descripcion; ?></textarea></td>
+            <td colspan="4"><textarea name="Descripcion" class="" title="Descripcion" id="Descripcion" cols="80" rows="8" <?php if($newmode=="update") echo "readonly"; ?> ><? echo $r->Descripcion; ?></textarea></td>
           </tr>
             
             <?php if($newmode=="update"): ?>
@@ -277,7 +277,7 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 						  <td colspan="4">Agregar Respuesta</td>
 		  </tr>
 						<tr class=row2>
-						  <td colspan="4"><textarea name="Cuerpo" class="" title="Cuerpo" id="Cuerpo" cols="80" rows="8"><?php echo $r->Cuerpo; ?></textarea></td>
+						  <td colspan="4"><textarea name="Cuerpo" class="" title="Cuerpo" id="Cuerpo" cols="80" rows="8"><? echo $r->Cuerpo; ?></textarea></td>
 		  </tr>
 						<tr class=row2>
 						  <td colspan="4">
@@ -334,10 +334,10 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
                 <input type=hidden name=IDMotivoPqrAnt value="<?=$r->IDMotivoPqr ?>">    
                 <input type=hidden name=IDAreaPqrAnt value="<?=$r->IDAreaPqr ?>">                
-				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
-                <input type=hidden name=IDEmpleado value="<?php echo $ID_Usuario ?>">
+				<input type=hidden name=ID value="<? echo $r->$Key ?>">
+                <input type=hidden name=IDEmpleado value="<? echo $ID_Usuario ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
+				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
 			</td>
 				</tr>
 			</table>
@@ -345,7 +345,7 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 	</tr>
 </table>
 </form>
-<?php
+<?
 }// End function print_form()
 
 /*******************************************************************************************
@@ -383,22 +383,22 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
-		<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?php
+<?
 		if($rows > 0){
 ?>		
 <br>
 <table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
+		<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
 	</tr>
-	<?php filtrar();?>	
+	<?filtrar();?>	
 	<tr>
-		<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
+		<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
 	</tr>
     <tr>
 		<td class=titlemedium  bgcolor=#9daac6>
@@ -408,7 +408,7 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
     
 	<tr>
 		<td class=texto bgcolor=#DBEAF5 colspan= nowrap>
-		<?php
+		<?
 			print $pages;
 		?>
 		</td>
@@ -417,12 +417,12 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Numero&nbsp;
-						    <?php if($_GET['order_by']=="Nombre")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Fecha</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
-						    <?php if($_GET['order_by']=="Descripcion")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Tipo&nbsp;
-						    <?php if($_GET['order_by']=="Publicar")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Numero&nbsp;
+						    <% if($_GET['order_by']=="Nombre"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Fecha</a><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;
+						    <% if($_GET['order_by']=="Descripcion"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Tipo&nbsp;
+						    <% if($_GET['order_by']=="Publicar"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Fuente</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Cliente</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Motivo</td>
@@ -432,20 +432,20 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 
-<?php while($r = db_fetch_object($result)){
+<? while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap class=row1><?php echo $r->Numero ?></td>
-						<td nowrap class=row1><?php echo $r->Fecha ?></td>
-						<td nowrap class=row1><?php echo get_field("TipoPqr","Nombre","IDTipoPqr",$r->IDTipoPqr); ?></td>
-						<td nowrap class=row1><?php echo get_field("FuentePqr","Nombre","IDFuentePqr",$r->IDFuentePqr); ?></td>
-						<td nowrap class=row1><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente) . " ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente); ?></td>
-						<td nowrap class=row1><?php echo substr(get_field("MotivoPqr","Nombre","IDMotivoPqr",$r->IDMotivoPqr),0,20); ?></td>
-						<td nowrap class=row1><?php echo get_field("PqrEstado","Nombre","IDPqrEstado",$r->IDPqrEstado); ?></td>
+						<td nowrap class=row1><? echo $r->Numero ?></td>
+						<td nowrap class=row1><? echo $r->Fecha ?></td>
+						<td nowrap class=row1><? echo get_field("TipoPqr","Nombre","IDTipoPqr",$r->IDTipoPqr); ?></td>
+						<td nowrap class=row1><? echo get_field("FuentePqr","Nombre","IDFuentePqr",$r->IDFuentePqr); ?></td>
+						<td nowrap class=row1><? echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente) . " ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente); ?></td>
+						<td nowrap class=row1><? echo substr(get_field("MotivoPqr","Nombre","IDMotivoPqr",$r->IDMotivoPqr),0,20); ?></td>
+						<td nowrap class=row1><? echo get_field("PqrEstado","Nombre","IDPqrEstado",$r->IDPqrEstado); ?></td>
 						<td nowrap class=row1><?php echo  $datos_empleado = get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado). " " . get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado); 
 						$id_pto_vta = get_field("Empleado","IDPuntoVenta","IDEmpleado",$r->IDEmpleado);
 				  echo " - " . $id_pto_vta = get_field("PuntoVenta","Nombre","IDPuntoVenta",$id_pto_vta);
@@ -466,7 +466,7 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 										if ($dias <0 && (int)$total_respuesta<=0){ 
 											//echo "Vencida hace " . abs($dias) . " dias";	?>	
 											<img src="../admin/images/campanaalerta.jpg" width="15" height="15" > 
-                                            <?php
+                                            <?
 											echo "<br><span style='color: red;'> Vencido " . abs($dias) . " dias";
 										}		
 									
@@ -475,14 +475,14 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 									?>
                         </td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<?php } // END for
+<? } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=11 nowrap>
-	<?php
+	<?
 		print $pages;
 		?>
 </td>
@@ -491,7 +491,7 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 </tr>
 </table>	
 
-<?php
+<? 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -512,15 +512,15 @@ else
 					      <td>Numero</td>
 					      <td><input type="text" size="20" name="Numero" id="Numero" class="post"></td>
 					      <td>Tipo</td>
-					      <td><?php echo formpopup("TipoPqr","Nombre","Nombre","IDTipoPqr",$r->IDTipoPqr,"input\" id=\"Tipo Pqr"); ?></td>
+					      <td><? echo formpopup("TipoPqr","Nombre","Nombre","IDTipoPqr",$r->IDTipoPqr,"input\" id=\"Tipo Pqr"); ?></td>
 					      <td>Fuente</td>
-					      <td><?php echo formpopup("FuentePqr","Nombre","Nombre","IDFuentePqr",$r->IDFuentePqr,"input\" id=\"Fuente Pqr"); ?></td>
+					      <td><? echo formpopup("FuentePqr","Nombre","Nombre","IDFuentePqr",$r->IDFuentePqr,"input\" id=\"Fuente Pqr"); ?></td>
 					      <td>Estado</td>
-					      <td><?php echo formpopup("PqrEstado","Nombre","Nombre","IDPqrEstado",$r->IDPqrEstado,"input\" id=\"Estado Pqr"); ?></td>
+					      <td><? echo formpopup("PqrEstado","Nombre","Nombre","IDPqrEstado",$r->IDPqrEstado,"input\" id=\"Estado Pqr"); ?></td>
 				        </tr>
 					    <tr>
 					      <td>Motivo</td>
-					      <td colspan="3"><?php echo formpopup("MotivoPqr","Nombre","Nombre","IDMotivoPqr",$r->IDMotivoPqr,"input\" id=\"Motivo Pqr"); ?></td>
+					      <td colspan="3"><? echo formpopup("MotivoPqr","Nombre","Nombre","IDMotivoPqr",$r->IDMotivoPqr,"input\" id=\"Motivo Pqr"); ?></td>
 					      <td>Documento Cliente</td>
 					      <td><input type="text" size="20" name="NumeroDocumento" id="NumeroDocumento" class="post"></td>
 					      <td>Nombre Cliente</td>
@@ -538,6 +538,6 @@ else
 				</td>
 			</tr>
 	</form>
-<?php
+<?		
 	}//End function filtrar
 ?>

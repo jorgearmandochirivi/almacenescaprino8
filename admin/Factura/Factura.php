@@ -1,5 +1,4 @@
-
-<body> <?php
+<body> <?
 
 $TitleMod ="Factura";
 
@@ -9,11 +8,26 @@ $Key = "IDFactura";
 $MOD = "Factura";
 $m = "Factura";
 
-		$permisos = get_permiso($ID_Usuario,$m,$Table);
+
+$permisos = get_permiso($ID_Usuario,$m,$Table);
 if($permisos[0] >= 2)
 {
 		switch (nvl($action)) {
-			case "update":
+			case "add" :
+				print_form("","insert","Nuevo Registro $TitleMod","Agregar Registro");
+			break;
+
+			case "insert" :
+				$frm= vars_LOG($_POST);
+				$id = insert($frm);
+				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
+			break;
+			case "edit":
+				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
+			break ;
+			case "update" :
+				$frm= vars_LOG($_POST);
+
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
@@ -23,45 +37,67 @@ if($permisos[0] >= 2)
 					$fechapago = "FechaPago".$key;
 					if( !empty( $_POST[$fechapago] ) )
 					{
-						echo "Atencion:: Por este modulo no es posible actualizar las cuotas, por favor dirijase a Facturas - > Pagos de creditos";
-						exit;
-
-						//inserto los punto spor la cuota
-						//consulto los puntos
-						$sql_puntos_anterior="Select * from PuntosClienteFidelizacion Where IDCliente='".$_POST[IDCliente]."' and IDPuntoVenta = '".$_POST[IDPuntoVenta]."' and IDFactura = '".$_POST[IDFactura]."' limit 1";
-						$qry_puntos_anterior = db_query( $sql_puntos_anterior );
-						while($row_punto=db_fetch_array($qry_puntos_anterior)){
-							echo $sql_puntos = " INSERT INTO PuntosClienteFidelizacion (IDCliente, IDPuntoVenta, IDFactura,IDReglaPunto,NombreRegla, DescripcionRegla, Puntos, FechaVencimiento,ObservacionesRegla, FechaTrCr) VALUES ('" . $_POST[IDCliente] . "','" . $_POST[IDPuntoVenta] . "','" . $_POST[IDFactura] . "', '".$row_punto[IDReglaPunto]."',  '".$row_punto[NombreRegla]."','".$row_punto[DescripcionRegla]."','" . (int)$row_punto[Puntos] . "','" . $row_punto[FechaVencimiento] . "', '".$row_punto[ObservacionesRegla]." Cuota"."',  NOW() ) ";
-							$qry_puntos = db_query( $sql_puntos );
-						}
-
-						//$sql_update = " UPDATE CreditoCuota SET FechaPago = '$_POST[$fechapago]' WHERE IDFactura = '$_POST[IDFactura]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDCuota = '$key' ";
-						//$qry_update = db_query( $sql_update );
-
+						$sql_update = " UPDATE CreditoCuota SET FechaPago = '$_POST[$fechapago]', UsuarioTrEd = 'Admin " . $ID_Usuario . ",Punto: " . $frm[idpunto]. "' AND FechaTrEd = CURDATE() WHERE IDFactura = '$_POST[IDFactura]' AND IDPuntoVenta = '$frm[idpunto]' AND IDCuota = '$key' ";
+						$qry_update = db_query( $sql_update );
 					}//end if
 				}//end for
-
-				//$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '$_POST[IDFactura]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' AND FechaPago = '0000-00-00 00:00:00'  ";
-				//$qry_cuotas = db_query( $sql_cuotas );
-				//if( db_num_rows( $qry_cuotas ) == 0  )
-				//{
-				//	db_query( "UPDATE Credito SET Cancelado = 'S' " );
-				//}//end if
-
-
 				//db_query( "tales" );
 				db_query("COMMIT");
 
-				echo "<script>location.href='?mod=".$MOD."&action=edit&id=".$_POST[IDFactura]."'</script>";
+			echo "
+				<script>
+					location.href='?mod=".$MOD."&action=edit&id=".$frm[$Key]."&idpunto=".$frm[idpunto]."'
+				</script>
+			";
+
+				//update($frm);
+			break;
+
+			case "autorizacambio":
+				$sql_inserta_aut = "Insert Into AutorizacionCambio (IDFactura, IDPuntoVenta, FechaAutorizacion, AutorizadoPor)
+									Values ('".$_GET["idfactura"]."','".$_GET["id_punto_venta"]."',NOW(),'".$datos["Nombre"]."')";
+				db_query( $sql_inserta_aut );
+				echo "
+				<script>
+					alert('Autorizacion registrada con exito');
+					location.href='?mod=".$MOD."&action=edit&id=".$_GET["idfactura"]."&idpunto=".$_GET["id_punto_venta"]."'
+				</script>
+
+			";
 
 			break;
-			case "edit":
-				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
+
+			case "del":
+				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
+			case "delete" :
+				$_GET[action]="";
+				delete($ID);
+			break;
 			case "list" :
 
-			if( $field == "NumeroReferencia" )
+				if(!empty($_GET["limit1"]) && !empty($_GET["limit2"])){
+						$cond_fecha= " and FechaFactura>= '".$_GET["limit1"]." 00:00:00' and FechaFactura<= '".$_GET["limit2"]." 23:59:59'";
+						$_GET["limit1"]=$_GET["limit1"]." 00:00:00";
+						$_GET["limit2"]=$_GET["limit2"]." 23:59:59";
+				}
+
+				if(!empty($_GET["FacturaElec"])){
+					if($_GET["FacturaElec"]=="N")
+						$buscar_elec="";
+					else
+						$buscar_elec="S";
+					
+
+					$cond_fecha.= " and FacturaElectronica = '".$buscar_elec."' " ;
+					$_GET["FacturaElectronica"] = $buscar_elec;
+				}	
+				
+
+				if( $field == "NumeroReferencia" )
 				{
+
+
 
 					$sql = " SELECT * FROM Referencia R, PuntoVentaReferencia PR, CodificacionEspecifica CE, DetalleFactura DF, Factura F
 								WHERE R.Numero LIKE '%$QryString%'
@@ -69,12 +105,22 @@ if($permisos[0] >= 2)
 								AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia
 								AND CE.IDCodificacionEspecifica = DF.IDCodificacionEspecifica
 								AND DF.IDFactura = F.IDFactura
-								AND DF.IDPuntoVenta = F.IDPuntoVenta
-								AND DF.IDPuntoVenta = '".$IDPuntoVenta."'
+								AND DF.IDPuntoVenta = F.IDPuntoVenta ".$cond_fecha."
 								GROUP BY F.IDFactura
 								ORDER BY F.FechaFactura DESC " ;
 
 				}//end if
+				elseif(!empty($_GET["FacturaElec"])){
+					$sql = " SELECT * FROM Referencia R, PuntoVentaReferencia PR, CodificacionEspecifica CE, DetalleFactura DF, Factura F
+								WHERE R.IDReferencia = PR.IDReferencia
+								AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia
+								AND CE.IDCodificacionEspecifica = DF.IDCodificacionEspecifica
+								AND DF.IDFactura = F.IDFactura
+								AND DF.IDPuntoVenta = F.IDPuntoVenta ".$cond_fecha."
+								GROUP BY F.IDFactura
+								ORDER BY F.FechaFactura DESC " ;
+
+				}
 				elseif($field == "Items" && (int)$QryString >0){
 					$sql = " SELECT count(DF.IDFactura) as TotalProductos, F.* FROM  CodificacionEspecifica CE, DetalleFactura DF, Factura F
 								WHERE
@@ -84,11 +130,10 @@ if($permisos[0] >= 2)
 
 				else
 				{
-							$sql = make_qry_string($HTTP_GET_VARS);
-
+							$sql = make_qry_string($_GET);
 				}
 
-
+			//echo $sql;
 			list_r($sql);
 			break;
 			default :
@@ -107,331 +152,446 @@ else
 		funtcion Print_form
 *******************************************************************************************/
 function print_form($id,$newmode,$title,$submit_caption){
-	GLOBAL $TitleMod,$Table,$MOD,$Key, $ID_Usuario, $IVA,$IDPuntoVenta,$crypt;
+	GLOBAL $TitleMod,$Table,$MOD,$Key, $ID_Usuario, $idpunto;
 
-	if (!empty($_GET[IDPuntoVenta]))
-		$IDPuntoVenta=$_GET[IDPuntoVenta];
-
-
-	$qid = db_query(" SELECT * FROM Factura WHERE IDFactura = '$id' AND IDPuntoVenta = '$IDPuntoVenta' ");
+	$qid = db_query(" SELECT * FROM $Table WHERE $Key = '$id' AND IDPuntoVenta = '$idpunto' ");
 
 	$r = db_fetch_object($qid);
-
 
 	$club_suavidad=get_field("Cliente","ClubSuavidad","IDCliente",$r->IDCliente);
 
 ?>
-
-
-<br>
-<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="550">
-
+<table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" />
-		</td>
-		<td class="tbtbot"><b></b>
-			<span class="gen">
-				<?=$title?>
-			</span>
-		</td>
-		<td class="tbtr">
-			<img src="images/spacer.gif" alt="" width="124" height="22" />
-		</td>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td></td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
-<table class="forumline" width="550" cellspacing="1" border="0" align="center">
+
+<br>
+<br>
+<script>
+function eliminafactura( IDFactura, IDPuntoVenta )
+{
+	if( confirm( "Seguro que desea eliminar esta factura?" ) )
+		window.open( 'Factura/eliminafactura.php?IDFactura='+IDFactura+'&IDPuntoVenta='+IDPuntoVenta,'','width=100, height=100' );
+}
+</script>
+<table border=1 cellpadding=1 cellspacing=0 bordercolor=#9DAAC6 align=center style="border-collapse: collapse">
+
 	<tr>
-	<td>
-		<table width=100% border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff" >
-
-				<tr >
+		<td class=maintitle bgcolor=#9daac6>Factura</td>
+	</tr>
+	<tr>
+		<td>
+			<table width=450 border=0 cellspacing=1 cellpadding=1 class=texto bgcolor=ffffff>
+				<tr class=row2>
 					<td colspan="2">
-
+						<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>">
 								<div align="center">
 									<table width=100% border=0>
 										<tr>
 											<td colspan="4">
 												<table class=rowtable>
 													<tr>
-														<td class=col1 >Nro Comprobante</td>
-														<td class=col2  ><input type="text" class="tbox" name="NumeroFactura" id="Numero Factura" size="24" value="<?=$r->NumeroFactura?>">
+														<td class=row2 colspan="2"></td>
+														<td class=row2>
+															<div align="left">
+																Numero Factura</div>														</td>
+														<td class=row2><input type="text" class="input" name="NumeroFactura" readonly size="24" value="<?=$r->NumeroFactura?>"></td>
+													</tr>
+													<tr>
+													  <td class=row2>Estado:</td>
+													  <td class=row2>
+															<?=$r->Estado?>
 
 														</td>
-
-														<td class=col1>
+													  <td class=row2>
 															<?php if($r->Estado=="ELECTRONICA"){
 																echo "Numero factura electr&oacute;nica: ";
 															}?>
 														</td>
-													  <td class=col1><?php if($r->Estado=="ELECTRONICA"){
+													  <td class=row2><?php if($r->Estado=="ELECTRONICA"){
 															echo $r->NumeroFacturaElectronica;
 														}?></td>
-													</tr>
-													<tr>
-													  <td class=col1 >Estado</td>
-													  <td class=col2 colspan="3" >
-															<?=$r->Estado?>
-														</td>
 												  </tr>
 													<tr>
-														<td class=col1>Punto de Venta</td>
-														<td class=col2 colspan="3">
-															<?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?>
-															<input type="hidden" value="<?=$IDPuntoVenta?>" name="IDPuntoVenta">
-															<input type="hidden" value="<?=$r->IDFactura?>" name="IDFactura"></td>
+														<td class=row2>Punto de Venta</td>
+														<td class=row2><input type="text" class="input" name="PuntoVenta" readonly size="24" value="<?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta)?>"></td>
+														<td class=row2>No. Documento</td>
+														<td class=row2><input type="text" class="input" name="NumeroDocumento" readonly size="24" value="<?=$r->NumeroDocumento?>"></td>
 													</tr>
 													<tr>
-														<td class=col1>Fecha Facturas</td>
-														<td class=col2 colspan="3"><input type="text" class="tbox" name="FechaFactura" size="19" value="<?=$r->FechaFactura?>" readonly>
-															<script language="JavaScript1.2">
+														<td class=row2></td>
+														<td class=row2></td>
+														<td class=row2></td>
+														<td class=row2></td>
+													</tr>
+													<tr>
+														<td class=rowtable><b>CLIENTE</b></td>
+														<td class=rowtable></td>
+														<td class=rowtable></td>
+														<td class=rowtable></td>
+													</tr>
+													<tr>
+														<td class=row2>Cedula</td>
+														<td class=row2><input type="text" class="input" name="Cedula" readonly size="15" value='<?echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" value="<?=$r->IDCliente?>"></td>
+														<td class=row2>Nombre</td>
+														<td class=row2><input type="text" class="input" name="Cliente" readonly size="20" value='<?echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente);?>'></td>
+													</tr>
+													<tr>
+														<td class=row2 nowrap>Telefono Cliente</td>
+														<td class=row2><input type="text" class="input" name="TeleCli" readonly size="15" value='<?echo get_field("Cliente","Telefono","IDCliente",$r->IDCliente);?>'></td>
+														<td class="col1" nowrap="nowrap">Club Suavidad</td>
+														<td class="col2"><?php echo get_field("Cliente","ClubSuavidad","IDCliente",$r->IDCliente) ?></td>
+													</tr>
+													<tr>
+														<td class=row1></td>
+														<td class=row1 colspan="3"></td>
+													</tr>
+													<tr>
+														<td class=row1>Fecha Factura</td>
+														<td class=row1><input type="text" class="input" name="FechaFactura" size="24" value='<?=$r->FechaFactura?>' readonly> </td>
+														<td class=row1><span class="col1">Numero de Tarjeta Fidelizacion</span></td>
+														<td class=row1><span class="col2"><?php echo get_field("TarjetaFidelizacion","Codigo","IDCliente",$r->IDCliente) ?></span></td>
+													</tr>
+													<tr>
+														<td class=row1>Numero registro</td>
+														<td class=row1><input type="text" class="input" name="NumeroRegistro" size="24" value='<?=$r->NumeroRegistro?>' readonly> </td>
+														<td class=row1><span class="col1"></span></td>
+														<td class=row1><span class="col2"></span></td>
+													</tr>
+													<tr>
+														<td class=row1>Payu</td>
+														<td class=row1><?=$r->NumeroPayu?></td>
+														<td class=row1><span class="col1">Adii</span></td>
+														<td class=row1><span class="col2">'<?=$r->NumeroAddi?></span></td>
+													</tr>
+													<tr>
+													  <td class=row1>Fecha Creacion</td>
+													  <td class=row1><?=$r->FechaCreacion?></td>
+													  <td class=row1>&nbsp;</td>
+													  <td class=row1>&nbsp;</td>
+												  </tr>
+													<tr>
+														<td class=row1><br>														</td>
+														<td class=row1></td>
+														<td class=row1></td>
+														<td class=row1></td>
+													</tr>
+													<tr>
+														<td class=row1>Observaciones</td>
+														<td colspan="3" class=row1><textarea name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
+													</tr>
 
-														</script>														Fecha Creacion: <?=$r->FechaCreacion?></td>
+													<tr>
+														<td class=rowtable><b>EMPLEADO.</b></td>
+														<td class=rowtable><?if($newmode == "insert"){?><input type="button" class="submit" name="empleado" value="Buscar" onClick="window.open('Empleado/popEmpleados.php','','width=400,height=400');"><?}?></td>
+														<td class=rowtable></td>
+														<td class=rowtable></td>
 													</tr>
 													<tr>
-														<td class=col1>Observaciones</td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
-													</tr>
-
-													<tr>
-														<td class=col1>Nro Pagare</td>
-														<td class=col2 colspan="3">
-														<input type="text" class="tbox" name="NumeroPagare" size="15" value='<?php echo $r->NumeroPagare;?>' <?php if(!empty($r->NumeroPagare)) echo "readOnly"; ?> >
-														</td>
-													</tr>
-
-
-													<tr>
-														<td class=col1>														</td>
-														<td class=col1></td>
-														<td class=col1></td>
-														<td class=col1></td>
+														<td class=row2>C&eacute;dula</td>
+														<td class=row2><input type="text" class="input" name="CedulaEmpleado" readonly size="15" value='<?echo get_field("Empleado","Cedula","IDEmpleado",$r->IDEmpleado);?>'> <input type="hidden" name="IDEmpleado" value="<?=$r->IDEmpleado?>"></td>
+														<td class=row2>Nombre</td>
+														<td class=row2><input type="text" class="input" name="NombreEmpleado" readonly size="20" value='<?echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?>'></td>
 													</tr>
 													<tr>
-														<td class=row1 colspan="4"><b>CLIENTE</b></td>
+														<td class=row2><br></td>
+														<td class=row2></td>
+														<td class=row2></td>
+														<td class=row2></td>
 													</tr>
 													<tr>
-														<td class=col1>C&eacute;dula</td>
-														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
-														<td class=col1>Nombre</td>
-														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?php echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?>'></td>
+														<td class=rowtable colspan="2"><b>CREDITO</b></td>
+														<td class=rowtable></td>
+														<td class=rowtable></td>
 													</tr>
 													<tr>
-														<td class=col1 nowrap>Telefono Cliente</td>
-														<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value='<?php echo get_field("Cliente","Telefono","IDCliente",$r->IDCliente);?>'></td>
-														<td class="col1" nowrap="nowrap">Numero de Fidelizacion</td>
-														<td class="col2"><input name="NumeroFidelizacion" type="text" class="tbox" id="NumeroFidelizacion" value='<?php echo $r->NumeroFidelizacion?>' size="20" readonly /></td>
+														<td class=row2>Financiaci&oacute;n</td>
+														<td class=row2><input type="text" class="input" name="Descuento" size="3" value="<?=$r->Descuento?>" maxlength="3">%</td>
+														<td class=row2></td>
+														<td class=row2></td>
 													</tr>
 													<tr>
-														<td class=col1 nowrap>Numero Payu<br></td>
-														<td class=col2><?php echo $r->NumeroPayu; ?></td>
-														<td class=col1>Numero Addi</td>
-														<td class=col1><?php echo $r->NumeroAddi; ?></td>
-													</tr>
-													<tr>
-														<td class=row1 ><b>VENDEDOR</b></td>
-														<td class=row1 colspan="3"><input type="button" class="button" name="empleado" value="Buscar" onClick="window.open('Empleado/popEmpleados.php?IDPuntoVenta=<?=$IDPuntoVenta?>','','width=400,height=400');"></td>
-													</tr>
-													<tr>
-														<td class=col1>C&eacute;dula</td>
-														<td class=col2><input type="text" class="tbox" name="CedulaEmpleado" readonly size="15" value='<?php echo get_field("Empleado","Cedula","IDEmpleado",$r->IDEmpleado);?>'> <input type="hidden" id="Empleado" name="IDEmpleado" value=""></td>
-														<td class=col1>Nombre</td>
-														<td class=col2><input type="text" class="tbox" name="NombreEmpleado" readonly size="20" value='<?php echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?>'></td>
-													</tr>
-													<tr>
-														<td class=col1><br></td>
-														<td class=col1></td>
-														<td class=col1></td>
-														<td class=col1></td>
-													</tr>
-													<tr>
-														<td class=row1 colspan="4"><b>CREDITO</b></td>
-													</tr>
-													<tr>
-														<td class=col1>Financiaci&oacute;n</td>
-														<td class=col2 colspan="3"><input type="text" class="tbox" name="Descuento" size="3" value="<?=$r->Descuento?>" maxlength="3">%</td>
-													</tr>
-													<tr>
-														<td class=col1>Comentario Descuento Especial</td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="ObservacionDescuento" rows="4" cols="64"><?=$r->ObservacionDescuento?></textarea></td>
+														<td class=row2>Comentario Descuento Especial</td>
+														<td class=row2 colspan="3"><textarea name="ObservacionDescuento" rows="4" cols="64"><?=$r->ObservacionDescuento?></textarea></td>
 													</tr>
 													<tr>
 													  <td class=col1>Alianzas</td>
-													  <td class=col2 colspan="3">
-                                                      <?php if(!empty($r->IDAlianza)):
+													  <td class=col2 colspan="3"><?php if(!empty($r->IDAlianza)):
 													  			echo get_field("Alianza","Nombre","IDAlianza",$r->IDAlianza) . " - " . $r->DescuentoAlianza . "%";
 													  		endif;
-													   ?>
-                                                      </td>
+													   ?></td>
 												  </tr>
+													<?
+													echo $newmode;
+													if( $newmode == "delete" )
+													{
+													?>
+													<tr>
+														<td class="row2" colspan="4" align="center"><input type="button" value="Eliminar Factura" onClick="eliminafactura( <?=$r->IDFactura?>,<?=$r->IDFactura?> );" class="input"></td>
+													</tr>
+													<?
+													}//end fi
+													?>
 												</table>
 										  </td>
 										</tr>
+										<?
+									if($newmode <> "insert")
+									{
+									?>
 										<tr>
-											<td class=navpic>Detalle Factura</td>
-											<td class=navpic colspan="3">
-												<div align="right">
-													</div>
-											</td>
+											<td class=titlemedium colspan="4">Detalle Factura</td>
+										</tr>
+										<tr>
+											<td id="field" colspan=4 bgcolor=#e7ebef></td>
 										</tr>
 										<tr bgcolor=#e7ebef>
-											<td colspan="4">
-												<table class="texto" border="0" cellspacing="1" cellpadding="0" id=table1 width="100%">
+											<td colspan="4" width="816">
+												<table class="bordertable" border="0" cellspacing="1" cellpadding="1" id=table1 width="100%" bgcolor="#ffffff">
 													<tr bgcolor="#dfe3e7">
-														<td align="center"><b>Item</b></td>
-														<td align="center"><b>Referencia</b></td>
-														<td align="center"><b>Talla</b></td>
-														<td align="center"><b>Nombre</b></td>
-														<td align="center"><b>Cantidad</b></td>
-														<td align="center"><b>Valor U.</b></td>
-														<td align="center"><b>Desc. Par.</b></td>
-														<td align="center"><b>Total</b></td>
+														<td align="center" class=rowform><b>Item</b></td>
+														<td align="center" class=rowform><b>Referencia</b></td>
+														<td align="center" class=rowform><b>Talla</b></td>
+														<td align="center" class=rowform><b>Nombre</b></td>
+														<td align="center" class=rowform><b>Cantidad</b></td>
+														<td align="center" class=rowform><b>Valor U.</b></td>
+														<td align="center" class=rowform><b>Descuento Par.</b></td>
+														<td align="center" class=rowform><b>Total</b></td>
 													</tr>
-													<?php
-														$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$IDPuntoVenta' ";
-														$query_detalle = db_query($sql_detalle);
-														$i = 0;
-														while( $r_detalle = db_fetch_object( $query_detalle ) )
-														{
-															$class = repetition()?"col1list":"col2list";
-															$i++;
-													?>
+													<? 												//Query para el detalle de la factura
+
+												$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
+												$query_detalle = db_query($sql_detalle);
+												$i = 1;
+
+												while( $r_detalle = db_fetch_object( $query_detalle ) )
+												{
+													if( $i % 2 == 0 )
+														$class = "row2";
+													else
+														$class = "rowtable";
+
+												?>
 													<tr bgcolor="#dfe3e7">
 														<td align="left" class="<?=$class?>"><b><?=$i?></b></td>
-														<td align="left" class="<?=$class?>">
-															<?php
-																echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)));
+														<td align="left" class="<?=$class?>"><%=get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))%></td>
+														<td align="left" class="<?=$class?>"><%=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))%></td>
+														<td align="left" class="<?=$class?>"><?=get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?>
+																<?php	
 																if( !empty( $r_detalle->CodigoTarjeta ) )
 																{
 																	echo "-" . $r_detalle->CodigoTarjeta;
 																}//end if
-															?>
-                                                       	</td>
-														<td align="left" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
-														<td align="left" class="<?=$class?>"><?php echo $ref=get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
-														<td align="left" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU);?></td>
-														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoPar);?>%</td>
-														<td align="left" class="<?=$class?>"><?php echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?></td>
+																?>
+													
+													</td>
+														<td align="left" class="<?=$class?>"><?=$r_detalle->Cantidad?></td>
+														<td align="left" class="<?=$class?>"><?echo number_format($r_detalle->ValorU);?></td>
+														<td align="left" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoPar);?></td>
+														<td align="left" class="<?=$class?>"><?echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?></td>
+													</tr>
+												<?
+													$i++;
+												}//while( $r_detalle = db_fetch_object( $query_detalle ) )
+												?>
+												<tr bgcolor="#dfe3e7">
+														<td align="left" class="<?=$class?>"><b><br></b></td>
+														<td align="left" class="<?=$class?>"></td>
+														<td align="left" class="<?=$class?>"></td>
+														<td align="left" class="<?=$class?>"></td>
+														<td align="left" class="<?=$class?>"></td>
+														<td align="left" class="<?=$class?>"></td>
+														<td align="left" class="<?=$class?>"></td>
+														<td align="left" class="<?=$class?>"></td>
+													</tr>
+											<tr bgcolor="#dfe3e7">
+														<td align="left" class="row2"><b><br></b></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="rowform" colspan="4">RESUMEN FACTURA</td>
+													</tr>
+
+                                             <!--
+											<tr bgcolor="#dfe3e7">
+											  <td align="left" class="row2">&nbsp;</td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td class=col2>Valor IVA</td>
+											  <td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorIVASinBono)?></td>
+											  </tr>
+                                             -->
+
+                                             <?php if($r->ValorBono!="0" ): ?>
+											<tr bgcolor="#dfe3e7">
+											  <td align="left" class="row2">&nbsp;</td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td class=col2>Total Factura</td>
+											  <td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorTotalSinBono)?></td>
+											  </tr>
+                                             <?php endif; ?>
+
+                                            <?php if($r->ValorBono!="0"): ?>
+											<tr bgcolor="#dfe3e7">
+											  <td align="left" class="row2">&nbsp;</td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td class=col2>Menos Bono fidelizaci&oacute;n</td>
+											  <td align="left" class="rowtable" colspan="3">-<?=number_format($r->ValorBono)?></td>
+											  </tr>
+                                             <?php endif; ?>
+
+
+                                            <?php if($r->ValorBono!="0"): ?>
+											<tr bgcolor="#dfe3e7">
+											  <td align="left" class="row2">&nbsp;</td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td class=col2>Sub Total </td>
+											  <td align="left" class="rowtable" colspan="3"><?=number_format((int)$r->ValorTotalSinBono-(int)$r->ValorBono)?></td>
+											  </tr>
+                                             <?php endif; ?>
+
+                                            <!--
+											<tr bgcolor="#dfe3e7">
+											  <td align="left" class="row2">&nbsp;</td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td align="left" class="row2"></td>
+											  <td class=col2>Valor sin IVA</td>
+											  <td align="left" class="rowtable" colspan="3"><?=number_format((int)$r->ValorTotal-(int)$r->ValorIVA)?></td>
+											  </tr>
+                                            -->
+
+											<tr bgcolor="#dfe3e7">
+														<td align="left" class="row2"><b><br></b></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="row2">
+															</td>
+														<td align="left" class="row2">
+															</td>
+														<td align="left" class="row2">
+															<div align="right">
+										      IVA</div></td>
+														<td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorIVA)?></td>
+													</tr>
+
+													<?php if((int)$r->ValorEnvioFactura!="0"){ ?>
+													<tr bgcolor="#dfe3e7">
+														<td align="left" class="row2"><b><br></b></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="row2">
+															</td>
+														<td align="left" class="row2">
+															</td>
+														<td align="left" class="row2">
+															<div align="right">
+										      Envio seleccionado:</div></td>
+														<td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorEnvioFactura)?></td>
+													</tr>
+													<?php  } ?>
+													
+													
+											<tr bgcolor="#dfe3e7">
+														<td align="left" class="row2"><b><br></b></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="row2">
+															</td>
+														<td align="left" class="row2">
+															</td>
+														<td align="left" class="row2">
+															<div align="right">Valor Neto</div></td>
+														<td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorTotal)?></td>
+													</tr>
+
+											<tr bgcolor="#dfe3e7">
+														<td align="left" class="row2"><b><br></b></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="rowform">FORMA DE PAGO</td>
+														<td align="left" class="rowform">VALOR</td>
+														<td align="left" class="rowform"></td>
+														<td align="left" class="rowform">No. DOCUMENTO</td>
+													</tr>
+
+											<?
+												$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
+												$query_formapago = db_query( $sql_formapago );
+
+												while( $r_formapago = db_fetch_object( $query_formapago ) )
+												{
+													if($r_formapago->Valor <> 0)
+													{
+											?>
+													<tr bgcolor="#dfe3e7">
+														<td align="left" class="row2"><b><br></b></td>
+														<td align="left" class="row2"></td>
+														<td align="left" class="row2">
+															</td>
+														<td align="left" class="row2">
+															</td>
+														<td align="left" class="row2">
+															<div align="right">
+																<?=get_field("FormaPago","Descripcion","IDFormaPago",$r_formapago->IDFormaPago)?>
+															</div>
+														</td>
+														<td align="left" class="rowtable" ><?=number_format($r_formapago->Valor)?></td>
+														<td align="left" class="rowtable"></td>
+														<td align="left" class="rowtable" ><?=$r_formapago->NumeroDocumento?></td>
+													</tr>
+												<?
+													}//end if($r_formapago->Valor <> 0)
+												}//end while( $r_formapago = db_fetch_object( $query_formapago ) )
+
+
+
+
+
+												?>
+
+												</table>
+
+
+												<?php
+												if((int)$r->ValorBono>0){
+												?>
+													<table class="bordertable" border="1" cellspacing="1" cellpadding="1" id=table1 width="100%" bgcolor="#ffffff">
+													<tr>
+														<td class="navpic" colspan="4" align="left">
+															<b>Numero Bono</b>														
+														</td>
+														<td class="navpic" colspan="4" align="left">
+															<b>Bono a nombre de:</b>														
+														</td>
 													</tr>
 													<?php
-													}
-													?>
-												</table>
+													$sql_bonos="SELECT BF.IDBonoFidelizacion, C.Nombre, C.Apellido, C.Cedula  FROM BonoFidelizacion BF, Cliente C WHERE BF.IDCliente = C.IDCliente AND BF.IDFactura = '".$r->IDFactura."'";
+													$result_bono=db_query($sql_bonos);
+													while($row_bono=db_fetch_array($result_bono)){ ?>
+													<tr>
+														<td class="navpic" colspan="4" align="left">
+															<?php echo $row_bono["IDBonoFidelizacion"]; ?>
+														</td>
+														<td class="navpic" colspan="4" align="left">
+															<?php echo $row_bono["Cedula"] . " " . $row_bono["Nombre"]. " " . $row_bono["Apellido"]; ?>
+														</td>
+													</tr>
+													<?php } ?>
+													</table>
+												<?php } ?>
 											</td>
 										</tr>
-										<tr>
-											<td class=col1></td>
-											<td class=col1 width="250"></td>
-											<td class=navpic colspan="2">
-												<div align="left">
-													RESUMEN FACTURA</div>
-											</td>
-										</tr>
-
-                                        <!--
-										<tr>
-										  <td class=col1></td>
-										  <td class=col1></td>
-										  <td class=col2>Valor IVA</td>
-										  <td class=col2><input type=text readonly name=ValorIVA2 value="<?=number_format($r->ValorIVASinBono)?>" class=tbox size=15></td>
-									  </tr>
-                                      -->
-
-                                       <?php if($r->ValorBono!="0" ): ?>
-										<tr>
-										  <td class=col1></td>
-										  <td class=col1></td>
-										  <td class=col2>Total Factura</td>
-										  <td class=col2><input type=text readonly name=ValorIVA3 value="<?=number_format($r->ValorTotalSinBono)?>" class=tbox size=15></td>
-									  </tr>
-                                      <?php endif; ?>
-
-
-                                       <?php if($r->ValorBono!="0"): ?>
-										<tr>
-										  <td class=col1></td>
-										  <td class=col1></td>
-										  <td class=col2>Menos Bono fidelizaci&oacute;n</td>
-										  <td class=col2><input type=text readonly name=ValorIVA4 value="-<?=number_format($r->ValorBono)?>" class=tbox size=15></td>
-									  </tr>
-                                      <?php endif; ?>
-
-                                       <?php if($r->ValorBono!="0"): ?>
-										<tr>
-										  <td class=col1></td>
-										  <td class=col1></td>
-										  <td class=col2>Sub Total</td>
-										  <td class=col2><input type=text readonly name=ValorIVA5 value="<?=number_format((int)$r->ValorTotalSinBono-(int)$r->ValorBono)?>" class=tbox size=15></td>
-									  </tr>
-                                      <?php endif; ?>
-
-                                      <!--
-										<tr>
-										  <td class=col1></td>
-										  <td class=col1></td>
-										  <td class=col2>Valor sin IVA</td>
-										  <td class=col2><input type=text readonly name=ValorIVA6 value="<?=number_format((int)$r->ValorTotal-(int)$r->ValorIVA)?>" class=tbox size=15></td>
-									  </tr>
-                                      -->
-										<tr>
-											<td class=col1></td>
-											<td class=col1 width="250"></td>
-											<td class=col2>
-												<div align="right">
-													Valor IVA</div>
-											</td>
-											<td class=col2><input type=text readonly name=ValorIVA value="<?=number_format($r->ValorIVA)?>" class=tbox size=15></td>
-										</tr>
-										<tr>
-											<td class=col1></td>
-											<td class=col1 width="250"></td>
-											<td class=col2>
-												<div align="right">
-													Valor Neto</div>
-											</td>
-											<td class=col2><input type=text readonly name=ValorTotal value="<?=number_format($r->ValorTotal)?>" class=tbox size=15></td>
-										</tr>
-
-										<tr>
-											<td class=col1></td>
-											<td class=col1 width="250"></td>
-											<td class=col2>
-												<div align="right">
-													Valor Envio</div>
-											</td>
-											<td class=col2><input type=text readonly name=ValorEnvioFactura value="<?=number_format($r->ValorEnvioFactura)?>" class=tbox size=15></td>
-										</tr>
-
-											<tr>
-											<td class=col1></td>
-											<td class=col1 width="250"></td>
-											<td class=navpic colspan="2">
-												<div align="left">
-													FORMA DE PAGO</div>
-											</td>
-										</tr>
-										<?php
-											$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
-											$query_formapago = db_query( $sql_formapago );
-
-											while( $r_formapago = db_fetch_object( $query_formapago ) )
-											{
-												if($r_formapago->Valor <> 0)
-												{
-										?>
-										<tr>
-											<td class=col1></td>
-											<td class=col1 width="250"></td>
-											<td class=col2>
-												<div align="right">
-													<?php echo get_field("FormaPago","Descripcion","IDFormaPago",$r_formapago->IDFormaPago)?></div>
-											</td>
-											<td class=col2><input type=text readonly name="formapago[<?=$r_formapago->IDFormaPago?>]" value="<?=number_format($r_formapago->Valor)?>" class=tbox size=15></td>
-										</tr>
-										<?php
-											}//end if($r_formapago->Valor <> 0)
-										}//end while( $r_formapago = db_fetch_object( $query_formapago ) )
+										<?
 
 										$sql_credito = "SELECT * FROM Credito WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 										$qry_credito = db_query( $sql_credito );
@@ -453,11 +613,10 @@ function print_form($id,$newmode,$title,$submit_caption){
 														<td align="center"><b>Cuota Numero</b></td>
 														<td align="center"><b>Fecha Cuota</b></td>
 														<td align="center"><b>Fecha Pago</b></td>
-														<td align="center"><b>Medio Pago</b></td>
 														<td align="center"><b>Valor Cuota</b></td>
 													</tr>
 
-										<?php
+										<?
 											$sql_cuotas = "SELECT * FROM CreditoCuota WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
 											$qry_cuotas = db_query( $sql_cuotas );
 											while( $r_cuotas = db_fetch_object( $qry_cuotas ) )
@@ -468,46 +627,25 @@ function print_form($id,$newmode,$title,$submit_caption){
 													<td class="<?=$class?>" align="center"><?=$r_cuotas->IDCuota?></td>
 													<td class="<?=$class?>" align="center"><?=$r_cuotas->FechaCuota?></td>
 													<td class="<?=$class?>" align="center">
-														<?php
-															if( $r_cuotas->FechaPago <> "0000-00-00 00:00:00" )
-																echo $r_cuotas->FechaPago;
-															else
-															{
-														?>
-																<input type="text" class="tbox" name="FechaPago<?=$r_cuotas->IDCuota?>" size="19" value='' >
+
+																<input type="text" class="tbox" name="FechaPago<?=$r_cuotas->IDCuota?>" size="19" value='<?php if ($r_cuotas->FechaPago!="0000-00-00 00:00:00") echo $r_cuotas->FechaPago; ?>' readonly>
 																<script language="JavaScript1.2">
 																	<!--
 																		if (!document.layers)
-																			document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaPago<?=$r_cuotas->IDCuota?>,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
+																			document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaPago<?=$r_cuotas->IDCuota?>,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 																	//-->
 																</script>
-														<?php
-															}//end else
-														?>
+
 													</td>
-													<td class="<?=$class?>" align="center"><?=$r_cuotas->MedioPago?></td>
 													<td class="<?=$class?>" align="center">
 														<?=number_format( $r_cuotas->ValorTotal, 0 )?>
-                                                        <?php
-														if( $r_cuotas->FechaPago == "0000-00-00 00:00:00" )
-															$saldo_cuota+=$r_cuotas->ValorTotal; ?>
 														<input type=hidden name=IDCuota[<?=$r_cuotas->IDCuota?>] value="<?=$r_cuotas->IDCuota?>">
 													</td>
 												</tr>
 
-
-										<?php
+										<?
 											}//end while
 										?>
-
-                                        <tr bgcolor="#dfe3e7">
-												  <td  align="center">&nbsp;</td>
-												  <td  align="center">&nbsp;</td>
-												  <td  align="center">&nbsp;</td>
-												  <td  align="center"><strong>Saldo</strong></td>
-												  <td  align="center"><strong>$<?php echo number_format($saldo_cuota); ?></strong></td>
-												  </tr>
-
 												</table>
 											</td>
 										</tr>
@@ -516,85 +654,70 @@ function print_form($id,$newmode,$title,$submit_caption){
 												<input type="submit" name="Submit" value="Actualizar Pagos" class="submit" >
 											</td>
 										</tr>
-										<?php
+										<?
 										}//end if cuotas
-										?>
 
-										<tr>
-											<td class="navpic" colspan="4" align="center">
-												<?php
-													echo $r->Resolucion;
-													echo "  Facturas desde ".$r->RDesde." Hasta ".$r->RHasta;
-												?>
-											</td>
-										</tr>
+
+																		}
+									?>
 									</table>
-									<input type="hidden" name="action" value="<?=$newmode?>"><br>
-								</div>
-
+									<input type="hidden" name="action" value="<?=$newmode?>">
+									<input type="hidden" name="ID" value="<?=$id?>">
+									<input type="hidden" name="IDFactura" value="<?=$r->IDFactura?>"><input type="hidden" name="IDEmpleado" value='<?if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>'>
+									<input type="hidden" name="idpunto" value="<?=$idpunto?>">
+									</div>
+							</FORM>
 					</td>
 				</tr>
-
-				<!--
-				<tr>
-                    	<td style="color:#EE080C;">
-                        	<?php if($IDPuntoVenta==19){ ?>
-                            <a href="#" onClick="window.open( 'Factura/FImpresion.php?id=<?php echo $r->IDFactura ?>&idpunto=<?=$IDPuntoVenta ?>','','width=426, height=350' )">
-                            Reimprimir
-                            </a>
-							<?php } ?>
-                        </td>
-                    </tr>
-				-->
-
-				<?php
-						if(date("Y-m-d")>="2023-10-01" && date("Y-m-d")<="2023-11-30"){ 
-							$sql_iva="SELECT IDBonoIva FROM BonoIva WHERE IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$IDPuntoVenta."'  LIMIT 1";
-							$r_iva=db_query($sql_iva);
-							$row_iva=db_fetch_array($r_iva);
-							if($row_iva["IDBonoIva"]>0){
-							$rutabono="BonoIva".$row_iva["IDBonoIva"].".pdf";
-							}
-						
-
-
-						
-						?>
-						<tr>
-							<td style="color:#EE080C;">
-								<a href="#" onClick="window.open( 'https://www.almacenescaprino.com/admin/files/facturas/<?php echo $rutabono; ?>','','width=426, height=350' )">
-								Reimprimir Bono Iva
-								</a>
-								
-							</td>
-						</tr>
-
-				<?php } ?>
-
-
-
 			</table>
+
+            <table class="bordertable" border="0" cellspacing="1" cellpadding="1" id=table1 width="100%" bgcolor="#ffffff">
+            	<tr>
+            	  <th colspan="2"><a href="?mod=Factura&action=autorizacambio&idfactura=<?php echo $id ?>&id_punto_venta=<?=$idpunto?>">Autorizar cambio</a></th>
+           	  </tr>
+            	<tr>
+                	<th>
+                    	Fecha Autorizacion
+                    </th>
+                    <th>
+                    	Autorizado por
+                    </th>
+                </tr>
+                <?php
+				$sql_autorizacion = "Select * From AutorizacionCambio Where IDFactura = '".$id."' and IDPuntoVenta = '".$idpunto."'";
+				$result_autorizacion = db_query($sql_autorizacion);
+				while($row_autorizacion = db_fetch_array($result_autorizacion)):?>
+                <tr>
+                	<td>
+                    	<?php echo $row_autorizacion["FechaAutorizacion"] ?>
+                    </td>
+                    <td align="center">
+                    	<?php echo $row_autorizacion["AutorizadoPor"] ?>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+
+            </table>
+
 		</td>
 	</tr>
 
-
-
 </table>
-</FORM>
-<?php
-} // END function print_form_fotos($id,$numfotos)
+<?
+}// End function print_form()
+
 /*******************************************************************************************
 		funcion Listar
 *******************************************************************************************/
 	function list_r($sql=""){
-		Global $TitleMod,$MOD,$Table,$Key,$listar,$IDPuntoVenta;
+		Global $TitleMod,$MOD,$Table,$Key,$listar;
 	if(empty($sql))
-	 	$sql =  "SELECT * FROM $Table WHERE IDPuntoVenta = '$IDPuntoVenta' ORDER BY FechaFactura DESC";
+	 	$sql =  "SELECT * FROM $Table ORDER BY FechaFactura DESC";
 
 		$nav = new buildNav;
 		$nav->offset = 'offset';
    		$nav->number_type = 'number';
-   		(!empty($listar))? $nav->limit = $listar:$nav->limit=40;
+   		(!empty($listar))? $nav->limit = $listar:$nav->limit=50;
    		$nav->execute($sql,$dblink);
 		$total_records =  $nav->total_result;
 		$rows = $nav->rows;
@@ -615,82 +738,66 @@ function print_form($id,$newmode,$title,$submit_caption){
 								$order="ASC";
 							}
 
-							?><?php
-		if($rows > 0){
-?><br>
-<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
-
+							?>
+<table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" />
-		</td>
-		<td class="tbtbot"><b></b>
-			<span class="gen">
-				Listar <?php echo $TitleMod ?>
-			</span>
-			<span class="gen">
-				<?php echo $info ?>
-			</span>
-		</td>
-		<td class="tbtr">
-			<img src="images/spacer.gif" alt="" width="124" height="22" />
-		</td>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td></td>
 	</tr>
 </table>
-<table class="forumline" width="650" cellspacing="1" border="0" align="center">
+<?
+		if($rows > 0){
+?>
+<br>
+<table width=750 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-	<td>
-		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
-			<tr>
-				<td class="forumlink" colspan="2">
-					<?php filtrar();?>
-				</td>
-			</tr>
-			<tr>
-				<td class="forumlink" colspan="2">
-				<a href="Factura/exportafactura.php?sql=<?php echo $sql; ?>"><img src="../images/excel_icon.gif" alt="" width="20" height="20" border="0" >Exportar Registros </a>
-					<table width=100% border=0 cellspacing=1 cellpadding=0>
-							<tr>
-								<td align=center class=navpic valign=middle bgcolor=#DBEAF5 width=69>Ver</td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Cliente&nbsp;<?php if($_GET['order_by']=="IDCliente")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Nro Comprobante&nbsp;<?php if($_GET['order_by']=="NumeroFactura")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">FechaFactura&nbsp;<?php if($_GET['order_by']=="FechaFactura")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">ValorTotal&nbsp;<?php if($_GET['order_by']=="ValorTotal")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
-									<td class=navpic nowrap bgcolor=#DBEAF5>Factura Electr&oacute;nica</td>
-									<?php if($IDPuntoVenta==16) { ?>
-										<td class=navpic nowrap bgcolor=#DBEAF5>Nro Ped Payu</td>
-										<td class=navpic nowrap bgcolor=#DBEAF5>Payu</td>
-									<?php } ?>
-								</tr>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+		</tr>
+<?filtrar();?>
+<tr>
+			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+		</tr>
+<tr>
+<td class=texto bgcolor=#DBEAF5 colspan=16 nowrap>
+<?
+	print $pages;
+?>
+</td>
+</tr>
+	<tr>
+			<td>
+<table width=100% border=0 cellspacing=1 cellpadding=0>
+<tr>
+						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Cliente&nbsp;<% if($_GET['order_by']=="IDCliente"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroDocumento&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Punto de Venta&nbsp;<% if($_GET['order_by']=="NumeroDocumento"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">NumeroFactura&nbsp;<% if($_GET['order_by']=="NumeroFactura"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5>Factura Electronica</td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">FechaFactura&nbsp;<% if($_GET['order_by']=="FechaFactura"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">ValorTotal&nbsp;<% if($_GET['order_by']=="ValorTotal"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
+					</tr>
 
-							<?php while($r = db_fetch_object($result)){
-								$class = repetition()?"col1list":"col2list";
-								$i++;
-							?>
+<? while($r = db_fetch_object($result)){
+?>
 
-							<tr>
-								<td align=center valign=middle nowrap width=50 class="<?=$class?>">
-								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
-								</td>
-									<td nowrap class="<?=$class?>"><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
-									<td nowrap class="<?=$class?>"><?php echo $r->NumeroFactura ?></td>
-									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaFactura,0,10))." ".substr($r->FechaFactura,10) ?></td>
-									<td align="right" nowrap class="<?=$class?>"><?php echo number_format($r->ValorTotal) ?></td>
-									<td align="center" nowrap class="<?=$class?>"><?php echo $r->Estado ?></td>
-									<td nowrap class=row1>
+<tr>
+						<td align=center valign=middle nowrap width=50 class=row2>
+	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>&idpunto=<%=$r->IDPuntoVenta%>'><img src='images/edit.gif' border='0'></a></td>
+						<td nowrap class=row1><? echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
+						<td nowrap class=row1><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta) ?></td>
+						<td nowrap class=row1><? echo $r->NumeroFactura ?></td>
+						<td nowrap class=row1>
+						<?php
+						$FechaGFactura=date("Y-m-d", strtotime("2021-12-01"));
+						$FechaFac=date("Y-m-d", strtotime(substr($r->FechaFactura,0,10)));
 
-									<?php 
-							$FechaGFactura=date("Y-m-d", strtotime("2021-12-01"));
-							$FechaFac=date("Y-m-d", strtotime(substr($r->FechaFactura,0,10)));
-
-							if($FechaFac >= $FechaGFactura ){ ?>
-							
+						if($FechaFac >= $FechaGFactura ){ ?>
 
 							<input type="radio" class="btnelectronica" name="facturaelectronica<?php echo $r->$Key."-".$r->IDPuntoVenta; ?>" idfactura='<?php echo $r->$Key ?>' idpuntoventa='<?php echo $r->IDPuntoVenta ?>' value="S" <?php if($r->FacturaElectronica=="S") echo "checked"; ?>>Si
 							<input type="radio" class="btnelectronica" name="facturaelectronica<?php echo $r->$Key."-".$r->IDPuntoVenta; ?>" idfactura='<?php echo $r->$Key ?>' idpuntoventa='<?php echo $r->IDPuntoVenta ?>' value="N" <?php if($r->FacturaElectronica=="N" || $r->FacturaElectronica=="" ) echo "checked"; ?>>No
-								
-							
-							<?php								
+							<?php 
 							if($r->FacturaElectronica=="N" || $r->FacturaElectronica==""){
 								$sql_log="SELECT Resultado FROM LogFacturaElectronica WHERE IDFactura = '".$r->$Key."' and IDPuntoventa = '".$r->IDPuntoVenta."' Order by IDLogFacturaElectronica DESC LIMIT 1";
 								$r_log=db_query($sql_log);
@@ -703,45 +810,30 @@ function print_form($id,$newmode,$title,$submit_caption){
 							}
 							?>
 							<div name='msgupdate<?php echo $r->$Key ?>' id='msgupdate<?php echo $r->$Key ?>'></div>
-							<?php
-						//echo $r->NumeroFideliazcion ?>
-						<?php } ?>	
+							<?
+						//echo $r->NumeroFideliazcion 
+						}
+						?>
+						
 					</td>
-
-					<?php if($IDPuntoVenta==16) { ?>
-							<td align=center valign=middle nowrap width=50 class="<?=$class?>">
-								<?php echo $r->NumeroPayu;  ?>
-							</td>	
-							<td align=center valign=middle nowrap width=50 class="<?=$class?>">
-									<?php if(!empty($r->NumeroPayu) && $r->PagoPayu!="S" ){  ?>
-									<input type="radio" class="btnpayu" name="pagopayu<?php echo $r->$Key."-".$r->IDPuntoVenta; ?>" idfactura='<?php echo $r->$Key ?>' idpuntoventa='<?php echo $r->IDPuntoVenta ?>' value="S" <?php if($r->PagoPayu=="S") echo "checked"; ?>>Si
-									<input type="radio" class="btnpayu" name="pagopayu<?php echo $r->$Key."-".$r->IDPuntoVenta; ?>" idfactura='<?php echo $r->$Key ?>' idpuntoventa='<?php echo $r->IDPuntoVenta ?>' value="N" <?php if($r->PagoPayu=="N" || $r->PagoPayu=="" ) echo "checked"; ?>>No
-									<div name='msgupdatepayu<?php echo $r->$Key ?>' id='msgupdatepayu<?php echo $r->$Key ?>'></div>
-									<?php } else	{
-										echo $r->PagoPayu;
-									}
-									?>	
-							</td>	
-					<?php } ?>		
-
-								</tr>
-							<?php } // END for
-							?>
-							<tr>
-							<td  class="navpic" colspan=6 nowrap>
-									<?php
-										print $pages;
-									?>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</td>
-	</tr>
+						<td nowrap class=row1><? echo $r->FechaFactura ?></td>
+						<td nowrap class=row1><? echo $r->ValorTotal ?></td>
+						<td align=center valign=middle nowrap width=60 class=row2>
+	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>&idpunto=<%=$r->IDPuntoVenta;%>'><img src='images/trash.gif' border='0'></a></td>
+					</tr>
+<? } // END for
+?>
+<tr>
+<td class=texto bgcolor=#DBEAF5 colspan=8 nowrap>
+	<?
+		print $pages;
+		?></td>
+</tr>
+</table></td>
+		</tr>
 </table>
-<?php
+
+<?
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -751,44 +843,50 @@ else
 		funcion filtrar
 *******************************************************************************************/
 	function filtrar(){
-	Global $dblink,$total_records,$row,$numtoshow,$MOD,$IDPuntoVenta;
+	Global $dblink,$total_records,$row,$numtoshow,$MOD;
 ?>
 	<form name="frm" action="./" method="get" onSubmit="return valbuscar(document.frm)">
 		<tr>
 			<td class="rowform" align="center" colspan=8>
 				<select name="field" id="Buscar por" class="popup">
 					<option value="">Buscar Por</option>
-                    <option value="NumeroReferencia">Referencia</option>
-					<option value="FechaFactura">Fecha</option>
-					<option value="Cliente.Cedula">Cedula</option>
-					<option value="NumeroFactura">Numero</option>
+					<option value="Cliente.Nombre">Nombre Cliente</option>
+					<option value="Cliente.Apellido">Apellido Cliente</option>
+					<option value="Cliente.Cedula">cedula Cliente</option>
+					<option value="PuntoVenta.Nombre">Punto de Venta</option>
+					<option selected value="NumeroFactura">Numero de Factura</option>
+					<option selected value="NumeroReferencia">Numero de Referencia</option>
 				</select>
 				<input type="text" size="20" name="QryString" id="Buscar Por" class="post">
 				Entre <input type=text readonly size=10 class=input name=limit1>
 				<script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
-							document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit1,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
+							document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit1,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 					//-->
 				</script>
 				 y <input type=text size=10 readonly class=input name=limit2>
 				<script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
-							document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit2,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
+							document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit2,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 					//-->
 				</script>
+				<br>Factura Electronica
+				<input type="radio" name="FacturaElec" value="S">Si generada
+				<input type="radio" name="FacturaElec" value="N">No generada
 				<br>
 				ordenar por
 				<select name="order_by" class="popup">
-					<option value="FechaFactura">Fecha</option>
-					<option value="Cliente.Cedula">Cedula</option>
-					<option value="NumeroFactura">Numero</option>
+					<option value="Cliente.Nombre">Nombre Cliente</option>
+					<option value="Cliente.Apellido">Apellido Cliente</option>
+					<option value="Cliente.Cedula">cedula Cliente</option>
+					<option value="PuntoVenta.Nombre">Punto de Venta</option>
 				</select>
 				de forma
 				<select name="in_order" class="popup">
-					<option value="DESC">Descendente</option>
 					<option value="ASC">Ascendente</option>
+					<option value="DESC">Descendente</option>
 				</select>
 				Listar
 				<select name="listar" class="popup">
@@ -796,18 +894,18 @@ else
 					<option value="15">15</option>
 					<option value="20">20</option>
 					<option value="25">25</option>
-					<option value="30">30</option>
+					<option value="50" selected>50</option>
 				</select>
 				<br>
 				<input type="hidden" name="mod" value="<?=$MOD?>">
 				<input type="hidden" name="rangofield" value="FechaFactura">
 				<input type="hidden" name="action" value="list">
-				<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
 				<input type="hidden" name="tjoin" value="Cliente">
+				<input type="hidden" name="tlevel" value="PuntoVenta">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>
 		</tr>
 	</form>
-<?php
+<?
 	}//End function filtrar
 ?>

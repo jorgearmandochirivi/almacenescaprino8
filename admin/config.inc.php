@@ -1,6 +1,9 @@
 <?php
 date_default_timezone_set('America/Bogota');
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
 
 $dbhost = "mysql";
 $dbname = "caprino";
@@ -60,7 +63,7 @@ $ancho_thumbnail=1800;
 
 
 $app_title= "Puntos de Venta :: CAPRINO";
-$ME = $SCRIPT_NAME;
+$ME = $_SERVER['SCRIPT_NAME'] ?? '';
 $crypt = "c4prino";
 
 //************* VARIABLES DE SESSION ************

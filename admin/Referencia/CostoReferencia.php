@@ -1,4 +1,4 @@
-<body> <?php
+<body> <?
 
 $TitleMod ="CostoReferencia";
 
@@ -103,14 +103,14 @@ else
 ?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
 		<td></td>
 	</tr>
 </table>
 	
 <br>
-<?php
+<?
 	$TABsel = 3;
 	include("Referencia/menutabReferencia.php");
 ?>
@@ -119,7 +119,7 @@ else
 <form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
 
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -182,17 +182,17 @@ else
 	
     
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
+			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap>
-<?php
+<?
 	print $pages;
 ?>
 </td>
 </tr>
 
-<?php
+<?
 		if($rows > 0){
 ?>	
 
@@ -207,24 +207,24 @@ else
 						<td class=rowform nowrap bgcolor=#DBEAF5> Eliminar </td>
 					</tr>
 
-<?php while($r = db_fetch_object($result)){
+<? while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
-  <td nowrap class=row1><a href='<?php echo "?mod=$MOD&action=edit&IDCostoReferencia="; echo $r->$Key; ?>&idReferencia=<?php echo $_GET[idReferencia]?>'><img src='images/edit.gif' border='0'></a></td>
-						<td nowrap class=row1><?php echo number_format( $r->Costo, 2 ) ?></td>
-						<td nowrap class=row1><?php echo $r->Fecha ?></td>
-						<td nowrap class=row1><?php echo $r->Observacion ?></td>
+  <td nowrap class=row1><a href='<? echo "?mod=$MOD&action=edit&IDCostoReferencia="; echo $r->$Key; ?>&idReferencia=<?php echo $_GET[idReferencia]?>'><img src='images/edit.gif' border='0'></a></td>
+						<td nowrap class=row1><? echo number_format( $r->Costo, 2 ) ?></td>
+						<td nowrap class=row1><? echo $r->Fecha ?></td>
+						<td nowrap class=row1><? echo $r->Observacion ?></td>
                         <td nowrap class=row1>
-                        <a href='<?php echo "?mod=CostoReferencia&action=del&IDCostoReferencia="; echo $r->$Key; ?>&idReferencia=<?php echo $_GET[idReferencia]?>'><img src='images/trash.gif' border='0'></a>	
+                        <a href='<? echo "?mod=CostoReferencia&action=del&IDCostoReferencia="; echo $r->$Key; ?>&idReferencia=<?php echo $_GET[idReferencia]?>'><img src='images/trash.gif' border='0'></a>	
                         </td>
 					</tr>
-<?php } // END for
+<? } // END for
 ?>
 <tr>
 </tr>	
 
-<?php
+<?
 }// End if$rows
 else
 	echo "<tr><td><br><br><span class=subtitle><b>No han sido cargados costos a esta referencia</b></span></td></tr>";
@@ -234,7 +234,7 @@ else
 		</tr>
 </table>	
 
-<?php
+<? 			
 
 }// Enf function list()				
 

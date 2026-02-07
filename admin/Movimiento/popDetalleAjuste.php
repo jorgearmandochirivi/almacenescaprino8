@@ -1,4 +1,4 @@
-<?php
+<?
 	include("../config.inc.php");
 	Encabezado();
 	$datos = Verifica_Sesion();
@@ -14,7 +14,7 @@
 	</head>
 
 	<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
-<?php
+<?
 
 $TitleMod ="Ajuste";
 
@@ -92,7 +92,7 @@ var Check = new Array('Nombre','Publicar');
 						</table>
 						<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 	
-				<?php 
+				<? 
 				foreach( $array_referencias as $key => $valor ){
 				
 					$class = repetition()?"col1list":"col2list";
@@ -104,8 +104,8 @@ var Check = new Array('Nombre','Publicar');
 	  				<td>
 	  					<table width="100%">
 							<tr>
-								<td nowrap width=150 class="<?=$class?>"><?php echo $key ?></td>
-								<?php
+								<td nowrap width=150 class="<?=$class?>"><? echo $key ?></td>
+								<?
 								foreach( $valor as $idtalla => $datos )
 								{
 								?>
@@ -113,12 +113,12 @@ var Check = new Array('Nombre','Publicar');
 										<table>
 											<tr>
 												<td>
-													<b><?php echo $array_tallas[ $idtalla ]; ?></b>
+													<b><? echo $array_tallas[ $idtalla ]; ?></b>
 												</td>
 											</tr>
 											<tr>
 												<td>
-													<?php
+													<?
 														echo $datos[Cantidad];
 														$TPares += $datos[Cantidad];
 													?>
@@ -127,7 +127,7 @@ var Check = new Array('Nombre','Publicar');
 										</table>
 										
 									</td>
-								<?php
+								<?
 								}
 								?>
 							</tr>
@@ -137,7 +137,7 @@ var Check = new Array('Nombre','Publicar');
 					
 					
 					
-						<?php } // END for
+						<? } // END for
 						if( $TPares > 0 )
 						{
 				?>
@@ -146,17 +146,17 @@ var Check = new Array('Nombre','Publicar');
 							Total Pares = <?=$TPares?>
 							</td>
 							</tr>
-						<?php
+						<?
 						}
 						?>
 						<tr>
 							<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="center">
-							<?php
+							<?
 								print $pages;
 							?>
 							<input type="hidden" name="action" value="<?=$newmode?>">
 							<input type="hidden" name="Referencias" value="<?=$frm['Referencias']?>">
-							<?php
+							<?
 							if( $newmode == "entrada" )
 							{
 								$caption = "Realizar Entrada";
@@ -174,7 +174,7 @@ var Check = new Array('Nombre','Publicar');
 						</td>
 					</tr>		
 				</table>
-<?php
+<?
 }// End function print_form()
 ?>
 </body>

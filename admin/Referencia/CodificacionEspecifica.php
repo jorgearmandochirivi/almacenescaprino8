@@ -1,4 +1,4 @@
-<body> <?php
+<body> <?
 
 $TitleMod ="Codificacion Especifica";
 
@@ -98,20 +98,20 @@ function seleccionapuntoventa($idreferencia, $newmode)
 	Global $idReferencia;
 ?>	
 	<br><br><br><br>
-	<?php
+	<?
 	$TABsel = 1;
  	include("Referencia/menutabReferencia.php");
 	?>	
 	<table cellspacing='0' cellpadding='2' border='0' align='left' class=bordertable width=300>
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 		<tr>
-			<td class=row1 width=76;?> 
+			<td class=row1 width=76%> 
 				Seleccione Punto de Venta>
 			</td>
 			<td>
 				<select class=input name=puntoventa onChange="document.frm.submit();">
 					<option value="">Seleccione</option>
-				<?php
+				<?
 					$sql_puntos = "SELECT P.* FROM PuntoVenta P, PuntoVentaReferencia PR ";
 					$sql_puntos .= "WHERE PR.IDReferencia = '$idreferencia' AND PR.IDPuntoVenta = P.IDPuntoVenta and P.Publicar = 'S' GROUP BY P.IDPuntoVenta";
 					
@@ -131,7 +131,7 @@ function seleccionapuntoventa($idreferencia, $newmode)
 		</tr>
 		</form>
 	</table>
-<?php
+<?
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -150,16 +150,16 @@ function seleccionapuntoventa($idreferencia, $newmode)
 
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<?php echo Referencia;?>">Administrar <?php echo Referencia;?></a> </td>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<%=Referencia%>">Administrar <%=Referencia%></a> </td>
 		<td></td>
 	</tr>
 </table>
-<?php
+<?
 if($rows > 0){
 ?>		
 <br>
-<?php
+<?
 	$TABsel = 1;
  	include("Referencia/menutabReferencia.php");
 ?>	
@@ -169,15 +169,15 @@ if($rows > 0){
 			<table cellspacing='0' cellpadding='2' border='0' align='left' class=bordertable width=100% >
 				<form name="frm1" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 				<tr>
-					<td width=70;?> 
+					<td width=70%> 
 						<b>
-							<?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$puntoventa) ?> - Referencia: <?php echo get_field("Referencia","Numero","IDReferencia",$idReferencia)?>
+							<? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$puntoventa) ?> - Referencia: <?echo get_field("Referencia","Numero","IDReferencia",$idReferencia)?>
 						</b>
 					</td>
 					<td>
 						<select class=input name=puntoventa onChange="document.frm1.submit();">
 							<option value="">Seleccione</option>
-						<?php
+						<?
 							$sql_puntos = "SELECT P.* FROM PuntoVenta P, PuntoVentaReferencia PR ";
 							$sql_puntos .= "WHERE PR.IDReferencia = '$idReferencia' AND PR.IDPuntoVenta = P.IDPuntoVenta GROUP BY P.IDPuntoVenta";
 							
@@ -201,7 +201,7 @@ if($rows > 0){
 	</tr>
 	<tr>
 		<td>
-			<?php 
+			<? 
 				$i = 0;
 				while($r[$i] = db_fetch_array($query_codificacion))
 				{
@@ -240,9 +240,9 @@ if($rows > 0){
 				<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 					<tr>
 						<td class="titlemedium" nowrap>
-							<?php echo get_field("Referencia","Nombre","IDReferencia",$idReferencia)?>
+							<?echo get_field("Referencia","Nombre","IDReferencia",$idReferencia)?>
 						</td>
-					<?php
+					<?
 					foreach($r as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -255,7 +255,7 @@ if($rows > 0){
 						<td class="rowform">
 							Existencias
 						</td>
-					<?php
+					<?
 					foreach($r as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -268,7 +268,7 @@ if($rows > 0){
 						<td class="rowform">
 							Minimo
 						</td>
-					<?php
+					<?
 					foreach($r as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -281,7 +281,7 @@ if($rows > 0){
 						<td class="rowform">
 							Maximo
 						</td>
-					<?php
+					<?
 					$i = 1;
 					foreach($r as $talla)
 					{
@@ -297,7 +297,7 @@ if($rows > 0){
 					
 					<tr>
 						<td class="titlemedium" colspan=<?=$i?> align="right">
-							<?php
+							<?
 							foreach($r as $talla)
 							{
 								if(!empty($talla[IDTalla]))
@@ -408,7 +408,7 @@ Disponibles: <?php echo $disponibles; ?>
 
 
 
-<?php
+<? 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";

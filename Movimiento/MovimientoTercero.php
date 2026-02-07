@@ -1228,59 +1228,59 @@
 									<table width=100% border=0 cellspacing=1 cellpadding=0>
 										<tr>
 											<td align=center class=navpic valign=middle bgcolor=#DBEAF5 width=69>Ver</td>
-											<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Proveedor&nbsp;
-													<?php if($_GET['order_by']=="IDProveedor")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Numero</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'> Orden</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>
-													<?php if($_GET['order_by']=="NumeroORdenCompra")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Fecha Pedido&nbsp;
-													<?php if($_GET['order_by']=="FechaPedido")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Fecha Entrega </a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
-													<?php if($_GET['order_by']=="FechaEntrega")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
-									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Estado&nbsp;
-													<?php if($_GET['order_by']=="IDEstadoPedidoTercero")<?php 
-													<img src="images/<?php echo $img;?>" border=0>
-													<?php };?>
-									</a></td>
-			          </tr>
-							
-							<?php while ($r = db_fetch_object($result)) {
-								$class = repetition() ? "col1list" : "col2list";
-								$i++;
-							?>
-							  	
-							<tr>
-								<td align=center valign=middle nowrap width=50 class="<?= $class ?>">
-								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id=";
-												echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
-								</td>
-									<td nowrap class="<?= $class ?>"><?php echo get_field("Proveedor", "Nombre", "IDProveedor", $r->IDProveedor); ?></td>
-									<td nowrap class="<?= $class ?>"><?php echo $r->NumeroOrdenCompra ?></td>
-									<td nowrap class="<?= $class ?>"><?php echo formatofecha(substr($r->FechaPedido, 0, 10)) . " " . substr($r->FechaPedido, 10) ?></td>
-									<td nowrap class="<?= $class ?>"><?php echo formatofecha(substr($r->FechaEntrega, 0, 10)) . " " . substr($r->FechaEntrega, 10) ?></td>
-									<td nowrap class="<?= $class ?>"><?php
-																		echo estado_tercero_pto_vta($r->IDPedidoTercero, $r->IDPuntoVenta);
+											<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=" . $_GET['field'] . "&IDPuntoVenta=" . $IDPuntoVenta . "&QryString=" . $_GET['QryString'] . "&order_by=IDCliente&in_order=" . $order . "&listar=" . $nav->limit . "&action=list"; ?>">Proveedor&nbsp;
+													<?php if ($_GET['order_by'] == "IDProveedor") { ?><img src="images/<?php echo $img; ?>" border=0><?php } ?></a> </td>
+											<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=" . $_GET['field'] . "&IDPuntoVenta=" . $IDPuntoVenta . "&QryString=" . $_GET['QryString'] . "&order_by=NumeroFacturaBono&in_order=" . $order . "&listar=" . $nav->limit . "&action=list"; ?>">Numero</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=" . $_GET['field'] . "&IDPuntoVenta=" . $IDPuntoVenta . "&QryString=" . $_GET['QryString'] . "&order_by=NumeroFacturaBono&in_order=" . $order . "&listar=" . $nav->limit . "&action=list"; ?>'> Orden</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=" . $_GET['field'] . "&IDPuntoVenta=" . $IDPuntoVenta . "&QryString=" . $_GET['QryString'] . "&order_by=NumeroFacturaBono&in_order=" . $order . "&listar=" . $nav->limit . "&action=list"; ?>'>
+													<?php if ($_GET['order_by'] == "NumeroORdenCompra") { ?><img src="images/<?php echo $img; ?>" border=0><?php } ?></a></td>
+											<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=" . $_GET['field'] . "&IDPuntoVenta=" . $IDPuntoVenta . "&QryString=" . $_GET['QryString'] . "&order_by=FechaFacturaBono&in_order=" . $order . "&listar=" . $nav->limit . "&action=list"; ?>">Fecha Pedido&nbsp;
+													<?php if ($_GET['order_by'] == "FechaPedido") { ?><img src="images/<?php echo $img; ?>" border=0><?php } ?></a> </td>
+											<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=" . $_GET['field'] . "&IDPuntoVenta=" . $IDPuntoVenta . "&QryString=" . $_GET['QryString'] . "&order_by=ValorTotal&in_order=" . $order . "&listar=" . $nav->limit . "&action=list"; ?>'>Fecha Entrega </a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=" . $_GET['field'] . "&IDPuntoVenta=" . $IDPuntoVenta . "&QryString=" . $_GET['QryString'] . "&order_by=ValorTotal&in_order=" . $order . "&listar=" . $nav->limit . "&action=list"; ?>'>&nbsp;
+													<?php if ($_GET['order_by'] == "FechaEntrega") { ?><img src="images/<?php echo $img; ?>" border=0><?php } ?></a></td>
+											<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=" . $_GET['field'] . "&IDPuntoVenta=" . $IDPuntoVenta . "&QryString=" . $_GET['QryString'] . "&order_by=FechaFacturaBono&in_order=" . $order . "&listar=" . $nav->limit . "&action=list"; ?>">Estado&nbsp;
+													<?php if ($_GET['order_by'] == "IDEstadoPedidoTercero") { ?>
+														<img src="images/<?php echo $img; ?>" border=0>
+													<?php } ?>
+												</a></td>
+										</tr>
 
-																		//echo get_field("EstadoPedidoTercero","Descripcion","IDEstadoPedidoTercero",$r->IDEstadoPedidoTercero); 
-																		?>
-                                    </td>
-								</tr>
-							<?php } // END for
-							?>
-							<tr>
-							<td  class="navpic" colspan=6 nowrap>
-									<?php
-									print $pages;
-									?>
-							</td>
-						</tr>		
-					</table>
-				</td>
-			</tr>
-		</table>
-	</td>
-	</tr>
-</table>
-<?php
+										<?php while ($r = db_fetch_object($result)) {
+											$class = repetition() ? "col1list" : "col2list";
+											$i++;
+										?>
+
+											<tr>
+												<td align=center valign=middle nowrap width=50 class="<?= $class ?>">
+													&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id=";
+																	echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+												</td>
+												<td nowrap class="<?= $class ?>"><?php echo get_field("Proveedor", "Nombre", "IDProveedor", $r->IDProveedor); ?></td>
+												<td nowrap class="<?= $class ?>"><?php echo $r->NumeroOrdenCompra ?></td>
+												<td nowrap class="<?= $class ?>"><?php echo formatofecha(substr($r->FechaPedido, 0, 10)) . " " . substr($r->FechaPedido, 10) ?></td>
+												<td nowrap class="<?= $class ?>"><?php echo formatofecha(substr($r->FechaEntrega, 0, 10)) . " " . substr($r->FechaEntrega, 10) ?></td>
+												<td nowrap class="<?= $class ?>"><?php
+																					echo estado_tercero_pto_vta($r->IDPedidoTercero, $r->IDPuntoVenta);
+
+																					//echo get_field("EstadoPedidoTercero","Descripcion","IDEstadoPedidoTercero",$r->IDEstadoPedidoTercero); 
+																					?>
+												</td>
+											</tr>
+										<?php } // END for
+										?>
+										<tr>
+											<td class="navpic" colspan=6 nowrap>
+												<?php
+												print $pages;
+												?>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		<?php
 			} // End if$rows
 			else
 				echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -1292,81 +1292,85 @@
 		function filtrar()
 		{
 			global $dblink, $total_records, $row, $numtoshow, $MOD, $IDPuntoVenta;
-?>
-	<form name="frm" action="./" method="get" onSubmit="return valbuscar(document.frm)">
+		?>
+		<form name="frm" action="./" method="get" onSubmit="return valbuscar(document.frm)">
 
-	<tr>
+			<tr>
 				<td class="rowform" align="center" colspan=8>
 
-							<table>
-								<tr>
-									<td>Numero Orden</td>
-									<td><input type="text" name="NumeroOrdenCompra" id="NumeroOrdenCompra"></td>
-									<td>Numero de Factura</td>
-									<td><input type="text" name="NumeroFactura" id="NumeroFactura"></td>
-									<td>Proveedor :</td>
-									<td><select name="IDProveedor" id="IDProveedor">
-	                	 <option value="">[Seleccione]</option>
-	                    <?php
-						$sql_provee = db_query("Select * from Proveedor Where Publicar = 'S' Order by Nombre");
-						while ($row_provee = db_fetch_array($sql_provee)) {
-						?>
-	                        <option value="<?php echo $row_provee["IDProveedor"]; ?>"><?php echo $row_provee["Nombre"]; ?></option>
-	                    <?php
-						}
-						?>
-	          		</select></td>
-								</tr>
-								<tr>
-										<td>Estado:</td>
-										<td><select name="IDEstadoPedidoTercero" id="IDEstadoPedidoTercero">
-		                    <option value="">[Seleccione]</option>
-		                    <?php
-							$sql_estados = db_query("Select * from EstadoPedidoTercero Where 1 Order by Descripcion");
-							while ($row_estado = db_fetch_array($sql_estados)) {
-							?>
-		                        <option value="<?php echo $row_estado["IDEstadoPedidoTercero"]; ?>"><?php echo $row_estado["Descripcion"]; ?></option>
-		                    <?php
-							}
-							?>
-		          		</select></td>
-										<td>Referencia</td>
-										<td><input type="text" name="ReferenciaCaprino" id="ReferenciaCaprino"></td>
-										<td>Tipolog&iacute;a</td>
-										<td><input type="text" name="Tipologia" id="Tipologia"></td>
-								</tr>
-								<tr>
-									<td>Desde</td>
-									<td><input  type="text" name="FechaDesde" class="input" value="<?= $FechaDesde ?>" size="10">
+					<table>
+						<tr>
+							<td>Numero Orden</td>
+							<td><input type="text" name="NumeroOrdenCompra" id="NumeroOrdenCompra"></td>
+							<td>Numero de Factura</td>
+							<td><input type="text" name="NumeroFactura" id="NumeroFactura"></td>
+							<td>Proveedor :</td>
+							<td><select name="IDProveedor" id="IDProveedor">
+									<option value="">[Seleccione]</option>
+									<?php
+									$sql_provee = db_query("Select * from Proveedor Where Publicar = 'S' Order by Nombre");
+									while ($row_provee = db_fetch_array($sql_provee)) {
+									?>
+										<option value="<?php echo $row_provee["IDProveedor"]; ?>"><?php echo $row_provee["Nombre"]; ?></option>
+									<?php
+									}
+									?>
+								</select></td>
+						</tr>
+						<tr>
+							<td>Estado:</td>
+							<td><select name="IDEstadoPedidoTercero" id="IDEstadoPedidoTercero">
+									<option value="">[Seleccione]</option>
+									<?php
+									$sql_estados = db_query("Select * from EstadoPedidoTercero Where 1 Order by Descripcion");
+									while ($row_estado = db_fetch_array($sql_estados)) {
+									?>
+										<option value="<?php echo $row_estado["IDEstadoPedidoTercero"]; ?>"><?php echo $row_estado["Descripcion"]; ?></option>
+									<?php
+									}
+									?>
+								</select></td>
+							<td>Referencia</td>
+							<td><input type="text" name="ReferenciaCaprino" id="ReferenciaCaprino"></td>
+							<td>Tipolog&iacute;a</td>
+							<td><input type="text" name="Tipologia" id="Tipologia"></td>
+						</tr>
+						<tr>
+							<td>Desde</td>
+							<td><input type="text" name="FechaDesde" class="input" value="<?= $FechaDesde ?>" size="10">
 
-									<script language="JavaScript1.2">
-										<!--
-											if (!document.layers)
-												document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaDesde,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
-										//-->
-									</script></td>
-									<td>Hasta</td>
-									<td><input  type="text" name="FechaHasta" class="input" value="<?= $FechaHasta ?>" size="10">
+								<script language="JavaScript1.2">
+									<!--
+									if (!document.layers)
+										document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaDesde,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
+									//
+									-->
+								</script>
+							</td>
+							<td>Hasta</td>
+							<td><input type="text" name="FechaHasta" class="input" value="<?= $FechaHasta ?>" size="10">
 
-									<script language="JavaScript1.2">
-										<!--
-											if (!document.layers)
-												document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaHasta,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
-										//-->
-									</script></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</table>
+								<script language="JavaScript1.2">
+									<!--
+									if (!document.layers)
+										document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaHasta,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
+									//
+									-->
+								</script>
+							</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
 
-                  <br>
-                <input type="hidden" name="mod" value="<?= $MOD ?>">
-                <input type="hidden" name="action" value="list">
-                <input type="submit" name="submit" value="Buscar" class="submit">
+					<br>
+					<input type="hidden" name="mod" value="<?= $MOD ?>">
+					<input type="hidden" name="action" value="list">
+					<input type="submit" name="submit" value="Buscar" class="submit">
 				</td>
 			</tr>
-			
+
 		</form>
-<?php
+	<?php
 		} //End function filtrar
-?>
+	?>

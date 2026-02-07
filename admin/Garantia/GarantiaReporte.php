@@ -1,39 +1,82 @@
-<script src="admin/jscripts/Chart.js-master/Chart.js"></script>
 
-<?php
-	$TitleMod ="Factura";
-	
-	$Table = "Factura";
-	$TableJoin = "DetalleFactura";
-	$Key = "IDFactura";
-	$MOD = "GenerarFactura";
-	$m = "Movimientos";
-		$permisos = get_permiso($ID_Usuario,$m,$Table);
+
+
+<script src="jscripts/Chart.js-master/Chart.js"></script>
+<body> 
+
+<?
+
+$TitleMod ="Reportes Garantia";
+
+$Table = "Garantia";
+$TableJoin = "";
+$Key = "IDGarantia";
+$MOD = "GarantiaReporte";
+$m = "Garantia";
+?>
+
+ <?
+
+$permisos = get_permiso($ID_Usuario,$m,$Table);
+
+
 		
 		
-	
 if($permisos[0] >= 2)
-{		
-		$action="list";		
-		switch ($action) {
-			
+{
+	
+	if (empty($action))
+		$action="list";
+		
+		switch (nvl($action)) {
 			case "list" :	
 			
-				if (!empty($_GET[puntoventa]))
-					$condiciones.=" and G.IDPuntoVenta = '".$_GET[puntoventa]."'";
-
-				if (!empty($_GET[Tipo]))
-					$condiciones.=" and G.TipoRegistro = '".$_GET[Tipo]."'";
-
-				if (!empty($_GET[TipoReproceso]))
-					$condiciones.=" and G.".$_GET[TipoReproceso]." = 'S'";
-
-				if (!empty($_GET[IDEstadoGarantia]))
+				
+					
+				if(!empty($_GET[IDGarantia]))
+					$condiciones.=" and G.IDGarantia = '".$_GET[IDGarantia]."'";
+	
+				if(!empty($_GET[TipoRegistro]))
+					$condiciones.=" and G.TipoRegistro = '".$_GET[TipoRegistro]."'";
+					
+				if(!empty($_GET[IDEstadoGarantia]))
 					$condiciones.=" and G.IDEstadoGarantia = '".$_GET[IDEstadoGarantia]."'";
+					
+				if(!empty($_GET[IDPuntoVenta]))
+					$condiciones.=" and G.IDPuntoVenta = '".$_GET[IDPuntoVenta]."'";
+					
+				if(!empty($_GET[CantidadVeces]))
+					$condiciones.=" and G.CantidadVeces = '".$_GET[CantidadVeces]."'";
+					
+				if(!empty($_GET[TipoProducto]))
+					$condiciones.=" and G.TipoProducto = '".$_GET[TipoProducto]."'";
+					
+				if(!empty($_GET[Alerta])):
+					switch($_GET[Alerta]):
+						case "V":
+						  $condiciones .= " and G.IDEstadoGarantia not in (9,8,10)";
+						  $condiciones .= " and FechaEstimadaEntrega < CURDATE()";						
+						break;
+						case "PV":
+						  $condiciones .= " and G.IDEstadoGarantia not in (9,8,10)";
+						  $condiciones .= " and FechaEstimadaEntrega BETWEEN CURDATE() and DATE_ADD( CURDATE() , INTERVAL 5 DAY )";
+						break;
+						case "NC":
+							$condiciones .= " and G.RequiereNotaCredito='S' and G.NumeroNotaCredito=''";
+						break;
+						case "PF":
+							$condiciones.=" and G.IDEstadoGarantia = '11'";
+						break;
+					endswitch;
+					
+				endif;	
 
 				if (!empty($_GET[limit1]) && !empty($_GET[limit2]))
 					$condiciones.=" and G.FechaTrCr between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
 
+				
+				
+				
 				if (!empty($_GET[TipoContrafuerte]))
 					$condiciones.=" and G.TipoContrafuerte = 'S'";
 
@@ -75,14 +118,20 @@ if($permisos[0] >= 2)
 
 
 					
-				
-			$sql = " SELECT G.*, C.*, EG.Nombre, G.FechaTrCr as FechaGarantia
+			//CON FACTURA	
+			$sql_anterior = " SELECT G.*, C.*, EG.Nombre, G.FechaTrCr as FechaGarantia
 							 FROM Garantia G, EstadoGarantia EG,  Cliente C, Factura F
 							 WHERE G.IDFactura = F.IDFactura and C.IDCliente = F.IDCliente and
 							 	   EG.IDEstadoGarantia = G.IDEstadoGarantia
-								   AND G.IDPuntoVenta = '".$datos[IDPuntoVenta]."'
 							 	   $condiciones
 							ORDER BY IDGarantia DESC";
+							
+			 $sql = " SELECT G.*, EG.Nombre, G.FechaTrCr as FechaGarantia
+							 FROM Garantia G, EstadoGarantia EG
+							 WHERE EG.IDEstadoGarantia = G.IDEstadoGarantia
+							 	   $condiciones
+							ORDER BY IDGarantia DESC";
+							
 
 			
 			//consulto totales para el resumen
@@ -91,6 +140,15 @@ if($permisos[0] >= 2)
 			$totales[contador_tipo_garantia]=0;
 			$totales[contador_tipo_servicio]=0;
 			$totales[contador_tipo_reproceso]=0;
+			$totales[contador_remonta]=0;
+			$totales[contador_autoriza_especial]=0;
+			$totales[contador_par_nuevo]=0;
+			$totales[contador_no_aceptado]=0;
+			
+			$totales[contador_una_vez]=0;
+			$totales[contador_segunda_vez]=0;
+			$totales[contador_tercera_vez]=0;
+			
 			$totales[contador_contrafuerte]=0;
 			$totales[contador_cuero]=0;
 			$totales[contador_plantilla]=0;
@@ -112,6 +170,24 @@ if($permisos[0] >= 2)
 					$totales[contador_tipo_servicio]++;	
 				elseif($row_garantia[TipoRegistro]=="Reproceso")	
 					$totales[contador_tipo_reproceso]++;
+				
+				
+				if ($row_garantia[Remonta]=="S")	
+					$totales[contador_remonta]++;
+				if ($row_garantia[IDTipoFinalizacionGarantia]!="0")
+					$totales[contador_autoriza_especial]++;
+				if ($row_garantia[IDTipoFinalizacionGarantia]=="1")	
+					$totales[contador_par_nuevo]++;
+				if ($row_garantia[IDTipoFinalizacionGarantia]=="3")
+					$totales[contador_no_aceptado]++;
+				if ($row_garantia[CantidadVeces]=="1")	
+					$totales[contador_una_vez]++;
+				if ($row_garantia[CantidadVeces]=="2")	
+					$totales[contador_segunda_vez]++;				
+				if ($row_garantia[CantidadVeces]=="3")
+					$totales[contador_tercera_vez]++;
+					
+				
 				
 				if ($row_garantia[TipoContrafuerte]=="S")	
 					$totales[contador_contrafuerte]++;
@@ -152,32 +228,55 @@ if($permisos[0] >= 2)
 			break;
 			default : 
 					list_r();
-			break;			
-			
+			break;
 		
 		} // End switch
 
 }//end if(permisos[0] > 2)
 else
-	echo Mensaje_Info("No tiene Permisos Suficientes","col1");
-	
-	
-/*******************************************************************************************
-		funtcion mostrarcedula
-*******************************************************************************************/
+	echo Mensaje_Info("No tiene Permisos Suficientes","col2");
 
-function list_r($sql="",$totales){
-	global $IDPuntoVenta;
-	
-if(empty($sql))
-	 	$sql =  "SELECT * FROM Garantia ORDER BY IDGarantia DESC";
+
+
+/*******************************************************************************************
+		funtcion Print_form
+*******************************************************************************************/
+function print_form($id="",$newmode,$title,$submit_caption) {
+
+	GLOBAL $TitleMod,$Table,$MOD,$Key,$ID_Usuario;
+	$qid = db_query(" SELECT * FROM $Table WHERE $Key = '$id' Order by IDGarantia DESC");
+	$r = db_fetch_object($qid);
+
+?>
+<script>
+var Check = new Array('Nombre','Publicar');
+</script>
+<table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
+		<tr>
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+			<td>&nbsp;</td>
+		</tr>
+</table>
+<br>
+</form>
+<?
+}// End function print_form()
+
+/*******************************************************************************************
+		funcion Listar
+*******************************************************************************************/
+	function list_r($sql="",$totales){
+		Global $TitleMod,$MOD,$Table,$Key,$listar;
+	if(empty($sql))
+	 	$sql =  "SELECT * FROM $Table ORDER BY $Key DESC";
 	 	
 
 		
 		$nav = new buildNav;
 		$nav->offset = 'offset';
    		$nav->number_type = 'number';
-   		(!empty($listar))? $nav->limit = $listar:$nav->limit=10;
+   		(!empty($listar))? $nav->limit = $listar:$nav->limit=50;
    		$nav->execute($sql,$dblink);
 		$total_records =  $nav->total_result;
 		$rows = $nav->rows;
@@ -198,20 +297,25 @@ if(empty($sql))
 								$order="ASC";
 							}
 							
-							?>	
-	
-
-	
+							?>
+<table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
+	<tr>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<?
+		if($rows > 0){
+?>		
 <br>
-
-
 <table width=500 cellpadding=0 cellspacing=0 align=center >
 	<tr>
-		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
+		<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
 	</tr>
-	<?php filtrar();?>	
+	<?filtrar();?>	
 	<tr>
-		<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
+		<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
 	</tr>
 	<tr>
 	  <td class=texto  colspan= nowrap>
@@ -223,23 +327,56 @@ if(empty($sql))
 	        <td colspan="4" bgcolor=#DBEAF5>ITEM</td>
           </tr>
 	      <tr>
-	        <td> Garantias</td>
-	        <td>&nbsp;<?php echo $totales[contador_garantia]; ?></td>
-	        <td>&nbsp;</td>
-	        <td>&nbsp;</td>
-          </tr>
-	      <tr>
-	        <td> Tipo: Garantias</td>
+	        <td>Cantidad Garantias</td>
 	        <td>&nbsp;<?php echo $totales[contador_tipo_garantia]; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
-          </tr>
+        </tr>
 	      <tr>
-	        <td> Tipo: Servicios Y reprocesos</td>
+	        <td>Cantidad Servicios</td>
+	        <td>&nbsp;<?php echo $totales[contador_tipo_servicio]; ?></td>
+	        <td>&nbsp;</td>
+	        <td>&nbsp;</td>
+        </tr>
+	      <tr>
+	        <td>Cantidad Reprocesos</td>
 	        <td>&nbsp;<?php echo $totales[contador_tipo_reproceso]; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
-          </tr>
+        </tr>
+	      <tr>
+	        <td><strong>TOTAL PROCESOS</strong></td>
+	        <td>&nbsp;<strong><?php echo $totales[contador_garantia]; ?></strong> </td>
+	        <td>&nbsp;</td>
+	        <td>&nbsp;</td>
+        </tr>
+	      <tr>
+	        <td colspan="4"><hr></td>
+        </tr>
+	      <tr>
+	        <td>Cantidad Remontas</td>
+	        <td>&nbsp;<?php echo $totales[contador_remonta]; ?></td>
+	        <td>Pares una vez</td>
+	        <td>&nbsp;<?php echo $totales[contador_una_vez]; ?></td>
+        </tr>
+	      <tr>
+	        <td>Autorizaciones especiales</td>
+	        <td>&nbsp;<?php echo $totales[contador_autoriza_especial]; ?></td>
+	        <td>Pares segunda vez</td>
+	        <td>&nbsp;<?php echo $totales[contador_segunda_vez]; ?></td>
+        </tr>
+	      <tr>
+	        <td>Pares nuevos</td>
+	        <td>&nbsp;<?php echo $totales[contador_par_nuevo]; ?></td>
+	        <td>Pares tercera vez</td>
+	        <td>&nbsp;<?php echo $totales[contador_tercera_vez]; ?></td>
+        </tr>
+	      <tr>
+	        <td>No aceptadas</td>
+	        <td>&nbsp;<?php echo $totales[contador_no_aceptado]; ?></td>
+	        <td>&nbsp;</td>
+	        <td>&nbsp;</td>
+        </tr>
 	      <tr>
 	        <td colspan="4" bgcolor=#DBEAF5>CAUSA GARANTIA</td>
           </tr>
@@ -292,7 +429,6 @@ if(empty($sql))
   </tr>
 	<tr>
 	  <td class=texto  colspan= nowrap>
-      
 		<div style="width: 50%; float:left">
         	<strong>CAUSA DE LA GARANTIA</strong>
 			<canvas id="canvas" height="600" width="700"></canvas>
@@ -352,14 +488,23 @@ if(empty($sql))
 				},
 				{
 					value: <?php echo $totales[contador_tipo_reproceso]; ?>,
-					color: "#46BFBD",
-					highlight: "#5AD3D1",
+					color: "#E4C43F",
+					highlight: "#CEC58E",
 					label: "Reprocesos"
 				}
 				
 
 			];
 
+				
+				var ctx = document.getElementById("canvas").getContext("2d");
+				window.myBar = new Chart(ctx).Bar(barChartData, {
+					responsive : true
+				});
+				
+				var ctx_pie = document.getElementById("chart-area").getContext("2d");
+				window.myPie = new Chart(ctx_pie).Pie(pieData);
+			
 			
 			
 			
@@ -369,159 +514,200 @@ if(empty($sql))
       </td>
   </tr>
 	<tr>
-	  <td>
-<table width=100% border=0 cellspacing=1 cellpadding=0>
-	<tr>
-	  <td colspan="8" align=left valign=middle bgcolor=#DBEAF5 class=rowform><span class="texto">
-	    <?php
-			print $pages;
-		?>
-	    </span></td>
-	  </tr>
-    <tr>
-  <td colspan="8" align=left valign=middle bgcolor=#DBEAF5 class=rowform><a href="Garantia/exportagarantias.php?sql=<?php echo $sql; ?>"><img src="../images/excel_icon.gif" alt="" width="20" height="20" border="0" >Exportar Registros </a></td>
-  </tr>
-<tr>
-						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Numero&nbsp;
-						    <?php if($_GET['order_by']=="Nombre")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Cliente</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
-						    <?php if($_GET['order_by']=="Codigo")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Producto&nbsp;
-						    <?php if($_GET['order_by']=="Publicar")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Factura&nbsp;
-						  <?php if($_GET['order_by']=="FechaFacturaBono")<?php 
-						  <img src="images/<?php echo $img;?>" alt="" border=0>
-						  <?php };?>
-						  </a></td>
-						<td class=navpic nowrap bgcolor=#DBEAF5>Fecha</td>
-						<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
-						<td class=navpic nowrap bgcolor=#DBEAF5>Punto de Venta</td>
-		</tr>
-
-<?php while($r = db_fetch_object($result)){
+	  <td><table width=100% border=0 cellspacing=4 cellpadding=0>
+	    <tr>
+	      <td colspan="12" align=left valign=middle class=rowform><a href="Garantia/exportagarantias.php?sql=<?php echo $sql; ?>"><img src="../images/excel_icon.gif" alt="" width="20" height="20" border="0" >Exportar Registros </a></td>
+        </tr>
+	    <tr>
+	      <td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5> Numero&nbsp;
+	        <% if($_GET['order_by']=="Nombre"){%>
+	        <img src="images/<%=$img%>" border=0>
+	        <%}%></td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5>Tipo<a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">&nbsp; </a></td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5>Clasif</td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5>Por:</td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5>Cliente
+	        <% if($_GET['order_by']=="Codigo"){%>
+	        <img src="images/<%=$img%>" border=0>
+	        <%}%></td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5>Ref</td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5>Talla</td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5>Tipo</td>
+	      <td class=navpic nowrap bgcolor=#DBEAF5>Fecha</td>
+	      <td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
+	      <td class=navpic nowrap bgcolor=#DBEAF5>Almacen Reg. Garantia</td>
+        </tr>
+	    <? while($r = db_fetch_object($result)){
+	$tallap="";
+	$id_referencia_item="";
 ?>
-  	
-<tr>
-						<td align=center valign=middle nowrap width=69 class=row2>
-						  &nbsp;<a href='<?php echo "?mod=SeguimientoGarantia&action=edit&id="; echo $r->IDGarantia; ?>'><img src='images/edit.gif' border='0'></a>
-</td>
-						<td nowrap class="<?=$class?>"><?php echo $r->IDGarantia; ?></td>
-						<td nowrap class="<?=$class?>"><?php
-									$id_cliente= get_field("Factura","IDCliente","IDFactura",$r->IDFactura);
-									echo get_field("Cliente","Nombre","IDCliente",$id_cliente)." ".get_field("Cliente","Apellido","IDCliente",$id_cliente)?></td>
-						<td nowrap class="<?=$class?>"><?php
-									  $sql_producto="select * from DetalleFactura Where IDDetalleFactura='".$r->IDDetalleFactura."' and IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVenta."'";
-									  $qry_producto=db_query($sql_producto);
-									  $r_detalle=db_fetch_object($qry_producto);
-									echo "<b>Ref:</b> " . get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)));
-									echo " <b>Talla:</b> " .get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica));
-									echo " <b>Nombre:</b> " .get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)));
+	    <tr>
+	      <td align=center valign=middle nowrap width=69 class=row2>&nbsp;<a href='<? echo "?mod=Garantia&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a></td>
+	      <td nowrap class="<?=$class?>"><? echo $r->IDGarantia; ?></td>
+	      <td nowrap class="<?=$class?>"><? echo $r->TipoRegistro; ?></td>
+	      <td nowrap class="<?=$class?>"><?  if($r->TipoProducto=="C") echo "Caprino"; elseif($r->TipoProducto=="T") echo "Tercero" ; ?></td>
+	      <td nowrap class="<?=$class?>"><?  if($r->CantidadVeces=="1") echo "Primera"; elseif($r->CantidadVeces=="2") echo "Segunda" ; else echo "Tercera"; ?>
+	        Vez</td>
+	      <td nowrap class="<?=$class?>"><? 
+						if(!empty($r->IDDetalleCambio)){
+									  $array_cambio_detalle=explode("|",$r->IDDetalleCambio);	
+									  $sql_datos_factura=db_query("Select * From Cambio Where IDCambio = '".$array_cambio_detalle[0]."'");
+									  $r_factura=db_fetch_array($sql_datos_factura);				  										
+									}
+									else{
+										
+									  if ($r->TipoFactura=="facturabono"):	
+										  $sql_datos_factura=db_query("Select * From FacturaBono Where IDFacturaBono = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
+									  else:
+									  	  $sql_datos_factura=db_query("Select * From Factura Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
+									  endif;
+									  $r_factura=db_fetch_array($sql_datos_factura);				  										
+									}
+									if ($r->TipoRegistro=="Reproceso"){
+										$id_proveedor=get_field("Referencia","IDProveedor","IDReferencia",$r->IDReferencia);
+										echo get_field("Proveedor","Nombre","IDProveedor",$id_proveedor);
+									}
+									elseif($r->Mayorista=="S"){
+										echo $r->NombreMayorista;	
+									}
+									else{
+										$id_cliente= $r_factura[IDCliente];
+										echo get_field("Cliente","Nombre","IDCliente",$id_cliente)." ".get_field("Cliente","Apellido","IDCliente",$id_cliente);
+									}
+									?></td>
+	      <td nowrap class="<?=$class?>"><?php
+									
+									if ($r->TipoRegistro=="Reproceso" || $r->Mayorista=="S" ){										
+										echo get_field("Referencia","Numero","IDReferencia",$r->IDReferencia);
+										$tallap=get_field("Talla","Descripcion","IDTalla",$r->IDTalla);
+										$id_tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$r->IDReferencia);;
+										$tipop= get_field("TipoReferencia","Descripcion","IDTipoReferencia",$id_tipo_ref);
+									}
+									elseif(!empty($r->IDDetalleFacturaBono)){
+										$array_bono_detalle=explode("|",$r->IDDetalleFacturaBono);
+										if (count($array_bono_detalle)>0):
+											$sql_bono=db_query("Select * From DetalleFacturaBono Where IDDetalleFacturaBono	 = '".$array_bono_detalle[1]."' and IDFacturaBono = '".$array_bono_detalle[0]."'");
+											$r_bono=db_fetch_array($sql_bono);
+											
+											$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_bono["IDCodificacionEspecifica"])));
+											$nombre_talla=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_bono["IDCodificacionEspecifica"]));
+											$id_tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$id_referencia_item);
+											echo $nombre_referencia=get_field("Referencia","Nombre","IDReferencia",$id_referencia_item);
+											$tipop=get_field("TipoReferencia","Descripcion","IDTipoReferencia",$id_tipo_ref);
+											$tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_bono["IDCodificacionEspecifica"]));
+										endif;
 
+										
+									}
+	
+									
+									elseif(empty($r->IDDetalleCambio)){
+										  $id_referencia_item="";
+										  $id_punto_venta=$r->IDPuntoVentaFactura;
+										  
+										  if ($r->TipoFactura=="facturabono"):	
+											  	$sql_producto="select * from DetalleFacturaBono Where IDDetalleFacturaBono='".$r->IDDetalleFactura."' and IDFacturaBono = '".$r->IDFactura."' and IDPuntoVenta = '".$id_punto_venta."'";
+										  else:
+											  $sql_producto="select * from DetalleFactura Where IDDetalleFactura='".$r->IDDetalleFactura."' and IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$id_punto_venta."'";
+										  endif;
+										  $qry_producto=db_query($sql_producto);
+										  $r_detalle=db_fetch_object($qry_producto);
+										  $id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)));
+										  $tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica));
+										  
+										  
+										if ($id_referencia_item==160){ // Cuando son excedentes consulto la referencia de la compra										
+											$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
+											$r_facturabono=db_fetch_array($sql_facturabono);							
+											if (!empty($r_facturabono[IDFacturaBono])){											
+												$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono[IDFacturaBono]."'");
+												$r_detallefacturabono=db_fetch_array($sql_detallefacturabono);								
+												$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
+												$tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"]));
+											}
+										  }									 
+										  
+										  
+										  
+										  $id_tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$id_referencia_item);
+										  echo get_field("Referencia","Nombre","IDReferencia",$id_referencia_item);										 
+										  $tipop=get_field("TipoReferencia","Descripcion","IDTipoReferencia",$id_tipo_ref);
+									}
+									else{
+										$array_cambio_detalle=explode("|",$r->IDDetalleCambio);
+										if (count($array_cambio_detalle)>0):
+											$sql_cambio=db_query("Select * From DetalleCambio Where IDDetalleCambio = '".$array_cambio_detalle[1]."' and IDCambio = '".$array_cambio_detalle[0]."'");
+											$r_cambio=db_fetch_array($sql_cambio);
+											
+											$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_cambio["IDCodificacionEspecifica"])));
+											$nombre_talla=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_cambio["IDCodificacionEspecifica"]));
+											$id_tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$id_referencia_item);
+											echo $nombre_referencia=get_field("Referencia","Nombre","IDReferencia",$id_referencia_item);
+											$tipop=get_field("TipoReferencia","Descripcion","IDTipoReferencia",$id_tipo_ref);
+										endif;
+										
+									}
+									
+									if($r->Mayorista=="S"):
+										echo $r->ColorMayorista;
+									endif;	
 									
 									?></td>
-						<td nowrap class="<?=$class?>"><?php echo get_field("Factura","Numerofactura","IDFactura",$r->IDFactura); ?></td>
-						<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaGarantia,0,10)) ?></td>
-						<td nowrap class="<?=$class?>"><?php echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia); ?></td>
-						<td nowrap class="<?=$class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
-		</tr>
-<?php } // END for
+	      <td nowrap class="<?=$class?>"><?php 
+							if ($tallap!="")
+								echo $tallap;
+							else	
+								echo $tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$id_referencia_item));
+							
+							
+							?></td>
+	      <td nowrap class="<?=$class?>"><?php 
+		  if($r->Mayorista=="S"):
+			echo $r->TipoProductoMayorista;
+		  else:
+		  	echo $tipop; 
+		endif;	
+			?></td>
+	      <td nowrap class="<?=$class?>"><? echo formatofecha(substr($r->FechaTrCr,0,10)) ?></td>
+	      <td nowrap class="<?=$class?>" style="color: #900; font-weight:bold"><?php 
+							echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia); 
+							
+							if ($r->IDEstadoGarantia==10): // si es autorizacion especial consulto quien la dio								
+								$sql_usuario_especial=db_query("Select * from ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia = 10");
+								$row_usuario_especial = db_fetch_array($sql_usuario_especial);
+								echo "<br><font style='color: #000;'>Por:" . get_field("Empleado","Nombre","IDEmpleado",$row_usuario_especial[IDEmpleado]) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_usuario_especial[IDEmpleado])."</font>";
+							endif;
+							
+							
+							
+							?></td>
+	      <td nowrap class="<?=$class?>"><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
+        </tr>
+	    <? } // END for
 ?>
-<tr>
-<td class=texto bgcolor=#DBEAF5 colspan=8 nowrap>
-	<?php
+	    <tr>
+	      <td class=texto bgcolor=#DBEAF5 colspan=12 nowrap><?
 		print $pages;
-		?>
-</td>
-</tr>		
-</table></td>
+		?></td>
+        </tr>
+      </table></td>
 </tr>
-</table>
-</form>
-<?php
-}//end	mostrar($newmode,$submit_caption)
+</table>	
 
+<? 			
+}// End if$rows
+else
+	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
+}// Enf function list()				
 
-/*******************************************************************************************
-		funtcion Print_formCliente
-*******************************************************************************************/
-function print_formgarantia($id="",$newmode,$title,$submit_caption) {
-
-	GLOBAL $TitleMod,$Table,$MOD,$Key,$cedula,$array_gustos,$array_deportes,$array_hobbies,$array_musica, $datos,$IDPuntoVenta;
-	$qid = db_query(" SELECT * FROM Cliente WHERE Cedula = '$id' ");
-	$r = db_fetch_object($qid);
-	
-?>
-	
-<br>
-<?php
-}// End function print_formgarantia()
-
-
-
-
-
-
-/*******************************************************************************************
-		funtcion print_formfactura_cliente
-*******************************************************************************************/
-function print_formfactura_cliente($id="",$newmode,$title,$submit_caption) {
-
-	GLOBAL $TitleMod,$Table,$MOD,$Key,$cedula,$array_gustos,$array_deportes,$array_hobbies,$array_musica, $datos,$IDPuntoVenta;
-	
-?>
-	
-<br>
-<?php
-}// End function print_formfactura_cliente()
-
-
-
-
-
-
-
-
-
-/*******************************************************************************************
-		funtcion Print_form
-*******************************************************************************************/
-
-function print_form($id,$newmode,$title,$submit_caption,$frm=""){
-	GLOBAL $TitleMod,$Table,$MOD,$Key, $ID_Usuario, $IVA,$IDPuntoVenta;
-	
-	
-	
-	
-	$qid = db_query(" SELECT * FROM Cliente WHERE IDCliente = '$id' ");
-		
-	$r = db_fetch_object($qid);
-?>
-
-<script language="JavaScript">
-<!--
-		
-	-->
-</script>
-<script>
-var Check = new Array('NumeroFactura','NumeroDocumento','IDPuntoVenta','IDCliente','IDEmpleado', 'Cantidad1', 'Nombre1', 'ValorTotal');
-</script>
-<br>
-<?php
-} // END function print_form_fotos($id,$numfotos)
-?>
-
-
-
-<?php
 /*******************************************************************************************
 		funcion filtrar
 *******************************************************************************************/
 	function filtrar(){
-	Global $dblink,$total_records,$row,$numtoshow,$MOD, $datos;
-	
+	Global $dblink,$total_records,$row,$numtoshow,$MOD;
 ?>
-	<form name="frm" action="" method="get">
+	<form name="frm" action="./" method="get" onSubmit="return valbuscar(document.frm)">
     
     
     
@@ -529,70 +715,88 @@ var Check = new Array('NumeroFactura','NumeroDocumento','IDPuntoVenta','IDClient
     
     
 	<tr>
-				<td class="rowform" align="center" colspan=8><span class="col2">
-                
-                
-Punto de venta 
-				    <select class=tbox name=puntoventa>
-				    <option value="">Seleccione</option>
-				    <?php
-							$sql_puntos = "SELECT P.* FROM PuntoVenta P ";
-							$sql_puntos .= "WHERE 1 and IDPuntoVenta = '".$datos[IDPuntoVenta]."' Order By Nombre";
-							
-							$query_puntos = db_query( $sql_puntos );
-						
-							while( $r_puntos = db_fetch_object( $query_puntos ) )
-							{
-								if ($r_puntos->IDPuntoVenta == $IDPuntoVenta )
-									$selecciona = " selected";
-								else	
-									$selecciona = " ";
-								
-								echo "<option value=$r_puntos->IDPuntoVenta $selecciona>$r_puntos->Nombre</option>";
-								
-							}
-						?>
-			    </select>
-				</span>Tipo
-                
-                <select name="Tipo" id="Tipo">
-               	  <option value="">[Seleccione]</option>
-                    <option value="Garantia">Garantia</option>
-                    <option value="Servicio">Servicio</option>
-                    <option value="Reproceso">Reproceso</option>
-                </select>
-                
-				  Tipo Reproceso
-				  <select name="TipoReproceso" id="TipoReproceso">
-				    <option value="">[Seleccione]</option>
-                    <option value="Remonta">Remonta</option>
-			      </select>
-				  <br>Estado
-                  <?php echo formpopup("EstadoGarantia","Nombre","IDEstadoGarantia","IDEstadoGarantia",$r->IDEstadoGarantia,"input\" id=\"IDEstadoGarantia"); ?>
-                  
-				  Entre
-                  
-                  <input type=text readonly size=10 class=input name=limit1>
-                  <script language='JavaScript1.2'>
+				<td class="rowform" align="center" colspan=8><p><span class="col2">
+				  
+				  
+			    Numero Garantia	 
+			    <input type="text" name="IDGarantia" id="IDGarantia">
+			    
+			    Tipo de Proceso :
+<select name="TipoRegistro" id="TipoRegistro">
+    <option value=""></option>
+    <option value="Garantia">Garantia</option>
+    <option value="Reproceso">Reproceso</option>
+    <option value="Servicio">Servicio</option>
+  </select>
+			    Estado:
+<select name="IDEstadoGarantia" id="IDEstadoGarantia">
+    <option value="">[Seleccione]</option>
+    <?php 
+                    $sql_estados=db_query("Select * from EstadoGarantia Where 1 Order by Nombre");
+                    while($row_estado=db_fetch_array($sql_estados)){
+                        ?>
+    <option value="<?php echo $row_estado["IDEstadoGarantia"]; ?>"><?php echo $row_estado["Nombre"]; ?></option>
+    <?php
+                    }
+                    ?>
+  </select>
+  <br>
+			    Punto Venta Registra
+<select name="IDPuntoVenta" id="IDPuntoVenta">
+    <option value="">[Seleccione]</option>
+    <?php 
+                    $sql_vta=db_query("Select * from PuntoVenta Where Publicar = 'S' Order by Nombre");
+                    while($row_vta=db_fetch_array($sql_vta)){
+                        ?>
+    <option value="<?php echo $row_vta["IDPuntoVenta"]; ?>"><?php echo $row_vta["Nombre"]; ?></option>
+    <?php
+                    }
+                    ?>
+  </select>
+			    Garantias por
+<select name="CantidadVeces" id="CantidadVeces">
+    <option value=""></option>
+    <option value="1">Primera Vez </option>
+    <option value="2">Segunda Vez</option>
+    <option value="3">Tercera Vez</option>
+  </select>
+			    Clasificacion
+<select name="TipoProducto" id="TipoProducto">
+    <option value=""></option>
+    <option value="C">Producto Caprino</option>
+    <option value="T">Producto Tercero</option>
+  </select>
+			    Alerta
+<select name="Alerta" id="Alerta">
+  <option value=""></option>
+  <option value="V">Vencidos</option>
+  <option value="PV">Proximo a vencer</option>
+  <option value="NC">Sin Nota Credito</option>
+  <option value="PF">Pendiente Finalizar</option>
+</select>
+			    </span><br>Entre:
+<input type=text readonly size=10 class=input name=limit1>
+			      <script language='JavaScript1.2'>
 								<!--
 								if (!document.layers)
 								document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit1,\"yyyy-mm-dd\")' width=16 height=16 border=0>")	
 								//-->
 					</script>
-y
-<input type=text size=10 readonly class=input name=limit2>
-<script language='JavaScript1.2'>
+			      y
+			      <input type=text size=10 readonly class=input name=limit2>
+			      <script language='JavaScript1.2'>
 								<!--
 								if (!document.layers)
 									document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit2,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 								//-->
 					</script>
-                
-                
-                
-                
-                
-<table width="100%"  cellpadding="2" cellspacing="3">
+				    
+				    
+				    
+				    
+				    
+			      </p>
+				  <table width="100%"  cellpadding="2" cellspacing="3">
                     <tr>
                       <td colspan="6"><strong>CAUSA DE GARANTIA</strong></td>
                     </tr>
@@ -600,12 +804,11 @@ y
                       <td class="row2">Contrafuerte</td>
                       <td class="row2"><input type="checkbox" name="TipoContrafuerte" id="TipoContrafuerte" value="S" <?php if ($_GET[TipoContrafuerte]=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpContrafuerte" id="tmpContrafuerte" value="<?php echo $r->TipoContrafuerte; ?>"></td>
-                      <td class="row2" >Despegue</td>
-                      <td class="row2" >
-                        
-                        <input type="checkbox" name="TipoDespegue" id="TipoDespegue" value="S" <?php if ($_GET[TipoDespegue]=="S"){ echo "checked"; } ?>  />
+                      <td >Despegue</td>
+                      <td ><input type="checkbox" name="TipoDespegue" id="TipoDespegue" value="S" <?php if ($_GET[TipoDespegue]=="S"){ echo "checked"; } ?>  />
+                        <span class="row2">
                           <input type="hidden" name="tmpTipoDespegue" id="tmpTipoDespegue" value="<?php echo $r->TipoDespegue; ?>">
-                      </td>
+                        </span></td>
                       <td class="row2">Cardado</td>
                       <td class="row2"><input type="checkbox" name="TipoCardado" id="TipoCardado" value="S" <?php if ($_GET[TipoCardado]=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCardado" id="tmpTipoCardado" value="<?php echo $r->TipoCardado; ?>"></td>
@@ -614,12 +817,11 @@ y
                       <td class="row2">Cuero</td>
                       <td class="row2"><input type="checkbox" name="TipoCuero" id="TipoCuero" value="S" <?php if ($_GET[TipoCuero]=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCuero" id="tmpTipoCuero" value="<?php echo $r->TipoCuero; ?>"></td>
-                      <td class="row2">Cambrion</td>
-                      <td class="row2">
-                        
-                        <input type="checkbox" name="TipoCambrion" id="TipoCambrion" value="S" <?php if ($_GET[TipoCambrion]=="S"){ echo "checked"; } ?>  />
+                      <td >Cambrion</td>
+                      <td><input type="checkbox" name="TipoCambrion" id="TipoCambrion" value="S" <?php if ($_GET[TipoCambrion]=="S"){ echo "checked"; } ?>  />
+                        <span class="row2">
                           <input type="hidden" name="tmpTipoCambrion" id="tmpTipoCambrion" value="<?php echo $r->TipoCambrion; ?>">
-                      </td>
+                        </span></td>
                       <td class="row2">Suela Rota</td>
                       <td class="row2"><input type="checkbox" name="TipoSuela" id="TipoSuela" value="S" <?php if ($_GET[TipoSuela]=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoSuela" id="tmpTipoSuela" value="<?php echo $r->TipoRemonta; ?>"></td>
@@ -628,11 +830,11 @@ y
                       <td class="row2">Plantilla estructural</td>
                       <td class="row2"><input type="checkbox" name="TipoPlantilla" id="TipoPlantilla" value="S" <?php if ($_GET[TipoPlantilla]=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoPlantilla" id="tmpTipoPlantilla" value="<?php echo $r->TipoPlantilla; ?>"></td>
-                      <td class="row2">Tacon</td>
-                      <td class="row2">
+                      <td >Tacon</td>
+                      <td ><span class="row2">
                         <input type="checkbox" name="TipoTacon" id="TipoTacon" value="S" <?php if ($_GET[TipoTacon]=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoTacon" id="tmpTipoTacon" value="<?php echo $r->TipoTacon; ?>">
-                      </td>
+                      </span></td>
                       <td class="row2">Guarnicion</td>
                       <td class="row2"><span class="row2">
                         <input type="checkbox" name="TipoGuarnicion" id="TipoGuarnicion" value="S" <?php if ($_GET[TipoGuarnicion]=="S"){ echo "checked"; } ?>  />
@@ -643,12 +845,11 @@ y
                       <td height="27" class="row2">Cremallera</td>
                       <td class="row2"><input type="checkbox" name="TipoCremallera" id="TipoCremallera" value="S" <?php if ($_GET[TipoCremallera]=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCremallera" id="tmpTipoCremallera" value="<?php echo $r->TipoCremallera; ?>"></td>
-                      <td class="row2">Cerco</td>
-                      <td class="row2">
-                        
-                        <input type="checkbox" name="TipoCerco" id="TipoCerco" value="S" <?php if ($_GET[TipoCerco]=="S"){ echo "checked"; } ?>  />
+                      <td >Cerco</td>
+                      <td><input type="checkbox" name="TipoCerco" id="TipoCerco" value="S" <?php if ($_GET[TipoCerco]=="S"){ echo "checked"; } ?>  />
+                        <span class="row2">
                           <input type="hidden" name="tmpTipoCerco" id="tmpTipoCerco" value="<?php echo $r->TipoCerco; ?>">
-                      </td>
+                        </span></td>
                       <td class="row2">Puntera</td>
                       <td class="row2"><span class="row2">
                         <input type="checkbox" name="TipoPuntera" id="TipoPuntera" value="S" <?php if ($_GET[TipoPuntera]=="S"){ echo "checked"; } ?>  />
@@ -659,10 +860,10 @@ y
                       <td class="row2">Herraje</td>
                       <td class="row2"><input type="checkbox" name="TipoHerraje" id="TipoHerraje" value="S" <?php if ($_GET[TipoHerraje]=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoHerraje" id="tmpTipoHerraje" value="<?php echo $r->TipoHerraje; ?>"></td>
-                      <td class="row2" >&nbsp;</td>
                       <td class="row2">&nbsp;</td>
                       <td class="row2">&nbsp;</td>
-                      <td class="row2">&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
                     </tr>
                   </table>                
                 
@@ -673,7 +874,7 @@ y
                 
                 
                 <br>
-					<input type="hidden" name="mod" value="GarantiaReporte">
+					<input type="hidden" name="mod" value="<?=$MOD?>">
 					
 					<input type="hidden" name="action" value="list">
 					
@@ -681,9 +882,6 @@ y
 	  </td>
 	  </tr>
 	</form>
-<?php
+<?		
 	}//End function filtrar
 ?>
-
-
-</BODY></HTML> 

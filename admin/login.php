@@ -1,4 +1,4 @@
-<?php php
+<?php
 	include ("config.inc.php");
 
 	Encabezado();
@@ -131,19 +131,19 @@ Where User = '$login' AND Password ='$pass' AND Autorizado = 'S' AND Nivel<3");
 			<tr>
 	<td class='mainbg'>
 		<table class="forumline" width="310" cellpadding="2" cellspacing="1" border="0">
-			<form action="<?php php echo $PHP_SELF;?>" method="post" name="loginfrm" onSubmit="return Evalua()">
+			<form action="<?php echo $PHP_SELF;?>" method="post" name="loginfrm" onSubmit="return Evalua()">
 			<tr>
 				<td class="titlemedium" colspan="4" height="25">Ingrese su Usuario y Password para acceder a la aplicaci&oacute;n</td>
 			</tr>
-			<?php php
-												 if (isset($ERROR)){
-												 ?>
+			<?php
+															 if (isset($ERROR)){
+															 ?>
 			<tr>
 					<td class="row1" colspan="4"><span class=gen>
-												 <?php php echo "$ERROR";
+											 <?php echo "$ERROR";
 									?></span></td>
 				</tr>
-				<?php php }
+				<?php }
 				?>
 			<tr>
 				<td class="row1" colspan="2"><span class="gen">Usuario :</span></td>
@@ -154,7 +154,7 @@ Where User = '$login' AND Password ='$pass' AND Autorizado = 'S' AND Nivel<3");
 				<td class="row2" colspan="2" valign="middle"><span class="genmed"><input type="password" class="post" name="clave" size="20" /></span></td>
 			</tr>
 			<tr>
-				<td class="rowform" colspan="4" align="center" height="28"><input type="hidden" value="<?php php echo $redirect;?>" name="redirect">
+				<td class="rowform" colspan="4" align="center" height="28"><input type="hidden" value="<?php echo $redirect;?>" name="redirect">
 				<input class="submit" type="submit" name="action" value="Iniciar">
 				<input type="reset" class="submit" value="Limpiar" class="buttons"></td>
 			</tr>

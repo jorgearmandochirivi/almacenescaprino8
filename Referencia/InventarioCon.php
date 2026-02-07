@@ -232,7 +232,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 						//Totallizar la linea
 						if( $linea <> substr( $r_referencia->Numero, 0, 2 )  )
 						{
-							if( array_sum( $array_linea[$linea] ) > 0 )
+							if( isset($array_linea[$linea]) && is_array($array_linea[$linea]) && array_sum( $array_linea[$linea] ) > 0 )
 							{
 				?>			<tr>
 								<td class="row0" align="left">Totales <?=$linea ?></td>
@@ -253,7 +253,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 								}//end for
 								?>
-								<td class="row0" align="right"><b><?=array_sum( $array_linea[$linea] ) ?></b></td>
+								<td class="row0" align="right"><b><?=array_sum( isset($array_linea[$linea]) && is_array($array_linea[$linea]) ? $array_linea[$linea] : array() ) ?></b></td>
 							</tr>
 							<?php
 								$array_linea = array( );
@@ -330,7 +330,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 					}//end for
 					?>
-					<td class="row0" align="right"><b><?=array_sum( $array_linea[$linea] ) ?></b></td>
+					<td class="row0" align="right"><b><?=array_sum( isset($array_linea[$linea]) && is_array($array_linea[$linea]) ? $array_linea[$linea] : array() ) ?></b></td>
 				</tr>
 				<tr>
 					<td class="navpic" align="left">Total</td>
@@ -350,11 +350,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 					}//end for
 					?>
-					<td class="navpic" align="right"><?=array_sum( $totales )?></td>
-				</tr>
-
-
-
+					<td class="navpic" align="right"><?=array_sum( isset($totales) && is_array($totales) ? $totales : array() )?></td>
 
 
 </table>

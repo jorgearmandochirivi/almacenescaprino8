@@ -1,4 +1,4 @@
-<body> <?php
+<body> <?
 
 $TitleMod ="PuntoVenta";
 
@@ -156,7 +156,7 @@ function addSelectF(size,type,name,value,keypress, blur){
 	var input =  document.createElement("SELECT");
 	input.setAttribute("name",name);
 
-	<?php
+	<?
 	$sql_formapago = "SELECT * FROM FormaPago";
 	$query_formapago = db_query($sql_formapago);
 	$i = 0;
@@ -179,7 +179,7 @@ function addSelectF(size,type,name,value,keypress, blur){
 function addSelectB(size,type,name,value,keypress, blur){
 	var input =  document.createElement("SELECT");
 	input.setAttribute("name",name);
-	<?php
+	<?
 	$sql_banco = "SELECT * FROM Banco";
 	$query_banco = db_query($sql_banco);
 	$i = 0;
@@ -245,41 +245,41 @@ function delRow(){
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
-			<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
+<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-				<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
+				<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
 			</tr>
 	<tr>
 				<td>
 		<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
 			<tr class=row2>
-			<td class="row1"> Tipo de Punto</td><td><?php echo formpopup("TipoPuntoVenta","Nombre","Nombre","IDTipoPuntoVenta",$r->IDTipoPuntoVenta,"input\" id=\"Tipo de Venta"); ?></td>
+			<td class="row1"> Tipo de Punto</td><td><? echo formpopup("TipoPuntoVenta","Nombre","Nombre","IDTipoPuntoVenta",$r->IDTipoPuntoVenta,"input\" id=\"Tipo de Venta"); ?></td>
 			</tr>
 
             <tr class=row2>
-				<td class="row1"> Prioridad para entrega pedidos de terceros</td><td><?php echo formpopup("TipoPrioridad","Nombre","Nombre","IDTipoPrioridad",$r->IDTipoPrioridad,"input\" id=\"Tipo de prioridad"); ?></td>
+				<td class="row1"> Prioridad para entrega pedidos de terceros</td><td><? echo formpopup("TipoPrioridad","Nombre","Nombre","IDTipoPrioridad",$r->IDTipoPrioridad,"input\" id=\"Tipo de prioridad"); ?></td>
 			</tr>
 
 
 						<tr class=row2>
-			<td class="row1"> Ciudad </td><td><?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"Ciudad"); ?></td>
+			<td class="row1"> Ciudad </td><td><? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"Ciudad"); ?></td>
 			</tr>
 			<tr class=row2>
 			<td class="row1"> Administrador </td>
 			<td>
-			<?php echo formpopup("Empleado","Nombre","Apellidos","IDEmpleado",$r->IDEmpleado,"input\" id=\"Empleado"," Publicar = 'S'"); ?> </td>
+			<? echo formpopup("Empleado","Nombre","Apellidos","IDEmpleado",$r->IDEmpleado,"input\" id=\"Empleado"," Publicar = 'S'"); ?> </td>
 			</tr>
 						<tr class=row2>
 							<td class="row1">Comisi&oacute;n</td>
-							<td><?php echo formpopup("Comision","Porcentaje","Porcentaje","IDComision",$r->IDComision,"input\" id=\"Comision"); ?></td>
+							<td><? echo formpopup("Comision","Porcentaje","Porcentaje","IDComision",$r->IDComision,"input\" id=\"Comision"); ?></td>
 						</tr>
 						<tr class=row2>
 			<td class="row1"> Nombre </td><td><input type=text size=25 class=input   name=Nombre id=Nombre value="<?=$r->Nombre ?>"> </td>
@@ -300,7 +300,7 @@ function delRow(){
 			<td class="row1"> Email  </td><td><input type=text size=25 class=input   name=Email id=Email value="<?=$r->Email ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td class="row1"> Publicar </td><td><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
+			<td class="row1"> Publicar </td><td><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
 			</tr>
 			<tr class=row2>
 			<td class="row1"> Centro de Costo </td><td><input type=text size=25 class=input   name=CentroCosto id=CentroCosto value="<?=$r->CentroCosto ?>"> </td>
@@ -354,7 +354,7 @@ function delRow(){
 								<input type="button" onClick="addRow()" value="agregar"> <input type="button" onClick="delRow()" value="remover">
 							</td>
 			</tr>
-			<?php
+			<?
 							$sql_fpago = "SELECT * FROM PuntoVentaBanco WHERe IDPuntoVenta = '$id';";
 							$query_fpago = db_query($sql_fpago);
 							if(db_num_rows($query_fpago))
@@ -381,7 +381,7 @@ function delRow(){
 										</td>
 									</tr>
 
-									<?php
+									<?
 									$i = 1;
 									while( $r_fpago = db_fetch_object($query_fpago) )
 									{
@@ -389,11 +389,11 @@ function delRow(){
 									?>
 										<tr class="row2">
 											<td  align="center">
-												<?php echo $i;?>
+												<?echo $i;?>
 											</td>
 											<td  align="center">
 												<select name="PVentaFPago[<?=$r_fpago->IDPuntoVentaBanco?>]" class="InputSelect">
-													<?php
+													<?
 														$sql_PPago = "SELECT * FROM FormaPago";
 														$query_PPago = db_query($sql_PPago);
 														while( $r_PPago = db_fetch_object( $query_PPago ) )
@@ -410,7 +410,7 @@ function delRow(){
 											</td>
 											<td  align="center">
 												<select name="PVentaBanco[<?=$r_fpago->IDPuntoVentaBanco?>]" class="InputSelect">
-													<?php
+													<?
 														$sql_Pbanco = "SELECT * FROM Banco";
 														$query_Pbanco = db_query($sql_Pbanco);
 														while( $r_Pbanco = db_fetch_object( $query_Pbanco ) )
@@ -426,12 +426,12 @@ function delRow(){
 												</select>
 											</td>
 											<td  align="center">
-												<input type="text" value="<?php echo $r_fpago->Comision?>" size="5" name="PVentaComision[<?=$r_fpago->IDPuntoVentaBanco?>]" class="input">
+												<input type="text" value="<?echo $r_fpago->Comision?>" size="5" name="PVentaComision[<?=$r_fpago->IDPuntoVentaBanco?>]" class="input">
 											</td>
 											<td align="center">
-												<a href='<?php echo "?mod=$MOD&action=delfpago&id=".$id."&idfpago=";echo $r_fpago->IDPuntoVentaBanco; ?>'><img src='images/trash.gif' border='0'></a></td>
+												<a href='<? echo "?mod=$MOD&action=delfpago&id=".$id."&idfpago=";echo $r_fpago->IDPuntoVentaBanco; ?>'><img src='images/trash.gif' border='0'></a></td>
 									</tr>
-									<?php
+									<?
 										$i++;
 									}
 									?>
@@ -439,7 +439,7 @@ function delRow(){
 								</table>
 							</td>
 						</tr>
-			<?php
+			<?
 							}//end if(db_num_rows($query_fpago))
 							?>
 
@@ -470,9 +470,9 @@ function delRow(){
 				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
 				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
+				<input type=hidden name=ID value="<? echo $r->$Key ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
+				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
 			</td>
 			</tr>
 			<tr>
@@ -480,7 +480,7 @@ function delRow(){
 				</td>
 				<td align=center class=row2></td>
 			</tr>
-			<?php
+			<%
 				$sql_rformaspago = " SELECT SUM( FPF.Valor ) as Valor, FP.Descripcion
 										FROM Factura F, FormaPagoFactura FPF, FormaPago FP
 										WHERE F.IDPuntoVenta = '$r->IDPuntoVenta'
@@ -493,7 +493,7 @@ function delRow(){
 
 			if( db_num_rows( $qry_rformaspago ) > 0 )
 			{
-			?>
+			%>
 			<tr><td align=left class="titlemedium" colspan="2">Reporte Formas de Pago Almac&eacute;n</td></tr>
 			<tr>
 				<td align=left class=row1 colspan=2>
@@ -503,30 +503,30 @@ function delRow(){
 							<td class="rowform" align="center" ><b>Forma de Pago</b></td>
 							<td class="rowform" align="center"><b>Valor</b></td>
 						</tr>
-						<?php
+						<%
 						while( $r_rformaspago = db_fetch_object( $qry_rformaspago ) )
 						{
 							$class = repetition()?"row1":"row2";
-						?>
+						%>
 							<tr>
-								<td class="<?php echo $class;?>" align="right"><?php echo $r_rformaspago->Descripcion;?></td>
-								<td class="<?php echo $class;?>" align="right"><?php echo number_format( $r_rformaspago->Valor,2 );?></td>
+								<td class="<%=$class%>" align="right"><%=$r_rformaspago->Descripcion%></td>
+								<td class="<%=$class%>" align="right"><%=number_format( $r_rformaspago->Valor,2 )%></td>
 							</tr>
-						<?php
+						<%
 						}//end while
-						?>
+						%>
 					</table>
 				</td>
 			</tr>
-			<?php
+			<%
 			}//end if
-			?>
+			%>
 		</table>
 		</td>
 	</tr>
 </table>
 </form>
-<?php
+<?
 }// End function print_form()
 
 /*******************************************************************************************
@@ -573,26 +573,26 @@ function delRow(){
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-		<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
-		<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?php
+<?
 		if($rows > 0){
 ?>
 <br>
 <table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
 		</tr>
-<?php filtrar();?>
+<?filtrar();?>
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
+			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=13 nowrap>
-<?php
+<?
 	print $pages;
 ?>
 </td>
@@ -602,29 +602,29 @@ function delRow(){
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Nombre&nbsp;<?php if($_GET['order_by']=="Nombre")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDEmpleado&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Administrador&nbsp;<?php if($_GET['order_by']=="IDEmpleado")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTipoPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">TipoPuntoVenta&nbsp;<?php if($_GET['order_by']=="IDTipoPuntoVenta")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Nombre&nbsp;<% if($_GET['order_by']=="Nombre"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDEmpleado&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Administrador&nbsp;<% if($_GET['order_by']=="IDEmpleado"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTipoPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">TipoPuntoVenta&nbsp;<% if($_GET['order_by']=="IDTipoPuntoVenta"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
 
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Codigo&nbsp;<?php if($_GET['order_by']=="Codigo")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Telefono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Telefono&nbsp;<?php if($_GET['order_by']=="Telefono")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Codigo&nbsp;<% if($_GET['order_by']=="Codigo"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Telefono&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Telefono&nbsp;<% if($_GET['order_by']=="Telefono"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
 						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none">Comentario</td>
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 
-<?php while($r = db_fetch_object($result)){
+<? while($r = db_fetch_object($result)){
 ?>
 
 <tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td  class=row1><?php echo $r->Nombre ?></td>
+						<td  class=row1><? echo $r->Nombre ?></td>
 
-						<td nowrap class=row1><?php echo get_field("Empleado","concat(Nombre,' ',Apellidos)","IDEmpleado",$r->IDEmpleado) ?></td>
-						<td nowrap class=row1><?php echo get_field("TipoPuntoVenta","Nombre","IDTipoPuntoVenta",$r->IDTipoPuntoVenta) ?></td>
-						<td nowrap class=row1><?php echo $r->Codigo ?></td>
-						<td nowrap class=row1><?php echo $r->Telefono ?></td>
+						<td nowrap class=row1><%=get_field("Empleado","concat(Nombre,' ',Apellidos)","IDEmpleado",$r->IDEmpleado) %></td>
+						<td nowrap class=row1><? echo get_field("TipoPuntoVenta","Nombre","IDTipoPuntoVenta",$r->IDTipoPuntoVenta) ?></td>
+						<td nowrap class=row1><? echo $r->Codigo ?></td>
+						<td nowrap class=row1><? echo $r->Telefono ?></td>
 						<td nowrap class=row1>
 							<?php 															
 							if (isset($r->FechaFinResolucion) && $r->FechaFinResolucion != "0000-00-00") {								
@@ -663,14 +663,14 @@ function delRow(){
 
 						</td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>
+	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>
 </td>
 					</tr>
-<?php } // END for
+<? } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=7 nowrap>
-	<?php
+	<?
 		print $pages;
 		?>
 </td>
@@ -679,7 +679,7 @@ function delRow(){
 		</tr>
 </table>
 
-<?php
+<?
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -740,6 +740,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?php
+<?
 	}//End function filtrar
 ?>
