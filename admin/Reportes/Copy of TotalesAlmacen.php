@@ -44,7 +44,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 							
-								Desde	<input type="text" name="FechaDesde" class="input" value="<?=fecha()?>" size="10">
+								Desde	<input type="text" name="FechaDesde" class="input" value="<?php echo fecha()?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -56,7 +56,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 								
-								Hasta	<input type="text" name="FechaHasta" class="input" value="<?=fecha()?>" size="10">
+								Hasta	<input type="text" name="FechaHasta" class="input" value="<?php echo fecha()?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -81,9 +81,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 				<tr>
-					<td class="maintitle" valign="middle">&nbsp; Ventas totales mensuales brutas desde ; <?=formatofecha($FechaDesde)?> hasta : <?=formatofecha($FechaHasta)?>
+					<td class="maintitle" valign="middle">&nbsp; Ventas totales mensuales brutas desde ; <?php echo formatofecha($FechaDesde)?> hasta : <?php echo formatofecha($FechaHasta)?>
 						
 					</td>
 				</tr>
@@ -150,7 +150,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							for( $i = $monthbegin; $i < $monthend; $i++ )
 							{
 							?>
-								<td class="titlemedium" align="center" nowrap><?=$Mes_array[$i]?></td>
+								<td class="titlemedium" align="center" nowrap><?php echo $Mes_array[$i]?></td>
 							<?php
 							}//end for
 							?>
@@ -165,13 +165,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							$class = repetition()?"row2":"row1";
 						?>
 							<tr>
-								<td class="<?=$class?>" align="center" nowrap><?=$valor['Nombre']?></td>
+								<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Nombre']?></td>
 								<?php
 								$monthbegin = ( $monthbegin * 1 );
 								for( $i = $monthbegin; $i < $monthend; $i++ )
 								{
 								?>
-									<td class="<?=$class?>" align="right" nowrap>
+									<td class="<?php echo $class?>" align="right" nowrap>
 										<?php
 											echo number_format( $datosfechas[$i+1][$valor['IDPuntoVenta']] , 2);
 											$totalespunto[$valor['IDPuntoVenta']]['Totales'] += $datosfechas[$i+1][$valor['IDPuntoVenta']];
@@ -191,12 +191,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								<?php
 								}//end for
 								?>
-								<td class="<?=$class?>" align="center" nowrap>
+								<td class="<?php echo $class?>" align="center" nowrap>
 									<?php
 										echo number_format( $totalespunto[$valor['IDPuntoVenta']]['Totales'] , 2);
 									?>
 								</td>
-										<td class="<?=$class?>" align="center" nowrap>
+										<td class="<?php echo $class?>" align="center" nowrap>
 										
 											<?php
 											if( $totalespunto[$valor['IDPuntoVenta']]['Totales'] > 0 )
@@ -205,7 +205,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												$opciones_mes = implode(",",$opcionespunto[$valor['IDPuntoVenta']]);
 												$titulopunto = "Ventas ".$valor['Nombre'];
 											?>
-											<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_mes?>&opciones=<?=$opciones_mes?>&titulo=<?=$titulopunto?>','','width=550, height=400');" >
+											<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?php echo $datos_mes?>&opciones=<?php echo $opciones_mes?>&titulo=<?php echo $titulopunto?>','','width=550, height=400');" >
 												<img src="images/chart_pie.png" border="0">
 											</a>
 											<?php
@@ -232,7 +232,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										$opciones_mes = implode(",",$opciones[$i+1]);
 										$titulo = "Ventas ".$Mes_array[$i];
 									?>
-									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_mes?>&opciones=<?=$opciones_mes?>&titulo=<?=$titulo?>','','width=550, height=400');" >
+									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?php echo $datos_mes?>&opciones=<?php echo $opciones_mes?>&titulo=<?php echo $titulo?>','','width=550, height=400');" >
 										<img src="images/chart_pie.png" border="0">
 									</a>
 									<?php

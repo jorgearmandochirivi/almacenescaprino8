@@ -45,7 +45,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 							
-								Desde	<input readonly type="text" name="FechaDesde" class="input" value="<?=$FechaDesde?>" size="10">
+								Desde	<input readonly type="text" name="FechaDesde" class="input" value="<?php echo $FechaDesde?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -57,7 +57,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 								
-								Hasta	<input readonly type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>" size="10">
+								Hasta	<input readonly type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -93,11 +93,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; <br>
 				<br>
-				<a href="exportar/exporttventastot.php?IDPuntoVenta=<?=$IDPuntoVenta?>&FechaDesde=<?=$FechaDesde?>&FechaHasta=<?=$FechaHasta?>">Exportar Archivo</a>
+				<a href="exportar/exporttventastot.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>&FechaDesde=<?php echo $FechaDesde?>&FechaHasta=<?php echo $FechaHasta?>">Exportar Archivo</a>
 				<br>
 				<br>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
 							
@@ -488,19 +488,19 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							$class="row1";
 						?>
 							<tr>
-								<td class="<?=$class?>" align="center" nowrap><?=$Fecha?></td>
-								<td class="<?=$class?>" align="right" nowrap><?=number_format( $datos[Venta] ,2 ); ?></td>
-								<td class="<?=$class?>" align="right" nowrap><?=number_format( $datos[valoriva] ,2 ); ?> </td>
-								<td class="<?=$class?>" align="right" nowrap><?=number_format( $datos[parcial] ,2 ); ?></td>
+								<td class="<?php echo $class?>" align="center" nowrap><?php echo $Fecha?></td>
+								<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $datos[Venta] ,2 ); ?></td>
+								<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $datos[valoriva] ,2 ); ?> </td>
+								<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $datos[parcial] ,2 ); ?></td>
 							</tr>
 						<?php
 						}//end for
 						?>					
 						<tr>
 							<td class="titlemedium" align="right" nowrap>TOTALES</td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $tventa, 2) ?></td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $tiva , 2)?></td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $ttotal , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $tventa, 2) ?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $tiva , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $ttotal , 2)?></td>
 						</tr>	
 					</table>
 				</td>

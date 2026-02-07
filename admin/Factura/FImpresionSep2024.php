@@ -122,7 +122,7 @@ table{
 											<?php
 												echo $tipo_emp= ($r->FechaFactura>="2019-07-19 00:00:00") ? "SAS En Reorganizacion" : "LTDA En Reorganizacion";
 											?><br>
-											NIT <?=get_field( "NIT","NIT","IDNIT",1 );?>&nbsp;&nbsp;&nbsp;&nbsp;
+											NIT <?php echo get_field( "NIT","NIT","IDNIT",1 );?>&nbsp;&nbsp;&nbsp;&nbsp;
 											R&eacute;gimen com&uacute;n
 											</td>
 											</tr>
@@ -140,11 +140,11 @@ table{
 												</tr>
 														<tr>
 													<td class=texto>Direcci&oacute;n</td>
-															<td class=texto colspan="3" nowrap><?=$r_puntoventa->Direccion?></td>
+															<td class=texto colspan="3" nowrap><?php echo $r_puntoventa->Direccion?></td>
 														</tr>
 														<tr>
 													<td class=texto nowrap>Tel&eacute;fono</td>
-															<td class=texto colspan="3" nowrap><?=$r_puntoventa->Telefono?></td>
+															<td class=texto colspan="3" nowrap><?php echo $r_puntoventa->Telefono?></td>
 														</tr>
                                                         <tr>
 													<td class=texto nowrap>Vendedor</td>
@@ -152,12 +152,12 @@ table{
 										</tr>
 														<tr>
 													<td class=texto nowrap>Fecha Factura</td>
-													<td class=texto colspan="3" nowrap><?=$r->FechaFactura?></td>
+													<td class=texto colspan="3" nowrap><?php echo $r->FechaFactura?></td>
 										</tr>
 
                                         <tr>
 													<td class=texto nowrap>Fecha Creacion</td>
-													<td class=texto colspan="3" nowrap><?=$r->FechaCreacion?></td>
+													<td class=texto colspan="3" nowrap><?php echo $r->FechaCreacion?></td>
 										</tr>
 
 
@@ -200,7 +200,7 @@ table{
 													$i++;
 											?>
 										  <tr >
-										    <td align="center" class="<?=$class?>"><?php
+										    <td align="center" class="<?php echo $class?>"><?php
 															$ref=get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)));
 															echo $ref;
 															//echo substr($ref,0,4) . "<br>" . substr($ref,4,10);
@@ -216,7 +216,7 @@ table{
 										      <?php
 															echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica));
 														?></td>
-										    <td align="center" class="<?=$class?>"><?php
+										    <td align="center" class="<?php echo $class?>"><?php
 
 
                                                                                                                 $precio_consultado = get_field("Precio","ValorVenta","IDPrecio",get_field("Referencia","IDPrecio","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))));
@@ -225,11 +225,11 @@ table{
                                                                                                                 echo number_format($precio_consultado);
 
                                                                                                                 ?></td>
-										    <td align="center" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-										    <td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoRef);//number_format($r_detalle->DescuentoRef);?>%</td>
-										    <td align="right" class="<?=$class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
-										    <td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoPar);//number_format($r_detalle->DescuentoRef);?>%</td>
-										    <td align="left" class="<?=$class?>"><?php
+										    <td align="center" class="<?php echo $class?>"><?php echo $r_detalle->Cantidad?></td>
+										    <td align="center" class="<?php echo $class?>"><?php echo number_format($r_detalle->DescuentoRef);//number_format($r_detalle->DescuentoRef);?>%</td>
+										    <td align="right" class="<?php echo $class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
+										    <td align="center" class="<?php echo $class?>"><?php echo number_format($r_detalle->DescuentoPar);//number_format($r_detalle->DescuentoRef);?>%</td>
+										    <td align="left" class="<?php echo $class?>"><?php
 															$valorsin = ( $r_detalle->ValorU * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) ) * $r_detalle->Cantidad;
 															echo number_format( $valorsin );
 														?></td>
@@ -260,7 +260,7 @@ table{
 										<td class=texto nowrap>
 											<div align="right">IVA</div>
 										</td>
-										<td class=texto align="right"><?=number_format($r->ValorIVASinBono)?></td>
+										<td class=texto align="right"><?php echo number_format($r->ValorIVASinBono)?></td>
 									</tr>
                                     -->
 
@@ -273,7 +273,7 @@ table{
 										<td width="79" nowrap class=texto>
 											<div align="right">Total Factura</div>
 										</td>
-										<td width="22" align="right" class=texto><?=number_format($r->ValorTotalSinBono)?></td>
+										<td width="22" align="right" class=texto><?php echo number_format($r->ValorTotalSinBono)?></td>
 									</tr>
                                     <?php endif; ?>
 
@@ -285,7 +285,7 @@ table{
 										<td class=texto nowrap>
 											<div align="right">Menos  bono fidelizaci&oacute;n</div>
 										</td>
-										<td class=texto align="right">-<?=number_format($r->ValorBono)?></td>
+										<td class=texto align="right">-<?php echo number_format($r->ValorBono)?></td>
 									</tr>
                                     <?php endif; ?>
 
@@ -297,7 +297,7 @@ table{
 										<td class=texto nowrap>
 											<div align="right">Sub Total</div>
 										</td>
-										<td class=texto align="right"><?=number_format((int)$r->ValorTotalSinBono-(int)$r->ValorBono)?></td>
+										<td class=texto align="right"><?php echo number_format((int)$r->ValorTotalSinBono-(int)$r->ValorBono)?></td>
 									</tr>
                                     <?php endif; ?>
 
@@ -309,7 +309,7 @@ table{
 										<td class=texto nowrap>
 											<div align="right">Valor sin IVA</div>
 										</td>
-										<td class=texto align="right"><?=number_format((int)$r->ValorTotal-(int)$r->ValorIVA)?></td>
+										<td class=texto align="right"><?php echo number_format((int)$r->ValorTotal-(int)$r->ValorIVA)?></td>
 									</tr>
                                     -->
 
@@ -320,7 +320,7 @@ table{
 										<td class=texto nowrap>
 											<div align="right">Iva </div>
 										</td>
-										<td class=texto align="right"><?=number_format($r->ValorIVA)?></td>
+										<td class=texto align="right"><?php echo number_format($r->ValorIVA)?></td>
 									</tr>
 
 
@@ -330,7 +330,7 @@ table{
 										<td class=texto nowrap>
 											<div align="right">Valor Neto</div>
 										</td>
-										<td class=texto align="right"><?=number_format($r->ValorTotal)?></td>
+										<td class=texto align="right"><?php echo number_format($r->ValorTotal)?></td>
 									</tr>
 									<tr>
 										<td class=texto></td>
@@ -357,7 +357,7 @@ table{
 											<div align="right">
 												<?php echo get_field("FormaPago","Descripcion","IDFormaPago",$r_formapago->IDFormaPago)?></div>
 										</td>
-										<td class=texto><?=number_format($r_formapago->Valor)?></td>
+										<td class=texto><?php echo number_format($r_formapago->Valor)?></td>
 									</tr>
 									<?php 									}//end if($r_formapago->Valor <> 0)
 								}//end while( $r_formapago = db_fetch_object( $query_formapago ) )
@@ -399,15 +399,15 @@ table{
 									?>
                                     	<tr>
                                             <td class="texto mensajefooter" colspan="4" align="justify">
-                                            	Puntos Disponibles antes de la Compra: <?=$array_fidelizacion["puntoantescompra"] ?>
-                                                Puntos Ultima Compra: <?=$array_fidelizacion["puntosultimacompra"] ?>
-                                                Puntos redimidos en la &uacute;ltima compra: <?=$array_fidelizacion["puntoredimidos"] ?>
-                                                Puntos Totales Acumulados sin redimir: <?=$array_fidelizacion["puntostotal"] ?>
+                                            	Puntos Disponibles antes de la Compra: <?php echo $array_fidelizacion["puntoantescompra"] ?>
+                                                Puntos Ultima Compra: <?php echo $array_fidelizacion["puntosultimacompra"] ?>
+                                                Puntos redimidos en la &uacute;ltima compra: <?php echo $array_fidelizacion["puntoredimidos"] ?>
+                                                Puntos Totales Acumulados sin redimir: <?php echo $array_fidelizacion["puntostotal"] ?>
                                                 <?php
                                                 if( !empty( $array_fidelizacion["puntosproxvence"] ) )
 												{
 												?>
-                                                	Puntos Pr&oacute;ximos a Vencer: <?=$array_fidelizacion["puntosproxvence"] ?>
+                                                	Puntos Pr&oacute;ximos a Vencer: <?php echo $array_fidelizacion["puntosproxvence"] ?>
                                             	<?php
 												}//end if
 												?>
@@ -415,7 +415,7 @@ table{
                                                 if( !empty( $array_fidelizacion["bonosproxvence"] ) )
 												{
 												?>
-                                                	Bonos Pr&oacute;ximos a Vencer: <?=$array_fidelizacion["bonosproxvence"] ?>
+                                                	Bonos Pr&oacute;ximos a Vencer: <?php echo $array_fidelizacion["bonosproxvence"] ?>
                                             	<?php
 												}//end if
 												?>
@@ -429,7 +429,7 @@ table{
                                     <tr>
                                     	<td class="texto" colspan="4" align="center">
 																					<?php $ruta_redireccion="/admin/files/facturas/Factura".$r_puntoventa->Codigo.$r->NumeroFactura.".pdf"; ?>
-                                        	<a href="/admin/files/facturas/Factura<?=$r_puntoventa->Codigo.$r->NumeroFactura?>.pdf">PDF</a>
+                                        	<a href="/admin/files/facturas/Factura<?php echo $r_puntoventa->Codigo.$r->NumeroFactura?>.pdf">PDF</a>
                                         </td>
 
                                     </tr>

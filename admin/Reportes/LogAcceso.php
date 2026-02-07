@@ -40,7 +40,7 @@ else
 	<br>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?php echo $Title ?></span></td>
 		</tr>
 	</table>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -55,7 +55,7 @@ else
 						  <td  align='left' valign='middle' class="nav"> Desde
 					      </td>
 						  <td align="left" valign="middle" class="nav">
-						  <input  type="text" name="FechaDesde" class="input" value="<?=$_POST["FechaDesde"]?>" size="10">
+						  <input  type="text" name="FechaDesde" class="input" value="<?php echo $_POST["FechaDesde"]?>" size="10">
                           <script language="JavaScript1.2">
 									<!--
 										if (!document.layers)
@@ -65,7 +65,7 @@ else
                           
                           </td>
 						  <td width="3%"  align='left' valign='middle' class="nav">Hasta</td>
-							<td width="28%" align="left" valign="middle" class="nav"><input  type="text" name="FechaHasta" class="input" value="<?=$_POST["FechaHasta"]?>" size="10">
+							<td width="28%" align="left" valign="middle" class="nav"><input  type="text" name="FechaHasta" class="input" value="<?php echo $_POST["FechaHasta"]?>" size="10">
                             <script language="JavaScript1.2">
 									<!--
 										if (!document.layers)
@@ -124,9 +124,9 @@ else
 					 $r_usuario = db_fetch_object( $qry_usuario );
 				?>			
 					<tr>
-						<td class="<?=$class?>"><?=$r_usuario->Nombre . " " . $r_usuario->Apellidos ?></td>
-						<td class="<?=$class?>"><?=$r->Fecha ?></td>
-						<td class="<?=$class?>"><?=$r->DireccionIP ?></td>
+						<td class="<?php echo $class?>"><?php echo $r_usuario->Nombre . " " . $r_usuario->Apellidos ?></td>
+						<td class="<?php echo $class?>"><?php echo $r->Fecha ?></td>
+						<td class="<?php echo $class?>"><?php echo $r->DireccionIP ?></td>
 					</tr>
 							<?php
 					

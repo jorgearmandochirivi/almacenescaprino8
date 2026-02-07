@@ -69,7 +69,7 @@ function seleccionareferencia( $newmode)
 							<td colspan="3">
 				<input type="submit" class="button" name="enviar" value="Consultar">
 
-				<input type="hidden" name="Exportar" value="S" /><input type=hidden name=mod value="<?=$MOD?>"></td>
+				<input type="hidden" name="Exportar" value="S" /><input type=hidden name=mod value="<?php echo $MOD?>"></td>
 						</tr>
 					</table>
 					</form>

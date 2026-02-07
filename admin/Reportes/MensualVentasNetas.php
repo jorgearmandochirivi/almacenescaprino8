@@ -50,7 +50,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				<form action="./" name="frmPuntoVenta" method="post" name="Moviles">
 						<tr>
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
-							<td  align='left' valign='middle' class="nav">Fecha	<input readonly type="text" name="Fecha" class="input" value="<?=fecha()?>">
+							<td  align='left' valign='middle' class="nav">Fecha	<input readonly type="text" name="Fecha" class="input" value="<?php echo fecha()?>">
 
 								<script language="JavaScript1.2">
 							<!--
@@ -58,7 +58,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frmPuntoVenta.Fecha,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
 							//-->
 						</script>
-								  Hasta Fecha <input readonly type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>">
+								  Hasta Fecha <input readonly type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>">
 
 								<script language="JavaScript1.2">
 							<!--
@@ -94,13 +94,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td><br>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
 							
 						Reporte Mensual Netas: 
-					    <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
-						 - <?=formatofecha( $FechaHasta )?>
+					    <?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?php echo formatofecha( $Fecha )?>
+						 - <?php echo formatofecha( $FechaHasta )?>
 					</td>
 				</tr>
 				<?php
@@ -241,9 +241,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							
 						?>
 				        <tr>
-				          <td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
-				          <td class="<?=$class?>" align="center" nowrap><?=$valor['FechaFacturaF']?></td>
-				          <td class="<?=$class?>" align="center" nowrap><?php
+				          <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['NumeroFactura']?></td>
+				          <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['FechaFacturaF']?></td>
+				          <td class="<?php echo $class?>" align="center" nowrap><?php
 										unset($array_referencias);
                                         if($valor['Numero']=="Excedente"):
 											// consulto cliente
@@ -275,15 +275,15 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 											echo $valor['Numero'];
 										endif;
 										?></td>
-						 <td class="<?=$class?>" align="center" nowrap><?=$id_ref = get_field("Talla","Descripcion","IDTalla",$valor['IDTalla']);?> </td>
-				          <td class="<?=$class?>" align="right" nowrap>
+						 <td class="<?php echo $class?>" align="center" nowrap><?php echo $id_ref = get_field("Talla","Descripcion","IDTalla",$valor['IDTalla']);?> </td>
+				          <td class="<?php echo $class?>" align="right" nowrap>
 										<?php
 										$ElValorUnitarioExc=  $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) );
 										echo number_format( $ElValorUnitario = $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,2);
 										?>
 
 									</td>
-				          <td class="<?=$class?>" align="center" nowrap><?php
+				          <td class="<?php echo $class?>" align="center" nowrap><?php
 							if($valor['Numero']=="Excedente"):
 								echo "0";
 								//$Pares += $valor['Cantidad'];
@@ -293,9 +293,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							endif;
 
 							?></td>
-				          <td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoRef']?></td>
-				          <td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoFactura']?></td>
-						  <td class="<?=$class?>" align="right" nowrap>&nbsp;
+				          <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoRef']?></td>
+				          <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoFactura']?></td>
+						  <td class="<?php echo $class?>" align="right" nowrap>&nbsp;
 
 
 
@@ -444,7 +444,7 @@ $ventadia = $ElValorUnitarioExc;
 echo number_format( $ventadia ,2);
 $TotalVentaDia += $ventadia;
 ?></td>
-				          <td class="<?=$class?>" align="center" nowrap><?php
+				          <td class="<?php echo $class?>" align="center" nowrap><?php
 
 
 
@@ -452,8 +452,8 @@ $TotalVentaDia += $ventadia;
 
 								$numero_factura_ant = $valor['NumeroFactura'];
 								?></td>
-				          <td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoPar']?></td>
-				          <td class="<?=$class?>" align="right" nowrap>
+				          <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoPar']?></td>
+				          <td class="<?php echo $class?>" align="right" nowrap>
 	                          <?php
 														if((int)$pago<=0){
 																$pago = $ElValorUnitarioExc;
@@ -470,17 +470,17 @@ $TotalVentaDia += $ventadia;
 
 															?>
                           </td>
-				          <td class="<?=$class?>" align="right" nowrap><?php
+				          <td class="<?php echo $class?>" align="right" nowrap><?php
 												echo number_format( $saldo ,2); $Saldo += $saldo;
 											?></td>
-				          <td class="<?=$class?>" align="right" nowrap>
+				          <td class="<?php echo $class?>" align="right" nowrap>
 						 <!-- COMISION BANCOS --> 
 						  <?php 
 									
 										$comision=$array_forma_pago[ $valor[IDFactura] ][ValorComision];										
 										echo number_format( $comision  ,2 );
 										$ComisionBancos += $comision;?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?php
+				          <td class="<?php echo $class?>" align="right" nowrap><?php
 											$valorbruto = $valorparcial - $comision;
 
 											//echo  "FORMU: " . 	$valorparcial ."-". $comision."<br>";
@@ -498,7 +498,7 @@ $TotalVentaDia += $ventadia;
 											echo number_format( $valorbruto,2 );
 											$ValorParcial += $valorbruto;
 										?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?php
+				          <td class="<?php echo $class?>" align="right" nowrap><?php
 								$valoriva = ( $valorparcial - ( $valorparcial / (1 + $IVA ) ) );
 
 								if($valoriva<0 || $valor["ValorTotal"]==0):
@@ -507,7 +507,7 @@ $TotalVentaDia += $ventadia;
 
 								echo number_format( $valoriva,2 );
 								$ValorIVA += $valoriva; ?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?php
+				          <td class="<?php echo $class?>" align="right" nowrap><?php
 							$valor_bruto_item=$valorparcial - $valoriva;
 
 							if($valor_bruto_item<0 || $valor["ValorTotal"]==0):
@@ -517,7 +517,7 @@ $TotalVentaDia += $ventadia;
 							echo number_format( $valor_bruto_item ,2 );
 							$ValorBruto += ( $valorparcial - $valoriva );
 							?></td>
-				          <td class="<?=$class?>" align="right" nowrap><table width=100;?>
+				          <td class="<?php echo $class?>" align="right" nowrap><table width=100;?>
 				            <?php
 									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 									{
@@ -537,7 +537,7 @@ $TotalVentaDia += $ventadia;
 
 
 								?></td>
-				          <td class="<?=$class?>" align="right" nowrap><table width=100;?>
+				          <td class="<?php echo $class?>" align="right" nowrap><table width=100;?>
 				            <?php
 									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 									{
@@ -552,7 +552,7 @@ $TotalVentaDia += $ventadia;
 				            <?php
 									//echo $array_banco[ $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][IDBanco] ][Nombre];
 								?></td>
-				          <td class="<?=$class?>" align="right" nowrap>
+				          <td class="<?php echo $class?>" align="right" nowrap>
 						  
 						  <table>
 				            <?php
@@ -619,7 +619,7 @@ $TotalVentaDia += $ventadia;
 									}
 									*/
 								?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?php
+				          <td class="<?php echo $class?>" align="right" nowrap><?php
 	 						$AgregaValorRteIva="N";
 							
 							foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
@@ -642,7 +642,7 @@ $TotalVentaDia += $ventadia;
 						  		$ValorReteIVA=0;
 
 							?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?php
+				          <td class="<?php echo $class?>" align="right" nowrap><?php
 						  $AgregaValorIca="N";
 						  foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 						  {
@@ -664,7 +664,7 @@ $TotalVentaDia += $ventadia;
 						  	$ValorReteICA=0;
 
 							?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?php
+				          <td class="<?php echo $class?>" align="right" nowrap><?php
 
 							$valor_ingreso = $valorparcial  - ($TotRteIca + $TotRteIva + $TotRteFte + $valoriva + $comision );
 							//echo  "<br>FORMULA: " . $valorparcial  ."- (".$TotRteIca ."+". $TotRteIva ."+". $TotRteFte ."+". $valoriva ."+". $comision .")"."<br>";
@@ -690,18 +690,18 @@ $TotalVentaDia += $ventadia;
 						?>
 				        <tr>
 				          <td class="titlemedium" colspan="5" align="right" nowrap>TOTALES</td>
-				          <td class="titlemedium" align="center" nowrap><?=$Pares ?></td>
+				          <td class="titlemedium" align="center" nowrap><?php echo $Pares ?></td>
 				          <td class="titlemedium" align="center" nowrap></td>
 				          <td class="titlemedium" align="center" nowrap></td>
 				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $TotalVentaDia ,2); ?></td>
 				          <td class="titlemedium" align="center" nowrap></td>
 				          <td class="titlemedium" align="right" nowrap></td>
 				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $PagoVerdadero , 2); //number_format( $Pago , 2); ?></td>
-				          <td class="titlemedium" align="right" nowrap><?=number_format( $Saldo , 2)?></td>
-				          <td class="titlemedium" align="right" nowrap><?=number_format( $ComisionBancos , 2)?></td>
-				          <td class="titlemedium" align="right" nowrap><?=number_format( $ValorParcial , 2)?></td>
-				          <td class="titlemedium" align="right" nowrap><?=number_format( $ValorIVA , 2)?></td>
-				          <td class="titlemedium" align="right" nowrap><?=number_format( $ValorBruto , 2)?></td>
+				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $Saldo , 2)?></td>
+				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $ComisionBancos , 2)?></td>
+				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $ValorParcial , 2)?></td>
+				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $ValorIVA , 2)?></td>
+				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $ValorBruto , 2)?></td>
 				          <td class="titlemedium" align="right" nowrap></td>
 				          <td class="titlemedium" align="right" nowrap></td>
 				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $valorretefuente , 2 ); ?></td>

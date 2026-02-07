@@ -37,10 +37,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 			<td>
 				<table width="100%" border="0" align="center" cellspacing="1" cellpadding="0" bgcolor="#345487">
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 						<tr>
 							<td class="maintitle" valign="middle">
-								Reporte Formas de Pago Almacen : <b><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta)?></b> Fecha : <b><?=formatofecha($Fecha)?></b>
+								Reporte Formas de Pago Almacen : <b><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta)?></b> Fecha : <b><?php echo formatofecha($Fecha)?></b>
 							</td>
 						</tr>
 						<?php
@@ -109,7 +109,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										{
 										?>
 											<tr>
-												<td class="rowform" colspan="9" align="left" nowrap><?=$valor['Descripcion']?> <br><?=$bancos[$valor[IDBanco]]?></td>
+												<td class="rowform" colspan="9" align="left" nowrap><?php echo $valor['Descripcion']?> <br><?php echo $bancos[$valor[IDBanco]]?></td>
 											</tr>
 											<?php
 											$valorfactura = 0;
@@ -136,12 +136,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 											?>
 
 											<tr>
-												<td class="<?=$class?>" align="center" nowrap><?php echo $r_factura->NumeroFactura?></td>
-												<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $r_factura->Valor, 2 );  $valorfactura += $r_factura->Valor; ?></td>
-												<td class="<?=$class?>" align="center" nowrap><?php echo $r_factura->Comision?></td>
-												<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $comision =  ( $r_factura->Valor / ( 1 + $IVA ) ) * ( $r_factura->Comision / 100 ), 2 ); $valorcomision += $comision;?></td>
-												<td class="<?=$class?>" align="right" nowrap><?php echo number_format( ($r_factura->Valor - $comision ), 2 ); $valorneto += $r_factura->Valor - $comision; ?></td>
-												<td class="<?=$class?>" align="right" nowrap>
+												<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_factura->NumeroFactura?></td>
+												<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $r_factura->Valor, 2 );  $valorfactura += $r_factura->Valor; ?></td>
+												<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_factura->Comision?></td>
+												<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $comision =  ( $r_factura->Valor / ( 1 + $IVA ) ) * ( $r_factura->Comision / 100 ), 2 ); $valorcomision += $comision;?></td>
+												<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( ($r_factura->Valor - $comision ), 2 ); $valorneto += $r_factura->Valor - $comision; ?></td>
+												<td class="<?php echo $class?>" align="right" nowrap>
 													<?php
 														if( $valor[IDFormaPago] <> 1 )
 														{
@@ -150,7 +150,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 														}
 													?>
 												</td>
-										<td class="<?=$class?>" align="right" nowrap>
+										<td class="<?php echo $class?>" align="right" nowrap>
 											<?php
 												if( $valor[IDFormaPago] <> 1 )
 												{
@@ -159,7 +159,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												}
 											?>
 										</td>
-										<td class="<?=$class?>" align="right" nowrap>
+										<td class="<?php echo $class?>" align="right" nowrap>
 											<?php
 												if( $valor[IDFormaPago] <> 1 )
 												{
@@ -168,7 +168,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												}
 											?>
 										</td>
-										<td class="<?=$class?>" align="right" nowrap>
+										<td class="<?php echo $class?>" align="right" nowrap>
 										<?php
 										//echo "FROMU: " . $r_factura->Valor ."-". $comision ."-". $ValorReteFuente ."-". $ValorReteICA . "-" . $ValorReteIVA ."<br>";
 										echo number_format( $r_factura->Valor - $comision - $ValorReteFuente - $ValorReteICA - $ValorReteIVA, 2 ); $valoringreso +=  $r_factura->Valor - $comision - $ValorReteFuente - $ValorReteICA - $ValorReteIVA;
@@ -207,14 +207,14 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									?>
 									<tr>
 										<td class="titlemedium" align="right" nowrap>TOTALES</td>
-										<td class="titlemedium" align="right" nowrap><?=number_format( $totalvalorfactura, 2) ?></td>
+										<td class="titlemedium" align="right" nowrap><?php echo number_format( $totalvalorfactura, 2) ?></td>
 										<td class="titlemedium" align="center" nowrap></td>
-										<td class="titlemedium" align="right" nowrap><?=number_format( $totalvalorcomision , 2)?></td>
-										<td class="titlemedium" align="right" nowrap><?=number_format( $totalvalorneto , 2)?></td>
-										<td class="titlemedium" align="right" nowrap><?=number_format( $totalvalorretefuente , 2)?></td>
+										<td class="titlemedium" align="right" nowrap><?php echo number_format( $totalvalorcomision , 2)?></td>
+										<td class="titlemedium" align="right" nowrap><?php echo number_format( $totalvalorneto , 2)?></td>
+										<td class="titlemedium" align="right" nowrap><?php echo number_format( $totalvalorretefuente , 2)?></td>
 										<td class="titlemedium" align="right" nowrap><?php echo number_format($TReteIVA , 2) ; ?></td>
 										<td class="titlemedium" align="right" nowrap><?php echo number_format($TReteICA , 2) ; ?></td>
-										<td class="titlemedium" align="right" nowrap><?=number_format( $totalvaloringreso , 2)?></td>
+										<td class="titlemedium" align="right" nowrap><?php echo number_format( $totalvaloringreso , 2)?></td>
 									</tr>
 								</table>
 							</td>

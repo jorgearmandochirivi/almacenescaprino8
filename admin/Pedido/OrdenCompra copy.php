@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="OrdenCompra";
 
@@ -9,7 +9,7 @@ $MOD = "OrdenCompra";
 
 ?>
 
- <?
+ <?php 
 
 		$permisos = get_permiso($ID_Usuario,$m,$Table);
 if($permisos[0] >= 2)
@@ -69,60 +69,60 @@ var Check = new Array('IDOrdenCompra','IDSugerido','IDEmpleado','NumeroOrden','F
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
 		<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
 <tr class=row2>
-			<td> IDOrdenCompra </td><td><input type=text size=25 class=input  readonly name=IDOrdenCompra id=IDOrdenCompra value="<?=$r->IDOrdenCompra ?>"> </td>
+			<td> IDOrdenCompra </td><td><input type=text size=25 class=input  readonly name=IDOrdenCompra id=IDOrdenCompra value="<?php echo $r->IDOrdenCompra ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> IDSugerido </td><td><input type=text size=25 class=input   name=IDSugerido id=IDSugerido value="<?=$r->IDSugerido ?>"> </td>
+			<td> IDSugerido </td><td><input type=text size=25 class=input   name=IDSugerido id=IDSugerido value="<?php echo $r->IDSugerido ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> IDEmpleado </td><td><input type=text size=25 class=input   name=IDEmpleado id=IDEmpleado value="<?=$r->IDEmpleado ?>"> </td>
+			<td> IDEmpleado </td><td><input type=text size=25 class=input   name=IDEmpleado id=IDEmpleado value="<?php echo $r->IDEmpleado ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> NumeroOrden </td><td><input type=text size=25 class=input   name=NumeroOrden id=NumeroOrden value="<?=$r->NumeroOrden ?>"> </td>
+			<td> NumeroOrden </td><td><input type=text size=25 class=input   name=NumeroOrden id=NumeroOrden value="<?php echo $r->NumeroOrden ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> FechaOrden </td><td><input type=text size=25 class=input   name=FechaOrden id=FechaOrden value="<?=$r->FechaOrden ?>"> </td>
+			<td> FechaOrden </td><td><input type=text size=25 class=input   name=FechaOrden id=FechaOrden value="<?php echo $r->FechaOrden ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> Estado </td><td><input type=text size=25 class=input   name=Estado id=Estado value="<?=$r->Estado ?>"> </td>
+			<td> Estado </td><td><input type=text size=25 class=input   name=Estado id=Estado value="<?php echo $r->Estado ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> ValorIVA </td><td><input type=text size=25 class=input   name=ValorIVA id=ValorIVA value="<?=$r->ValorIVA ?>"> </td>
+			<td> ValorIVA </td><td><input type=text size=25 class=input   name=ValorIVA id=ValorIVA value="<?php echo $r->ValorIVA ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> ValorTotal </td><td><input type=text size=25 class=input   name=ValorTotal id=ValorTotal value="<?=$r->ValorTotal ?>"> </td>
+			<td> ValorTotal </td><td><input type=text size=25 class=input   name=ValorTotal id=ValorTotal value="<?php echo $r->ValorTotal ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> Observaciones </td><td><textarea rows=5 cols=55 wrap=virtual name=Observaciones id=Observaciones><?=$r->Observaciones?></textarea></td>
+			<td> Observaciones </td><td><textarea rows=5 cols=55 wrap=virtual name=Observaciones id=Observaciones><?php echo $r->Observaciones?></textarea></td>
 			</tr>
 			<tr class=row2>
-			<td> Publicar </td><td><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
+			<td> Publicar </td><td><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
 			</tr>
 			<tr>
 			<td colspan=2 align=center class=row2>
-				<input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<? echo $r->$Key ?>">
-				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+				<input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+				<input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+				<input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+				<input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
+				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
+				<input type=hidden name=action value=<?php echo $newmode?>>
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 			</tr>
 			</table>
@@ -130,7 +130,7 @@ var Check = new Array('IDOrdenCompra','IDSugerido','IDEmpleado','NumeroOrden','F
 	</tr>
 </table>
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -168,27 +168,27 @@ var Check = new Array('IDOrdenCompra','IDSugerido','IDEmpleado','NumeroOrden','F
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
 <table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-<?filtrar();?>	
+<?php filtrar();?>	
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=17 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
@@ -198,37 +198,37 @@ var Check = new Array('IDOrdenCompra','IDSugerido','IDEmpleado','NumeroOrden','F
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 <tr>
 <td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDOrdenCompra&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">IDOrdenCompra&nbsp;<% if($_GET['order_by']=="IDOrdenCompra"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDSugerido&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">IDSugerido&nbsp;<% if($_GET['order_by']=="IDSugerido"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDEmpleado&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">IDEmpleado&nbsp;<% if($_GET['order_by']=="IDEmpleado"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">NumeroOrden&nbsp;<% if($_GET['order_by']=="NumeroOrden"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">FechaOrden&nbsp;<% if($_GET['order_by']=="FechaOrden"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Estado&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Estado&nbsp;<% if($_GET['order_by']=="Estado"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorIVA&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">ValorIVA&nbsp;<% if($_GET['order_by']=="ValorIVA"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">ValorTotal&nbsp;<% if($_GET['order_by']=="ValorTotal"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Observaciones&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Observaciones&nbsp;<% if($_GET['order_by']=="Observaciones"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Publicar&nbsp;<% if($_GET['order_by']=="Publicar"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDOrdenCompra&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">IDOrdenCompra&nbsp;<?php  if($_GET['order_by']=="IDOrdenCompra"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDSugerido&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">IDSugerido&nbsp;<?php  if($_GET['order_by']=="IDSugerido"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDEmpleado&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">IDEmpleado&nbsp;<?php  if($_GET['order_by']=="IDEmpleado"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">NumeroOrden&nbsp;<?php  if($_GET['order_by']=="NumeroOrden"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">FechaOrden&nbsp;<?php  if($_GET['order_by']=="FechaOrden"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Estado&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Estado&nbsp;<?php  if($_GET['order_by']=="Estado"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorIVA&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">ValorIVA&nbsp;<?php  if($_GET['order_by']=="ValorIVA"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">ValorTotal&nbsp;<?php  if($_GET['order_by']=="ValorTotal"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Observaciones&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Observaciones&nbsp;<?php  if($_GET['order_by']=="Observaciones"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Publicar&nbsp;<?php  if($_GET['order_by']=="Publicar"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 <td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-<td nowrap class=row1><? echo $r->IDOrdenCompra ?></td> <td nowrap class=row1><? echo $r->IDSugerido ?></td> <td nowrap class=row1><? echo $r->IDEmpleado ?></td> <td nowrap class=row1><? echo $r->NumeroOrden ?></td> <td nowrap class=row1><? echo $r->FechaOrden ?></td> <td nowrap class=row1><? echo $r->Estado ?></td> <td nowrap class=row1><? echo $r->ValorIVA ?></td> <td nowrap class=row1><? echo $r->ValorTotal ?></td> <td nowrap class=row1><? echo $r->Observaciones ?></td>
-						<td nowrap class=row1><? echo $r->Publicar ?></td>
+<td nowrap class=row1><?php echo $r->IDOrdenCompra ?></td> <td nowrap class=row1><?php echo $r->IDSugerido ?></td> <td nowrap class=row1><?php echo $r->IDEmpleado ?></td> <td nowrap class=row1><?php echo $r->NumeroOrden ?></td> <td nowrap class=row1><?php echo $r->FechaOrden ?></td> <td nowrap class=row1><?php echo $r->Estado ?></td> <td nowrap class=row1><?php echo $r->ValorIVA ?></td> <td nowrap class=row1><?php echo $r->ValorTotal ?></td> <td nowrap class=row1><?php echo $r->Observaciones ?></td>
+						<td nowrap class=row1><?php echo $r->Publicar ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=12 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -237,7 +237,7 @@ var Check = new Array('IDOrdenCompra','IDSugerido','IDEmpleado','NumeroOrden','F
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -298,7 +298,7 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="Fecha">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="Gerencia">
@@ -306,6 +306,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

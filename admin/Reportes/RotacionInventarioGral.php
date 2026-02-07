@@ -50,13 +50,13 @@ function seleccionareferencia( $newmode)
 		<tr>
 			<td class="maintitle"><b></b>
 				<span class="gen">
-					<?=$Title?>
+					<?php echo $Title?>
 				</span>
 			</td>
 		</tr>
 </table>
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="bordertable" width="100%">
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 			<tr>
 			<td class=col1 width=30;?> 
 				Buscar Referencia Por			</td>
@@ -70,15 +70,15 @@ function seleccionareferencia( $newmode)
 				<input type=text class=tbox name=referencia>
 				<input type="submit" class="button" name="enviar" value="Consultar">
 
-				<input type=hidden name=action value=<?=$newmode?>>			</td>
-				<td align="left" valign="middle" class="nav" nowrap>Desde <input type="text" name="FechaDesde" class="input" value="<?=date( "Y-m-d" )?>" size="10"> 
+				<input type=hidden name=action value=<?php echo $newmode?>>			</td>
+				<td align="left" valign="middle" class="nav" nowrap>Desde <input type="text" name="FechaDesde" class="input" value="<?php echo date( "Y-m-d" )?>" size="10"> 
 					<script language="JavaScript1.2">
 									<!--
 										if (!document.layers)
 											document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaDesde,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
 									//-->
 								</script>				</td>
-				<td align="left" valign="middle" class="nav" nowrap>Hasta <input type="text" name="FechaHasta" class="input" value="<?=date( "Y-m-d" )?>" size="10"> 
+				<td align="left" valign="middle" class="nav" nowrap>Hasta <input type="text" name="FechaHasta" class="input" value="<?php echo date( "Y-m-d" )?>" size="10"> 
 					<script language="JavaScript1.2">
 									<!--
 										if (!document.layers)
@@ -155,14 +155,14 @@ function seleccionareferencia( $newmode)
     </p>
     <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="100%">
 		<tr>
-			<td class="maintitle"><b></b><span class="gen"><?=$Title?> <?php echo $Titulo ?> </span></td>
+			<td class="maintitle"><b></b><span class="gen"><?php echo $Title?> <?php echo $Titulo ?> </span></td>
 		</tr>
 </table>
 	<table width=100% cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
 		<td class="titlemedium" >
 				<table cellspacing='0' cellpadding='2' border='0' align='center'  width="100%">
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 						<tr>
 							<td class=col1 width=30;?> 
 				Buscar Referencia Por				</td>
@@ -172,17 +172,17 @@ function seleccionareferencia( $newmode)
 									<option value="Nombre">Nombre</option>
 								</select>
 				&nbsp;&nbsp;&nbsp;
-		<input type=text class=tbox name=referencia value="<?=$referencia ?>">
+		<input type=text class=tbox name=referencia value="<?php echo $referencia ?>">
 		<input type="submit" class="button" name="enviar" value="Consultar">
-		<input type=hidden name=action value='<?="list"?>'></td>
-							<td align="left" valign="middle" class="nav" nowrap>Desde <input type="text" name="FechaDesde" class="input" value="<?=$FechaDesde?>" size="10"> 
+		<input type=hidden name=action value='<?php echo "list"?>'></td>
+							<td align="left" valign="middle" class="nav" nowrap>Desde <input type="text" name="FechaDesde" class="input" value="<?php echo $FechaDesde?>" size="10"> 
 								<script language="JavaScript1.2">
 									<!--
 										if (!document.layers)
 											document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaDesde,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
 									//-->
 								</script>							</td>
-							<td align="left" valign="middle" class="nav" nowrap>Hasta <input type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>" size="10"> 
+							<td align="left" valign="middle" class="nav" nowrap>Hasta <input type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>" size="10"> 
 								<script language="JavaScript1.2">
 									<!--
 										if (!document.layers)
@@ -310,7 +310,7 @@ if( !empty( $IDTipoReferencia ) )
 					?>
 					
 					<table width="100%" border="0" cellspacing="1" cellpadding="0">
-						<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+						<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 							<tr>
 								
 								<td class="rowform" width="20%">Referencia</td>	

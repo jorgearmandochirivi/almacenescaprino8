@@ -1,4 +1,4 @@
-<?
+<?php 
 	include("../config.inc.php");
 	Encabezado();
 	$datos = Verifica_Sesion();
@@ -14,7 +14,7 @@
 	</head>
 
 	<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
-<?
+<?php 
 
 $TitleMod ="Entrada";
 
@@ -76,29 +76,29 @@ var Check = new Array('Nombre','Publicar');
 <table class="forumline" width="100%" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" >
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" >
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 				<tr>
 					<td class="col1" nowrap>Numero de Remisi&oacute;n</td>
-					<td class="col2"><input type="input" name="Remision" readonly value="<?=$r_laremision[Remision]?>" class="tbox" id="Remision"></td>
+					<td class="col2"><input type="input" name="Remision" readonly value="<?php echo $r_laremision[Remision]?>" class="tbox" id="Remision"></td>
 				</tr>
 				<tr>
 					<td class="col1" nowrap>Fecha</td>
 					<td class="col2" nowrap>
-						<input type="input" name="Fecha" readonly value="<?=$r_laremision[Fecha]?>" id="Fecha" class="tbox">
+						<input type="input" name="Fecha" readonly value="<?php echo $r_laremision[Fecha]?>" id="Fecha" class="tbox">
 					</td>
 				</tr>
 				<tr>
 					<td class="col1" nowrap>Punto Venta</td>
 					<td class="col2" nowrap>
-						<input type="input" name="Fecha" readonly value="<?=get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_laremision[IDPuntoVenta] );?>" id="Fecha" class="tbox">
+						<input type="input" name="Fecha" readonly value="<?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_laremision[IDPuntoVenta] );?>" id="Fecha" class="tbox">
 					</td>
 				</tr>
 
 		</table>
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 	
-				<? 
+				<?php 
 				foreach( $array_referencias as $key => $valor ){
 				
 					$class = repetition()?"col1list":"col2list";
@@ -110,21 +110,21 @@ var Check = new Array('Nombre','Publicar');
 	  				<td>
 	  					<table width="100%">
 							<tr>
-								<td nowrap width=150 class="<?=$class?>"><? echo $key ?></td>
-								<?
+								<td nowrap width=150 class="<?php echo $class?>"><?php echo $key ?></td>
+								<?php 
 								foreach( $valor as $idtalla => $datos )
 								{
 								?>
-									<td nowrap  class="<?=$class?>">
+									<td nowrap  class="<?php echo $class?>">
 										<table>
 											<tr>
 												<td>
-													<b><? echo $array_tallas[ $idtalla ]; ?></b>
+													<b><?php echo $array_tallas[ $idtalla ]; ?></b>
 												</td>
 											</tr>
 											<tr>
 												<td>
-													<?
+													<?php 
 														echo $datos[Total];
 														$TPares += $datos[Total];
 													?>
@@ -133,7 +133,7 @@ var Check = new Array('Nombre','Publicar');
 										</table>
 										
 									</td>
-								<?
+								<?php 
 								}
 								?>
 							</tr>
@@ -143,26 +143,26 @@ var Check = new Array('Nombre','Publicar');
 					
 					
 					
-						<? } // END for
+						<?php } // END for
 						if( $TPares > 0 )
 						{
 				?>
 						<tr>
-								<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="center">
-							Total Pares = <?=$TPares?>
+								<td  bgcolor=#DBEAF5 colspan = "<?php echo $colspan+2?>" nowrap class="navpic" align="center">
+							Total Pares = <?php echo $TPares?>
 							</td>
 							</tr>
-						<?
+						<?php 
 						}
 						?>
 						<tr>
-							<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="center">
-							<?
+							<td  bgcolor=#DBEAF5 colspan = "<?php echo $colspan+2?>" nowrap class="navpic" align="center">
+							<?php 
 								print $pages;
 							?>
-							<input type="hidden" name="action" value="<?=$newmode?>">
-							<input type="hidden" name="Referencias" value="<?=$frm['Referencias']?>">
-							<?
+							<input type="hidden" name="action" value="<?php echo $newmode?>">
+							<input type="hidden" name="Referencias" value="<?php echo $frm['Referencias']?>">
+							<?php 
 							if( $newmode == "entrada" )
 							{
 								$caption = "Realizar Entrada";
@@ -172,13 +172,13 @@ var Check = new Array('Nombre','Publicar');
 								$caption = "Comfirmar Entrada";
 							}
 							?>
-							<input type="submit" class="button" name="enviar" value="<?=$caption?>">
+							<input type="submit" class="button" name="enviar" value="<?php echo $caption?>">
 						</td>
 								<td></td>
 						</td>
 					</tr>		
 				</table>
-<?
+<?php 
 }// End function print_form()
 ?>
 </body>

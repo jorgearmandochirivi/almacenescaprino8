@@ -75,7 +75,7 @@ function printWindow() {
 
 <body>
 	
-	<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
+	<FORM name="frm" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 			<table class="forumline" width="314" cellspacing="1" border="0" align="center" height="100" id="#content">
 		<tr>
 			<td valign="top">
@@ -90,20 +90,20 @@ function printWindow() {
 												<tr>
 												  <td width="108" class=texto></td>
 												  <td class=texto colspan="3" align="right" nowrap><strong>CALZADO CAPRINO</strong><br>
-											      <?=$r_puntoventa->Nombre?></td>
+											      <?php echo $r_puntoventa->Nombre?></td>
 											  </tr>
 												<tr>
 												  <td colspan="4" nowrap class=texto>
                                                   
                                                   	<p><span class="texto1">INDUSTRIA MANUFACTURERA DE CALZADO LTDA IMACAL LTDA<br>
                                                   	  
-                                                  	  NIT: <?=get_field( "NIT","NIT","IDNIT",1 );?>
+                                                  	  NIT: <?php echo get_field( "NIT","NIT","IDNIT",1 );?>
                                                	    </span></p>                                               	  </td>
 											  </tr>
 												
 														<tr>
 													<td class=texto nowrap>Fecha Factura</td>
-													<td class=texto colspan="3"><?=$r->FechaFactura?></td>
+													<td class=texto colspan="3"><?php echo $r->FechaFactura?></td>
 												</tr>
 														<tr>
 													<td class=texto>Cliente</td>
@@ -136,13 +136,13 @@ function printWindow() {
 													$i++;
 											?>
 												<tr >
-													<td align="center" class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
-													<td align="center" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
-															<td align="center" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-															<td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoRef);//number_format($r_detalle->DescuentoRef);?>%</td>
-															<td align="right" class="<?=$class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
-															<td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoPar);//number_format($r_detalle->DescuentoRef);?>%</td>
-															<td align="right" class="<?=$class?>">
+													<td align="center" class="<?php echo $class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
+													<td align="center" class="<?php echo $class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
+															<td align="center" class="<?php echo $class?>"><?php echo $r_detalle->Cantidad?></td>
+															<td align="center" class="<?php echo $class?>"><?php echo number_format($r_detalle->DescuentoRef);//number_format($r_detalle->DescuentoRef);?>%</td>
+															<td align="right" class="<?php echo $class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
+															<td align="center" class="<?php echo $class?>"><?php echo number_format($r_detalle->DescuentoPar);//number_format($r_detalle->DescuentoRef);?>%</td>
+															<td align="right" class="<?php echo $class?>">
 														<?php
 															$valorsin = ( $r_detalle->ValorU * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) ) * $r_detalle->Cantidad;
 															echo number_format( $valorsin );
@@ -167,14 +167,14 @@ function printWindow() {
 										<td class=texto width="250"></td>
 										<td class=texto nowrap>
 											<div align="right">IVA</div>										</td>
-										<td class=texto align="right"><?=number_format($r->ValorIVA)?></td>
+										<td class=texto align="right"><?php echo number_format($r->ValorIVA)?></td>
 									</tr>
 									<tr>
 										<td class=texto></td>
 										<td class=texto width="250"></td>
 										<td class=texto nowrap>
 											<div align="right">Total</div>										</td>
-										<td class=texto align="right"><?=number_format($r->ValorTotal)?></td>
+										<td class=texto align="right"><?php echo number_format($r->ValorTotal)?></td>
 									</tr>
 									<tr>
 										<td class=texto></td>
@@ -198,7 +198,7 @@ function printWindow() {
 										<td class=texto>
 											<div align="right">
 												<?php echo get_field("FormaPago","Descripcion","IDFormaPago",$r_formapago->IDFormaPago)?></div>										</td>
-										<td class=texto><?=number_format($r_formapago->Valor)?></td>
+										<td class=texto><?php echo number_format($r_formapago->Valor)?></td>
 									</tr>
 									<?php 									}//end if($r_formapago->Valor <> 0)
 								}//end while( $r_formapago = db_fetch_object( $query_formapago ) )

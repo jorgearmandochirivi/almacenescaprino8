@@ -63,7 +63,7 @@ function print_form($id="",$idpuntoventa = "", $newmode,$title,$submit_caption) 
 				<table width="100%" border=0 cellspacing=1 cellpadding=1 class=texto>
 
 
-					<form name="frmInv" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+					<form name="frmInv" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Tenga en cuenta que no se hayan realizado las operaciones de inventario del traslado");?></td>
 						</tr>
@@ -119,7 +119,7 @@ function datos_traslado($id, $idpuntoventa){
 
 
 <table class="bordertable" width="100%" cellspacing="1" border="0" align="center">
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" >
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" >
 	<tr>
 
 		<td class="maintitle"><b></b>
@@ -156,13 +156,13 @@ function datos_traslado($id, $idpuntoventa){
 														<td class=row1>Estado</td>
 														<td class=row2 ><?php echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado); ?></td>
 														<td class=row1>Fecha </td>
-														<td class=row2 ><input type="text" class="tbox" name="Fecha" size="19" value='<?=$r->Fecha?>' readonly>
+														<td class=row2 ><input type="text" class="tbox" name="Fecha" size="19" value='<?php echo $r->Fecha?>' readonly>
 
 															</td>
 													</tr>
 													<tr>
 														<td class=row1 >Observaciones</td>
-														<td class=row2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
+														<td class=row2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?php echo $r->Observaciones?></textarea></td>
 													</tr>
 												</table>
 											</td>
@@ -193,22 +193,22 @@ function datos_traslado($id, $idpuntoventa){
 															$Talla = get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica);;
 													?>
 													<tr >
-														<td class="<?=$class?>">
-															<b><?=$i?></b>
-															<input type="hidden" name="IDCodificacionEspecifica[]" value="<?=$r_detalle->IDCodificacionEspecifica?>">
-															<input type="hidden" name="Talla[]" value="<?=$Talla?>">
-															<input type="hidden" name="IDReferencia[]" value="<?=get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)?>">
+														<td class="<?php echo $class?>">
+															<b><?php echo $i?></b>
+															<input type="hidden" name="IDCodificacionEspecifica[]" value="<?php echo $r_detalle->IDCodificacionEspecifica?>">
+															<input type="hidden" name="Talla[]" value="<?php echo $Talla?>">
+															<input type="hidden" name="IDReferencia[]" value="<?php echo get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)?>">
 
 														</td>
-														<td class="<?=$class?>">
+														<td class="<?php echo $class?>">
 															<?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
-														<td class="<?=$class?>">
+														<td class="<?php echo $class?>">
 															<?php echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
 														</td>
-														<td class="<?=$class?>">
+														<td class="<?php echo $class?>">
 															<?php echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?>
 														</td>
-														<td class="<?=$class?>">
+														<td class="<?php echo $class?>">
 															<?php echo $r_detalle->Cantidad ?>
 														</td>
 													</tr>
@@ -221,8 +221,8 @@ function datos_traslado($id, $idpuntoventa){
 										<tr class=row2>
 											<td align="center">
 												<input type=hidden name=action value="eliminaahorasi">
-												<input type=hidden name="idtraslado" value="<?=$r->IDTraslado ?>">
-												<input type=hidden name="idpuntoventa" value="<?=$r->IDPuntoVentaOrigen ?>">
+												<input type=hidden name="idtraslado" value="<?php echo $r->IDTraslado ?>">
+												<input type=hidden name="idpuntoventa" value="<?php echo $r->IDPuntoVentaOrigen ?>">
 												<input type=submit name=submit value="Eliminar Traslado" class=submit>
 											</td>
 										</tr>

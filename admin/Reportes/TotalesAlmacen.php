@@ -66,7 +66,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 							
-								Desde:	<input type="text" name="FechaDesde" class="input" value="<?=fecha()?>" size="10">
+								Desde:	<input type="text" name="FechaDesde" class="input" value="<?php echo fecha()?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -78,7 +78,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 							</td>
 							<td align="left" valign="middle" class="nav">
 								
-								Hasta	<input type="text" name="FechaHasta" class="input" value="<?=fecha()?>" size="10">
+								Hasta	<input type="text" name="FechaHasta" class="input" value="<?php echo fecha()?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -104,9 +104,9 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 		<tr>
 		<td>
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 				<tr>
-					<td class="maintitle" valign="middle">&nbsp; Ventas totales mensuales brutas desde ; <?=formatofecha($FechaDesde)?> hasta : <?=formatofecha($FechaHasta)?>
+					<td class="maintitle" valign="middle">&nbsp; Ventas totales mensuales brutas desde ; <?php echo formatofecha($FechaDesde)?> hasta : <?php echo formatofecha($FechaHasta)?>
 						
 					</td>
 				</tr>
@@ -192,7 +192,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 								foreach( $datos_meses as $mes => $valores )
 								{
 							?>
-								<td class="titlemedium" align="center" nowrap><?=$Mes_array[$mes - 1] . " " . $mes . " / " .$year?></td>
+								<td class="titlemedium" align="center" nowrap><?php echo $Mes_array[$mes - 1] . " " . $mes . " / " .$year?></td>
 							<?php
 								}//end for
 							?>
@@ -207,7 +207,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 							$class = repetition()?"row2":"row1";
 						?>
 							<tr>
-								<td class="<?=$class?>" align="center" nowrap><?=$valor['Nombre']?></td>
+								<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Nombre']?></td>
 								<?php
 								$monthbegin = ( $monthbegin * 1 );
 								$yearbegin = ( $yearbegin * 1 );
@@ -216,7 +216,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 									foreach( $datos_meses as $mes => $valores )
 									{
 								?>
-									<td class="<?=$class?>" align="right" nowrap>
+									<td class="<?php echo $class?>" align="right" nowrap>
 										<?php
 											echo number_format( $datosfechas[$year][$mes][$valor['IDPuntoVenta']] , 2);											
 											$totalespunto[$valor['IDPuntoVenta']]['Totales'] += $datosfechas[$year][$mes][$valor['IDPuntoVenta']];
@@ -236,12 +236,12 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 								<?php
 									}//end for
 								?>
-								<td class="<?=$class?>" align="center" nowrap>
+								<td class="<?php echo $class?>" align="center" nowrap>
 									<?php
 										echo number_format( $totalespunto[$valor['IDPuntoVenta']]['Totales'] , 2);
 									?>
 								</td>
-										<td class="<?=$class?>" align="center" nowrap>
+										<td class="<?php echo $class?>" align="center" nowrap>
 										
 											<?php
 											if( $totalespunto[$valor['IDPuntoVenta']]['Totales'] > 0 )
@@ -250,7 +250,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 												$opciones_mes = implode(",",$opcionespunto[$valor['IDPuntoVenta']]);
 												$titulopunto = "Ventas ".$valor['Nombre'];
 											?>
-											<a href="javascript:;" onClick="window.open('Reportes/graficar.php?datos=<?=$datos_mes?>&opciones=<?=$opciones_mes?>&titulo=<?=$titulopunto?>','','width=550, height=400');" >
+											<a href="javascript:;" onClick="window.open('Reportes/graficar.php?datos=<?php echo $datos_mes?>&opciones=<?php echo $opciones_mes?>&titulo=<?php echo $titulopunto?>','','width=550, height=400');" >
 												<img src="images/chart_pie.png" border="0">
 											</a>
 											<?php
@@ -277,7 +277,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 										$opciones_mes = implode(",",$opciones[$i+1]);
 										$titulo = "Ventas ".$Mes_array[$i];
 									?>
-									<a href="javascript:;" onClick="window.open('Reportes/graficar.php?datos=<?=$datos_mes?>&opciones=<?=$opciones_mes?>&titulo=<?=$titulo?>','','width=550, height=400');" >
+									<a href="javascript:;" onClick="window.open('Reportes/graficar.php?datos=<?php echo $datos_mes?>&opciones=<?php echo $opciones_mes?>&titulo=<?php echo $titulo?>','','width=550, height=400');" >
 										<img src="images/chart_pie.png" border="0">
 									</a>
 									<?php

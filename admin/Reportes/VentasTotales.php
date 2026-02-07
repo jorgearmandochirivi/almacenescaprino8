@@ -47,10 +47,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
-							Ventas totales mensuales desde ; <?=formatofecha($FechaDesde)?> hasta : <?=formatofecha($FechaHasta)?>
+							Ventas totales mensuales desde ; <?php echo formatofecha($FechaDesde)?> hasta : <?php echo formatofecha($FechaHasta)?>
 						
 					</td>
 				</tr>
@@ -108,10 +108,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							{
 						?>
 						<tr>
-							<td class="<?=$class?>" align="center" nowrap><?=$key?></td>
-							<td class="<?=$class?>" align="right" nowrap><?=$valor['Venta']?> </td>
-							<td class="<?=$class?>" align="right" nowrap><?=$valor['IVA']?></td>
-							<td class="<?=$class?>" align="center" nowrap><?php echo $valor['Venta'] + $valor['IVA'];?></td>
+							<td class="<?php echo $class?>" align="center" nowrap><?php echo $key?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo $valor['Venta']?> </td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo $valor['IVA']?></td>
+							<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Venta'] + $valor['IVA'];?></td>
 						</tr>
 						
 						<?php

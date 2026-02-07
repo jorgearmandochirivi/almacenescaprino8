@@ -118,10 +118,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
 				<table width="100%" border="0" align="center" cellspacing="1" cellpadding="0" bgcolor="#345487">
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 						<tr>
 							<td class="maintitle" valign="middle">
-								Reporte Ventas Empleados <b>Desde :</b> <?=formatofecha($FechaDesde)?>  <b>Hasta :</b> <?=formatofecha($FechaHasta)?>
+								Reporte Ventas Empleados <b>Desde :</b> <?php echo formatofecha($FechaDesde)?>  <b>Hasta :</b> <?php echo formatofecha($FechaHasta)?>
 							</td>
 						</tr>
 						<?php
@@ -158,11 +158,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					$class = repetition()?"row2":"row1";
 					?>
 					<tr>
-						<td class="<?=$class?>" align="center" nowrap><?=$row_venta['Cedula']?></td>
-						<td class="<?=$class?>" align="center" nowrap><?=$row_venta['Nombre']. " " . $row_venta['Apellidos']?></td>
-						<td class="<?=$class?>" align="center" nowrap><?=get_field( "Cargo","Cargo","IDCargo",$row_venta['IDCargo'] )?></td>
-						<td class="<?=$class?>" align="center" nowrap><?=$array_punto[ $_POST["IDPuntoVenta"] ];?></td>
-						<td class="<?=$class?>" align="right" nowrap>
+						<td class="<?php echo $class?>" align="center" nowrap><?php echo $row_venta['Cedula']?></td>
+						<td class="<?php echo $class?>" align="center" nowrap><?php echo $row_venta['Nombre']. " " . $row_venta['Apellidos']?></td>
+						<td class="<?php echo $class?>" align="center" nowrap><?php echo get_field( "Cargo","Cargo","IDCargo",$row_venta['IDCargo'] )?></td>
+						<td class="<?php echo $class?>" align="center" nowrap><?php echo $array_punto[ $_POST["IDPuntoVenta"] ];?></td>
+						<td class="<?php echo $class?>" align="right" nowrap>
 								<?php
 								$suma_total+=$row_venta["ValorTotal"];
 								echo number_format( $row_venta["ValorTotal"]);
@@ -173,11 +173,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 				<?php } ?>
 				<tr>
-					<td class="<?=$class?>" align="center" nowrap><?=$row_venta['Cedula']?></td>
-					<td class="<?=$class?>" align="center" nowrap><?=$row_venta['Nombre']. " " . $row_venta['Apellidos']?></td>
-					<td class="<?=$class?>" align="center" nowrap><?=$row_venta['Cargo']?></td>
-					<td class="<?=$class?>" align="center" nowrap><b>TOTAL</b></td>
-					<td class="<?=$class?>" align="right" nowrap><b><?php echo "$".number_format($suma_total,2);		?></b>
+					<td class="<?php echo $class?>" align="center" nowrap><?php echo $row_venta['Cedula']?></td>
+					<td class="<?php echo $class?>" align="center" nowrap><?php echo $row_venta['Nombre']. " " . $row_venta['Apellidos']?></td>
+					<td class="<?php echo $class?>" align="center" nowrap><?php echo $row_venta['Cargo']?></td>
+					<td class="<?php echo $class?>" align="center" nowrap><b>TOTAL</b></td>
+					<td class="<?php echo $class?>" align="right" nowrap><b><?php echo "$".number_format($suma_total,2);		?></b>
 					</td>
 				</tr>
 

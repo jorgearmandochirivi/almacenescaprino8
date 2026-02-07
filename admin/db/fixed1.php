@@ -365,10 +365,10 @@ while( $r_formapago = db_fetch_array( $qry_formapago ) )
 						{
 						?>
 						<tr class=row2>
-							<td ><?=$array_formapago[ $r->IDFormaPago ]?></td>
-							<td ><?=$r->Valor?></td>
-							<td ><?=$r->Comision?></td>
-							<td ><a href="?mod=fixed&action=borraforma&IDFactura=<?=$r->IDFactura?>&IDFormaPagoFactura=<?=$r->IDFormaPagoFactura?>&IDPuntoVenta=<?=$r->IDPuntoVenta?>">Borrar</a></td>
+							<td ><?php echo $array_formapago[ $r->IDFormaPago ]?></td>
+							<td ><?php echo $r->Valor?></td>
+							<td ><?php echo $r->Comision?></td>
+							<td ><a href="?mod=fixed&action=borraforma&IDFactura=<?php echo $r->IDFactura?>&IDFormaPagoFactura=<?php echo $r->IDFormaPagoFactura?>&IDPuntoVenta=<?php echo $r->IDPuntoVenta?>">Borrar</a></td>
 						</tr>
 						<?php
 						}

@@ -229,7 +229,7 @@ function print_form($newmode,$submit_caption) {
 var Check = new Array('Nombre','Publicar');
 </script>
 		<br>
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?> onsubmit="return EvaluaReg(this,Check)" <?php }?>>
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?> onsubmit="return EvaluaReg(this,Check)" <?php }?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
@@ -250,15 +250,15 @@ var Check = new Array('Nombre','Publicar');
 			<tr >
 				<td width="23%" class=col1>
 					<div align="center">
-						<?=get_field("FormaPago","Descripcion","IDFormaPago",$r->IDFormaPago)?></div>
+						<?php echo get_field("FormaPago","Descripcion","IDFormaPago",$r->IDFormaPago)?></div>
 				</td>
 								<td width="37%" class=col2>
 					<div align="center">
-						<input type="text" size="15" class="input" name="Valor[<?=$r->IDPuntoVentaBanco?>]" value="">
-						<input type="hidden" name="IDFormaPago[<?=$r->IDPuntoVentaBanco?>]" value="<?=$r->IDFormaPago?>">
-						<input type="hidden" name="IDPuntoVentaBanco[<?=$r->IDPuntoVentaBanco?>]" value="<?=$r->IDPuntoVentaBanco?>">
-						<input type="hidden" name="Comision[<?=$r->IDPuntoVentaBanco?>]" value="<?=$r->Comision?>">
-						<input type="hidden" name="IDBanco[<?=$r->IDPuntoVentaBanco?>]" value="<?=$r->IDBanco?>"></div>
+						<input type="text" size="15" class="input" name="Valor[<?php echo $r->IDPuntoVentaBanco?>]" value="">
+						<input type="hidden" name="IDFormaPago[<?php echo $r->IDPuntoVentaBanco?>]" value="<?php echo $r->IDFormaPago?>">
+						<input type="hidden" name="IDPuntoVentaBanco[<?php echo $r->IDPuntoVentaBanco?>]" value="<?php echo $r->IDPuntoVentaBanco?>">
+						<input type="hidden" name="Comision[<?php echo $r->IDPuntoVentaBanco?>]" value="<?php echo $r->Comision?>">
+						<input type="hidden" name="IDBanco[<?php echo $r->IDPuntoVentaBanco?>]" value="<?php echo $r->IDBanco?>"></div>
 				</td>
 							</tr>
 		<?php
@@ -266,12 +266,12 @@ var Check = new Array('Nombre','Publicar');
 		?>
 			<tr class=col1list>
 				<td class=rowtable align=center colspan="2">
-					<input type="submit" name="Submit" value="<?=$submit_caption?>">
-					<input type="hidden" name="action" value="<?=$newmode?>">
-					<input type="hidden" name="ValorTotal" value="<?=round($valor)?>">
-					<input type="hidden" name="id" value="<?=$id?>">
-					<input type="hidden" name="idpunto" value="<?=$idpunto?>">
-					<input type="hidden" name="FechaFactura" value="<?=substr(get_field("Factura","FechaFactura","IDfactura",$id."' AND IDPuntoVenta = '$IDPuntoVenta"),0,10);?>">
+					<input type="submit" name="Submit" value="<?php echo $submit_caption?>">
+					<input type="hidden" name="action" value="<?php echo $newmode?>">
+					<input type="hidden" name="ValorTotal" value="<?php echo round($valor)?>">
+					<input type="hidden" name="id" value="<?php echo $id?>">
+					<input type="hidden" name="idpunto" value="<?php echo $idpunto?>">
+					<input type="hidden" name="FechaFactura" value="<?php echo substr(get_field("Factura","FechaFactura","IDfactura",$id."' AND IDPuntoVenta = '$IDPuntoVenta"),0,10);?>">
 				</td>
 			</tr>
 		</table>

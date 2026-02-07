@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<?
+<?php 
 	$TitleMod ="Traslados";
 	
 	$Table = "Traslado";
@@ -139,7 +139,7 @@ function addInput(size,type,name,value,keypress, blur,cont){
 		input.setAttribute("onblur","formatCurrency(this);CalculaMontoTotalIngreso(this);"); 
 	
 	if(keypress==4){
-		var URL = "'Referencia/popReferencias.php?IDPuntoVenta=<?=$IDPuntoVenta?>&cont="+cont+"&IDFactura=<?=$IDFactura?>'";
+		var URL = "'Referencia/popReferencias.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>&cont="+cont+"&IDFactura=<?php echo $IDFactura?>'";
 		
 		var funcion = "window.open("+URL+",'','width=400,height=400');";
 		
@@ -251,7 +251,7 @@ function selreferencia(REFERENCIA, NOMBRE, TALLA, CODIFICACION, CONT, MAXIMO, VA
 	/*******Si la factura tiene descuento especial se hace la operacion**************/
 	var descuento = 0;
 	var PRECIO = 0;
-	var iva = <?=$IVA?>;
+	var iva = <?php echo $IVA?>;
 	
 	
 	document.frm.elements["Maximo"+CONT].value = MAXIMO;
@@ -292,7 +292,7 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<?=$title?>
+				<?php echo $title?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -300,7 +300,7 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 <table class="forumline" width="580" cellspacing="1" border="0" align="center">
 	<tr>
 	<td width="100%">
@@ -316,20 +316,20 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 												<table class=rowtable width="100%">
 													<tr>
 														<td class=col1>Fecha </td>
-														<td class=col2 colspan="3"><input type="text" class="tbox" name="Fecha" size="19" value='<?=fecha()." ".hora()?>' readonly>
+														<td class=col2 colspan="3"><input type="text" class="tbox" name="Fecha" size="19" value='<?php echo fecha()." ".hora()?>' readonly>
 															<script language="JavaScript1.2">
 															<!--
 																if (!document.layers)
 																	document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaFactura,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
 															//-->
 														</script>
-															<input type="hidden" value="<?=$IDPuntoVenta?>" name="IDPuntoVentaOrigen"></td>
+															<input type="hidden" value="<?php echo $IDPuntoVenta?>" name="IDPuntoVentaOrigen"></td>
 													</tr>
 													<tr>
 														<td class=col1>Destino</td>
 														<td class=col2 colspan="3">
 															<select name="IDPuntoVentaDestino" class="InputSelect">
-															<?
+															<?php 
 																$sql_puntoventa = "SELECT * FROM PuntoVenta";
 																$query_puntoventa = db_query($sql_puntoventa);
 																while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
@@ -342,7 +342,7 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 													</tr>
 													<tr>
 														<td class=col1>Observaciones</td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
+														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?php echo $r->Observaciones?></textarea></td>
 													</tr>
 													<tr>
 														<td class=col1><br></td>
@@ -381,7 +381,7 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 														<td align="center"><input type=text readonly name=Nombre1 class=tbox size=15></td>
 														<td align="center"><input type=hidden name=IDCodificacion1><input type=hidden name=ITEM></td>
 														<td align="center"><input type=text name=Cantidad1 class=tbox size=5 onBlur="if(!compruebamaximo(this.value,1)) this.value = ''; "></td>
-														<td align="center"><input type=button name=Agregar1 class=submit value=Referencia onClick="window.open('Referencia/popReferencias.php?IDPuntoVenta=<?=$IDPuntoVenta?>&cont=1','','width=450,height=400');"></td>
+														<td align="center"><input type=button name=Agregar1 class=submit value=Referencia onClick="window.open('Referencia/popReferencias.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>&cont=1','','width=450,height=400');"></td>
 														<td align="center"><input type=hidden name=Maximo1></td>
 														<td align="center"><input type=hidden name=Precio1></td>
 													</tr>
@@ -390,8 +390,8 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 											</td>
 										</tr>
 									</table>
-									<input type="hidden" name="action" value="<?=$newmode?>">
-									<input type="submit" class="button" name="submit" value="<?=$submit_caption?>"></div>
+									<input type="hidden" name="action" value="<?php echo $newmode?>">
+									<input type="submit" class="button" name="submit" value="<?php echo $submit_caption?>"></div>
 							
 					</td>
 				</tr>
@@ -401,6 +401,6 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 	
 </table>
 </FORM>
-<?
+<?php 
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML> 

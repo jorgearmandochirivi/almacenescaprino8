@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="Orden de Compra";
 
@@ -71,7 +71,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 <br>
 	<table cellspacing="0" cellpadding="2" border="0" align="center" width="100%" bgcolor="#FFFFFF">
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> <a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a></td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> <a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a></td>
 			<td></td>
 		</tr>
 	</table>
@@ -79,12 +79,12 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	<br>
 	<table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td class="maintitle" bgcolor="#9daac6"><b><? echo $TitleMod ?></b></td>
+			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
 		</tr>
 		<tr>
 			<td>
 				<table width="100%" border="0" cellspacing="1" cellpadding="0">
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 						<tr>
 							<td class="row1" nowrap>
 								<table width=100% cellspacing="1" cellpadding="1" bgcolor=#ffffff>
@@ -93,8 +93,8 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 											Punto de Venta
 										</td>
 										<td class=row1>
-											<input type="text" class="input" name="PuntoVenta" readonly size="24" value="<?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$r_pedido->IDPuntoVenta)?>">
-											<input type="hidden" name="IDPuntoVenta" value="<?=$r_pedido->IDPuntoVenta?>">
+											<input type="text" class="input" name="PuntoVenta" readonly size="24" value="<?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r_pedido->IDPuntoVenta)?>">
+											<input type="hidden" name="IDPuntoVenta" value="<?php echo $r_pedido->IDPuntoVenta?>">
 										</td>
 										<td class=row1>
 											<div align="left">
@@ -102,22 +102,22 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 												 Numero.</div>
 										</td>
 										<td class=row1>
-											<input type="text" class="input" name="NumeroOrden" readonly size="24" value="<?=$r_pedido->NumeroOrden?>">
+											<input type="text" class="input" name="NumeroOrden" readonly size="24" value="<?php echo $r_pedido->NumeroOrden?>">
 										</td>
 									</tr>
 									<tr>
 										<td class=row1>Fecha</td>
 										<td class=row1>
-											<input type="text" class="input" name="FechaOrden" size="24" value="<?=$r_pedido->FechaOrden?>" readonly>
+											<input type="text" class="input" name="FechaOrden" size="24" value="<?php echo $r_pedido->FechaOrden?>" readonly>
 </td>
 										<td class=row1>Estado </td>
 										<td class=row1>
-											<? echo formpopup("EstadoPedido","Descripcion","IDEstadoPedido","IDEstadoPedido",$r_pedido->IDEstadoPedido,"input\" id=\"IDEstadoPedido"); ?>
+											<?php echo formpopup("EstadoPedido","Descripcion","IDEstadoPedido","IDEstadoPedido",$r_pedido->IDEstadoPedido,"input\" id=\"IDEstadoPedido"); ?>
 										</td>
 									</tr>
 									<tr>
 										<td class=row1>Observaciones</td>
-										<td colspan="3" class=row1><textarea name="Observaciones" rows="4" cols="64"><?=$r_pedido->Observaciones?></textarea></td>
+										<td colspan="3" class=row1><textarea name="Observaciones" rows="4" cols="64"><?php echo $r_pedido->Observaciones?></textarea></td>
 									</tr>
 									<tr>
 										<td class=row1 colspan="4"></td>
@@ -132,18 +132,18 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 									</tr>
 									<tr>
 										<td class=row2 colspan="4">
-											<?
+											<?php 
 												verdetallepedido($id);
 											?>
 										</td>
 									</tr>
 									<tr>
 										<td class=row2 colspan="4" align="center">
-											<input type="hidden" name="action" value="<?=$newmode?>">
-											<input type="hidden" name="ID" value="<?=$id?>">
-											<input type="hidden" name="IDOrdenCompra" value="<?=$id?>">
-											<input type="submit" class="submit" name="submit" value="<?=$submit_caption?>">
-											<input type="hidden" name="IDSugerido" value="<?=$r_pedido->IDSugerido?>">
+											<input type="hidden" name="action" value="<?php echo $newmode?>">
+											<input type="hidden" name="ID" value="<?php echo $id?>">
+											<input type="hidden" name="IDOrdenCompra" value="<?php echo $id?>">
+											<input type="submit" class="submit" name="submit" value="<?php echo $submit_caption?>">
+											<input type="hidden" name="IDSugerido" value="<?php echo $r_pedido->IDSugerido?>">
 
 										</td>
 									</tr>
@@ -155,7 +155,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 			</td>
 		</tr>
 	</table>
-	<?
+	<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -194,27 +194,27 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							?>
 	<table cellspacing="0" cellpadding="2" border="0" align="center" width="100%" bgcolor="#FFFFFF">
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> <a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a></td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> <a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a></td>
 			<td></td>
 		</tr>
 	</table>
-	<?
+	<?php 
 if($rows > 0){
 ?><br>
 <table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-	<?
+	<?php 
 		filtrar();
 	?>	
 	<tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 
 	<tr>
 		<td class=texto bgcolor=#DBEAF5 colspan=7 nowrap>
-		<?
+		<?php 
 			print $pages;
 		?>
 		</td>
@@ -224,27 +224,27 @@ if($rows > 0){
 			<table width=100% border=0 cellspacing=1 cellpadding=0>
 				<tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Punto de Venta<% if($_GET['order_by']=="IDPuntoVenta"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">NumeroOrden&nbsp;<% if($_GET['order_by']=="NumeroOrden"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">FechaOrden&nbsp;<% if($_GET['order_by']=="FechaOrden"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Punto de Venta<?php  if($_GET['order_by']=="IDPuntoVenta"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">NumeroOrden&nbsp;<?php  if($_GET['order_by']=="NumeroOrden"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">FechaOrden&nbsp;<?php  if($_GET['order_by']=="FechaOrden"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 					</tr>
 	
-				<? while($r = db_fetch_object($result)){
+				<?php while($r = db_fetch_object($result)){
 				?>
 	 	
 				<tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-						&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+						&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 					</td>
-						<td nowrap class=row1><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
-						<td nowrap class=row1><? echo $r->NumeroOrden ?></td>
-						<td nowrap class=row1><? echo $r->FechaOrden ?></td>
+						<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
+						<td nowrap class=row1><?php echo $r->NumeroOrden ?></td>
+						<td nowrap class=row1><?php echo $r->FechaOrden ?></td>
 					</tr>
-				<? } // END for
+				<?php } // END for
 				?>
 				<tr>
 					<td class=texto bgcolor=#DBEAF5 colspan=4 nowrap>
-						<?
+						<?php 
 						print $pages;
 						?>
 					</td>
@@ -254,7 +254,7 @@ if($rows > 0){
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -315,7 +315,7 @@ Global $dblink,$total_records,$row,$numtoshow,$MOD;
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="Fecha">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="Gerencia">
@@ -323,7 +323,7 @@ Global $dblink,$total_records,$row,$numtoshow,$MOD;
 			</td>
 		</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 
 
@@ -346,7 +346,7 @@ function verdetallepedido($id)
 	$i=0;
 ?>
 	<table width=80% cellpadding=1 cellspacing=0 class=text align=center bgcolor=#DEE3E7>
-<?
+<?php 
 	while( $r_referencias = db_fetch_object( $query_referencias ) )
 	{
 		
@@ -378,11 +378,11 @@ function verdetallepedido($id)
 		
 			<tr>
 				<td class=rowform align=center>
-				<?
+				<?php 
 					echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_referencias->IDPuntoVentaReferencia));	
 				?>
 				</td>
-				<?
+				<?php 
 					foreach($r_detalle as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -395,7 +395,7 @@ function verdetallepedido($id)
 				<td class=rowform align=center>
 					Existencias
 				</td>
-				<?
+				<?php 
 					foreach($r_detalle as $talladetalle)
 					{
 						foreach($r_codificacion as $talla)
@@ -411,7 +411,7 @@ function verdetallepedido($id)
 				<td class=rowform align=center>
 					M&aacute;ximo
 				</td>
-				<?
+				<?php 
 					foreach($r_detalle as $talladetalle)
 					{
 						foreach($r_codificacion as $talla)
@@ -427,7 +427,7 @@ function verdetallepedido($id)
 				<td class=rowform align=center>
 					Minimo
 				</td>
-				<?
+				<?php 
 					foreach($r_detalle as $talladetalle)
 					{
 						foreach($r_codificacion as $talla)
@@ -443,7 +443,7 @@ function verdetallepedido($id)
 				<td class=rowform align=center>
 					Estado
 				</td>
-				<?
+				<?php 
 					foreach($r_detalle as $talla)
 					{
 						
@@ -462,7 +462,7 @@ function verdetallepedido($id)
 				<td class="rowform" align=center>
 					PEDIDO
 				</td>
-				<?
+				<?php 
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -474,7 +474,7 @@ function verdetallepedido($id)
 				}
 				?>
 			</tr>
-	<?
+	<?php 
 	
 	$r_detalle = array();
 	$r_codificacion = array();
@@ -482,6 +482,6 @@ function verdetallepedido($id)
 	}//end while( $r_referencias = db_fetch_object( $query_referencias ) )
 	?>
 	</table>
-<?
+<?php 
 }// end function verdetallesugerido($id)
 ?>

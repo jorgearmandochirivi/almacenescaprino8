@@ -1,5 +1,5 @@
 
-<body> <?
+<body> <?php 
 
 //envia_pedido_tercero("54","reenvio");
 
@@ -209,7 +209,7 @@ if($permisos[0] >= 2)
 			<script>
             	alert("Pedido Guardado con exito");
             </script>
-			<?
+			<?php 
 			print_form($frm["IDPedidoTercero"],"update","Actualizar $TitleMod","Realizar Cambios");
 			
 			break;
@@ -346,16 +346,16 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
 
 <div id="Pedido" style=" <?php if ($_GET[tab]=="detalle" && !empty($id)){ ?> display:none;  <?php } ?>">
 
-<form name="frm" id="frmPedidoTercero" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <? if($newmode!="delete"){ ?> onSubmit="return EvaluaReg(this,Check)" <?} ?>>
+<form name="frm" id="frmPedidoTercero" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){ ?> onSubmit="return EvaluaReg(this,Check)" <?php } ?>>
 	
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=center width="70%" >
@@ -377,7 +377,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 					<table  border="0" cellspacing="0" cellpadding="0" bgcolor="<?php echo $color_tab; ?>" id=TB1>
 						<tr height="16">
 							<td class="LeftCurve" valign="top" align="left" width="12" height="16" nowrap>&nbsp;&nbsp;&nbsp;</td>
-							<td valign="top" nowrap  height="16"><a href="./?mod=<?php echo $MOD;?>&action=edit&id=<?=$id?>&tab=pedido" class="TAB">PEDIDO TERCERO</a>&nbsp;</td>
+							<td valign="top" nowrap  height="16"><a href="./?mod=<?php echo $MOD;?>&action=edit&id=<?php echo $id?>&tab=pedido" class="TAB">PEDIDO TERCERO</a>&nbsp;</td>
 							<td align="right" class="RightCurve" width="10" nowrap height="16">&nbsp;&nbsp;</td>
 						</tr>
 					</table>
@@ -394,7 +394,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 					<table border="0"  bgcolor="<?php echo $color_tab; ?>" cellspacing="0" cellpadding="0" id=TB2>
 						<tr height="16">
 							<td class="LeftCurve" valign="top" align="left" width="12" height="16" nowrap>&nbsp;&nbsp;&nbsp;</td>
-							<td valign="top" height="16"><a href="./?mod=<?php echo $MOD;?>&id=<?=$id?>&tab=detalle&action=edit" class="TAB">DETALLE PEDIDO</a>&nbsp;</td>
+							<td valign="top" height="16"><a href="./?mod=<?php echo $MOD;?>&id=<?php echo $id?>&tab=detalle&action=edit" class="TAB">DETALLE PEDIDO</a>&nbsp;</td>
 							<td align="right" class="RightCurve" width="10" nowrap height="16">&nbsp;&nbsp;</td>
 						</tr>
 					</table>
@@ -412,7 +412,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 					<table border="0"  bgcolor="<?php echo $color_tab; ?>" cellspacing="0" cellpadding="0" id=TB2>
 						<tr height="16">
 							<td class="LeftCurve" valign="top" align="left" width="12" height="16" nowrap>&nbsp;&nbsp;&nbsp;</td>
-							<td valign="top" height="16"><a href="./?mod=EntregaTercero&id=<?=$id?>&tab=verificacion&action=edit" class="TAB">VERIFICACION PEDIDO</a>&nbsp;</td>
+							<td valign="top" height="16"><a href="./?mod=EntregaTercero&id=<?php echo $id?>&tab=verificacion&action=edit" class="TAB">VERIFICACION PEDIDO</a>&nbsp;</td>
 							<td align="right" class="RightCurve" width="10" nowrap height="16">&nbsp;&nbsp;</td>
 						</tr>
 					</table>
@@ -426,7 +426,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
       </td>
 	  </tr>
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -434,11 +434,11 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 						<tr class=row2>
 						  <td width="11%"><span style="color:#FF7477; font-size:12px; font-weight:bold">ESTADO</span></td>
 						  <td colspan="3"><span style="color:#FF7477; font-size:12px; font-weight:bold">
-                          <? echo formpopup("EstadoPedidoTercero","Descripcion","Descripcion","IDEstadoPedidoTercero",$r->IDEstadoPedidoTercero,"input\" id=\"IDCiudad"); ?></span>
+                          <?php echo formpopup("EstadoPedidoTercero","Descripcion","Descripcion","IDEstadoPedidoTercero",$r->IDEstadoPedidoTercero,"input\" id=\"IDCiudad"); ?></span>
                           
                           <?php 						 
 						  if($r->IDEstadoPedidoTercero=="2" && $Nivel==0): ?>
-                          	<a href='<? echo "?mod=$MOD&action=activarpedido&id=".$r->$Key ?>'>Cambiar estado a Guardado</a>
+                          	<a href='<?php echo "?mod=$MOD&action=activarpedido&id=".$r->$Key ?>'>Cambiar estado a Guardado</a>
                           <?php endif;?>
                           
                           
@@ -500,7 +500,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
                           <?php if($newmode=="insert"): ?>
                           	Automatico
                           <?php else: ?>  
-                          <input type=text size=25 class=input   name=NumeroOrdenCompra id=NumeroOrdenCompra value="<?=$r->NumeroOrdenCompra ?>" readonly> 
+                          <input type=text size=25 class=input   name=NumeroOrdenCompra id=NumeroOrdenCompra value="<?php echo $r->NumeroOrdenCompra ?>" readonly> 
                           
                           <?php if((int)$r->IDEstadoPedidoTercero>1 ): ?>
                           PDF Pedido
@@ -515,7 +515,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
             <tr class=row2>
               <td>Fecha Pedido</td>
               <td width="28%"><span class="col2">
-                <input type=text readonly size=10 class=input name=FechaPedido id="FechaPedido" title="Fecha Pedido" value="<?=$r->FechaPedido ?>">
+                <input type=text readonly size=10 class=input name=FechaPedido id="FechaPedido" title="Fecha Pedido" value="<?php echo $r->FechaPedido ?>">
                 <script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
@@ -524,7 +524,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 				</script>
               </span></td>
               <td width="13%">Fecha Entrega</td>
-              <td width="48%"><input type=text size=10 readonly class=input name=FechaEntrega id="FechaEntrega" title="Fecha Entrega"  value="<?=$r->FechaEntrega ?>">
+              <td width="48%"><input type=text size=10 readonly class=input name=FechaEntrega id="FechaEntrega" title="Fecha Entrega"  value="<?php echo $r->FechaEntrega ?>">
               <script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
@@ -540,14 +540,14 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
             <tr class=row2>
               <td>Condiciones Pago</td>
               <td colspan="3" valign="middle">
-              <textarea name="NotaPago" id="NotaPago" cols="80" rows="2"><? if (!empty($r->NotaPago)) echo $r->NotaPago; else echo get_field("ParametroTercero","Descripcion","IDParametroTercero",7);  ?></textarea>
+              <textarea name="NotaPago" id="NotaPago" cols="80" rows="2"><?php if (!empty($r->NotaPago)) echo $r->NotaPago; else echo get_field("ParametroTercero","Descripcion","IDParametroTercero",7);  ?></textarea>
               15 Dias
-                <input type=text size=2 class=input   name="CondicionPago30" id="CondicionPago30" value="<?=$r->CondicionPago30 ?>">
+                <input type=text size=2 class=input   name="CondicionPago30" id="CondicionPago30" value="<?php echo $r->CondicionPago30 ?>">
                  % 30  Dias
-                 <input type=text size=2 class=input   name="CondicionPago45" id="CondicionPago45" value="<?=$r->CondicionPago45 ?>">
+                 <input type=text size=2 class=input   name="CondicionPago45" id="CondicionPago45" value="<?php echo $r->CondicionPago45 ?>">
                  % 
                  45 Dias
-                 <input type=text size=2 class=input   name="CondicionPago60" id="CondicionPago60" value="<?=$r->CondicionPago60 ?>">
+                 <input type=text size=2 class=input   name="CondicionPago60" id="CondicionPago60" value="<?php echo $r->CondicionPago60 ?>">
                  %</td>
             </tr>
             
@@ -564,14 +564,14 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			?>
 			<tr class=row2>
 			  <td>Nota 1</td>
-			  <td colspan="3"><textarea name="Nota1" class="" title="Nota1" id="Nota1" cols="140" rows="5"><? if (!empty($r->Nota1)) echo $r->Nota1; else echo get_field("ParametroTercero","Descripcion","IDParametroTercero",1);  ?></textarea></td>
+			  <td colspan="3"><textarea name="Nota1" class="" title="Nota1" id="Nota1" cols="140" rows="5"><?php if (!empty($r->Nota1)) echo $r->Nota1; else echo get_field("ParametroTercero","Descripcion","IDParametroTercero",1);  ?></textarea></td>
 		  </tr>
 			<tr class=row2>
 			  <td>Nota 2</td>
-			  <td colspan="3"><textarea name="Nota2" class="tbox" title="Nota1" id="Nota2" cols="140" rows="5"><? if (!empty($r->Nota2)) echo $r->Nota2; else echo get_field("ParametroTercero","Descripcion","IDParametroTercero",2);  ?></textarea></td>
+			  <td colspan="3"><textarea name="Nota2" class="tbox" title="Nota1" id="Nota2" cols="140" rows="5"><?php if (!empty($r->Nota2)) echo $r->Nota2; else echo get_field("ParametroTercero","Descripcion","IDParametroTercero",2);  ?></textarea></td>
 		  </tr>
 			<tr class=row2>
-			<td> Observaciones </td><td colspan="3"><textarea name="Observaciones" class="tbox" title="Observaciones" id="Observaciones" cols="140" rows="5"><? if (!empty($r->Observaciones)) echo $r->Observaciones; else echo get_field("ParametroTercero","Descripcion","IDParametroTercero",4);  ?></textarea></td>
+			<td> Observaciones </td><td colspan="3"><textarea name="Observaciones" class="tbox" title="Observaciones" id="Observaciones" cols="140" rows="5"><?php if (!empty($r->Observaciones)) echo $r->Observaciones; else echo get_field("ParametroTercero","Descripcion","IDParametroTercero",4);  ?></textarea></td>
 			</tr>
 			<tr class=row2>
 			  <td colspan="4"><table width="100%" border="0" class=row2>
@@ -581,7 +581,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			        <td class="row2">
 	                    <?php if (!empty($r->Foto1)): ?>
                           	<img src="<?php echo "imagenes/". $r->Foto1; ?>" width="150" height="150">
-                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto1&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
+                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto1&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
                           <?php else: ?>
 	                          <input type="file" name="Foto1" id="Foto1" class=input>
                           <?php endif; ?>
@@ -589,7 +589,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			        <td>Foto 2</td>
 			        <td><?php if (!empty($r->Foto2)): ?>
                           	<img src="<?php echo "imagenes/". $r->Foto2; ?>" width="150" height="150">
-                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto2&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
+                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto2&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
                           <?php else: ?>
 	                          <input type="file" name="Foto2" id="Foto2" class=input>
                           <?php endif; ?></td>
@@ -598,14 +598,14 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			        <td class="row2">Foto 3</td>
 			        <td class="row2"><?php if (!empty($r->Foto3)): ?>
                           	<img src="<?php echo "imagenes/". $r->Foto3; ?>" width="150" height="150">
-                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto3&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
+                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto3&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
                           <?php else: ?>
 	                          <input type="file" name="Foto3" id="Foto3" class=input>
                           <?php endif; ?></td>
 			        <td>Foto 4</td>
 			        <td><?php if (!empty($r->Foto4)): ?>
                           	<img src="<?php echo "imagenes/". $r->Foto4; ?>" width="150" height="150">
-                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto4&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
+                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto4&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
                           <?php else: ?>
 	                          <input type="file" name="Foto4" id="Foto4" class=input>
                           <?php endif; ?></td>
@@ -614,14 +614,14 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			        <td class="row2">Foto 5</td>
 			        <td class="row2"><?php if (!empty($r->Foto5)): ?>
                           	<img src="<?php echo "imagenes/". $r->Foto5; ?>" width="150" height="150">
-                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto5&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
+                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto5&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
                           <?php else: ?>
 	                          <input type="file" name="Foto5" id="Foto5" class=input>
                           <?php endif; ?></td>
 			        <td>Foto 6</td>
 			        <td><?php if (!empty($r->Foto6)): ?>
                           	<img src="<?php echo "imagenes/". $r->Foto6; ?>" width="150" height="150">
-                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto6&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
+                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto6&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
                           <?php else: ?>
 	                          <input type="file" name="Foto6" id="Foto6" class=input>
                           <?php endif; ?></td>
@@ -630,14 +630,14 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			        <td class="row2">Foto 7</td>
 			        <td class="row2"><?php if (!empty($r->Foto7)): ?>
                           	<img src="<?php echo "imagenes/". $r->Foto7; ?>" width="150" height="150">
-                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto7&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
+                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto7&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
                           <?php else: ?>
 	                          <input type="file" name="Foto7" id="Foto7" class=input>
                           <?php endif; ?></td>
 			        <td>Foto 8</td>
 			        <td> <?php if (!empty($r->Foto8)): ?>
                           	<img src="<?php echo "imagenes/". $r->Foto8; ?>" width="150" height="150">
-                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto8&id=<? echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
+                            <a href="?mod=<?php echo $MOD; ?>&action=delfoto&campo=Foto8&id=<?php echo $r->$Key ?>&idnot="><img src='images/trash.gif' border='0'></a>
                           <?php else: ?>
 	                          <input type="file" name="Foto8" id="Foto8" class=input>
                           <?php endif; ?></td>
@@ -713,7 +713,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 						</td>
                         <td align="center">
                         <?php if (!empty($array_detalle_orden[$i]["IDDetallePedidoTercero"]) && $r->IDEstadoPedidoTercero != 2): ?>
-                        <a href='<? echo "?mod=$MOD&action=delitem&id=".$r->$Key."&iditem="; echo $array_detalle_orden[$i]["IDDetallePedidoTercero"]; ?>'><img src='images/trash.gif' border='0'></a>
+                        <a href='<?php echo "?mod=$MOD&action=delitem&id=".$r->$Key."&iditem="; echo $array_detalle_orden[$i]["IDDetallePedidoTercero"]; ?>'><img src='images/trash.gif' border='0'></a>
                         <?php endif; ?>
                         </td>
                       </tr>
@@ -814,17 +814,17 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			<td colspan=2 align=center class=row2>
             	         
 
-            <input type=hidden name=IDPedidoTercero id=IDPedidoTercero value="<?=$r->IDPedidoTercero ?>">
-			  <input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-              <input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-              <input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-              <input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-              <input type=hidden name=ID value="<? echo $r->$Key ?>">
-              <input type=hidden name=action value=<?=$newmode?>>
-              <!-- <input type=hidden name="IDEstadoPedidoTercero" id="IDEstadoPedidoTercero" value=<? if($newmode=="insert") echo "1"; else echo $r->IDEstadoPedidoTercero ?>> -->
+            <input type=hidden name=IDPedidoTercero id=IDPedidoTercero value="<?php echo $r->IDPedidoTercero ?>">
+			  <input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+              <input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+              <input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+              <input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
+              <input type=hidden name=ID value="<?php echo $r->$Key ?>">
+              <input type=hidden name=action value=<?php echo $newmode?>>
+              <!-- <input type=hidden name="IDEstadoPedidoTercero" id="IDEstadoPedidoTercero" value=<?php if($newmode=="insert") echo "1"; else echo $r->IDEstadoPedidoTercero ?>> -->
               
-              <? if($r->IDEstadoPedidoTercero == 1 || $r->IDEstadoPedidoTercero == ""):  ?>
-              <input type=submit name=submit value="<? if($newmode=="insert") echo "Guardar y Continuar"; else echo $submit_caption ?>" class=submit>
+              <?php if($r->IDEstadoPedidoTercero == 1 || $r->IDEstadoPedidoTercero == ""):  ?>
+              <input type=submit name=submit value="<?php if($newmode=="insert") echo "Guardar y Continuar"; else echo $submit_caption ?>" class=submit>
               <?php endif; ?>
               </td>
 			</tr>
@@ -880,7 +880,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
     
 <div id="DetallePedido" style=" <?php if ($_GET[tab]!="detalle" && !empty($id)){ ?> display:none;  <?php } ?>">
 
-<form name="frm" id="frmPedidoTercero" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <? if($newmode!="delete"){ ?> onSubmit="return EvaluaReg(this,Check)" <?} ?>>
+<form name="frm" id="frmPedidoTercero" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){ ?> onSubmit="return EvaluaReg(this,Check)" <?php } ?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center width="70%" >
 	<tr>
@@ -901,7 +901,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 					<table  border="0" cellspacing="0" cellpadding="0" bgcolor="<?php echo $color_tab; ?>" id=TB1>
 						<tr height="16">
 							<td class="LeftCurve" valign="top" align="left" width="12" height="16" nowrap>&nbsp;&nbsp;&nbsp;</td>
-							<td valign="top" nowrap  height="16"><a href="./?mod=<?php echo $MOD;?>&action=edit&id=<?=$id?>&tab=pedido" class="TAB">PEDIDO TERCERO</a>&nbsp;</td>
+							<td valign="top" nowrap  height="16"><a href="./?mod=<?php echo $MOD;?>&action=edit&id=<?php echo $id?>&tab=pedido" class="TAB">PEDIDO TERCERO</a>&nbsp;</td>
 							<td align="right" class="RightCurve" width="10" nowrap height="16">&nbsp;&nbsp;</td>
 						</tr>
 					</table>
@@ -918,7 +918,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 					<table border="0"  bgcolor="<?php echo $color_tab; ?>" cellspacing="0" cellpadding="0" id=TB2>
 						<tr height="16">
 							<td class="LeftCurve" valign="top" align="left" width="12" height="16" nowrap>&nbsp;&nbsp;&nbsp;</td>
-							<td valign="top" height="16"><a href="./?mod=<?php echo $MOD;?>&id=<?=$id?>&tab=detalle&action=edit" class="TAB">DETALLE PEDIDO</a>&nbsp;</td>
+							<td valign="top" height="16"><a href="./?mod=<?php echo $MOD;?>&id=<?php echo $id?>&tab=detalle&action=edit" class="TAB">DETALLE PEDIDO</a>&nbsp;</td>
 							<td align="right" class="RightCurve" width="10" nowrap height="16">&nbsp;&nbsp;</td>
 						</tr>
 					</table>
@@ -936,7 +936,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 					<table border="0"  bgcolor="<?php echo $color_tab; ?>" cellspacing="0" cellpadding="0" id=TB2>
 						<tr height="16">
 							<td class="LeftCurve" valign="top" align="left" width="12" height="16" nowrap>&nbsp;&nbsp;&nbsp;</td>
-							<td valign="top" height="16"><a href="./?mod=EntregaTercero&id=<?=$id?>&tab=verificacion&action=edit" class="TAB">VERIFICACION PEDIDO</a>&nbsp;</td>
+							<td valign="top" height="16"><a href="./?mod=EntregaTercero&id=<?php echo $id?>&tab=verificacion&action=edit" class="TAB">VERIFICACION PEDIDO</a>&nbsp;</td>
 							<td align="right" class="RightCurve" width="10" nowrap height="16">&nbsp;&nbsp;</td>
 						</tr>
 					</table>
@@ -950,7 +950,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
       </td>
 	  </tr>
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -1476,23 +1476,23 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 			<td colspan=2 align=center class=row2>
             	         
 
-            <input type=hidden name=IDPedidoTercero id=IDPedidoTercero value="<?=$r->IDPedidoTercero ?>">
-			  <input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-              <input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-              <input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-              <input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-              <input type=hidden name=ID value="<? echo $r->$Key ?>">
+            <input type=hidden name=IDPedidoTercero id=IDPedidoTercero value="<?php echo $r->IDPedidoTercero ?>">
+			  <input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+              <input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+              <input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+              <input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
+              <input type=hidden name=ID value="<?php echo $r->$Key ?>">
               <input type=hidden name=action value="inserta_detalle_referencia">
-              <input type=hidden name="IDEstadoPedidoTercero" id="IDEstadoPedidoTercero" value=<? if($newmode=="insert") echo "1"; else echo $r->IDEstadoPedidoTercero ?>>
+              <input type=hidden name="IDEstadoPedidoTercero" id="IDEstadoPedidoTercero" value=<?php if($newmode=="insert") echo "1"; else echo $r->IDEstadoPedidoTercero ?>>
               
-              <? 
+              <?php 
 			  
 			  
 			  if($r->IDEstadoPedidoTercero == 1):  ?>
-              <input type=submit name=submit value="<? if($newmode=="insert") echo "Guardar y Continuar"; else echo $submit_caption ?>" class=submit>
+              <input type=submit name=submit value="<?php if($newmode=="insert") echo "Guardar y Continuar"; else echo $submit_caption ?>" class=submit>
               <?php endif ?>
               
-               <? 	
+               <?php 	
 			   // Solo muestro el boton de generar si ya se guardo el detalle
 									$sql_detalle_pedido_ref = "Select count(*) Total 
 															  From DetallePedidoTerceroReferencia
@@ -1509,7 +1509,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 								$tipo_envio="reenvio";
 							endif;
 					   ?>
-					  <input type="button" name="genera_pedido" id="genera_pedido" alt="<?=$r->IDPedidoTercero ?>" rel="<?php echo $tipo_envio; ?>"  value="<?php echo $mensaje_boton; ?>" class=submit>
+					  <input type="button" name="genera_pedido" id="genera_pedido" alt="<?php echo $r->IDPedidoTercero ?>" rel="<?php echo $tipo_envio; ?>"  value="<?php echo $mensaje_boton; ?>" class=submit>
              <?php } 
 			 else{ ?>
              	<br>Para poder generar el pedido primero debe guardar la sugerencia de cantidades
@@ -1538,7 +1538,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 
 
 
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -1583,26 +1583,26 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 							?>
 		<table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 			<tr>
-				<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-				<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-				<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+				<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+				<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+				<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 			</tr>
 		</table>
-		<?
+		<?php 
 				if($rows > 0){
 		?>		
 		<br>
 		<table  cellpadding=0 cellspacing=0 align=center class=bordertable>
 			<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-			<?filtrar();?>	
+			<?php filtrar();?>	
 			<tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 			<tr>
 				<td class=texto bgcolor=#DBEAF5 colspan=12 nowrap>
-				<?
+				<?php 
 					print $pages;
 				?>
 				</td>
@@ -1612,14 +1612,14 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 					<table width=100% border=0 cellspacing=1 cellpadding=0>
 						<tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Numero Orden</a><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;
-					        <% if($_GET['order_by']=="NumeroOrdenCompra"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Proveedor&nbsp;
-                            <% if($_GET['order_by']=="IDProveedor"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Apellidos&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Fecha Pedido&nbsp;
-						    <% if($_GET['order_by']=="FechaPedido"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCargo&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Fecha Entrega&nbsp;
-						    <% if($_GET['order_by']=="FechaEntrega"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Numero Orden</a><a style="color: #3A4F6C;text-decoration: none" href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
+					        <?php  if($_GET['order_by']=="NumeroOrdenCompra"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Proveedor&nbsp;
+                            <?php  if($_GET['order_by']=="IDProveedor"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Apellidos&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Fecha Pedido&nbsp;
+						    <?php  if($_GET['order_by']=="FechaPedido"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCargo&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Fecha Entrega&nbsp;
+						    <?php  if($_GET['order_by']=="FechaEntrega"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Fecha <br>
 						  Ultima Fac</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Estado</td>
@@ -1629,17 +1629,17 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 
-						<? while($r = db_fetch_object($result)){
+						<?php while($r = db_fetch_object($result)){
 						?>
 						  	
 						<tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-								&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 							</td>
-						<td nowrap class=row1><? echo $r->NumeroOrdenCompra ?></td>
-						<td nowrap class=row1><? echo get_field("Proveedor","Nombre","IDProveedor",$r->IDProveedor) ?></td>
-						<td nowrap class=row1><? echo $r->FechaPedido ?></td>
-						<td nowrap class=row1><? echo $r->FechaEntrega ?></td>
+						<td nowrap class=row1><?php echo $r->NumeroOrdenCompra ?></td>
+						<td nowrap class=row1><?php echo get_field("Proveedor","Nombre","IDProveedor",$r->IDProveedor) ?></td>
+						<td nowrap class=row1><?php echo $r->FechaPedido ?></td>
+						<td nowrap class=row1><?php echo $r->FechaEntrega ?></td>
 						<td nowrap class=row1><?php
                         $sql_fecha="Select * From DetallePedidoTerceroReferencia Where IDPedidoTercero = '".$r->$Key."' Order by FechaRecibido desc Limit 1";
 						$result_fecha = db_query($sql_fecha);
@@ -1647,7 +1647,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 						echo substr($row_fecha["FechaRecibido"],0,10);
 						?></td>
 						<td nowrap class=row1>
-						<? 
+						<?php 
 						echo estado_tercero($r->IDPedidoTercero);
 						//echo get_field("EstadoPedidoTercero","Descripcion","IDEstadoPedidoTercero",$r->IDEstadoPedidoTercero) 
 						?>
@@ -1683,14 +1683,14 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
                         <?php echo $diferencia_total = $total_pedido - $total_recibido; ?>
                         </td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-								&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+								&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 							</td>
 					</tr>
-						<? } // END for
+						<?php } // END for
 						?>
 						<tr>
 							<td class=texto bgcolor=#DBEAF5 colspan=11 nowrap>
-								<?
+								<?php 
 									print $pages;
 									?>
 							</td>
@@ -1700,7 +1700,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 		</tr>
 		</table>	
 
-<? 			
+<?php 			
 	}// End if$rows
 	else
 		echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -1751,7 +1751,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
                 <input type="text" name="Tipologia" id="Tipologia">
                
                 Desde
-                <input  type="text" name="FechaDesde" class="input" value="<?=$FechaDesde?>" size="10">
+                <input  type="text" name="FechaDesde" class="input" value="<?php echo $FechaDesde?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -1762,7 +1762,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
                          
                 Hasta
                 
-                <input  type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>" size="10">
+                <input  type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -1771,12 +1771,12 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 									//-->
 								</script>  
                   <br>                            
-                <input type="hidden" name="mod" value="<?=$MOD?>">
+                <input type="hidden" name="mod" value="<?php echo $MOD?>">
                 <input type="hidden" name="action" value="list">
                 <input type="submit" name="submit" value="Buscar" class="submit">
 				</td>
 			</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

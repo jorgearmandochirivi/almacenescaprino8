@@ -65,7 +65,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
 					
 					
-					<form name="frmInv" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+					<form name="frmInv" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 						
 						<tr class=row2>
 							<td align="center">

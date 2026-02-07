@@ -1,6 +1,6 @@
 
 <body>
-<?
+<?php 
 
 
 $TitleMod ="Cliente";
@@ -12,7 +12,7 @@ $MOD = "ReporteCliente";
 $m = "Cliente";
 ?>
 
- <?
+ <?php 
 
 
 $permisos = get_permiso($ID_Usuario,$m,$Table);
@@ -105,26 +105,26 @@ else
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>
 <br>
 <table width=500 cellpadding=2 cellspacing=3 align=center class=bordertable>
 	<tr>
-		<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 	</tr>
-	<?filtrar();?>
+	<?php filtrar();?>
 	<tr>
-		<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+		<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 	</tr>
 	<tr>
 		<td class=texto bgcolor=#DBEAF5 colspan= nowrap>
-		<?
+		<?php 
 			print $pages;
 		?>
 		</td>
@@ -144,17 +144,17 @@ else
 						<td class=rowform nowrap bgcolor=#DBEAF5>Ver detalles</td>
 					</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 	$tallap="";
 	$id_referencia_item="";
 ?>
 
 	<tr>
-						<td nowrap class="<?=$class?>"><? echo $r->Cedula; ?></td>
-						<td nowrap class="<?=$class?>"><? echo $r->Nombre . " " . $r->Apellido; ?></td>
-						<td nowrap class="<?=$class?>"><? echo get_field("Ciudad","Descripcion","IDCiudad",$r->IDCiudad) ?></td>
-						<td nowrap class="<?=$class?>">$<? echo number_format($r->ValorCompras, 0 ); ?></td>
-						<td nowrap class="<?=$class?>"><?
+						<td nowrap class="<?php echo $class?>"><?php echo $r->Cedula; ?></td>
+						<td nowrap class="<?php echo $class?>"><?php echo $r->Nombre . " " . $r->Apellido; ?></td>
+						<td nowrap class="<?php echo $class?>"><?php echo get_field("Ciudad","Descripcion","IDCiudad",$r->IDCiudad) ?></td>
+						<td nowrap class="<?php echo $class?>">$<?php echo number_format($r->ValorCompras, 0 ); ?></td>
+						<td nowrap class="<?php echo $class?>"><?php 
 						 $sql_item="SELECT SUM(DF.Cantidad) as CantidadTotal
 									FROM Factura F, DetalleFactura DF
 									WHERE F.IDFactura=DF.IDfactura AND
@@ -166,14 +166,14 @@ else
 						echo $row_item["CantidadTotal"];
 							?></td>
 						<td align=center valign=middle nowrap width=50 class=row2>
-								&nbsp;<a href='<? echo "?mod=ClienteFidelizado&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+								&nbsp;<a href='<?php echo "?mod=ClienteFidelizado&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 						</td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=18 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -182,7 +182,7 @@ else
 </tr>
 </table>
 
-<?
+<?php 
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -210,7 +210,7 @@ else
 									 			$condiciones.=" and F.FechaFactura between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
 									 		}
 											?>
-										 <input type=text readonly size=10 class=input name=limit1 value="<?=$_GET[limit1];?>">
+										 <input type=text readonly size=10 class=input name=limit1 value="<?php echo $_GET[limit1];?>">
 					 <script language='JavaScript1.2'>
 							 <!--
 							 if (!document.layers)
@@ -220,7 +220,7 @@ else
 										 </td>
 										 <td>Fecha Fin</td>
 										 <td>
-										 <input type=text size=10 readonly class=input name=limit2 value="<?=$_GET[limit2];?>">
+										 <input type=text size=10 readonly class=input name=limit2 value="<?php echo $_GET[limit2];?>">
 					 <script language='JavaScript1.2'>
 							 <!--
 							 if (!document.layers)
@@ -269,7 +269,7 @@ else
 
                  </table>
                  <br>
-                <input type="hidden" name="mod" value="<?=$MOD?>">
+                <input type="hidden" name="mod" value="<?php echo $MOD?>">
                 <input type="hidden" name="action" value="list">
                 <input type="submit" name="submit" value="Buscar" class="submit">
 
@@ -277,6 +277,6 @@ else
 				</td>
 			</tr>
 	</form>
-<?
+<?php 
 	}//End function filtrar
 ?>

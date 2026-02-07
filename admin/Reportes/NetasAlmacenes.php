@@ -112,11 +112,11 @@ function print_from($Mes="", $Ano=""){
 		<tr>
 		<td><br>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp;
 
-						Reporte Ventas Almacenes : Mes <?=$Mes ?>&nbsp; &nbsp; A&ntilde;o: <?=$Ano?>
+						Reporte Ventas Almacenes : Mes <?php echo $Mes ?>&nbsp; &nbsp; A&ntilde;o: <?php echo $Ano?>
 					</td>
 				</tr>
 				<?php
@@ -497,7 +497,7 @@ function print_from($Mes="", $Ano=""){
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
-							<td class="titlemedium" align="center" nowrap><?=$nombrepunto?></td>
+							<td class="titlemedium" align="center" nowrap><?php echo $nombrepunto?></td>
 							<?php
 							}//end for
 							?>
@@ -513,14 +513,14 @@ function print_from($Mes="", $Ano=""){
 							//print_r($valor);
 						?>
 						<tr>
-							<td class="<?=$class?>" align="center" nowrap><?=$key?></td>
+							<td class="<?php echo $class?>" align="center" nowrap><?php echo $key?></td>
 
 							<?php
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
 
-							<td class="<?=$class?>" align="right" nowrap>
+							<td class="<?php echo $class?>" align="right" nowrap>
 								<?php
 
 									echo number_format(  $array_facturas[ $key ][ $idpuntoventa ]  , 2 );
@@ -529,17 +529,17 @@ function print_from($Mes="", $Ano=""){
 							<?php
 							}//end for
 							?>
-							<td class="<?=$class?>" align="right" nowrap>
+							<td class="<?php echo $class?>" align="right" nowrap>
 								<?php
 									echo number_format( $tarray_facturasfecha[ $key ]  , 2 );
 								?>
 							</td>
-							<td class="<?=$class?>" align="right" nowrap>
+							<td class="<?php echo $class?>" align="right" nowrap>
 								<?php
 								echo  number_format( $array_addi[$key]  , 2 );
 								?>
 							</td>
-							<td class="<?=$class?>" align="right" nowrap>
+							<td class="<?php echo $class?>" align="right" nowrap>
 								<?php
 								echo  number_format( $array_bold[$key]  , 2 );
 								?>
@@ -557,13 +557,13 @@ function print_from($Mes="", $Ano=""){
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $tarray_facturas[ $idpuntoventa ] , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $tarray_facturas[ $idpuntoventa ] , 2)?></td>
 							<?php
 							}
 							?>
-							<td class="titlemedium" align="right" nowrap><?=number_format( array_sum( $tarray_facturas ) , 2)?></td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $GranTotalAddi, 2)?></td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $GranTotalBold, 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( array_sum( $tarray_facturas ) , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $GranTotalAddi, 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $GranTotalBold, 2)?></td>
 							
 						</tr>
 

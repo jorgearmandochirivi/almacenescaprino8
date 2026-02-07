@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="SubEspecialidad";
 
@@ -65,20 +65,20 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 <script>
 var Check = new Array('MDID_Especialidad','Descripcion','Publicar');
 </script>
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	<table width=98% border=0 cellspacing=1 cellpadding=1 class=texto>
-			<tr><td class=col1 align=right><?=$Label[MDID_Especialidad]?></td><td class=col2><? echo formpopup("MD_Especialidad","Descripcion","Descripcion","MDID_Especialidad",$r->MDID_Especialidad,"inputSelect\" id=\"MDID_Especialidad"); ?></td></tr>
-			<tr><td class=col1 align=right><?=$Label[Descripcion]?></td><td class=col2><input type=text size=25 class=tbox   name=Descripcion value="<?=$r->Descripcion ?>"> </td></tr>
-<tr><td class=col1 align=right><?=$Label[Publicar]?></td><td class=col2><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td></tr>
+			<tr><td class=col1 align=right><?php echo $Label[MDID_Especialidad]?></td><td class=col2><?php echo formpopup("MD_Especialidad","Descripcion","Descripcion","MDID_Especialidad",$r->MDID_Especialidad,"inputSelect\" id=\"MDID_Especialidad"); ?></td></tr>
+			<tr><td class=col1 align=right><?php echo $Label[Descripcion]?></td><td class=col2><input type=text size=25 class=tbox   name=Descripcion value="<?php echo $r->Descripcion ?>"> </td></tr>
+<tr><td class=col1 align=right><?php echo $Label[Publicar]?></td><td class=col2><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td></tr>
 <tr>
-			<td colspan=2 align=center class=row2><input type=hidden name=IDMD_SubEspecialidad value="<?=$r->IDMD_SubEspecialidad ?>"><input type=hidden name=ID value="<? echo $r->$Key ?>">
-<input type=hidden name=action value=<?=$newmode?>>
-<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+			<td colspan=2 align=center class=row2><input type=hidden name=IDMD_SubEspecialidad value="<?php echo $r->IDMD_SubEspecialidad ?>"><input type=hidden name=ID value="<?php echo $r->$Key ?>">
+<input type=hidden name=action value=<?php echo $newmode?>>
+<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 </td>
 </tr>
 </table>
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -116,12 +116,12 @@ if($_GET['in_order']=="DESC"){
 if($rows > 0){
 ?>		
 <br>
-<?filtrar();?>
-<table  cellpadding=0 align=center class="tablas" width=95%>
+<?php filtrar();?>
+<table  cellpadding=0 align=center class="tablas" width=95?>
 
 <tr>
 <th>
-<?
+<?php 
 	print $info;
 ?>
 </th>
@@ -130,28 +130,28 @@ if($rows > 0){
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 <tr>
 						<th class=titulodetablas nowrap>Editar</th>
-						<th class=titulodetablas> <a href="<% echo "?m=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=MDID_Especialidad&in_order=".$order."&listar=".$nav->limit; %>">MDID_Especialidad&nbsp;<% if($_GET['order_by']=="MDID_Especialidad"){%><img src="images/<%=$img%>" border=0><%}%></a> </th>
-						<th class=titulodetablas> <a href="<% echo "?m=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit; %>">Descripcion&nbsp;<% if($_GET['order_by']=="Descripcion"){%><img src="images/<%=$img%>" border=0><%}%></a> </th><th class=titulodetablas> <a href="<% echo "?m=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit; %>">Publicar&nbsp;<% if($_GET['order_by']=="Publicar"){%><img src="images/<%=$img%>" border=0><%}%></a> </th>
+						<th class=titulodetablas> <a href="<?php  echo "?m=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=MDID_Especialidad&in_order=".$order."&listar=".$nav->limit; ?>">MDID_Especialidad&nbsp;<?php  if($_GET['order_by']=="MDID_Especialidad"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </th>
+						<th class=titulodetablas> <a href="<?php  echo "?m=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit; ?>">Descripcion&nbsp;<?php  if($_GET['order_by']=="Descripcion"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </th><th class=titulodetablas> <a href="<?php  echo "?m=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit; ?>">Publicar&nbsp;<?php  if($_GET['order_by']=="Publicar"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </th>
 						<th class=titulodetablas>Eliminar</th>
 					</tr>
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 $class = repetition()?"col1list":"col2list";
 ?>
-<tr class=<?=$class?>>
+<tr class=<?php echo $class?>>
 						<td align=center valign=middle nowrap width=5>
-	&nbsp;<a href='<? echo "?m=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<?php echo "?m=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap><? echo get_field("MD_Especialidad","Descripcion","MDID_Especialidad","$r->MDID_Especialidad"); ?></td>
-						<td nowrap><? echo $r->Descripcion ?></td> <td nowrap><? echo $r->Publicar ?></td>
+						<td nowrap><?php echo get_field("MD_Especialidad","Descripcion","MDID_Especialidad","$r->MDID_Especialidad"); ?></td>
+						<td nowrap><?php echo $r->Descripcion ?></td> <td nowrap><?php echo $r->Publicar ?></td>
 						<td align=center valign=middle nowrap width=60>
-&nbsp;<a href='<? echo "?m=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+&nbsp;<a href='<?php echo "?m=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=6 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -160,7 +160,7 @@ $class = repetition()?"col1list":"col2list";
 </tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -213,7 +213,7 @@ Listar <select name="listar" class="popup">
 <option value="30">30</option>
 </select> 
 	<br>
-	<input type="hidden" name="mod" value="<?=$MOD?>">
+	<input type="hidden" name="mod" value="<?php echo $MOD?>">
 	<input type="hidden" name="action" value="list">
 	<input type="submit" name="submit" value="Buscar" class="submit">
 	<input type="hidden" name="tjoin" value="">
@@ -222,6 +222,6 @@ Listar <select name="listar" class="popup">
 </tr>
 	</form>
 </table>	
-<?		
+<?php 		
 	}//End function filtrar
 ?>

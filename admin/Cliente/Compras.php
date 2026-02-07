@@ -57,7 +57,7 @@ function mostrarcedula($newmode,$submit_caption){
 ?>
 	
 <br>
-<form name="frmcliente" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" onsubmit="disable(this);">
+<form name="frmcliente" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" onsubmit="disable(this);">
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="800">
 	
 	<tr>
@@ -81,8 +81,8 @@ function mostrarcedula($newmode,$submit_caption){
   
   <tr>
 	<td class="col2list" align="center" valign="middle" colspan="2">
-		<input type="submit" class="button" name="enviar" value="<?=$submit_caption?>">
-		<input type="hidden" value="<?=$newmode?>" name="action">
+		<input type="submit" class="button" name="enviar" value="<?php echo $submit_caption?>">
+		<input type="hidden" value="<?php echo $newmode?>" name="action">
 	</td>
   </tr>
 </table>
@@ -114,7 +114,7 @@ function print_form($idCliente,$submit_caption) {
 var Check = new Array('Cedula','Nombre','Apellido');
 </script>
 <br>
-	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
+	<form name="frmcliente" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
 	
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="800">
 	
@@ -123,7 +123,7 @@ var Check = new Array('Cedula','Nombre','Apellido');
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<?=$title?>
+				<?php echo $title?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -159,8 +159,8 @@ if($rows > 0){
 										$class = repetition()?"row1":"row2";
 									?>
 									<tr>
-										<td align="center" class="<?=$class?>"><?php echo $r_factura->NumeroFactura;?></td>
-										<td align="center" class="<?=$class?>">
+										<td align="center" class="<?php echo $class?>"><?php echo $r_factura->NumeroFactura;?></td>
+										<td align="center" class="<?php echo $class?>">
                                         <?php 
 										$sql_ref="Select * from DetalleFactura Where IDFactura = '".$r_factura->IDFactura."' and IDPuntoVenta = '".$r_factura->IDPuntoVenta."'";
 										$result_ref=db_query($sql_ref);
@@ -172,11 +172,11 @@ if($rows > 0){
 										
 										?>
                                         </td>
-										<td align="center" class="<?=$class?>"><?php echo formatofecha( substr( $r_factura->FechaFactura, 0, 10) );?></td>
-										<td align="center" class="<?=$class?>"><?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_factura->IDPuntoVenta );?></td>
-										<td align="center" class="<?=$class?>"><?php echo get_field("DetalleFactura","COUNT( IDDetalleFactura )","IDFactura",$r_factura->IDFactura."' AND IDPuntoVenta = '$r_factura->IDPuntoVenta");?></td>
-										<td align="right" class="<?=$class?>"><?php echo number_format($r_factura->ValorTotal, 2 );?></td>
-										<td align="center" class="<?=$class?>"><a href="?mod=Factura&action=edit&id=<?=$r_factura->IDFactura?>&IDPuntoVenta=<?=$r_factura->IDPuntoVenta?>" target="_blank"><img src="admin/images/attach.png" border="0"></a></td>
+										<td align="center" class="<?php echo $class?>"><?php echo formatofecha( substr( $r_factura->FechaFactura, 0, 10) );?></td>
+										<td align="center" class="<?php echo $class?>"><?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_factura->IDPuntoVenta );?></td>
+										<td align="center" class="<?php echo $class?>"><?php echo get_field("DetalleFactura","COUNT( IDDetalleFactura )","IDFactura",$r_factura->IDFactura."' AND IDPuntoVenta = '$r_factura->IDPuntoVenta");?></td>
+										<td align="right" class="<?php echo $class?>"><?php echo number_format($r_factura->ValorTotal, 2 );?></td>
+										<td align="center" class="<?php echo $class?>"><a href="?mod=Factura&action=edit&id=<?php echo $r_factura->IDFactura?>&IDPuntoVenta=<?php echo $r_factura->IDPuntoVenta?>" target="_blank"><img src="admin/images/attach.png" border="0"></a></td>
 									</tr>
 									<?php
 									}//end while

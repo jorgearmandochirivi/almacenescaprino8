@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 //actualizo los bonos vencidos
 $sql_vencidos = db_query("UPDATE BonoFidelizacion Set Estado = 'V'
@@ -93,8 +93,8 @@ else
 ?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
@@ -102,10 +102,10 @@ else
 <br>
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left width="100%" >
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>&nbsp;</td>
@@ -124,7 +124,7 @@ else
  ?>
 
  <table cellpadding=1 cellspacing=0 class=bordertable align=left width="100%" >
-<form name="frmFecha" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+<form name="frmFecha" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 
 	<tr>
 		<td class=maintitle bgcolor=#9daac6>&nbsp;Modificar Fecha/ Estado vencimiento bono</td>
@@ -168,7 +168,7 @@ else
             </tr>
             <tr>
 				<td colspan=3 align=center class=row2>
-                    <input type=hidden name=IDBonoFidelizacion id=IDPuntosClienteFidelizacion value="<?=$_GET[IDBonoFidelizacion] ?>">
+                    <input type=hidden name=IDBonoFidelizacion id=IDPuntosClienteFidelizacion value="<?php echo $_GET[IDBonoFidelizacion] ?>">
                     <input type=hidden name=action value="modificafecha">
                     <input type=hidden name=mod value="BonoFidelizado">
                     <input type=submit name=submit value="Modificar fecha" class="submit">
@@ -185,24 +185,24 @@ else
 <table width="100%" cellpadding=0 cellspacing=0 align=left class=bordertable>
 
 <tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-<?filtrar();?>
+<?php filtrar();?>
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
   <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap><a href="Fidelizacion/exportabonos.php"><img src="../images/excel_icon.gif" alt="" width="20" height="20" border="0" >Exportar Registros </a></td>
 </tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
 </tr>
 
-<?
+<?php 
 		if($rows > 0){
 ?>
 
@@ -226,13 +226,13 @@ else
 					</tr
 
 >
-  <? while($r = db_fetch_object($result)){
+  <?php while($r = db_fetch_object($result)){
 ?>
 
 <tr>
   <td nowrap class=row1>
   	<a href="../Movimiento/popBono.php?id=<?php echo $r->IDBonoFidelizacion; ?>" target="_blank">		
-  		<? echo $r->IDBonoFidelizacion ?>
+  		<?php echo $r->IDBonoFidelizacion ?>
 	</a>
 	<?php if($_GET["QryString"]){ ?>
 	<br><b>Reenviar Bono a:</b> <?php echo get_field("Cliente","Email","IDCliente",$r->IDCliente); ?>
@@ -243,22 +243,22 @@ else
 		<?php }   ?>	
 	<?php } ?>	
 	</td>
-						<td nowrap class=row1><? echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
-						<td nowrap class=row1><? echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente); ?></td>
-						<td nowrap class=row1><? echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente) . " " . get_field("Cliente","Apellido","IDCliente",$r->IDCliente); ?></td>
-						<td nowrap class=row1><? echo number_format($r->Valor,0) ?></td>
-						<td nowrap class=row1 align=center><? echo $r->Fecha ?></td>
+						<td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
+						<td nowrap class=row1><?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente); ?></td>
+						<td nowrap class=row1><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente) . " " . get_field("Cliente","Apellido","IDCliente",$r->IDCliente); ?></td>
+						<td nowrap class=row1><?php echo number_format($r->Valor,0) ?></td>
+						<td nowrap class=row1 align=center><?php echo $r->Fecha ?></td>
 						<td nowrap class=row1>
-							<? echo $r->FechaVencimiento ?>
+							<?php echo $r->FechaVencimiento ?>
 							<?php //if ($r->Estado=="D" || $r->Estado=="V" ){ ?>
                                 <a href="?mod=BonoFidelizado&IDBonoFidelizacion=<?php echo $r->IDBonoFidelizacion; ?>&accion=edit_fecha_vencimiento">cambiar fecha / estado</a>
                             <?php //} ?>
                         </td>
-						<td nowrap class=row1><b><? if($r->Estado=="D"){ ?> Disponible<? }elseif($r->Estado=="V"){ ?>Vencido <? }elseif($r->Estado=="W"){ ?>Web<? }elseif($r->Estado=="R"){ ?>Redimido <? } elseif($r->Estado=="C"){ echo "Anulado"; } ?></b></td>
-						<td nowrap class=row1><? echo get_field("Cliente","Cedula","IDCliente",$r->IDClienteRedimioBono)." " . get_field("Cliente","Nombre","IDCliente",$r->IDClienteRedimioBono) . " " .get_field("Cliente","Apellido","IDCliente",$r->IDClienteRedimioBono);  ?></td>
-						<td nowrap class=row1><? echo $array_puntos[ $r->IDPuntoVentaRedimido ]["Nombre"] ?></td>
-		  <td nowrap class=row1><? echo $r->FechaRedimido ?></td>
-		  <td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVentaRedimido?>&id=<?=$r->IDFactura ?>"><? echo $r->IDFactura ?></td>
+						<td nowrap class=row1><b><?php if($r->Estado=="D"){ ?> Disponible<?php }elseif($r->Estado=="V"){ ?>Vencido <?php }elseif($r->Estado=="W"){ ?>Web<?php }elseif($r->Estado=="R"){ ?>Redimido <?php } elseif($r->Estado=="C"){ echo "Anulado"; } ?></b></td>
+						<td nowrap class=row1><?php echo get_field("Cliente","Cedula","IDCliente",$r->IDClienteRedimioBono)." " . get_field("Cliente","Nombre","IDCliente",$r->IDClienteRedimioBono) . " " .get_field("Cliente","Apellido","IDCliente",$r->IDClienteRedimioBono);  ?></td>
+						<td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVentaRedimido ]["Nombre"] ?></td>
+		  <td nowrap class=row1><?php echo $r->FechaRedimido ?></td>
+		  <td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVentaRedimido?>&id=<?php echo $r->IDFactura ?>"><?php echo $r->IDFactura ?></td>
 		  <td nowrap class=row1 align="right">
 		  	<?php
 			if($r->Estado=="R"){
@@ -270,9 +270,9 @@ else
 
            </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
-<?
+<?php 
 }// End if$rows
 else
 	echo "<tr><td><br><br><span class=subtitle><b>Este cliente no tiene puntos de fidelizaci&oacute;n </b></span></td></tr>";
@@ -282,7 +282,7 @@ else
 		</tr>
 </table>
 
-<?
+<?php 
 
 }// Enf function list()
 
@@ -335,7 +335,7 @@ else
 									<option value="30">30</option>
 								</select>
 					<br>
-					<input type="hidden" name="mod" value="<?=$MOD?>">
+					<input type="hidden" name="mod" value="<?php echo $MOD?>">
 					<input type="hidden" name="rangofield" value="Fecha">
 					<input type="hidden" name="action" value="list">
 					<input type="hidden" name="tjoin" value="Cliente">
@@ -343,6 +343,6 @@ else
 				</td>
 			</tr>
 	</form>
-<?
+<?php 
 	}//End function filtrar
 ?>

@@ -43,7 +43,7 @@ else
 	<br>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?php echo $Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -69,11 +69,11 @@ else
 					 $r_usuario = db_fetch_object( $qry_usuario );
 				?>			
 					<tr>
-						<td class="<?=$class?>"><?=$r->IDSesion?></td>
-						<td class="<?=$class?>"><?=$r_usuario->Nombre." ".$r_usuario->Apellidos?></td>
-						<td class="<?=$class?>"><?=$r->Inicio?></td>
-						<td class="<?=$class?>" align="center">
-							<a href="./?mod=<?=$MOD?>&action=del&id=<?=$r->IDSesion?>">
+						<td class="<?php echo $class?>"><?php echo $r->IDSesion?></td>
+						<td class="<?php echo $class?>"><?php echo $r_usuario->Nombre." ".$r_usuario->Apellidos?></td>
+						<td class="<?php echo $class?>"><?php echo $r->Inicio?></td>
+						<td class="<?php echo $class?>" align="center">
+							<a href="./?mod=<?php echo $MOD?>&action=del&id=<?php echo $r->IDSesion?>">
 							<img src="images/trash.gif" border="0">
 							</a>
 						</td>

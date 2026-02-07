@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="Factura";
 
@@ -116,8 +116,8 @@ function print_form($id,$newmode,$title,$submit_caption){
 ?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
@@ -141,7 +141,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 			<table width=450 border=0 cellspacing=1 cellpadding=1 class=texto bgcolor=ffffff>
 				<tr class=row2>
 					<td colspan="2">
-						<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>">
+						<FORM name="frm" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>">
 								<div align="center">
 									<table width=100% border=0>
 										<tr>
@@ -152,19 +152,19 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 														<td class=row2>
 															<div align="left">
 																Numero Factura</div>														</td>
-														<td class=row2><input type="text" class="input" name="NumeroFactura" readonly size="24" value="<?=$r->NumeroFactura?>"></td>
+														<td class=row2><input type="text" class="input" name="NumeroFactura" readonly size="24" value="<?php echo $r->NumeroFactura?>"></td>
 													</tr>
 													<tr>
 													  <td class=row2>Estado:</td>
-													  <td class=row2><?=$r->Estado?></td>
+													  <td class=row2><?php echo $r->Estado?></td>
 													  <td class=row2>&nbsp;</td>
 													  <td class=row2>&nbsp;</td>
 												  </tr>
 													<tr>
 														<td class=row2>Punto de Venta</td>
-														<td class=row2><input type="text" class="input" name="PuntoVenta" readonly size="24" value="<?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta)?>"></td>
+														<td class=row2><input type="text" class="input" name="PuntoVenta" readonly size="24" value="<?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta)?>"></td>
 														<td class=row2>No. Documento</td>
-														<td class=row2><input type="text" class="input" name="NumeroDocumento" readonly size="24" value="<?=$r->NumeroDocumento?>"></td>
+														<td class=row2><input type="text" class="input" name="NumeroDocumento" readonly size="24" value="<?php echo $r->NumeroDocumento?>"></td>
 													</tr>
 													<tr>
 														<td class=row2></td>
@@ -180,13 +180,13 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 													</tr>
 													<tr>
 														<td class=row2>Cedula</td>
-														<td class=row2><input type="text" class="input" name="Cedula" readonly size="15" value='<?echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" value="<?=$r->IDCliente?>"></td>
+														<td class=row2><input type="text" class="input" name="Cedula" readonly size="15" value='<?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" value="<?php echo $r->IDCliente?>"></td>
 														<td class=row2>Nombre</td>
-														<td class=row2><input type="text" class="input" name="Cliente" readonly size="20" value='<?echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente);?>'></td>
+														<td class=row2><input type="text" class="input" name="Cliente" readonly size="20" value='<?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente);?>'></td>
 													</tr>
 													<tr>
 														<td class=row2 nowrap>Telefono Cliente</td>
-														<td class=row2><input type="text" class="input" name="TeleCli" readonly size="15" value='<?echo get_field("Cliente","Telefono","IDCliente",$r->IDCliente);?>'></td>
+														<td class=row2><input type="text" class="input" name="TeleCli" readonly size="15" value='<?php echo get_field("Cliente","Telefono","IDCliente",$r->IDCliente);?>'></td>
 														<td class="col1" nowrap="nowrap">Club Suavidad</td>
 														<td class="col2"><?php echo get_field("Cliente","ClubSuavidad","IDCliente",$r->IDCliente) ?></td>
 													</tr>
@@ -196,13 +196,13 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 													</tr>
 													<tr>
 														<td class=row1>Fecha Factura</td>
-														<td class=row1><input type="text" class="input" name="FechaFactura" size="24" value='<?=$r->FechaFactura?>' readonly> </td>
+														<td class=row1><input type="text" class="input" name="FechaFactura" size="24" value='<?php echo $r->FechaFactura?>' readonly> </td>
 														<td class=row1><span class="col1">Numero de Tarjeta Fidelizacion</span></td>
 														<td class=row1><span class="col2"><?php echo get_field("TarjetaFidelizacion","Codigo","IDCliente",$r->IDCliente) ?></span></td>
 													</tr>
 													<tr>
 													  <td class=row1>Fecha Creacion</td>
-													  <td class=row1><?=$r->FechaCreacion?></td>
+													  <td class=row1><?php echo $r->FechaCreacion?></td>
 													  <td class=row1>&nbsp;</td>
 													  <td class=row1>&nbsp;</td>
 												  </tr>
@@ -214,20 +214,20 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 													</tr>
 													<tr>
 														<td class=row1>Observaciones</td>
-														<td colspan="3" class=row1><textarea name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
+														<td colspan="3" class=row1><textarea name="Observaciones" rows="4" cols="64"><?php echo $r->Observaciones?></textarea></td>
 													</tr>
 													
 													<tr>
 														<td class=rowtable><b>EMPLEADO</b></td>
-														<td class=rowtable><?if($newmode == "insert"){?><input type="button" class="submit" name="empleado" value="Buscar" onClick="window.open('Empleado/popEmpleados.php','','width=400,height=400');"><?}?></td>
+														<td class=rowtable><?php if($newmode == "insert"){?><input type="button" class="submit" name="empleado" value="Buscar" onClick="window.open('Empleado/popEmpleados.php','','width=400,height=400');"><?php }?></td>
 														<td class=rowtable></td>
 														<td class=rowtable></td>
 													</tr>
 													<tr>
 														<td class=row2>C&eacute;dula</td>
-														<td class=row2><input type="text" class="input" name="CedulaEmpleado" readonly size="15" value='<?echo get_field("Empleado","Cedula","IDEmpleado",$r->IDEmpleado);?>'> <input type="hidden" name="IDEmpleado" value="<?=$r->IDEmpleado?>"></td>
+														<td class=row2><input type="text" class="input" name="CedulaEmpleado" readonly size="15" value='<?php echo get_field("Empleado","Cedula","IDEmpleado",$r->IDEmpleado);?>'> <input type="hidden" name="IDEmpleado" value="<?php echo $r->IDEmpleado?>"></td>
 														<td class=row2>Nombre</td>
-														<td class=row2><input type="text" class="input" name="NombreEmpleado" readonly size="20" value='<?echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?>'></td>
+														<td class=row2><input type="text" class="input" name="NombreEmpleado" readonly size="20" value='<?php echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?>'></td>
 													</tr>
 													<tr>
 														<td class=row2><br></td>
@@ -242,13 +242,13 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 													</tr>
 													<tr>
 														<td class=row2>Valor Descuento</td>
-														<td class=row2><input type="text" class="input" name="Descuento" size="3" value="<?=$r->Descuento?>" maxlength="3">%</td>
+														<td class=row2><input type="text" class="input" name="Descuento" size="3" value="<?php echo $r->Descuento?>" maxlength="3">%</td>
 														<td class=row2></td>
 														<td class=row2></td>
 													</tr>
 													<tr>
 														<td class=row2>Comentario Descuento Especial</td>
-														<td class=row2 colspan="3"><textarea name="ObservacionDescuento" rows="4" cols="64"><?=$r->ObservacionDescuento?></textarea></td>
+														<td class=row2 colspan="3"><textarea name="ObservacionDescuento" rows="4" cols="64"><?php echo $r->ObservacionDescuento?></textarea></td>
 													</tr>
 													<tr>
 													  <td class=col1>Alianzas</td>
@@ -257,21 +257,21 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 													  		endif;
 													   ?></td>
 												  </tr>
-													<?
+													<?php 
 													echo $newmode; 	
 													if( $newmode == "delete" )
 													{
 													?>
 													<tr>
-														<td class="row2" colspan="4" align="center"><input type="button" value="Eliminar Factura" onClick="eliminafactura( <?=$r->IDFactura?>,<?=$r->IDFactura?> );" class="input"></td>
+														<td class="row2" colspan="4" align="center"><input type="button" value="Eliminar Factura" onClick="eliminafactura( <?php echo $r->IDFactura?>,<?php echo $r->IDFactura?> );" class="input"></td>
 													</tr>
-													<?
+													<?php 
 													}//end fi
 													?>
 												</table>
 										  </td>
 										</tr>
-										<? 
+										<?php 
 									if($newmode <> "insert")
 									{
 									?>
@@ -294,7 +294,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 														<td align="center" class=rowform><b>Descuento Par.</b></td>
 														<td align="center" class=rowform><b>Total</b></td>
 													</tr>
-													<? 												//Query para el detalle de la factura
+													<?php 												//Query para el detalle de la factura
 												
 												$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 												$query_detalle = db_query($sql_detalle);
@@ -309,28 +309,28 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 													
 												?>
 													<tr bgcolor="#dfe3e7">
-														<td align="left" class="<?=$class?>"><b><?=$i?></b></td>
-														<td align="left" class="<?=$class?>"><%=get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))%></td>
-														<td align="left" class="<?=$class?>"><%=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))%></td>
-														<td align="left" class="<?=$class?>"><%=get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))%></td>
-														<td align="left" class="<?=$class?>"><?=$r_detalle->Cantidad?></td>
-														<td align="left" class="<?=$class?>"><?echo number_format($r_detalle->ValorU);?></td>
-														<td align="left" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoPar);?></td>
-														<td align="left" class="<?=$class?>"><?echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?></td>
+														<td align="left" class="<?php echo $class?>"><b><?php echo $i?></b></td>
+														<td align="left" class="<?php echo $class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_detalle->Cantidad?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format($r_detalle->ValorU);?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format($r_detalle->DescuentoPar);?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?></td>
 													</tr>
-												<?
+												<?php 
 													$i++;
 												}//while( $r_detalle = db_fetch_object( $query_detalle ) )
 												?>
 												<tr bgcolor="#dfe3e7">
-														<td align="left" class="<?=$class?>"><b><br></b></td>
-														<td align="left" class="<?=$class?>"></td>
-														<td align="left" class="<?=$class?>"></td>
-														<td align="left" class="<?=$class?>"></td>
-														<td align="left" class="<?=$class?>"></td>
-														<td align="left" class="<?=$class?>"></td>
-														<td align="left" class="<?=$class?>"></td>
-														<td align="left" class="<?=$class?>"></td>
+														<td align="left" class="<?php echo $class?>"><b><br></b></td>
+														<td align="left" class="<?php echo $class?>"></td>
+														<td align="left" class="<?php echo $class?>"></td>
+														<td align="left" class="<?php echo $class?>"></td>
+														<td align="left" class="<?php echo $class?>"></td>
+														<td align="left" class="<?php echo $class?>"></td>
+														<td align="left" class="<?php echo $class?>"></td>
+														<td align="left" class="<?php echo $class?>"></td>
 													</tr>
 											<tr bgcolor="#dfe3e7">
 														<td align="left" class="row2"><b><br></b></td>
@@ -347,7 +347,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 											  <td align="left" class="row2"></td>
 											  <td align="left" class="row2"></td>
 											  <td class=col2>Valor IVA</td>
-											  <td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorIVASinBono)?></td>
+											  <td align="left" class="rowtable" colspan="3"><?php echo number_format($r->ValorIVASinBono)?></td>
 											  </tr>
                                              --> 
                                              
@@ -358,7 +358,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 											  <td align="left" class="row2"></td>
 											  <td align="left" class="row2"></td>
 											  <td class=col2>Total Factura</td>
-											  <td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorTotalSinBono)?></td>
+											  <td align="left" class="rowtable" colspan="3"><?php echo number_format($r->ValorTotalSinBono)?></td>
 											  </tr>
                                              <?php endif; ?>
                                               
@@ -369,7 +369,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 											  <td align="left" class="row2"></td>
 											  <td align="left" class="row2"></td>
 											  <td class=col2>Menos Bono fidelizaci&oacute;n</td>
-											  <td align="left" class="rowtable" colspan="3">-<?=number_format($r->ValorBono)?></td>
+											  <td align="left" class="rowtable" colspan="3">-<?php echo number_format($r->ValorBono)?></td>
 											  </tr>
                                              <?php endif; ?> 
                                             
@@ -381,7 +381,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 											  <td align="left" class="row2"></td>
 											  <td align="left" class="row2"></td>
 											  <td class=col2>Sub Total </td>
-											  <td align="left" class="rowtable" colspan="3"><?=number_format((int)$r->ValorTotalSinBono-(int)$r->ValorBono)?></td>
+											  <td align="left" class="rowtable" colspan="3"><?php echo number_format((int)$r->ValorTotalSinBono-(int)$r->ValorBono)?></td>
 											  </tr>
                                              <?php endif; ?>  
                                               
@@ -392,7 +392,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 											  <td align="left" class="row2"></td>
 											  <td align="left" class="row2"></td>
 											  <td class=col2>Valor sin IVA</td>
-											  <td align="left" class="rowtable" colspan="3"><?=number_format((int)$r->ValorTotal-(int)$r->ValorIVA)?></td>
+											  <td align="left" class="rowtable" colspan="3"><?php echo number_format((int)$r->ValorTotal-(int)$r->ValorIVA)?></td>
 											  </tr>
                                             -->
                                               
@@ -406,7 +406,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 														<td align="left" class="row2">
 															<div align="right">
 										      IVA</div></td>
-														<td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorIVA)?></td>
+														<td align="left" class="rowtable" colspan="3"><?php echo number_format($r->ValorIVA)?></td>
 													</tr>
 											<tr bgcolor="#dfe3e7">
 														<td align="left" class="row2"><b><br></b></td>
@@ -417,7 +417,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 															</td>
 														<td align="left" class="row2">
 															<div align="right">Valor Neto</div></td>
-														<td align="left" class="rowtable" colspan="3"><?=number_format($r->ValorTotal)?></td>
+														<td align="left" class="rowtable" colspan="3"><?php echo number_format($r->ValorTotal)?></td>
 													</tr>
 													
 											<tr bgcolor="#dfe3e7">
@@ -431,7 +431,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 														<td align="left" class="rowform">No. DOCUMENTO</td>
 													</tr>
 													
-											<?
+											<?php 
 												$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 												$query_formapago = db_query( $sql_formapago );
 												
@@ -449,14 +449,14 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 															</td>
 														<td align="left" class="row2">
 															<div align="right">
-																<?=get_field("FormaPago","Descripcion","IDFormaPago",$r_formapago->IDFormaPago)?>
+																<?php echo get_field("FormaPago","Descripcion","IDFormaPago",$r_formapago->IDFormaPago)?>
 															</div>
 														</td>
-														<td align="left" class="rowtable" ><?=number_format($r_formapago->Valor)?></td>
+														<td align="left" class="rowtable" ><?php echo number_format($r_formapago->Valor)?></td>
 														<td align="left" class="rowtable"></td>
-														<td align="left" class="rowtable" ><?=$r_formapago->NumeroDocumento?></td>
+														<td align="left" class="rowtable" ><?php echo $r_formapago->NumeroDocumento?></td>
 													</tr>
-												<?
+												<?php 
 													}//end if($r_formapago->Valor <> 0)
 												}//end while( $r_formapago = db_fetch_object( $query_formapago ) )
 												
@@ -469,7 +469,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 												</table>
 											</td>
 										</tr>
-										<? 	
+										<?php 	
 										
 										$sql_credito = "SELECT * FROM Credito WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 										$qry_credito = db_query( $sql_credito );
@@ -481,7 +481,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 										
 										<tr>
 											<td class="navpic" colspan="4" align="left">
-												<b>Cuotas Factura - No Credito <?=$r_credito->NumeroDocumento ?></b>
+												<b>Cuotas Factura - No Credito <?php echo $r_credito->NumeroDocumento ?></b>
 											</td>
 										</tr>
 										<tr>
@@ -494,7 +494,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 														<td align="center"><b>Valor Cuota</b></td>
 													</tr>
 											
-										<?
+										<?php 
 											$sql_cuotas = "SELECT * FROM CreditoCuota WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
 											$qry_cuotas = db_query( $sql_cuotas );
 											while( $r_cuotas = db_fetch_object( $qry_cuotas ) )
@@ -502,26 +502,26 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 												$class = repetition()?"col1list":"col2list";
 										?>
 												<tr>
-													<td class="<?=$class?>" align="center"><?=$r_cuotas->IDCuota?></td>
-													<td class="<?=$class?>" align="center"><?=$r_cuotas->FechaCuota?></td>
-													<td class="<?=$class?>" align="center">
+													<td class="<?php echo $class?>" align="center"><?php echo $r_cuotas->IDCuota?></td>
+													<td class="<?php echo $class?>" align="center"><?php echo $r_cuotas->FechaCuota?></td>
+													<td class="<?php echo $class?>" align="center">
 														
-																<input type="text" class="tbox" name="FechaPago<?=$r_cuotas->IDCuota?>" size="19" value='<?php if ($r_cuotas->FechaPago!="0000-00-00 00:00:00") echo $r_cuotas->FechaPago; ?>' readonly>
+																<input type="text" class="tbox" name="FechaPago<?php echo $r_cuotas->IDCuota?>" size="19" value='<?php if ($r_cuotas->FechaPago!="0000-00-00 00:00:00") echo $r_cuotas->FechaPago; ?>' readonly>
 																<script language="JavaScript1.2">
 																	<!--
 																		if (!document.layers)
-																			document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaPago<?=$r_cuotas->IDCuota?>,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
+																			document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaPago<?php echo $r_cuotas->IDCuota?>,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
 																	//-->
 																</script>
 														
 													</td>
-													<td class="<?=$class?>" align="center">
-														<?=number_format( $r_cuotas->ValorTotal, 0 )?>
-														<input type=hidden name=IDCuota[<?=$r_cuotas->IDCuota?>] value="<?=$r_cuotas->IDCuota?>">
+													<td class="<?php echo $class?>" align="center">
+														<?php echo number_format( $r_cuotas->ValorTotal, 0 )?>
+														<input type=hidden name=IDCuota[<?php echo $r_cuotas->IDCuota?>] value="<?php echo $r_cuotas->IDCuota?>">
 													</td>
 												</tr>
 										
-										<?
+										<?php 
 											}//end while
 										?>
 												</table>
@@ -532,17 +532,17 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 												<input type="submit" name="Submit" value="Actualizar Pagos" class="submit" >
 											</td>
 										</tr>
-										<?
+										<?php 
 										}//end if cuotas
 										
 										
 																		}
 									?>
 									</table>
-									<input type="hidden" name="action" value="<?=$newmode?>">
-									<input type="hidden" name="ID" value="<?=$id?>">
-									<input type="hidden" name="IDFactura" value="<?=$r->IDFactura?>"><input type="hidden" name="IDEmpleado" value='<?if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>'> 
-									<input type="hidden" name="idpunto" value="<?=$idpunto?>">
+									<input type="hidden" name="action" value="<?php echo $newmode?>">
+									<input type="hidden" name="ID" value="<?php echo $id?>">
+									<input type="hidden" name="IDFactura" value="<?php echo $r->IDFactura?>"><input type="hidden" name="IDEmpleado" value='<?php if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>'> 
+									<input type="hidden" name="idpunto" value="<?php echo $idpunto?>">
 									</div>
 							</FORM>
 					</td>
@@ -552,7 +552,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 	</tr>
 	
 </table>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -590,26 +590,26 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
 <table width=750 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-<?filtrar();?>	
+<?php filtrar();?>	
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=16 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
@@ -619,35 +619,35 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Cliente&nbsp;<% if($_GET['order_by']=="IDCliente"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroDocumento&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Punto de Venta&nbsp;<% if($_GET['order_by']=="NumeroDocumento"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">NumeroFactura&nbsp;<% if($_GET['order_by']=="NumeroFactura"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Cliente&nbsp;<?php  if($_GET['order_by']=="IDCliente"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroDocumento&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Punto de Venta&nbsp;<?php  if($_GET['order_by']=="NumeroDocumento"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">NumeroFactura&nbsp;<?php  if($_GET['order_by']=="NumeroFactura"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Numero de Fidelizacion</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">FechaFactura&nbsp;<% if($_GET['order_by']=="FechaFactura"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">ValorTotal&nbsp;<% if($_GET['order_by']=="ValorTotal"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">FechaFactura&nbsp;<?php  if($_GET['order_by']=="FechaFactura"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">ValorTotal&nbsp;<?php  if($_GET['order_by']=="ValorTotal"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>&idpunto=<%=$r->IDPuntoVenta%>'><img src='images/edit.gif' border='0'></a></td>
-						<td nowrap class=row1><? echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
-						<td nowrap class=row1><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta) ?></td>
-						<td nowrap class=row1><? echo $r->NumeroFactura ?></td>
-						<td nowrap class=row1><? echo $r->NumeroFideliazcion ?></td>
-						<td nowrap class=row1><? echo $r->FechaFactura ?></td>
-						<td nowrap class=row1><? echo $r->ValorTotal ?></td>
+	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>&idpunto=<?php echo $r->IDPuntoVenta?>'><img src='images/edit.gif' border='0'></a></td>
+						<td nowrap class=row1><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
+						<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta) ?></td>
+						<td nowrap class=row1><?php echo $r->NumeroFactura ?></td>
+						<td nowrap class=row1><?php echo $r->NumeroFideliazcion ?></td>
+						<td nowrap class=row1><?php echo $r->FechaFactura ?></td>
+						<td nowrap class=row1><?php echo $r->ValorTotal ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>&idpunto=<%=$r->IDPuntoVenta;%>'><img src='images/trash.gif' border='0'></a></td>
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>&idpunto=<?php echo $r->IDPuntoVenta;?>'><img src='images/trash.gif' border='0'></a></td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=8 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?></td>
 </tr>		
@@ -655,7 +655,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -716,7 +716,7 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="FechaFactura">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="Cliente">
@@ -725,6 +725,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

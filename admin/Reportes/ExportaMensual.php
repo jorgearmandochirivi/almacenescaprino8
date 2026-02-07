@@ -59,7 +59,7 @@ function print_from($IDPuntoVenta="", $FechaDesde="", $FechaHasta=""){
 						<tr>
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
-                            	Fecha Desde	<input readonly type="text" name="Fecha" class="input" value="<?=fecha()?>">
+                            	Fecha Desde	<input readonly type="text" name="Fecha" class="input" value="<?php echo fecha()?>">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -69,7 +69,7 @@ function print_from($IDPuntoVenta="", $FechaDesde="", $FechaHasta=""){
 								</script>
 							</td>
 							<td  align='left' valign='middle' class="nav">
-                            	Fecha Hasta	<input readonly type="text" name="FechaHasta" class="input" value="<?=fecha()?>">
+                            	Fecha Hasta	<input readonly type="text" name="FechaHasta" class="input" value="<?php echo fecha()?>">
 
 								<script language="JavaScript1.2">
 									<!--

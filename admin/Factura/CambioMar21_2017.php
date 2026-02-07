@@ -81,7 +81,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<?=$title?>
+				<?php echo $title?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -89,7 +89,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 <table class="forumline" width="550" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
@@ -106,25 +106,25 @@ function print_form($id,$newmode,$title,$submit_caption){
 													<tr>
 														<td class=col1 >No. Regisro</td>
 														<td class=col2 colspan="3" >
-														<input type="text" class="tbox" name="NumeroFacturaBono" id="Numero FacturaBono" readonly size="24" value="<?=$r->IDCambio?>"></td>
+														<input type="text" class="tbox" name="NumeroFacturaBono" id="Numero FacturaBono" readonly size="24" value="<?php echo $r->IDCambio?>"></td>
 													</tr>
 													<tr>
 														<td class=col1>Factura del Cambio</td>
-														<td class=col2><input type="text" class="tbox" name="FacturaCambio" id="Numero FacturaBono" readonly size="24" value="<?=$r->IDFacturaCambio?>"></td>
-														<td class=col2><a href="?mod=Factura&action=edit&id=<?=$r->IDFacturaCambio?>" title="VerFactura"><img src="images/magnifier.png" border="0"></a></td>
+														<td class=col2><input type="text" class="tbox" name="FacturaCambio" id="Numero FacturaBono" readonly size="24" value="<?php echo $r->IDFacturaCambio?>"></td>
+														<td class=col2><a href="?mod=Factura&action=edit&id=<?php echo $r->IDFacturaCambio?>" title="VerFactura"><img src="images/magnifier.png" border="0"></a></td>
 														<td class=col2></td>
 													</tr>
 													<tr>
 														<td class=col1>Punto de Venta</td>
 														<td class=col2 colspan="3">
 															<?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?>
-															<input type="hidden" value="<?=$IDPuntoVenta?>" name="IDPuntoVenta">
+															<input type="hidden" value="<?php echo $IDPuntoVenta?>" name="IDPuntoVenta">
 														</td>
 													</tr>
 													<tr>
 														<td class=col1>Fecha </td>
 														<td class=col2 colspan="3">
-															<input type="text" class="tbox" name="FechaFacturaBono" size="19" value='<?=$r->FechaCambio?>' readonly>
+															<input type="text" class="tbox" name="FechaFacturaBono" size="19" value='<?php echo $r->FechaCambio?>' readonly>
 
 															<script language="JavaScript1.2">
 															
@@ -133,7 +133,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1>Observaciones</td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
+														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?php echo $r->Observaciones?></textarea></td>
 													</tr>
 													<tr>
 														<td class=col1>
@@ -147,7 +147,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1>C&eacute;dula</td>
-														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
+														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?php echo $r->IDCliente?>"></td>
 														<td class=col1>Nombre</td>
 														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?php echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?>'></td>
 													</tr>
@@ -214,7 +214,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 																</td>
 																<td class="col1list" align="left"><?php echo $r_referenciacambio->Nombre;?></td>
 																<td class="col1list" align="center" width="100%"><?php echo $r_detalle->Cantidad?></td>
-																<td class="col1list" align="center"><a href="?mod=Factura&action=edit&id=<?=$r->IDFacturaCambio?>" title="VerFactura"><img src="images/magnifier.png" border="0"></a></td>
+																<td class="col1list" align="center"><a href="?mod=Factura&action=edit&id=<?php echo $r->IDFacturaCambio?>" title="VerFactura"><img src="images/magnifier.png" border="0"></a></td>
 															</tr>
 															<?php
 															}while( $r_detalle = db_fetch_object( $query_detalle ) );
@@ -233,7 +233,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 														<td class=col1 nowrap></td>
 														<td class=col1>Factura Excedente</td>
 														<td class=col2 colspan="2"><input type="text" class="tbox" name="Factura" readonly size="20" value="<?php echo $r->IDFactura?>">
-															<a href="?mod=Factura&action=edit&id=<?=$r->IDFactura?>" title="VerFactura"><img src="images/magnifier.png" border="0">
+															<a href="?mod=Factura&action=edit&id=<?php echo $r->IDFactura?>" title="VerFactura"><img src="images/magnifier.png" border="0">
 															</a></td>
 													</tr>
 													<tr>
@@ -273,12 +273,12 @@ function print_form($id,$newmode,$title,$submit_caption){
 
 													?>
 													<tr bgcolor="#dfe3e7">
-														<td align="left" class="<?=$class?>"><?php echo $r_referencia->Numero?></td>
-														<td align="left" class="<?=$class?>"><?php echo $r_referencia->Talla?></td>
-														<td align="left" class="<?=$class?>"><?php echo $r_referencia->Nombre?></td>
-														<td align="left" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU);?></td>
-														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU * $r_detalle->Cantidad);?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_referencia->Numero?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_referencia->Talla?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_referencia->Nombre?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_detalle->Cantidad?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format($r_detalle->ValorU);?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format($r_detalle->ValorU * $r_detalle->Cantidad);?></td>
 													</tr>
 													<?php
 													}while( $r_detalle = db_fetch_object( $query_detalle ) );
@@ -300,11 +300,11 @@ function print_form($id,$newmode,$title,$submit_caption){
 												<div align="right">
 													Total</div>
 											</td>
-											<td class=col2><input type=text readonly name=ValorTotal value="<?=number_format($r->Excedente)?>" class=tbox size=15></td>
+											<td class=col2><input type=text readonly name=ValorTotal value="<?php echo number_format($r->Excedente)?>" class=tbox size=15></td>
 										</tr>
 										
 									</table>
-									<input type="hidden" name="action" value="<?=$newmode?>">
+									<input type="hidden" name="action" value="<?php echo $newmode?>">
 </div>
 							
 					</td>
@@ -350,9 +350,9 @@ function print_form($id,$newmode,$title,$submit_caption){
 													<tr>
 														<td class=col1 >No. Regisro</td>
 														<td class=col2 >
-														<?=$r->IDCambio?></td>
+														<?php echo $r->IDCambio?></td>
 														<td class=col2 ><span class="col1">Factura del Cambio</span></td>
-														<td class=col2 ><?=$r->IDFacturaCambio?></td>
+														<td class=col2 ><?php echo $r->IDFacturaCambio?></td>
 													</tr>
 													<tr>
 														<td class=col1>Punto de Venta</td>
@@ -361,11 +361,11 @@ function print_form($id,$newmode,$title,$submit_caption){
 															
 														</td>
 														<td class=col2><span class="col1">Fecha</span></td>
-														<td class=col2><?=$r->FechaCambio?></td>
+														<td class=col2><?php echo $r->FechaCambio?></td>
 													</tr>
 													<tr>
 														<td class=col1>Observaciones</td>
-														<td class=col2 colspan="3"><?=$r->Observaciones?></td>
+														<td class=col2 colspan="3"><?php echo $r->Observaciones?></td>
 													</tr>
 													<tr>
 														<td class=col1>
@@ -436,7 +436,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 																</td>
 																<td class="col1list" align="left"><?php echo $r_referenciacambio->Nombre;?></td>
 																<td class="col1list" align="center" width="100%"><?php echo $r_detalle->Cantidad?></td>
-																<td class="col1list" align="center"><a href="?mod=Factura&action=edit&id=<?=$r->IDFacturaCambio?>" title="VerFactura"><img src="images/magnifier.png" border="0"></a></td>
+																<td class="col1list" align="center"><a href="?mod=Factura&action=edit&id=<?php echo $r->IDFacturaCambio?>" title="VerFactura"><img src="images/magnifier.png" border="0"></a></td>
 															</tr>
 															<?php
 															}while( $r_detalle = db_fetch_object( $query_detalle ) );
@@ -494,12 +494,12 @@ function print_form($id,$newmode,$title,$submit_caption){
 
 													?>
 													<trGarantia>
-														<td align="left" class="<?=$class?>"><?php echo $r_referencia->Numero?></td>
-														<td align="left" class="<?=$class?>"><?php echo $r_referencia->Talla?></td>
-														<td align="left" class="<?=$class?>"><?php echo $r_referencia->Nombre?></td>
-														<td align="left" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU);?></td>
-														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU * $r_detalle->Cantidad);?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_referencia->Numero?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_referencia->Talla?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_referencia->Nombre?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_detalle->Cantidad?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format($r_detalle->ValorU);?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format($r_detalle->ValorU * $r_detalle->Cantidad);?></td>
 													</tr>
 													<?php
 													}while( $r_detalle = db_fetch_object( $query_detalle ) );
@@ -521,7 +521,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 												<div align="right">
 													Total</div>
 											</td>
-											<td class=col2><?=number_format($r->Excedente)?></td>
+											<td class=col2><?php echo number_format($r->Excedente)?></td>
 										</tr>
 										
 									</table>							
@@ -547,7 +547,7 @@ function print_form($id,$newmode,$title,$submit_caption){
     	</div>
         
         <div align="center">	
-  		 <a href="/admin/filesotros/Cambio/Cambio<?=$id . "_".$IDPuntoVenta?>.pdf">Imprimir Cambio</a>
+  		 <a href="/admin/filesotros/Cambio/Cambio<?php echo $id . "_".$IDPuntoVenta?>.pdf">Imprimir Cambio</a>
         </div>
 
 
@@ -640,13 +640,13 @@ function print_form($id,$newmode,$title,$submit_caption){
 							?>
 							  	
 							<tr>
-								<td align=center valign=middle nowrap width=50 class="<?=$class?>">
+								<td align=center valign=middle nowrap width=50 class="<?php echo $class?>">
 								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-									<td nowrap class="<?=$class?>"><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
-									<td nowrap class="<?=$class?>"><?php echo $r->IDCambio ?></td>
-									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaCambio,0,10))." ".substr($r->FechaCambio,10) ?></td>
-									<td nowrap class="<?=$class?>"><?php echo number_format($r->Excedente) ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo $r->IDCambio ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo formatofecha(substr($r->FechaCambio,0,10))." ".substr($r->FechaCambio,10) ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo number_format($r->Excedente) ?></td>
 								</tr>
 							<?php } // END for
 							?>
@@ -722,10 +722,10 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="FechaFacturaBono">
 				<input type="hidden" name="action" value="list">
-				<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
+				<input type="hidden" name="IDPuntoVenta" value="<?php echo $IDPuntoVenta?>">
 				<input type="hidden" name="tjoin" value="Cliente">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>

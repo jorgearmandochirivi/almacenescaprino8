@@ -1,7 +1,7 @@
 <script src="jscripts/Chart.js-master/Chart.js"></script>
 <body> 
 
-<?
+<?php 
 
 $TitleMod ="Reportes Garantia";
 
@@ -12,7 +12,7 @@ $MOD = "GarantiaReporte";
 $m = "Garantia";
 ?>
 
- <?
+ <?php 
 
 $permisos = get_permiso($ID_Usuario,$m,$Table);
 
@@ -233,14 +233,14 @@ var Check = new Array('Nombre','Publicar');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 			<td>&nbsp;</td>
 		</tr>
 </table>
 <br>
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -280,22 +280,22 @@ var Check = new Array('Nombre','Publicar');
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td>&nbsp;</td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
 <table width=500 cellpadding=0 cellspacing=0 align=center >
 	<tr>
-		<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 	</tr>
-	<?filtrar();?>	
+	<?php filtrar();?>	
 	<tr>
-		<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+		<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 	</tr>
 	<tr>
 	  <td class=texto  colspan= nowrap>
@@ -324,28 +324,28 @@ var Check = new Array('Nombre','Publicar');
 	    <tr>
 	      <td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
 	      <td class=rowform nowrap bgcolor=#DBEAF5> Numero&nbsp;
-	        <% if($_GET['order_by']=="Nombre"){%>
-	        <img src="images/<%=$img%>" border=0>
-	        <%}%></td>
-	      <td class=rowform nowrap bgcolor=#DBEAF5>Fecha Ingreso<a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">&nbsp; </a></td>
+	        <?php  if($_GET['order_by']=="Nombre"){?>
+	        <img src="images/<?php echo $img?>" border=0>
+	        <?php }?></td>
+	      <td class=rowform nowrap bgcolor=#DBEAF5>Fecha Ingreso<a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">&nbsp; </a></td>
 	      <td class=rowform nowrap bgcolor=#DBEAF5>Fecha Recibido en fabrica</td>
 	      <td class=rowform nowrap bgcolor=#DBEAF5>Fecha enviado a almacenes</td>
 	      <td class=rowform nowrap bgcolor=#DBEAF5>Fecha Entrega
 al	cliente        
-  <% if($_GET['order_by']=="Codigo"){%>
-  <%}%></td>
+  <?php  if($_GET['order_by']=="Codigo"){?>
+  <?php }?></td>
 	      <td class=rowform nowrap bgcolor=#DBEAF5>Total Dias Fabrica</td>
 	      <td class=rowform nowrap bgcolor=#DBEAF5>Total Dias Entrega</td>
         </tr>
-	    <? while($r = db_fetch_object($result)){
+	    <?php while($r = db_fetch_object($result)){
 	$tallap="";
 	$id_referencia_item="";
 ?>
 	    <tr>
-	      <td align=center valign=middle nowrap width=69 class=row2>&nbsp;<a href='<? echo "?mod=Garantia&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a></td>
-	      <td nowrap class="<?=$class?>"><? echo $r->IDGarantia; ?></td>
-	      <td nowrap class="<?=$class?>"><? echo substr($r->FechaTrCr,0,10); ?></td>
-	      <td nowrap class="<?=$class?>">
+	      <td align=center valign=middle nowrap width=69 class=row2>&nbsp;<a href='<?php echo "?mod=Garantia&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a></td>
+	      <td nowrap class="<?php echo $class?>"><?php echo $r->IDGarantia; ?></td>
+	      <td nowrap class="<?php echo $class?>"><?php echo substr($r->FechaTrCr,0,10); ?></td>
+	      <td nowrap class="<?php echo $class?>">
 		  <?php  
 		  $sql_recibido_fabrica = "Select * From ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia in (5, 12)";
 		  $result_recibido_fabrica = db_query($sql_recibido_fabrica);
@@ -354,7 +354,7 @@ al	cliente
 		  ?>
           
           </td>
-	      <td nowrap class="<?=$class?>">
+	      <td nowrap class="<?php echo $class?>">
 	     <?php  
 		  $sql_enviada_tienda = "Select * From ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia in (7)";
 		  $result_enviada_tienda = db_query($sql_enviada_tienda);
@@ -363,13 +363,13 @@ al	cliente
 		  ?>
           
           </td>
-	      <td nowrap class="<?=$class?>"><?php  
+	      <td nowrap class="<?php echo $class?>"><?php  
 		  $sql_entrega_cliente = "Select * From ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia in (9)";
 		  $result_entrega_cliente = db_query($sql_entrega_cliente);
 		  $row_entrega_cliente = db_fetch_array($result_entrega_cliente);
 		  echo substr($row_entrega_cliente[FechaComentario],0,10);
 		  ?></td>
-	      <td nowrap class="<?=$class?>" align="center"><?php
+	      <td nowrap class="<?php echo $class?>" align="center"><?php
 				
 				
 				$fecha_inicio_fabrica = substr($row_recibido_fabrica[FechaComentario],0,10);
@@ -385,7 +385,7 @@ al	cliente
 				
 				
 				?></td>
-	      <td nowrap class="<?=$class?>" align="center"><?php
+	      <td nowrap class="<?php echo $class?>" align="center"><?php
 				
 				
 				$fecha_inicio = substr($r->FechaTrCr,0,10);
@@ -402,10 +402,10 @@ al	cliente
 				
 				?></td>
         </tr>
-	    <? } // END for
+	    <?php } // END for
 ?>
 	    <tr>
-	      <td class=texto bgcolor=#DBEAF5 colspan=8 nowrap><?
+	      <td class=texto bgcolor=#DBEAF5 colspan=8 nowrap><?php 
 		print $pages;
 		?></td>
         </tr>
@@ -413,7 +413,7 @@ al	cliente
 </tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -592,7 +592,7 @@ else
                 
                 
                 <br>
-					<input type="hidden" name="mod" value="<?=$MOD?>">
+					<input type="hidden" name="mod" value="<?php echo $MOD?>">
 					
 					<input type="hidden" name="action" value="list">
 					
@@ -600,6 +600,6 @@ else
 	  </td>
 	  </tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

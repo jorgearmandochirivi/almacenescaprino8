@@ -95,7 +95,7 @@ function seleccionareferencia( $newmode)
 
 				<span class="gen">
 
-					<?=$Title?>
+					<?php echo $Title?>
 
 				</span>
 
@@ -107,7 +107,7 @@ function seleccionareferencia( $newmode)
 
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="bordertable" width="820">
 
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 
 			<tr>
 
@@ -137,13 +137,13 @@ function seleccionareferencia( $newmode)
 
 
 
-				<input type=hidden name=action value=<?=$newmode?>>
+				<input type=hidden name=action value=<?php echo $newmode?>>
 
 				
 
 			</td>
 
-				<td align="left" valign="middle" class="nav" nowrap>Desde <input type="text" name="FechaDesde" class="input" value="<?=date( "Y-m-d" 
+				<td align="left" valign="middle" class="nav" nowrap>Desde <input type="text" name="FechaDesde" class="input" value="<?php echo date( "Y-m-d" 
 )?>" size="10"> 
 
 					<script language="JavaScript1.2">
@@ -161,7 +161,7 @@ onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.F
 
 				</td>
 
-				<td align="left" valign="middle" class="nav" nowrap>Hasta <input type="text" name="FechaHasta" class="input" value="<?=date( "Y-m-d" 
+				<td align="left" valign="middle" class="nav" nowrap>Hasta <input type="text" name="FechaHasta" class="input" value="<?php echo date( "Y-m-d" 
 )?>" size="10"> 
 
 					<script language="JavaScript1.2">
@@ -243,7 +243,7 @@ onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.F
 
 		<tr>
 
-			<td class="maintitle"><b></b><span class="gen"><?=$Title?> - <?php echo $campo.":".$referencia;  ?> Los Almacenes que no apareces, no tienen venta 
+			<td class="maintitle"><b></b><span class="gen"><?php echo $Title?> - <?php echo $campo.":".$referencia;  ?> Los Almacenes que no apareces, no tienen venta 
 para esta referencia</span></td>
 
 		</tr>
@@ -258,7 +258,7 @@ para esta referencia</span></td>
 
 				<table cellspacing='0' cellpadding='2' border='0' align='center'  width="820">
 
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 
 						<tr>
 
@@ -280,14 +280,14 @@ para esta referencia</span></td>
 
 				&nbsp;&nbsp;&nbsp;
 
-		<input type=text class=tbox name=referencia value="<?=$referencia ?>">
+		<input type=text class=tbox name=referencia value="<?php echo $referencia ?>">
 
 		<input type="submit" class="button" name="enviar" value="Consultar">
 
-		<input type=hidden name=action value='<?="list"?>'></td>
+		<input type=hidden name=action value='<?php echo "list"?>'></td>
 
 							<td align="left" valign="middle" class="nav" nowrap>Desde <input type="text" name="FechaDesde" id="FechaDesde" class="input" 
-value="<?=$FechaDesde?>" size="10"> 
+value="<?php echo $FechaDesde?>" size="10"> 
 
 								<script language="JavaScript1.2">
 
@@ -305,7 +305,7 @@ onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.F
 							</td>
 
 							<td align="left" valign="middle" class="nav" nowrap>Hasta <input type="text" name="FechaHasta" id="FechaHasta" class="input" 
-value="<?=$FechaHasta?>" size="10"> 
+value="<?php echo $FechaHasta?>" size="10"> 
 
 								<script language="JavaScript1.2">
 
@@ -474,7 +474,7 @@ $r_codificacionesp[Existencias];
 
 					<table width="100%" border="0" cellspacing="1" cellpadding="0">
 
-						<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+						<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 
 							<tr>
 

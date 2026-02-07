@@ -110,16 +110,16 @@ return $qry_string;
 					<table width="100%" border="0" cellspacing="1" cellpadding="1" class=bordertable align=center> 
 						<tr>
 							<td class="navpic">
-								<?
+								<?php 
 									echo  Referencias." ".$info;
 								?>
 							</td>
 						</tr>
 					</table>
 					<table>
-						<form action="<?=$PHP_SELF?>" method=get>
+						<form action="<?php echo $PHP_SELF?>" method=get>
 							<tr>
-								<td class="<?=$class?>" colspan="3" nowrap align="left"><?print($pages)?></td>
+								<td class="<?php echo $class?>" colspan="3" nowrap align="left"><?php print($pages)?></td>
 							</tr>
 							<tr>
 								<td class="rowtable" colspan="3" nowrap>Por <select name="field" class="inputSelect">
@@ -160,32 +160,32 @@ $array_tallas = array();
 						<tr>
 							<td></td>
 							<td></td>
-							<? 							foreach( $array_tallas as $key => $tallas )
+							<?php 							foreach( $array_tallas as $key => $tallas )
 							{
 							?>
 							<td width="50" align="center"><br>
 							</td>
-							<? 							}//end foreach
+							<?php 							}//end foreach
 							?></tr>
 						<tr>
 							<td class="titulodetablas">Referencia</td>
 							<td class="titulodetablas">Nombre</td>
-							<? 							foreach( $array_tallas as $key => $tallas )
+							<?php 							foreach( $array_tallas as $key => $tallas )
 							{
 								$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
 							?>
-							<td width="50" class="titulodetablas" align="center"><? echo $talla; ?></td>
-							<? 							}//end foreach
+							<td width="50" class="titulodetablas" align="center"><?php echo $talla; ?></td>
+							<?php 							}//end foreach
 							?></tr>
 						<tr>
-							<td class="<?=$class?>" nowrap><?php echo $r->Numero ?></td>
-							<td class="<?=$class?>"><?php echo $r->Nombre ?></td>
-							<? 							$numcols = 100;
+							<td class="<?php echo $class?>" nowrap><?php echo $r->Numero ?></td>
+							<td class="<?php echo $class?>"><?php echo $r->Nombre ?></td>
+							<?php 							$numcols = 100;
 							$contador = 1;
 							foreach( $array_tallas as $key => $tallas )
 							{
 							?>
-							<td class="<?=$class?>" align="left"><? 											
+							<td class="<?php echo $class?>" align="left"><?php 											
 									if( $tallas[Existencias] > 0 )
 									{
 										if( $tallas[Existencias] > 0 )

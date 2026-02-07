@@ -54,7 +54,7 @@
     
 		<form name=form method="Post" action="">
 			<div align="center">
-				<?
+				<?php 
 				
 				$sql_referencias = "SELECT R.IDReferencia, R.Numero
 										FROM Referencia R

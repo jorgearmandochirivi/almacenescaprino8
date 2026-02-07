@@ -1,5 +1,5 @@
 
-<body> <?
+<body> <?php 
 
 $TitleMod ="Clientes_Ventas";
 
@@ -77,26 +77,26 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
 		<table width=900 border=0 cellspacing=1 cellpadding=1 class=texto>
 						<tr class=row2>
 			<td width="40%"> Cedula <br>
-								<input type=text size=25 class=input   name=Cedula id=Cedula value="<?=$r->Cedula ?>"></td><td width="10"> </td>
+								<input type=text size=25 class=input   name=Cedula id=Cedula value="<?php echo $r->Cedula ?>"></td><td width="10"> </td>
 							<td>Nombre<br>
-								<input type=text size=25 class=input   name=Nombre id=Nombre value="<?=$r->Nombre ?>"> </td>
+								<input type=text size=25 class=input   name=Nombre id=Nombre value="<?php echo $r->Nombre ?>"> </td>
 						</tr>
 						<tr class=row2>
 			<td width="40%"></td><td width="10"> </td>
@@ -104,25 +104,25 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 						</tr>
 			<tr class=row2>
 			<td width="40%"> Apellidos <br>
-								<input type=text size=25 class=input name=Apellido id=Apellidos value="<?=$r->Apellido ?>"></td><td width="10"> </td>
+								<input type=text size=25 class=input name=Apellido id=Apellidos value="<?php echo $r->Apellido ?>"></td><td width="10"> </td>
 							<td>Telefono <br>
-								<input type=text size=25 class=input   name=Telefono id=Telefono value="<?=$r->Telefono ?>"></td>
+								<input type=text size=25 class=input   name=Telefono id=Telefono value="<?php echo $r->Telefono ?>"></td>
 						</tr>
 			<tr class=row2>
 			<td width="40%">Celular <br>
-								<input type=text size=25 class=input   name=Celular id=Celular value="<?=$r->Celular ?>"></td><td width="10"> </td>
+								<input type=text size=25 class=input   name=Celular id=Celular value="<?php echo $r->Celular ?>"></td><td width="10"> </td>
 							<td>Direccion <br>
-								<input type=text size=25 class=input   name=Direccion id=Direccion value="<?=$r->Direccion ?>"></td>
+								<input type=text size=25 class=input   name=Direccion id=Direccion value="<?php echo $r->Direccion ?>"></td>
 						</tr>
 			<tr class=row2>
 			<td width="40%">Ciudad<br>
-								<? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad"); ?></td><td width="10"> </td>
+								<?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad"); ?></td><td width="10"> </td>
 							<td>Empleado<br>
-								<input type=text size=25 class=input   name=IDEmpleado id=IDEmpleado value="<?=$r->IDEmpleado ?>"></td>
+								<input type=text size=25 class=input   name=IDEmpleado id=IDEmpleado value="<?php echo $r->IDEmpleado ?>"></td>
 						</tr>
 			<tr class=row2>
 			<td width="40%">Fecha de Nacimiento<br>
-								<input type=text size=25 class=input   name=FechaNacimiento id=IDEmpleado value="<?=$r->FechaNacimiento ?>"></td><td width="10"> </td>
+								<input type=text size=25 class=input   name=FechaNacimiento id=IDEmpleado value="<?php echo $r->FechaNacimiento ?>"></td><td width="10"> </td>
 							<td>Estado Civil <br>
 								<select name="EstadoCivil" id="Estado Civil" class="input">
 									<option value="" Selected>Seleccione</option>
@@ -136,25 +136,25 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 						</tr>
 			<tr class=row2>
 			<td width="40%">N&uacute;mero de Hijos<br>
-								<input type=text size=25 class=input   name=NumeroHijos id=IDEmpleado value="<?=$r->NumeroHijos ?>"></td><td width="10"></td>
+								<input type=text size=25 class=input   name=NumeroHijos id=IDEmpleado value="<?php echo $r->NumeroHijos ?>"></td><td width="10"></td>
 							<td></td>
 						</tr>
 			<tr class=row2>
 			<td width="40%">Gustos<br>
-								<textarea name="Gustos" rows="4" cols="40"><?=$r->Gustos?></textarea></td><td width="10"> </td>
+								<textarea name="Gustos" rows="4" cols="40"><?php echo $r->Gustos?></textarea></td><td width="10"> </td>
 							<td>Deportes<br>
-								<textarea name="Deportes" rows="4" cols="40"><?=$r->Deportes?></textarea></td>
+								<textarea name="Deportes" rows="4" cols="40"><?php echo $r->Deportes?></textarea></td>
 						</tr>
 						<tr class=row2>
 							<td width="40%">Restaurantes<br>
-								<textarea name="Restaurantes" rows="4" cols="40"><?=$r->Restaurantes?></textarea></td>
+								<textarea name="Restaurantes" rows="4" cols="40"><?php echo $r->Restaurantes?></textarea></td>
 							<td width="10"></td>
 							<td>M&uacute;sica<br>
-								<textarea name="Musica" rows="4" cols="40"><?=$r->Musica?></textarea></td>
+								<textarea name="Musica" rows="4" cols="40"><?php echo $r->Musica?></textarea></td>
 						</tr>
 						<tr class=row2>
 							<td width="40%">Hobbies<br>
-								<textarea name="Hobbies" rows="4" cols="40"><?=$r->Hobbies?></textarea></td>
+								<textarea name="Hobbies" rows="4" cols="40"><?php echo $r->Hobbies?></textarea></td>
 							<td width="10">
 							
 								
@@ -164,39 +164,39 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 						</tr>
 						<tr class=row2>
 							<td width="40%">Autorizo a recibir e-mail con promociones o informaci&oacute;n<br>
-								<? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AutorizaMail, 'AutorizaMail'); ?></td>
+								<?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AutorizaMail, 'AutorizaMail'); ?></td>
 							<td width="10"></td>
 							<td> Publicar <br>
-								<? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
+								<?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
 						</tr>
 						<tr class=row2>
 							<td width="40%">e-mail<br>
-								<input type=text size=25 class=input name=EMail id=IDEmpleado value="<?=$r->EMail ?>"></td>
+								<input type=text size=25 class=input name=EMail id=IDEmpleado value="<?php echo $r->EMail ?>"></td>
 							<td width="10"></td>
 							<td></td>
 						</tr>
 						<tr>
-							<td colspan=3 align=center class=row2><input type=hidden name=IDCliente id=IDCliente value="<?=$r->IDCliente ?>"><input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<? echo $r->$Key ?>">
-				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+							<td colspan=3 align=center class=row2><input type=hidden name=IDCliente id=IDCliente value="<?php echo $r->IDCliente ?>"><input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+				<input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+				<input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+				<input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
+				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
+				<input type=hidden name=action value=<?php echo $newmode?>>
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 						</tr>
 						<tr>
 							<td colspan="3" align=center class=row2><br>
 							</td>
 						</tr>
-						<%
+						<?php 
 						if( $newmode <> "insert" )
 						{
 							
 							$sql_facturas = " SELECT * FROM Factura WHERE IDCliente = '$r->IDCliente' ORDER BY FechaFactura DESC ";
 							$qry_facturas = db_query( $sql_facturas );
 							
-						%>
+						?>
 						<tr>
 							<td colspan="3" align=center class=row2>
 								<table width="100%" border="0" cellspacing="2" cellpadding="0" class="bordertable">
@@ -211,26 +211,26 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 										<td align="center" class="titlemedium">Valor Factura</td>
 										<td align="center" class="titlemedium">Ver Detalle</td>
 									</tr>
-									<%
+									<?php 
 									while( $r_factura = db_fetch_object( $qry_facturas ) )
 									{
 										$class = repetition()?"row1":"row2";
-									%>
+									?>
 									<tr>
-										<td align="center" class="<%=$class%>"><%echo $r_factura->NumeroFactura;%></td>
-										<td align="center" class="<%=$class%>"><%echo formatofecha( substr( $r_factura->FechaFactura, 0, 10) );%></td>
-										<td align="center" class="<%=$class%>"><%echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_factura->IDPuntoVenta );%></td>
-										<td align="center" class="<%=$class%>"><%echo get_field("DetalleFactura","COUNT( IDDetalleFactura )","IDFactura",$r_factura->IDFactura."' AND IDPuntoVenta = '$r_factura->IDPuntoVenta");%></td>
-										<td align="right" class="<%=$class%>"><%echo number_format($r_factura->ValorTotal, 2 );%></td>
-										<td align="center" class="<%=$class%>"><a href="?mod=Factura&action=edit&id=<%=$r_factura->IDFactura%>&idpunto=<%=$r_factura->IDPuntoVenta%>" target="_blank"><img src="images/attach.png" border="0"></a></td>
+										<td align="center" class="<?php echo $class?>"><?php echo $r_factura->NumeroFactura;?></td>
+										<td align="center" class="<?php echo $class?>"><?php echo formatofecha( substr( $r_factura->FechaFactura, 0, 10) );?></td>
+										<td align="center" class="<?php echo $class?>"><?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_factura->IDPuntoVenta );?></td>
+										<td align="center" class="<?php echo $class?>"><?php echo get_field("DetalleFactura","COUNT( IDDetalleFactura )","IDFactura",$r_factura->IDFactura."' AND IDPuntoVenta = '$r_factura->IDPuntoVenta");?></td>
+										<td align="right" class="<?php echo $class?>"><?php echo number_format($r_factura->ValorTotal, 2 );?></td>
+										<td align="center" class="<?php echo $class?>"><a href="?mod=Factura&action=edit&id=<?php echo $r_factura->IDFactura?>&idpunto=<?php echo $r_factura->IDPuntoVenta?>" target="_blank"><img src="images/attach.png" border="0"></a></td>
 									</tr>
-									<%
+									<?php 
 									}//end while
-									%>
+									?>
 								</table>
 								<br>
 								
-								<%
+								<?php 
 								/***********************PRODUCTOS MAS REQUERIDOS**********************************/
 								$sql_productos = " SELECT F.NumeroFactura, R.IDReferencia, R.Numero, DF.Cantidad, L.Nombre 
 													FROM Factura F, DetalleFactura DF,CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Linea L 
@@ -243,7 +243,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 													AND R.IDLinea = L.IDLinea 
 													ORDER BY DF.Cantidad DESC ";
 								$qry_productos = db_query( $sql_productos );
-								%>
+								?>
 								<table width="100%" border="0" cellspacing="2" cellpadding="0" class="bordertable">
 									<tr>
 										<td colspan="6" align="left" class="maintitle">Productos mas requeridos</td>
@@ -255,36 +255,36 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 										<td align="center" class="titlemedium">Linea</td>
 										<td align="center" class="titlemedium">Ver Referencia</td>
 									</tr>
-									<%
+									<?php 
 									while( $r_producto = db_fetch_object( $qry_productos ) )
 									{
 										$class = repetition()?"row1":"row2";
-									%>
+									?>
 									<tr>
-										<td align="center" class="<%=$class%>"><%echo $r_producto->NumeroFactura;%></td>
-										<td align="center" class="<%=$class%>"><%echo $r_producto->Numero;%></td>
-										<td align="center" class="<%=$class%>"><%echo $r_producto->Cantidad;%></td>
-										<td align="center" class="<%=$class%>"><%echo $r_producto->Nombre;%></td>
-										<td align="center" class="<%=$class%>"><a href="?mod=Referencia&action=edit&id=<%=$r_producto->IDReferencia%>" target="_blank"><img src="images/attach.png" border="0"></a></td>
+										<td align="center" class="<?php echo $class?>"><?php echo $r_producto->NumeroFactura;?></td>
+										<td align="center" class="<?php echo $class?>"><?php echo $r_producto->Numero;?></td>
+										<td align="center" class="<?php echo $class?>"><?php echo $r_producto->Cantidad;?></td>
+										<td align="center" class="<?php echo $class?>"><?php echo $r_producto->Nombre;?></td>
+										<td align="center" class="<?php echo $class?>"><a href="?mod=Referencia&action=edit&id=<?php echo $r_producto->IDReferencia?>" target="_blank"><img src="images/attach.png" border="0"></a></td>
 									</tr>
-									<%
+									<?php 
 									}//end while
-									%>
+									?>
 							  </table>
-								<%
+								<?php 
 								/***********************PRODUCTOS MAS REQUERIDOS**********************************/
-								%>
+								?>
 						  </td>
 		  </tr>
-						<%
+						<?php 
 						}//end if newmode
-						%>
+						?>
 					</table>
 		</td>
 	</tr>
 </table>
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -307,7 +307,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
   // $sqlinterno =  "SELECT * FROM $Table ORDER BY $Key  DESC limit 1000000";   
         
          $sqlinterno =  "SELECT * FROM $Table ORDER BY $Key  DESC limit 1000 ";  
-    $result_count = mysql_query($sqlinterno) or die(mysql_error());
+    $result_count = db_query($sqlinterno);
 while($ra = db_fetch_object($result_count )){
 
   
@@ -327,25 +327,25 @@ while($ra = db_fetch_object($result_count )){
    $queryfactura = "SELECT COUNT(ValorTotal) as Valor FROM Factura WHERE IDCliente = $ra->IDCliente GROUP BY IDCliente"; 
     
     
-                                                $result_count_facturas = mysql_query($queryfactura) or die(mysql_error());
+                                                $result_count_facturas = db_query($queryfactura);
                                                 $NumeroFacturas = db_fetch_object($result_count_facturas);
                                                 
                                                 
-                                               $NumeroFactu = $NumeroFacturas->Valor ;
+                                               $NumeroFactu = $NumeroFacturas ? $NumeroFacturas->Valor : 0;
                          
                                                
     $queryfecha = "SELECT 	FechaFactura FROM `Factura` where IDCliente = $ra->IDCliente GROUP BY IDCliente";      
-    $result_count_facturas_fecha = mysql_query($queryfecha) or die(mysql_error());
+    $result_count_facturas_fecha = db_query($queryfecha);
                                                 $NumeroFacturas = db_fetch_object($result_count_facturas_fecha);
                                                 
                                                 
-                                               $fecha = $NumeroFacturas->FechaFactura ;
+                                               $fecha = $NumeroFacturas ? $NumeroFacturas->FechaFactura : null;
                                             
     $queryvalor = "SELECT SUM(ValorTotal) as Valor FROM Factura WHERE IDCliente = $ra->IDCliente GROUP BY IDCliente"; 
-                                                $result_valor = mysql_query($queryvalor) or die(mysql_error());
+                                                $result_valor = db_query($queryvalor);
                                                 $valortotal = db_fetch_object($result_valor);
                                                 
-                                                $valortot= $valortotal->Valor;
+                                                $valortot = $valortotal ? $valortotal->Valor : 0;
                                                 
                                                 
                                                                                       
@@ -356,26 +356,27 @@ while($ra = db_fetch_object($result_count )){
      // $queryupdate= "Update Cliente set Facturas = 22, Valor_Total = 22  where IDCliente = $ra->IDCliente"; 
    
 
- 
+    $queryupdate = null;
     
-    if($r->Facturas !=$NumeroFactu &&$r->Valor_Total !=$valortot ){
+    if($ra->Facturas !=$NumeroFactu &&$ra->Valor_Total !=$valortot ){
          $queryupdate= "Update Cliente set Facturas = '$NumeroFactu', Valor_Total = '$valortot', Fecha = '$fecha', Fecha_Actualizada = NOW()  where IDCliente = $ra->IDCliente"; 
     }  
-    else if($r->Facturas !=$NumeroFactu && $r->Valor_Total == $valortot){
+    else if($ra->Facturas !=$NumeroFactu && $ra->Valor_Total == $valortot){
          $queryupdate= "Update Cliente set Facturas = '$NumeroFactu', Fecha = '$fecha', Fecha_Actualizada = NOW()  where IDCliente = $ra->IDCliente"; 
     }
-     else if($r->Facturas ==$NumeroFactu && $r->Valor_Total != $valortot){
+     else if($ra->Facturas ==$NumeroFactu && $ra->Valor_Total != $valortot){
         $queryupdate= "Update Cliente set Valor_Total = '$valortot', Fecha = '$fecha', Fecha_Actualizada = NOW()  where IDCliente = $ra->IDCliente"; 
     }
                                                 
-                                                
-//       $queryupdate= "Update Cliente set Valor_Total = '$valortot', Fecha = '$fecha', Fecha_Actualizada = NOW()  where IDCliente = $ra->IDCliente"; 
- mysql_query($queryupdate) or die(mysql_error());
-    // mysql_query($queryupdate) or die(mysql_error()); 
+    // Solo ejecutar si hay query                                           
+    if (!empty($queryupdate)) {
+        db_query($queryupdate);
+    }
+    // db_query($queryupdate); 
    // echo $query;*/
    }
     
-                                           //    mysql_query($query) or die(mysql_error());
+                                           //    db_query($query);
     
 }
 
@@ -408,26 +409,26 @@ while($ra = db_fetch_object($result_count )){
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
 <table width=900 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-<?filtrar();?>	
+<?php filtrar();?>	
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
@@ -437,11 +438,11 @@ while($ra = db_fetch_object($result_count )){
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar.</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Cedula&in_order=".$order."&listar=".$nav->limit; %>&action=list">Cedula&nbsp;<% if($_GET['order_by']=="Cedula"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit; %>&action=list">Nombre&nbsp;<% if($_GET['order_by']=="Nombre"){%><img src="images/<%=$img%>" border=0><%}%></a> </td><td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Apellido&in_order=".$order."&listar=".$nav->limit; %>&action=list">Apellidos&nbsp;<% if($_GET['order_by']=="Apellidos"){%><img src="images/<%=$img%>" border=0><%}%></a> </td><td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Telefono&in_order=".$order."&listar=".$nav->limit; %>&action=list">Telefono&nbsp;<% if($_GET['order_by']=="Telefono"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Celular&in_order=".$order."&listar=".$nav->limit; %>&action=list">Facturas&nbsp;<% if($_GET['order_by']=="Celular"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCiudad&in_order=".$order."&listar=".$nav->limit; %>&action=list">IDCiudad&nbsp;<% if($_GET['order_by']=="IDCiudad"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit; %>&action=list">Valor Total&nbsp;<% if($_GET['order_by']=="Valor Total"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Cedula&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Cedula&nbsp;<?php  if($_GET['order_by']=="Cedula"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Nombre&nbsp;<?php  if($_GET['order_by']=="Nombre"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td><td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Apellido&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Apellidos&nbsp;<?php  if($_GET['order_by']=="Apellidos"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td><td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Telefono&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Telefono&nbsp;<?php  if($_GET['order_by']=="Telefono"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Celular&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Facturas&nbsp;<?php  if($_GET['order_by']=="Celular"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCiudad&in_order=".$order."&listar=".$nav->limit; ?>&action=list">IDCiudad&nbsp;<?php  if($_GET['order_by']=="IDCiudad"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Valor Total&nbsp;<?php  if($_GET['order_by']=="Valor Total"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 <?php
@@ -451,7 +452,7 @@ while($ra = db_fetch_object($result_count )){
 //}
 //exit;
 ?>
-<? 
+<?php 
 
 
 while($r = db_fetch_object($result)){
@@ -465,36 +466,36 @@ while($r = db_fetch_object($result)){
   	
 <tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap class=row1><? echo $r->Cedula ?></td>
-						<td nowrap class=row1><? echo $r->Nombre ?></td> <td nowrap class=row1><? echo $r->Apellido?></td> <td nowrap class=row1><? echo $r->Telefono ?></td>
-						<td nowrap class=row1><? 
+						<td nowrap class=row1><?php echo $r->Cedula ?></td>
+						<td nowrap class=row1><?php echo $r->Nombre ?></td> <td nowrap class=row1><?php echo $r->Apellido?></td> <td nowrap class=row1><?php echo $r->Telefono ?></td>
+						<td nowrap class=row1><?php 
                                               /*  $query = "SELECT COUNT(ValorTotal) as Valor FROM Factura WHERE IDCliente = $r->IDCliente GROUP BY IDCliente"; 
-                                                $result_count = mysql_query($query) or die(mysql_error());
+                                                $result_count = db_query($query) or die(mysqli_error or handled by db_query);
                                                 $valor = db_fetch_object($result_count);
                                                 echo $valor->Valor ;
                                                 */
                                                 echo $r->Facturas
                                                 ?></td>
-						<td nowrap class=row1><? echo get_field("Ciudad","Descripcion","IDCiudad",$r->IDCiudad) ?></td>
+						<td nowrap class=row1><?php echo get_field("Ciudad","Descripcion","IDCiudad",$r->IDCiudad) ?></td>
 						<td nowrap class=row1><?php 
                                                /* 
                                                 $query = "SELECT SUM(ValorTotal) as Valor FROM Factura WHERE IDCliente = $r->IDCliente GROUP BY IDCliente"; 
-                                                $result_valor = mysql_query($query) or die(mysql_error());
+                                                $result_valor = db_query($query) or die(mysqli_error or handled by db_query);
                                                 $valor = db_fetch_object($result_valor);
                                                 echo $valor->Valor ;*/
                                                echo $r->Valor_Total
                                               //  $query= "Update Cliente set Facturas = $valor->Valor where IDCliente = $r->IDCliente"; 
                                                 
-                                              //  mysql_query($query) or die(mysql_error());
+                                              //  db_query($query) or die(mysqli_error or handled by db_query);
                                                 //echo fredy;
                                                 ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<? 
+<?php 
 
 
 
@@ -503,7 +504,7 @@ while($r = db_fetch_object($result)){
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=9 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -512,7 +513,7 @@ while($r = db_fetch_object($result)){
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -551,22 +552,22 @@ function list_r($sql=""){
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
 <table width=900 cellpadding=0 cellspacing=0 align=center class=bordertable>
 <tr>
-		  <td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+		  <td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 	  </tr>
-<?filtrar();?>	
+<?php filtrar();?>	
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
   <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap>
@@ -575,7 +576,7 @@ function list_r($sql=""){
 </tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
@@ -585,12 +586,12 @@ function list_r($sql=""){
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Cedula&in_order=".$order."&listar=".$nav->limit; %>&action=list">Cedula&nbsp;<% if($_GET['order_by']=="Cedula"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit; %>&action=list">Nombre&nbsp;<% if($_GET['order_by']=="Nombre"){%><img src="images/<%=$img%>" border=0><%}%></a> </td><td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Apellido&in_order=".$order."&listar=".$nav->limit; %>&action=list">Apellidos&nbsp;<% if($_GET['order_by']=="Apellidos"){%><img src="images/<%=$img%>" border=0><%}%></a> </td><td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Telefono&in_order=".$order."&listar=".$nav->limit; %>&action=list">Telefono&nbsp;<% if($_GET['order_by']=="Telefono"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Facturas&in_order=".$order."&listar=".$nav->limit; %>&action=list">Facturas&nbsp;<% if($_GET['order_by']=="Facturas"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCiudad&in_order=".$order."&listar=".$nav->limit; %>&action=list">IDCiudad&nbsp;<% if($_GET['order_by']=="IDCiudad"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Ano&in_order=".$order."&listar=".$nav->limit; %>&action=list">Fecha Nacimiento&nbsp;<% if($_GET['order_by']=="Ano"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Valor_Total&in_order=".$order."&listar=".$nav->limit; %>&action=list">Valor Total&nbsp;<% if($_GET['order_by']=="Valor_Total"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Cedula&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Cedula&nbsp;<?php  if($_GET['order_by']=="Cedula"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Nombre&nbsp;<?php  if($_GET['order_by']=="Nombre"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td><td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Apellido&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Apellidos&nbsp;<?php  if($_GET['order_by']=="Apellidos"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td><td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Telefono&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Telefono&nbsp;<?php  if($_GET['order_by']=="Telefono"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Facturas&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Facturas&nbsp;<?php  if($_GET['order_by']=="Facturas"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCiudad&in_order=".$order."&listar=".$nav->limit; ?>&action=list">IDCiudad&nbsp;<?php  if($_GET['order_by']=="IDCiudad"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Ano&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Fecha Nacimiento&nbsp;<?php  if($_GET['order_by']=="Ano"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Valor_Total&in_order=".$order."&listar=".$nav->limit; ?>&action=list">Valor Total&nbsp;<?php  if($_GET['order_by']=="Valor_Total"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 <?php
@@ -600,7 +601,7 @@ function list_r($sql=""){
 //}
 //exit;
 ?>
-<? 
+<?php 
 
 
 while($r = db_fetch_object($result)){
@@ -614,13 +615,13 @@ while($r = db_fetch_object($result)){
   	
 <tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap class=row1><? echo $r->Cedula ?></td>
-						<td nowrap class=row1><? echo $r->Nombre ?></td> <td nowrap class=row1><? echo $r->Apellido?></td> <td nowrap class=row1><? echo $r->Telefono ?></td>
-						<td nowrap class=row1><? 
+						<td nowrap class=row1><?php echo $r->Cedula ?></td>
+						<td nowrap class=row1><?php echo $r->Nombre ?></td> <td nowrap class=row1><?php echo $r->Apellido?></td> <td nowrap class=row1><?php echo $r->Telefono ?></td>
+						<td nowrap class=row1><?php 
                                                 /*$query = "SELECT COUNT(ValorTotal) as Valor FROM Factura WHERE IDCliente = $r->IDCliente GROUP BY IDCliente"; 
-                                                $result_count = mysql_query($query) or die(mysql_error());
+                                                $result_count = db_query($query) or die(mysqli_error or handled by db_query);
                                                 $valor = db_fetch_object($result_count);
                                                 
                                                 echo $valor->Valor ;
@@ -628,12 +629,12 @@ while($r = db_fetch_object($result)){
                                                 
                                                  echo $r->Facturas;
                                                 ?></td>
-						<td nowrap class=row1><? echo get_field("Ciudad","Descripcion","IDCiudad",$r->IDCiudad) ?></td>
-						<td nowrap class=row1><? if( !empty( $r->Ano ) ) echo $r->Ano . "-" . $r->Mes . "-" . $r->Dia ?></td>
+						<td nowrap class=row1><?php echo get_field("Ciudad","Descripcion","IDCiudad",$r->IDCiudad) ?></td>
+						<td nowrap class=row1><?php if( !empty( $r->Ano ) ) echo $r->Ano . "-" . $r->Mes . "-" . $r->Dia ?></td>
 						<td nowrap class=row1><?php 
                                                 
                                                /* $query = "SELECT SUM(ValorTotal) as Valor FROM Factura WHERE IDCliente = $r->IDCliente GROUP BY IDCliente"; 
-                                                 $result_valor = mysql_query($query) or die(mysql_error());
+                                                 $result_valor = db_query($query) or die(mysqli_error or handled by db_query);
                                                  
                                                  
                                                 $valor = db_fetch_object($result_valor);
@@ -645,10 +646,10 @@ while($r = db_fetch_object($result)){
                                                 //echo fredy;
                                                 ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<? 
+<?php 
 
 
 
@@ -657,7 +658,7 @@ while($r = db_fetch_object($result)){
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=9 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -666,7 +667,7 @@ while($r = db_fetch_object($result)){
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -714,7 +715,7 @@ else
 					</select>
 
 					<br>
-					<input type="hidden" name="mod" value="<?=$MOD?>">
+					<input type="hidden" name="mod" value="<?php echo $MOD?>">
 					<input type="hidden" name="rangofield" value="Fecha">
 					<input type="hidden" name="action" value="list">
 					<input type="hidden" name="tjoin" value="">
@@ -722,7 +723,7 @@ else
 	  </td>
 			</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>
 

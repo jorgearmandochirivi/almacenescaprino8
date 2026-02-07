@@ -3152,29 +3152,29 @@ function crear_pdf_pedido($id_pedido_tercero){
 													$i++;
 											?>
   <tr >
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->ReferenciaProveedor;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->ReferenciaCaprino;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->CodigoColor;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->CueroColor;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Suela;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Tacon;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Horma;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Producto;?></td>
-    <td align="right" class="<?=$class?>" style="border-bottom:1px solid #000000">$<?php
+    <td align="right" class="<?php echo $class?>" style="border-bottom:1px solid #000000">$<?php
 															echo $r_detalle->Precio;?></td>
-    <td align="left" class="<?=$class?>" style="font-size:8px; border-bottom:1px solid #000000"><?php
+    <td align="left" class="<?php echo $class?>" style="font-size:8px; border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Observacion;?></td>
   </tr>
   <tr >
-    <td colspan="10" align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><hr></td>
+    <td colspan="10" align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><hr></td>
   </tr>
   <?php
 												}

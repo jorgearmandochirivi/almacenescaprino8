@@ -38,7 +38,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 							
-								Desde	<input  type="text" name="FechaDesde" class="input" value="<?=$FechaDesde?>" size="10">
+								Desde	<input  type="text" name="FechaDesde" class="input" value="<?php echo $FechaDesde?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -49,7 +49,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 								
-								Hasta	<input  type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>" size="10">
+								Hasta	<input  type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -82,16 +82,16 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>
 				&nbsp;&nbsp;&nbsp;&nbsp;  <img src="images/book_go.png" border="0" alt="">&nbsp; 
-				<a href="./?mod=ReportePagos&Fecha=<?=$Fecha?>&IDPuntoVenta=<?=$IDPuntoVenta?>" class="menuppal">
+				<a href="./?mod=ReportePagos&Fecha=<?php echo $Fecha?>&IDPuntoVenta=<?php echo $IDPuntoVenta?>" class="menuppal">
 					Ver informe formas de pago
 				</a>
 				<br>&nbsp; 
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
 							
-						Reporte Ventas Diarias Almacen : <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
+						Reporte Ventas Diarias Almacen : <?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?php echo formatofecha( $Fecha )?>
 					</td>
 				</tr>
 				<?php
@@ -170,15 +170,15 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							//print_r($valor);
 						?>
 						<tr>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['FechaFacturaF']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['Numero']?> </td>
-										<td class="<?=$class?>" align="right" nowrap><?=number_format( $ElValorUnitario = $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,2)?></td>
-							<td class="<?=$class?>" align="center" nowrap><?php echo $valor['Cantidad']; $Pares += $valor['Cantidad'];?></td>
-							<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoRef']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoFactura']?> </td>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoPar']?></td>
-										<td class="<?=$class?>" align="right" nowrap>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['NumeroFactura']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['FechaFacturaF']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Numero']?> </td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ElValorUnitario = $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,2)?></td>
+							<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Cantidad']; $Pares += $valor['Cantidad'];?></td>
+							<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoRef']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoFactura']?> </td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoPar']?></td>
+										<td class="<?php echo $class?>" align="right" nowrap>
 											<?php
 												$TotalFactura = $valor[ValorTotal] ;
 												if( $valor['DescuentoPar'] > 0 )
@@ -238,21 +238,21 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												
 											?>
 										</td>
-										<td class="<?=$class?>" align="right" nowrap>
+										<td class="<?php echo $class?>" align="right" nowrap>
 											<?php
 												echo number_format( $saldo ,2); $Saldo += $saldo;
 											?>
 										</td>
-										<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $comision  ,2 ); $ComisionBancos += $comision;?></td>
-										<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $valorbruto = $valorparcial - $comision ,2); $ValorParcial += $valorbruto; ?></td>
-							<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $valoriva = ( $valorparcial - ( $valorparcial / (1 + $IVA ) ) ),2 );$ValorIVA += $valoriva; ?> </td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $comision  ,2 ); $ComisionBancos += $comision;?></td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $valorbruto = $valorparcial - $comision ,2); $ValorParcial += $valorbruto; ?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $valoriva = ( $valorparcial - ( $valorparcial / (1 + $IVA ) ) ),2 );$ValorIVA += $valoriva; ?> </td>
 							
 							
 							
-							<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $valorparcial - $valoriva ,2 ); $ValorBruto += ( $valorparcial - $valoriva );?></td>
-							<td class="<?=$class?>" align="right" nowrap><?php    echo $array_formapago[ $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][IDFormaPago] ][Descripcion] ;?></td>
-							<td class="<?=$class?>" align="right" nowrap><?php  echo $array_banco[ $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][IDBanco] ][Nombre];?></td>
-							<td class="<?=$class?>" align="right" nowrap>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $valorparcial - $valoriva ,2 ); $ValorBruto += ( $valorparcial - $valoriva );?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php    echo $array_formapago[ $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][IDFormaPago] ][Descripcion] ;?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php  echo $array_banco[ $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][IDBanco] ][Nombre];?></td>
+							<td class="<?php echo $class?>" align="right" nowrap>
 								<?php
 									$ValorReteICA = 0;
 									$ValorReteIVA = 0;
@@ -272,18 +272,18 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									}
 								?>
 							</td>
-							<td class="<?=$class?>" align="right" nowrap>
+							<td class="<?php echo $class?>" align="right" nowrap>
 							
 							<?php
 							echo number_format( $ValorReteIVA, 2 );
 							?>
 							</td>
-							<td class="<?=$class?>" align="right" nowrap>
+							<td class="<?php echo $class?>" align="right" nowrap>
 							<?php
 							echo number_format( $ValorReteICA, 2 );
 							?>
 							</td>
-							<td class="<?=$class?>" align="right" nowrap>
+							<td class="<?php echo $class?>" align="right" nowrap>
 							<?php
 							echo number_format(  $valorparcial  - ($ValorReteICA + $ValorReteIVA + $ValorReteFuente + $valoriva + $comision ), 2 );
 							?>
@@ -296,15 +296,15 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							
 						<tr>
 							<td class="titlemedium" colspan="4" align="right" nowrap>TOTALES</td>
-							<td class="titlemedium" align="center" nowrap><?=$Pares ?></td>
+							<td class="titlemedium" align="center" nowrap><?php echo $Pares ?></td>
 							<td class="titlemedium" align="center" colspan="2" nowrap></td>
 										<td class="titlemedium" align="right" nowrap></td>
-										<td class="titlemedium" align="right" nowrap><?=number_format( $Pago , 2)?></td>
-										<td class="titlemedium" align="right" nowrap><?=number_format( $Saldo , 2)?></td>
-										<td class="titlemedium" align="right" nowrap><?=number_format( $ComisionBancos , 2)?></td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $ValorParcial , 2)?></td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $ValorIVA , 2)?></td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $ValorBruto , 2)?></td>
+										<td class="titlemedium" align="right" nowrap><?php echo number_format( $Pago , 2)?></td>
+										<td class="titlemedium" align="right" nowrap><?php echo number_format( $Saldo , 2)?></td>
+										<td class="titlemedium" align="right" nowrap><?php echo number_format( $ComisionBancos , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $ValorParcial , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $ValorIVA , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $ValorBruto , 2)?></td>
 										<td class="titlemedium" align="right" nowrap></td>
 										<td class="titlemedium" align="right" nowrap></td>
 										<td class="titlemedium" align="right" nowrap></td>
@@ -319,7 +319,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						<tr>
 							<td class="maintitle" valign="middle">&nbsp; 
 									
-								Reporte Creditos : <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
+								Reporte Creditos : <?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?php echo formatofecha( $Fecha )?>
 							</td>
 						</tr>
 						
@@ -343,11 +343,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							$class = repetition()?"row2":"row1";
 						?>
 							<tr>
-								<td class="<?=$class?>" align="center" nowrap><?=$r_credito->NumeroFactura ?></td>
-								<td class="<?=$class?>" align="center" colspan="2" nowrap><?=$r_credito->IDCuota?></td>
-								<td class="<?=$class?>" align="right" nowrap><?=$r_credito->FechaCuota?></td>
-								<td class="<?=$class?>" align="right" nowrap><?=$r_credito->FechaPago?></td>
-								<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_credito->ValorTotal , 2); $ValorTotal += $r_credito->ValorTotal?></td>
+								<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_credito->NumeroFactura ?></td>
+								<td class="<?php echo $class?>" align="center" colspan="2" nowrap><?php echo $r_credito->IDCuota?></td>
+								<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_credito->FechaCuota?></td>
+								<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_credito->FechaPago?></td>
+								<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $r_credito->ValorTotal , 2); $ValorTotal += $r_credito->ValorTotal?></td>
 							</tr>
 						<?php	
 						}//ebd while
@@ -357,7 +357,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								<td class="titlemedium" align="center" colspan="2" nowrap></td>
 								<td class="titlemedium" align="right" nowrap></td>
 								<td class="titlemedium" align="right" nowrap>Total</td>
-								<td class="titlemedium" align="right" nowrap><?=number_format( $ValorTotal, 2 )?></td>
+								<td class="titlemedium" align="right" nowrap><?php echo number_format( $ValorTotal, 2 )?></td>
 							</tr>
 							
 							</table>

@@ -234,7 +234,7 @@ else
 	</tr>
 	<tr>
 	<td>
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" >
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" >
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 				<tr>
 					<?php
@@ -242,14 +242,14 @@ else
 						$frm[Remision] = get_maxID( "Entrada WHERE IDPuntoVenta = '$IDPuntoVenta'","Remision" );
 					?>
 					<td class="row1" nowrap>Numero de Remisi&oacute;n</td>
-					<td class="row2"><input type="input" name="Remision" readonly value="<?=$frm[Remision]?>" class="tbox" id="Remision"></td>
+					<td class="row2"><input type="input" name="Remision" readonly value="<?php echo $frm[Remision]?>" class="tbox" id="Remision"></td>
 					<td class="row1" nowrap>Numero de Factura</td>
-					<td class="row2"><input type="input" name="NumeroFactura" readonly value="<?=$frm[NumeroFactura]?>" class="tbox"></td>
+					<td class="row2"><input type="input" name="NumeroFactura" readonly value="<?php echo $frm[NumeroFactura]?>" class="tbox"></td>
 				</tr>
 				<tr>
 					<td class="row1" nowrap>Fecha</td>
 					<td class="row2" nowrap>
-						<input type="input" name="Fecha" readonly value="<?=$frm[Fecha]?>" id="Fecha" class="tbox">
+						<input type="input" name="Fecha" readonly value="<?php echo $frm[Fecha]?>" id="Fecha" class="tbox">
 					</td>
 					<td class="row1" colspan="2">
 								
@@ -260,7 +260,7 @@ else
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 					<tr>
 						<td class=navpic align="center" nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=".$MOD."&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; ?>' style="text-decoration: none;">REFERENCIA</a><a style="text-decoration: none;" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="Referencia.Numero"){?><img src="images/<?php echo $img;?>" border=0><?php }?></a></td>
-							<td class=navpic nowrap bgcolor=#DBEAF5 align="center" colspan = "<?=$colspan+1?>">TALLAS</td>
+							<td class=navpic nowrap bgcolor=#DBEAF5 align="center" colspan = "<?php echo $colspan+1?>">TALLAS</td>
 						</tr>
 	
 				<?php 
@@ -272,47 +272,47 @@ else
 				?>
 	  	
 					<tr>
-						<td nowrap class="<?=$class?>"></td>
+						<td nowrap class="<?php echo $class?>"></td>
 						<?php
 						foreach( $array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos )
 						{
 						?>
-						<td nowrap class="<?=$class?>"><b><?php echo get_field("Talla","Descripcion","IDTalla",$datos[IDTalla]); ?></b></td>
+						<td nowrap class="<?php echo $class?>"><b><?php echo get_field("Talla","Descripcion","IDTalla",$datos[IDTalla]); ?></b></td>
 						<?php
 						}
 						//anadir las columnas que falten (DISENO)
 						for( $i = 0; $i<$columnasmas; $i++ )
 						{
 						?>
-							<td nowrap class="<?=$class?>">
+							<td nowrap class="<?php echo $class?>">
 							</td>
 						<?php
 						}//end for
 						?>
-						<td class="<?=$class?>">
+						<td class="<?php echo $class?>">
 						</td>
 					</tr>
 					
 					<tr>
-						<td nowrap class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$valor[IDPuntoVentaReferencia]))?></td>
+						<td nowrap class="<?php echo $class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$valor[IDPuntoVentaReferencia]))?></td>
 						<?php
 						$TIngreso = 0;
 						foreach( $array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos )
 						{
 						?>
-							<td nowrap class="<?=$class?>">
+							<td nowrap class="<?php echo $class?>">
 								<?php echo number_format($datos[CantidadPendiente]); ?><br>
-								<input type="hidden" name="Cantidad[<?=$datos[IDPendientes]?>]" value="<?=$datos[CantidadPendiente]?>">
-								<input type="hidden" name="IDPuntoVentaReferencia[<?=$datos[IDPendientes]?>]" value="<?=$datos[IDPuntoVentaReferencia]?>">
-								<input type="hidden" name="IDTalla[<?=$datos[IDPendientes]?>]" value="<?=$datos[IDTalla]?>">
+								<input type="hidden" name="Cantidad[<?php echo $datos[IDPendientes]?>]" value="<?php echo $datos[CantidadPendiente]?>">
+								<input type="hidden" name="IDPuntoVentaReferencia[<?php echo $datos[IDPendientes]?>]" value="<?php echo $datos[IDPuntoVentaReferencia]?>">
+								<input type="hidden" name="IDTalla[<?php echo $datos[IDPendientes]?>]" value="<?php echo $datos[IDTalla]?>">
 								<?php 
 									$pend = $datos[IDPendientes]; 
 									$Ingr = $_POST[Ingreso];
 									$TIngreso += $Ingr[$pend];
 									$TPares += $Ingr[$pend];
 								?>
-								<input type="text" size="5" name="Ingreso[<?=$datos[IDPendientes]?>]"  value="<?php echo $Ingr[$pend] ?>">
-								<input type="hidden" name="IDPendientes[<?=$datos[IDPendientes]?>]" value="<?=$datos[IDPendientes]?>">
+								<input type="text" size="5" name="Ingreso[<?php echo $datos[IDPendientes]?>]"  value="<?php echo $Ingr[$pend] ?>">
+								<input type="hidden" name="IDPendientes[<?php echo $datos[IDPendientes]?>]" value="<?php echo $datos[IDPendientes]?>">
 							</td>
 
 						<?php
@@ -321,13 +321,13 @@ else
 						for( $i = 0; $i<$columnasmas; $i++ )
 						{
 						?>
-							<td nowrap class="<?=$class?>">
+							<td nowrap class="<?php echo $class?>">
 							</td>
 						<?php
 						}//end for
 						?>
-						<td class="<?=$class?>">
-							<input type="text" readonly size="5" name="TIngreso" value="<?=$TIngreso?>" value="">
+						<td class="<?php echo $class?>">
+							<input type="text" readonly size="5" name="TIngreso" value="<?php echo $TIngreso?>" value="">
 						</td>
 					</tr>
 						<?php } // END for
@@ -335,20 +335,20 @@ else
 						{
 				?>
 						<tr>
-							<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="center">
-							Total Pares a ingresar = <?=$TPares?>
+							<td  bgcolor=#DBEAF5 colspan = "<?php echo $colspan+2?>" nowrap class="navpic" align="center">
+							Total Pares a ingresar = <?php echo $TPares?>
 							</td>
 						</tr>
 						<?php
 						}
 						?>
 						<tr>
-							<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="center">
+							<td  bgcolor=#DBEAF5 colspan = "<?php echo $colspan+2?>" nowrap class="navpic" align="center">
 							<?php
 								print $pages;
 							?>
-							<input type="hidden" name="action" value="<?=$newmode?>">
-							<input type="hidden" name="Referencias" value="<?=$frm['Referencias']?>">
+							<input type="hidden" name="action" value="<?php echo $newmode?>">
+							<input type="hidden" name="Referencias" value="<?php echo $frm['Referencias']?>">
 							<?php
 							if( $newmode == "entrada" )
 							{
@@ -465,7 +465,7 @@ else
 	{
 	?>
 	<table width=590 cellpadding=0 cellspacing=0 align=center class=bordertable>
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" >
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" >
 		<tr>
 			<td colspan=2 class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
 		</tr>
@@ -479,7 +479,7 @@ else
 			}
 		?>
 			</select>
-			<input type=hidden name=mod value=<?=$MOD?>
+			<input type=hidden name=mod value=<?php echo $MOD?>
 			</td>
 	</tr>
 		</form>
@@ -509,7 +509,7 @@ else
 		<tr>
 			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
 		</tr>	<td>
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="setSelectOptions(document.frm.Referencias);return EvaluaReg(this,Check)">
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="setSelectOptions(document.frm.Referencias);return EvaluaReg(this,Check)">
 			<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto  >
 				<tr>
 				<?php
@@ -517,7 +517,7 @@ else
 						$frm[IDAjuste] = get_maxID( "Ajuste WHERE IDPuntoVenta = '$IDPuntoVenta'","IDAjuste" );
 						?>
 					<td class="row1" nowrap>Numero de Ajuste</td>
-							<td class="row2"><input type="input" name="IDAjuste" class="tbox" id="Ajuste" value="<?=$frm[IDAjuste]?>"></td>
+							<td class="row2"><input type="input" name="IDAjuste" class="tbox" id="Ajuste" value="<?php echo $frm[IDAjuste]?>"></td>
 						</tr>
 				<tr>
 					<td class="row1" nowrap>FechaAjuste</td>
@@ -538,7 +538,7 @@ else
 				<tr>
 					<td  colspan="2" align="center">
 						<table cellpadding="1" align=center cellspacing="1" width="100%">
-									<td class="row1list">Para agregar una referebcia haga <a href="javascript:;" onclick="window.open('Movimiento/popajustes.php?IDPuntoVenta=<?=$IDPuntoVenta?>','','width=600,height=500'); this.value=''">click aqu&iacute; </a><br>
+									<td class="row1list">Para agregar una referebcia haga <a href="javascript:;" onclick="window.open('Movimiento/popajustes.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>','','width=600,height=500'); this.value=''">click aqu&iacute; </a><br>
 										<select name="Referencias" style="width:180px; " size="20" multiple class="inputSelect" id="Referencias"></select><br>
 										</a>Para eliminar una referencia haga <a href="JavaScript:removeitem(document.frm.Referencias);" class="tex-menu-sup">click aqu&iacute; </a><br>
 									</td>
@@ -548,7 +548,7 @@ else
 						<tr>
 							<td colspan="2" align="center" class="row1list">
 								<input type="hidden" name="action" value="listar">
-								<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
+								<input type="hidden" name="IDPuntoVenta" value="<?php echo $IDPuntoVenta?>">
 								<input type="submit" value="Continuar" name="enviar">
 							</td>
 						</tr>
@@ -598,11 +598,11 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="FechaOrden">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="PuntoVentaReferencia">
-				<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
+				<input type="hidden" name="IDPuntoVenta" value="<?php echo $IDPuntoVenta?>">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>
 		</tr>

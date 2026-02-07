@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="Novedades Bancos";
 
@@ -98,7 +98,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	<tr>
 		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
-	<?
+	<?php 
 	//INFORMACION DEL DIA QUE SE SELECCIONA 
 	?>
 	<tr>
@@ -108,13 +108,13 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	</tr>
 	
 	
-	<?
+	<?php 
 	//INFORMACION DE TOTAL VENDIDO EL DIA QUE SE SELECCIONA
 	?>
 	<tr>
 		<td align=center class=row2>
 			<table width=500 border=0 cellspacing=1 cellpadding=1 class=bordertable bgcolor="ffffff">
-				<?
+				<?php 
 					
 					$Fechainicio = $Fecha." "."00:00:00";
 					$Fechafin = $Fecha." "."23:59:59";
@@ -133,17 +133,17 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				<tr>
 					<td width="30%" align="right" class=rowtable><b>Total Vendido</b></td>
 					<td align="left" class=rowtablesoft>
-						<?echo "$ ".number_format( $r_factura->Total )?>
+						<?php echo "$ ".number_format( $r_factura->Total )?>
 					</td>
 				</tr>
-				<?		
+				<?php 		
 					
 					}//end while( $r_factura = db_fetch_object( $query_factura ) )
 				?>
 			</table>
 		</td>
 	</tr>
-	<?
+	<?php 
 	//INFORMACION DE TOTAL VENDIDO EL DIA QUE SE SELECCIONA
 	?>
 	
@@ -156,7 +156,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<b>Valor</b>
 					</td>
 				</tr>
-				<?
+				<?php 
 					$sql_novedad = "SELECT NB.* 
 									FROM NovedadBanco NB, PuntoVentaBanco PB 
 									WHERE NB.Fecha = '$Fecha' AND NB.IDPuntoVentaBanco = PB.IDPuntoVentaBanco
@@ -171,10 +171,10 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				<tr>
 					<td width="30%" align="center" class=rowtable><?php echo get_field("Banco","Nombre","IDBanco",get_field("PuntoVentaBanco","IDBanco","IDPuntoVentaBanco",$r_novedad->IDPuntoVentaBanco))?></td>
 					<td align="center" class=rowtable>
-						<?echo "$ ".number_format( $r_novedad->Valor )?>
+						<?php echo "$ ".number_format( $r_novedad->Valor )?>
 					</td>
 				</tr>
-				<?		
+				<?php 		
 					
 					}//end while( $r_novedad = db_fetch_object( $query_novedad ) )
 				?>
@@ -186,7 +186,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 			<br>
 		</td>
 	</tr>
-	<?
+	<?php 
 	//INFORMACION DEL DIA QUE SE SELECCIONA 
 	?>
 	
@@ -202,7 +202,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 			</table>
 		</td>
 	</tr>
-	<?
+	<?php 
 	while( $r = db_fetch_object( $qid ) )
 	{
 	?>
@@ -210,16 +210,16 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		<td>
 			<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
 				<tr class=row2>
-					<td width="30%"><?echo get_field( "Banco","Nombre","IDBanco", $r->IDBanco )?></td>
+					<td width="30%"><?php echo get_field( "Banco","Nombre","IDBanco", $r->IDBanco )?></td>
 					<td>
-						<input type=text class=input name="valor[<?echo $r->IDBanco?>]" value="">
-						<input type=hidden name="Banco[<?echo $r->IDBanco?>]" value="<?echo $r->IDBanco?>">
+						<input type=text class=input name="valor[<?php echo $r->IDBanco?>]" value="">
+						<input type=hidden name="Banco[<?php echo $r->IDBanco?>]" value="<?php echo $r->IDBanco?>">
 					</td>
 				</tr>
 			</table>
 		</td>
 	</tr>
-	<?
+	<?php 
 	}//end while( $r = db_fetch_object( $qid ) )
 	?>
 	
@@ -234,7 +234,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	
 </table>
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -311,7 +311,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	</tr>
 	</form>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
@@ -319,13 +319,13 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		<tr>
 			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-		<?filtrar();?>	
+		<?php filtrar();?>	
 		<tr>
 			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 		<tr>
 			<td class=texto bgcolor=#DBEAF5 nowrap>
-			<?
+			<?php 
 				print $pages;
 			?>
 			</td>
@@ -353,7 +353,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				?>
 				<tr>
 					<td class=texto bgcolor=#DBEAF5 colspan=5 nowrap>
-						<?
+						<?php 
 							print $pages;
 							?>
 					</td>
@@ -428,6 +428,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

@@ -48,7 +48,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				<form action="./" name="frmPuntoVenta" method="post" name="Moviles">
 						<tr>
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
-							<td  align='left' valign='middle' class="nav">Fecha	<input readonly type="text" name="Fecha" class="input" value="<?=fecha()?>">
+							<td  align='left' valign='middle' class="nav">Fecha	<input readonly type="text" name="Fecha" class="input" value="<?php echo fecha()?>">
 
 								<script language="JavaScript1.2">
 							<!--
@@ -56,7 +56,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frmPuntoVenta.Fecha,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
 							//-->
 						</script>
-								  Hasta Fecha <input readonly type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>">
+								  Hasta Fecha <input readonly type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>">
 
 								<script language="JavaScript1.2">
 							<!--
@@ -92,13 +92,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td><br>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
 							
 						Reporte Creditos  Almacen : 
-					    <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
-						 - <?=formatofecha( $FechaHasta )?>
+					    <?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?php echo formatofecha( $Fecha )?>
+						 - <?php echo formatofecha( $FechaHasta )?>
 					</td>
 				</tr>
 				<?php
@@ -133,18 +133,18 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							//print_r($valor);
 						?>
 						<tr>
-							<td class="<?=$class?>" align="center" nowrap><?=$r_credito->NumeroFactura ?></td>
-							<td class="<?=$class?>" align="right" nowrap><?=$r_credito->Consecutivo ?></td>
-							<td class="<?=$class?>" align="right" nowrap><?=$r_credito->IDCuota?></td>
-							<td class="<?=$class?>" align="right" nowrap><?php
+							<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_credito->NumeroFactura ?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_credito->Consecutivo ?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_credito->IDCuota?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php
 									$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '".$r_credito->IDFactura."' AND IDPuntoVenta = '$r_credito->IDPuntoVenta' AND FechaPago = '0000-00-00 00:00:00' ";
 									$qry_cuotas = db_query( $sql_cuotas );
 									$r_cuotas = db_fetch_object( $qry_cuotas );
 									echo $r_cuotas->numero;
 									?></td>
-							<td class="<?=$class?>" align="right" nowrap><?=$r_credito->FechaCuota?></td>
-							<td class="<?=$class?>" align="right" nowrap><?=$r_credito->FechaPago?></td>
-							<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_credito->ValorTotal , 2); $ValorTotal += $r_credito->ValorTotal?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_credito->FechaCuota?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_credito->FechaPago?></td>
+							<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $r_credito->ValorTotal , 2); $ValorTotal += $r_credito->ValorTotal?></td>
 						</tr>
 						
 						<?php
@@ -158,7 +158,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="titlemedium" align="right" nowrap>&nbsp;</td>
 							<td class="titlemedium" align="right" nowrap>&nbsp;</td>
 							<td class="titlemedium" align="right" nowrap>&nbsp;</td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $ValorTotal , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $ValorTotal , 2)?></td>
 						</tr>
 											
 							

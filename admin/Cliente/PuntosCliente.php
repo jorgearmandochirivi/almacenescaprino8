@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="PuntosCliente";
 
@@ -81,23 +81,23 @@ else
 ?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
 	
 <br>
-<?
+<?php 
 	$TABsel = 2;
 	include("Cliente/menutabCliente.php");
 ?>
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left width="100%" >
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -117,12 +117,12 @@ else
                 <td>
                 	<select name="IDPuntoVenta" id="IDPuntoVenta">
                     	<option value="">Seleccione punto de venta</option>
-                        <?
+                        <?php 
                         foreach( $array_puntos as $idpuntoventa => $datos_puntoventa )
 						{
 						?>
-							<option value="<?=$idpuntoventa ?>"><?=$datos_puntoventa["Nombre"] ?></option>
-						<?
+							<option value="<?php echo $idpuntoventa ?>"><?php echo $datos_puntoventa["Nombre"] ?></option>
+						<?php 
 						}//end for
 						?>
                     </select>
@@ -160,7 +160,7 @@ else
             </tr> 
             <tr>
 				<td colspan=3 align=center class=row2>
-                    <input type=hidden name=IDCliente id=IDCliente value="<?=$idCliente ?>">
+                    <input type=hidden name=IDCliente id=IDCliente value="<?php echo $idCliente ?>">
                     <input type=hidden name=action value="cargarpuntos">
                     <input type=hidden name=mod value="PuntosCliente">
                     <input type=submit name=submit value="Cargar Puntos" class="submit">
@@ -176,17 +176,17 @@ else
 	
     
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
 </tr>
 
-<?
+<?php 
 		if($rows > 0){
 ?>	
 
@@ -202,23 +202,23 @@ else
 						<td class=rowform nowrap bgcolor=#DBEAF5> Redimidos </td>
 					</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
-						<td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta?>&id=<?=$r->IDFactura ?>"><? echo $r->IDFactura ?></a></td>
-						<td nowrap class=row1><? echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
-						<td nowrap class=row1><? echo $r->FechaTrCr ?></td>
-						<td nowrap class=row1><? echo $r->FechaVencimiento ?></td>
-                        <td nowrap class=row1><? echo $r->Puntos?></td>
-                        <td nowrap class=row1><? echo $r->Redimido ?></td>
+						<td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVenta?>&id=<?php echo $r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
+						<td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
+						<td nowrap class=row1><?php echo $r->FechaTrCr ?></td>
+						<td nowrap class=row1><?php echo $r->FechaVencimiento ?></td>
+                        <td nowrap class=row1><?php echo $r->Puntos?></td>
+                        <td nowrap class=row1><?php echo $r->Redimido ?></td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 </tr>	
 
-<?
+<?php 
 }// End if$rows
 else
 	echo "<tr><td><br><br><span class=subtitle><b>Este cliente no tiene puntos de fidelizaci&oacute;n </b></span></td></tr>";
@@ -228,7 +228,7 @@ else
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 
 }// Enf function list()				
 

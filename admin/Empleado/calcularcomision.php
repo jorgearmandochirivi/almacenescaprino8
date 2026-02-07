@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="Comision Empleados";
 
@@ -260,8 +260,8 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 ?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
@@ -269,7 +269,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 <br><br>
 
 <table cellspacing='1' cellpadding='2' border='0' align='center' width='700' class='bordertable'>
-	<form name="frmcalcular" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data">
+	<form name="frmcalcular" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data">
 	<tr>
 		<td class="titlemedium" colspan=2>Calcular Comisi&oacute;n		</td>
 	</tr>
@@ -279,7 +279,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		<td class="rowtable">Desde		</td>
 		<td class="row1">
 		
-			<input type="text" class="input" name="FechaInicio" size="19" value='<?=fecha()?>' readonly>
+			<input type="text" class="input" name="FechaInicio" size="19" value='<?php echo fecha()?>' readonly>
 			<script language="JavaScript1.2">
 				<!--
 					if (!document.layers)
@@ -291,7 +291,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	</tr>
 			<tr>
 				<td class="rowtable">Hasta</td>
-				<td class="row1"><input type="text" class="input" name="FechaFinal" size="19" value='<?=fecha()?>' readonly>
+				<td class="row1"><input type="text" class="input" name="FechaFinal" size="19" value='<?php echo fecha()?>' readonly>
 
 					<script language="JavaScript1.2">
 				<!--
@@ -310,21 +310,21 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	</form>
 </table>
 
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
 <table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-		<?filtrar();?>	
+		<?php filtrar();?>	
 		<tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 		<tr>
 			<td class=texto bgcolor=#DBEAF5 nowrap>
-			<?
+			<?php 
 				print $pages;
 			?>
 			</td>
@@ -345,26 +345,26 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<td align=center class=rowform valign=middle nowrap bgcolor=#DBEAF5 width=69>Valor Comision Punto</td>
 						<td align=center class=rowform valign=middle nowrap bgcolor=#DBEAF5 width=69>Total Comisi&oacute;n</td>
 					</tr>
-				<? while($r = db_fetch_object($result)){
+				<?php while($r = db_fetch_object($result)){
 				?>
   				<tr>
-						<td nowrap class=row1><? echo get_field("Empleado","CONCAT(Nombre,' ',Apellidos)","IDEmpleado",$r->IDEmpleado)?></td>
-						<td nowrap class=row1><? echo $r->Fecha?></td>
-					<td nowrap class=row1><? echo formatofecha( $r->FechaInicio )?></td>
-						<td align=center valign=middle nowrap width=60 class=row1>&nbsp;<? echo formatofecha( $r->FechaFin )?>&nbsp;</td>
-						<td align=center valign=middle nowrap width=60 class=row1><? echo number_format( $r->TotalVendido )?></td>
-						<td align=center valign=middle nowrap width=60 class=row1><? echo $r->Porcentaje ?></td>
-						<td align=center valign=middle nowrap width=60 class=row1><? echo number_format( $r->ValorComision )?></td>
-						<td align=center valign=middle nowrap width=60 class=row1><? echo number_format( $r->TotalVendidoPunto )?></td>
-						<td align=center valign=middle nowrap width=60 class=row1><? echo $r->PorcentajePunto?></td>
-						<td align=center valign=middle nowrap width=60 class=row1><? echo number_format( $r->ValorComisionPunto )?></td>
-						<td align=center valign=middle nowrap width=60 class=row1><? echo number_format( $r->ValorComisionPunto + $r->ValorComision )?></td>
+						<td nowrap class=row1><?php echo get_field("Empleado","CONCAT(Nombre,' ',Apellidos)","IDEmpleado",$r->IDEmpleado)?></td>
+						<td nowrap class=row1><?php echo $r->Fecha?></td>
+					<td nowrap class=row1><?php echo formatofecha( $r->FechaInicio )?></td>
+						<td align=center valign=middle nowrap width=60 class=row1>&nbsp;<?php echo formatofecha( $r->FechaFin )?>&nbsp;</td>
+						<td align=center valign=middle nowrap width=60 class=row1><?php echo number_format( $r->TotalVendido )?></td>
+						<td align=center valign=middle nowrap width=60 class=row1><?php echo $r->Porcentaje ?></td>
+						<td align=center valign=middle nowrap width=60 class=row1><?php echo number_format( $r->ValorComision )?></td>
+						<td align=center valign=middle nowrap width=60 class=row1><?php echo number_format( $r->TotalVendidoPunto )?></td>
+						<td align=center valign=middle nowrap width=60 class=row1><?php echo $r->PorcentajePunto?></td>
+						<td align=center valign=middle nowrap width=60 class=row1><?php echo number_format( $r->ValorComisionPunto )?></td>
+						<td align=center valign=middle nowrap width=60 class=row1><?php echo number_format( $r->ValorComisionPunto + $r->ValorComision )?></td>
 					</tr>
-				<? } // END for
+				<?php } // END for
 				?>
 				<tr>
 						<td class=texto bgcolor=#DBEAF5 colspan=11 nowrap>
-						<?
+						<?php 
 							print $pages;
 							?>
 					</td>
@@ -374,7 +374,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -430,7 +430,7 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="FechaInicio">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="Empleado">
@@ -438,6 +438,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

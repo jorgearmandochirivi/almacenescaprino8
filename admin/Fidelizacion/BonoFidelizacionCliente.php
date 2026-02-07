@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 //actualizo los bonos vencidos
 $sql_vencidos = db_query("UPDATE BonoFidelizacion Set Estado = 'V'
@@ -77,23 +77,23 @@ else
 ?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
 	
 <br>
-<?
+<?php 
 	$TABsel = 2;
 	include("Fidelizacion/menutabCliente.php");
 ?>
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left width="100%" >
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>&nbsp;</td>
@@ -105,17 +105,17 @@ else
 	
     
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
 </tr>
 
-<?
+<?php 
 		if($rows > 0){
 ?>	
 
@@ -134,23 +134,23 @@ else
 						<td class=rowform nowrap bgcolor=#DBEAF5>Factura Con la que se redimi&oacute;</td>
 					</tr
 
-><? while($r = db_fetch_object($result)){
+><?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
-  <td nowrap class=row1><? echo $r->IDBonoFidelizacion ?></td>
-						<td nowrap class=row1><? echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
-						<td nowrap class=row1><? echo number_format($r->Valor,2) ?></td>
-						<td nowrap class=row1><? echo $r->Fecha ?></td>
-						<td nowrap class=row1><? if($r->Estado=="D"){ ?> Disponible<? }elseif($r->Estado=="V"){ ?>Vencido <? }elseif($r->Estado=="W"){ ?>Web<? } elseif($r->Estado=="R"){ ?>Redimido <? }elseif($r->Estado=="C"){ ?> Cancelado (Factura Eliminada) <? } ?></td>
-						<td nowrap class=row1><? echo get_field("Cliente","Cedula","IDCliente",$r->IDClienteRedimioBono)." " . get_field("Cliente","Nombre","IDCliente",$r->IDClienteRedimioBono) . " " .get_field("Cliente","Apellido","IDCliente",$r->IDClienteRedimioBono);  ?></td>
-						<td nowrap class=row1><? echo $array_puntos[ $r->IDPuntoVentaRedimido ]["Nombre"] ?></td>
-		  <td nowrap class=row1><? echo $r->FechaRedimido ?></td>
-		  <td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVentaRedimido?>&id=<?=$r->IDFactura ?>"><? echo get_field( "Factura","NumeroFactura","IDFactura",$r->IDFactura) ?></td>
+  <td nowrap class=row1><?php echo $r->IDBonoFidelizacion ?></td>
+						<td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
+						<td nowrap class=row1><?php echo number_format($r->Valor,2) ?></td>
+						<td nowrap class=row1><?php echo $r->Fecha ?></td>
+						<td nowrap class=row1><?php if($r->Estado=="D"){ ?> Disponible<?php }elseif($r->Estado=="V"){ ?>Vencido <?php }elseif($r->Estado=="W"){ ?>Web<?php } elseif($r->Estado=="R"){ ?>Redimido <?php }elseif($r->Estado=="C"){ ?> Cancelado (Factura Eliminada) <?php } ?></td>
+						<td nowrap class=row1><?php echo get_field("Cliente","Cedula","IDCliente",$r->IDClienteRedimioBono)." " . get_field("Cliente","Nombre","IDCliente",$r->IDClienteRedimioBono) . " " .get_field("Cliente","Apellido","IDCliente",$r->IDClienteRedimioBono);  ?></td>
+						<td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVentaRedimido ]["Nombre"] ?></td>
+		  <td nowrap class=row1><?php echo $r->FechaRedimido ?></td>
+		  <td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVentaRedimido?>&id=<?php echo $r->IDFactura ?>"><?php echo get_field( "Factura","NumeroFactura","IDFactura",$r->IDFactura) ?></td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
-<?
+<?php 
 }// End if$rows
 else
 	echo "<tr><td><br><br><span class=subtitle><b>Este cliente no tiene puntos de fidelizaci&oacute;n </b></span></td></tr>";
@@ -160,7 +160,7 @@ else
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 
 }// Enf function list()				
 

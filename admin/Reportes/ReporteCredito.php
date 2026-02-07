@@ -55,7 +55,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 
-								Desde	<input  type="text" name="FechaDesde" class="input" value="<?=$FechaDesde?>" size="10">
+								Desde	<input  type="text" name="FechaDesde" class="input" value="<?php echo $FechaDesde?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -67,7 +67,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 
-								Hasta	<input  type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>" size="10">
+								Hasta	<input  type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -129,15 +129,15 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; <br>
 				<br>
-				<!--<a href="exportar/exporttventas.php?IDPuntoVenta=<?=$IDPuntoVenta?>&FechaDesde=<?=$FechaDesde?>&FechaHasta=<?=$FechaHasta?>">Exportar Archivo</a>-->
-               <a href="exportar/exportcredito.php?IDPuntoVenta=<?=$IDPuntoVenta?>&FechaDesde=<?=$FechaDesde?>&FechaHasta=<?=$FechaHasta?>&Cedula=<?php echo $_POST["Cedula"] ?>&Estado=<?php echo $_POST["Estado"] ?>">
+				<!--<a href="exportar/exporttventas.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>&FechaDesde=<?php echo $FechaDesde?>&FechaHasta=<?php echo $FechaHasta?>">Exportar Archivo</a>-->
+               <a href="exportar/exportcredito.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>&FechaDesde=<?php echo $FechaDesde?>&FechaHasta=<?php echo $FechaHasta?>&Cedula=<?php echo $_POST["Cedula"] ?>&Estado=<?php echo $_POST["Estado"] ?>">
                	<img src="../images/excel_icon.gif" alt="" width="20" height="20" border="0" >
                	Exportar Archivo
                </a>
 				<br>
 				<br>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp;
 
@@ -317,19 +317,19 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 						?>
 								<tr>
-										<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[FechaFacturaF]?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[NumeroDocumento]?></td>
-											<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[NumeroPagare]?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$cliente[Cedula] ?></td>
-										<td class="<?=$class?>" align="center" ><?=$cliente[Nombre]." ".$cliente[Apellido] ?></td>
-									<td class="<?=$class?>" align="center" nowrap><?=$array_puntos[$r_facturas[IDPuntoVenta]]?> </td>
-									<td class="<?=$class?>" align="center" nowrap>
-											<a target="_blank" href="?mod=Factura&action=edit&id=<?=$r_facturas[IDFactura]?>&idpunto=<?=$IDPuntoVenta?>">
-													<?=$r_facturas[NumeroFactura]?>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaFacturaF]?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[NumeroDocumento]?></td>
+											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[NumeroPagare]?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $cliente[Cedula] ?></td>
+										<td class="<?php echo $class?>" align="center" ><?php echo $cliente[Nombre]." ".$cliente[Apellido] ?></td>
+									<td class="<?php echo $class?>" align="center" nowrap><?php echo $array_puntos[$r_facturas[IDPuntoVenta]]?> </td>
+									<td class="<?php echo $class?>" align="center" nowrap>
+											<a target="_blank" href="?mod=Factura&action=edit&id=<?php echo $r_facturas[IDFactura]?>&idpunto=<?php echo $IDPuntoVenta?>">
+													<?php echo $r_facturas[NumeroFactura]?>
 											</a>
 									</td>
-									<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_facturas[ValorTotalSinBono],2 ); ?></td>
-									<td class="<?=$class?>" align="right" nowrap>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $r_facturas[ValorTotalSinBono],2 ); ?></td>
+									<td class="<?php echo $class?>" align="right" nowrap>
 										<?php
 										
 										$TotalSaldo+=$r_facturas[ValorTotal]; echo number_format( $r_facturas[ValorTotal],2 );
@@ -339,23 +339,23 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										*/
 										?>
 									</td>
-									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorCuotaPago,2 ); ?></td>
-									<td class="<?=$class?>" align="center" nowrap>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorCuotaPago,2 ); ?></td>
+									<td class="<?php echo $class?>" align="center" nowrap>
 										<?php
 											echo $candeladas;
 										?>
 									</td>
 
-									<td class="<?=$class?>" align="right" nowrap><?=number_format( $TotalCuotaPagada,2 ); ?></td>
-									 <td class="<?=$class?>" align="right" nowrap><?php echo $FechasAbono; ?></td>
-										<td class="<?=$class?>" align="center" nowrap>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $TotalCuotaPagada,2 ); ?></td>
+									 <td class="<?php echo $class?>" align="right" nowrap><?php echo $FechasAbono; ?></td>
+										<td class="<?php echo $class?>" align="center" nowrap>
 										<?php
 											//echo $pendientes = db_num_rows( $qry_cuotas ) - $candeladas;
 											echo $pendientes = 5 - $candeladas;
 										?>
 									 </td>
 									 
-										<td class="<?=$class?>" align="center" nowrap>
+										<td class="<?php echo $class?>" align="center" nowrap>
 									    <?php
 
 											//$ValorSaldo=(int)$r_facturas["ValorTotal"] - ((int)$ValorCuotaPago*((int)$candeladas));											
@@ -367,7 +367,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 											$tValorTotal += $faltante_cuotas;
 											?></td>
 
-										<td class="<?=$class?>" align="center" nowrap><?php
+										<td class="<?php echo $class?>" align="center" nowrap><?php
 											$alerta_cuota_vencida=0;
 											if( date( "Y-m-d" ) >= $fechaproximo && $pendientes > 0  ):
 												//echo " <img src='images/iconalert.gif' border=0>    &nbsp;&nbsp;";
@@ -379,13 +379,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										?></td>
 
 
-											<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[FechaUltimaGestion] ?></td>
+											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaUltimaGestion] ?></td>
 
-											<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[FechaCartaNotificacion] ?></td>
-											<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[FechaReporteCredito] ?></td>
+											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaCartaNotificacion] ?></td>
+											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaReporteCredito] ?></td>
 
 
-                                        <td class="<?=$class?>" align="center" nowrap ><?php
+                                        <td class="<?php echo $class?>" align="center" nowrap ><?php
 											if($mostrar_cartera == 1):
 												echo '<span style="color:#06306F; font-weight:bold">C Castigada</span> &nbsp;&nbsp;';
 												//$valor_total_cartera += $r_facturas[ ValorTotal ];
@@ -402,14 +402,14 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 										?></td>
 
-                                        <td class="<?=$class?>" align="center" nowrap><?php
+                                        <td class="<?php echo $class?>" align="center" nowrap><?php
 											if($mostrar_cartera == 1):
 												echo $cartera_castigada;
 											endif;
 
 										?></td>
-                                        <td class="<?=$class?>" align="center" nowrap>$<?php echo number_format($valor_cartera,'0',',','.'); ?></td>
-																				<td class="<?=$class?>" align="left"><?php echo $r_facturas[ComentarioCredito]; if($r_facturas[FechaUtimoComentario]!="0000-00-00") echo "<br>".$r_facturas[FechaUtimoComentario]; ?></td>
+                                        <td class="<?php echo $class?>" align="center" nowrap>$<?php echo number_format($valor_cartera,'0',',','.'); ?></td>
+																				<td class="<?php echo $class?>" align="left"><?php echo $r_facturas[ComentarioCredito]; if($r_facturas[FechaUtimoComentario]!="0000-00-00") echo "<br>".$r_facturas[FechaUtimoComentario]; ?></td>
 
 									</tr>
 									<?php
@@ -419,29 +419,29 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						/****************************** FIN DE MOSTRAR LAS VENTAS CON TARJETA DE CREDITO Y DEBITO ********************************/
 						?>
                         <tr>
-						  <td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-						  <td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-						  <td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-						  <td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-						  <td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-						  <td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-						  <td class="<?=$class?>" align="right" nowrap>&nbsp;</td>
-						  <td class="<?=$class?>" align="center" nowrap><strong>TOTAL SALDO</strong></td>
-						  <td class="<?=$class?>" align="center" nowrap><strong>$<?php echo number_format($TotalSaldo,'0',',','.'); ?></strong></td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-						  <td class="<?=$class?>" align="center" nowrap><strong>TOTAL CARTERA</strong></td>
-							<td class="<?=$class?>" align="center" nowrap><strong>$<?php echo number_format($SumaCartera,'0',',','.'); ?></strong></td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
-							<td class="<?=$class?>" align="center" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="right" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="center" nowrap><strong>TOTAL SALDO</strong></td>
+						  <td class="<?php echo $class?>" align="center" nowrap><strong>$<?php echo number_format($TotalSaldo,'0',',','.'); ?></strong></td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+						  <td class="<?php echo $class?>" align="center" nowrap><strong>TOTAL CARTERA</strong></td>
+							<td class="<?php echo $class?>" align="center" nowrap><strong>$<?php echo number_format($SumaCartera,'0',',','.'); ?></strong></td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
+							<td class="<?php echo $class?>" align="center" nowrap>&nbsp;</td>
 					  </tr>
 
 								</table>

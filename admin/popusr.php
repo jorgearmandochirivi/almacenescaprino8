@@ -30,7 +30,7 @@ echo "
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td class="tituloRP" align=center>[ <?php 	for($i=0;$i<25;$i++){
-		if($i==14) echo " ] <br> [ ";;?><a class="textoGP" href="?val=<?=$alfabet_array[$i]?>&action=list&obj=<?=$obj?>"><?php echo $alfabet_array[$i];?></a> <?php if($i!=13)<?php | <?php };?><?php }?><a href="../?val=<?=$alfabet_array[$i]?>&action=list&obj=<?=$obj?>" class="textoGP"><?php echo $alfabet_array[$i];?></a> ]</td>
+		if($i==14) echo " ] <br> [ ";;?><a class="textoGP" href="?val=<?php echo $alfabet_array[$i]?>&action=list&obj=<?php echo $obj?>"><?php echo $alfabet_array[$i];?></a> <?php if($i!=13)<?php | <?php };?><?php }?><a href="../?val=<?php echo $alfabet_array[$i]?>&action=list&obj=<?php echo $obj?>" class="textoGP"><?php echo $alfabet_array[$i];?></a> ]</td>
 						</tr>
 					</table>
 					<form name="frm" action="" method="get" onsubmit="return validar(this)">
@@ -108,7 +108,7 @@ echo "
 						
 						<tr>
 							<td nowrap class="textoGP" onmouseover="this.style.cursor='hand'">
-								<a href="#" onClick="usuario('<?=$directorio->Nombre?> <?=$directorio->Apellidos?>','<?=$directorio->IDEmpleado?>')" class="menuAP"><b><?=$directorio->Apellidos?></b>,&nbsp;<?=$directorio->Nombre?></a>
+								<a href="#" onClick="usuario('<?php echo $directorio->Nombre?> <?php echo $directorio->Apellidos?>','<?php echo $directorio->IDEmpleado?>')" class="menuAP"><b><?php echo $directorio->Apellidos?></b>,&nbsp;<?php echo $directorio->Nombre?></a>
 							</td>
 							<td nowrap class="textoAP"></td>
 						</tr>

@@ -140,7 +140,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				var Check2 = new Array("IDPuntoVenta");
 				</script>
 					
-					<form name="frmInv" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+					<form name="frmInv" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Asignar Referencias a los puntos");?></td>
 						</tr>

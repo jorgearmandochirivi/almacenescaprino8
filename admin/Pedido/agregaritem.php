@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<?
+<?php 
 include ("../config.inc.php3");
 print_form($idsugerido);
 
@@ -26,7 +26,7 @@ Global $numfotos;
 							<div align="right">
 								Generar 
 								<input type="text" size="21" name="Referencia" id="Referencia" class="post"> 
-								<input type="hidden" name="IDSugerido" value="<?=$idsugerido?>">
+								<input type="hidden" name="IDSugerido" value="<?php echo $idsugerido?>">
 								<input type="submit" name="submit" value="Generar">
 								<input type="hidden" name="action" value="agregaritem">
 							</div>
@@ -36,6 +36,6 @@ Global $numfotos;
 			</table>
 		</td>
 	</tr>
-</table><?
+</table><?php 
 } // END function print_form($idsugerido)
 ?></BODY></HTML></body> 

@@ -1,5 +1,5 @@
 <body>
-	<?
+	<?php 
 
 $TitleMod ="Generar Pedido Sugerido";
 
@@ -211,12 +211,12 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 <br><br>
 	<table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td class="maintitle" bgcolor="#9daac6"><b><? echo $TitleMod ?></b></td>
+			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
 		</tr>
 		<tr>
 			<td>
 				<table width="100%" border="0" cellspacing="1" cellpadding="0">
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 						<tr>
 							<td class="row1" nowrap>
 								<table width=100% cellspacing="1" cellpadding="1" bgcolor=#ffffff>
@@ -228,13 +228,13 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 												 Numero.</div>
 										</td>
 										<td class=row1>
-											<input type="text" class="input" name="NumeroPedido" size="24" value="<?=$r_sugerido->NumeroSugerido?>">
+											<input type="text" class="input" name="NumeroPedido" size="24" value="<?php echo $r_sugerido->NumeroSugerido?>">
 										</td>
 									</tr>
 									<tr>
 										<td class=row1>Fecha</td>
 										<td class=row1>
-											<input type="text" class="input" name="Fecha" size="15" value="<?=fecha()?>" readonly>
+											<input type="text" class="input" name="Fecha" size="15" value="<?php echo fecha()?>" readonly>
 											<script language="JavaScript1.2">
 												<!--
 													if (!document.layers)
@@ -244,8 +244,8 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 										</td>
 										<td class=row1>Estado </td>
 										<td class=row1>
-											<input type="text" class="input" name="EstadoPedido" size="24" value="<?=get_field("EstadoPedido","Descripcion","IDEstadoPedido",$r_sugerido->IDEstadoPedido)?>">
-											<input type="hidden" name="IDEstadoPedido" size="24" value="<?=$r_sugerido->IDEstadoPedido?>"></td>
+											<input type="text" class="input" name="EstadoPedido" size="24" value="<?php echo get_field("EstadoPedido","Descripcion","IDEstadoPedido",$r_sugerido->IDEstadoPedido)?>">
+											<input type="hidden" name="IDEstadoPedido" size="24" value="<?php echo $r_sugerido->IDEstadoPedido?>"></td>
 									</tr>
 									<tr>
 										<td class=row1>Observaciones</td>
@@ -259,19 +259,19 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 											Detalle del Pedido Sugerido
 										</td>
 										<td class=titlemedium align=right>	
-											<input type=button name=submit value="Sugerir Item" class=submit onclick="javascript:popUp('Pedido/agregaritem.php?&idsugerido=<?=$id?>','350','100')">
+											<input type=button name=submit value="Sugerir Item" class=submit onclick="javascript:popUp('Pedido/agregaritem.php?&idsugerido=<?php echo $id?>','350','100')">
 										</td>	
 									</tr>
 									<tr>
 										<td class=row2 colspan="4">
-											<?verdetallesugerido($id);?>
+											<?php verdetallesugerido($id);?>
 										</td>
 									</tr>
 									<tr>
 										<td class=row2 colspan="4" align="center">
-											<input type="hidden" name="action" value="<?=$newmode?>">
-											<input type="hidden" name="idsugerido" value="<?=$id?>">
-											<input type="submit" class="submit" name="submit" value="<?=$submit_option?>">
+											<input type="hidden" name="action" value="<?php echo $newmode?>">
+											<input type="hidden" name="idsugerido" value="<?php echo $id?>">
+											<input type="submit" class="submit" name="submit" value="<?php echo $submit_option?>">
 										</td>
 									</tr>
 								</table>
@@ -282,7 +282,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 			</td>
 		</tr>
 	</table>	
-<?
+<?php 
 }// Enf function print_form()				
 
 /*******************************************************************************************
@@ -305,7 +305,7 @@ function verdetallesugerido($id)
 	$i=0;
 ?>
 	<table width=100% cellpadding=1 cellspacing=0 class=text bgcolor=#ffffff>
-<?
+<?php 
 	while( $r_referencias = db_fetch_object( $query_referencias ) )
 	{
 		
@@ -337,11 +337,11 @@ function verdetallesugerido($id)
 		
 			<tr>
 				<td class=rowform align=center>
-				<?
+				<?php 
 					echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_referencias->IDPuntoVentaReferencia));	
 				?>
 				</td>
-				<?
+				<?php 
 					foreach($r_detalle as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -349,7 +349,7 @@ function verdetallesugerido($id)
 					}//end foreach($r_detalle as $talla)
 				?>
 				<td class=rowform align=center>
-					<a href="./?mod=<?=$MOD?>&action=delref&idref=<?=$r_referencias->IDPuntoVentaReferencia?>&idsugerido=<?=$id?>" title="Quitar Item">
+					<a href="./?mod=<?php echo $MOD?>&action=delref&idref=<?php echo $r_referencias->IDPuntoVentaReferencia?>&idsugerido=<?php echo $id?>" title="Quitar Item">
 						<img src="images/trash.gif" border="0">
 					</a>
 				</td>	
@@ -359,7 +359,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					Existencias
 				</td>
-				<?
+				<?php 
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -374,7 +374,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					M&aacute;ximo
 				</td>
-				<?
+				<?php 
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -389,7 +389,7 @@ function verdetallesugerido($id)
 				<td class=rowform align=center>
 					Minimo
 				</td>
-				<?
+				<?php 
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -404,7 +404,7 @@ function verdetallesugerido($id)
 				<td class="rowform" align=center>
 					SUGERIDO
 				</td>
-				<?
+				<?php 
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -419,7 +419,7 @@ function verdetallesugerido($id)
 					
 				</td>	
 			</tr>
-	<?
+	<?php 
 	
 	$r_detalle = array();
 	$r_codificacion = array();
@@ -427,6 +427,6 @@ function verdetallesugerido($id)
 	}//end while( $r_referencias = db_fetch_object( $query_referencias ) )
 	?>
 	</table>
-<?
+<?php 
 }// end function verdetallesugerido($id)
 ?>

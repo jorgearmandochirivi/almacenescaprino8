@@ -109,7 +109,7 @@ table{
       </tr>
       <tr>
         <td class=texto colspan="4"> NIT
-          <?=get_field( "NIT","NIT","IDNIT",1 );?>
+          <?php echo get_field( "NIT","NIT","IDNIT",1 );?>
           &nbsp;&nbsp;&nbsp;&nbsp;
           R&eacute;gimen com&uacute;n </td>
       </tr>
@@ -117,15 +117,15 @@ table{
         <td width="38%" class=texto>Almac&eacute;n</td>
         <td class=texto colspan="3" nowrap>IMACAL
 				<?php echo $tipo_emp= ($r_cuota->FechaCuota>="2019-07-19 00:00:00") ? "SAS" : "LTDA"; ?>
-          <?=$r_puntoventa->Nombre?></td>
+          <?php echo $r_puntoventa->Nombre?></td>
       </tr>
       <tr>
         <td class=texto>Direcci&oacute;n</td>
-        <td class=texto colspan="3" nowrap><?=$r_puntoventa->Direccion?></td>
+        <td class=texto colspan="3" nowrap><?php echo $r_puntoventa->Direccion?></td>
       </tr>
       <tr>
         <td class=texto nowrap>Tel&eacute;fono</td>
-        <td class=texto colspan="3" nowrap><?=$r_puntoventa->Telefono?></td>
+        <td class=texto colspan="3" nowrap><?php echo $r_puntoventa->Telefono?></td>
       </tr>
       <tr>
         <td class=texto nowrap>&nbsp;</td>
@@ -133,23 +133,23 @@ table{
       </tr>
       <tr>
         <td class=texto nowrap>Cuota N&uacute;mero</td>
-        <td class=texto colspan="3"><?=$r_cuota->IDCuota?></td>
+        <td class=texto colspan="3"><?php echo $r_cuota->IDCuota?></td>
       </tr>
       <tr>
         <td class=texto nowrap>Fecha Cuota</td>
-        <td class=texto colspan="3"><?=$r_cuota->FechaCuota?></td>
+        <td class=texto colspan="3"><?php echo $r_cuota->FechaCuota?></td>
       </tr>
       <tr>
         <td class=texto nowrap>Fecha de Pago</td>
-        <td class=texto colspan="3"><?=$r_cuota->FechaPago?></td>
+        <td class=texto colspan="3"><?php echo $r_cuota->FechaPago?></td>
       </tr>
       <tr>
         <td class=texto nowrap>Valor Total P&oacute;liza</td>
-        <td class=texto colspan="3"><?=number_format( $r->ValorTotal )?></td>
+        <td class=texto colspan="3"><?php echo number_format( $r->ValorTotal )?></td>
       </tr>
       <tr>
         <td class=texto nowrap>Valor Cuota Quincena</td>
-        <td class=texto colspan="3"><?=number_format( $r_cuota->ValorTotal )?></td>
+        <td class=texto colspan="3"><?php echo number_format( $r_cuota->ValorTotal )?></td>
       </tr>
       <tr>
         <td class=texto>Cuotas Pendientes</td>
@@ -181,7 +181,7 @@ table{
       </tr>
       <tr>
         <td class=texto>Almacen donde se abona:</td>
-        <td class=texto colspan="3" nowrap><?=get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_cuota->IDPuntoVentaPago);?></td>
+        <td class=texto colspan="3" nowrap><?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_cuota->IDPuntoVentaPago);?></td>
       </tr>
     </table>
     <p>&nbsp;</p>
@@ -203,7 +203,7 @@ table{
 										<td class=texto nowrap>
 											<div align="right">IVA</div>
 										</td>
-										<td class=texto align="right"><?=number_format($r->ValorIVASinBono)?></td>
+										<td class=texto align="right"><?php echo number_format($r->ValorIVASinBono)?></td>
 									</tr>
                                     -->
 
@@ -228,7 +228,7 @@ table{
 										<td class=texto nowrap>
 											<div align="right">Valor sin IVA</div>
 										</td>
-										<td class=texto align="right"><?=number_format((int)$r->ValorTotal-(int)$r->ValorIVA)?></td>
+										<td class=texto align="right"><?php echo number_format((int)$r->ValorTotal-(int)$r->ValorIVA)?></td>
 									</tr>
                                     -->
 

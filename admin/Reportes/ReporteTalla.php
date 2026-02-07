@@ -69,7 +69,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						  <td  align='left' valign='middle' class="nav"> Desde
 					      </td>
 						  <td align="left" valign="middle" class="nav">
-						  <input  type="text" name="FechaDesde" class="input" value="<?=$FechaDesde?>" size="10">
+						  <input  type="text" name="FechaDesde" class="input" value="<?php echo $FechaDesde?>" size="10">
                           <script language="JavaScript1.2">
 									<!--
 										if (!document.layers)
@@ -79,7 +79,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                           
                           </td>
 						  <td width="3%"  align='left' valign='middle' class="nav">Hasta</td>
-							<td width="28%" align="left" valign="middle" class="nav"><input  type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>" size="10">
+							<td width="28%" align="left" valign="middle" class="nav"><input  type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>" size="10">
                             <script language="JavaScript1.2">
 									<!--
 										if (!document.layers)
@@ -164,11 +164,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
         
 				 
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">
-						&nbsp; Ventas totales <?php echo $FechaDesde." - ".$FechaHasta ?> - <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>
-						- Mostrando <?=$numero_referencias?> Referencias
+						&nbsp; Ventas totales <?php echo $FechaDesde." - ".$FechaHasta ?> - <?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>
+						- Mostrando <?php echo $numero_referencias?> Referencias
 					</td>
 				</tr>
 				<?php
@@ -244,7 +244,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							//for( $i = 33; $i <= 43; $i++ )
 							{
 							?>
-								<td class="navpic" align="center" nowrap><?=$i?></td>
+								<td class="navpic" align="center" nowrap><?php echo $i?></td>
 							<?php
 							}//end for
 							?>
@@ -266,7 +266,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									
 									
 									<tr>
-											<td class="navpic" align="center" nowrap><?=$linea?></td>
+											<td class="navpic" align="center" nowrap><?php echo $linea?></td>
 											<?php
 											foreach( $array_lastallas as $i=>$tales )
 											{
@@ -317,12 +317,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							//print_r($array_tallas[$valor['IDPuntoVentaReferencia']]);
 						?>
 							<tr>
-								<td class="<?=$class?>" align="center" nowrap><?=$valor['Numero']?></td>
+								<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Numero']?></td>
 								<?php
 								foreach( $array_lastallas as $i=>$tales )
 								{
 								?>
-									<td class="<?=$class?>" align="right" nowrap>
+									<td class="<?php echo $class?>" align="right" nowrap>
 										<?php
 											
 											
@@ -356,7 +356,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								<?php
 								}//end for
 								?>
-								<td class="<?=$class?>" align="center" nowrap>
+								<td class="<?php echo $class?>" align="center" nowrap>
 									<?php
 										echo number_format( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] , 0);
 										if( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] > 0 )

@@ -103,7 +103,7 @@ var Check = new Array('Nombre','Apellidos','IDCargo','Salario','IDComision','IDP
 		</tr>
 </table>
 <br>
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
@@ -185,13 +185,13 @@ var Check = new Array('Nombre','Apellidos','IDCargo','Salario','IDComision','IDP
 			</tr>
 			
             <tr class=row2>
-			<td> Cedula </td><td><input type=text size=25 class=input   name=Cedula id=Cedula value="<?=$r->Cedula ?>"> </td>
+			<td> Cedula </td><td><input type=text size=25 class=input   name=Cedula id=Cedula value="<?php echo $r->Cedula ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> Nombre </td><td><input type=text size=25 class=input   name=Nombre id=Nombre value="<?=$r->Nombre ?>"> </td>
+			<td> Nombre </td><td><input type=text size=25 class=input   name=Nombre id=Nombre value="<?php echo $r->Nombre ?>"> </td>
 			</tr>
 			<tr class=row2>
-			<td> Apellidos </td><td><input type=text size=25 class=input   name=Apellidos id=Apellidos value="<?=$r->Apellidos ?>"> </td>
+			<td> Apellidos </td><td><input type=text size=25 class=input   name=Apellidos id=Apellidos value="<?php echo $r->Apellidos ?>"> </td>
 			</tr>
 			<tr class=row2>
 			<td>Cargo</td><td><?php echo formpopup("Cargo","Cargo","Cargo","IDCargo",$r->IDCargo,"input\" id=\"Cargo"); ?>  </td>
@@ -213,18 +213,18 @@ var Check = new Array('Nombre','Apellidos','IDCargo','Salario','IDComision','IDP
 			}
 			?>
 			<tr class=row2>
-			<td> CodigoVendedor </td><td><input type=text size=25 class=input   name=CodigoVendedor id=CodigoVendedor value="<?=$r->CodigoVendedor ?>"> </td>
+			<td> CodigoVendedor </td><td><input type=text size=25 class=input   name=CodigoVendedor id=CodigoVendedor value="<?php echo $r->CodigoVendedor ?>"> </td>
 			</tr>
 			<tr class=row2>
 			<td> Publicar </td><td><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
 			</tr>
 			<tr>
-			<td colspan=2 align=center class=row2><input type=hidden name=IDEmpleado id=IDEmpleado value="<?=$r->IDEmpleado ?>"><input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
+			<td colspan=2 align=center class=row2><input type=hidden name=IDEmpleado id=IDEmpleado value="<?php echo $r->IDEmpleado ?>"><input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+				<input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+				<input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+				<input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
 				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
-				<input type=hidden name=action value=<?=$newmode?>>
+				<input type=hidden name=action value=<?php echo $newmode?>>
 				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 			</tr>
@@ -403,7 +403,7 @@ var Check = new Array('Nombre','Apellidos','IDCargo','Salario','IDComision','IDP
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="Fecha">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="Cargo">

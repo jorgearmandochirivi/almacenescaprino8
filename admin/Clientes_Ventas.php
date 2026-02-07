@@ -73,7 +73,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 		</tr>
 </table>
 <br>
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
@@ -84,9 +84,9 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 		<table width=507 border=0 cellspacing=1 cellpadding=1 class=texto>
 						<tr class=row2>
 			<td width="40%"> Cedula <br>
-								<input type=text size=25 class=input   name=Cedula id=Cedula value="<?=$r->Cedula ?>"></td><td width="10"> </td>
+								<input type=text size=25 class=input   name=Cedula id=Cedula value="<?php echo $r->Cedula ?>"></td><td width="10"> </td>
 							<td>Nombre<br>
-								<input type=text size=25 class=input   name=Nombre id=Nombre value="<?=$r->Nombre ?>"> </td>
+								<input type=text size=25 class=input   name=Nombre id=Nombre value="<?php echo $r->Nombre ?>"> </td>
 						</tr>
 						<tr class=row2>
 			<td width="40%"></td><td width="10"> </td>
@@ -94,25 +94,25 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 						</tr>
 			<tr class=row2>
 			<td width="40%"> Apellidos <br>
-								<input type=text size=25 class=input name=Apellido id=Apellidos value="<?=$r->Apellido ?>"></td><td width="10"> </td>
+								<input type=text size=25 class=input name=Apellido id=Apellidos value="<?php echo $r->Apellido ?>"></td><td width="10"> </td>
 							<td>Telefono <br>
-								<input type=text size=25 class=input   name=Telefono id=Telefono value="<?=$r->Telefono ?>"></td>
+								<input type=text size=25 class=input   name=Telefono id=Telefono value="<?php echo $r->Telefono ?>"></td>
 						</tr>
 			<tr class=row2>
 			<td width="40%">Celular <br>
-								<input type=text size=25 class=input   name=Celular id=Celular value="<?=$r->Celular ?>"></td><td width="10"> </td>
+								<input type=text size=25 class=input   name=Celular id=Celular value="<?php echo $r->Celular ?>"></td><td width="10"> </td>
 							<td>Direccion <br>
-								<input type=text size=25 class=input   name=Direccion id=Direccion value="<?=$r->Direccion ?>"></td>
+								<input type=text size=25 class=input   name=Direccion id=Direccion value="<?php echo $r->Direccion ?>"></td>
 						</tr>
 			<tr class=row2>
 			<td width="40%">Ciudad<br>
 								<?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad"); ?></td><td width="10"> </td>
 							<td>Empleado<br>
-								<input type=text size=25 class=input   name=IDEmpleado id=IDEmpleado value="<?=$r->IDEmpleado ?>"></td>
+								<input type=text size=25 class=input   name=IDEmpleado id=IDEmpleado value="<?php echo $r->IDEmpleado ?>"></td>
 						</tr>
 			<tr class=row2>
 			<td width="40%">Fecha de Nacimiento<br>
-								<input type=text size=25 class=input   name=FechaNacimiento id=IDEmpleado value="<?=$r->FechaNacimiento ?>"></td><td width="10"> </td>
+								<input type=text size=25 class=input   name=FechaNacimiento id=IDEmpleado value="<?php echo $r->FechaNacimiento ?>"></td><td width="10"> </td>
 							<td>Estado Civil <br>
 								<select name="EstadoCivil" id="Estado Civil" class="input">
 									<option value="" Selected>Seleccione</option>
@@ -126,25 +126,25 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 						</tr>
 			<tr class=row2>
 			<td width="40%">N&uacute;mero de Hijos<br>
-								<input type=text size=25 class=input   name=NumeroHijos id=IDEmpleado value="<?=$r->NumeroHijos ?>"></td><td width="10"></td>
+								<input type=text size=25 class=input   name=NumeroHijos id=IDEmpleado value="<?php echo $r->NumeroHijos ?>"></td><td width="10"></td>
 							<td></td>
 						</tr>
 			<tr class=row2>
 			<td width="40%">Gustos<br>
-								<textarea name="Gustos" rows="4" cols="40"><?=$r->Gustos?></textarea></td><td width="10"> </td>
+								<textarea name="Gustos" rows="4" cols="40"><?php echo $r->Gustos?></textarea></td><td width="10"> </td>
 							<td>Deportes<br>
-								<textarea name="Deportes" rows="4" cols="40"><?=$r->Deportes?></textarea></td>
+								<textarea name="Deportes" rows="4" cols="40"><?php echo $r->Deportes?></textarea></td>
 						</tr>
 						<tr class=row2>
 							<td width="40%">Restaurantes<br>
-								<textarea name="Restaurantes" rows="4" cols="40"><?=$r->Restaurantes?></textarea></td>
+								<textarea name="Restaurantes" rows="4" cols="40"><?php echo $r->Restaurantes?></textarea></td>
 							<td width="10"></td>
 							<td>M&uacute;sica<br>
-								<textarea name="Musica" rows="4" cols="40"><?=$r->Musica?></textarea></td>
+								<textarea name="Musica" rows="4" cols="40"><?php echo $r->Musica?></textarea></td>
 						</tr>
 						<tr class=row2>
 							<td width="40%">Hobbies<br>
-								<textarea name="Hobbies" rows="4" cols="40"><?=$r->Hobbies?></textarea></td>
+								<textarea name="Hobbies" rows="4" cols="40"><?php echo $r->Hobbies?></textarea></td>
 							<td width="10">
 							
 								
@@ -161,17 +161,17 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
 						</tr>
 						<tr class=row2>
 							<td width="40%">e-mail<br>
-								<input type=text size=25 class=input name=EMail id=IDEmpleado value="<?=$r->EMail ?>"></td>
+								<input type=text size=25 class=input name=EMail id=IDEmpleado value="<?php echo $r->EMail ?>"></td>
 							<td width="10"></td>
 							<td></td>
 						</tr>
 						<tr>
-							<td colspan=3 align=center class=row2><input type=hidden name=IDCliente id=IDCliente value="<?=$r->IDCliente ?>"><input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
+							<td colspan=3 align=center class=row2><input type=hidden name=IDCliente id=IDCliente value="<?php echo $r->IDCliente ?>"><input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+				<input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+				<input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+				<input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
 				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
-				<input type=hidden name=action value=<?=$newmode?>>
+				<input type=hidden name=action value=<?php echo $newmode?>>
 				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 						</tr>
@@ -294,7 +294,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono','IDCiudad','Public
   // $sqlinterno =  "SELECT * FROM $Table ORDER BY $Key  DESC limit 1000000";   
         
          $sqlinterno =  "SELECT * FROM $Table ORDER BY $Key  DESC limit 1";  
-    $result_count = mysql_query($sqlinterno) or die(mysql_error());
+    $result_count = db_query($sqlinterno) or die(mysqli_error());
 while($ra = db_fetch_object($result_count )){
   //  echo $ra->Cedula;
    
@@ -303,7 +303,7 @@ while($ra = db_fetch_object($result_count )){
    $queryfactura = "SELECT COUNT(ValorTotal) as Valor FROM Factura WHERE IDCliente = $ra->IDCliente GROUP BY IDCliente"; 
     
     
-                                                $result_count_facturas = mysql_query($queryfactura) or die(mysql_error());
+                                                $result_count_facturas = db_query($queryfactura) or die(mysqli_error());
                                                 $NumeroFacturas = db_fetch_object($result_count_facturas);
                                                 
                                                 
@@ -311,14 +311,14 @@ while($ra = db_fetch_object($result_count )){
                          
                                                
     $queryfecha = "SELECT 	FechaFactura FROM `Factura` where IDCliente = $ra->IDCliente GROUP BY IDCliente";      
-    $result_count_facturas_fecha = mysql_query($queryfecha) or die(mysql_error());
+    $result_count_facturas_fecha = db_query($queryfecha) or die(mysqli_error());
                                                 $NumeroFacturas = db_fetch_object($result_count_facturas_fecha);
                                                 
                                                 
                                                $fecha = $NumeroFacturas->FechaFactura ;
                                             
     $queryvalor = "SELECT SUM(ValorTotal) as Valor FROM Factura WHERE IDCliente = $ra->IDCliente GROUP BY IDCliente"; 
-                                                $result_valor = mysql_query($queryvalor) or die(mysql_error());
+                                                $result_valor = db_query($queryvalor) or die(mysqli_error());
                                                 $valortotal = db_fetch_object($result_valor);
                                                 
                                                 $valortot= $valortotal->Valor;
@@ -346,12 +346,12 @@ while($ra = db_fetch_object($result_count )){
          $queryupdate= "Update Cliente set Valor_Total = '$valortot', Fecha = '$fecha'  where IDCliente = $ra->IDCliente"; 
     }*/
        $queryupdate= "Update Cliente set Valor_Total = '$valortot', Fecha = '$fecha'  where IDCliente = $ra->IDCliente"; 
- mysql_query($queryupdate) or die(mysql_error());
-    // mysql_query($queryupdate) or die(mysql_error()); 
+ db_query($queryupdate) or die(mysqli_error());
+    // db_query($queryupdate) or die(mysqli_error()); 
    // echo $query;*/
    
     
-                                           //    mysql_query($query) or die(mysql_error());
+                                           //    db_query($query) or die(mysqli_error());
     
 }
 
@@ -447,7 +447,7 @@ while($r = db_fetch_object($result)){
 						<td nowrap class=row1><?php echo $r->Nombre ?></td> <td nowrap class=row1><?php echo $r->Apellido?></td> <td nowrap class=row1><?php echo $r->Telefono ?></td>
 						<td nowrap class=row1><?php 
                                               /*  $query = "SELECT COUNT(ValorTotal) as Valor FROM Factura WHERE IDCliente = $r->IDCliente GROUP BY IDCliente"; 
-                                                $result_count = mysql_query($query) or die(mysql_error());
+                                                $result_count = db_query($query) or die(mysqli_error());
                                                 $valor = db_fetch_object($result_count);
                                                 echo $valor->Valor ;
                                                 */
@@ -457,13 +457,13 @@ while($r = db_fetch_object($result)){
 						<td nowrap class=row1><?php 
                                                /* 
                                                 $query = "SELECT SUM(ValorTotal) as Valor FROM Factura WHERE IDCliente = $r->IDCliente GROUP BY IDCliente"; 
-                                                $result_valor = mysql_query($query) or die(mysql_error());
+                                                $result_valor = db_query($query) or die(mysqli_error());
                                                 $valor = db_fetch_object($result_valor);
                                                 echo $valor->Valor ;*/
                                                echo $r->Valor_Total
                                               //  $query= "Update Cliente set Facturas = $valor->Valor where IDCliente = $r->IDCliente"; 
                                                 
-                                              //  mysql_query($query) or die(mysql_error());
+                                              //  db_query($query) or die(mysqli_error());
                                                 //echo fredy;
                                                 ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
@@ -591,7 +591,7 @@ while($r = db_fetch_object($result)){
 						<td nowrap class=row1><?php echo $r->Nombre ?></td> <td nowrap class=row1><?php echo $r->Apellido?></td> <td nowrap class=row1><?php echo $r->Telefono ?></td>
 						<td nowrap class=row1><?php 
                                                 /*$query = "SELECT COUNT(ValorTotal) as Valor FROM Factura WHERE IDCliente = $r->IDCliente GROUP BY IDCliente"; 
-                                                $result_count = mysql_query($query) or die(mysql_error());
+                                                $result_count = db_query($query) or die(mysqli_error());
                                                 $valor = db_fetch_object($result_count);
                                                 
                                                 echo $valor->Valor ;
@@ -603,7 +603,7 @@ while($r = db_fetch_object($result)){
 						<td nowrap class=row1><?php 
                                                 
                                                /* $query = "SELECT SUM(ValorTotal) as Valor FROM Factura WHERE IDCliente = $r->IDCliente GROUP BY IDCliente"; 
-                                                 $result_valor = mysql_query($query) or die(mysql_error());
+                                                 $result_valor = db_query($query) or die(mysqli_error());
                                                  
                                                  
                                                 $valor = db_fetch_object($result_valor);
@@ -695,7 +695,7 @@ else
 									<option value="30">30</option>
 								</select> 
 					<br>
-					<input type="hidden" name="mod" value="<?=$MOD?>">
+					<input type="hidden" name="mod" value="<?php echo $MOD?>">
 					<input type="hidden" name="rangofield" value="Fecha">
 					<input type="hidden" name="action" value="list">
 					<input type="hidden" name="tjoin" value="">

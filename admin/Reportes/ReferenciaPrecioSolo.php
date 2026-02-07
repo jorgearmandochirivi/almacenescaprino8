@@ -65,7 +65,7 @@ function seleccionareferencia( $newmode)
 {
 	GLOBAL $Title;
 ?>	
-	<br><br><br><br>	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="700" class="bordertable">		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">			<tr>				<td class=maintitle colspan="2">Puntos de Venta	<select name="IDPuntoVenta" onchange="document.frmPuntoVenta.submit();" >						<option value="">Seleccione Un Punto de Venta</option><?php 								
+	<br><br><br><br>	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="700" class="bordertable">		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">			<tr>				<td class=maintitle colspan="2">Puntos de Venta	<select name="IDPuntoVenta" onchange="document.frmPuntoVenta.submit();" >						<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
@@ -87,7 +87,7 @@ function seleccionareferencia( $newmode)
 				<input type=text class=tbox name=referencia>
 				<input type="submit" class="button" name="enviar" value="Consultar">
 
-				<input type=hidden name=action value=<?=$newmode?>>
+				<input type=hidden name=action value=<?php echo $newmode?>>
 				
 			</td>
 		</tr>
@@ -107,7 +107,7 @@ function seleccionareferencia( $newmode)
 	<br>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?php echo $Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -125,7 +125,7 @@ function seleccionareferencia( $newmode)
 				while( $r_referencia = db_fetch_object( $qry_referencia ) )				{
 				?>
 						<tr>
-							<td class="row1"><?=$r_referencia->Numero ?></td>
+							<td class="row1"><?php echo $r_referencia->Numero ?></td>
 							<td class="row1">
 								<?php 									echo  number_format( $arrayprecios[$r_referencia->IDPrecio][ValorVenta],2);									
 								?>

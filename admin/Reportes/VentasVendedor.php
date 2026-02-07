@@ -56,7 +56,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 
-								Desde	<input readonly type="text" name="FechaDesde" class="input" value="<?=fecha()?>" size="10">
+								Desde	<input readonly type="text" name="FechaDesde" class="input" value="<?php echo fecha()?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -68,7 +68,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 
-								Hasta	<input readonly type="text" name="FechaHasta" class="input" value="<?=fecha()?>" size="10">
+								Hasta	<input readonly type="text" name="FechaHasta" class="input" value="<?php echo fecha()?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -104,10 +104,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
 				<table width="100%" border="0" align="center" cellspacing="1" cellpadding="0" bgcolor="#345487">
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 						<tr>
 							<td class="maintitle" valign="middle">
-								Reporte Ventas Empleados <b>Desde :</b> <?=formatofecha($FechaDesde)?>  <b>Hasta :</b> <?=formatofecha($FechaHasta)?>
+								Reporte Ventas Empleados <b>Desde :</b> <?php echo formatofecha($FechaDesde)?>  <b>Hasta :</b> <?php echo formatofecha($FechaHasta)?>
 							</td>
 						</tr>
 						<?php
@@ -412,12 +412,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 				?>
 									<tr>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['Cedula']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['Nombre']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$venta['Cargo']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$array_punto[ $idpunto ];?></td>
-										<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['admin'], 2 ); $totalb +=  $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['admin']?></td>
-										<td class="<?=$class?>" align="right" nowrap><?=number_format( $venta['ValorTotal'], 2); $total +=  $venta['ValorTotal']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Cedula']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Nombre']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $venta['Cargo']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $array_punto[ $idpunto ];?></td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['admin'], 2 ); $totalb +=  $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['admin']?></td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $venta['ValorTotal'], 2); $total +=  $venta['ValorTotal']?></td>
 									</tr>
 				<?php
 							}//end foreach( $array_ventasadmin[$valor['IDEmpleado']] as $llave => $venta  )
@@ -425,13 +425,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							{
 				?>
 									<tr>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['Cedula']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['Nombre']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$venta['Cargo']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$array_punto[ $idpunto ];?></td>
-										<td class="<?=$class?>" align="right" nowrap><?=number_format( $venta['ValorTotal'] - $Comision[$valor['IDEmpleado']][ $idpunto ]['empleado'], 2 ) ;
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Cedula']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Nombre']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $venta['Cargo']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $array_punto[ $idpunto ];?></td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $venta['ValorTotal'] - $Comision[$valor['IDEmpleado']][ $idpunto ]['empleado'], 2 ) ;
 										$totalb +=  $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['empleado']?></td>
-										<td class="<?=$class?>" align="right" nowrap><?=number_format( $venta['ValorTotal'], 2) ; $total +=  $venta['ValorTotal']?></td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $venta['ValorTotal'], 2) ; $total +=  $venta['ValorTotal']?></td>
 									</tr>
 				<?php
 							}//end foreach( $array_ventasvendedor[$valor['IDEmpleado']] as $llave => $venta  )

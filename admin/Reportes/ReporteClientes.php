@@ -49,7 +49,7 @@ function print_from($IDPuntoVenta="", $FechaInicio="", $FechaFin=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 							
-								Desde	<input  type="text" name="FechaInicio" class="input" value="<?=$FechaInicio?>" size="10">
+								Desde	<input  type="text" name="FechaInicio" class="input" value="<?php echo $FechaInicio?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -61,7 +61,7 @@ function print_from($IDPuntoVenta="", $FechaInicio="", $FechaFin=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 								
-								Hasta	<input  type="text" name="FechaFin" class="input" value="<?=$FechaFin?>" size="10">
+								Hasta	<input  type="text" name="FechaFin" class="input" value="<?php echo $FechaFin?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -97,7 +97,7 @@ function print_from($IDPuntoVenta="", $FechaInicio="", $FechaFin=""){
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; <br>
 				<br>
-				<a href="exportar/archivoventas.php?IDPuntoVenta=<?=$IDPuntoVenta?>&FechaInicio=<?=$FechaInicio?>&FechaFin=<?=$FechaFin?>">Exportar Archivo</a>
+				<a href="exportar/archivoventas.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>&FechaInicio=<?php echo $FechaInicio?>&FechaFin=<?php echo $FechaFin?>">Exportar Archivo</a>
 				<br>
 				<br></td>
 		</tr>

@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="PuntosCliente";
 
@@ -103,23 +103,23 @@ else
 ?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
 	
 <br>
-<?
+<?php 
 	$TABsel = 2;
 	include("Fidelizacion/menutabCliente.php");
 ?>
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left width="100%" >
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -139,12 +139,12 @@ else
                 <td>
                 	<select name="IDPuntoVenta" id="IDPuntoVenta">
                     	<option value="">Seleccione punto de venta</option>
-                        <?
+                        <?php 
                         foreach( $array_puntos as $idpuntoventa => $datos_puntoventa )
 						{
 						?>
-							<option value="<?=$idpuntoventa ?>"><?=$datos_puntoventa["Nombre"] ?></option>
-						<?
+							<option value="<?php echo $idpuntoventa ?>"><?php echo $datos_puntoventa["Nombre"] ?></option>
+						<?php 
 						}//end for
 						?>
                     </select>
@@ -152,7 +152,7 @@ else
             </tr>
             <tr class="row2">
               <td>Empleado que asigna</td>
-              <td><span class="col2"><? echo formpopup("Empleado WHERE IDPuntoVenta >0 ","Nombre","Nombre","IDEmpleado",$frm[IDEmpleado],"input\" id=\"Empleado"); ?></span></td>
+              <td><span class="col2"><?php echo formpopup("Empleado WHERE IDPuntoVenta >0 ","Nombre","Nombre","IDEmpleado",$frm[IDEmpleado],"input\" id=\"Empleado"); ?></span></td>
             </tr>
             <tr class=row2>
 				<td width="200"> 
@@ -186,7 +186,7 @@ else
             </tr> 
             <tr>
 				<td colspan=3 align=center class=row2>
-                    <input type=hidden name=IDCliente id=IDCliente value="<?=$idCliente ?>">
+                    <input type=hidden name=IDCliente id=IDCliente value="<?php echo $idCliente ?>">
                     <input type=hidden name=action value="cargarpuntos">
                     <input type=hidden name=mod value="PuntosClienteFidelizacion">
                     <input type=submit name=submit value="Cargar Puntos" class="submit">
@@ -209,7 +209,7 @@ else
  ?>
  
  <table cellpadding=1 cellspacing=0 class=bordertable align=left width="100%" >
-<form name="frmFecha" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
+<form name="frmFecha" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" >
 
 	<tr>
 		<td class=maintitle bgcolor=#9daac6>&nbsp;Modificar Fecha vencimiento puntos</td>
@@ -241,8 +241,8 @@ else
             </tr> 
             <tr>
 				<td colspan=3 align=center class=row2>
-                    <input type=hidden name=IDCliente id=IDCliente value="<?=$idCliente ?>">
-                    <input type=hidden name=IDPuntosClienteFidelizacion id=IDPuntosClienteFidelizacion value="<?=$_GET[IDPuntosClienteFidelizacion] ?>">
+                    <input type=hidden name=IDCliente id=IDCliente value="<?php echo $idCliente ?>">
+                    <input type=hidden name=IDPuntosClienteFidelizacion id=IDPuntosClienteFidelizacion value="<?php echo $_GET[IDPuntosClienteFidelizacion] ?>">
                     <input type=hidden name=action value="modificafecha">
                     <input type=hidden name=mod value="PuntosClienteFidelizacion">
                     <input type=submit name=submit value="Modificar fecha" class="submit">
@@ -320,17 +320,17 @@ else
 	
     
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=10 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
 </tr>
 
-<?
+<?php 
 		if($rows > 0){
 ?>	
 
@@ -353,27 +353,27 @@ else
 						<td class=rowform nowrap bgcolor=#DBEAF5>Total Final</td>
 					</tr>
 
-<? 
+<?php 
 $contador=0;
 while($r = db_fetch_object($result)){ 
 	$redimido_punto="";
 	if (!strpos($r->DescripcionRegla,"excedente")){
 ?>
 	<tr>
-        <td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta?>&id=<?=$r->IDFactura ?>"><? echo get_field( "Factura","NumeroFactura","IDFactura",$r->IDFactura);  ?></a></td>
-        <td nowrap class=row1><? echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
-        <td nowrap class=row1><? echo $r->NombreRegla ?></td>
-        <td nowrap class=row1><? echo $r->DescripcionRegla ?></td>
-        <td nowrap class=row1><? echo $r->ObservacionesRegla ?></td>
-        <td nowrap class=row1><? echo $r->FechaTrCr ?></td>
+        <td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVenta?>&id=<?php echo $r->IDFactura ?>"><?php echo get_field( "Factura","NumeroFactura","IDFactura",$r->IDFactura);  ?></a></td>
+        <td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
+        <td nowrap class=row1><?php echo $r->NombreRegla ?></td>
+        <td nowrap class=row1><?php echo $r->DescripcionRegla ?></td>
+        <td nowrap class=row1><?php echo $r->ObservacionesRegla ?></td>
+        <td nowrap class=row1><?php echo $r->FechaTrCr ?></td>
         <td nowrap class=row1>
-			<? echo $r->FechaVencimiento ?> 
+			<?php echo $r->FechaVencimiento ?> 
             <?php if ($r->Redimido=="N"){ ?>
             	<a href="?mod=PuntosClienteFidelizacion&idCliente=<?php echo $r->IDCliente; ?>&IDPuntosClienteFidelizacion=<?php echo $r->IDPuntosClienteFidelizacion; ?>&accion=edit_fecha_vencimiento">cambiar fecha</a>
             <?php } ?>
         </td>
-        <td nowrap class=row1 style="background-color:#0F3" align="right" ><b><? echo $r->Puntos?></b></td>
-        <td nowrap class=row1 align="center"><? echo $redimido_punto=$r->Redimido ?></td>
+        <td nowrap class=row1 style="background-color:#0F3" align="right" ><b><?php echo $r->Puntos?></b></td>
+        <td nowrap class=row1 align="center"><?php echo $redimido_punto=$r->Redimido ?></td>
         <td nowrap class=row1 style=" background-color: #0C9" align="right"><b> 
 				<?php 
 				if ($contador==0){
@@ -391,15 +391,15 @@ while($r = db_fetch_object($result)){
     
 	<?php if ($redimido_punto=="S" && (int)$disponibles>=350){ ?>
 	<tr>
-        <td nowrap class=row1 style=" background-color:#FE9EAD"><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta?>&id=<?=$r->IDFactura ?>"><? echo $r->IDFactura ?></a></td>
-        <td nowrap class=row1 style=" background-color:#FE9EAD"><? echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
+        <td nowrap class=row1 style=" background-color:#FE9EAD"><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVenta?>&id=<?php echo $r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
+        <td nowrap class=row1 style=" background-color:#FE9EAD"><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
         <td nowrap class=row1 style=" background-color:#FE9EAD">redencion bono</td>
         <td nowrap class=row1 style=" background-color:#FE9EAD">redencion bono</td>
-        <td nowrap class=row1 style=" background-color:#FE9EAD"><? echo $r->ObservacionesRegla ?></td>
-        <td nowrap class=row1 style=" background-color:#FE9EAD"><? echo $r->FechaTrCr ?></td>
-        <td nowrap class=row1 style=" background-color:#FE9EAD"><? echo $r->FechaVencimiento ?></td>
+        <td nowrap class=row1 style=" background-color:#FE9EAD"><?php echo $r->ObservacionesRegla ?></td>
+        <td nowrap class=row1 style=" background-color:#FE9EAD"><?php echo $r->FechaTrCr ?></td>
+        <td nowrap class=row1 style=" background-color:#FE9EAD"><?php echo $r->FechaVencimiento ?></td>
         <td nowrap class=row1 style=" background-color:#FE9EAD" align="right" ><b>-
-			<? 
+			<?php 
 			if ($contador==0)
 				echo $puntos_bono_generado=(int)$r->PuntosRedimidos;
 			else
@@ -407,7 +407,7 @@ while($r = db_fetch_object($result)){
 			?>
             </b>
             </td>
-        <td nowrap class=row1 align="center"><? echo $r->Redimido ?></td>
+        <td nowrap class=row1 align="center"><?php echo $r->Redimido ?></td>
         <td nowrap class=row1 style=" background-color: #0C9" align="right"> <b>
 				<?php echo $disponibles=(int)$r->Puntos-($r->PuntosRedimidos); ?>
            </b>     
@@ -421,32 +421,32 @@ while($r = db_fetch_object($result)){
     
     
     
-<?	
+<?php 	
 	
 	
 ?>
 <!--  	
 <tr>
-						<td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta?>&id=<?=$r->IDFactura ?>"><? echo $r->IDFactura ?></a></td>
-						<td nowrap class=row1><? echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
-						<td nowrap class=row1><? echo $r->NombreRegla ?></td>
-						<td nowrap class=row1><? echo $r->DescripcionRegla ?></td>
-						<td nowrap class=row1><? echo $r->ObservacionesRegla ?></td>
-						<td nowrap class=row1><? echo $r->FechaTrCr ?></td>
-						<td nowrap class=row1><? echo $r->FechaVencimiento ?></td>
-                        <td nowrap class=row1 style="background-color:#0F3" ><b><? echo $r->Puntos?></b></td>
-                        <td nowrap class=row1><? echo $r->Redimido ?></td>
-                        <td nowrap class=row1 <?php if ($r->PuntosRedimidos!="0"){ ?> style=" background-color:#FE9EAD"  <?php } ?>> <?php if ($r->PuntosRedimidos!="0"){ ?> <b>-<? echo $r->PuntosRedimidos ?></b> <?php } ?></td>
+						<td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVenta?>&id=<?php echo $r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
+						<td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
+						<td nowrap class=row1><?php echo $r->NombreRegla ?></td>
+						<td nowrap class=row1><?php echo $r->DescripcionRegla ?></td>
+						<td nowrap class=row1><?php echo $r->ObservacionesRegla ?></td>
+						<td nowrap class=row1><?php echo $r->FechaTrCr ?></td>
+						<td nowrap class=row1><?php echo $r->FechaVencimiento ?></td>
+                        <td nowrap class=row1 style="background-color:#0F3" ><b><?php echo $r->Puntos?></b></td>
+                        <td nowrap class=row1><?php echo $r->Redimido ?></td>
+                        <td nowrap class=row1 <?php if ($r->PuntosRedimidos!="0"){ ?> style=" background-color:#FE9EAD"  <?php } ?>> <?php if ($r->PuntosRedimidos!="0"){ ?> <b>-<?php echo $r->PuntosRedimidos ?></b> <?php } ?></td>
 					</tr>
 -->                    
-<? 
+<?php 
 	$contador++;
 } // END for
 ?>
 <tr>
 </tr>	
 
-<?
+<?php 
 }// End if$rows
 else
 	echo "<tr><td><br><br><span class=subtitle><b>Este cliente no tiene puntos de fidelizaci&oacute;n </b></span></td></tr>";
@@ -456,7 +456,7 @@ else
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 
 }// Enf function list()				
 

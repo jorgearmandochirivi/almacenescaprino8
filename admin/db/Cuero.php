@@ -71,7 +71,7 @@ var Check = new Array('Descripcion','Publicar');
 		</tr>
 </table>
 <br>
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
+<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
@@ -81,7 +81,7 @@ var Check = new Array('Descripcion','Publicar');
 	<td>
 		<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
 						<tr class=row2>
-			<td> Descripci&oacute;n </td><td><input type=text size=25 class=input   name=Descripcion id=Descripcion value="<?=$r->Descripcion ?>"> </td>
+			<td> Descripci&oacute;n </td><td><input type=text size=25 class=input   name=Descripcion id=Descripcion value="<?php echo $r->Descripcion ?>"> </td>
 			</tr>
 						<tr class=row2>
 			<td> Publicar </td><td><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
@@ -89,13 +89,13 @@ var Check = new Array('Descripcion','Publicar');
 			
 			<tr>
 			<td colspan=2 align=center class=row2>
-				<input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
+				<input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+				<input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+				<input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+				<input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
 				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
-				<input type=hidden name=action value=<?=$newmode?>>
-<input type=hidden name=IDCuero id=IDCuero value="<?=$r->IDCuero ?>"><input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
+				<input type=hidden name=action value=<?php echo $newmode?>>
+<input type=hidden name=IDCuero id=IDCuero value="<?php echo $r->IDCuero ?>"><input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 				</tr>
 			</table>
@@ -243,7 +243,7 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="action" value="list">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>

@@ -470,7 +470,7 @@ endif; //if((int)$cantidad_referencia>0):
                 </select>
                 <br>
                 <br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="action" value="list">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>

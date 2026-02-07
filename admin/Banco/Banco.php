@@ -1,5 +1,5 @@
 <body> 
-<?
+<?php 
 
 $TitleMod ="Banco";
 
@@ -10,7 +10,7 @@ $MOD = "Banco";
 $m = "Banco";
 ?>
 
- <?
+ <?php 
 
 		$permisos = get_permiso($ID_Usuario,$m,$Table);
 if($permisos[0] >= 2)
@@ -110,7 +110,7 @@ var Check = new Array('Nombre','Publicar');
 	</tr>
 </table>
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -153,7 +153,7 @@ var Check = new Array('Nombre','Publicar');
 		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
@@ -161,13 +161,13 @@ var Check = new Array('Nombre','Publicar');
 	<tr>
 		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 	</tr>
-	<?filtrar();?>	
+	<?php filtrar();?>	
 	<tr>
 		<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 	</tr>
 	<tr>
 		<td class=texto bgcolor=#DBEAF5 colspan= nowrap>
-		<?
+		<?php 
 			print $pages;
 		?>
 		</td>
@@ -200,7 +200,7 @@ var Check = new Array('Nombre','Publicar');
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=5 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -255,6 +255,6 @@ else
 				</td>
 			</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

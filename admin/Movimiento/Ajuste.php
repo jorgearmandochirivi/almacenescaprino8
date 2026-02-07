@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="Ajustes de Inventario";
 
@@ -177,7 +177,7 @@ else
 	<br>
 	<table class="bordertable" width="600" cellspacing="1" border="0" align="center">
 		<tr>
-			<td class="maintitle" bgcolor="#9daac6"><b><? echo $TitleMod ?></b></td>
+			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
 		</tr>
 	</table>
 
@@ -185,16 +185,16 @@ else
 	<table class="forumline" width="600" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
-		<?
+		<?php 
 			filtrar();
 		?>
 	</td>
 	</tr>
 	<tr>
 	<td>
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" >
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" >
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="bordertable" >
-			<tr><?
+			<tr><?php 
 			if( empty( $frm[IDAjuste] ) )
 				?>
 				<td class="row1" nowrap>Almacen</td>
@@ -203,31 +203,31 @@ else
 
 
 				<tr>
-					<?
+					<?php 
 					if( empty( $frm[IDAjuste] ) )
 						$frm[IDAjuste] = get_maxID( "Ajuste WHERE IDPuntoVenta = '$IDPuntoVenta'","IDAjuste" );
 					?>
 					<td class="row1" nowrap>Numero de Ajuste</td>
-					<td class="row2"><input type="input" name="NumeroAjuste" readonly value="<?=$frm[IDAjuste]?>" class="tbox" id="NumeroAjuste"></td>
+					<td class="row2"><input type="input" name="NumeroAjuste" readonly value="<?php echo $frm[IDAjuste]?>" class="tbox" id="NumeroAjuste"></td>
 				</tr>
 				<tr>
 					<td class="row1" nowrap>Fecha</td>
 					<td class="row2" nowrap>
-						<input type="input" name="FechaAjuste" readonly value="<?=$frm[FechaAjuste]?>" id="FechaAjuste" class="tbox">
+						<input type="input" name="FechaAjuste" readonly value="<?php echo $frm[FechaAjuste]?>" id="FechaAjuste" class="tbox">
 					</td>
 				</tr>
 						<tr>
 							<td class="row1" nowrap>Observaciones</td>
-							<td class="row2" nowrap><textarea name="Observaciones" rows="10" cols="50"><?=$frm[Observaciones]?></textarea></td>
+							<td class="row2" nowrap><textarea name="Observaciones" rows="10" cols="50"><?php echo $frm[Observaciones]?></textarea></td>
 						</tr>
 					</table>
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 					<tr>
-						<td class=navpic align="center" nowrap bgcolor=#DBEAF5><a href='<? echo "?mod=".$MOD."&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; ?>' style="text-decoration: none;">REFERENCIA</a><a style="text-decoration: none;" href='<? echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<? if($_GET['order_by']=="Referencia.Numero"){?><img src="images/<%=$img%>" border=0><?}?></a></td>
-							<td class=navpic nowrap bgcolor=#DBEAF5 align="center" colspan = "<?=$colspan+1?>">TALLAS</td>
+						<td class=navpic align="center" nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=".$MOD."&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; ?>' style="text-decoration: none;">REFERENCIA</a><a style="text-decoration: none;" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="Referencia.Numero"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+							<td class=navpic nowrap bgcolor=#DBEAF5 align="center" colspan = "<?php echo $colspan+1?>">TALLAS</td>
 						</tr>
 
-				<?
+				<?php 
 				foreach( $array_referencias as $key => $valor ){
 
 					$class = repetition()?"row1list":"row2list";
@@ -236,88 +236,88 @@ else
 				?>
 
 					<tr>
-						<td nowrap class="<?=$class?>"></td>
-						<?
+						<td nowrap class="<?php echo $class?>"></td>
+						<?php 
 						foreach( $array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos )
 						{
 						?>
-						<td nowrap class="<?=$class?>"><b><? echo get_field("Talla","Descripcion","IDTalla",$datos[IDTalla]); ?></b></td>
-						<?
+						<td nowrap class="<?php echo $class?>"><b><?php echo get_field("Talla","Descripcion","IDTalla",$datos[IDTalla]); ?></b></td>
+						<?php 
 						}
 						//anadir las columnas que falten (DISENO)
 						for( $i = 0; $i<$columnasmas; $i++ )
 						{
 						?>
-							<td nowrap class="<?=$class?>">
+							<td nowrap class="<?php echo $class?>">
 							</td>
-						<?
+						<?php 
 						}//end for
 						?>
-						<td class="<?=$class?>">
+						<td class="<?php echo $class?>">
 						</td>
 					</tr>
 
 					<tr>
-						<td nowrap class="<?=$class?>"><? echo $LaReferencia = get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$valor[IDPuntoVentaReferencia]))?></td>
-						<?
+						<td nowrap class="<?php echo $class?>"><?php echo $LaReferencia = get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$valor[IDPuntoVentaReferencia]))?></td>
+						<?php 
 						$TIngreso = 0;
 						foreach( $array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos )
 						{
 						?>
-							<td nowrap class="<?=$class?>">
-								<?
+							<td nowrap class="<?php echo $class?>">
+								<?php 
 								echo $datos[Existencias]."<br>";
 								?>
-								<input type="hidden" name="Cantidad[<?=$datos[IDPendientes]?>]" value="<?=$datos[CantidadPendiente]?>">
-								<input type="hidden" name="IDCodificacionEspecifica[<?=$datos[IDCodificacionEspecifica]?>]" value="<?=$datos[IDCodificacionEspecifica]?>">
-								<?
+								<input type="hidden" name="Cantidad[<?php echo $datos[IDPendientes]?>]" value="<?php echo $datos[CantidadPendiente]?>">
+								<input type="hidden" name="IDCodificacionEspecifica[<?php echo $datos[IDCodificacionEspecifica]?>]" value="<?php echo $datos[IDCodificacionEspecifica]?>">
+								<?php 
 									$pend = $datos[IDCodificacionEspecifica];
 									$Ingr = $_POST[Ingreso];
 									$TIngreso += $Ingr[$pend];
 									$TPares += $Ingr[$pend];
 								?>
-								<input type="text" size="5" name="Ingreso[<?=$datos[IDCodificacionEspecifica]?>]"  value="<? echo $Ingr[$pend] ?>">
-								<input type="hidden" name="IDCodificacionEspecifica[<?=$datos[IDCodificacionEspecifica]?>]" value="<?=$datos[IDCodificacionEspecifica]?>">
-								<input type="hidden" name="Referencia[<?=$datos[IDCodificacionEspecifica]?>]" value="<?=$LaReferencia?>">
-								<input type="hidden" name="Tallas[<?=$datos[IDCodificacionEspecifica]?>]" value="<?=$datos[IDTalla]?>">
+								<input type="text" size="5" name="Ingreso[<?php echo $datos[IDCodificacionEspecifica]?>]"  value="<?php echo $Ingr[$pend] ?>">
+								<input type="hidden" name="IDCodificacionEspecifica[<?php echo $datos[IDCodificacionEspecifica]?>]" value="<?php echo $datos[IDCodificacionEspecifica]?>">
+								<input type="hidden" name="Referencia[<?php echo $datos[IDCodificacionEspecifica]?>]" value="<?php echo $LaReferencia?>">
+								<input type="hidden" name="Tallas[<?php echo $datos[IDCodificacionEspecifica]?>]" value="<?php echo $datos[IDTalla]?>">
 							</td>
 
-						<?
+						<?php 
 						}
 						//anadir las columnas que falten (DISENO)
 						for( $i = 0; $i<$columnasmas; $i++ )
 						{
 						?>
-							<td nowrap class="<?=$class?>">
+							<td nowrap class="<?php echo $class?>">
 							</td>
-						<?
+						<?php 
 						}//end for
 						?>
-						<td class="<?=$class?>">
-							<input type="text" readonly size="5" name="TIngreso" value="<?=$TIngreso?>" value="">
+						<td class="<?php echo $class?>">
+							<input type="text" readonly size="5" name="TIngreso" value="<?php echo $TIngreso?>" value="">
 						</td>
 					</tr>
-						<? } // END for
+						<?php } // END for
 						if( $TPares > 0 )
 						{
 				?>
 						<tr>
-							<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="center">
-							Total Pares a ingresar = <?=$TPares?>
+							<td  bgcolor=#DBEAF5 colspan = "<?php echo $colspan+2?>" nowrap class="navpic" align="center">
+							Total Pares a ingresar = <?php echo $TPares?>
 							</td>
 						</tr>
-						<?
+						<?php 
 						}
 						?>
 						<tr>
-							<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="center">
-							<?
+							<td  bgcolor=#DBEAF5 colspan = "<?php echo $colspan+2?>" nowrap class="navpic" align="center">
+							<?php 
 								print $pages;
 							?>
-							<input type="hidden" name="action" value="<?=$newmode?>">
-							<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
-							<input type="hidden" name="Referencias" value="<?=$frm['Referencias']?>">
-							<%
+							<input type="hidden" name="action" value="<?php echo $newmode?>">
+							<input type="hidden" name="IDPuntoVenta" value="<?php echo $IDPuntoVenta?>">
+							<input type="hidden" name="Referencias" value="<?php echo $frm['Referencias']?>">
+							<?php 
 							if( $newmode == "entrada" )
 							{
 								$caption = "Realizar Ajuste";
@@ -326,8 +326,8 @@ else
 							{
 								$caption = "Comfirmar Ajuste";
 							}
-							%>
-							<input type="submit" class="button" name="enviar" value="<%=$caption%>">
+							?>
+							<input type="submit" class="button" name="enviar" value="<?php echo $caption?>">
 						</td>
 							<td></td>
 
@@ -338,7 +338,7 @@ else
 			</td>
 		</tr>
 	</table>
-	<?
+	<?php 
 }// End if$rows
 
 }// Enf function list()
@@ -435,7 +435,7 @@ else
 		</tr>
         <tr>
         	<td>
-	<?
+	<?php 
 
 	filtrar();
 
@@ -444,32 +444,32 @@ else
       	</tr>
   	</table>
     <br><br><br>
-	<?
+	<?php 
 
 	if( empty( $IDPuntoVenta ) )
 	{
 	?>
 	<table width=590 cellpadding=0 cellspacing=0 align=center class=bordertable>
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" >
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" >
 		<tr>
 			<td colspan=2 class="maintitle" bgcolor="#9daac6"><b>Realizar Ajuste de Inventario</b></td>
 		</tr>
 		<tr>
 		<td width="117">Puntos de Venta	</td>
 		<td><select name="IDPuntoVenta" onChange="document.frm.submit();" >
-				<option value="">Seleccione Un Punto de Venta</option><%
+				<option value="">Seleccione Un Punto de Venta</option><?php 
 			$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
 			while($punto = db_fetch_object($qry_punto)){
 				 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 			}
-		%>
+		?>
 			</select>
-			<input type=hidden name=mod value=<?=$MOD?>
+			<input type=hidden name=mod value=<?php echo $MOD?>
 			</td>
 	</tr>
 		</form>
 	</table>
-	<?
+	<?php 
 
 		verajustes( $IDPuntoVentaBuscar );
 
@@ -482,12 +482,12 @@ else
 		<tr>
 		<td width="117">Puntos de Venta	</td>
 		<td><select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-				<option value="">Seleccione Un Punto de Venta</option><%
+				<option value="">Seleccione Un Punto de Venta</option><?php 
 			$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
 			while($punto = db_fetch_object($qry_punto)){
 				 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 			}
-		%>
+		?>
 			</select>
 			</td>
 	</tr>
@@ -495,18 +495,18 @@ else
 	<br><br>
 	<table class="bordertable" width="600" cellspacing="1" border="0" align="center">
 		<tr>
-			<td class="maintitle" bgcolor="#9daac6"><b><? echo $TitleMod ?></b></td>
+			<td class="maintitle" bgcolor="#9daac6"><b><?php echo $TitleMod ?></b></td>
 		</tr>
 		<td>
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="setSelectOptions(document.frm.Referencias);return EvaluaReg(this,Check)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="setSelectOptions(document.frm.Referencias);return EvaluaReg(this,Check)">
 				<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto  >
 
-					<tr><?
+					<tr><?php 
 					if( empty( $frm[IDAjuste] ) )
 						$frm[IDAjuste] = get_maxID( "Ajuste WHERE IDPuntoVenta = '$IDPuntoVenta'","IDAjuste" );
 						?>
 						<td class="row1" nowrap>Numero de Ajuste</td>
-						<td class="row2"><input type="input" name="IDAjuste" class="tbox" id="Ajuste" value="<?=$frm[IDAjuste]?>"></td>
+						<td class="row2"><input type="input" name="IDAjuste" class="tbox" id="Ajuste" value="<?php echo $frm[IDAjuste]?>"></td>
 					</tr>
 					<tr>
 						<td class="row1" nowrap>Fecha de Ajuste</td>
@@ -532,7 +532,7 @@ else
 					<tr>
 						<td  colspan="2" align="center">
 							<table cellpadding="1" align=center cellspacing="1" width="100%">
-								<td class="row1list">Para agregar una referebcia haga <a href="javascript:;" onClick="window.open('Movimiento/popajustes.php?IDPuntoVenta=<?=$IDPuntoVenta?>','','width=600,height=500'); this.value=''">click aqu&iacute; </a><br>
+								<td class="row1list">Para agregar una referebcia haga <a href="javascript:;" onClick="window.open('Movimiento/popajustes.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>','','width=600,height=500'); this.value=''">click aqu&iacute; </a><br>
 									<select name="Referencias" style="width:180px; " size="20" multiple class="inputSelect" id="Referencias"></select><br>
 									</a>Para eliminar una referencia haga <a href="JavaScript:removeitem(document.frm.Referencias);" class="tex-menu-sup">click aqu&iacute; </a><br>
 								</td>
@@ -541,7 +541,7 @@ else
 					</tr>
 					<tr>
 						<td colspan="2" align="center" class="row1list"><input type="hidden" name="action" value="listar">
-								<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
+								<input type="hidden" name="IDPuntoVenta" value="<?php echo $IDPuntoVenta?>">
 								<?php if($ID_Usuario==229){
 									echo "Solo consulta";
 								}else{
@@ -556,7 +556,7 @@ else
 		</td>
 		</tr>
 	</table>
-<?
+<?php 
 	}//end else
 }// Enf function previoentrada()
 
@@ -606,21 +606,21 @@ else
 			$order="ASC";
 		}
 
-							?><?
+							?><?php 
 	if($rows > 0){
 ?><br>
 	<br>
 	<br>
 	<table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
 	<tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 	<tr>
 	<td class=texto bgcolor=#DBEAF5 colspan=11 nowrap>
-	<?
+	<?php 
 		print $pages;
 	?>
 	</td>
@@ -636,29 +636,29 @@ else
 						<td class=rowform nowrap bgcolor=#DBEAF5>Usuario</td>
 					</tr>
 
-				<?
+				<?php 
 				while($r = db_fetch_object($result)){
 				?>
 
 					<tr>
 						<td nowrap class=row1>
-							<a href="javascript:;" onClick="window.open( 'Movimiento/popDetalleAjuste.php?IDAjuste=<?=$r->IDAjuste?>&IDPuntoVenta=<?=$r->IDPuntoVenta?>','','width=700, height=700, scrollbars=yes' )">
+							<a href="javascript:;" onClick="window.open( 'Movimiento/popDetalleAjuste.php?IDAjuste=<?php echo $r->IDAjuste?>&IDPuntoVenta=<?php echo $r->IDPuntoVenta?>','','width=700, height=700, scrollbars=yes' )">
 							<img src='images/edit.gif' border='0'>
 							</a>
 						</a>
-						<td nowrap class=row1><? echo $r->NumeroAjuste?></td>
-						<td nowrap class=row1><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta)?></td>
+						<td nowrap class=row1><?php echo $r->NumeroAjuste?></td>
+						<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta)?></td>
 						<td nowrap class=row1>
-							<? //echo $r->FechaAjuste
+							<?php //echo $r->FechaAjuste
 									echo $r->FechaTrCr;
 							?></td>
-						<td nowrap class=row1><? echo $r->UsuarioTrCr?></td>
+						<td nowrap class=row1><?php echo $r->UsuarioTrCr?></td>
 					</tr>
-				<? } // END for
+				<?php } // END for
 				?>
 					<tr>
 						<td class=texto bgcolor=#DBEAF5 colspan=6 nowrap>
-							<?
+							<?php 
 								print $pages;
 							?>
 						</td>
@@ -667,7 +667,7 @@ else
 			</td>
 		</tr>
 	</table>
-	<?
+	<?php 
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -687,23 +687,23 @@ else
 		<tr>
 			<td class="rowform" align="center" colspan=8>
 				<select name="IDPuntoVentaBuscar"  >
-                    <option value="">Seleccione Un Punto de Venta</option><%
+                    <option value="">Seleccione Un Punto de Venta</option><?php 
                 $qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
                 while($punto = db_fetch_object($qry_punto)){
                      echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
                 }
-            %>
+            ?>
                 </select>
 
 
                 Referencia: <input type="text" name="ReferenciaBuscar" id="ReferenciaBuscar">
 
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="action" value="list">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>
 		</tr>
 	</form>
-<?
+<?php 
 	}//End function filtrar
 ?>

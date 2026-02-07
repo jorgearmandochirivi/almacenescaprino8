@@ -32,7 +32,7 @@
 </script>
 
 
-<body> <?
+<body> <?php 
 $TitleMod ="Tarjetas Regalo";
 
 $Table = "TarjetaPunto";
@@ -189,18 +189,18 @@ var Check = new Array('Codigo','Estado');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
 
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left >
-	<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <? if($newmode!="delete"){ ?>onsubmit="return EvaluaCampos(this,Check)"<?}?>>
+	<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){ ?>onsubmit="return EvaluaCampos(this,Check)"<?php }?>>
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -210,11 +210,11 @@ var Check = new Array('Codigo','Estado');
 						</tr>
 						<tr class=row2>
 						  <td>Codigo</td>
-						  <td><input type="text" name="CodigoTarjeta" id="Codigo" title="Codigo Tarjeta" class="tbox" value="<?=$r->CodigoTarjeta ?>"></td>
+						  <td><input type="text" name="CodigoTarjeta" id="Codigo" title="Codigo Tarjeta" class="tbox" value="<?php echo $r->CodigoTarjeta ?>"></td>
 		  </tr>
 		  <tr class=row2>
 						  <td>Punto de venta</td>
-						  <td><? echo formpopup("PuntoVenta","Nombre","Nombre","IDPuntoVenta",$r->IDPuntoVenta,"input\" id=\"PuntoVenta"); ?></td>
+						  <td><?php echo formpopup("PuntoVenta","Nombre","Nombre","IDPuntoVenta",$r->IDPuntoVenta,"input\" id=\"PuntoVenta"); ?></td>
 		  </tr>
 		  <tr class=row2>
 						  <td>Descripci&oacute;n</td>
@@ -222,7 +222,7 @@ var Check = new Array('Codigo','Estado');
 		  </tr>
 						<tr class=row2>
 						  <td>Estado</td>
-						  <td><span class="col2"><? echo formradiogroup(array('Vendida'=>'V','Disponible'=>'D','Anulado'=>'A','Obsequio'=>'O'),$r->Estado, 'Estado'); ?></span></td>
+						  <td><span class="col2"><?php echo formradiogroup(array('Vendida'=>'V','Disponible'=>'D','Anulado'=>'A','Obsequio'=>'O'),$r->Estado, 'Estado'); ?></span></td>
 		  </tr>
 
 
@@ -233,15 +233,15 @@ var Check = new Array('Codigo','Estado');
 			</tr>
 			<tr>
 			<td align=center class=row2 colspan="2">
-            	<input type=hidden name=IDTarjetaFidelizacion value="<?=$r->IDTarjetaFidelizacion ?>">
-                <input type=hidden name=IDCliente value="<?=$r->IDCliente ?>">
-            	<input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<? echo $r->$Key ?>">
-				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+            	<input type=hidden name=IDTarjetaFidelizacion value="<?php echo $r->IDTarjetaFidelizacion ?>">
+                <input type=hidden name=IDCliente value="<?php echo $r->IDCliente ?>">
+            	<input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+				<input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+				<input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+				<input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
+				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
+				<input type=hidden name=action value=<?php echo $newmode?>>
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 			</tr>
 			</table>
@@ -249,7 +249,7 @@ var Check = new Array('Codigo','Estado');
 	</tr>
 </table>
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -290,28 +290,28 @@ var Check = new Array('Codigo','Estado');
 
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>
 <br>
 <table width=750 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
 
-<?filtrar();?>
+<?php filtrar();?>
 
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=16 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
@@ -329,18 +329,18 @@ var Check = new Array('Codigo','Estado');
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 				</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
 
 <tr>
 <td align=center valign=middle nowrap width=50 class=row2>
-  &nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+  &nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-<td nowrap class=row1><? echo $r->CodigoTarjeta ?></td>
-<td nowrap class=row1><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta);  ?></td>
+<td nowrap class=row1><?php echo $r->CodigoTarjeta ?></td>
+<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta);  ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
                         <span class="row1">
-							<?
+							<?php 
 							if ($r->Estado=="V")
 								echo "Vendida";
 							elseif($r->Estado=="D")
@@ -352,14 +352,14 @@ var Check = new Array('Codigo','Estado');
 							 ?>
                         </span></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>
 </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 						<td class=texto bgcolor=#DBEAF5 colspan=3 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -369,7 +369,7 @@ var Check = new Array('Codigo','Estado');
 		</tr>
 </table>
 
-<?
+<?php 
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -410,12 +410,12 @@ else
 					<option value="60" selected>60</option>
 				</select>
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="action" value="list">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>
 		</tr>
 	</form>
-<?
+<?php 
 	}//End function filtrar
 ?>

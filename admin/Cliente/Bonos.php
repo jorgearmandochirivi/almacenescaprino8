@@ -63,7 +63,7 @@ function mostrarcedula($newmode,$submit_caption){
 ?>
 	
 <br>
-<form name="frmcliente" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" onsubmit="disable(this);">
+<form name="frmcliente" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" onsubmit="disable(this);">
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="800">
 	
 	<tr>
@@ -87,8 +87,8 @@ function mostrarcedula($newmode,$submit_caption){
   
   <tr>
 	<td class="col2list" align="center" valign="middle" colspan="2">
-		<input type="submit" class="button" name="enviar" value="<?=$submit_caption?>">
-		<input type="hidden" value="<?=$newmode?>" name="action">
+		<input type="submit" class="button" name="enviar" value="<?php echo $submit_caption?>">
+		<input type="hidden" value="<?php echo $newmode?>" name="action">
 	</td>
   </tr>
 </table>
@@ -215,7 +215,7 @@ function print_form($idCliente,$submit_caption) {
 var Check = new Array('Cedula','Nombre','Apellido');
 </script>
 <br>
-	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
+	<form name="frmcliente" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
 	
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="800">
 	
@@ -224,7 +224,7 @@ var Check = new Array('Cedula','Nombre','Apellido');
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<?=$title?>
+				<?php echo $title?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -282,7 +282,7 @@ if($rows > 0){
 	  <td nowrap="nowrap" class="row1"><?php echo get_field("Cliente","Cedula","IDCliente",$r->IDClienteRedimioBono)." " . get_field("Cliente","Nombre","IDCliente",$r->IDClienteRedimioBono) . " " .get_field("Cliente","Apellido","IDCliente",$r->IDClienteRedimioBono);  ?></td>
 	  <td nowrap="nowrap" class="row1"><?php echo $array_puntos[ $r->IDPuntoVentaRedimido ]["Nombre"] ?></td>
 	  <td nowrap="nowrap" class="row1"><?php echo $r->FechaRedimido ?></td>
-	  <td nowrap="nowrap" class="row1"><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVentaRedimido?>&id=<?=$r->IDFactura ?>"><?php echo $r->IDFactura ?></td>
+	  <td nowrap="nowrap" class="row1"><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVentaRedimido?>&id=<?php echo $r->IDFactura ?>"><?php echo $r->IDFactura ?></td>
     </tr>
 
   	

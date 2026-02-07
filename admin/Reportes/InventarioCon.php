@@ -117,7 +117,7 @@ function seleccionareferencia( $newmode)
 
 	<br><br><br><br>
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="700" class="bordertable">
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 			<tr>
 				<td class=maintitle colspan="2">
 					
@@ -159,7 +159,7 @@ function seleccionareferencia( $newmode)
 								</select><input type=text class=tbox name=referencia>
 				<input type="submit" class="button" name="enviar" value="Consultar">
 
-				<input type=hidden name=action value=<?=$newmode?>><input type=hidden name=mod value="<?=$MOD?>"></td>
+				<input type=hidden name=action value=<?php echo $newmode?>><input type=hidden name=mod value="<?php echo $MOD?>"></td>
 						</tr>
 							
 					</table>
@@ -186,7 +186,7 @@ function seleccionareferencia( $newmode)
 ?>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?php echo $Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -281,7 +281,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 							if( array_sum( $array_linea[$linea] ) > 0 )
 							{
 				?>			<tr>
-								<td class="rowform">Totales <?=$linea ?></td>
+								<td class="rowform">Totales <?php echo $linea ?></td>
 								<td class="rowform">&nbsp;</td>
                                 <td class="rowform">&nbsp;</td>
 								<?php
@@ -298,7 +298,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 								}//end for
 								?>
-								<td class="rowform" align="right"><b><?=array_sum( $array_linea[$linea] ) ?></b></td>
+								<td class="rowform" align="right"><b><?php echo array_sum( $array_linea[$linea] ) ?></b></td>
 							</tr>
 							<?php
 								$array_linea = array( );
@@ -350,7 +350,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 							}//end for
 							?>
-							<td class="row1"><b><?=$totalreferencia ?></b></td>
+							<td class="row1"><b><?php echo $totalreferencia ?></b></td>
 
 							<?php
 							if($_GET["analisis"]==1 || $_POST["analisis"]==1){
@@ -413,7 +413,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 					}//end for
 					?>
-					<td class="maintitle"><?=array_sum( $totales )?></td>
+					<td class="maintitle"><?php echo array_sum( $totales )?></td>
 				</tr>
 
 

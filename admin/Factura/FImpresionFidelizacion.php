@@ -110,14 +110,14 @@ table{
     <tr>
         <td class=texto colspan="2">
             Imacal <?php echo $tipo_emp= ($r->FechaTrEd>="2019-07-19 00:00:00") ? "SAS" : "SAS"; ?>
-            NIT <?=get_field( "NIT","NIT","IDNIT",1 );?>&nbsp;&nbsp;&nbsp;&nbsp;
+            NIT <?php echo get_field( "NIT","NIT","IDNIT",1 );?>&nbsp;&nbsp;&nbsp;&nbsp;
             R&eacute;gimen com&uacute;n
         </td>
     </tr>
 
     <tr>
         <td class=texto width="91">Fecha Registro</td>
-        <td width="112" colspan="2" nowrap class=texto><?=date("Y-m-d") ?></td>
+        <td width="112" colspan="2" nowrap class=texto><?php echo date("Y-m-d") ?></td>
     </tr>
     <?php
     if( !empty( $r->FechaTrEd ) && $r->FechaTrEd !="0000-00-00 00:00:00" )
@@ -125,66 +125,66 @@ table{
 	?>
     <tr>
         <td class=texto width="91">Fecha ctualizaci&oacute;n</td>
-        <td class=texto colspan="2" nowrap><?=substr($r->FechaTrEd,0,10) ?></td>
+        <td class=texto colspan="2" nowrap><?php echo substr($r->FechaTrEd,0,10) ?></td>
     </tr>
 	<?php
 	}//end if
 	?>
     <tr>
         <td class=texto width="91">Vendedor</td>
-        <td class=texto colspan="2" nowrap><?=get_field( "Empleado", "Nombre", "IDEmpleado", $r->IDEmpleado ) . " " . get_field( "Empleado", "Apellidos", "IDEmpleado", $r->IDEmpleado ) ?></td>
+        <td class=texto colspan="2" nowrap><?php echo get_field( "Empleado", "Nombre", "IDEmpleado", $r->IDEmpleado ) . " " . get_field( "Empleado", "Apellidos", "IDEmpleado", $r->IDEmpleado ) ?></td>
     </tr>
 
     <tr>
         <td class=texto nowrap>Nombre Cliente</td>
-        <td class=texto colspan="2" nowrap><?=$r->Nombre . " " . $r->Apellido; ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->Nombre . " " . $r->Apellido; ?></td>
     </tr>    
     <tr>
         <td class=texto nowrap>Cedula</td>
-        <td class=texto colspan="2" nowrap><?=$r->Cedula?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->Cedula?></td>
     </tr>
     <tr>
         <td class=texto nowrap>Fecha de Nac.</td>
-        <td class=texto colspan="2" nowrap><?=$r->Ano . "-" . $r->Mes . "-" .$r->Dia  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->Ano . "-" . $r->Mes . "-" .$r->Dia  ?></td>
     </tr>
     <tr>
         <td class=texto nowrap>Email</td>
-        <td class=texto colspan="2" nowrap><?=$r->EMail  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->EMail  ?></td>
     </tr>
     <tr>
         <td class=texto nowrap>Tel&eacute;fono</td>
-        <td class=texto colspan="2" nowrap><?=$r->Telefono  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->Telefono  ?></td>
     </tr>
     <tr>
         <td class=texto nowrap>Celular</td>
-        <td class=texto colspan="2" nowrap><?=$r->Celular  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->Celular  ?></td>
     </tr>
     <tr>
         <td class=texto >Direcci&oacute;n</td>
-        <td class=texto colspan="2"><?=str_replace(" ","_",$r->Direccion) . "(".get_field( "Ciudad", "Descripcion", "IDCiudad", $r->IDCiudad ) .")"; ?></td>
+        <td class=texto colspan="2"><?php echo str_replace(" ","_",$r->Direccion) . "(".get_field( "Ciudad", "Descripcion", "IDCiudad", $r->IDCiudad ) .")"; ?></td>
     </tr>   
     <tr>
         <td class=texto nowrap>Autorizo <br>Envio de SMS</td>
-        <td class=texto colspan="2" nowrap><?=$r->AceptaSMS  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->AceptaSMS  ?></td>
     </tr>
     <tr>
         <td class=texto nowrap>Autorizo <br>envio a correo</td>
-        <td class=texto colspan="2" nowrap><?=$r->AutorizaMail  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->AutorizaMail  ?></td>
     </tr>
 
     <tr>
         <td class=texto nowrap>Acepto t&eacute;rminos<br> y condiciones</td>
-        <td class=texto colspan="2" nowrap><?=$r->AceptaTerminos  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->AceptaTerminos  ?></td>
     </tr>
 
     <tr>
         <td class=texto nowrap>Acepta Habeas Data</td>
-        <td class=texto colspan="2" nowrap><?=$r->AceptaHabeas  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->AceptaHabeas  ?></td>
     </tr>
 
     <tr>
         <td class=texto nowrap>Numero de Tarjeta<br> entregada	</td>
-        <td class=texto colspan="2" nowrap><?=$r->NumeroTarjeta  ?></td>
+        <td class=texto colspan="2" nowrap><?php echo $r->NumeroTarjeta  ?></td>
     </tr>
 
     <tr>
@@ -226,7 +226,7 @@ table{
     </tr>
     <tr>
       <td colspan="4" align="center" class=texto>
-       <a href="/admin/files/facturas/Cliente<?=$r->IDCliente ?>.pdf">pdf</a>
+       <a href="/admin/files/facturas/Cliente<?php echo $r->IDCliente ?>.pdf">pdf</a>
       </td>
     </tr>
 

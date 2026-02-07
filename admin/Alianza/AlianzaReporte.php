@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 
 $TitleMod ="Alianza";
 
@@ -89,8 +89,8 @@ function print_form($id,$newmode,$title,$submit_caption){
 ?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
@@ -104,7 +104,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 		window.open( 'Factura/eliminafactura.php?IDFactura='+IDFactura+'&IDPuntoVenta='+IDPuntoVenta,'','width=100, height=100' );
 }
 </script>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -148,21 +148,21 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 		<td></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>	
 
 <br>
 <table width=750 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-<?filtrar();?>	
+<?php filtrar();?>	
 
 <?php	if(!empty($sql_resumen)): ?>
 <tr>
@@ -197,11 +197,11 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 
 
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=16 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
@@ -217,32 +217,32 @@ function eliminafactura( IDFactura, IDPuntoVenta )
   </tr>
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Cliente&nbsp;<% if($_GET['order_by']=="IDCliente"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroDocumento&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Punto de Venta&nbsp;<% if($_GET['order_by']=="NumeroDocumento"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">NumeroFactura&nbsp;<% if($_GET['order_by']=="NumeroFactura"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Cliente&nbsp;<?php  if($_GET['order_by']=="IDCliente"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroDocumento&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Punto de Venta&nbsp;<?php  if($_GET['order_by']=="NumeroDocumento"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">NumeroFactura&nbsp;<?php  if($_GET['order_by']=="NumeroFactura"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Numero de Fidelizacion</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">FechaFactura&nbsp;<% if($_GET['order_by']=="FechaFactura"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">ValorTotal&nbsp;<% if($_GET['order_by']=="ValorTotal"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">FechaFactura&nbsp;<?php  if($_GET['order_by']=="FechaFactura"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">ValorTotal&nbsp;<?php  if($_GET['order_by']=="ValorTotal"){?><img src="images/<?php echo $img?>" border=0><?php }?></a> </td>
 					</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 						<td align=center valign=middle nowrap width=69 class=row2>
-	&nbsp;<a href='<? echo "?mod=Factura&action=edit&id="; echo $r->$Key; ?>&idpunto=<%=$r->IDPuntoVenta%>'><img src='images/edit.gif' border='0'></a></td>
-						<td nowrap class=row1><? echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
-						<td nowrap class=row1><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta) ?></td>
-						<td nowrap class=row1><? echo $r->NumeroFactura ?></td>
-						<td nowrap class=row1><? echo $r->NumeroFideliazcion ?></td>
-						<td nowrap class=row1><? echo $r->FechaFactura ?></td>
-						<td nowrap class=row1><? echo $r->ValorTotal ?></td>
+	&nbsp;<a href='<?php echo "?mod=Factura&action=edit&id="; echo $r->$Key; ?>&idpunto=<?php echo $r->IDPuntoVenta?>'><img src='images/edit.gif' border='0'></a></td>
+						<td nowrap class=row1><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
+						<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta) ?></td>
+						<td nowrap class=row1><?php echo $r->NumeroFactura ?></td>
+						<td nowrap class=row1><?php echo $r->NumeroFideliazcion ?></td>
+						<td nowrap class=row1><?php echo $r->FechaFactura ?></td>
+						<td nowrap class=row1><?php echo $r->ValorTotal ?></td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=7 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?></td>
 </tr>		
@@ -250,7 +250,7 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -274,7 +274,7 @@ else
 				<option class="<?php echo (int)$r_alianza[Descuento]; ?>"  value="<?php echo $r_alianza[IDAlianza] ?>"><?php echo $r_alianza[Nombre] . " - " . $r_alianza[Descuento] . "%";  ?></option>
 			  <?php endwhile; ?>
 			  </select>
-				 Punto Venta <? echo formpopup("PuntoVenta","Nombre","Nombre","IDPuntoVenta",$r->IDPuntoVenta,"input\" id=\"PuntoVenta"); ?><br>
+				 Punto Venta <?php echo formpopup("PuntoVenta","Nombre","Nombre","IDPuntoVenta",$r->IDPuntoVenta,"input\" id=\"PuntoVenta"); ?><br>
 				 Entre <input type=text readonly size=10 class=input name=limit1>
 				<script language='JavaScript1.2'>
 					<!--
@@ -291,7 +291,7 @@ else
 				</script>
 				<br>
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="FechaFactura">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="Cliente">
@@ -300,6 +300,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

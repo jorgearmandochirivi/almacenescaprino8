@@ -213,7 +213,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				var Check2 = new Array("Importar");
 				</script>
 				
-					<form name="frmInv" action="<?=$PhP_SELF?>" method="post" enctype="multipart/form-data" onsubmit="return EvaluaReg(this,Check2)">
+					<form name="frmInv" action="<?php echo $PhP_SELF?>" method="post" enctype="multipart/form-data" onsubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Importar Inventario Referencias");?></td>
 						</tr>

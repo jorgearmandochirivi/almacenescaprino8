@@ -52,7 +52,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 							
-								Desde	<input  type="text" name="FechaDesde" class="input" value="<?=$FechaDesde?>" size="10">
+								Desde	<input  type="text" name="FechaDesde" class="input" value="<?php echo $FechaDesde?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -63,7 +63,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 								
-								Hasta	<input  type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>" size="10">
+								Hasta	<input  type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -202,16 +202,16 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>
 				&nbsp;&nbsp;&nbsp;&nbsp;  <img src="images/book_go.png" border="0" alt="">&nbsp; 
-				<a href="./?mod=ReportePagos&Fecha=<?=$Fecha?>&IDPuntoVenta=<?=$IDPuntoVenta?>" class="menuppal">
+				<a href="./?mod=ReportePagos&Fecha=<?php echo $Fecha?>&IDPuntoVenta=<?php echo $IDPuntoVenta?>" class="menuppal">
 					Ver informe formas de pago
 				</a>
 				<br>&nbsp; 
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
 							
-						Reporte Almacen : <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
+						Reporte Almacen : <?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?php echo formatofecha( $Fecha )?>
 					</td>
 				</tr>
 				<?php
@@ -244,16 +244,16 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							//print_r($valor);
 						?>
 						<tr>
-						  <td class="<?=$class?>" align="center" nowrap><?=$row_factura->FechaFactura;?></td>
-						  <td class="<?=$class?>" align="center" nowrap><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
-						  <td class="<?=$class?>" align="center" nowrap><?php echo get_field("Empleado","Nombre","IDEmpleado",$row_factura->IDEmpleado) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_factura->IDEmpleado); ?></td>
-										<td class="<?=$class?>" align="center" nowrap><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta;?>&id=<?=$r->IDFactura ?>"><?=$row_factura->NumeroFactura; ?></a></td>
-										<td class="<?=$class?>" align="center" nowrap><?php echo $r->TotalProductos ?></td>
-										<td class="<?=$class?>" align="center" nowrap>$
-										  <?=number_format($row_factura->ValorTotal); ?>
+						  <td class="<?php echo $class?>" align="center" nowrap><?php echo $row_factura->FechaFactura;?></td>
+						  <td class="<?php echo $class?>" align="center" nowrap><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
+						  <td class="<?php echo $class?>" align="center" nowrap><?php echo get_field("Empleado","Nombre","IDEmpleado",$row_factura->IDEmpleado) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_factura->IDEmpleado); ?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVenta;?>&id=<?php echo $r->IDFactura ?>"><?php echo $row_factura->NumeroFactura; ?></a></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r->TotalProductos ?></td>
+										<td class="<?php echo $class?>" align="center" nowrap>$
+										  <?php echo number_format($row_factura->ValorTotal); ?>
 										</td>
-										<td class="<?=$class?>" align="center" nowrap><?php echo get_field("Cliente","Nombre","IDCliente",$row_factura->IDCliente) . " " . get_field("Cliente","Apellido","IDCliente",$row_factura->IDCliente); ?></td>
-										<td class="<?=$class?>" align="right" nowrap><?php echo get_field("Cliente","Cedula","IDCliente",$row_factura->IDCliente); ?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo get_field("Cliente","Nombre","IDCliente",$row_factura->IDCliente) . " " . get_field("Cliente","Apellido","IDCliente",$row_factura->IDCliente); ?></td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo get_field("Cliente","Cedula","IDCliente",$row_factura->IDCliente); ?></td>
 						</tr>
 						
 						<?php

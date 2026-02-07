@@ -146,7 +146,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<?=$title?>
+				<?php echo $title?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -155,7 +155,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 	</tr>
 </table>
 
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" onSubmit="disable( this );" >
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" onSubmit="disable( this );" >
 <table class="forumline" width="580" cellspacing="1" border="0" align="center">
 	<tr>
 	<td width="100%">
@@ -174,11 +174,11 @@ function print_form($id,$newmode,$title,$submit_caption){
 														<td class=col2 >
 															<?php
 																echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen);
-															?><input type="hidden" value="<?=$r->IDPuntoVentaOrigen?>" name="IDPuntoVentaOrigen"></td>
+															?><input type="hidden" value="<?php echo $r->IDPuntoVentaOrigen?>" name="IDPuntoVentaOrigen"></td>
 														<td class=col1>Fecha </td>
-														<td class=col2 ><input type="text" class="tbox" name="Fecha" size="19" value='<?=$r->Fecha?>' readonly>
+														<td class=col2 ><input type="text" class="tbox" name="Fecha" size="19" value='<?php echo $r->Fecha?>' readonly>
 															
-															<input type="hidden" value="<?=$r->IDPuntoVentaDestino?>" name="IDPuntoVentaDestino"></td>
+															<input type="hidden" value="<?php echo $r->IDPuntoVentaDestino?>" name="IDPuntoVentaDestino"></td>
 													</tr>
 													<tr>
 														<td class=col1>Estado</td>
@@ -186,7 +186,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1 >Observaciones</td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
+														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?php echo $r->Observaciones?></textarea></td>
 													</tr>
 													<tr>
 														<td class=col1><br></td>
@@ -222,23 +222,23 @@ function print_form($id,$newmode,$title,$submit_caption){
 															$Talla = get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica);;
 													?>
 													<tr >
-														<td class="<?=$class?>">
-															<b><?=$i?></b>
-															<input type="hidden" name="IDCodificacionEspecifica[]" value="<?=$r_detalle->IDCodificacionEspecifica?>">
-															<input type="hidden" name="Talla[]" value="<?=$Talla?>">
+														<td class="<?php echo $class?>">
+															<b><?php echo $i?></b>
+															<input type="hidden" name="IDCodificacionEspecifica[]" value="<?php echo $r_detalle->IDCodificacionEspecifica?>">
+															<input type="hidden" name="Talla[]" value="<?php echo $Talla?>">
 															<input type="hidden" name="Cantidad[]" value="<?php echo $r_detalle->Cantidad ?>">
-															<input type="hidden" name="IDReferencia[]" value="<?=get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)?>">
+															<input type="hidden" name="IDReferencia[]" value="<?php echo get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)?>">
 
 														</td>
-														<td class="<?=$class?>">
+														<td class="<?php echo $class?>">
 															<?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
-														<td class="<?=$class?>">
+														<td class="<?php echo $class?>">
 															<?php echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
 														</td>
-														<td class="<?=$class?>">
+														<td class="<?php echo $class?>">
 															<?php echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?>
 														</td>
-														<td class="<?=$class?>">
+														<td class="<?php echo $class?>">
 															<?php echo $r_detalle->Cantidad ?>
 														</td>
 													</tr>
@@ -249,10 +249,10 @@ function print_form($id,$newmode,$title,$submit_caption){
 											</td>
 										</tr>
 									</table>
-									<input type="hidden" name="action" value="<?=$newmode?>">
-									<input type="hidden" name="ID" value="<?=$r->$Key?>">
-									<input type="hidden" name="IDTraslado" value="<?=$r->$Key?>">
-									<input type="submit" class="button" name="submit" value="<?=$submit_caption?>"></div>
+									<input type="hidden" name="action" value="<?php echo $newmode?>">
+									<input type="hidden" name="ID" value="<?php echo $r->$Key?>">
+									<input type="hidden" name="IDTraslado" value="<?php echo $r->$Key?>">
+									<input type="submit" class="button" name="submit" value="<?php echo $submit_caption?>"></div>
 							
 					</td>
 				</tr>
@@ -348,13 +348,13 @@ function print_form($id,$newmode,$title,$submit_caption){
 							?>
 							  	
 							<tr>
-								<td align=center valign=middle nowrap width=50 class="<?=$class?>">
+								<td align=center valign=middle nowrap width=50 class="<?php echo $class?>">
 								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>&idpuntoorigen=<?php echo $r->IDPuntoVentaOrigen; ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-									<td nowrap class="<?=$class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen)?></td>
-									<td nowrap class="<?=$class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaDestino) ?></td>
-									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->Fecha,0,10))." ".substr($r->Fecha,10) ?></td>
-									<td nowrap class="<?=$class?>"><?php echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado) ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen)?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaDestino) ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo formatofecha(substr($r->Fecha,0,10))." ".substr($r->Fecha,10) ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado) ?></td>
 								</tr>
 							<?php } // END for
 							?>
@@ -425,9 +425,9 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="Fecha">
-				<input type="hidden" name="IDPuntoVentaDestino" value="<?=$IDPuntoVenta?>">
+				<input type="hidden" name="IDPuntoVentaDestino" value="<?php echo $IDPuntoVenta?>">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="">
 				<input type="submit" name="submit" value="Buscar" class="submit">

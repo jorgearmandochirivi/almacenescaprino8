@@ -1,4 +1,4 @@
-<body> <?php
+<body> <?
 
 $TitleMod ="Log";
 
@@ -59,7 +59,7 @@ else
 <br>
 <table width="600"  cellpadding=0 cellspacing=0 class=bordertable>
 	<tr>
-		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
+		<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
 	</tr>
 	<tr><td>
 <table width=100% border=0 cellspacing=1 cellpadding=0>
@@ -73,24 +73,24 @@ else
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Ver</td>
 					</tr>
 
-<?php while($r = db_fetch_object($result)){
+<? while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
-						<td nowrap class=row1><?php echo $r->Modulo ?></td>
-						<td align="center" nowrap class=row1><?php echo $r->IDModulo ?></td>
-						<td nowrap class=row1><?php echo $r->Fecha?></td>
-						<td nowrap class=row1><?php echo $r->Transaccion?></td>
-						<td align=center valign=middle nowrap width=60 class=row2><?php echo $r->DireccionIP?></td>
-						<td align=center valign=middle nowrap width=60 class=row2><?php echo get_field("Usuario","Nombre","IDUsuario",$r->IDUsuario)?></td>
+						<td nowrap class=row1><? echo $r->Modulo ?></td>
+						<td align="center" nowrap class=row1><? echo $r->IDModulo ?></td>
+						<td nowrap class=row1><? echo $r->Fecha?></td>
+						<td nowrap class=row1><? echo $r->Transaccion?></td>
+						<td align=center valign=middle nowrap width=60 class=row2><? echo $r->DireccionIP?></td>
+						<td align=center valign=middle nowrap width=60 class=row2><? echo get_field("Usuario","Nombre","IDUsuario",$r->IDUsuario)?></td>
 						<td align=center valign=middle nowrap width=60 class=row2><a href="#" onclick="window.open('log/verdetalle.php?IDL=<?=$r->IDLog; ?>','','scrollbars=yes,width=500,height=280,top=160, left=160 ')"><img src='images/edit.gif' border='0'></a></td>
 					</tr>
-<?php } // END for
+<? } // END for
 ?>
 <tr>
 						<td class=texto bgcolor=#DBEAF5 colspan=5 nowrap>
 
-	<?php
+	<?
 		print $pages;
 		?>
 		</td>
@@ -101,7 +101,7 @@ else
 </tr>
 </table>	
 
-<?php
+<? 			
 }// End if$rows
 else
 	echo "<br><br><p class=subtitle align=center><b>No existen registros en  $TitleMod </b></p>";
@@ -158,7 +158,7 @@ filtrar();
 			</tr>
 	</form>
 	</table>
-<?php
+<?		
 	}//End function filtrar
 ?>
 

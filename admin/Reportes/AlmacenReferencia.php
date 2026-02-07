@@ -105,7 +105,7 @@ function print_from($frm = ""){
 							<tr>
 								<td valign="middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								<td  valign="middle" class="nav" align="right">Referencia</td>
-								<td  valign="middle" class="nav" align="left"><input type="text" name="Referencia" class="input" value="<?=$Referencia?>" size="20"></td>
+								<td  valign="middle" class="nav" align="left"><input type="text" name="Referencia" class="input" value="<?php echo $Referencia?>" size="20"></td>
 								<td align="left" valign="middle"  class="nav">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								<td align="right" valign="middle" class="nav">Sexo</td>
 								<td align="left" valign="middle" class="texto"><input type="radio" name="Sexo" value="M" size="20">&nbsp;&nbsp;M &nbsp;&nbsp;<input type="radio" name="Sexo" value="F" size="20">&nbsp;&nbsp;F &nbsp;&nbsp;</td>
@@ -171,11 +171,11 @@ function print_from($frm = ""){
 					$numero_referencias = db_num_rows( $qry_referencias );
 			?>
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">
-						&nbsp; Ventas totales <?=$Mes_array[$Mes-1]?> - <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>
-						- Mostrando <?=$numero_referencias?> Referencias
+						&nbsp; Ventas totales <?php echo $Mes_array[$Mes-1]?> - <?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>
+						- Mostrando <?php echo $numero_referencias?> Referencias
 					</td>
 				</tr>
 				<?php
@@ -228,7 +228,7 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 							for( $i = 33; $i <= 43; $i++ )
 							{
 							?>
-								<td class="titlemedium" align="center" nowrap><?=$i?></td>
+								<td class="titlemedium" align="center" nowrap><?php echo $i?></td>
 							<?php
 							}//end for
 							?>
@@ -243,12 +243,12 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 							//print_r($array_tallas[$valor['IDPuntoVentaReferencia']]);
 						?>
 							<tr>
-								<td class="<?=$class?>" align="center" nowrap><?=$valor['Numero']?></td>
+								<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['Numero']?></td>
 								<?php
 								for( $i = 33; $i <= 43; $i++ )
 								{
 								?>
-									<td class="<?=$class?>" align="right" nowrap>
+									<td class="<?php echo $class?>" align="right" nowrap>
 										<?php
 											
 											
@@ -282,7 +282,7 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 								<?php
 								}//end for
 								?>
-								<td class="<?=$class?>" align="center" nowrap>
+								<td class="<?php echo $class?>" align="center" nowrap>
 									<?php
 										echo number_format( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] , 2);
 										if( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] > 0 )
@@ -293,7 +293,7 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 										}
 									?>
 								</td>
-										<td class="<?=$class?>" align="center" nowrap>
+										<td class="<?php echo $class?>" align="center" nowrap>
 										
 											<?php
 											if( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] > 0 )
@@ -302,7 +302,7 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 												$opciones_referencia = implode(",",$opcionesreferencia[$valor['IDPuntoVentaReferencia']]);
 												$titulo_referencia = "Ventas ".$valor['Numero'];
 											?>
-											<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_referencia?>&opciones=<?=$opciones_referencia?>&titulo=<?=$titulo_referencia?>','','width=550, height=400');" >
+											<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?php echo $datos_referencia?>&opciones=<?php echo $opciones_referencia?>&titulo=<?php echo $titulo_referencia?>','','width=550, height=400');" >
 												<img src="images/chart_pie.png" border="0">
 											</a>
 											<?php
@@ -328,7 +328,7 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 										$opciones_tallas = implode(",",$opcionestallas[$i]);
 										$titulo_tallas = "Ventas talla ".$i;
 									?>
-									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_tallas?>&opciones=<?=$opciones_tallas?>&titulo=<?=$titulo_tallas?>','','width=550, height=400');" >
+									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?php echo $datos_tallas?>&opciones=<?php echo $opciones_tallas?>&titulo=<?php echo $titulo_tallas?>','','width=550, height=400');" >
 										<img src="images/chart_pie.png" border="0">
 									</a>
 									<?php
@@ -346,7 +346,7 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 										$opciones_totales = implode(",",$opcionestotales);
 										$titulo_totales = "Ventas Totales ";
 								?>
-									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_totales?>&opciones=<?=$opciones_totales?>&titulo=<?=$titulo_totales?>','','width=550, height=400');" >
+									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?php echo $datos_totales?>&opciones=<?php echo $opciones_totales?>&titulo=<?php echo $titulo_totales?>','','width=550, height=400');" >
 										<img src="images/chart_pie.png" border="0">
 									</a>
 								<?php

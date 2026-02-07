@@ -143,7 +143,7 @@ function seleccionareferencia( $newmode)
 ?>	
 	<br><br><br><br>
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline bordertable" width="700" >
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 			<tr>
 				<td class=maintitle colspan="2">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -163,7 +163,7 @@ function seleccionareferencia( $newmode)
 						<tr>
 							<td colspan="2">
 								<input type="submit" class="button" name="enviar" value="Consultar">
-								<input type=hidden name=action value=<?=$newmode?>><input type=hidden name=mod value="<?=$MOD?>">
+								<input type=hidden name=action value=<?php echo $newmode?>><input type=hidden name=mod value="<?php echo $MOD?>">
                             </td>
 						</tr>
 					</table>
@@ -201,7 +201,7 @@ function seleccionareferencia( $newmode)
 ?>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?php echo $Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	
@@ -211,7 +211,7 @@ function seleccionareferencia( $newmode)
 
         <tr>
             <td>
-            	<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+            	<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 
                 <table width="100%">
                     <tr>
@@ -247,7 +247,7 @@ function seleccionareferencia( $newmode)
                             		{
                             			$disponibles++;
                             	?>
-                            			<!--<input type="checkbox" name="Tarjeta[<?=$r_tarjetas["CodigoTarjeta"]?>]" value="<?=$r_tarjetas["CodigoTarjeta"]?>" >-->
+                            			<!--<input type="checkbox" name="Tarjeta[<?php echo $r_tarjetas["CodigoTarjeta"]?>]" value="<?php echo $r_tarjetas["CodigoTarjeta"]?>" >-->
                             	<?php
                             		}//end if
 									elseif($r_tarjetas["Estado"] == "V"){
@@ -273,9 +273,9 @@ function seleccionareferencia( $newmode)
 					?>
                     <tr>
                     	<td colspan="3">
-                    		<!-- Tarjetas en Existencias: <?=$r_cod->Existencias ?><br> -->
-                    		Tarjetas Disponibles (D): <?=$disponibles ?><br>
-                            Tarjetas Vendidas (V): <?=$vendidas ?>
+                    		<!-- Tarjetas en Existencias: <?php echo $r_cod->Existencias ?><br> -->
+                    		Tarjetas Disponibles (D): <?php echo $disponibles ?><br>
+                            Tarjetas Vendidas (V): <?php echo $vendidas ?>
                     	</td>
                     </tr>
                     
@@ -319,8 +319,8 @@ function seleccionareferencia( $newmode)
 
                				
 							<input type="hidden" name="action" value="trasladar">
-							<input type="hidden" name="mod" value="<?=$MOD?>">
-							<input type="hidden" name="IDPuntoVentaOrigen" value="<?=$IDPuntoVenta ?>">
+							<input type="hidden" name="mod" value="<?php echo $MOD?>">
+							<input type="hidden" name="IDPuntoVentaOrigen" value="<?php echo $IDPuntoVenta ?>">
 							<input type="submit" name="btnTrasladar" class="submit" value="Trasladar">
 
 						</td>

@@ -305,7 +305,7 @@ if (estado_garantia_anterior != estado_garantia_nuevo ){
 
 
 <body>
-<?
+<?php 
 
 
 $TitleMod ="Garantia";
@@ -317,7 +317,7 @@ $MOD = "Garantia";
 $m = "Garantia";
 ?>
 
- <?
+ <?php 
 
 
 $permisos = get_permiso($ID_Usuario,$m,$Table);
@@ -546,9 +546,9 @@ var Check = new Array('Nombre','Publicar');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
@@ -556,7 +556,7 @@ var Check = new Array('Nombre','Publicar');
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -564,7 +564,7 @@ var Check = new Array('Nombre','Publicar');
 
 
 
-        <form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?> onSubmit="return EvaluaReg(this,Check)" <?}?>>
+        <form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?> onSubmit="return EvaluaReg(this,Check)" <?php }?>>
 
 
 
@@ -598,7 +598,7 @@ var Check = new Array('Nombre','Publicar');
                     </tr>
                     <tr>
                       <td>Fecha Estimada para resolver garantia</td>
-                      <td colspan="3" class="row2"><span class="<?=$class?>"><? echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></span></td>
+                      <td colspan="3" class="row2"><span class="<?php echo $class?>"><?php echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></span></td>
                     </tr>
                     <tr>
                       <td>Almac&eacute;n Compra</td>
@@ -729,7 +729,7 @@ var Check = new Array('Nombre','Publicar');
                           <td>Tipo</td>
                         </tr>
                         <tr bgcolor="#dfe3e7" class="texto forumline">
-                          <td align="left" class="<?=$class?>">&nbsp;
+                          <td align="left" class="<?php echo $class?>">&nbsp;
                             <?php
 
 							if ($r->TipoRegistro=="Reproceso" || $r->Mayorista=="S" || $r->Dotacion=="S"){
@@ -799,7 +799,7 @@ var Check = new Array('Nombre','Publicar');
 
 
 
-                          <td align="left" class="<?=$class?>">&nbsp;
+                          <td align="left" class="<?php echo $class?>">&nbsp;
 
                           <?php  if ($r->TipoRegistro=="Reproceso" || $r->Mayorista=="S" || $r->Dotacion=="S"){
 									echo $nombre_talla=get_field("Talla","Nombre","IDTalla",$r->IDTalla);
@@ -809,7 +809,7 @@ var Check = new Array('Nombre','Publicar');
                            <?php } ?>
 
                           </td>
-                          <td align="left" class="<?=$class?>"><?php  if ($r->TipoRegistro=="Reproceso"){
+                          <td align="left" class="<?php echo $class?>"><?php  if ($r->TipoRegistro=="Reproceso"){
 									$tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$r->IDReferencia);;
 									echo get_field("TipoReferencia","Descripcion","IDTipoReferencia",$tipo_ref);
 
@@ -1108,8 +1108,8 @@ var Check = new Array('Nombre','Publicar');
                             <td>Talla</td>
                           </tr>
                           <tr bgcolor="#dfe3e7" class="texto forumline">
-                            <td align="left" class="<?=$class?>">&nbsp;<?php echo $nombre_ref; ?></td>
-                            <td align="left" class="<?=$class?>">&nbsp;<?php echo $nombre_talla ?></td>
+                            <td align="left" class="<?php echo $class?>">&nbsp;<?php echo $nombre_ref; ?></td>
+                            <td align="left" class="<?php echo $class?>">&nbsp;<?php echo $nombre_talla ?></td>
                           </tr>
                         </table></td>
                     </tr>
@@ -1196,21 +1196,21 @@ var Check = new Array('Nombre','Publicar');
                 </tr>
                 <tr bgcolor="#dfe3e7">
                   <td colspan="2" align="center" class=rowform><span class="row2">
-                    <input type=hidden name=IDGarantia value="<?=$r->IDGarantia ?>">
-                    <input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-                    <input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-                    <input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-                    <input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-                    <input type=hidden name=IDDetalleFactura value="<?=$r->IDDetalleFactura ?>">
-                    <input type=hidden name=IDFactura value="<?=$r->IDFactura ?>">
-                    <input type=hidden name=IDPuntoVenta value="<?=$r->IDPuntoVenta ?>">
-                    <input type=hidden name=ID value="<? echo $r->$Key ?>">
-                    <input type=hidden name="IDEstadoGarantiaAnt" id="IDEstadoGarantiaAnt" value="<?=$r->IDEstadoGarantia ?>">
-                    <input type=hidden name=action value=<?=$newmode?>>
-										<input type=hidden name=NombreReferencia value=<?=$NombreReferenciaG?>>
+                    <input type=hidden name=IDGarantia value="<?php echo $r->IDGarantia ?>">
+                    <input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+                    <input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+                    <input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+                    <input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
+                    <input type=hidden name=IDDetalleFactura value="<?php echo $r->IDDetalleFactura ?>">
+                    <input type=hidden name=IDFactura value="<?php echo $r->IDFactura ?>">
+                    <input type=hidden name=IDPuntoVenta value="<?php echo $r->IDPuntoVenta ?>">
+                    <input type=hidden name=ID value="<?php echo $r->$Key ?>">
+                    <input type=hidden name="IDEstadoGarantiaAnt" id="IDEstadoGarantiaAnt" value="<?php echo $r->IDEstadoGarantia ?>">
+                    <input type=hidden name=action value=<?php echo $newmode?>>
+										<input type=hidden name=NombreReferencia value=<?php echo $NombreReferenciaG?>>
 
-                    <!-- <input type=submit name=submit value="<? echo $submit_caption ?>" class=submit> -->
-                    <input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+                    <!-- <input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit> -->
+                    <input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
                   </span></td>
                 </tr>
 
@@ -1253,7 +1253,7 @@ var Check = new Array('Nombre','Publicar');
     </script>
 
 
-      <form name="frmdetalle" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data"  onSubmit="return valida_datos(this)">
+      <form name="frmdetalle" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data"  onSubmit="return valida_datos(this)">
       <table width="100%" border=0 cellspacing=1 cellpadding=1 class=texto>
 	    <tr class=row2>
 	      <td>Estado garantia</td>
@@ -1272,7 +1272,7 @@ var Check = new Array('Nombre','Publicar');
 
           <div id="divtipofinalizacion" style="display:none"  >
           <br>SE AUTORIZA:
-          <? //echo formpopup("TipoFinalizacionGarantia","Nombre","IDTipoFinalizacionGarantia","IDTipoFinalizacionGarantia","","input\" id=\"IDTipoFinalizacionGarantia",""); ?>
+          <?php //echo formpopup("TipoFinalizacionGarantia","Nombre","IDTipoFinalizacionGarantia","IDTipoFinalizacionGarantia","","input\" id=\"IDTipoFinalizacionGarantia",""); ?>
          <select name="IDTipoFinalizacionGarantia" id="IDTipoFinalizacionGarantia" class="input" onChange="evalua_valor_especial(this.value)">
          		  <option value="">[Seleccione]</option>
 				  <?php
@@ -1329,13 +1329,13 @@ var Check = new Array('Nombre','Publicar');
 	      <td>&nbsp;</td>
 	      </tr>
 	    <tr>
-	      <td colspan=2 align=center class=row2><input type=hidden name=IDGarantia value="<?=$r->IDGarantia ?>">
-            <input type=hidden name=IDPuntoVenta value="<?=$r->IDPuntoVenta ?>">
-            <input type=hidden name=ID value="<? echo $r->$Key ?>">
-            <input type=hidden name="FechaSalidaAlmacenAnt" value="<?=$r->FechaSalidaAlmacen ?>">
-            <input type=hidden name="FechaEntradaAlmacenAnt" value="<?=$r->FechaEntradaAlmacen ?>">
-            <input type=hidden name="FechaEntregaClienteAnt" value="<?=$r->FechaEntregaCliente ?>">
-            <input type=hidden name="IDEstadoGarantiaAnt" id="IDEstadoGarantiaAnt" value="<?=$r->IDEstadoGarantia ?>">
+	      <td colspan=2 align=center class=row2><input type=hidden name=IDGarantia value="<?php echo $r->IDGarantia ?>">
+            <input type=hidden name=IDPuntoVenta value="<?php echo $r->IDPuntoVenta ?>">
+            <input type=hidden name=ID value="<?php echo $r->$Key ?>">
+            <input type=hidden name="FechaSalidaAlmacenAnt" value="<?php echo $r->FechaSalidaAlmacen ?>">
+            <input type=hidden name="FechaEntradaAlmacenAnt" value="<?php echo $r->FechaEntradaAlmacen ?>">
+            <input type=hidden name="FechaEntregaClienteAnt" value="<?php echo $r->FechaEntregaCliente ?>">
+            <input type=hidden name="IDEstadoGarantiaAnt" id="IDEstadoGarantiaAnt" value="<?php echo $r->IDEstadoGarantia ?>">
             <input type=hidden name=action value="insertarcomentario">
             <?php
 			//Consulto el rol del usuario para los permisos
@@ -1408,7 +1408,7 @@ var Check = new Array('Nombre','Publicar');
 
 </table>
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -1448,26 +1448,26 @@ var Check = new Array('Nombre','Publicar');
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>
 <br>
 <table width=500 cellpadding=2 cellspacing=3 align=center class=bordertable>
 	<tr>
-		<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 	</tr>
-	<?filtrar();?>
+	<?php filtrar();?>
 	<tr>
-		<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+		<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 	</tr>
 	<tr>
 		<td class=texto bgcolor=#DBEAF5 colspan= nowrap>
-		<?
+		<?php 
 			print $pages;
 		?>
 		</td>
@@ -1481,22 +1481,22 @@ var Check = new Array('Nombre','Publicar');
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5> Numero&nbsp;
-						    <% if($_GET['order_by']=="Nombre"){%><img src="images/<%=$img%>" border=0><%}%> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5>Tipo<a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">&nbsp;
+						    <?php  if($_GET['order_by']=="Nombre"){?><img src="images/<?php echo $img?>" border=0><?php }?> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5>Tipo<a style="color: #3A4F6C;text-decoration: none" href="<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">&nbsp;
 
 						</a></td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Clasif</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Por:</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Cliente
-	                      <% if($_GET['order_by']=="Codigo"){%><img src="images/<%=$img%>" border=0><%}%></td>
+	                      <?php  if($_GET['order_by']=="Codigo"){?><img src="images/<?php echo $img?>" border=0><?php }?></td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Ref</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Talla</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Tipo</td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>NumeroGuia / persona</td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Factura&nbsp;
-						  <% if($_GET['order_by']=="FechaFacturaBono"){%>
-						  <img src="images/<%=$img%>" alt="" border=0>
-		  <%}%>						  </td>
+						  <?php  if($_GET['order_by']=="FechaFacturaBono"){?>
+						  <img src="images/<?php echo $img?>" alt="" border=0>
+		  <?php }?>						  </td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Fecha</td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Almacen Reg. Garantia</td>
@@ -1506,20 +1506,20 @@ var Check = new Array('Nombre','Publicar');
 						<td class=navpic nowrap bgcolor=#DBEAF5>ALERTA</td>
 					</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 	$tallap="";
 	$id_referencia_item="";
 ?>
 
 <tr>
 						<td align=center valign=middle nowrap width=69 class=row2>
-						  &nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+						  &nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap class="<?=$class?>"><? echo $r->IDGarantia; ?></td>
-						<td nowrap class="<?=$class?>"><? echo $r->TipoRegistro; ?></td>
-						<td nowrap class="<?=$class?>"><?  if($r->TipoProducto=="C") echo "Caprino"; elseif($r->TipoProducto=="T") echo "Tercero" ; ?></td>
-						<td nowrap class="<?=$class?>"><?  if($r->CantidadVeces=="1") echo "Primera"; elseif($r->CantidadVeces=="2") echo "Segunda" ; else echo "Tercera"; ?> Vez</td>
-						<td nowrap class="<?=$class?>"><?
+						<td nowrap class="<?php echo $class?>"><?php echo $r->IDGarantia; ?></td>
+						<td nowrap class="<?php echo $class?>"><?php echo $r->TipoRegistro; ?></td>
+						<td nowrap class="<?php echo $class?>"><?php  if($r->TipoProducto=="C") echo "Caprino"; elseif($r->TipoProducto=="T") echo "Tercero" ; ?></td>
+						<td nowrap class="<?php echo $class?>"><?php  if($r->CantidadVeces=="1") echo "Primera"; elseif($r->CantidadVeces=="2") echo "Segunda" ; else echo "Tercera"; ?> Vez</td>
+						<td nowrap class="<?php echo $class?>"><?php 
 
 						if(!empty($r->IDDetalleCambio)){
 									  $array_cambio_detalle=explode("|",$r->IDDetalleCambio);
@@ -1548,7 +1548,7 @@ var Check = new Array('Nombre','Publicar');
 										echo get_field("Cliente","Nombre","IDCliente",$id_cliente)." ".get_field("Cliente","Apellido","IDCliente",$id_cliente);
 									}
 									?></td>
-						<td nowrap class="<?=$class?>"><?php
+						<td nowrap class="<?php echo $class?>"><?php
 
 
 									if ($r->TipoRegistro=="Reproceso" || $r->Mayorista=="S" || $r->Dotacion=="S"){
@@ -1631,7 +1631,7 @@ var Check = new Array('Nombre','Publicar');
 
 
 									?></td>
-						<td nowrap class="<?=$class?>"><?php
+						<td nowrap class="<?php echo $class?>"><?php
 							if ($tallap!="")
 								echo $tallap;
 							else
@@ -1639,7 +1639,7 @@ var Check = new Array('Nombre','Publicar');
 
 
 							?></td>
-						<td nowrap class="<?=$class?>"><?php
+						<td nowrap class="<?php echo $class?>"><?php
 							if($r->Mayorista=="S" || $r->Dotacion=="S"):
 								echo $r->TipoProductoMayorista;
 							else:
@@ -1647,7 +1647,7 @@ var Check = new Array('Nombre','Publicar');
 							endif;
 
 							?></td>
-						<td nowrap class="<?=$class?>"><?
+						<td nowrap class="<?php echo $class?>"><?php 
 						if($r->Mayorista=="S" || $r->Dotacion=="S"):
 							echo $r->IngresadoPor;
 						else:
@@ -1657,7 +1657,7 @@ var Check = new Array('Nombre','Publicar');
 						?>
 
                         </td>
-						<td nowrap class="<?=$class?>"><?
+						<td nowrap class="<?php echo $class?>"><?php 
 						if ($r->TipoFactura=="facturabono"):
 							echo $r_factura[NumeroFacturaBono]  . "(bono)";
 						else:
@@ -1665,8 +1665,8 @@ var Check = new Array('Nombre','Publicar');
 						endif;
 							?>
                         </td>
-						<td nowrap class="<?=$class?>"><? echo formatofecha(substr($r->FechaTrCr,0,10)) ?></td>
-						<td nowrap class="<?=$class?>" style="color: #900; font-weight:bold">
+						<td nowrap class="<?php echo $class?>"><?php echo formatofecha(substr($r->FechaTrCr,0,10)) ?></td>
+						<td nowrap class="<?php echo $class?>" style="color: #900; font-weight:bold">
 							<?php
 							echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia);
 
@@ -1680,18 +1680,18 @@ var Check = new Array('Nombre','Publicar');
 
 							?>
                         </td>
-						<td nowrap class="<?=$class?>"><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
-						<td nowrap class="<?=$class?>">&nbsp;</td>
-						<td nowrap class="<?=$class?>"><? echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></td>
-						<td nowrap class="<?=$class?>">
-						<? echo $r->RequiereNotaCredito;
+						<td nowrap class="<?php echo $class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
+						<td nowrap class="<?php echo $class?>">&nbsp;</td>
+						<td nowrap class="<?php echo $class?>"><?php echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></td>
+						<td nowrap class="<?php echo $class?>">
+						<?php echo $r->RequiereNotaCredito;
 								 if ($r->RequiereNotaCredito=="S"){ echo " Numero: " . $r->NumeroNotaCredito ; }
 								 elseif(!empty($r->NumeroNotaCredito)){
 									echo  "S Numero: " . $r->NumeroNotaCredito ;
 								}
 								  ?>
                         </td>
-						<td nowrap class="<?=$class?>">
+						<td nowrap class="<?php echo $class?>">
 							<?php
 
 							if ($r->TipoRegistro=="Reproceso"){
@@ -1761,11 +1761,11 @@ var Check = new Array('Nombre','Publicar');
 
                         </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=18 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -1774,7 +1774,7 @@ var Check = new Array('Nombre','Publicar');
 </tr>
 </table>
 
-<?
+<?php 
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -1938,7 +1938,7 @@ else
                     </tr>
                  </table>
                  <br>
-                <input type="hidden" name="mod" value="<?=$MOD?>">
+                <input type="hidden" name="mod" value="<?php echo $MOD?>">
                 <input type="hidden" name="action" value="list">
                 <input type="submit" name="submit" value="Buscar" class="submit">
 
@@ -1946,6 +1946,6 @@ else
 				</td>
 			</tr>
 	</form>
-<?
+<?php 
 	}//End function filtrar
 ?>

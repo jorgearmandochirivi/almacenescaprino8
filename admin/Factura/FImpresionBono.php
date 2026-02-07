@@ -115,32 +115,32 @@ function printWindow() {
 										<td colspan="4">
 											<table class=rowtable>
 												<tr>
-															<td class=texto colspan="4" align="right" nowrap>Documento transaccion bono. <?=$r->IDFacturaBono?></td>
+															<td class=texto colspan="4" align="right" nowrap>Documento transaccion bono. <?php echo $r->IDFacturaBono?></td>
 														</tr>
 												
 												
 												<tr>
 													<td class=texto>Alamac&eacute;n</td>
-													<td class="texto" colspan="3">CALZADO CAPRINO <?=$r_puntoventa->Nombre?> </td>
+													<td class="texto" colspan="3">CALZADO CAPRINO <?php echo $r_puntoventa->Nombre?> </td>
 													
 												</tr>
 												<tr>
 													<td class=texto nowrap>NIT </td>
 													<td class="texto" colspan="3">
-														<?=get_field( "NIT","NIT","IDNIT",1 );?> R&eacute;gimen com&uacute;n</td>
+														<?php echo get_field( "NIT","NIT","IDNIT",1 );?> R&eacute;gimen com&uacute;n</td>
 												</tr>
 														<tr>
 													<td class=texto>Direcci&oacute;n</td>
-															<td class=texto colspan="3"><?=$r_puntoventa->Direccion?></td>
+															<td class=texto colspan="3"><?php echo $r_puntoventa->Direccion?></td>
 															
 														</tr>
 													<tr>
 														<td class=texto nowrap>Tel&eacute;fono: </td>
-														<td class="texto" colspan="3"><?=$r_puntoventa->Telefono?></td>
+														<td class="texto" colspan="3"><?php echo $r_puntoventa->Telefono?></td>
 													</tr>
 														<tr>
 													<td class=texto nowrap>Fecha Factura</td>
-													<td class=texto colspan="3"><?=$r->FechaFactura?></td>
+													<td class=texto colspan="3"><?php echo $r->FechaFactura?></td>
 												</tr>
 														<tr>
 													<td class=texto>Cliente</td>
@@ -179,12 +179,12 @@ function printWindow() {
 													$i++;
 											?>
 												<tr >
-													<td align="center" class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
-													<td align="center" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
-													<td align="center" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-													<td align="right" class="<?=$class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
-													<td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoRef);?></td>
-													<td align="right" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU * $r_detalle->Cantidad);?></td>
+													<td align="center" class="<?php echo $class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
+													<td align="center" class="<?php echo $class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
+													<td align="center" class="<?php echo $class?>"><?php echo $r_detalle->Cantidad?></td>
+													<td align="right" class="<?php echo $class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
+													<td align="center" class="<?php echo $class?>"><?php echo number_format($r_detalle->DescuentoRef);?></td>
+													<td align="right" class="<?php echo $class?>"><?php echo number_format($r_detalle->ValorU * $r_detalle->Cantidad);?></td>
 												</tr>
 												<?php 											}
 											?>
@@ -205,7 +205,7 @@ function printWindow() {
 										<td class=texto nowrap>
 											<div align="right">Total</div>
 										</td>
-										<td class=texto align="right"><?=number_format($r->ValorTotal);?></td>
+										<td class=texto align="right"><?php echo number_format($r->ValorTotal);?></td>
 									</tr>
 									
 									
@@ -215,7 +215,7 @@ function printWindow() {
 									</tr>
 									<tr>
                                     	<td class="texto" colspan="4" align="center">
-                                        	<a href="/admin/files/facturas/FBonos<?=$r_puntoventa->Codigo.$r->IDFacturaBono ?>.pdf">pdf</a>
+                                        	<a href="/admin/files/facturas/FBonos<?php echo $r_puntoventa->Codigo.$r->IDFacturaBono ?>.pdf">pdf</a>
                                         </td>
                                     	
                                     </tr>

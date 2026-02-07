@@ -178,7 +178,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<?=$title?>
+				<?php echo $title?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -186,7 +186,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 <table class="forumline" width="550" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
@@ -202,25 +202,25 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 												<table class=rowtable>
 													<tr>
 														<td class=col1 >No. Factura</td>
-														<td class=col2 colspan="3" ><input type="text" class="tbox" name="NumeroFactura" id="Numero Factura" size="24" value="<?=$r->NumeroFactura?>"></td>
+														<td class=col2 colspan="3" ><input type="text" class="tbox" name="NumeroFactura" id="Numero Factura" size="24" value="<?php echo $r->NumeroFactura?>"></td>
 													</tr>
 													<tr>
 														<td class=col1>Punto de Venta</td>
 														<td class=col2 colspan="3">
 															<?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?>
-															<input type="hidden" value="<?=$r->IDPuntoVenta ?>" name="IDPuntoVenta">
-															<input type="hidden" value="<?=$r->IDFactura ?>" name="IDFactura"></td>
+															<input type="hidden" value="<?php echo $r->IDPuntoVenta ?>" name="IDPuntoVenta">
+															<input type="hidden" value="<?php echo $r->IDFactura ?>" name="IDFactura"></td>
 													</tr>
 													<tr>
 														<td class=col1>Fecha Factura</td>
-														<td class=col2 colspan="3"><input type="text" class="tbox" name="FechaFactura" size="19" value="<?=$r->FechaFactura?>" readonly>
+														<td class=col2 colspan="3"><input type="text" class="tbox" name="FechaFactura" size="19" value="<?php echo $r->FechaFactura?>" readonly>
 															<script language="JavaScript1.2">
 
 														</script>														</td>
 													</tr>
 													<tr>
 														<td class=col1>Observaciones</td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
+														<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?php echo $r->Observaciones?></textarea></td>
 													</tr>
 													<tr>
 														<td class=col1>														</td>
@@ -235,11 +235,11 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1>Comentario</td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="ComentarioCredito" rows="4" cols="64"><?=$r->ComentarioCredito?></textarea></td>
+														<td class=col2 colspan="3"><textarea class="tareabox" name="ComentarioCredito" rows="4" cols="64"><?php echo $r->ComentarioCredito?></textarea></td>
 													</tr>
 													<tr>
 														<td class=col1>Fecha Ultimo Comentario</td>
-														<td class=col2 colspan="3"><?=$r->FechaUtimoComentario?></td>
+														<td class=col2 colspan="3"><?php echo $r->FechaUtimoComentario?></td>
 													</tr>
 													<tr>
 														<td class=col1>Fecha Ultima Gesti&oacute;n</td>
@@ -287,7 +287,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1>C&eacute;dula</td>
-														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
+														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?php echo $r->IDCliente?>"></td>
 														<td class=col1>Nombre</td>
 														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?php echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?>'></td>
 													</tr>
@@ -305,7 +305,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=row1 ><b>VENDEDOR</b></td>
-														<td class=row1 colspan="3"><input type="button" class="button" name="empleado" value="Buscar" onClick="window.open('Empleado/popEmpleados.php?IDPuntoVenta=<?=$IDPuntoVenta?>','','width=400,height=400');"></td>
+														<td class=row1 colspan="3"><input type="button" class="button" name="empleado" value="Buscar" onClick="window.open('Empleado/popEmpleados.php?IDPuntoVenta=<?php echo $IDPuntoVenta?>','','width=400,height=400');"></td>
 													</tr>
 													<tr>
 														<td class=col1>C&eacute;dula</td>
@@ -324,11 +324,11 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1>Incremento</td>
-														<td class=col2 colspan="3"><input type="text" class="tbox" name="Descuento" size="3" value="<?=$r->Descuento?>" maxlength="3">%</td>
+														<td class=col2 colspan="3"><input type="text" class="tbox" name="Descuento" size="3" value="<?php echo $r->Descuento?>" maxlength="3">%</td>
 													</tr>
 													<tr>
 														<td class=col1>Comentario</td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="ObservacionDescuento" rows="4" cols="64"><?=$r->ObservacionDescuento?></textarea></td>
+														<td class=col2 colspan="3"><textarea class="tareabox" name="ObservacionDescuento" rows="4" cols="64"><?php echo $r->ObservacionDescuento?></textarea></td>
 													</tr>
 												</table>
 										  </td>
@@ -363,14 +363,14 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 															$i++;
 													?>
 													<tr bgcolor="#dfe3e7">
-														<td align="left" class="<?=$class?>"><b><?=$i?></b></td>
-														<td align="left" class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
-														<td align="left" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
-														<td align="left" class="<?=$class?>"><?php echo $ref=get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
-														<td align="left" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU);?></td>
-														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoPar);?>%</td>
-														<td align="left" class="<?=$class?>"><?php echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?></td>
+														<td align="left" class="<?php echo $class?>"><b><?php echo $i?></b></td>
+														<td align="left" class="<?php echo $class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $ref=get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo $r_detalle->Cantidad?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format($r_detalle->ValorU);?></td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format($r_detalle->DescuentoPar);?>%</td>
+														<td align="left" class="<?php echo $class?>"><?php echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?></td>
 													</tr>
 													<?php
 													}
@@ -393,7 +393,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 												<div align="right">
 													Valor IVA</div>
 											</td>
-											<td class=col2><input type=text readonly name=ValorIVA value="<?=number_format($r->ValorIVA)?>" class=tbox size=15></td>
+											<td class=col2><input type=text readonly name=ValorIVA value="<?php echo number_format($r->ValorIVA)?>" class=tbox size=15></td>
 										</tr>
 										<tr>
 											<td class=col1></td>
@@ -403,7 +403,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 													Total Factura
 												</div>
 											</td>
-											<td class=col2><input type=text readonly name=ValorTotal value="<?=number_format($r->ValorTotal)?>" class=tbox size=15></td>
+											<td class=col2><input type=text readonly name=ValorTotal value="<?php echo number_format($r->ValorTotal)?>" class=tbox size=15></td>
 										</tr>
 
 											<tr>
@@ -430,7 +430,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 												<div align="right">
 													<?php echo get_field("FormaPago","Descripcion","IDFormaPago",$r_formapago->IDFormaPago)?></div>
 											</td>
-											<td class=col2><input type=text readonly name="formapago[<?=$r_formapago->IDFormaPago?>]" value="<?=number_format($r_formapago->Valor)?>" class=tbox size=15></td>
+											<td class=col2><input type=text readonly name="formapago[<?php echo $r_formapago->IDFormaPago?>]" value="<?php echo number_format($r_formapago->Valor)?>" class=tbox size=15></td>
 										</tr>
 										<?php
 											}//end if($r_formapago->Valor <> 0)
@@ -446,7 +446,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 
 										<tr>
 											<td class="navpic" colspan="4" align="left">
-												<b>Cuotas Factura - No Credito <?=$r_credito->NumeroDocumento ?></b>
+												<b>Cuotas Factura - No Credito <?php echo $r_credito->NumeroDocumento ?></b>
 											</td>
 										</tr>
 										<tr>
@@ -474,15 +474,15 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 												$class = repetition()?"col1list":"col2list";
 										?>
 												<tr>
-													<td class="<?=$class?>" align="center"><?=$r_cuotas->IDCuota?></td>
-													<td class="<?=$class?>" align="center"><?=$r_cuotas->FechaCuota?></td>
-													<td class="<?=$class?>" align="center">
+													<td class="<?php echo $class?>" align="center"><?php echo $r_cuotas->IDCuota?></td>
+													<td class="<?php echo $class?>" align="center"><?php echo $r_cuotas->FechaCuota?></td>
+													<td class="<?php echo $class?>" align="center">
 
 														<?php
                                                         if( $r_cuotas->FechaPago == "0000-00-00 00:00:00" && $r_cuotas->Estado !="Cartera Castigada")
 														{
 														?>
-																<input type="checkbox" class="seleccion_cuota_pago" name="CheckFechaPago<?=$r_cuotas->IDCuota?>" id="CheckFechaPago<?=$r_cuotas->IDCuota?>" alt="<?=$r_cuotas->IDCuota?>">
+																<input type="checkbox" class="seleccion_cuota_pago" name="CheckFechaPago<?php echo $r_cuotas->IDCuota?>" id="CheckFechaPago<?php echo $r_cuotas->IDCuota?>" alt="<?php echo $r_cuotas->IDCuota?>">
 
 
 														<?php
@@ -490,13 +490,13 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 														?>
 
                                                     </td>
-													<td class="<?=$class?>" align="center">
+													<td class="<?php echo $class?>" align="center">
 
 														<?php
                                                         if( $r_cuotas->FechaPago == "0000-00-00 00:00:00" && $r_cuotas->Estado !="Cartera Castigada")
 														{
 														?>
-																<select name="MedioPago<?=$r_cuotas->IDCuota?>" id="MedioPago<?=$r_cuotas->IDCuota?>" alt="<?=$r_cuotas->IDCuota?>" >
+																<select name="MedioPago<?php echo $r_cuotas->IDCuota?>" id="MedioPago<?php echo $r_cuotas->IDCuota?>" alt="<?php echo $r_cuotas->IDCuota?>" >
 																	<option value="">Seleccione</option>
 																	<option value="Efectivo">Efectivo</option>
 																	<option value="Transferencia">Transferencia</option>
@@ -510,7 +510,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 														?>
 
                                                     </td>
-													<td class="<?=$class?>" align="center">
+													<td class="<?php echo $class?>" align="center">
 														<?php
 															if( $r_cuotas->FechaPago <> "0000-00-00 00:00:00" )
 																echo $r_cuotas->FechaPago;
@@ -522,7 +522,7 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 																else{
 														?>
 																<?php //Usuario especial con id 57 que puede modificar las fechas de creditos  ?>
-                                                                <input type="text" class="tbox" name="FechaPago<?=$r_cuotas->IDCuota?>"  id="FechaPago<?=$r_cuotas->IDCuota?>" size="19" value='' <?php if($ID_Usuario!=57){ ?>readonly <?php } ?>  >
+                                                                <input type="text" class="tbox" name="FechaPago<?php echo $r_cuotas->IDCuota?>"  id="FechaPago<?php echo $r_cuotas->IDCuota?>" size="19" value='' <?php if($ID_Usuario!=57){ ?>readonly <?php } ?>  >
 
 														<?php
 																}
@@ -530,13 +530,13 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 															//end else
 														?>
 													</td>
-													<td class="<?=$class?>" align="center">
-														<?=number_format( $r_cuotas->ValorTotal, 0 )?>
+													<td class="<?php echo $class?>" align="center">
+														<?php echo number_format( $r_cuotas->ValorTotal, 0 )?>
                                                         <?php
 														if( $r_cuotas->FechaPago == "0000-00-00 00:00:00" )
 															$saldo_cuota+=$r_cuotas->ValorTotal; ?>
 
-														<input type=hidden name=IDCuota[<?=$r_cuotas->IDCuota?>] value="<?=$r_cuotas->IDCuota?>">
+														<input type=hidden name=IDCuota[<?php echo $r_cuotas->IDCuota?>] value="<?php echo $r_cuotas->IDCuota?>">
 													</td>
 												</tr>
 
@@ -578,13 +578,13 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 											</td>
 										</tr>
 									</table>
-									<input type="hidden" name="action" value="<?=$newmode?>">
+									<input type="hidden" name="action" value="<?php echo $newmode?>">
 
 									<br>
                                     <?php if($r->Estado=="ANULADA"): ?>
                                         FACTURA ANULADA
                                      <?php else: ?>
-                                    <input value="Imprimir Factura" type="button" class="submit" onClick="window.open( 'Factura/FImpresion.php?id=<?=$r->IDFactura?>&idpunto=<?=$r->IDPuntoVenta?>','','width=426, height=350' )">
+                                    <input value="Imprimir Factura" type="button" class="submit" onClick="window.open( 'Factura/FImpresion.php?id=<?php echo $r->IDFactura?>&idpunto=<?php echo $r->IDPuntoVenta?>','','width=426, height=350' )">
                                     <?php endif; ?>
 
                                     <input type="hidden" name="IDPuntoVentaPago" id="IDPuntoVentaPago" value="<?php echo $IDPuntoVenta; ?>">
@@ -723,14 +723,14 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 							?>
 
 							<tr style="color:#EE080C">
-								<td align=center valign=middle nowrap width=50 class="<?=$class?>" >
+								<td align=center valign=middle nowrap width=50 class="<?php echo $class?>" >
 								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id=" . $r->$Key . "&idp=" . $r->IDPuntoVenta ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-								<td nowrap class="<?=$class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta);?></td>
-									<td nowrap class="<?=$class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
-									<td nowrap class="<?=$class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo $r->NumeroFactura ?></td>
-									<td nowrap class="<?=$class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo formatofecha(substr($r->FechaFactura,0,10))." ".substr($r->FechaFactura,10) ?></td>
-									<td align="right" nowrap class="<?=$class?>"><?php echo number_format($r->ValorTotal) ?></td>
+								<td nowrap class="<?php echo $class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta);?></td>
+									<td nowrap class="<?php echo $class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
+									<td nowrap class="<?php echo $class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo $r->NumeroFactura ?></td>
+									<td nowrap class="<?php echo $class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo formatofecha(substr($r->FechaFactura,0,10))." ".substr($r->FechaFactura,10) ?></td>
+									<td align="right" nowrap class="<?php echo $class?>"><?php echo number_format($r->ValorTotal) ?></td>
 								</tr>
                                <?php
 							   	$contador++;
@@ -785,14 +785,14 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 							?>
 
 							<tr style="color:#EE080C">
-								<td align=center valign=middle nowrap width=50 class="<?=$class?>" >
+								<td align=center valign=middle nowrap width=50 class="<?php echo $class?>" >
 								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id=" . $r->$Key . "&idp=" . $r->IDPuntoVenta ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-								<td nowrap class="<?=$class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta);?></td>
-									<td nowrap class="<?=$class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
-									<td nowrap class="<?=$class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo $r->NumeroFactura ?></td>
-									<td nowrap class="<?=$class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo formatofecha(substr($r->FechaFactura,0,10))." ".substr($r->FechaFactura,10) ?></td>
-									<td align="right" nowrap class="<?=$class?>"><?php echo number_format($r->ValorTotal) ?></td>
+								<td nowrap class="<?php echo $class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta);?></td>
+									<td nowrap class="<?php echo $class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
+									<td nowrap class="<?php echo $class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo $r->NumeroFactura ?></td>
+									<td nowrap class="<?php echo $class?>" <?php if($contador==0): echo 'style="color:#EE080C"'; endif; ?>><?php echo formatofecha(substr($r->FechaFactura,0,10))." ".substr($r->FechaFactura,10) ?></td>
+									<td align="right" nowrap class="<?php echo $class?>"><?php echo number_format($r->ValorTotal) ?></td>
 								</tr>
                                <?php
 							   	$contador++;
@@ -858,7 +858,7 @@ else
 						?>
 				</select>
                 -->
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="action" value="list">
 				<input type="submit" name="submit" value="Buscar Factura" class="submit">
 			</td>

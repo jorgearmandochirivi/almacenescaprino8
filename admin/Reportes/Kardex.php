@@ -99,7 +99,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		if($_POST["ano"] && $_POST["mes"]){ ?>
 			
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">
-				<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+				<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 					<?php			
 					$pto_vet_ref="";
 					//Se consulta ventas

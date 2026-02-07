@@ -53,7 +53,7 @@ function printWindow() {
 
 <body>
 	
-	<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
+	<FORM name="frm" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 			<table class="forumline" width="215" height="100" cellspacing="1" border="0" align="center">
 		<tr>
 			<td valign="top">
@@ -67,7 +67,7 @@ function printWindow() {
 													<table class=rowtable>
 														<tr>
 															<td class=texto></td>
-															<td class=texto colspan="3" align="right" nowrap>Documento pago cuota credito. <?=$r->NumeroDocumento?></td>
+															<td class=texto colspan="3" align="right" nowrap>Documento pago cuota credito. <?php echo $r->NumeroDocumento?></td>
 														</tr>
 														<?php
 													$sql_puntoVenta = "SELECT * from PuntoVenta WHERE IDPuntoVenta = '$r->IDPuntoVenta' ";
@@ -76,34 +76,34 @@ function printWindow() {
 												?>
 														<tr>
 															<td class=texto>Alamac&eacute;n</td>
-															<td class=texto colspan="2">CALZADO CAPRINO <?=$r_puntoventa->Nombre?></td>
-															<td class=texto nowrap>NIT <?=get_field( "NIT","NIT","IDNIT",1 );?><br>
+															<td class=texto colspan="2">CALZADO CAPRINO <?php echo $r_puntoventa->Nombre?></td>
+															<td class=texto nowrap>NIT <?php echo get_field( "NIT","NIT","IDNIT",1 );?><br>
 																R&eacute;gimen com&uacute;n</td>
 														</tr>
 														<tr>
 															<td class=texto>Direcci&oacute;n</td>
-															<td class=texto colspan="2"><?=$r_puntoventa->Direccion?></td>
-															<td class=texto nowrap>Tel&eacute;fono: <?=$r_puntoventa->Telefono?></td>
+															<td class=texto colspan="2"><?php echo $r_puntoventa->Direccion?></td>
+															<td class=texto nowrap>Tel&eacute;fono: <?php echo $r_puntoventa->Telefono?></td>
 														</tr>
 														<tr>
 															<td class=texto nowrap>Cuota N&uacute;mero</td>
-															<td class=texto colspan="3"><?=$r_cuota->IDCuota?></td>
+															<td class=texto colspan="3"><?php echo $r_cuota->IDCuota?></td>
 														</tr>
 														<tr>
 															<td class=texto nowrap>Fecha Cuota</td>
-															<td class=texto colspan="3"><?=$r_cuota->FechaCuota?></td>
+															<td class=texto colspan="3"><?php echo $r_cuota->FechaCuota?></td>
 														</tr>
 														<tr>
 															<td class=texto nowrap>Fecha Pago</td>
-															<td class=texto colspan="3"><?=$r_cuota->FechaPago?></td>
+															<td class=texto colspan="3"><?php echo $r_cuota->FechaPago?></td>
 														</tr>
 														<tr>
 															<td class=texto nowrap>Valor Total P&oacute;liza</td>
-															<td class=texto colspan="3"><?=$r->ValorTotal?></td>
+															<td class=texto colspan="3"><?php echo $r->ValorTotal?></td>
 														</tr>
 														<tr>
 															<td class=texto nowrap>Valor Cuota Quincena</td>
-															<td class=texto colspan="3"><?=$r_cuota->ValorTotal?></td>
+															<td class=texto colspan="3"><?php echo $r_cuota->ValorTotal?></td>
 														</tr>
 														<tr>
 															<td class=texto>CLIENTE</td>

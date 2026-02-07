@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php 
 $TitleMod ="Plan Contactos / Campa&ntilde;as";
 
 $Table = "PlanContacto";
@@ -222,18 +222,18 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
 
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left >
-	<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <? if($newmode!="delete"){ ?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+	<form name="frm" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){ ?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -243,18 +243,18 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 						</tr>
 						<tr class=row2>
 						  <td>Nombre</td>
-						  <td><input type="text" name="Nombre" id="Nombre" title="Nombre" class="tbox" value="<?=$r->Nombre ?>"></td>
+						  <td><input type="text" name="Nombre" id="Nombre" title="Nombre" class="tbox" value="<?php echo $r->Nombre ?>"></td>
 		  </tr>
 						<tr class=row2>
 						  <td>Descripcion</td>
 						  <td>
-                          <textarea name="Descripcion" class="tbox" title="Descripcion" id="Descripcion" cols="40" rows="4"><?=$r->Descripcion ?></textarea>
+                          <textarea name="Descripcion" class="tbox" title="Descripcion" id="Descripcion" cols="40" rows="4"><?php echo $r->Descripcion ?></textarea>
                           </td>
 		  </tr>
 						<tr class=row2>
 						  <td>Linea</td>
 						  <td><select name="IDLinea[]" id="IDLinea" data-placeholder="Seleccione Linea..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-						    <? 
+						    <?php 
 																
 															$array_linea_guardados=explode("|",$r->IDLinea); 	
                                                             $sql_tipo = "SELECT * FROM Tipo ORDER BY Descripcion";
@@ -279,16 +279,16 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 		  </tr>
 		  <tr class=row2>
 						  <td>% Descuento</td>
-						  <td><input type="text" name="Descuento" class="tbox" value="<?=$r->Descuento ?>"></td>
+						  <td><input type="text" name="Descuento" class="tbox" value="<?php echo $r->Descuento ?>"></td>
 		  </tr>
 						<tr class=row2>
 						  <td>Compra minima $</td>
-						  <td><input type="text" name="CompraMinima" class="tbox" value="<?=$r->CompraMinima ?>"></td>
+						  <td><input type="text" name="CompraMinima" class="tbox" value="<?php echo $r->CompraMinima ?>"></td>
 		  </tr>
 						<tr class=row2>
 						  <td>Fecha Inicio</td>
 						  <td><span class="col2">
-						    <input type=text readonly size=10 class=input name=FechaInicio id="FechaInicio" title="Fecha Inicio" value="<?=$r->FechaInicio ?>">
+						    <input type=text readonly size=10 class=input name=FechaInicio id="FechaInicio" title="Fecha Inicio" value="<?php echo $r->FechaInicio ?>">
 						    <script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
@@ -299,7 +299,7 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 		  </tr>
 						<tr class=row2>
 						  <td>Fecha Fin</td>
-						  <td><input type=text size=10 readonly class=input name=FechaFin id="FechaFin" title="Fecha Fin"  value="<?=$r->FechaFin ?>">
+						  <td><input type=text size=10 readonly class=input name=FechaFin id="FechaFin" title="Fecha Fin"  value="<?php echo $r->FechaFin ?>">
 						    <script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
@@ -322,12 +322,12 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
                               <b>Cedulas a las que aplica el plan</b><br>	
                               <textarea name="Cedula" id="Cedula" cols="10" rows="4"><?php echo $datos; ?></textarea>
                               <a href="?mod=PlanContacto&action=delcedulas&id=<?php echo $_GET[id] ?>">Eliminar cedulas</a>
-                          <? } ?>
+                          <?php } ?>
                           </td>
 		  </tr>
 						<tr class=row2>
 						  <td>Publicar</td>
-						  <td><span class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></span></td>
+						  <td><span class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></span></td>
 		  </tr>
 						<tr class=row2>
 						  <td>&nbsp;</td>
@@ -340,14 +340,14 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 			</tr>
 			<tr>
 			<td align=center class=row2 colspan="2">
-            	<input type=hidden name=IDPlanContacto value="<?=$r->IDPlanContacto ?>">
-            	<input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
-				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
-				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
-				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<? echo $r->$Key ?>">
-				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+            	<input type=hidden name=IDPlanContacto value="<?php echo $r->IDPlanContacto ?>">
+            	<input type=hidden name=UsuarioTrCr value="<?php echo $r->UsuarioTrCr ?>">
+				<input type=hidden name=FechaTrCr value="<?php echo $r->FechaTrCr ?>">
+				<input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
+				<input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
+				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
+				<input type=hidden name=action value=<?php echo $newmode?>>
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 			</tr>
 			</table>
@@ -374,7 +374,7 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 
 
 </form>
-<?
+<?php 
 }// End function print_form()
 
 /*******************************************************************************************
@@ -413,25 +413,25 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 <br>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php 
 		if($rows > 0){
 ?>		
 <br>
 <table width=750 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php  echo $info;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=16 nowrap>
-<?
+<?php 
 	print $pages;
 ?>
 </td>
@@ -451,27 +451,27 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 				</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 <td align=center valign=middle nowrap width=50 class=row2>
-  &nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+  &nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-<td nowrap class=row1><? echo $r->Nombre ?></td>
-<td nowrap class=row1><? echo $r->Descripcion ?></td>
-						<td align=center valign=middle nowrap width=60 class=row2><span class="row1"><? echo $r->FechaInicio; ?></span></td>
-						<td align=center valign=middle nowrap width=60 class=row2><span class="row1"><? echo $r->FechaFin; ?></span></td>
-						<td align=center valign=middle nowrap width=60 class=row2><span class="row1"><? echo $r->Publicar; ?></span></td>
+<td nowrap class=row1><?php echo $r->Nombre ?></td>
+<td nowrap class=row1><?php echo $r->Descripcion ?></td>
+						<td align=center valign=middle nowrap width=60 class=row2><span class="row1"><?php echo $r->FechaInicio; ?></span></td>
+						<td align=center valign=middle nowrap width=60 class=row2><span class="row1"><?php echo $r->FechaFin; ?></span></td>
+						<td align=center valign=middle nowrap width=60 class=row2><span class="row1"><?php echo $r->Publicar; ?></span></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 						<td class=texto bgcolor=#DBEAF5 colspan=3 nowrap>
-	<?
+	<?php 
 		print $pages;
 		?>
 </td>
@@ -480,7 +480,7 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 		</tr>
 </table>	
 
-<? 			
+<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -526,7 +526,7 @@ else
 					<option value="30">30</option>
 				</select> 
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="Fecha">
 				<input type="hidden" name="action" value="list">
 				<input type="hidden" name="tjoin" value="Linea">
@@ -535,6 +535,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php 		
 	}//End function filtrar
 ?>

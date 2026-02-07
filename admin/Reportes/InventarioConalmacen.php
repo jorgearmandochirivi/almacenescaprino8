@@ -44,13 +44,13 @@ function seleccionareferencia( $newmode)
 		<tr>
 			<td class="maintitle"><b></b>
 				<span class="gen">
-					<?=$Title?>
+					<?php echo $Title?>
 				</span>
 			</td>
 		</tr>
 	</table>
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="bordertable" width="650">
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
+		<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 			<tr>
 			<td class=col1 width=30;?>
 				Buscar Referencia Por:
@@ -65,7 +65,7 @@ function seleccionareferencia( $newmode)
 				<input type=text class=tbox name=referencia value="<?php echo $referencia ?>">
 				<input type="submit" class="button" name="enviar" value="Consultar">
 
-				<input type=hidden name=action value=<?=$newmode?>>
+				<input type=hidden name=action value=<?php echo $newmode?>>
 
 			</td>
 		</tr>
@@ -134,14 +134,14 @@ function seleccionareferencia( $newmode)
 	<br>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="820">
 		<tr>
-			<td class="maintitle"><b></b><span class="gen"><?=$Title?> - <?php echo $campo.":".$referencia;  ?> Los Almacenes que no aparecen, no tienen existencias</span></td>
+			<td class="maintitle"><b></b><span class="gen"><?php echo $Title?> - <?php echo $campo.":".$referencia;  ?> Los Almacenes que no aparecen, no tienen existencias</span></td>
 		</tr>
 	</table>
 	<table width=820 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
 		<td class="" >
 				<table cellspacing='0' cellpadding='2' border='0' align='center'  width="650">
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 						<tr>
 						<td class=col1 width=30;?>
 							Buscar Referencia Por
@@ -270,7 +270,7 @@ if( !empty( $referencia ) ||  !empty( $_POST["IDPuntoVenta"] ) || !empty( $_POST
 					?>
 
 					<table width="100%" border="0" cellspacing="1" cellpadding="0">
-						<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
+						<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 							<tr>
 							<td class="rowform">PUNTOS DE VENTA</td>
 							<?php

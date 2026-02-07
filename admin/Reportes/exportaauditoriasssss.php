@@ -27,7 +27,7 @@
 			AND CodEsp.Existencias > 0
 			";
 	
-	$QryExistencias = mysql_query( $SqlExistencias);
+	$QryExistencias = db_query( $SqlExistencias);
 	
 	
 ?>
@@ -44,7 +44,7 @@
 	</tr>
 	
 	<?php
-	while($Existencias = mysql_fetch_array( $QryExistencias ))
+	while($Existencias = db_fetch_array( $QryExistencias ))
 	{
 	?>
 	<tr>

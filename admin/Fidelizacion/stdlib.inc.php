@@ -1,4 +1,4 @@
-<?
+<?php 
 
 function nvl(&$var, $default="") {
 /* if $var is undefined, return $default, otherwise return $var */
@@ -3098,17 +3098,17 @@ function crear_pdf_pedido($id_pedido_tercero){
 <table align="center" width="90%" bgcolor="#EEEEEE">
   <tr>
     <td ><strong>PROVEEDOR</strong></td>
-    <td ><font color="#FF383B"><? echo strtoupper(get_field("Proveedor","Nombre","IDProveedor",$row_pedido[IDProveedor])); ?></font></td>
+    <td ><font color="#FF383B"><?php echo strtoupper(get_field("Proveedor","Nombre","IDProveedor",$row_pedido[IDProveedor])); ?></font></td>
     <td ><strong>ORDEN DE COMPRA: No.</strong></td>
-    <td colspan="3" ><font color="#FF383B"><? echo $row_pedido[NumeroOrdenCompra]; ?></font></td>
+    <td colspan="3" ><font color="#FF383B"><?php echo $row_pedido[NumeroOrdenCompra]; ?></font></td>
   </tr>
   <tr>
     <td width="15%" ><strong>RAZON SOCIAL</strong></td>
     <td width="14%" >IMACAL LTDA.</td>
     <td width="20%" ><strong>FECHA PEDIDO</strong></td>
-    <td width="16%" ><? echo $row_pedido[FechaPedido]; ?></td>
+    <td width="16%" ><?php echo $row_pedido[FechaPedido]; ?></td>
     <td width="15%" ><strong>FECHA ENTREGA</strong></td>
-    <td width="20%" ><? echo $row_pedido[FechaEntrega]; ?></td>
+    <td width="20%" ><?php echo $row_pedido[FechaEntrega]; ?></td>
   </tr>
   <tr>
     <td  nowrap><strong>NIT</strong></td>
@@ -3138,7 +3138,7 @@ function crear_pdf_pedido($id_pedido_tercero){
     <td align="center" nowrap bgcolor="#CAE2F5" class="texto"><b>Precio</b></td>
     <td align="center" nowrap bgcolor="#CAE2F5" class="texto"><b>Observaciones</b></td>
   </tr>
-  <?
+  <?php 
 												$sql_detalle = "SELECT * FROM DetallePedidoTercero WHERE IDPedidoTercero = '".$row_pedido[IDPedidoTercero]."'";
 												$query_detalle = db_query($sql_detalle);
 												$i = 0;
@@ -3149,31 +3149,31 @@ function crear_pdf_pedido($id_pedido_tercero){
 													$i++;
 											?>
   <tr >
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->ReferenciaProveedor;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->ReferenciaCaprino;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->CodigoColor;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->CueroColor;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Suela;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Tacon;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Horma;?></td>
-    <td align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><?php
+    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Producto;?></td>
-    <td align="right" class="<?=$class?>" style="border-bottom:1px solid #000000">$<?php
+    <td align="right" class="<?php echo $class?>" style="border-bottom:1px solid #000000">$<?php
 															echo $r_detalle->Precio;?></td>
-    <td align="left" class="<?=$class?>" style="font-size:8px; border-bottom:1px solid #000000"><?php
+    <td align="left" class="<?php echo $class?>" style="font-size:8px; border-bottom:1px solid #000000"><?php
 															echo $r_detalle->Observacion;?></td>
   </tr>
   <tr >
-    <td colspan="10" align="center" class="<?=$class?>" style="border-bottom:1px solid #000000"><hr></td>
+    <td colspan="10" align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><hr></td>
   </tr>
-  <?
+  <?php 
 												}
 
 											?>
@@ -3233,13 +3233,13 @@ function crear_pdf_pedido($id_pedido_tercero){
 
 <table width="90%" align="center" border="1" cellpadding="0" cellspacing="0">
 	<tr>
-    	<td ><span class="texto"><? echo $row_pedido[Nota1]; ?></span></td>
+    	<td ><span class="texto"><?php echo $row_pedido[Nota1]; ?></span></td>
     </tr>
 	<tr>
-    	<td style="color:#EF0206"><font color="#FF383B"><? echo $row_pedido[Nota2]; ?></font></td>
+    	<td style="color:#EF0206"><font color="#FF383B"><?php echo $row_pedido[Nota2]; ?></font></td>
     </tr>
 	<tr>
-    	<td><span class="texto"><? echo $row_pedido[Observaciones]; ?></span></td>
+    	<td><span class="texto"><?php echo $row_pedido[Observaciones]; ?></span></td>
     </tr>
 
 </table>

@@ -54,7 +54,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 
-								Desde	<input readonly type="text" name="FechaDesde" class="input" value="<?=fecha()?>" size="10">
+								Desde	<input readonly type="text" name="FechaDesde" class="input" value="<?php echo fecha()?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -66,7 +66,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 
-								Hasta	<input readonly type="text" name="FechaHasta" class="input" value="<?=fecha()?>" size="10">
+								Hasta	<input readonly type="text" name="FechaHasta" class="input" value="<?php echo fecha()?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -113,10 +113,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
 				<table width="100%" border="0" align="center" cellspacing="1" cellpadding="0" bgcolor="#345487">
-					<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+					<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 						<tr>
 							<td class="maintitle" valign="middle">
-								Reporte Rotacion Empleados <b>Desde :</b> <?=formatofecha($FechaDesde)?>  <b>Hasta :</b> <?=formatofecha($FechaHasta)?>
+								Reporte Rotacion Empleados <b>Desde :</b> <?php echo formatofecha($FechaDesde)?>  <b>Hasta :</b> <?php echo formatofecha($FechaHasta)?>
 							</td>
 						</tr>
 
@@ -157,11 +157,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 
 								<tr>
-										<td class="<?=$class?>" align="center" nowrap><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r_empleado['IDPuntoVenta']);?></td>
-                                        <td class="<?=$class?>" align="center" nowrap><?=$r_empleado['Cedula']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$r_empleado['Nombre']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=substr($r_empleado['FechaFactura'],0,10)?></td>
-                                        <td class="<?=$class?>" align="center" nowrap><?=number_format($r_empleado['TotalVenta'],0,'','.'); ?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r_empleado['IDPuntoVenta']);?></td>
+                                        <td class="<?php echo $class?>" align="center" nowrap><?php echo $r_empleado['Cedula']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_empleado['Nombre']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo substr($r_empleado['FechaFactura'],0,10)?></td>
+                                        <td class="<?php echo $class?>" align="center" nowrap><?php echo number_format($r_empleado['TotalVenta'],0,'','.'); ?></td>
 
 
 									</tr>
@@ -245,12 +245,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                                 foreach($array_datos[$mes_actual][$r_pto_vta["IDPuntoVenta"]] as $key_datos => $valor):
                                  ?>
                                     <tr>
-                                        <td class="<?=$class?>" align="center" nowrap><?php echo $key_datos;?></td>
+                                        <td class="<?php echo $class?>" align="center" nowrap><?php echo $key_datos;?></td>
                                          <?php for($i=1;$i<=31;$i++):
 										 	if(strlen($i)<=1)
 												$i="0".$i;
 										 ?>
-                                                    <td class="<?=$class?>" align="center" nowrap>
+                                                    <td class="<?php echo $class?>" align="center" nowrap>
 														<?php
 																$valor_item = $valor[$i]["TotalVenta"];
 																if((int)$valor_item>0)
@@ -260,7 +260,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 														?>
                                                     </td>
                                          <?php endfor; ?>
-                                        <td class="<?=$class?>" align="center" nowrap><?=number_format($suma_total,0,'','.')?></td>
+                                        <td class="<?php echo $class?>" align="center" nowrap><?php echo number_format($suma_total,0,'','.')?></td>
                                     </tr>
                         <?php
 							$suma_total=0;

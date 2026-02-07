@@ -186,7 +186,7 @@ function Comprobar(formulario)
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<?=$title?>
+				<?php echo $title?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -195,7 +195,7 @@ function Comprobar(formulario)
 	</tr>
 </table>
 
-<form name="frmdetalle" id="frmdetalle" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" onsubmit="return Comprobar();">
+<form name="frmdetalle" id="frmdetalle" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" onsubmit="return Comprobar();">
 
 <table class="forumline" width="550" cellspacing="1" border="0" align="center">
 	<tr>
@@ -232,7 +232,7 @@ function Comprobar(formulario)
                     </tr>
                     <tr>
                       <td>Fecha Estimada para resolver garantia</td>
-                      <td colspan="3" class="row2"><span class="<?=$class?>"><?php echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></span></td>
+                      <td colspan="3" class="row2"><span class="<?php echo $class?>"><?php echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></span></td>
                     </tr>
                     <tr>
                       <td>Almac&eacute;n Compra</td>
@@ -351,7 +351,7 @@ function Comprobar(formulario)
                           <td>Tipo</td>
                         </tr>
                         <tr bgcolor="#dfe3e7" class="texto forumline">
-                          <td align="left" class="<?=$class?>">&nbsp;
+                          <td align="left" class="<?php echo $class?>">&nbsp;
                           <?php  if ($r->TipoRegistro=="Reproceso" ||$r->Mayorista=="S"){
 									echo $nombre_referencia=get_field("Referencia","Numero","IDReferencia",$r->IDReferencia);
 
@@ -414,7 +414,7 @@ function Comprobar(formulario)
 
 
                           </td>
-                          <td align="left" class="<?=$class?>">&nbsp;
+                          <td align="left" class="<?php echo $class?>">&nbsp;
 
 						  <?php  if ($r->TipoRegistro=="Reproceso" || $r->Mayorista=="S"){
 									echo $nombre_talla=get_field("Talla","Nombre","IDTalla",$r->IDTalla);
@@ -424,7 +424,7 @@ function Comprobar(formulario)
                                <?php } ?>
 
 
-                          <td align="left" class="<?=$class?>">
+                          <td align="left" class="<?php echo $class?>">
 
 
 						<?php  if ($r->TipoRegistro=="Reproceso"){
@@ -681,10 +681,10 @@ function Comprobar(formulario)
                             <td>Talla</td>
                           </tr>
                           <tr bgcolor="#dfe3e7" class="texto forumline">
-                            <td align="left" class="<?=$class?>">
+                            <td align="left" class="<?php echo $class?>">
                             <?php echo $nombre_referencia; ?>
                             </td>
-                            <td align="left" class="<?=$class?>">&nbsp;
+                            <td align="left" class="<?php echo $class?>">&nbsp;
                             <?php echo $nombre_talla ?>
                             </td>
                           </tr>
@@ -793,14 +793,14 @@ function Comprobar(formulario)
 										  </tr>
 										<tr>
 										  <td colspan=2 align=center class=row2>
-											<input type=hidden name=IDGarantia value="<?=$r->IDGarantia ?>">
-                                            <input type=hidden name=TipoProductoGarantia id="TipoProductoGarantia" value="<?=$r->TipoProducto ?>">
-                                            <input type=hidden name=IDPuntoVenta value="<?=$r->IDPuntoVenta ?>">
+											<input type=hidden name=IDGarantia value="<?php echo $r->IDGarantia ?>">
+                                            <input type=hidden name=TipoProductoGarantia id="TipoProductoGarantia" value="<?php echo $r->TipoProducto ?>">
+                                            <input type=hidden name=IDPuntoVenta value="<?php echo $r->IDPuntoVenta ?>">
 											<input type=hidden name=ID value="<?php echo $r->$Key ?>">
-                                            <input type=hidden name="FechaSalidaAlmacenAnt" value="<?=$r->FechaSalidaAlmacen ?>">
-                                            <input type=hidden name="FechaEntradaAlmacenAnt" value="<?=$r->FechaEntradaAlmacen ?>">
-                                            <input type=hidden name="FechaEntregaClienteAnt" value="<?=$r->FechaEntregaCliente ?>">
-                                            <input type=hidden name="IDEstadoGarantiaAnt" id="IDEstadoGarantiaAnt" value="<?=$r->IDEstadoGarantia ?>">
+                                            <input type=hidden name="FechaSalidaAlmacenAnt" value="<?php echo $r->FechaSalidaAlmacen ?>">
+                                            <input type=hidden name="FechaEntradaAlmacenAnt" value="<?php echo $r->FechaEntradaAlmacen ?>">
+                                            <input type=hidden name="FechaEntregaClienteAnt" value="<?php echo $r->FechaEntregaCliente ?>">
+                                            <input type=hidden name="IDEstadoGarantiaAnt" id="IDEstadoGarantiaAnt" value="<?php echo $r->IDEstadoGarantia ?>">
 											<input type=hidden name=action value="insertarcomentario">
 											<input type=submit name=submit value="Guardar Proceso" class=submit>
                                             <br><br>
@@ -967,12 +967,12 @@ function Comprobar(formulario)
 							?>
 
 							<tr>
-								<td align=center valign=middle nowrap width=50 class="<?=$class?>">
+								<td align=center valign=middle nowrap width=50 class="<?php echo $class?>">
 								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-								<td nowrap class="<?=$class?>"><?php echo $r->IDGarantia; ?></td>
-								<td nowrap class="<?=$class?>"><?php echo $r->TipoRegistro; ?></td>
-									<td nowrap class="<?=$class?>">
+								<td nowrap class="<?php echo $class?>"><?php echo $r->IDGarantia; ?></td>
+								<td nowrap class="<?php echo $class?>"><?php echo $r->TipoRegistro; ?></td>
+									<td nowrap class="<?php echo $class?>">
 									<?php
 									if(!empty($r->IDDetalleCambio)){
 									  $array_cambio_detalle=explode("|",$r->IDDetalleCambio);
@@ -1006,7 +1006,7 @@ function Comprobar(formulario)
 
 
                                     </td>
-									<td nowrap class="<?=$class?>"><?php
+									<td nowrap class="<?php echo $class?>"><?php
 
 									if ($r->TipoRegistro=="Reproceso" || $r->Mayorista=="S"){
 										echo get_field("Referencia","Numero","IDReferencia",$r->IDReferencia);
@@ -1088,7 +1088,7 @@ function Comprobar(formulario)
 
 
 									?></td>
-									<td nowrap class="<?=$class?>"><?php
+									<td nowrap class="<?php echo $class?>"><?php
 							if ($tallap!="")
 								echo $tallap;
 							else
@@ -1096,13 +1096,13 @@ function Comprobar(formulario)
 
 
 							?></td>
-									<td nowrap class="<?=$class?>"><?php
+									<td nowrap class="<?php echo $class?>"><?php
 							if($r->Mayorista=="S"):
 								echo $r->TipoProductoMayorista;
 							else:
 								echo $tipop;
 							endif;	 ?></td>
-									<td nowrap class="<?=$class?>"><?php
+									<td nowrap class="<?php echo $class?>"><?php
 									if ($r->TipoFactura=="facturabono"):
 										echo $r_factura[NumeroFacturaBono]  . "(bono)";
 									else:
@@ -1110,17 +1110,17 @@ function Comprobar(formulario)
 									endif;
 
 									?></td>
-									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaTrCr,0,10)) ?></td>
-									<td nowrap class="<?=$class?>"><?php echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia); ?></td>
-									<td nowrap class="<?=$class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaFactura); ?></td>
-									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></td>
-									<td nowrap class="<?=$class?>">
+									<td nowrap class="<?php echo $class?>"><?php echo formatofecha(substr($r->FechaTrCr,0,10)) ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia); ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaFactura); ?></td>
+									<td nowrap class="<?php echo $class?>"><?php echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></td>
+									<td nowrap class="<?php echo $class?>">
 										<?php
                                             echo $r->RequiereNotaCredito;
                                             if ($r->RequiereNotaCredito=="S"){ echo " Numero: " . $r->NumeroNotaCredito ; }
                                         ?>
                                     </td>
-									<td nowrap class="<?=$class?>">
+									<td nowrap class="<?php echo $class?>">
 							<?php
 
 							if ($r->TipoRegistro=="Reproceso"){
@@ -1259,10 +1259,10 @@ else
 					<option value="30">30</option>
 				</select>
 				<br>
-				<input type="hidden" name="mod" value="<?=$MOD?>">
+				<input type="hidden" name="mod" value="<?php echo $MOD?>">
 				<input type="hidden" name="rangofield" value="FechaFacturaBono">
 				<input type="hidden" name="action" value="list">
-				<input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>">
+				<input type="hidden" name="IDPuntoVenta" value="<?php echo $IDPuntoVenta?>">
 				<input type="hidden" name="tjoin" value="Cliente">
 				<input type="submit" name="submit" value="Buscar" class="submit">
 			</td>

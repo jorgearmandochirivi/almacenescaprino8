@@ -65,7 +65,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav">
 
-								Desde	<input  type="text" name="FechaDesde" class="input" value="<?=$FechaDesde?>" size="10">
+								Desde	<input  type="text" name="FechaDesde" class="input" value="<?php echo $FechaDesde?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -76,7 +76,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td align="left" valign="middle" class="nav">
 
-								Hasta	<input  type="text" name="FechaHasta" class="input" value="<?=$FechaHasta?>" size="10">
+								Hasta	<input  type="text" name="FechaHasta" class="input" value="<?php echo $FechaHasta?>" size="10">
 
 								<script language="JavaScript1.2">
 									<!--
@@ -109,16 +109,16 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>
 				&nbsp;&nbsp;&nbsp;&nbsp;  <img src="images/book_go.png" border="0" alt="">&nbsp;
-				<a href="./?mod=ReportePagos&Fecha=<?=$Fecha?>&IDPuntoVenta=<?=$IDPuntoVenta?>" class="menuppal">
+				<a href="./?mod=ReportePagos&Fecha=<?php echo $Fecha?>&IDPuntoVenta=<?php echo $IDPuntoVenta?>" class="menuppal">
 					Ver informe formas de pago
 				</a>
 				<br>&nbsp;
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">
-			<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
+			<form name="frm" action="<?php echo $PHP_SELF?>" method="post" onSubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp;
 
-						Reporte Ventas Diarias Almacen : <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
+						Reporte Ventas Diarias Almacen : <?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?php echo formatofecha( $Fecha )?>
 					</td>
 				</tr>
 				<?php
@@ -222,9 +222,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							//print_r($valor);
 						?>
 						<tr>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['FechaFacturaF']?></td>
-										<td class="<?=$class?>" align="center" nowrap>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['NumeroFactura']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['FechaFacturaF']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap>
 										<?php
 										unset($array_referencias);
                                         if($valor['Numero']=="Excedente"):
@@ -258,9 +258,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										endif;
 										?>
                                         </td>
-										<td class="<?=$class?>" align="center" nowrap><?=$id_ref = get_field("Talla","Descripcion","IDTalla",$valor['IDTalla']);?> </td>
-										<td class="<?=$class?>" align="right" nowrap><?=number_format( $ElValorUnitario = $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,2)?></td>
-							<td class="<?=$class?>" align="center" nowrap>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $id_ref = get_field("Talla","Descripcion","IDTalla",$valor['IDTalla']);?> </td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ElValorUnitario = $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,2)?></td>
+							<td class="<?php echo $class?>" align="center" nowrap>
                             <?php
 							if($valor['Numero']=="Excedente"):
 								echo "0";
@@ -273,9 +273,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							?>
 
                             </td>
-							<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoRef']?></td>
+							<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoRef']?></td>
 
-										<td class="<?=$class?>" align="center" nowrap><?php
+										<td class="<?php echo $class?>" align="center" nowrap><?php
 								$descuento_bono=0;
                                 if ((int)$valor['ValorBono']>0 && $numero_factura_ant !=  $valor['NumeroFactura']){
 									echo $descuento_bono=number_format($valor['ValorBono']);
@@ -291,8 +291,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 								$numero_factura_ant = $valor['NumeroFactura'];
 								?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoPar']?></td>
-										<td class="<?=$class?>" align="center" nowrap>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoPar']?></td>
+										<td class="<?php echo $class?>" align="center" nowrap>
 											<?php
 												$TotalFactura = $valor[ValorTotal] ;
 												if( $valor['DescuentoPar'] > 0 )
@@ -365,7 +365,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 											?>
 										</td>
-										<td class="<?=$class?>" align="left">
+										<td class="<?php echo $class?>" align="left">
 											<?php //get_field("Alianza","Nombre","IDAlianza",$valor["IDAlianza"]) . " " .
 											$texto_alianza=str_replace("Se aplica descuento por alianza","",$valor["ObservacionDescuento"]);
 											echo $texto_alianza; 
@@ -373,7 +373,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										</td>
 
 
-										<td class="<?=$class?>" align="left" nowrap>
+										<td class="<?php echo $class?>" align="left" nowrap>
 											<?php
 											$sql_cli="SELECT * FROM Cliente WHERE IDCliente = '".$valor["IDCliente"]."'";
 											$r_cli=db_query($sql_cli);
@@ -391,10 +391,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 						<tr>
 							<td class="titlemedium" colspan="4" align="right" nowrap>TOTALES</td>
-							<td class="titlemedium" align="center" nowrap><?=$Pares ?></td>
+							<td class="titlemedium" align="center" nowrap><?php echo $Pares ?></td>
 							<td class="titlemedium" align="center" colspan="3" nowrap></td>
 							<td class="titlemedium" align="right" nowrap></td>
-							<td class="titlemedium" align="right" nowrap><?=number_format( $Pago , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format( $Pago , 2)?></td>
 							<td class="titlemedium" align="center" colspan="2" nowrap></td>
 
 									</tr>

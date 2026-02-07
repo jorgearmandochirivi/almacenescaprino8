@@ -57,7 +57,7 @@ function mostrarcedula($newmode,$submit_caption){
 ?>
 	
 <br>
-<form name="frmcliente" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" onsubmit="disable(this);">
+<form name="frmcliente" method="post" enctype="multipart/form-data" action="<?php echo $PHP_SELF?>" onsubmit="disable(this);">
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="800">
 	
 	<tr>
@@ -81,8 +81,8 @@ function mostrarcedula($newmode,$submit_caption){
   
   <tr>
 	<td class="col2list" align="center" valign="middle" colspan="2">
-		<input type="submit" class="button" name="enviar" value="<?=$submit_caption?>">
-		<input type="hidden" value="<?=$newmode?>" name="action">
+		<input type="submit" class="button" name="enviar" value="<?php echo $submit_caption?>">
+		<input type="hidden" value="<?php echo $newmode?>" name="action">
 	</td>
   </tr>
 </table>
@@ -114,7 +114,7 @@ function print_form($idCliente,$submit_caption) {
 var Check = new Array('Cedula','Nombre','Apellido');
 </script>
 <br>
-	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
+	<form name="frmcliente" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
 	
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="800">
 	
@@ -123,7 +123,7 @@ var Check = new Array('Cedula','Nombre','Apellido');
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<?=$title?>
+				<?php echo $title?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -206,7 +206,7 @@ while($r = db_fetch_object($qid)){
 	if (!strpos($r->DescripcionRegla,"excedente")){
 ?>
 	<tr>
-        <td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta?>&id=<?=$r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
+        <td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVenta?>&id=<?php echo $r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
         <td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
         <td nowrap class=row1><?php echo $r->NombreRegla ?></td>
         <td nowrap class=row1><?php echo $r->DescripcionRegla ?></td>
@@ -232,7 +232,7 @@ while($r = db_fetch_object($qid)){
     
 	<?php if ($redimido_punto=="S" && (int)$disponibles>=350){ ?>
 	<tr>
-        <td nowrap class=row1 style=" background-color:#FE9EAD"><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta?>&id=<?=$r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
+        <td nowrap class=row1 style=" background-color:#FE9EAD"><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVenta?>&id=<?php echo $r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
         <td nowrap class=row1 style=" background-color:#FE9EAD"><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
         <td nowrap class=row1 style=" background-color:#FE9EAD">redencion bono</td>
         <td nowrap class=row1 style=" background-color:#FE9EAD">redencion bono</td>
@@ -268,7 +268,7 @@ while($r = db_fetch_object($qid)){
 ?>
 <!--  	
 <tr>
-						<td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta?>&id=<?=$r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
+						<td nowrap class=row1><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?php echo $r->IDPuntoVenta?>&id=<?php echo $r->IDFactura ?>"><?php echo $r->IDFactura ?></a></td>
 						<td nowrap class=row1><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
 						<td nowrap class=row1><?php echo $r->NombreRegla ?></td>
 						<td nowrap class=row1><?php echo $r->DescripcionRegla ?></td>

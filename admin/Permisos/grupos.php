@@ -1,1 +1,246 @@
-<body> <?$TitleMod ="Grupos de Usuarios";$Table = "GrupoUsuarios";$TableJoin = "Permisos";$Key = "IDGrupoUsuarios";$MOD = "usrperm";$TABsel = 1;$array_permiso = array("1"=>"acceso denegado","2"=>"solo lectura","3"=>"lectura - escritura");		$permisos = get_permiso($ID_Usuario,$m,$Table);if($permisos[0] >= 2){		switch (nvl($action)) {			case "add" :				print_form("","insert","Nuevo Registro $TitleMod","Agregar Registro");			break;			case "list" :				if(isset($_GET['listar'])) 						$listar = $_GET['listar'];						$sql = make_qry_string($HTTP_GET_VARS);					if(!empty($_GET['QryString'])) 						$sql = make_qry_string($HTTP_GET_VARS);					list_r($sql,$listar);			break;			case "insert" :								$frm= vars_LOG($HTTP_POST_VARS);				$id = insert($frm);				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");			break;			case "edit":				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");			break ;			case "update" :				$frm= vars_LOG($HTTP_POST_VARS);				update($frm);			break;			default : 					list_r();			break;				} // End switch}//end if(permisos[0] > 2)else	echo Mensaje_Info("No tiene Permisos Suficientes","row2");/*******************************************************************************************		funtcion Print_form*******************************************************************************************/function print_form($id="",$newmode,$title,$submit_caption) {	GLOBAL $TitleMod,$Table,$MOD,$Key,$dir_img, $folder_img_directorio,$imagedir,$strcript,$array_nivel,$TableJoin;	GLOBAL $verdir_w,$verdir_h,$options,$action,$array_permiso;	$qid = db_query(" SELECT * FROM $Table WHERE $Key = '$id' ");	$r = db_fetch_object($qid);?><table cellspacing='0' cellpadding='2' border='0'  width='600' bgcolor='#FFFFFF'>		<tr>			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/usrperm.png border=0> 			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNrol.gif' border='0'></a></td>		</tr></table><?	if($newmode=="update")	include("Permisos/menugrupo.php");?>			<table cellpadding=1 cellspacing=0 class=bordertable >		<form name="frmgrupo" action="<?=$PHP_SELF?>" method="POST" enctype="multipart/form-data">			<tr>				<td>					<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>						<tr >							<td class=maintitle colspan="3"><?=TitleMod?></td>						</tr>						<tr >							<td class=row1>Nombre</td>							<td colspan="2" class=row2><input type=text size=35 class=tbox name=Nombre value="<%=$r->Nombre %>"></td>						</tr>						<tr  >							<td class=row1>Descripci&oacute;n</td>							<td colspan="2" class=row2><textarea rows=5 cols=55 wrap=virtual id=Descripci&oacute;n name=Descripcion><?=$r->Descripcion?></textarea></td>						</tr>						<tr class=bgTop>							<td colspan="3" align="center">								<input type=hidden name=ID value="<? echo $r->$Key ?>"> 								<input type=hidden name=action value="<?=$newmode?>"> 								<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>							</td>						</tr>					</table>				</td>			</tr>			</form>		</table>	<?}// End function print_form()/*******************************************************************************************		funcion Listar*******************************************************************************************/	function list_r($sql="",$listar){		Global $TitleMod,$MOD,$Table,$Key,$k,$options;				if(empty($sql))	 	$sql =  "SELECT * FROM $Table  ";		$nav = new buildNav;		$nav->offset = 'offset';   		$nav->number_type = 'number';   		if(!isset($listar))   			$nav->limit = 10;   		else   			$nav->limit = $listar;   		$nav->execute($sql,$dblink);		$total_records =  $nav->total_result;		$rows = $nav->rows;		$result = $nav->sql_result;		$row = $offset;		$startrow = $offset + 1;		$finalrow = ($row * $nav->limit) + $rows;		 	$pages = $nav->show_num_pages('&laquo;','&laquo; prev','&raquo;','next &raquo;','|','class=navvar');   // show pages				$info = $nav->show_info(); ?><table cellspacing='0' cellpadding='2' border='0'  width='600' bgcolor='#FFFFFF'>		<tr>			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/usrperm.png' border=0> 			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNrol.gif' border='0'></a></td>		</tr></table><?		if($rows > 0){		?><br><table width=600  cellpadding=0 cellspacing=0 class=bordertable>		<tr><td>						</td></tr>					<tr>						<td class=maintitle><% echo "Se encontraron $total_records registro(s) Mostrando del $startrow al $finalrow ";%></td>					</tr>						<tr><td><table width=600 border=0 cellspacing=1 cellpadding=0>						<? if($_GET['in_order']=="ASC" || $_GET['in_order']==""){								$img="down.png";								$order="DESC";							}else if($_GET['in_order']=="DESC"){								$img="up.png";								$order="ASC";							}														?><tr class="titlemedium">						<td align=center   valign=middle  width=69>Editar</td>						<td nowrap class="titulodetablas"><a  href="<? echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list&submit=Buscar"; ?>">Grupo&nbsp;<? if($_GET['order_by']=="Nombre"){?><img src="images/<?=$img?>" border=0><?}?></a></td>						<td class="titulodetablas" nowrap  width="246"><a href="<? echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit."&action=list&submit=Buscar"; ?>">Descripci&oacute;n&nbsp;<? if($_GET['order_by']=="Descripcion"){?><img src="images/<?=$img?>" border=0><?}?></a></td><? while($r = db_fetch_object($result)){	$class = repetition()?"row1":"row2";?><tr>						<td align=center valign=middle nowrap width=50 class=<?=$class?>>	&nbsp;<a href="./?mod=<%=$MOD%>&action=edit&id=<%=$r->IDGrupoUsuarios %>"><img src="images/edit.gif" alt="" border="0"></a></td>						<td nowrap class="<?=$class?>"><? echo $r->Nombre ?></td>						<td nowrap class="<?=$class?>" width="246"><? echo $r->Descripcion ?></td>	</tr><? } // END for?><tr>						<td class=texto class="cols1list" colspan=3 nowrap>	<?		print $pages;		?>		</td>					</tr>		</table></td></tr></table>	<? 			}// End if$rowselse	echo "<br><br><p class=subtitle align=center><b>No existen registros en  $TitleMod </b></p><br>";}// Enf function list()				/*******************************************************************************************		funcion filtrar*******************************************************************************************/	function filtrar(){	Global $dblink,$total_records,$row,$numtoshow,$MOD;?>	<form name="frm" action="./" method="get" onsubmit="return valbuscar(document.frm)">			<tr>				<td class="rowform" align="center" colspan=8>					<select name="field" id="Buscar Por" class="popup">						<option value="">Buscar Por</option>						<option value="Nombre">Grupo</option>						<option value="Descripcion">Descripci&oacute;n</option>					</select> <input type="text" size="20" name="QryString" id="Buscar Por" class="post">										ordenar por <select name="order_by" class="popup">						<option value="Nombre">Grupo</option>						<option value="Descripcion">Descripci&oacute;n</option>											</select><br> de forma <select name="in_order" class="popup">						<option value="ASC">Ascendente</option>						<option value="DESC">Descendente</option>					</select>										Listar <select name="listar" class="popup">									<option value="10">10</option>									<option value="15">15</option>									<option value="20">20</option>									<option value="25">25</option>									<option value="30">30</option>																	</select> 					<br>					<input type="hidden" name="m" value="<?=$MOD?>">   					<input type="hidden" name="action" value="list">					<input type="submit" name="submit" value="Buscar" class="submit">					<br><br>				</td>			</tr>	</form>		<?			}//End function filtrar?>
+<body> <?php 
+
+$TitleMod ="Grupos de Usuarios";
+$Table = "GrupoUsuarios";
+$TableJoin = "Permisos";
+$Key = "IDGrupoUsuarios";
+$MOD = "usrperm";
+$TABsel = 1;
+$array_permiso = array("1"=>"acceso denegado","2"=>"solo lectura","3"=>"lectura - escritura");
+		$permisos = get_permiso($ID_Usuario,$m,$Table);
+if($permisos[0] >= 2)
+{
+		switch (nvl($action)) {
+			case "add" :
+				print_form("","insert","Nuevo Registro $TitleMod","Agregar Registro");
+			break;
+			case "list" :
+				if(isset($_GET['listar'])) 
+						$listar = $_GET['listar'];
+						$sql = make_qry_string($HTTP_GET_VARS);
+					if(!empty($_GET['QryString'])) 
+						$sql = make_qry_string($HTTP_GET_VARS);
+					list_r($sql,$listar);
+			break;
+			case "insert" :
+				
+				$frm= vars_LOG($HTTP_POST_VARS);
+				$id = insert($frm);
+				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
+			break;
+			case "edit":
+				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
+			break ;
+			case "update" :
+				$frm= vars_LOG($HTTP_POST_VARS);
+				update($frm);
+			break;
+			default : 
+					list_r();
+			break;
+		
+		} // End switch
+
+}//end if(permisos[0] > 2)
+else
+	echo Mensaje_Info("No tiene Permisos Suficientes","row2");
+
+
+/*******************************************************************************************
+		funtcion Print_form
+*******************************************************************************************/
+
+function print_form($id="",$newmode,$title,$submit_caption) {
+
+	GLOBAL $TitleMod,$Table,$MOD,$Key,$dir_img, $folder_img_directorio,$imagedir,$strcript,$array_nivel,$TableJoin;
+	GLOBAL $verdir_w,$verdir_h,$options,$action,$array_permiso;
+	$qid = db_query(" SELECT * FROM $Table WHERE $Key = '$id' ");
+	$r = db_fetch_object($qid);
+
+?>
+<table cellspacing='0' cellpadding='2' border='0'  width='600' bgcolor='#FFFFFF'>
+		<tr>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/usrperm.png border=0> 
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNrol.gif' border='0'></a></td>
+		</tr>
+</table>
+<?php 
+	if($newmode=="update")
+	include("Permisos/menugrupo.php");
+?>	
+		<table cellpadding=1 cellspacing=0 class=bordertable >
+		<form name="frmgrupo" action="<?php echo $PHP_SELF?>" method="POST" enctype="multipart/form-data">
+			<tr>
+				<td>
+					<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
+						<tr >
+							<td class=maintitle colspan="3"><?php echo TitleMod?></td>
+						</tr>
+						<tr >
+							<td class=row1>Nombre</td>
+							<td colspan="2" class=row2><input type=text size=35 class=tbox name=Nombre value="<?php echo $r->Nombre ?>"></td>
+						</tr>
+						<tr  >
+							<td class=row1>Descripci&oacute;n</td>
+							<td colspan="2" class=row2><textarea rows=5 cols=55 wrap=virtual id=Descripci&oacute;n name=Descripcion><?php echo $r->Descripcion?></textarea></td>
+						</tr>
+						<tr class=bgTop>
+							<td colspan="3" align="center">
+								<input type=hidden name=ID value="<?php echo $r->$Key ?>"> 
+								<input type=hidden name=action value="<?php echo $newmode?>"> 
+								<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			</form>
+		</table>
+	
+<?php 
+}// End function print_form()
+
+
+/*******************************************************************************************
+		funcion Listar
+*******************************************************************************************/
+
+	function list_r($sql="", $listar=null){
+		Global $TitleMod,$MOD,$Table,$Key,$k,$options;
+			
+	if(empty($sql))
+	 	$sql =  "SELECT * FROM $Table  ";
+
+		$nav = new buildNav;
+		$nav->offset = 'offset';
+   		$nav->number_type = 'number';
+   		if(!isset($listar))
+   			$nav->limit = 10;
+   		else
+   			$nav->limit = $listar;
+   		$nav->execute($sql,$dblink);
+		$total_records =  $nav->total_result;
+		$rows = $nav->rows;
+		$result = $nav->sql_result;
+		$row = $offset;
+		$startrow = $offset + 1;
+		$finalrow = ($row * $nav->limit) + $rows;
+	
+	 	$pages = $nav->show_num_pages('&laquo;','&laquo; prev','&raquo;','next &raquo;','|','class=navvar');   // show pages
+		
+		$info = $nav->show_info(); 
+?>
+<table cellspacing='0' cellpadding='2' border='0'  width='600' bgcolor='#FFFFFF'>
+		<tr>
+			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/usrperm.png' border=0> 
+			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNrol.gif' border='0'></a></td>
+		</tr>
+</table>
+
+<?php 
+		if($rows > 0){
+		
+?><br>
+<table width=600  cellpadding=0 cellspacing=0 class=bordertable>
+
+	
+	<tr><td>
+			
+			</td></tr>
+					<tr>
+						<td class=maintitle><?php  echo "Se encontraron $total_records registro(s) Mostrando del $startrow al $finalrow ";?></td>
+					</tr>
+					
+	<tr><td>
+<table width=600 border=0 cellspacing=1 cellpadding=0>
+						<?php if($_GET['in_order']=="ASC" || $_GET['in_order']==""){
+								$img="down.png";
+								$order="DESC";
+							}else if($_GET['in_order']=="DESC"){
+								$img="up.png";
+								$order="ASC";
+							}
+							
+							?>
+
+<tr class="titlemedium">
+						<td align=center   valign=middle  width=69>Editar</td>
+						<td nowrap class="titulodetablas"><a  href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list&submit=Buscar"; ?>">Grupo&nbsp;<?php if($_GET['order_by']=="Nombre"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+						<td class="titulodetablas" nowrap  width="246"><a href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Descripcion&in_order=".$order."&listar=".$nav->limit."&action=list&submit=Buscar"; ?>">Descripci&oacute;n&nbsp;<?php if($_GET['order_by']=="Descripcion"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+
+<?php while($r = db_fetch_object($result)){
+
+	$class = repetition()?"row1":"row2";
+?>
+<tr>
+						<td align=center valign=middle nowrap width=50 class=<?php echo $class?>>
+	&nbsp;<a href="./?mod=<?php echo $MOD?>&action=edit&id=<?php echo $r->IDGrupoUsuarios ?>"><img src="images/edit.gif" alt="" border="0"></a></td>
+						<td nowrap class="<?php echo $class?>"><?php echo $r->Nombre ?></td>
+						<td nowrap class="<?php echo $class?>" width="246"><?php echo $r->Descripcion ?></td>
+	</tr>
+<?php } // END for
+?>
+<tr>
+						<td class=texto class="cols1list" colspan=3 nowrap>
+
+	<?php 
+		print $pages;
+		?>
+		</td>
+					</tr>		
+</table></td>
+</tr>
+</table>	
+<?php 			
+}// End if$rows
+else
+	echo "<br><br><p class=subtitle align=center><b>No existen registros en  $TitleMod </b></p><br>";
+
+}// Enf function list()				
+
+/*******************************************************************************************
+		funcion filtrar
+*******************************************************************************************/
+	function filtrar(){
+	Global $dblink,$total_records,$row,$numtoshow,$MOD;
+?>
+	<form name="frm" action="./" method="get" onsubmit="return valbuscar(document.frm)">
+			<tr>
+				<td class="rowform" align="center" colspan=8>
+					<select name="field" id="Buscar Por" class="popup">
+						<option value="">Buscar Por</option>
+						<option value="Nombre">Grupo</option>
+						<option value="Descripcion">Descripci&oacute;n</option>
+					</select> <input type="text" size="20" name="QryString" id="Buscar Por" class="post">
+					
+					ordenar por <select name="order_by" class="popup">
+						<option value="Nombre">Grupo</option>
+						<option value="Descripcion">Descripci&oacute;n</option>
+						
+					</select><br> de forma <select name="in_order" class="popup">
+						<option value="ASC">Ascendente</option>
+						<option value="DESC">Descendente</option>
+					</select>
+					
+					Listar <select name="listar" class="popup">
+									<option value="10">10</option>
+									<option value="15">15</option>
+									<option value="20">20</option>
+									<option value="25">25</option>
+									<option value="30">30</option>
+									
+								</select> 
+					<br>
+					<input type="hidden" name="m" value="<?php echo $MOD?>">   
+					<input type="hidden" name="action" value="list">
+					<input type="submit" name="submit" value="Buscar" class="submit">
+					<br><br>
+				</td>
+			</tr>
+	</form>
+		
+<?php 		
+	}//End function filtrar
+?>

@@ -1,11 +1,11 @@
-<%
+<?php 
 	include("../config.inc.php");
 	Encabezado();
 	$datos = Verifica_Sesion();
 	$Nombre_Usuario = usr_datos($datos["IDUsuario"]);
 	$ID_Usuario = $datos["IDUsuario"];
 	$Nivel =  $datos["Nivel"];
-%>
+?>
 <html>
 
 	<head>
@@ -18,11 +18,11 @@
 	<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
 		<table width="100%" cellpadding="3" cellspacing="0" border="0" align=center>
 			<tr>
-				<th background="titlegrad.jpg" align="left"><strong><font color="white"><%pv($app_title);%> :: Referemcias</font></strong></th>
+				<th background="titlegrad.jpg" align="left"><strong><font color="white"><?php pv($app_title);?> :: Referemcias</font></strong></th>
 			</tr>
 		</table>
 		<link rel="stylesheet" href="../styles.css?1" type="text/css">
-		<%
+		<?php 
 
 $TitleMod ="Empleados";
 $MOD = "bempleados";
@@ -98,13 +98,13 @@ return $qry_string;
 		$info = $nav->show_info(); 
 	
 	} // if(!empty($sql)){ 
-%>
+?>
 
 		<table width="350" border="0" cellspacing="1" cellpadding="0" align=center>
 			<tr>
 				<td>
 					<table width="100%" border="0" cellspacing="1" cellpadding="1" class=bordertable align=center> 
-						<?
+						<?php 
 						if(!empty($sql))
 						{
 						?>
@@ -114,7 +114,7 @@ return $qry_string;
 							<td  class="titlemedium" colspan="2" nowrap align="center">Nombre</td>
 						</tr>
 						
-						<%
+						<?php 
 						}
 						
 						for ($y = 1; $y <= $rows; $y++) {
@@ -126,22 +126,22 @@ return $qry_string;
 							
 						  	$r = db_fetch_object($result);
 						  	
-						%>
+						?>
 						
 						<tr>
-							<td class="<?=$class?>" nowrap>
-								<a href="javascript:window.opener.selempleado('<?=$r->IDEmpleado?>','<?=$r->Cedula?>','<?echo $r->Nombre." ".$r->Apellidos?>');javascript:window.close();">
-									<% echo $r->Cedula %>
+							<td class="<?php echo $class?>" nowrap>
+								<a href="javascript:window.opener.selempleado('<?php echo $r->IDEmpleado?>','<?php echo $r->Cedula?>','<?php echo $r->Nombre." ".$r->Apellidos?>');javascript:window.close();">
+									<?php  echo $r->Cedula ?>
 								</a>
 							</td>
-							<td class="<?=$class?>" colspan="2">
-								<% echo $r->Nombre." ".$r->Apellidos %>
+							<td class="<?php echo $class?>" colspan="2">
+								<?php  echo $r->Nombre." ".$r->Apellidos ?>
 							</td>
 						</tr>
-						<%
+						<?php 
 						} // END for
-						%>
-						<form action="<?=$PHP_SELF?>" method=get>
+						?>
+						<form action="<?php echo $PHP_SELF?>" method=get>
 							<tr>
 								<td class="rowtable" colspan="3" nowrap>Por
 										<select name="field">
@@ -159,7 +159,7 @@ return $qry_string;
 				</td>
 		</tr>
 		</table>
-		<% 			
+		<?php  			
 }// Enf function list()				
-%></body>
+?></body>
 </html>

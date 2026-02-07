@@ -146,7 +146,7 @@
 		break;
 	}
 ?>
-	var initialtab=[<?=$tab?>, "<?=$m?>"]
+	var initialtab=[<?php echo $tab?>, "<?php echo $m?>"]
 
 
 
