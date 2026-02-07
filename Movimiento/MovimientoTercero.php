@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 		$TitleMod = "Cambios";
 
@@ -347,7 +347,7 @@
 				</td>
 			</tr>
 		</table>
-		<FORM name="frm" id="frmEntradaTercero" method="post" enctype="multipart/form-data" action="<?= $PHP_SELF ?>" <? if ($newmode != "delete") { ?>onsubmit="return EvaluaReg2(this,Check)" <? } ?>>
+		<FORM name="frm" id="frmEntradaTercero" method="post" enctype="multipart/form-data" action="<?= $PHP_SELF ?>" <?php if ($newmode != "delete") { ?>onsubmit="return EvaluaReg2(this,Check)" <?php } ?>>
 			<table class="forumline" width="800" cellspacing="1" border="0" align="center">
 				<tr>
 					<td>
@@ -364,7 +364,7 @@
 														<tr>
 															<td class=col1>Entrada Numero</td>
 															<td class=col2>
-																<?
+																<?php
 																$Remision = get_maxID("Entrada WHERE IDPuntoVenta = '$IDPuntoVenta'", "Remision");
 																?>
 																<input type="input" name="Remision" class="tbox" id="Remision" title="Remision" value="<?= $Remision ?>" readonly>
@@ -1149,7 +1149,7 @@
 
 			</table>
 		</FORM>
-		<?
+		<?php
 		} // END function print_form_fotos($id,$numfotos)
 		/*******************************************************************************************
 		funcion Listar
@@ -1203,10 +1203,10 @@
 					</td>
 					<td class="tbtbot"><b></b>
 						<span class="gen">
-							Listar <? echo $TitleMod ?>
+							Listar <?php echo $TitleMod ?>
 						</span>
 						<span class="gen">
-							<? echo $info ?>
+							<?php echo $info ?>
 						</span>
 					</td>
 					<td class="tbtr">
@@ -1220,7 +1220,7 @@
 						<table width=100% border=0 cellspacing=1 cellpadding=1 class="forumline texto">
 							<tr>
 								<td class="forumlink" colspan="2">
-									<? filtrar(); ?>
+									<?php filtrar(); ?>
 								</td>
 							</tr>
 							<tr>
@@ -1228,47 +1228,47 @@
 									<table width=100% border=0 cellspacing=1 cellpadding=0>
 										<tr>
 											<td align=center class=navpic valign=middle bgcolor=#DBEAF5 width=69>Ver</td>
-											<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Proveedor&nbsp;
-													<% if($_GET['order_by']=="IDProveedor"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Numero</a><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'> Orden</a><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>
-													<% if($_GET['order_by']=="NumeroORdenCompra"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Fecha Pedido&nbsp;
-													<% if($_GET['order_by']=="FechaPedido"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Fecha Entrega </a><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;
-													<% if($_GET['order_by']=="FechaEntrega"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Estado&nbsp;
-													<% if($_GET['order_by']=="IDEstadoPedidoTercero"){%>
-													<img src="images/<%=$img%>" border=0>
-													<%}%>
+											<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Proveedor&nbsp;
+													<?php if($_GET['order_by']=="IDProveedor")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Numero</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'> Orden</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>
+													<?php if($_GET['order_by']=="NumeroORdenCompra")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Fecha Pedido&nbsp;
+													<?php if($_GET['order_by']=="FechaPedido")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Fecha Entrega </a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
+													<?php if($_GET['order_by']=="FechaEntrega")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+									<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Estado&nbsp;
+													<?php if($_GET['order_by']=="IDEstadoPedidoTercero")<?php 
+													<img src="images/<?php echo $img;?>" border=0>
+													<?php };?>
 									</a></td>
 			          </tr>
 							
-							<? while ($r = db_fetch_object($result)) {
+							<?php while ($r = db_fetch_object($result)) {
 								$class = repetition() ? "col1list" : "col2list";
 								$i++;
 							?>
 							  	
 							<tr>
 								<td align=center valign=middle nowrap width=50 class="<?= $class ?>">
-								&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id=";
+								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id=";
 												echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-									<td nowrap class="<?= $class ?>"><? echo get_field("Proveedor", "Nombre", "IDProveedor", $r->IDProveedor); ?></td>
-									<td nowrap class="<?= $class ?>"><? echo $r->NumeroOrdenCompra ?></td>
-									<td nowrap class="<?= $class ?>"><? echo formatofecha(substr($r->FechaPedido, 0, 10)) . " " . substr($r->FechaPedido, 10) ?></td>
-									<td nowrap class="<?= $class ?>"><? echo formatofecha(substr($r->FechaEntrega, 0, 10)) . " " . substr($r->FechaEntrega, 10) ?></td>
-									<td nowrap class="<?= $class ?>"><?
+									<td nowrap class="<?= $class ?>"><?php echo get_field("Proveedor", "Nombre", "IDProveedor", $r->IDProveedor); ?></td>
+									<td nowrap class="<?= $class ?>"><?php echo $r->NumeroOrdenCompra ?></td>
+									<td nowrap class="<?= $class ?>"><?php echo formatofecha(substr($r->FechaPedido, 0, 10)) . " " . substr($r->FechaPedido, 10) ?></td>
+									<td nowrap class="<?= $class ?>"><?php echo formatofecha(substr($r->FechaEntrega, 0, 10)) . " " . substr($r->FechaEntrega, 10) ?></td>
+									<td nowrap class="<?= $class ?>"><?php
 																		echo estado_tercero_pto_vta($r->IDPedidoTercero, $r->IDPuntoVenta);
 
 																		//echo get_field("EstadoPedidoTercero","Descripcion","IDEstadoPedidoTercero",$r->IDEstadoPedidoTercero); 
 																		?>
                                     </td>
 								</tr>
-							<? } // END for
+							<?php } // END for
 							?>
 							<tr>
 							<td  class="navpic" colspan=6 nowrap>
-									<?
+									<?php
 									print $pages;
 									?>
 							</td>
@@ -1280,7 +1280,7 @@
 	</td>
 	</tr>
 </table>
-<?
+<?php
 			} // End if$rows
 			else
 				echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -1367,6 +1367,6 @@
 			</tr>
 			
 		</form>
-<?
+<?php
 		} //End function filtrar
 ?>

@@ -2,7 +2,7 @@
 <body><script language=javascript><!--
 var clrOver = "02387A"; 
 var clrIn = "6bb2d4"; 
-var TABSelected = "TB" + <%=$TABsel%>;
+var TABSelected = "TB" + <?php echo $TABsel;?>;
 
 function mOvr(src) {
 	if(document.getElementById(TABSelected) != src)
@@ -20,7 +20,7 @@ function TABoff()
 {
 	for(i=1;i<=2;i++)
 	{
-       if(i != <%=$TABsel%>){
+       if(i != <?php echo $TABsel;?>){
      		var TAB = "TB" + i;
 	    	document.getElementById(TAB).bgColor = clrIn;
 		}

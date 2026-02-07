@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 function header_export($file){
 
 
@@ -150,7 +150,7 @@ function seleccionareferencia( $newmode)
 						<tr>
 							<td width="117">Puntos de Venta	</td>
 							<td><select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><?								
+									<option value="">Seleccione Un Punto de Venta</option><?php								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
@@ -171,7 +171,7 @@ function seleccionareferencia( $newmode)
 			</tr>
 		</form>
 	</table>
-	<?
+	<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -201,7 +201,7 @@ function seleccionareferencia( $newmode)
 ?>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <? echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	
@@ -220,7 +220,7 @@ function seleccionareferencia( $newmode)
                         <td class="titlemedium">Factura</td>
 						<td class="titlemedium">Descripcion</td>
                     </tr>
-                    <?
+                    <?php
 					$cont = 0;
                    	$sql_tarjetas = "SELECT * FROM TarjetaPunto WHERE IDPuntoVenta = '" . $IDPuntoVenta . "' ";
 					$qry_tarjetas = db_query( $sql_tarjetas );
@@ -232,23 +232,23 @@ function seleccionareferencia( $newmode)
 					?>
                     	<tr>
                         	<td class="row1">
-                            	<?
+                            	<?php
                                 	echo $r_tarjetas["CodigoTarjeta"];
 								?>
                             </td>
                             <td class="row1">
-                            	<?
+                            	<?php
                                 	echo $r_tarjetas["Estado"];
 								?>
                             </td>
                             <td class="row1">
-                            	<?
+                            	<?php
                             		if( $r_tarjetas["Estado"] == "D" )
                             		{
                             			$disponibles++;
                             	?>
                             			<!--<input type="checkbox" name="Tarjeta[<?=$r_tarjetas["CodigoTarjeta"]?>]" value="<?=$r_tarjetas["CodigoTarjeta"]?>" >-->
-                            	<?
+                            	<?php
                             		}//end if
 									elseif($r_tarjetas["Estado"] == "V"){
 										$vendidas++;
@@ -267,7 +267,7 @@ function seleccionareferencia( $newmode)
 							</td>
 
                         </tr>
-                    <?
+                    <?php
 						$cont++;
 					}//ednw hile
 					?>
@@ -290,7 +290,7 @@ function seleccionareferencia( $newmode)
                		<tr>
                			<td>
                				<select name="IDPuntoVenta" >
-									<option value="">Seleccione Un Punto de Venta</option><?								
+									<option value="">Seleccione Un Punto de Venta</option><?php								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta ORDER BY IDCiudad, Nombre");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
@@ -340,6 +340,6 @@ function seleccionareferencia( $newmode)
     </table>	
 
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

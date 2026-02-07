@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 
 $TitleMod ="Log de Accesos al Sistema  ";
@@ -103,7 +103,7 @@ else
 					<td class="titlemedium">Fecha </td>
 					<td class="titlemedium">IP </td>
 				</tr>
-				<?
+				<?php
 				
 					if($_POST["IDPuntoVenta"])	
 						$condicion_filtro .= " and IDPuntoVenta = '".$_POST["IDPuntoVenta"]."' ";
@@ -128,7 +128,7 @@ else
 						<td class="<?=$class?>"><?=$r->Fecha ?></td>
 						<td class="<?=$class?>"><?=$r->DireccionIP ?></td>
 					</tr>
-							<?
+							<?php
 					
 				}//end while referencia
 				?>
@@ -138,6 +138,6 @@ else
 				
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

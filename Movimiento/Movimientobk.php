@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Entrada de Pedidos";
 
@@ -158,7 +158,7 @@ else
 			$order="ASC";
 		}
 							
-							?><?
+							?><?php
 	if($rows > 0){
 ?>
 	<br>
@@ -169,7 +169,7 @@ else
 			</td>
 			<td class="tbtbot"><b></b>
 				<span class="gen">
-					<? echo $TitleMod." - ".$info ?>
+					<?php echo $TitleMod." - ".$info ?>
 				</span>
 			</td>
 			<td class="tbtr">
@@ -182,7 +182,7 @@ else
 	<table class="forumline" width="600" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
-		<?
+		<?php
 			filtrar();
 		?>
 	</td>
@@ -192,23 +192,23 @@ else
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" >
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 					<tr>
-							<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; %>'>Referencia</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;<% if($_GET['order_by']=="Referencia.Numero"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-							<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Talla</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'><% if($_GET['order_by']=="IDTalla"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=CantidadPendiente&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Cantidad</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=CantidadPendiente&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'><% if($_GET['order_by']=="CantidadPendiente"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
+							<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; ?>'>Referencia</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="Referencia.Numero")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+							<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Talla</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php if($_GET['order_by']=="IDTalla")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=CantidadPendiente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Cantidad</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=CantidadPendiente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php if($_GET['order_by']=="CantidadPendiente")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
 						<td class=navpic nowrap bgcolor=#DBEAF5 align="center">Ingreso</td>
 					</tr>
 	
-				<? 
+				<?php 
 				while($r = db_fetch_object($result)){
 				
 					$class = repetition()?"col1list":"col2list";
 				?>
 	  	
 					<tr>
-							<td nowrap class="<?=$class?>"><? echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r->IDPuntoVentaReferencia))?></td>
-							<td nowrap class="<?=$class?>"><? echo get_field("Talla","Descripcion","IDTalla",$r->IDTalla); ?></td>
+							<td nowrap class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r->IDPuntoVentaReferencia))?></td>
+							<td nowrap class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",$r->IDTalla); ?></td>
 						<td nowrap class="<?=$class?>">
-							<? echo number_format($r->CantidadPendiente); ?>
+							<?php echo number_format($r->CantidadPendiente); ?>
 							<input type="hidden" name="Cantidad[<?=$r->IDPendientes?>]" value="<?=$r->CantidadPendiente?>">
 							<input type="hidden" name="IDPuntoVentaReferencia[<?=$r->IDPendientes?>]" value="<?=$r->IDPuntoVentaReferencia?>">
 							<input type="hidden" name="IDTalla[<?=$r->IDPendientes?>]" value="<?=$r->IDTalla?>">
@@ -218,11 +218,11 @@ else
 							<input type="hidden" name="IDPendientes[<?=$r->IDPendientes?>]" value="<?=$r->IDPendientes?>">
 						</td>
 					</tr>
-				<? } // END for
+				<?php } // END for
 				?>
 					<tr>
 						<td  bgcolor=#DBEAF5 colspan=4 nowrap class="navpic" align="center">
-							<?
+							<?php
 								print $pages;
 							?>
 							<input type="hidden" name="action" value="insert">
@@ -237,7 +237,7 @@ else
 			</td>
 		</tr>
 	</table>
-	<? 			
+	<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No hay pedidos pendientes </b></span>";
@@ -288,6 +288,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 ?>

@@ -7,7 +7,7 @@
 
 //Set tab to intially be selected when page loads:
 //[which tab (1=first tab), ID of tab content to display]:
-<?
+<?php
 	switch($mod)
 	{
 		case "NovedadBanco":

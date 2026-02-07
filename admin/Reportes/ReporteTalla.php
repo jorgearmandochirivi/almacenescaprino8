@@ -134,7 +134,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		<tr>
 		<td>
         
-        <?		
+        <?php		
 		
 					if($_POST["IDProveedor"])	
 						$condicion_filtro = " and R.IDProveedor = '".$_POST["IDProveedor"]."' ";
@@ -151,7 +151,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		?>
         
         
-        <?
+        <?php
 				//QUERY REFERENCIAS DEL PUNTO DEL VENTA
 					 $sql_referencias = " SELECT R.Numero, PVR.IDPuntoVentaReferencia 
 											FROM Referencia R, PuntoVentaReferencia PVR 
@@ -167,11 +167,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
 				<tr>
 					<td class="maintitle" valign="middle">
-						&nbsp; Ventas totales <? echo $FechaDesde." - ".$FechaHasta ?> - <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>
+						&nbsp; Ventas totales <?php echo $FechaDesde." - ".$FechaHasta ?> - <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>
 						- Mostrando <?=$numero_referencias?> Referencias
 					</td>
 				</tr>
-				<?
+				<?php
 					
 					$i = 0;
 					while( $r_referencias = db_fetch_array( $qry_referencias ) )
@@ -238,19 +238,19 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						<tr>
 								<td class="navpic" align="center" nowrap>Referencia</td>
-							<?
+							<?php
 
 							foreach( $array_lastallas as $i=>$tales )
 							//for( $i = 33; $i <= 43; $i++ )
 							{
 							?>
 								<td class="navpic" align="center" nowrap><?=$i?></td>
-							<?
+							<?php
 							}//end for
 							?>
 								<td class="navpic" align="center" nowrap>TOTALES</td>
 								</tr>
-						<?
+						<?php
 						//print_r($array_referencias);
 						foreach( $array_referencias as $key => $valor )
 						{
@@ -267,12 +267,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									
 									<tr>
 											<td class="navpic" align="center" nowrap><?=$linea?></td>
-											<?
+											<?php
 											foreach( $array_lastallas as $i=>$tales )
 											{
 											?>
 												<td class="navpic" align="right" nowrap>
-													<?
+													<?php
 														
 														
 														foreach( $array_tallas[$valor['IDPuntoVentaReferencia']] as $llave => $talla )
@@ -290,12 +290,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 			
 													?>
 												</td>
-											<?
+											<?php
 											}//end for
 											?>
 											<td class="navpic" align="center" nowrap>
 												
-												<?
+												<?php
 												echo array_sum( $array_linea[$linea] );
 												?>
 											</td>
@@ -308,7 +308,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									
 									
 									
-						<?			
+						<?php			
 							
 							}//end if
 							
@@ -318,12 +318,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						?>
 							<tr>
 								<td class="<?=$class?>" align="center" nowrap><?=$valor['Numero']?></td>
-								<?
+								<?php
 								foreach( $array_lastallas as $i=>$tales )
 								{
 								?>
 									<td class="<?=$class?>" align="right" nowrap>
-										<?
+										<?php
 											
 											
 											foreach( $array_tallas[$valor['IDPuntoVentaReferencia']] as $llave => $talla )
@@ -353,11 +353,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 										?>
 									</td>
-								<?
+								<?php
 								}//end for
 								?>
 								<td class="<?=$class?>" align="center" nowrap>
-									<?
+									<?php
 										echo number_format( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] , 0);
 										if( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] > 0 )
 										{
@@ -369,25 +369,25 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								</td>
 									</tr>
 						
-						<?
+						<?php
 						}//while( $r_referencias = db_fetch_object( $qry_referencias ) )
 						?>
 						<tr>
 							<td class="navpic" align="center" nowrap>TOTALES</td>
-							<?
+							<?php
 							foreach( $array_lastallas as $i=>$tales )
 							{
 							?>
 								<td class="navpic" align="right" nowrap>
-									<?
+									<?php
 										echo number_format( $totalestalla[$i]['Totales'] );
 									?>
 								</td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="navpic" align="center" nowrap>
-								<?
+								<?php
 									echo number_format( $total, 0);
 									
 								?>

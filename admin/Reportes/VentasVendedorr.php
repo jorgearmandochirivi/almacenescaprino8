@@ -81,9 +81,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty( $FechaDesde ) && !empty( $FechaHasta ) ){
-		%>
+		?>
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
 				<table width="100%" border="0" align="center" cellspacing="1" cellpadding="0" bgcolor="#345487">
@@ -426,7 +426,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 	 } // END if(!empty($IDEmpresa))
 	?>
 	</table>
-	<?PHP						
+	<?php PHP						
 }// Enf function print()	
 
 ?>

@@ -1,4 +1,4 @@
-<body><?
+<body><?php
 
 $Table = "CodificacionEspecifica";
 $TableJoin = "Referencia";
@@ -85,12 +85,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                             
                             </td>
 							<td align="left" valign="middle" class="nav">Puntos de Venta	<select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><% 								
+									<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select> <input type="hidden" name="mod" value="ConsultaFacturaPares"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav"><input type="submit" value="Ver Reporte" name="submit" class="submit"></td>
 						</tr>
@@ -121,7 +121,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		
 		<br>
 		<br>
-		<?
+		<?php
 		if(!empty($FechaDesde) && !empty($FechaHasta)  ){
 				if (!empty($IDPuntoVenta))
 					$condicion_punto=" AND DF.IDPuntoVenta = '$IDPuntoVenta' ";
@@ -214,7 +214,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						Reporte Almacen : <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
 					</td>
 				</tr>
-				<?
+				<?php
 					
 					//print_r( $array_banco );
 					//Seleccionar Bancos
@@ -233,7 +233,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="titlemedium" align="center" nowrap> Cliente</td>
 										<td class="titlemedium" align="center" nowrap> Cedula</td>
 							</tr>
-						<?
+						<?php
 						while ($r = db_fetch_object( $query ))
 						{ 
 							$sql_factura=db_query("Select * From Factura Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVenta."'");
@@ -245,18 +245,18 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						?>
 						<tr>
 						  <td class="<?=$class?>" align="center" nowrap><?=$row_factura->FechaFactura;?></td>
-						  <td class="<?=$class?>" align="center" nowrap><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
-						  <td class="<?=$class?>" align="center" nowrap><? echo get_field("Empleado","Nombre","IDEmpleado",$row_factura->IDEmpleado) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_factura->IDEmpleado); ?></td>
+						  <td class="<?=$class?>" align="center" nowrap><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
+						  <td class="<?=$class?>" align="center" nowrap><?php echo get_field("Empleado","Nombre","IDEmpleado",$row_factura->IDEmpleado) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_factura->IDEmpleado); ?></td>
 										<td class="<?=$class?>" align="center" nowrap><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVenta;?>&id=<?=$r->IDFactura ?>"><?=$row_factura->NumeroFactura; ?></a></td>
-										<td class="<?=$class?>" align="center" nowrap><? echo $r->TotalProductos ?></td>
+										<td class="<?=$class?>" align="center" nowrap><?php echo $r->TotalProductos ?></td>
 										<td class="<?=$class?>" align="center" nowrap>$
 										  <?=number_format($row_factura->ValorTotal); ?>
 										</td>
-										<td class="<?=$class?>" align="center" nowrap><? echo get_field("Cliente","Nombre","IDCliente",$row_factura->IDCliente) . " " . get_field("Cliente","Apellido","IDCliente",$row_factura->IDCliente); ?></td>
-										<td class="<?=$class?>" align="right" nowrap><? echo get_field("Cliente","Cedula","IDCliente",$row_factura->IDCliente); ?></td>
+										<td class="<?=$class?>" align="center" nowrap><?php echo get_field("Cliente","Nombre","IDCliente",$row_factura->IDCliente) . " " . get_field("Cliente","Apellido","IDCliente",$row_factura->IDCliente); ?></td>
+										<td class="<?=$class?>" align="right" nowrap><?php echo get_field("Cliente","Cedula","IDCliente",$row_factura->IDCliente); ?></td>
 						</tr>
 						
-						<?
+						<?php
 						}//end foreach( $r_facturas as $key => $valor )
 						?>
 							
@@ -283,12 +283,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</table>
 	</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

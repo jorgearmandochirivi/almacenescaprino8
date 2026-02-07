@@ -19,7 +19,7 @@
 	</head>
 
 	<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
-<?
+<?php
 
 $TitleMod ="Forma de Pago Factura";
 
@@ -356,7 +356,7 @@ var Check = new Array('Nombre','Publicar');
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=navpic bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo "No. ".$id."  Valor: $".number_format(round($valor)); ?></td>
+		<td class=navpic bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo "No. ".$id."  Valor: $".number_format(round($valor)); ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -385,14 +385,14 @@ var Check = new Array('Nombre','Publicar');
 
 
 
-    <form name="frm" id="frmFormaPago" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?> onSubmit="return EvaluaReg(this,Check)" <?}?>>
+    <form name="frm" id="frmFormaPago" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?> onSubmit="return EvaluaReg(this,Check)" <?php }?>>
 
 		<table width=467 border=0 cellspacing=1 cellpadding=1 class=texto>
 			<tr class=row2>
 				<td width="23%" class=titulodetablas align=center>Forma de Pago</td>
 								<td width="37%" class=titulodetablas align=center>Valor</td>
 							</tr>
-		<?
+		<?php
 			while( $r = db_fetch_object($qid) )
 			{
 				if( $r->IDFormaPago <> 17 ) //Puntos Fidelizacion
@@ -431,12 +431,12 @@ var Check = new Array('Nombre','Publicar');
 							?>
 
 						<input type="text" size="15" class="input" name="Valor[<?=$r->IDPuntoVentaBanco?>]" value="<?php echo $valor_pagar; ?>" <?php echo $campo_activo; ?>>
-                        <?
+                        <?php
                         if( $r->IDFormaPago == "20" )
 						{
 						?>
                         	<input type="text" size="15" class="input" name="CodigoTargeta[<?=$r->IDPuntoVentaBanco?>]" value="" placeholder="Codigo Tarjeta">
-                        <?
+                        <?php
 						}//end if
 						?>
 						<input type="hidden" name="IDFormaPago[<?=$r->IDPuntoVentaBanco?>]" value="<?=$r->IDFormaPago?>">
@@ -445,7 +445,7 @@ var Check = new Array('Nombre','Publicar');
 						<input type="hidden" name="IDBanco[<?=$r->IDPuntoVentaBanco?>]" value="<?=$r->IDBanco?>"></div>
 				</td>
 							</tr>
-		<?
+		<?php
 				}//end if
 				elseif(1==2) //Se descativo la forma de pago por medio de pago se descuenta en la realizacion de la factura
 				{
@@ -518,12 +518,12 @@ var Check = new Array('Nombre','Publicar');
 
                                         </td>
                                         <td>
-                                       		<?
+                                       		<?php
                                             	echo $r_bono["IDBonoFidelizacion"];
 											?>
                                        </td>
                                         <td>$
-											<?
+											<?php
                                             	echo number_format($r_bono["Valor"],"0",",",".");
 											?>
                                       	</td>
@@ -541,7 +541,7 @@ var Check = new Array('Nombre','Publicar');
 							</div>
 						</td>
 					</tr>
-		<?
+		<?php
 							}//end if no hay puntos
 						}//end if fidelizado
 				}//end else
@@ -569,7 +569,7 @@ var Check = new Array('Nombre','Publicar');
 	</tr>
 </table>
 
-<?
+<?php
 }// End function print_form()
 ?>
 </body>

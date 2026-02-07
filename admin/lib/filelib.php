@@ -1,4 +1,4 @@
-<?
+<?php
 /*******************************************************************************************
 	Libreria de funciones básicas para php
 	Creador por Francisco Mu–oz :

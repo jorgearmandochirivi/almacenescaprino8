@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../../admin/config.inc.php");
 	
 	header( "Content-type: text/json" );

@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<?
+<?php
 	$TitleMod ="Traslados";
 	
 	$Table = "Traslado";
@@ -209,7 +209,7 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 														<td class=col1>Destino</td>
 														<td class=col2 colspan="3">
 															<select name="IDPuntoVentaDestino" class="InputSelect">
-															<?
+															<?php
 																$sql_puntoventa = "SELECT * FROM PuntoVenta";
 																$query_puntoventa = db_query($sql_puntoventa);
 																while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
@@ -254,7 +254,7 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 														<td align="center"><b></b></td>
 														<td align="center"><b></b></td>
 													</tr>
-													<?
+													<?php
 													for( $i = 1; $i <= 20; $i++  )
 													{
 													?>
@@ -269,7 +269,7 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 														<td align="center"><input type=hidden name=Maximo<?=$i?>></td>
 														<td align="center"><input type=hidden name=Precio<?=$i?>></td>
 													</tr>
-													<?
+													<?php
 													}
 													?>
 													<tbody bgcolor=#e7ebef></tbody>
@@ -289,6 +289,6 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 	
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML> 

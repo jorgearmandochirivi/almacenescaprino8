@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 $TitleMod ="Codificacion Especifica  ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta );
 
 $Table = "CodificacionEspecifica";
@@ -51,15 +51,15 @@ function seleccionareferencia( $newmode)
 							<td colspan="2">
 								<select name="IDPuntoVenta" >
 									<option value="">Seleccione Un Punto de Venta</option>
-									<% 								
+									<?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
 								while($punto = db_fetch_object($qry_punto)){
-									%>
-									<option value="<% echo $punto->IDPuntoVenta;%>">
-										&nbsp;&nbsp;<% echo $punto->Nombre %></option>";
-								<%
+									?>
+									<option value="<?php echo $punto->IDPuntoVenta;;?>">
+										&nbsp;&nbsp;<?php echo $punto->Nombre ?></option>";
+								<?php
 								}
-							%>
+							?>
 								</select>
 								</td>
 							
@@ -77,7 +77,7 @@ function seleccionareferencia( $newmode)
 			</tr>
 		
 	</table>
-	<?
+	<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 ?>

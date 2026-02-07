@@ -1,4 +1,4 @@
-<%
+<?php
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -10,11 +10,11 @@
 	$IDPuntoVenta = $datos["IDPuntoVenta"];
 
  	 	
-%>
+  ?>
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=ISO-8859-1">
-		<title><%pv($app_title);%> Especialidades</title>
+		<title><?php pv($app_title);;?> Especialidades</title>
 		<link href="../styles.css" rel="stylesheet" media="screen">
 		<link href="../admin/styles.css" rel="stylesheet" media="screen">
 	
@@ -50,7 +50,7 @@
 	<body bgcolor="#ffffff">
 	<table width="100%" cellpadding="3" cellspacing="0" border="0" class="content">
 	<tr>
-		<td class="navpic"  align="left"><strong><font ><%pv($app_title);%></font></strong></td>
+		<td class="navpic"  align="left"><strong><font ><?php pv($app_title);;?></font></strong></td>
 	</tr>
 	<tr>
 		<td class="col2"  align="left">
@@ -61,7 +61,7 @@
 	</table>
 		<form name=form method="Post" action="">
 			<div align="center">
-				<?
+				<?php
 				
 				/*
 				$sql_referencias = "SELECT R.IDReferencia, R.Numero, PVR.IDPuntoVentaReferencia
@@ -91,10 +91,10 @@
 
 				?>
 				<SELECT name=Referencias style="width:180px; " size="20" class="inputSelect" multiple>
-					<%
+					<?php
 						foreach( $array_referencias as $key=>$valor )
 							echo "<option value=$valor[IDPuntoVentaReferencia]>$valor[Numero]</option>";
-					%>
+					?>
 				</SELECT><br>
 				<br>
 				<input type="button" value="Agregar" onclick="if(document.form.Referencias.selectedIndex >= 0)additem(window.opener.document.frm.Referencias,form.Referencias.options[form.Referencias.selectedIndex].value,form.Referencias.options[form.Referencias.selectedIndex].text);">	<input type="button" value="Cerrar" onclick="window.close();">

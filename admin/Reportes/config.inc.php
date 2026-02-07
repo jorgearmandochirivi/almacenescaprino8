@@ -1,4 +1,4 @@
-<?
+<?php
 //exit; 
 $dbhost = "lldd216.servidoresdns.net";
 

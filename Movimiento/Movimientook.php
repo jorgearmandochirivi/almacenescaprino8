@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Entrada de Pedidos";
 
@@ -193,7 +193,7 @@ else
 			</td>
 			<td class="tbtbot"><b></b>
 				<span class="gen">
-					<? echo $TitleMod." - ".$info ?>
+					<?php echo $TitleMod." - ".$info ?>
 				</span>
 			</td>
 			<td class="tbtr">
@@ -206,7 +206,7 @@ else
 	<table class="forumline" width="600" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
-		<?
+		<?php
 			filtrar();
 		?>
 	</td>
@@ -234,11 +234,11 @@ else
 		</table>
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 					<tr>
-						<td class=navpic align="center" nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; %>' style="text-decoration: none;">REFERENCIA</a><a style="text-decoration: none;" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;<% if($_GET['order_by']=="Referencia.Numero"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
+						<td class=navpic align="center" nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&tjoin=PuntoVentaReferencia&action=list"; ?>' style="text-decoration: none;">REFERENCIA</a><a style="text-decoration: none;" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="Referencia.Numero")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
 							<td class=navpic nowrap bgcolor=#DBEAF5 align="center" colspan = "<?=$colspan?>">TALLAS</td>
 					</tr>
 	
-				<? 
+				<?php 
 				foreach( $array_referencias as $key => $valor ){
 				
 					$class = repetition()?"col1list":"col2list";
@@ -248,12 +248,12 @@ else
 	  	
 					<tr>
 						<td nowrap class="<?=$class?>"></td>
-						<?
+						<?php
 						foreach( $array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos )
 						{
 						?>
-						<td nowrap class="<?=$class?>"><b><? echo get_field("Talla","Descripcion","IDTalla",$datos[IDTalla]); ?></b></td>
-						<?
+						<td nowrap class="<?=$class?>"><b><?php echo get_field("Talla","Descripcion","IDTalla",$datos[IDTalla]); ?></b></td>
+						<?php
 						}
 						//anadir las columnas que falten (DISENO)
 						for( $i = 0; $i<$columnasmas; $i++ )
@@ -261,20 +261,20 @@ else
 						?>
 							<td nowrap class="<?=$class?>">
 							</td>
-						<?
+						<?php
 						}//end for
 						?>
 						
 					</tr>
 					
 					<tr>
-						<td nowrap class="<?=$class?>"><? echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$valor[IDPuntoVentaReferencia]))?></td>
-						<?
+						<td nowrap class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$valor[IDPuntoVentaReferencia]))?></td>
+						<?php
 						foreach( $array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos )
 						{
 						?>
 							<td nowrap class="<?=$class?>">
-								<? echo number_format($datos[CantidadPendiente]); ?><br>
+								<?php echo number_format($datos[CantidadPendiente]); ?><br>
 								<input type="hidden" name="Cantidad[<?=$datos[IDPendientes]?>]" value="<?=$datos[CantidadPendiente]?>">
 								<input type="hidden" name="IDPuntoVentaReferencia[<?=$datos[IDPendientes]?>]" value="<?=$datos[IDPuntoVentaReferencia]?>">
 								<input type="hidden" name="IDTalla[<?=$datos[IDPendientes]?>]" value="<?=$datos[IDTalla]?>">
@@ -282,7 +282,7 @@ else
 								<input type="hidden" name="IDPendientes[<?=$datos[IDPendientes]?>]" value="<?=$datos[IDPendientes]?>">
 							</td>
 
-						<?
+						<?php
 						}
 						//anadir las columnas que falten (DISENO)
 						for( $i = 0; $i<$columnasmas; $i++ )
@@ -290,16 +290,16 @@ else
 						?>
 							<td nowrap class="<?=$class?>">
 							</td>
-						<?
+						<?php
 						}//end for
 						?>
 						
 					</tr>
-				<? } // END for
+				<?php } // END for
 				?>
 					<tr>
 							<td  bgcolor=#DBEAF5 colspan = "<?=$colspan+1?>" nowrap class="navpic" align="center">
-							<?
+							<?php
 								print $pages;
 							?>
 							<input type="hidden" name="action" value="insert">
@@ -313,7 +313,7 @@ else
 			</td>
 		</tr>
 	</table>
-	<? 			
+	<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No hay pedidos pendientes </b></span>";
@@ -411,7 +411,7 @@ else
 			</td>
 			<td class="tbtbot"><b></b>
 				<span class="gen">
-					<? echo $TitleMod." - ".$info ?>
+					<?php echo $TitleMod." - ".$info ?>
 				</span>
 			</td>
 			<td class="tbtr">
@@ -453,7 +453,7 @@ else
 			</td>
 		</tr>
 	</table>
-<?
+<?php
 }// Enf function previoentrada()				
 
 
@@ -502,6 +502,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 ?>

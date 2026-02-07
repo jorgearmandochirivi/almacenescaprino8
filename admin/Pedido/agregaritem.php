@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<?
+<?php
 include ("../config.inc.php3");
 print_form($idsugerido);
 
@@ -36,6 +36,6 @@ Global $numfotos;
 			</table>
 		</td>
 	</tr>
-</table><?
+</table><?php
 } // END function print_form($idsugerido)
 ?></BODY></HTML></body> 

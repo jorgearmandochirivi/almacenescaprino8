@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	//Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -119,7 +119,7 @@ table{
         <td class=texto width="91">Fecha Registro</td>
         <td width="112" colspan="2" nowrap class=texto><?=date("Y-m-d") ?></td>
     </tr>
-    <?
+    <?php
     if( !empty( $r->FechaTrEd ) && $r->FechaTrEd !="0000-00-00 00:00:00" )
 	{
 	?>
@@ -127,7 +127,7 @@ table{
         <td class=texto width="91">Fecha ctualizaci&oacute;n</td>
         <td class=texto colspan="2" nowrap><?=substr($r->FechaTrEd,0,10) ?></td>
     </tr>
-	<?
+	<?php
 	}//end if
 	?>
     <tr>
@@ -236,7 +236,7 @@ table{
 </table>
 
 
-<?
+<?php
 
 $page = ob_get_contents();
 $fw = fopen($file, "w");

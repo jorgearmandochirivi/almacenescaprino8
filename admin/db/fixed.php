@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 $TitleMod ="Referencia";
 
 $Table = "Referencia";
@@ -321,9 +321,9 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 					<script>
 				var Check2 = new Array("Importar");
 				</script>
-					<form name="frmInv" action="<? echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
+					<form name="frmInv" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
-							<td colspan="2"><%=Mensaje_Info("Agregar Forma de Pago")%></td>
+							<td colspan="2"><?php echo Mensaje_Info("Agregar Forma de Pago");?></td>
 						</tr>
 						<tr class=row2>
 							<td class=row2>
@@ -335,7 +335,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<? 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
+									<?php 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
 								$query_puntoventa = db_query($sql_puntoventa);
 								while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 								{
@@ -361,7 +361,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							<td>
 								<select name="IDFormaPago" class="input">
 									<option value=''>Seleccione</option>
-									<?
+									<?php
 									$sql_formapago = " SELECT * FROM FormaPago ";
 									$qry_formapago = db_query( $sql_formapago );
 									while( $r_formapago = db_fetch_object( $qry_formapago ) )
@@ -381,9 +381,9 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							<td><input type=submit name=submit value="enviar" class=submit></td>
 						</tr>
 					</form>
-					<form name="frmPr" action="<? echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmPr" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
-							<td colspan="2"><%=Mensaje_Info("Cambiar Fecha")%></td>
+							<td colspan="2"><?php echo Mensaje_Info("Cambiar Fecha");?></td>
 						</tr>
 						<tr class=row2>
 							<td class=row2>
@@ -408,7 +408,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<? 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
+									<?php 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
 								$query_puntoventa = db_query($sql_puntoventa);
 								while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 								{
@@ -422,8 +422,8 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							<td><input type=submit name=submit value="enviar" class=submit></td>
 						</tr>
 					</form>
-					<form name="frmfactura" action="<? echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
-						<tr class=row2><td colspan=2><%=Mensaje_Info("Eliminar Factura")%></td>
+					<form name="frmfactura" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+						<tr class=row2><td colspan=2><?php echo Mensaje_Info("Eliminar Factura");?></td>
 						</tr>
 						<tr class=row2>
 							<td class=row2>
@@ -435,7 +435,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<? 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
+									<?php 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
 								$query_puntoventa = db_query($sql_puntoventa);
 								while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 								{
@@ -463,8 +463,8 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 					</form>
 
 					<!--
-					<form name="frmfacturaelectronica" action="<? echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
-						<tr class=row2><td colspan=2><%=Mensaje_Info("Cambiar a Factura Electr&oacute;nica")%></td>
+					<form name="frmfacturaelectronica" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+						<tr class=row2><td colspan=2><?php echo Mensaje_Info("Cambiar a Factura Electr&oacute;nica");?></td>
 						</tr>
 						<tr class=row2>
 							<td class=row2>
@@ -485,7 +485,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<? 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
+									<?php 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
 								$query_puntoventa = db_query($sql_puntoventa);
 								while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 								{
@@ -501,9 +501,9 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 					</form>
 					-->
 
-					<form name="frmVerificaFormas" action="<? echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaFormas" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
-							<td colspan="2"><%=Mensaje_Info("Verificar Formas de Pago")%></td>
+							<td colspan="2"><?php echo Mensaje_Info("Verificar Formas de Pago");?></td>
 						</tr>
 						<tr class=row2>
 							<td class=row2>
@@ -515,7 +515,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<? 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
+									<?php 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
 								$query_puntoventa = db_query($sql_puntoventa);
 								while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 								{
@@ -542,9 +542,9 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						</tr>
 					</form>
 
-					<form name="frmVerificaCambios" action="<? echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaCambios" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
-							<td colspan="2"><%=Mensaje_Info("Borrar Cambios / Recuerde Borrar Primero el excedente generado")%></td>
+							<td colspan="2"><?php echo Mensaje_Info("Borrar Cambios / Recuerde Borrar Primero el excedente generado");?></td>
 						</tr>
 						<tr class=row2>
 							<td class=row2>
@@ -556,7 +556,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<? 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
+									<?php 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
 								$query_puntoventa = db_query($sql_puntoventa);
 								while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 								{
@@ -571,9 +571,9 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						</tr>
 					</form>
 
-					<form name="frmVerificaFacturaBonos" action="<? echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaFacturaBonos" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
-							<td colspan="2"><%=Mensaje_Info("Borrar Redimir Bonos / Recuerde Borrar Primero el excedente generado")%></td>
+							<td colspan="2"><?php echo Mensaje_Info("Borrar Redimir Bonos / Recuerde Borrar Primero el excedente generado");?></td>
 						</tr>
 						<tr class=row2>
 							<td class=row2>
@@ -585,7 +585,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<? 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
+									<?php 								$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S'";
 								$query_puntoventa = db_query($sql_puntoventa);
 								while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 								{
@@ -605,7 +605,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 			</td>
 	</tr>
 </table>
-<?
+<?php
 }// End function print_form()
 
 
@@ -635,9 +635,9 @@ while( $r_formapago = db_fetch_array( $qry_formapago ) )
 					<script>
 				var Check2 = new Array("Importar");
 				</script>
-					<form name="frmInv" action="<? echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
+					<form name="frmInv" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
-							<td colspan="4"><%=Mensaje_Info("Formas de Pago de la Factura")%></td>
+							<td colspan="4"><?php echo Mensaje_Info("Formas de Pago de la Factura");?></td>
 						</tr>
 						<tr class=titlemedium>
 							<td >Forma de Pago</td>
@@ -645,7 +645,7 @@ while( $r_formapago = db_fetch_array( $qry_formapago ) )
 							<td >Comision</td>
 							<td >Borrar</td>
 						</tr>
-						<?
+						<?php
 						while( $r = db_fetch_object( $qid ) )
 						{
 						?>
@@ -655,7 +655,7 @@ while( $r_formapago = db_fetch_array( $qry_formapago ) )
 							<td ><?=$r->Comision?></td>
 							<td ><a href="?mod=fixed&action=borraforma&IDFactura=<?=$r->IDFactura?>&IDFormaPagoFactura=<?=$r->IDFormaPagoFactura?>&IDPuntoVenta=<?=$r->IDPuntoVenta?>">Borrar</a></td>
 						</tr>
-						<?
+						<?php
 						}
 						?>
 					</form>
@@ -664,7 +664,7 @@ while( $r_formapago = db_fetch_array( $qry_formapago ) )
 			</td>
 	</tr>
 </table>
-<?
+<?php
 }// End function
 
 ?>

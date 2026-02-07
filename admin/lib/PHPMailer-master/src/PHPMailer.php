@@ -2425,7 +2425,7 @@ class PHPMailer
         if ('' !== $this->MessageID && preg_match('/^<.*@.*>$/', $this->MessageID)) {
             $this->lastMessageID = $this->MessageID;
         } else {
-            $this->lastMessageID = sprintf('<%s@%s>', $this->uniqueid, $this->serverHostname());
+            $this->lastMessageID = sprintf('<?php s@%s>', $this->uniqueid, $this->serverHostname());
         }
         $result .= $this->headerLine('Message-ID', $this->lastMessageID);
         if (null !== $this->Priority) {

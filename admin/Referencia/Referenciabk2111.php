@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Referencia";
 
@@ -158,14 +158,14 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
 
-<?	
+<?php 
 	if($newmode <> "insert")
 	{
 		$TABsel = 1;
@@ -178,9 +178,9 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 	}
 ?>	
 <table cellpadding=1 cellspacing=0 class=bordertable align=left >
-	<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+	<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -202,8 +202,8 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 										<td class=row2>Saldo</td>
 									</tr>
 									<tr>
-										<td class=row1><? echo formradiogroup(array('M'=>'M','F'=>'F','Otro'=>'Otro'),$r->Sexo, 'Sexo'); ?></td>
-										<td class=row1><? echo formradiogroup(array('S'=>'S','N'=>'N'),$r->Saldo, 'Saldo'); ?></td>
+										<td class=row1><?php echo formradiogroup(array('M'=>'M','F'=>'F','Otro'=>'Otro'),$r->Sexo, 'Sexo'); ?></td>
+										<td class=row1><?php echo formradiogroup(array('S'=>'S','N'=>'N'),$r->Saldo, 'Saldo'); ?></td>
 									</tr>
 									<tr>
 										<td></td>
@@ -218,7 +218,7 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 							<td>Lista de Precios<br>
 								<select name="IDPrecio" class="input">
 								<option value="">Seleccione...</option>
-								<? 
+								<?php 
 								
 								$sql_precio = " SELECT * FROM Precio ORDER BY ValorVenta ";
 								$qry_precio = db_query( $sql_precio );
@@ -236,9 +236,9 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 						</tr>
 						<tr class=row2>
 			<td width="50%">Proveedor<br>
-								<? echo formpopup("Proveedor","Nombre","Nombre","IDProveedor",$r->IDProveedor,"input\" id=\"Proveedor"); ?></td><td>Talla <br>
+								<?php echo formpopup("Proveedor","Nombre","Nombre","IDProveedor",$r->IDProveedor,"input\" id=\"Proveedor"); ?></td><td>Talla <br>
 								<select name=IDTipoTalla>
-									<option value="">[ Seleccione ]</option><? 
+									<option value="">[ Seleccione ]</option><?php 
 								$sql_tipotalla = "SELECT * FROM TipoTalla ORDER BY Descripcion";
 								$query_tipotalla = db_query($sql_tipotalla);
 								while($r_tipotalla = db_fetch_object($query_tipotalla))
@@ -258,10 +258,10 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 			</tr>
 						<tr class=row2>
 			<td width="50%">Color<br>
-								<? echo formpopup("Color","Nombre","Nombre","IDColor",$r->IDColor,"input\" id=\"Color"); ?></td><td>Linea<br>
+								<?php echo formpopup("Color","Nombre","Nombre","IDColor",$r->IDColor,"input\" id=\"Color"); ?></td><td>Linea<br>
 								<select name=IDLinea>
 								<option value="">[ Seleccione ]</option>
-								<? 
+								<?php 
 									$sql_tipo = "SELECT * FROM Tipo ORDER BY Descripcion";
 									$query_tipo = db_query($sql_tipo);
 									while($r_tipo = db_fetch_object($query_tipo))
@@ -281,8 +281,8 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 			</tr>
 						<tr class=row2>
 			<td width="50%">Cuero<br>
-								<? echo formpopup("Cuero","Descripcion","Descripcion","IDCuero",$r->IDCuero,"input\" id=\"Cuero"); ?></td><td> Publicar<br>
-								 <? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
+								<?php echo formpopup("Cuero","Descripcion","Descripcion","IDCuero",$r->IDCuero,"input\" id=\"Cuero"); ?></td><td> Publicar<br>
+								 <?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
 			</tr>
 						<tr class=row3>
 							<td colspan="2">
@@ -292,9 +292,9 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 						<tr class=row2>
 							<td colspan="2">
 								<br>
-								<%
+								<?php
 									table_check_list($Table,$Key,$r->$Key,"PuntoVenta","IDPuntoVenta","PuntoVentaReferencia","PuntoVenta[]",$newmode);
-								%>							
+								?>							
 							</td>
 						</tr>
 						<tr class=row3>
@@ -314,9 +314,9 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
 				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<? echo $r->$Key ?>">
+				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 			</tr>
 			</table>
@@ -324,7 +324,7 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 	</tr>
 </table>
 </form>
-<?
+<?php
 }// End function print_form()
 
 /*******************************************************************************************
@@ -363,26 +363,26 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 <br>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php
 		if($rows > 0){
 ?>		
 <br>
 <table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-<?filtrar();?>	
+<?php filtrar();?>	
 <tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
 		</tr>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=16 nowrap>
-<?
+<?php
 	print $pages;
 ?>
 </td>
@@ -392,39 +392,39 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 				<table width=100% border=0 cellspacing=1 cellpadding=0>
 				<tr>
 				<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-				<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Numero&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Numero<% if($_GET['order_by']=="Numero"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-				<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDProveedor&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Proveedor&nbsp;<% if($_GET['order_by']=="IDProveedor"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-				<td class=rowform nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTipoTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Tipo de Talla</a><a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTipoTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; %>"><% if($_GET['order_by']=="IDTipoTalla"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDLinea&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Tipo Ref.&nbsp;<% if($_GET['order_by']=="IDLinea"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDLinea&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Linea&nbsp;<% if($_GET['order_by']=="IDLinea"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-				<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Nombre<% if($_GET['order_by']=="Nombre"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-				<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Publicar&nbsp;<% if($_GET['order_by']=="Publicar"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+				<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Numero&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Numero<?php if($_GET['order_by']=="Numero")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+				<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDProveedor&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Proveedor&nbsp;<?php if($_GET['order_by']=="IDProveedor")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+				<td class=rowform nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTipoTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Tipo de Talla</a><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTipoTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>"><?php if($_GET['order_by']=="IDTipoTalla")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDLinea&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Tipo Ref.&nbsp;<?php if($_GET['order_by']=="IDLinea")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDLinea&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Linea&nbsp;<?php if($_GET['order_by']=="IDLinea")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+				<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Nombre<?php if($_GET['order_by']=="Nombre")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+				<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Publicar&nbsp;<?php if($_GET['order_by']=="Publicar")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
 				<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 				</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 <td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-<td nowrap class=row1><? echo $r->Numero ?></td> 
-<td nowrap class=row1><? echo $r->IDProveedor ?></td>
-						<td nowrap class=row1><? echo get_field("TipoTalla","Descripcion","IDTipoTalla",$r->IDTipoTalla) ?></td>
-						<td nowrap class=row1><?echo get_field("Tipo","Descripcion","IDTipo",get_field("Linea","IDTipo","IDLinea",$r->IDLinea))?></td>
-						<td nowrap class=row1><? echo get_field("Linea","Nombre","IDLinea",$r->IDLinea) ?></td>
-						<td nowrap class=row1><? echo $r->Nombre ?></td>
-						<td nowrap class=row1><? echo $r->Publicar ?></td>
+<td nowrap class=row1><?php echo $r->Numero ?></td> 
+<td nowrap class=row1><?php echo $r->IDProveedor ?></td>
+						<td nowrap class=row1><?php echo get_field("TipoTalla","Descripcion","IDTipoTalla",$r->IDTipoTalla) ?></td>
+						<td nowrap class=row1><?php echo get_field("Tipo","Descripcion","IDTipo",get_field("Linea","IDTipo","IDLinea",$r->IDLinea))?></td>
+						<td nowrap class=row1><?php echo get_field("Linea","Nombre","IDLinea",$r->IDLinea) ?></td>
+						<td nowrap class=row1><?php echo $r->Nombre ?></td>
+						<td nowrap class=row1><?php echo $r->Publicar ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 						<td class=texto bgcolor=#DBEAF5 colspan=8 nowrap>
-	<?
+	<?php
 		print $pages;
 		?>
 </td>
@@ -433,7 +433,7 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 		</tr>
 </table>	
 
-<? 			
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -488,6 +488,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 ?>

@@ -1,4 +1,4 @@
-<body><?
+<body><?php
 		
 		require( $libdir."dhabiles.inc.php" );
 	
@@ -82,12 +82,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td  align='left' valign='middle' class="nav"><img src='images/house.png' border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav">Puntos de Venta	<select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><% 								
+									<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select> <input type="hidden" name="mod" value="ReporteMensual"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav">
 								<input type="submit" value="Ver Reporte" name="submit" class="submit">
@@ -101,9 +101,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty($IDPuntoVenta) && !empty( $FechaDesde ) && !empty( $FechaHasta ) ){
-		%>
+		?>
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; <br>
 				<br>
@@ -115,12 +115,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
 							
-						<?
+						<?php
 						echo "MENSUAL CONSIGNACIONES ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta )." ".$FechaDesde." - ".$FechaHasta;
 						?>
 					</td>
 				</tr>
-				<?
+				<?php
 
 					
 					$array_fechas = dhabiles($FechaDesde, $FechaHasta);
@@ -207,7 +207,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="titlemedium" align="center" nowrap>Rte. ICA</td>
 							<td class="titlemedium" align="center" nowrap>Ingreso</td>
 						</tr>
-						<?
+						<?php
 						
 						//voltear el array porque viene al reves
 						
@@ -294,10 +294,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorRetefuente = $datos[ValorRetefuente],2 ); $tValorRetefuente += $ValorRetefuente;?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $Neto = $datos[Neto] ,2 ); $tNeto += $Neto; ?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorRIVA = $datos[ValorRIVA] ,2 ); $tValorRIVA += $ValorRIVA; ?> </td>
-									<td class="<?=$class?>" align="right" nowrap><?echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
-									<td class="<?=$class?>" align="right" nowrap><?echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
+									<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
+									<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
 								</tr>
-						<?
+						<?php
 							}//end for
 						}//end for
 						
@@ -357,10 +357,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorRetefuente = $datos[ValorRetefuente],2 ); $tValorRetefuente += $ValorRetefuente;?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $Neto = $datos[Neto] ,2 ); $tNeto += $Neto; ?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorRIVA = $datos[ValorRIVA] ,2 ); $tValorRIVA += $ValorRIVA; ?> </td>
-									<td class="<?=$class?>" align="right" nowrap><?echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
-									<td class="<?=$class?>" align="right" nowrap><?echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
+									<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
+									<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
 								</tr>
-						<?
+						<?php
 						}//end for
 						
 						/********************** FIN DE MOSTRAR LAS FECHAS CON EFECTIVO *********************************************/
@@ -386,12 +386,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</table>
 			</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

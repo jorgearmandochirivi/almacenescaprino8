@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Codificacion Especifica";
 
@@ -52,7 +52,7 @@ function seleccionareferencia( $newmode)
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="bordertable" width="820">
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 			<tr>
-			<td class=col1 width=30%> 
+			<td class=col1 width=30;?> 
 				Buscar Referencia Por
 			</td>
 				<td class="col2" nowrap>
@@ -87,7 +87,7 @@ function seleccionareferencia( $newmode)
 			</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -107,7 +107,7 @@ function seleccionareferencia( $newmode)
 	<br>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="820">
 		<tr>
-			<td class="maintitle"><b></b><span class="gen"><?=$Title?> - <? echo $campo.":".$referencia;  ?> Los Almacenes que no apareces, no tienen venta para esta referencia</span></td>
+			<td class="maintitle"><b></b><span class="gen"><?=$Title?> - <?php echo $campo.":".$referencia;  ?> Los Almacenes que no apareces, no tienen venta para esta referencia</span></td>
 		</tr>
 	</table>
 	<table width=820 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -116,7 +116,7 @@ function seleccionareferencia( $newmode)
 				<table cellspacing='0' cellpadding='2' border='0' align='center'  width="820">
 					<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 						<tr>
-							<td class=col1 width=30%> 
+							<td class=col1 width=30;?> 
 				Buscar Referencia Por
 				</td>
 							<td class="col2" nowrap>
@@ -149,7 +149,7 @@ function seleccionareferencia( $newmode)
 				</table>
 			</td>
 	</tr>
-<?
+<?php
 if( !empty( $referencia ) )	
 {
 	
@@ -181,7 +181,7 @@ if( !empty( $referencia ) )
 		?>
 			<tr>
 				<td class="row1">
-					<? 
+					<?php 
 						$i = 0;
 						$r = array( );
 						while($r_codificacionesp = db_fetch_array($query_codificacion))
@@ -199,7 +199,7 @@ if( !empty( $referencia ) )
 							<tr>
 								
 								<td class="rowform">PUNTOS DE VENTA</td>	
-								<?
+								<?php
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 								{
 									//if( array_sum($array_existencias[ $idpunto ]) > 0 )
@@ -209,13 +209,13 @@ if( !empty( $referencia ) )
 								<td class="rowform">TOTALES</td>
 							</tr>
 							
-							<?
+							<?php
 							foreach($array_puntos as $idpunto => $nombre)
 							{
 							?>
 							<tr>
-								<td class=rowform align=center><? echo $nombre; ?></td>
-								<?
+								<td class=rowform align=center><?php echo $nombre; ?></td>
+								<?php
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 								{
 									echo "<td class=row1 align=center>".$array_ventas[ $idpunto ][ $idtalla ]."</td>";
@@ -224,28 +224,28 @@ if( !empty( $referencia ) )
 									
 								}//end for
 								?>	
-								<td class="rowform"><? echo $totalpunto[ $idpunto ]; ?></td>
+								<td class="rowform"><?php echo $totalpunto[ $idpunto ]; ?></td>
 							</tr>
-							<?
+							<?php
 							}//end for
 							?>
 							
 							<tr>
 								<td class="rowform">TOTALES</td>	
-								<?
+								<?php
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 								{
 									//if( array_sum($array_existencias[ $idpunto ]) > 0 )
 										echo "<td class=rowform align=center>".$totaltalla[ $idtalla ]."</td>";
 								}//end for
 								?>	
-								<td class="rowform"><? echo array_sum( $totalpunto ); ?></td>
+								<td class="rowform"><?php echo array_sum( $totalpunto ); ?></td>
 							</tr>
 						</form>
 					</table>
 				</td>
 			</tr>
-		<?
+		<?php
 		}// End if$rows
 		else
 			echo "<tr><td><span class=col1list><b>No se encontraron registros con los par&aacute;metros proporcionados </b></span></td></tr>";
@@ -253,6 +253,6 @@ if( !empty( $referencia ) )
 ?>
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

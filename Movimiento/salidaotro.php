@@ -1,7 +1,7 @@
 
 <body>
 
-<?
+<?php
 	$TitleMod ="Salida de Mercancia";
 	
 	$Table = "Movimiento";
@@ -316,7 +316,7 @@ function CalculaSubtotal(  )
 														</div>
 													</td>
 													<td class=col2>
-														<?
+														<?php
 															echo get_maxID("Movimiento","IDMovimiento");
 														?>
 													</td>
@@ -329,7 +329,7 @@ function CalculaSubtotal(  )
 														<div align="left">
 															Tipo de Movimiento</div>
 													</td>
-													<td class=col2><? echo formpopup("TipoMovimiento","NombreMovimiento","NombreMovimiento","IDTipoMovimiento",$r->IDTipoMovimiento,"input\" id=\"IDTipoMovimiento"); ?><input type="hidden" value="<?=$IDPuntoVenta?>" name="IDPuntoVenta"></td>
+													<td class=col2><?php echo formpopup("TipoMovimiento","NombreMovimiento","NombreMovimiento","IDTipoMovimiento",$r->IDTipoMovimiento,"input\" id=\"IDTipoMovimiento"); ?><input type="hidden" value="<?=$IDPuntoVenta?>" name="IDPuntoVenta"></td>
 													<td class=col2></td>
 													<td class=col2></td>
 												</tr>
@@ -379,7 +379,7 @@ function CalculaSubtotal(  )
 													<td align="center" class="col2list"><b></b></td>
 												</tr>
 											
-											<?
+											<?php
 											for( $i = 1; $i<=20;$i++)
 											{
 											?>
@@ -392,7 +392,7 @@ function CalculaSubtotal(  )
 													<td class="col2list" align="left"><input type=text id="Cantidad<?=$i?>" name=Cantidad<?=$i?> class=input size=5 onKeyPress="return acceptNum(event)" onBlur="if( !compruebamaximo( this.value, <?=$i?> ) ) this.value='';  CalculaSubtotal( );  "></td>
 													<td class="col2list" align="left"><input type=hidden name=Maximo<?=$i?>></td>
 												</tr>
-											<?
+											<?php
 											}//end for
 											?>
 											
@@ -418,7 +418,7 @@ function CalculaSubtotal(  )
 								
 							</table>
 								<input type="hidden" name="action" value="<?=$newmode?>"> <input type="hidden" name="ID" value="<?=$id?>"><input type=hidden name=ITEM value="5">
-								<input type="hidden" name="IDMovimiento" value="<?=$r->IDMovimiento?>"><input type="hidden" name="IDEmpleado" value='<?if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>'> <input type="submit" class="submit" name="submit" value="<?=$submit_caption?>">
+								<input type="hidden" name="IDMovimiento" value="<?=$r->IDMovimiento?>"><input type="hidden" name="IDEmpleado" value='<?php if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>'> <input type="submit" class="submit" name="submit" value="<?=$submit_caption?>">
 							
 					</td>
 				</tr>
@@ -428,6 +428,6 @@ function CalculaSubtotal(  )
 	
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY>

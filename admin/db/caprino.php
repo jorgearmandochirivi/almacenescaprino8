@@ -1,4 +1,4 @@
-<?
+<?php
 /*******************************************************************************************
 	Libreria de funciones para el Sistema de Puntos de Venta de Caprino
 	Creador por: John Escobar

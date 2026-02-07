@@ -1,4 +1,4 @@
-<?
+<?php
 
 	function generar_codigo_barras($parametros_codigo_barras, $IDCliente, $alto_barras = '',$libdir,$dirroot)
     {

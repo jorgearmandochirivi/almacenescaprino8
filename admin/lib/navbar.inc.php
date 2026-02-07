@@ -1,1 +1,99 @@
-<%class navbar {  var $numrowsperpage = 10;  var $str_previous = "<img src=images/prev.gif align=middle border=0>";  var $str_next = "<img src=images/next.gif align=middle border=0>"; // var $str_previous = "<span class=navvar> << </span>"; // var $str_next = "<span class=navvar> >> </span>";  // Variables used internally  var $file;  //var $total_records;  function execute($sql, $db) {    global $total_records, $row, $numtoshow,$start;    $numtoshow = $this->numrowsperpage;    if (!isset($row)) $row = 0;    $start = $row * $numtoshow;       $result = mysql_query($sql, $db);      $total_records = mysql_num_rows($result);      $sql .= " LIMIT $start, $numtoshow";      $result = mysql_query($sql, $db); 	return $result;  }  // This function creates a string that is going to be  // added to the url string for the navigation links.  // This is specially important to have dynamic links,  // so if you want to add extra options to the queries,  // the class is going to add it to the navigation links  // dynamically.  function build_geturl()  {    global $REQUEST_URI, $REQUEST_METHOD, $HTTP_GET_VARS, $HTTP_POST_VARS;    list($fullfile, $voided) = explode("?", $REQUEST_URI);    $this->file = $fullfile;    $cgi = $REQUEST_METHOD == 'GET' ? $HTTP_GET_VARS : $HTTP_POST_VARS;    reset ($cgi);    while (list($key, $value) = each($cgi)) {      if ($key != "row"  && !empty($value) && $key != "Submit")        $query_string .= "&" . $key . "=" . $value;    }    return $query_string;  }  // This function creates an array of all the links for the  // navigation bar. This is useful since it is completely  // independent from the layout or design of the page.  // The function returns the array of navigation links to the  // caller php script, so it can build the layout with the  // navigation links content available.  //  // $option parameter (default to "all") :  //  . "all"   - return every navigation link  //  . "pages" - return only the page numbering links  //  . "sides" - return only the 'Next' and / or 'Previous' links  //  // $show_blank parameter (default to "off") :  //  . "off" - don't show the "Next" or "Previous" when it is not needed  //  . "on"  - show the "Next" or "Previous" strings as plain text when it is not needed  function getlinks($option = "all", $show_blank = "off") {    global $total_records,$row, $numtoshow;    $extra_vars = $this->build_geturl();    $file = $this->file;    $number_of_pages = ceil($total_records / $numtoshow);    $subscript = 0;    for ($current = 0; $current < $number_of_pages; $current++) {      if ((($option == "all") || ($option == "sides")) && ($current == 0)) {        if ($row != 0)          $array[0] = '<a href="' . $file . '?row=' . ($row - 1) . $extra_vars . '">' . $this->str_previous . '</a>';        elseif (($row == 0) && ($show_blank == "on"))          $array[0] = $this->str_previous;      }      if (($option == "all") || ($option == "pages")) {        if ($row == $current)          $array[++$subscript] = '<span class=navvar>'.($current > 0 ? ($current + 1) : 1).'</span>';        else          $array[++$subscript] = '<a href="' . $file . '?row=' . $current . $extra_vars . '" class=navvar>' . ($current + 1) . '</a>';      }      if ((($option == "all") || ($option == "sides")) && ($current == ($number_of_pages - 1))) {        if ($row != ($number_of_pages - 1))          $array[++$subscript] = '<a href="' . $file . '?row=' . ($row + 1) . $extra_vars . '" class=navvar>' . $this->str_next . '</a>';        elseif (($row == ($number_of_pages - 1)) && ($show_blank == "on"))          $array[++$subscript] = $this->str_next;      }    }    return $array;  }}%>
+<?php
+class navbar {
+
+  var $numrowsperpage = 10;
+  var $str_previous = "<img src=images/prev.gif align=middle border=0>";
+  var $str_next = "<img src=images/next.gif align=middle border=0>";
+ // var $str_previous = "<span class=navvar> << </span>";
+ // var $str_next = "<span class=navvar> >> </span>";
+
+  // Variables used internally
+  var $file;
+  //var $total_records;
+
+  function execute($sql, $db) {
+    global $total_records, $row, $numtoshow,$start;
+
+    $numtoshow = $this->numrowsperpage;
+    if (!isset($row)) $row = 0;
+    $start = $row * $numtoshow;
+ 
+      $result = mysqli_query($db, $sql);
+      $total_records = mysqli_num_rows($result);
+      $sql .= " LIMIT $start, $numtoshow";
+      $result = mysqli_query($db, $sql);
+ 
+	return $result;
+  }
+
+  // This function creates a string that is going to be
+  // added to the url string for the navigation links.
+  // This is specially important to have dynamic links,
+  // so if you want to add extra options to the queries,
+  // the class is going to add it to the navigation links
+  // dynamically.
+  function build_geturl()
+  {
+    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+    $request_method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+    list($fullfile, $voided) = explode("?", $request_uri . "?");
+    $this->file = $fullfile;
+    $cgi = $request_method == 'GET' ? $_GET : $_POST;
+    $query_string = '';
+    foreach ($cgi as $key => $value) {
+      if ($key != "row"  && !empty($value) && $key != "Submit")
+        $query_string .= "&" . $key . "=" . $value;
+    }
+    return $query_string;
+  }
+
+  // This function creates an array of all the links for the
+  // navigation bar. This is useful since it is completely
+  // independent from the layout or design of the page.
+  // The function returns the array of navigation links to the
+  // caller php script, so it can build the layout with the
+  // navigation links content available.
+  //
+  // $option parameter (default to "all") :
+  //  . "all"   - return every navigation link
+  //  . "pages" - return only the page numbering links
+  //  . "sides" - return only the 'Next' and / or 'Previous' links
+  //
+  // $show_blank parameter (default to "off") :
+  //  . "off" - don't show the "Next" or "Previous" when it is not needed
+  //  . "on"  - show the "Next" or "Previous" strings as plain text when it is not needed
+  function getlinks($option = "all", $show_blank = "off") {
+    global $total_records,$row, $numtoshow;
+
+    $extra_vars = $this->build_geturl();
+
+    $file = $this->file;
+    $number_of_pages = ceil($total_records / $numtoshow);
+    $subscript = 0;
+    for ($current = 0; $current < $number_of_pages; $current++) {
+      if ((($option == "all") || ($option == "sides")) && ($current == 0)) {
+        if ($row != 0)
+          $array[0] = '<a href="' . $file . '?row=' . ($row - 1) . $extra_vars . '">' . $this->str_previous . '</a>';
+        elseif (($row == 0) && ($show_blank == "on"))
+          $array[0] = $this->str_previous;
+      }
+
+      if (($option == "all") || ($option == "pages")) {
+        if ($row == $current)
+          $array[++$subscript] = '<span class=navvar>'.($current > 0 ? ($current + 1) : 1).'</span>';
+        else
+          $array[++$subscript] = '<a href="' . $file . '?row=' . $current . $extra_vars . '" class=navvar>' . ($current + 1) . '</a>';
+      }
+
+      if ((($option == "all") || ($option == "sides")) && ($current == ($number_of_pages - 1))) {
+        if ($row != ($number_of_pages - 1))
+          $array[++$subscript] = '<a href="' . $file . '?row=' . ($row + 1) . $extra_vars . '" class=navvar>' . $this->str_next . '</a>';
+        elseif (($row == ($number_of_pages - 1)) && ($show_blank == "on"))
+          $array[++$subscript] = $this->str_next;
+      }
+    }
+    return $array;
+  }
+}
+?>

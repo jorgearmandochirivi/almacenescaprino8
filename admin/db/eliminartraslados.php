@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 $TitleMod ="Eliminar Traslados";
 
 $Table = "Traslado";
@@ -56,7 +56,7 @@ function print_form($id="",$idpuntoventa = "", $newmode,$title,$submit_caption) 
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left width="100%" >
 	<tr>
-			<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+			<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 		</tr>
 	<tr>
 			<td>
@@ -65,7 +65,7 @@ function print_form($id="",$idpuntoventa = "", $newmode,$title,$submit_caption) 
 
 					<form name="frmInv" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
-							<td colspan="2"><%=Mensaje_Info("Tenga en cuenta que no se hayan realizado las operaciones de inventario del traslado")%></td>
+							<td colspan="2"><?php echo Mensaje_Info("Tenga en cuenta que no se hayan realizado las operaciones de inventario del traslado");?></td>
 						</tr>
 						<tr class=row2>
 							<td>ID Traslado</td>
@@ -78,7 +78,7 @@ function print_form($id="",$idpuntoventa = "", $newmode,$title,$submit_caption) 
 							<td>
 								<select name="IDPuntoVenta" onChange="document.frm.submit();" >
 										<option value="">Seleccione Un Punto de Venta</option>
-										<?
+										<?php
 										$qry_punto = db_query("SELECT * FROM PuntoVenta WHERE Publicar = 'S' ORDER BY IDCiudad, Nombre ");
 										while($punto = db_fetch_object($qry_punto)){
 											 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
@@ -102,7 +102,7 @@ function print_form($id="",$idpuntoventa = "", $newmode,$title,$submit_caption) 
 
 
 
-<?
+<?php
 	if( !empty($id) && !empty($idpuntoventa) )
 		datos_traslado($id, $idpuntoventa);
 }// End function print_form()
@@ -141,20 +141,20 @@ function datos_traslado($id, $idpuntoventa){
 													<tr>
 														<td class=row1>Origen </td>
 														<td class=row2 >
-															<?
+															<?php
 																echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen);
 															?>
 														</td>
 														<td class=row1>Destino </td>
 														<td class=row2 >
-															<?
+															<?php
 																echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaDestino);
 															?>
 														</td>
 													</tr>
 													<tr>
 														<td class=row1>Estado</td>
-														<td class=row2 ><? echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado); ?></td>
+														<td class=row2 ><?php echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado); ?></td>
 														<td class=row1>Fecha </td>
 														<td class=row2 ><input type="text" class="tbox" name="Fecha" size="19" value='<?=$r->Fecha?>' readonly>
 
@@ -181,7 +181,7 @@ function datos_traslado($id, $idpuntoventa){
 														<td class="rowform" align="center"><b>Nombre</b></td>
 														<td class="rowform" align="center"><b>Cantidad</b></td>
 													</tr>
-													<?
+													<?php
 														$sql_detalle = " SELECT * FROM DetalleTraslado WHERE IDTraslado = '$r->IDTraslado' AND IDPuntoVentaOrigen = '$r->IDPuntoVentaOrigen' ";
 														$query_detalle = db_query($sql_detalle);
 														$i = 0;
@@ -201,18 +201,18 @@ function datos_traslado($id, $idpuntoventa){
 
 														</td>
 														<td class="<?=$class?>">
-															<? echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
+															<?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
 														<td class="<?=$class?>">
-															<? echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
+															<?php echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
 														</td>
 														<td class="<?=$class?>">
-															<? echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?>
+															<?php echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?>
 														</td>
 														<td class="<?=$class?>">
-															<? echo $r_detalle->Cantidad ?>
+															<?php echo $r_detalle->Cantidad ?>
 														</td>
 													</tr>
-													<?
+													<?php
 														}//end while
 													?>
 												</table>
@@ -238,7 +238,7 @@ function datos_traslado($id, $idpuntoventa){
 
 </table>
 
-<?
+<?php
 	}//end if
 	else
 	{

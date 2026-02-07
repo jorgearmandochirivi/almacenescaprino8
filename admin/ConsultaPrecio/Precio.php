@@ -5,7 +5,7 @@ function ver_datos(valor){
 }
 </script>
 
-<?
+<?php
 
 	$TitleMod ="Bonos Clientes";
 	$Table = "Cliente";
@@ -129,13 +129,13 @@ endif;
 $qry_referencia_precio = db_query( $sql_referencia_precio );
 while($r = db_fetch_object( $qry_referencia_precio )){ ?>	
 	<tr>
-	  <td nowrap="nowrap" class="row1"><? echo $r->Numero ?></td>
-	  <td nowrap="nowrap" class="row1"><? echo $r->NumeroAnterior ?></td>
-	  <td nowrap="nowrap" class="row1"><? echo get_field("Tipologia","Nombre","IDTipologia",$r->IDTipologia) ?></td>
-	  <td height="39" nowrap="nowrap" class="row1"><? $precio_bruto=(int)$r->ValorVenta; echo number_format($precio_bruto,2) ?></td>
-	  <td nowrap="nowrap" class="row1"><? echo $descuento=(int)$r->Descuento ?>%</td>
+	  <td nowrap="nowrap" class="row1"><?php echo $r->Numero ?></td>
+	  <td nowrap="nowrap" class="row1"><?php echo $r->NumeroAnterior ?></td>
+	  <td nowrap="nowrap" class="row1"><?php echo get_field("Tipologia","Nombre","IDTipologia",$r->IDTipologia) ?></td>
+	  <td height="39" nowrap="nowrap" class="row1"><?php $precio_bruto=(int)$r->ValorVenta; echo number_format($precio_bruto,2) ?></td>
+	  <td nowrap="nowrap" class="row1"><?php echo $descuento=(int)$r->Descuento ?>%</td>
 	  <td nowrap="nowrap" class="row1">$
-	  <? 
+	  <?php 
 	  if ($descuento>0)
 		  	$precio_venta = $precio_bruto - ( $precio_bruto * $descuento / 100);
 		else
@@ -147,7 +147,7 @@ while($r = db_fetch_object( $qry_referencia_precio )){ ?>
     </tr>
 
   	
-	<? } // END for
+	<?php } // END for
 ?>
 	
 </table>
@@ -160,7 +160,7 @@ while($r = db_fetch_object( $qry_referencia_precio )){ ?>
 
 
 
-<?
+<?php
 }//end	mostrar($newmode,$submit_caption)
 
 
@@ -187,7 +187,7 @@ function print_form($idCliente,$submit_caption) {
 var Check = new Array('Cedula','Nombre','Apellido');
 </script>
 <br>
-	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?}?>>
+	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
 	
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="800">
 	
@@ -207,7 +207,7 @@ var Check = new Array('Cedula','Nombre','Apellido');
 
 
 
-<?
+<?php
 if($rows > 0){
 ?>
 
@@ -223,38 +223,38 @@ if($rows > 0){
 	  <td class="rowform" nowrap="nowrap" bgcolor="#DBEAF5">Fecha en que se redimi&oacute;</td>
 	  <td class="rowform" nowrap="nowrap" bgcolor="#DBEAF5">Factura Con la que se redimi&oacute;</td>
     </tr>
-<? 
+<?php 
 	while($r = db_fetch_object($qid)){
 ?>
     
 	<tr>
-	  <td height="39" nowrap="nowrap" class="row1"><a href="Movimiento/popBono.php?id=<?php echo $r->IDBonoFidelizacion;  ?> " target="_blank"><? echo $r->IDBonoFidelizacion ?></a></td>
-	  <td nowrap="nowrap" class="row1"><? echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
-	  <td nowrap="nowrap" class="row1">$<? echo number_format($r->Valor,2) ?></td>
-	  <td nowrap="nowrap" class="row1"><? echo $r->Fecha ?></td>
-	  <td nowrap="nowrap" class="row1"><? if($r->Estado=="D"){ ?>
+	  <td height="39" nowrap="nowrap" class="row1"><a href="Movimiento/popBono.php?id=<?php echo $r->IDBonoFidelizacion;  ?> " target="_blank"><?php echo $r->IDBonoFidelizacion ?></a></td>
+	  <td nowrap="nowrap" class="row1"><?php echo $array_puntos[ $r->IDPuntoVenta ]["Nombre"] ?></td>
+	  <td nowrap="nowrap" class="row1">$<?php echo number_format($r->Valor,2) ?></td>
+	  <td nowrap="nowrap" class="row1"><?php echo $r->Fecha ?></td>
+	  <td nowrap="nowrap" class="row1"><?php if($r->Estado=="D"){ ?>
 	    Disponible
-	    <? }
+	    <?php }
 		elseif($r->Estado=="V"){ ?>
 	    Vencido
-        <? }
+        <?php }
 		elseif($r->Estado=="R"){ ?>
 	    Redimido
-        <? }elseif($r->Estado=="C"){ ?>
+        <?php }elseif($r->Estado=="C"){ ?>
 	    Cancelado (Factura Eliminada)
-	    <? } ?>
+	    <?php } ?>
         </td>
-	  <td nowrap="nowrap" class="row1"><? echo get_field("Cliente","Cedula","IDCliente",$r->IDClienteRedimioBono)." " . get_field("Cliente","Nombre","IDCliente",$r->IDClienteRedimioBono) . " " .get_field("Cliente","Apellido","IDCliente",$r->IDClienteRedimioBono);  ?></td>
-	  <td nowrap="nowrap" class="row1"><? echo $array_puntos[ $r->IDPuntoVentaRedimido ]["Nombre"] ?></td>
-	  <td nowrap="nowrap" class="row1"><? echo $r->FechaRedimido ?></td>
-	  <td nowrap="nowrap" class="row1"><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVentaRedimido?>&id=<?=$r->IDFactura ?>"><? echo $r->IDFactura ?></td>
+	  <td nowrap="nowrap" class="row1"><?php echo get_field("Cliente","Cedula","IDCliente",$r->IDClienteRedimioBono)." " . get_field("Cliente","Nombre","IDCliente",$r->IDClienteRedimioBono) . " " .get_field("Cliente","Apellido","IDCliente",$r->IDClienteRedimioBono);  ?></td>
+	  <td nowrap="nowrap" class="row1"><?php echo $array_puntos[ $r->IDPuntoVentaRedimido ]["Nombre"] ?></td>
+	  <td nowrap="nowrap" class="row1"><?php echo $r->FechaRedimido ?></td>
+	  <td nowrap="nowrap" class="row1"><a target="_blank" href="?mod=Factura&action=edit&idpunto=<?=$r->IDPuntoVentaRedimido?>&id=<?=$r->IDFactura ?>"><?php echo $r->IDFactura ?></td>
     </tr>
 
   	
-	<? } // END for
+	<?php } // END for
 ?>
 
-<?
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>Este cliente no tiene puntos de fidelizaci&oacute;n </b></span>";
@@ -265,7 +265,7 @@ else
 
 
 </form>
-	<?
+	<?php
 }// End function print_formcliente()
 
 

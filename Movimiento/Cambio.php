@@ -1,6 +1,6 @@
 
 
-<?
+<?php
 	$TitleMod ="Cambio";
 	
 	$Table = "Cambio";
@@ -474,7 +474,7 @@ function EvaluarFunciones( Form, Check )
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?}?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?php }?>>
 <table class="forumline" width="580" cellspacing="1" border="0" align="center">
 	<tr>
 	<td width="100%">
@@ -513,7 +513,7 @@ function EvaluarFunciones( Form, Check )
 												</tr>
 												<tr>
 													<td class=col1>Vendedor</td>
-													<td class=col2><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
+													<td class=col2><?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
 													<td class=col1 colspan="2"></td>
 												</tr>
 												<tr>
@@ -528,15 +528,15 @@ function EvaluarFunciones( Form, Check )
 												<tr>
 													<td class=col1>C&eacute;dula</td>
 													<td class=col2>
-														<input type="text" class="tbox" name="Cedula" readonly size="15" value="<?echo  $r_factura->Cedula;?>">
+														<input type="text" class="tbox" name="Cedula" readonly size="15" value="<?php echo  $r_factura->Cedula;?>">
 														<input type="hidden" name="IDCliente" id="Cliente" value="<?=$r_factura->IDCliente?>">
 													</td>
 													<td class=col1>Nombre</td>
-													<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?echo  $r_factura->Nombre;?>'></td>
+													<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?php echo  $r_factura->Nombre;?>'></td>
 												</tr>
 												<tr>
 													<td class=col1 nowrap>Telefono Cliente</td>
-													<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value="<?echo ,$r_factura->Telefono?>"></td>
+													<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value="<?php echo ,$r_factura->Telefono?>"></td>
 													<td class=col1></td>
 													<td class=col1></td>
 												</tr>
@@ -549,7 +549,7 @@ function EvaluarFunciones( Form, Check )
 											
 												<tr>
 													<td class=col1>Excedente( $ )</td>
-													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?echo $r_factura->Excedente?>"></td>
+													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?php echo $r_factura->Excedente?>"></td>
 													<td class=col1></td>
 													<td class=col1></td>
 												</tr>
@@ -577,18 +577,18 @@ function EvaluarFunciones( Form, Check )
 															<tr>
 																<td align="left"><b>1</b></td>
 																<td align="left">
-																	<input type=text readonly value="<%=$array_dato['Referencia']%>" name=NumeroC1 class=tbox size=7>
+																	<input type=text readonly value="<?php echo $array_dato['Referencia'];?>" name=NumeroC1 class=tbox size=7>
 																</td>
 																<td align="left">
-																	<%
+																	<?php
 																	$talla = get_field( "Talla","Descripcion","IDTalla", get_field( "CodificacionEspecifica","IDTalla","IDCodificacionEspecifica", $r_factura->IDCodificacionEspecifica));
-																	%>
-																	<input type=text readonly name=TallaC1 class=tbox value="<%=$talla%>" size=5>
+																	?>
+																	<input type=text readonly name=TallaC1 class=tbox value="<?php echo $talla;?>" size=5>
 																</td>
-																<td align="left"><input type=text  readonly  name=NombreC1 value="<%=$array_dato['Referencia']%>" class=tbox size=15></td>
-																<td align="center" width="100%"><input type=hidden name=IDCodificacionC1 value="<?echo $r_factura->IDCodificacionEspecifica?>"><input type=text name=CantidadC1 class=tbox value="<?echo $r_factura->Cantidad?>" size=5 ></td>
-																<td align="left"><input type=text readonly name=ValorUC1 class=tbox size=15 value="<?echo number_format($r_factura->PrecioU,2)?>"></td>
-																<td align="left"><input type=text readonly name=TotalC1 class=tbox value="<?echo number_format($r_factura->PrecioU * $r_factura->Cantidad,2)?>" size=15></td>
+																<td align="left"><input type=text  readonly  name=NombreC1 value="<?php echo $array_dato['Referencia'];?>" class=tbox size=15></td>
+																<td align="center" width="100%"><input type=hidden name=IDCodificacionC1 value="<?php echo $r_factura->IDCodificacionEspecifica?>"><input type=text name=CantidadC1 class=tbox value="<?php echo $r_factura->Cantidad?>" size=5 ></td>
+																<td align="left"><input type=text readonly name=ValorUC1 class=tbox size=15 value="<?php echo number_format($r_factura->PrecioU,2)?>"></td>
+																<td align="left"><input type=text readonly name=TotalC1 class=tbox value="<?php echo number_format($r_factura->PrecioU * $r_factura->Cantidad,2)?>" size=15></td>
 															</tr>
 															<tbody bgcolor=#e7ebef></tbody>
 														</table>
@@ -688,6 +688,6 @@ function EvaluarFunciones( Form, Check )
 	
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML> 

@@ -1,4 +1,4 @@
-<?
+<?php
 error_reporting(E_ALL);
 $dbhost = "localhost";
 $dbname = "Caprino";

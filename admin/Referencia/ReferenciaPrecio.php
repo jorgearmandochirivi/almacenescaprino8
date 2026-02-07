@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 function header_export($file){
 
@@ -69,14 +69,14 @@ function seleccionareferencia( $newmode)
 ?>	
 	<br><br><br><br>
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="700" class="bordertable">
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">			<tr>				<td class=maintitle colspan="2">Puntos de Venta	<select name="IDPuntoVenta" onchange="document.frmPuntoVenta.submit();" >						<option value="">Seleccione Un Punto de Venta</option><% 																$qry_punto = db_query("SELECT * FROM PuntoVenta ");								while($punto = db_fetch_object($qry_punto)){
+		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">			<tr>				<td class=maintitle colspan="2">Puntos de Venta	<select name="IDPuntoVenta" onchange="document.frmPuntoVenta.submit();" >						<option value="">Seleccione Un Punto de Venta</option><?php 																$qry_punto = db_query("SELECT * FROM PuntoVenta ");								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 					</select></td>
 			</tr>
 			<tr>
-			<td class=maintitle width=30%> 
+			<td class=maintitle width=30;?> 
 				Buscar Referencia Por
 			</td>
 			<td class="maintitle">
@@ -95,7 +95,7 @@ function seleccionareferencia( $newmode)
 		</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -110,7 +110,7 @@ function seleccionareferencia( $newmode)
 	<br>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <? echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -119,9 +119,9 @@ function seleccionareferencia( $newmode)
 			<table width="100%">
 				<tr>
 					<td class="titlemedium">Referencia</td>
-					<td class="titlemedium"><? echo  $datostallas[Descripcion] ?></td>
+					<td class="titlemedium"><?php echo  $datostallas[Descripcion] ?></td>
 				</tr>
-				<?
+				<?php
 
 				$sql_referencia = "SELECT * FROM Referencia WHERE IDReferencia <> '160' ORDER BY  IDTipoTalla, Numero ";
 				$qry_referencia = db_query( $sql_referencia );
@@ -130,13 +130,13 @@ function seleccionareferencia( $newmode)
 				?>						<tr>
 							<td class="row1"><?=$r_referencia->Numero ?></td>
 							<td class="row1">
-								<? 
+								<?php 
 									echo  number_format( $arrayprecios[$r_referencia->IDPrecio][ValorVenta], 0,2);
 								?>
 							</td>
 						</tr>
-				<?
+				<?php
 				}//end while referencia
 				?>
 			</table>		</td>	</tr></table>	
-<? 			}// Enf function list()				?>
+<?php 			}// Enf function list()				?>

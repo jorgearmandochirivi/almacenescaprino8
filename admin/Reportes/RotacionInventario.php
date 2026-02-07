@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 
 
@@ -111,7 +111,7 @@ function seleccionareferencia( $newmode)
 
 			<tr>
 
-			<td class=col1 width=30%> 
+			<td class=col1 width=30;?> 
 
 				Buscar Referencia Por
 
@@ -181,29 +181,29 @@ onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.F
 
 			</tr>
 			<tr>
-				<td class=col1 width=30%>Tipo de Referencia</td>
+				<td class=col1 width=30;?>Tipo de Referencia</td>
 				<td class="col2">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td>&nbsp;&nbsp;&nbsp;<select name="IDTipoReferencia">
-									<option value="">Seleccione Un Tipo de Referencia</option><% 								
+									<option value="">Seleccione Un Tipo de Referencia</option><?php 								
 								$qry_tiporef = db_query("SELECT * FROM TipoReferencia ORDER BY Descripcion");
 								while($tiporef = db_fetch_object($qry_tiporef)){
 									 echo "<option value=$tiporef->IDTipoReferencia ";if($IDTipoReferencia == $tiporef->IDTipoReferencia ) echo "selected"; echo ">&nbsp;&nbsp;$tiporef->Descripcion</option>";
 								}
-							%>
+							?>
 								</select></td>
 						</tr>
 					</table>
 				</td>
 				<td align="left" valign="middle" class="nav" nowrap>Ciudad</td>
-				<td align="left" valign="middle" class="nav" nowrap><? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"Ciudad"," IDCiudad = 1 or IDCiudad = 2 "); ?></td>
+				<td align="left" valign="middle" class="nav" nowrap><?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"Ciudad"," IDCiudad = 1 or IDCiudad = 2 "); ?></td>
 			</tr>
 		</form>
 
 	</table>
 
-<?
+<?php
 
 }//end function seleccionapuntoventa($idreferencia)
 
@@ -243,7 +243,7 @@ onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.F
 
 		<tr>
 
-			<td class="maintitle"><b></b><span class="gen"><?=$Title?> - <? echo $campo.":".$referencia;  ?> Los Almacenes que no apareces, no tienen venta 
+			<td class="maintitle"><b></b><span class="gen"><?=$Title?> - <?php echo $campo.":".$referencia;  ?> Los Almacenes que no apareces, no tienen venta 
 para esta referencia</span></td>
 
 		</tr>
@@ -262,7 +262,7 @@ para esta referencia</span></td>
 
 						<tr>
 
-							<td class=col1 width=30%> 
+							<td class=col1 width=30;?> 
 
 				Buscar Referencia Por
 
@@ -324,23 +324,23 @@ onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.F
 
 						</tr>
 						<tr>
-							<td class=col1 width=30%>Tipo de Referencia</td>
+							<td class=col1 width=30;?>Tipo de Referencia</td>
 							<td class="col2">
 								<table width="100%" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td>&nbsp;&nbsp;&nbsp;<select name="IDTipoReferencia">
-												<option value="">Seleccione Un Tipo de Referencia</option><% 								
+												<option value="">Seleccione Un Tipo de Referencia</option><?php 								
 								$qry_tiporef = db_query("SELECT * FROM TipoReferencia ORDER BY Descripcion");
 								while($tiporef = db_fetch_object($qry_tiporef)){
 									 echo "<option value=$tiporef->IDTipoReferencia ";if($IDTipoReferencia == $tiporef->IDTipoReferencia ) echo "selected"; echo ">&nbsp;&nbsp;$tiporef->Descripcion</option>";
 								}
-							%>
+							?>
 											</select></td>
 									</tr>
 								</table>
 							</td>
 							<td align="left" valign="middle" class="nav" nowrap>Ciudad</td>
-							<td align="left" valign="middle" class="nav" nowrap><? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$_POST["IDCiudad"],"input\" id=\"Ciudad"); ?></td>
+							<td align="left" valign="middle" class="nav" nowrap><?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$_POST["IDCiudad"],"input\" id=\"Ciudad"); ?></td>
 						</tr>
 					</form>
 
@@ -350,7 +350,7 @@ onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.F
 
 	</tr>
 
-<?
+<?php
 
 if( !empty( $referencia ) )	
 
@@ -417,7 +417,7 @@ if( !empty( $referencia ) )
 
 				<td class="row1">
 
-					<? 
+					<?php 
 
 						$i = 0;
 
@@ -482,7 +482,7 @@ $r_codificacionesp[Existencias];
 
 								<td class="rowform" width="20%">PUNTOS DE VENTA</td>	
 
-								<?
+								<?php
 
 								$width=60 / count( $array_tallas_mostrar ); 
 
@@ -504,7 +504,7 @@ $r_codificacionesp[Existencias];
 
 							
 
-							<?
+							<?php
 
 							foreach($array_puntos as $idpunto => $nombre)
 
@@ -516,9 +516,9 @@ $r_codificacionesp[Existencias];
 
 							<tr>
 
-								<td class=rowform align=center><? echo $nombre; ?></td>
+								<td class=rowform align=center><?php echo $nombre; ?></td>
 
-								<?
+								<?php
 
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 
@@ -561,13 +561,13 @@ $idpunto ][ $idtalla ] + $array_existencias[ $idpunto ][ $idtalla ] ) * 100 ) , 
 
 								?>	
 
-								<td class="rowform"  align="right" ><? echo $TotalVentasPunto[ $idpunto ]."<br>".$TotalExistenciasPunto[ 
+								<td class="rowform"  align="right" ><?php echo $TotalVentasPunto[ $idpunto ]."<br>".$TotalExistenciasPunto[ 
 $idpunto ]."<br>";echo number_format( $Rotacion = ( $TotalVentasPunto[ $idpunto ] / ( $TotalVentasPunto[ $idpunto ] + $TotalExistenciasPunto[ $idpunto ] ) * 100 ), 2 ); 
 ?></td>
 
 							</tr>
 
-							<?
+							<?php
 
 							}//end for
 
@@ -579,7 +579,7 @@ $idpunto ]."<br>";echo number_format( $Rotacion = ( $TotalVentasPunto[ $idpunto 
 
 								<td class="rowform">TOTALES</td>	
 
-								<?
+								<?php
 
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 
@@ -595,7 +595,7 @@ $TotalExistenciasTalla[ $idtalla ] ) * 100 ), 2 )."</td>";
 
 								?>	
 
-								<td class="rowform" align=right><? echo 
+								<td class="rowform" align=right><?php echo 
 array_sum($TotalVentasTalla)."<br>".array_sum($TotalExistenciasTalla)."<br>";echo number_format( ( $Rotacion = ( array_sum($TotalVentasTalla) / ( 
 array_sum($TotalVentasTalla) + array_sum($TotalExistenciasTalla) ) ) ) * 100, 2 ); ?></td>
 
@@ -611,7 +611,7 @@ array_sum($TotalVentasTalla) + array_sum($TotalExistenciasTalla) ) ) ) * 100, 2 
 
 			</tr>
 
-		<?
+		<?php
 
 		}// End if$rows
 
@@ -627,7 +627,7 @@ array_sum($TotalVentasTalla) + array_sum($TotalExistenciasTalla) ) ) ) * 100, 2 
 
 
 
-<? 			
+<?php
 
 }// Enf function list()				
 

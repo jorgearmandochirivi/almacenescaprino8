@@ -20,7 +20,7 @@ else{
 ?>
 
 
-<%
+<?php
 		
 		require( $libdir."dhabiles.inc.php" );
 		
@@ -47,7 +47,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
  //require( "Reportes/Calc.php" );
  //$Calendario = new Date_Calc;
   
-%>
+  ?>
 	
 	<table width="100%">
 		
@@ -83,12 +83,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td  align='left' valign='middle' class="nav"><img src='images/house.png' border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav">Puntos de Venta	
 								<select name="IDPuntoVenta" onchange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><% 								
+									<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta ORDER BY IDCiudad, Nombre ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select> <input type="hidden" name="mod" value="ReporteCreditoAbonos"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav">
 								<input type="submit" value="Ver Reporte" name="submit" class="submit">
@@ -102,9 +102,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		
 		<br>
 		<br>
-		<%
+		<?php
 		if( !empty( $FechaDesde ) && !empty( $FechaHasta ) ){
-		%>
+		?>
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; <br>
 				<br>
@@ -116,12 +116,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
 							
-						<?
+						<?php
 						echo "CREDITOS ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta )." ".$FechaDesde." - ".$FechaHasta;
 						?>
 					</td>
 				</tr>
-				<?
+				<?php
 					
 										
 					 
@@ -160,7 +160,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="titlemedium" align="center" nowrap>Fecha de Cuota</td>
 										<td class="titlemedium" align="center" nowrap>Fecha Pago</td>
 									</tr>
-						<?
+						<?php
 						
 						//print_r( $array_fechas );
 						
@@ -191,16 +191,16 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									<td class="<?=$class?>" align="right" nowrap><?=$r_facturas[NumeroFactura]?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_facturas[ValorTotal],2 ); $tValorTotal += $r_facturas[ValorTotal];?></td>
 										<td class="<?=$class?>" align="right" nowrap>
-										<?	
+										<?php	
 											echo $r_facturas[FechaCuota];
 										?>
 									 </td>
-										<td class="<?=$class?>" align="right" nowrap><?	
+										<td class="<?=$class?>" align="right" nowrap><?php	
 											echo $r_facturas[FechaPago];
 											
 										?></td>
 									</tr>
-									<?
+									<?php
 						}//end for
 						
 						/****************************** FIN DE MOSTRAR LAS VENTAS CON TARJETA DE CREDITO Y DEBITO ********************************/
@@ -226,12 +226,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</table>
 			</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

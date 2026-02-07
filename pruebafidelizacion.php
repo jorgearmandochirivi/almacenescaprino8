@@ -1,4 +1,4 @@
-<?
+<?php
 
 	include("admin/config.inc.php");
 	//include("admin/lib/fidelizacion_caprino.php");

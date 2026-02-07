@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 function header_export($file){
 
@@ -73,16 +73,16 @@ function seleccionareferencia( $newmode)
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 			<tr>
 				<td class=maintitle colspan="2">Puntos de Venta	<select name="IDPuntoVenta" onchange="document.frmPuntoVenta.submit();" >
-						<option value="">Seleccione Un Punto de Venta</option><% 								
+						<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 					</select></td>
 			</tr>
 			<tr>
-			<td class=maintitle width=30%> 
+			<td class=maintitle width=30;?> 
 				Buscar Referencia Por
 			</td>
 			<td class="maintitle">
@@ -101,7 +101,7 @@ function seleccionareferencia( $newmode)
 		</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -261,7 +261,7 @@ function seleccionareferencia( $newmode)
 	<br>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <? echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -276,7 +276,7 @@ function seleccionareferencia( $newmode)
 					<td class="titlemedium">Movimiento</td>
 					<td class="titlemedium">Cantidad</td>
 				</tr>
-				<?
+				<?php
 				foreach( $array_kardex as $Referencia => $array_fechas )
 				{
 					foreach( $array_fechas as $Fecha => $TipoMovArray )
@@ -284,16 +284,16 @@ function seleccionareferencia( $newmode)
 						{
 				?>
 				<tr>
-					<td class="row1"><? echo $Referencia; ?></td>
-					<td class="row1"><? echo $Fecha; ?></td>
+					<td class="row1"><?php echo $Referencia; ?></td>
+					<td class="row1"><?php echo $Fecha; ?></td>
 					<td class="row1" align="right">
-						<? 
+						<?php 
 							echo  $TipoMovimiento;
 						?>
 					</td>
 					<td class="row1" align="right"><b><?=$Cantidad ?></b></td>
 				</tr>
-				<?
+				<?php
 						}//end for
 				?>
 				<tr>
@@ -303,12 +303,12 @@ function seleccionareferencia( $newmode)
 					<td class="titlemedium"></td>
 				</tr>
 
-				<?
+				<?php
 				}//end for
 				?>
 				
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

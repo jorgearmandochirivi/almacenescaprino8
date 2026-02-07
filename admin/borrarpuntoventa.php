@@ -1,4 +1,4 @@
-<?
+<?php
 exit;
 include( "config.inc.php" );
 

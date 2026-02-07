@@ -1,4 +1,4 @@
-<?
+<?php
 
 /*******************************************************************************************
 	Libreria de funciones para el Sistema de Puntos de Venta de Caprino - Salidas de MErcancia

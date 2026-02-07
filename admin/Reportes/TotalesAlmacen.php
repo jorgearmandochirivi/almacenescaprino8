@@ -97,7 +97,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 		</td>
 		</tr>
 
-		<?
+		<?php
 		if(!empty( $FechaDesde ) && !empty( $FechaHasta ) ){
 			
 		?>
@@ -110,7 +110,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 						
 					</td>
 				</tr>
-				<?
+				<?php
 					
 					$daybegin = substr( $FechaDesde, 8 , 10 );
 					$monthbegin = substr( $FechaDesde, 5 , 2 );
@@ -184,7 +184,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						<tr>
 								<td class="titlemedium" align="center" nowrap>Punto</td>
-							<?
+							<?php
 							$monthbegin = ( $monthbegin * 1 ) - 1;
 							$yearbegin = ( $yearbegin * 1 ) ;
 							
@@ -193,13 +193,13 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 								{
 							?>
 								<td class="titlemedium" align="center" nowrap><?=$Mes_array[$mes - 1] . " " . $mes . " / " .$year?></td>
-							<?
+							<?php
 								}//end for
 							?>
 								<td class="titlemedium" align="center" nowrap>TOTALES</td>
 										<td class="titlemedium" align="center" nowrap>GRAFICAR</td>
 						</tr>
-						<?
+						<?php
 						//print_r($datosfechas);
 						//print_r($array_puntos);
 						foreach( $array_puntos as $key => $valor )
@@ -208,7 +208,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 						?>
 							<tr>
 								<td class="<?=$class?>" align="center" nowrap><?=$valor['Nombre']?></td>
-								<?
+								<?php
 								$monthbegin = ( $monthbegin * 1 );
 								$yearbegin = ( $yearbegin * 1 );
 								
@@ -217,7 +217,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 									{
 								?>
 									<td class="<?=$class?>" align="right" nowrap>
-										<?
+										<?php
 											echo number_format( $datosfechas[$year][$mes][$valor['IDPuntoVenta']] , 2);											
 											$totalespunto[$valor['IDPuntoVenta']]['Totales'] += $datosfechas[$year][$mes][$valor['IDPuntoVenta']];
 											$totalesmes[$year][$mes]['Totales'] += $datosfechas[$year][$mes][$valor['IDPuntoVenta']];
@@ -233,17 +233,17 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 
 										?>
 									</td>
-								<?
+								<?php
 									}//end for
 								?>
 								<td class="<?=$class?>" align="center" nowrap>
-									<?
+									<?php
 										echo number_format( $totalespunto[$valor['IDPuntoVenta']]['Totales'] , 2);
 									?>
 								</td>
 										<td class="<?=$class?>" align="center" nowrap>
 										
-											<?
+											<?php
 											if( $totalespunto[$valor['IDPuntoVenta']]['Totales'] > 0 )
 											{
 												$datos_mes = implode(",",$datospunto[$valor['IDPuntoVenta']]);
@@ -253,24 +253,24 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 											<a href="javascript:;" onClick="window.open('Reportes/graficar.php?datos=<?=$datos_mes?>&opciones=<?=$opciones_mes?>&titulo=<?=$titulopunto?>','','width=550, height=400');" >
 												<img src="images/chart_pie.png" border="0">
 											</a>
-											<?
+											<?php
 											}
 											?>
 										</td>
 									</tr>
 						
-						<?
+						<?php
 						}//while( $r_puntos = db_fetch_object( $qry_puntos ) )
 						?>
 						<tr >
 							<td class="row1" align="center" nowrap></td>
-							<?
+							<?php
 							$monthbegin = ( $monthbegin * 1 );
 							for( $i = $monthbegin; $i < $monthend; $i++ )
 							{
 							?>
 								<td class="row1" align="center" nowrap>
-									<?
+									<?php
 									if( $totalesmes[$i+1]['Totales'] > 0 )
 									{	
 										$datos_mes = implode(",",$datos[$i+1]);
@@ -280,11 +280,11 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 									<a href="javascript:;" onClick="window.open('Reportes/graficar.php?datos=<?=$datos_mes?>&opciones=<?=$opciones_mes?>&titulo=<?=$titulo?>','','width=550, height=400');" >
 										<img src="images/chart_pie.png" border="0">
 									</a>
-									<?
+									<?php
 									}
 									?>
 								</td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="row1" align="center" nowrap>
@@ -295,20 +295,20 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 						
 						<tr>
 							<td class="titlemedium" align="center" nowrap>TOTALES</td>
-							<?
+							<?php
 								foreach( $datosfechas as $year => $datos_meses )
 									foreach( $datos_meses as $mes => $valores )
 							{
 							?>
 								<td class="titlemedium" align="right" nowrap>
-									<?
+									<?php
 										echo number_format( $totalesmes[$year][$mes]['Totales'] );
 									?>
 								</td>
-							<?
+							<?php
 							}//end for
 							?>
-							<td class="titlemedium" align="center" nowrap><? echo number_format( $total, 2);?></td>
+							<td class="titlemedium" align="center" nowrap><?php echo number_format( $total, 2);?></td>
 										<td class="titlemedium" align="center" nowrap></td>
 									</tr>
 						
@@ -322,12 +322,12 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 		</table>
 	</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

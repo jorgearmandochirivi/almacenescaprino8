@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<?
+<?php
 	$TitleMod ="Traslados2";
 
 	$Table = "Traslado";
@@ -425,7 +425,7 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 															<input type="hidden" value="<?=$IDPuntoVenta?>" name="IDPuntoVentaOrigen">
 
 
-                                                            Empleado: <? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' and Publicar = 'S' ","Nombre","Apellidos","IDEmpleado",$frm[IDEmpleado],"input\" id=\"Empleado"); ?>
+                                                            Empleado: <?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' and Publicar = 'S' ","Nombre","Apellidos","IDEmpleado",$frm[IDEmpleado],"input\" id=\"Empleado"); ?>
 
                                                             </td>
 													</tr>
@@ -434,7 +434,7 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 														<td class=col2 colspan="3">
 															<select name="IDPuntoVentaDestino" class="InputSelect" required>
 															<option value=''>Seleccione</option>
-															<?
+															<?php
 																$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre";
 																$query_puntoventa = db_query($sql_puntoventa);
 																while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
@@ -486,7 +486,7 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 														<td align="center"><b></b></td>
 														<td align="center"><b></b></td>
 													</tr>
-													<?
+													<?php
 													for( $i = 1; $i <= 200; $i++  )
 													{
 														if($i==20 || $i==40 || $i==60 || $i==80  || $i==100 || $i==120 || $i==140 || $i==160 || $i==180):
@@ -501,20 +501,20 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 													<tr id="<?php echo $i; ?>" <?php echo $mostrar_tr; ?>>
 														<td align="center"><b><?=$i?></b></td>
 
-                                                                                                                <td align="center"><input type=text  id=Numero<?=$i?> name=Numero<?=$i?> rel="<?=$i ?>" value="<? echo $frm[ $numero ] ?>" class="tbox tboxReferencia" size=8></td>
+                                                                                                                <td align="center"><input type=text  id=Numero<?=$i?> name=Numero<?=$i?> rel="<?=$i ?>" value="<?php echo $frm[ $numero ] ?>" class="tbox tboxReferencia" size=8></td>
 
 
-                                                                                                                <td align="center"><input type=text readonly id=Talla<?=$i?> name=Talla<?=$i?> value="<? echo $frm[ $talla ] ?>" class=tbox size=5></td>
+                                                                                                                <td align="center"><input type=text readonly id=Talla<?=$i?> name=Talla<?=$i?> value="<?php echo $frm[ $talla ] ?>" class=tbox size=5></td>
 
 
-                                                                                                                <td align="center"><input type=text readonly id=Nombre<?=$i?> name=Nombre<?=$i?> value="<? echo $frm[ $nombre ] ?>" class=tbox size=15></td>
+                                                                                                                <td align="center"><input type=text readonly id=Nombre<?=$i?> name=Nombre<?=$i?> value="<?php echo $frm[ $nombre ] ?>" class=tbox size=15></td>
 
 
-                                                                                                                <td align="center"><input type=hidden name=IDCodificacion<?=$i?> id=IDCodificacion<?=$i?> value="<? echo $frm[ $idcodificacion ] ?>" ></td>
+                                                                                                                <td align="center"><input type=hidden name=IDCodificacion<?=$i?> id=IDCodificacion<?=$i?> value="<?php echo $frm[ $idcodificacion ] ?>" ></td>
 
 
 														<td align="center">
-                                                        	<input type=number id="Cantidad<?=$i?>" name=Cantidad<?=$i?> value="<? echo $frm[ $cantidad ] ?>" class="tbox" size=3 min="1" max="100000" onBlur="calculagrantotal(); if(!compruebamaximo(this.value,<?=$i?>)){ this.value = ''; } else{ habilita_tarjeta(this.value,<?=$i?>);calculatotal(this.value,<?=$i?>);}">
+                                                        	<input type=number id="Cantidad<?=$i?>" name=Cantidad<?=$i?> value="<?php echo $frm[ $cantidad ] ?>" class="tbox" size=3 min="1" max="100000" onBlur="calculagrantotal(); if(!compruebamaximo(this.value,<?=$i?>)){ this.value = ''; } else{ habilita_tarjeta(this.value,<?=$i?>);calculatotal(this.value,<?=$i?>);}">
                                                             <div id="div_tarjeta" style="display:none">
                                                             	<textarea name="NumeroTarjeta<?=$i?>" id="NumeroTarjeta<?=$i?>"></textarea>
                                                             </div>
@@ -524,7 +524,7 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 														<td align="center"><input type=hidden name=Precio<?=$i?>></td>
 													</tr>
 
-													<?
+													<?php
 													}
 													?>
                                                     <tr>
@@ -559,6 +559,6 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML>

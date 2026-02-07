@@ -275,7 +275,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 
 
-	<?PHP
+	<?php PHP
 }// Enf function print()
 
 ?>

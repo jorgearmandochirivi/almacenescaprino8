@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Costo Referencia";
 
@@ -168,9 +168,9 @@ var Check = new Array('Descripcion','Publicar');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgColor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
@@ -178,17 +178,17 @@ var Check = new Array('Descripcion','Publicar');
 
 
 
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=maintitle bgColor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgColor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td><table width="100%" border=0 cellspacing=1 cellpadding=1 class=texto>
 	  <tr class=row2>
 	    <td>Referencia</td>
-	    <td><? echo formpopup("Referencia","Numero","IDReferencia","IDReferencia",$r->IDReferencia,"input\" id=\"Referencia"); ?></td>
+	    <td><?php echo formpopup("Referencia","Numero","IDReferencia","IDReferencia",$r->IDReferencia,"input\" id=\"Referencia"); ?></td>
 	    </tr>
 	  <tr class=row2>
 	    <td width="200"> Costo </td>
@@ -214,15 +214,15 @@ var Check = new Array('Descripcion','Publicar');
           <input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
           <input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
           <input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-          <input type=hidden name=ID value="<? echo $r->$Key ?>">
+          <input type=hidden name=ID value="<?php echo $r->$Key ?>">
           <input type=hidden name=action value=<?=$newmode?>>
-          <input type=submit name=submit value="<? echo $submit_caption ?>" class=submit></td>
+          <input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit></td>
 	    </tr>
 	  </table></td>
 	</tr>
 </table>
 </form>
-<?
+<?php
 }// End function print_form()
 
 /*******************************************************************************************
@@ -260,9 +260,9 @@ var Check = new Array('Descripcion','Publicar');
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgColor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
 <br>
@@ -288,7 +288,7 @@ var Check = new Array('Descripcion','Publicar');
 
 </form>
 
-<?
+<?php
 		if($rows > 0){
 ?>		
 <br>
@@ -297,15 +297,15 @@ var Check = new Array('Descripcion','Publicar');
 <br>
 <table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-			<td class=titlemedium bgColor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgColor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-<?filtrar();?>	
+<?php filtrar();?>	
 <tr>
-			<td class=titlemedium  bgColor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgColor=#9daac6><?php echo $info;;?></td>
 		</tr>
 <tr>
 <td class=texto bgColor=#DBEAF5 colspan=12 nowrap>
-<?
+<?php
 	print $pages;
 ?>
 </td>
@@ -322,25 +322,25 @@ var Check = new Array('Descripcion','Publicar');
 						<td align=center  class=rowform valign=middle bgColor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 <td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-<td nowrap class=row1><? echo get_field("Referencia","Numero","IDReferencia",$r->IDReferencia);  ?></td> <td nowrap class=row1><? echo $r->Costo ?></td>
-						<td nowrap class=row1><? echo $r->Fecha ?></td>
-						<td nowrap class=row1><? echo $r->Observacion ?></td>
+<td nowrap class=row1><?php echo get_field("Referencia","Numero","IDReferencia",$r->IDReferencia);  ?></td> <td nowrap class=row1><?php echo $r->Costo ?></td>
+						<td nowrap class=row1><?php echo $r->Fecha ?></td>
+						<td nowrap class=row1><?php echo $r->Observacion ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgColor=#DBEAF5 colspan=6 nowrap>
-	<?
+	<?php
 		print $pages;
 		?>
 </td>
@@ -349,7 +349,7 @@ var Check = new Array('Descripcion','Publicar');
 		</tr>
 </table>	
 
-<? 			
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -396,6 +396,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 ?>

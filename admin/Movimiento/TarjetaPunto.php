@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 $TitleMod ="Importar Archivo de Codigos de Tarjetas";
 
 $Table = "TarjetaPunto";
@@ -147,7 +147,7 @@ function print_form($id="",$title,$submit_caption) {
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left >
 	<tr>
-			<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?></td>
+			<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?></td>
 		</tr>
 	<tr>
 			<td>
@@ -167,7 +167,7 @@ function print_form($id="",$title,$submit_caption) {
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<?
+									<?php
 										$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre";
 										$query_puntoventa = db_query($sql_puntoventa);
 										while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
@@ -190,7 +190,7 @@ function print_form($id="",$title,$submit_caption) {
 			</td>
 	</tr>
 </table>
-<?
+<?php
 }// End function print_form()
 
 ?>

@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Codificacion Especifica";
 
@@ -57,7 +57,7 @@ function seleccionareferencia( $newmode)
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="650">
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 		<tr>
-			<td class=col1 width=30%> 
+			<td class=col1 width=30;?> 
 				Buscar Referencia Por
 			</td>
 			<td class="col2">
@@ -76,7 +76,7 @@ function seleccionareferencia( $newmode)
 		</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -93,7 +93,7 @@ function seleccionareferencia( $newmode)
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
 		<tr>
 			<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" /></td>
-			<td class="tbtbot"><b></b><span class="gen"><?=$Title?> - <? echo $campo.":".$referencia;  ?></span></td>
+			<td class="tbtbot"><b></b><span class="gen"><?=$Title?> - <?php echo $campo.":".$referencia;  ?></span></td>
 			<td class="tbtr"><img src="images/spacer.gif" alt="" width="124" height="22" /></td>
 		</tr>
 	</table>
@@ -103,7 +103,7 @@ function seleccionareferencia( $newmode)
 				<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="650">
 					<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 						<tr>
-							<td class=col1 width=30%> 
+							<td class=col1 width=30;?> 
 				Buscar Referencia Por
 				</td>
 							<td class="col2">
@@ -120,7 +120,7 @@ function seleccionareferencia( $newmode)
 				</table>
 			</td>
 	</tr>
-<?
+<?php
 	 	
 	 $sql_referencia = "SELECT $campo FROM Referencia WHERE $campo LIKE '%$referencia%' ";
 	 	
@@ -135,7 +135,7 @@ function seleccionareferencia( $newmode)
 		?>
 			<tr>
 				<td>
-					<? 
+					<?php 
 						$i = 0;
 						while($r_codificacionesp = db_fetch_array($query_codificacion))
 						{
@@ -175,9 +175,9 @@ function seleccionareferencia( $newmode)
 						<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 							<tr>
 								<td class="navpic" nowrap>
-									<?echo get_field("Referencia","Nombre","IDReferencia",$idReferencia)?>
+									<?php echo get_field("Referencia","Nombre","IDReferencia",$idReferencia)?>
 								</td>
-							<?
+							<?php
 							foreach($r as $talla)
 							{
 								if(!empty($talla[IDTalla]))
@@ -190,7 +190,7 @@ function seleccionareferencia( $newmode)
 								<td class="col2">
 									Existencias
 								</td>
-							<?
+							<?php
 							foreach($r as $talla)
 							{
 								if(!empty($talla[IDTalla]))
@@ -203,7 +203,7 @@ function seleccionareferencia( $newmode)
 								<td class="col2">
 									Minimo
 								</td>
-							<?
+							<?php
 							foreach($r as $talla)
 							{
 								if(!empty($talla[IDTalla]))
@@ -216,7 +216,7 @@ function seleccionareferencia( $newmode)
 								<td class="col2">
 									Maximo
 								</td>
-							<?
+							<?php
 							$i = 1;
 							foreach($r as $talla)
 							{
@@ -231,7 +231,7 @@ function seleccionareferencia( $newmode)
 							</tr>
 							
 							<tr>
-								<td class="navpic" colspan=<?=$i?> align="right"><?
+								<td class="navpic" colspan=<?=$i?> align="right"><?php
 									foreach($r as $talla)
 									{
 										if(!empty($talla[IDTalla]))
@@ -247,7 +247,7 @@ function seleccionareferencia( $newmode)
 					</table>
 				</td>
 			</tr>
-		<?
+		<?php
 		}// End if$rows
 		else
 			echo "<tr><td><span class=col1list><b>No se encontraron registros con los par&aacute;metros proporcionados </b></span></td></tr>";
@@ -255,6 +255,6 @@ function seleccionareferencia( $newmode)
 ?>
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

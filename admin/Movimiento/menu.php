@@ -1,5 +1,5 @@
 <body>
-	<?
+	<?php
 	$m = "Movimientos";
 	?>
 	<table cellspacing="0" cellpadding="2" border="0" align="center" width="100%" bgcolor="#FFFFFF">

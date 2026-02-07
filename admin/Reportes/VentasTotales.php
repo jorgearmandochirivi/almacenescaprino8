@@ -1,4 +1,4 @@
-<body><%
+<body><?php
 		switch ($action) {
 			
 			case "view" :
@@ -38,12 +38,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 	
 	$ReteFuente = $r_retefuente->Valor / 100;
  
-%>
+  ?>
 	
 	<table width="100%">
-		<%
+		<?php
 		if(!empty($IDPuntoVenta) && !empty( $FechaDesde ) && !empty( $FechaHasta ) ){
-		%>
+		?>
 		<tr>
 		<td>
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
@@ -54,7 +54,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						
 					</td>
 				</tr>
-				<?
+				<?php
 					
 					$nowdate = $yearbegin.$monthbegin.$daybegin;
 					$enddate = $Calendario->nextWeekday($dayend,$monthend,$yearend);
@@ -99,7 +99,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="titlemedium" align="center" nowrap>IVA</td>
 							<td class="titlemedium" align="center" nowrap>TOTAL</td>
 						</tr>
-						<?
+						<?php
 						foreach( $datosfechas as $key => $valor )
 						{ 
 							$class = repetition()?"row2":"row1";
@@ -111,10 +111,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="<?=$class?>" align="center" nowrap><?=$key?></td>
 							<td class="<?=$class?>" align="right" nowrap><?=$valor['Venta']?> </td>
 							<td class="<?=$class?>" align="right" nowrap><?=$valor['IVA']?></td>
-							<td class="<?=$class?>" align="center" nowrap><?echo $valor['Venta'] + $valor['IVA'];?></td>
+							<td class="<?=$class?>" align="center" nowrap><?php echo $valor['Venta'] + $valor['IVA'];?></td>
 						</tr>
 						
-						<?
+						<?php
 							}//end if( !empty( $valor['Venta'] ) )
 						}//foreach( $datosfechas as $key => $valor )
 						?>
@@ -128,12 +128,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</table>
 	</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

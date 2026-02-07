@@ -1,4 +1,4 @@
-<body><%
+<body><?php
 		
 		require( $libdir."dhabiles.inc.php" );
 		
@@ -33,7 +33,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
  	$IVA = 0.16;
  endif;
  
-%>
+  ?>
 	
 	<table width="100%">
 		
@@ -68,12 +68,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td  align='left' valign='middle' class="nav"><img src='images/house.png' border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav">Puntos de Venta	<select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><% 								
+									<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta WHERE Publicar = 'S' ORDER BY IDCiudad, Nombre");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select> <input type="hidden" name="mod" value="ReporteVMensual"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav">
 								<input type="submit" value="Ver Reporte" name="submit" class="submit">
@@ -87,9 +87,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty($IDPuntoVenta) && !empty( $FechaDesde ) && !empty( $FechaHasta ) ){
-		%>
+		?>
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; <br>
 				<br>
@@ -101,12 +101,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp; 
 							
-						<?
+						<?php
 						echo "MENSUAL VENTAS ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta )." ".$FechaDesde." - ".$FechaHasta;
 						?>
 					</td>
 				</tr>
-				<?					
+				<?php					
 										
 					 $sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura,DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF, F.ValorTotal, R.Numero, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef, DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura 
 										FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P 
@@ -481,7 +481,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="titlemedium" align="center" nowrap>IVA</td>
 							<td class="titlemedium" align="center" nowrap>TOTAL</td>
 						</tr>
-						<?
+						<?php
 						//print_r( $ventas );
 						foreach( $ventas as $Fecha => $datos )
 						{
@@ -493,7 +493,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								<td class="<?=$class?>" align="right" nowrap><?=number_format( $datos[valoriva] ,2 ); ?> </td>
 								<td class="<?=$class?>" align="right" nowrap><?=number_format( $datos[parcial] ,2 ); ?></td>
 							</tr>
-						<?
+						<?php
 						}//end for
 						?>					
 						<tr>
@@ -510,12 +510,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</table>
 			</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

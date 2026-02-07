@@ -101,7 +101,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						 - <?=formatofecha( $FechaHasta )?>
 					</td>
 				</tr>
-				<?
+				<?php
 					$sql_facturas = "SELECT * 
 									FROM CreditoCuota 
 									WHERE DATE_FORMAT( FechaPago,'%Y-%c-%d' ) >= DATE_FORMAT('$Fecha','%Y-%c-%d' )  AND DATE_FORMAT( FechaPago,'%Y-%c-%d' ) <= DATE_FORMAT('$FechaHasta','%Y-%c-%d' )
@@ -123,7 +123,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="titlemedium" align="center" nowrap>Fecha de Pago</td>
 							<td class="titlemedium" align="center" nowrap>Valor</td>
 						</tr>
-						<?
+						<?php
 						while( $r_credito = db_fetch_object( $qry_facturas ) )
 						{
 							$r_facturas[$i] = $array_factura;
@@ -136,7 +136,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="<?=$class?>" align="center" nowrap><?=$r_credito->NumeroFactura ?></td>
 							<td class="<?=$class?>" align="right" nowrap><?=$r_credito->Consecutivo ?></td>
 							<td class="<?=$class?>" align="right" nowrap><?=$r_credito->IDCuota?></td>
-							<td class="<?=$class?>" align="right" nowrap><?
+							<td class="<?=$class?>" align="right" nowrap><?php
 									$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '".$r_credito->IDFactura."' AND IDPuntoVenta = '$r_credito->IDPuntoVenta' AND FechaPago = '0000-00-00 00:00:00' ";
 									$qry_cuotas = db_query( $sql_cuotas );
 									$r_cuotas = db_fetch_object( $qry_cuotas );
@@ -147,7 +147,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_credito->ValorTotal , 2); $ValorTotal += $r_credito->ValorTotal?></td>
 						</tr>
 						
-						<?
+						<?php
 						}//end foreach( $r_facturas as $key => $valor )
 						?>
 							

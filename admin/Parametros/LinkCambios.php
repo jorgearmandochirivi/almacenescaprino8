@@ -1,5 +1,5 @@
 <body>
-<?
+<?php
 
 $TitleMod ="Link Cambios";
 
@@ -83,17 +83,17 @@ var Check = new Array('Fecha');
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table>
 <br>
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?> onsubmit="return EvaluaReg(this,Check)" <?}?>>
+<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?> onsubmit="return EvaluaReg(this,Check)" <?php }?>>
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -105,7 +105,7 @@ var Check = new Array('Fecha');
 			<?php if($r->$Key==1){ ?>
 			<tr class=row2>
 			<td>Habilitar Link</td><td>
-            <? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Habilitar, 'Habilitar'); ?>
+            <?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Habilitar, 'Habilitar'); ?>
 
 							</td>
 			</tr>
@@ -115,14 +115,14 @@ var Check = new Array('Fecha');
                           http://www.almacenescaprino.com/?mod=cambioreferenciaanterior
                           </td>
 		  </tr>
-			<? } ?>
+			<?php } ?>
 
 			<?php if($r->$Key==2){ ?>
 						<tr class=row2>
 						  <td>Habilitar Descuentos para Relaciones publicas</td>
-						  <td><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->RelacionesPublicas, 'RelacionesPublicas'); ?></td>
+						  <td><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->RelacionesPublicas, 'RelacionesPublicas'); ?></td>
 		  </tr>
-				<? } ?>
+				<?php } ?>
 						<tr class=row2>
 						  <td colspan="2">Puntos de venta que aplica</td>
 		  </tr>
@@ -135,9 +135,9 @@ var Check = new Array('Fecha');
 		  </tr>
 						<tr>
 			<td colspan=2 align=center class=row2>
-            	<input type=hidden name=IDLinkCambio value="<?=$r->IDLinkCambio ?>">    <input type=hidden name=ID value="<? echo $r->$Key ?>">
+            	<input type=hidden name=IDLinkCambio value="<?=$r->IDLinkCambio ?>">    <input type=hidden name=ID value="<?php echo $r->$Key ?>">
                 <input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 				</tr>
 					</table>
@@ -145,7 +145,7 @@ var Check = new Array('Fecha');
 	</tr>
 </table>
 </form>
-<?
+<?php
 }// End function print_form()
 
 /*******************************************************************************************
@@ -183,26 +183,26 @@ var Check = new Array('Fecha');
 							?>
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
-		<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-		<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+		<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
+		<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+		<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
-<?
+<?php
 		if($rows > 0){
 ?>
 <br>
 <table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	<tr>
-		<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 	</tr>
 
 	<tr>
-		<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+		<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
 	</tr>
 	<tr>
 		<td class=texto bgcolor=#DBEAF5 colspan= nowrap>
-		<?
+		<?php
 			print $pages;
 		?>
 		</td>
@@ -212,20 +212,20 @@ var Check = new Array('Fecha');
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
 						<td class=rowform nowrap bgcolor=#DBEAF5>Nombre</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Habilitar</a><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;
-						    <% if($_GET['order_by']=="Fecha"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
+						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Habilitar</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
+						    <?php if($_GET['order_by']=="Fecha")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
 						<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Eliminar</td>
 					</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
 
 <tr>
 						<td align=center valign=middle nowrap width=50 class=row2>
-	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap class=row1><? echo $r->Nombre ?></td>
-						<td nowrap class=row1><?
+						<td nowrap class=row1><?php echo $r->Nombre ?></td>
+						<td nowrap class=row1><?php
 						switch($r->$Key){
 							case "1":
 								echo $r->Habilitar;
@@ -236,14 +236,14 @@ var Check = new Array('Fecha');
 						}
 						 ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
-	&nbsp;&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>
+	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>
 </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=3 nowrap>
-	<?
+	<?php
 		print $pages;
 		?>
 </td>
@@ -252,7 +252,7 @@ var Check = new Array('Fecha');
 </tr>
 </table>
 
-<?
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -298,6 +298,6 @@ else
 				</td>
 			</tr>
 	</form>
-<?
+<?php
 	}//End function filtrar
 ?>

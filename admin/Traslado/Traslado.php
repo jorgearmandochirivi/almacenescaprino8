@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<?
+<?php
 	$TitleMod ="Traslados";
 
 	$Table = "Traslado";
@@ -300,7 +300,7 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 <table class="forumline" width="580" cellspacing="1" border="0" align="center">
 	<tr>
 	<td width="100%">
@@ -329,7 +329,7 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 														<td class=col1>Destino</td>
 														<td class=col2 colspan="3">
 															<select name="IDPuntoVentaDestino" class="InputSelect">
-															<?
+															<?php
 																$sql_puntoventa = "SELECT * FROM PuntoVenta";
 																$query_puntoventa = db_query($sql_puntoventa);
 																while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
@@ -405,6 +405,6 @@ var Check = new Array('IDPuntoVentaDestino''Fecha');
 
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML>

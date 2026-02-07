@@ -443,7 +443,7 @@ function EvaluarFunciones( Form, Check )
 	-->
 </script>
 
-<?
+<?php
 
 
 	//envia_correo_proveedor("jorgechirivi@gmail.com","538", "4", "jorge", "Garantia", "plantillas","Excedente","1");
@@ -834,7 +834,7 @@ function mostrarfactura($newmode,$submit_caption,$msg=""){
       <!--
       <select class=tbox name=puntoventa>
 		  <option value="">Seleccione</option>
-						<?
+						<?php
 							$sql_puntos = "SELECT P.* FROM PuntoVenta P ";
 							$sql_puntos .= "WHERE 1 Order By Nombre";
 
@@ -889,7 +889,7 @@ function mostrarfactura($newmode,$submit_caption,$msg=""){
 
 </table>
 </form>
-<?
+<?php
 }//end	mostrar($newmode,$submit_caption)
 
 
@@ -992,14 +992,14 @@ function print_formgarantia($id="",$newmode,$title,$submit_caption,$tipo_garanti
 									 Por favor buscar cambio asignado  al numero de la factura
                         <?php endif; ?>
                         </td>
-                        <td align="left" class="<?=$class?>"><%=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))%></td>
-                        <td align="left" class="<?=$class?>"><%=get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))%></td>
+                        <td align="left" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica));?></td>
+                        <td align="left" class="<?=$class?>"><?php echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)));?></td>
                         <td align="left" class="<?=$class?>"><?=$r_detalle->Cantidad?></td>
-                        <td align="left" class="<?=$class?>"><?echo number_format($r_detalle->ValorU);?></td>
-                        <td align="left" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoPar);?></td>
+                        <td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU);?></td>
+                        <td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoPar);?></td>
                         <td align="left" class="<?=$class?>">
-						<? //echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?>
-						<? echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?>
+						<?php //echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?>
+						<?php echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?>
 						
 					</td>
                     </tr>
@@ -1027,13 +1027,13 @@ function print_formgarantia($id="",$newmode,$title,$submit_caption,$tipo_garanti
                       <td align="left" class="<?=$class?>">
                         <input type="radio" name="IDProductoGarantia" id="IDProductoGarantia<?=$i?>" value="<?php echo $r_detalle_cambio->IDDetalleCambio."|".$r_detalle_cambio->IDCambio."|".$r_detalle_cambio->IDPuntoVenta;  ?>"></td>
                         <td align="left" class="<?=$class?>"><b><?=$i?></b></td>
-                        <td align="left" class="<?=$class?>"><%=get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle_cambio->IDCodificacionEspecifica)))%></td>
-                        <td align="left" class="<?=$class?>"><%=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))%></td>
-                        <td align="left" class="<?=$class?>"><%=get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle_cambio->IDCodificacionEspecifica)))%></td>
+                        <td align="left" class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle_cambio->IDCodificacionEspecifica)));?></td>
+                        <td align="left" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica));?></td>
+                        <td align="left" class="<?=$class?>"><?php echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle_cambio->IDCodificacionEspecifica)));?></td>
                         <td align="left" class="<?=$class?>"><?=$r_detalle->Cantidad?></td>
-                        <td align="left" class="<?=$class?>"><?echo number_format($r_detalle_cambio->PrecioU);?></td>
-                        <td align="left" class="<?=$class?>"><?echo number_format($r_detalle_cambio->DescuentoRef);?></td>
-                        <td align="left" class="<?=$class?>"><?echo number_format( ( $r_detalle_cambio->ValorU * $r_detalle_cambio->Cantidad ) * ( 1 - ( $r_detalle_cambio->DescuentoRef / 100 ) ) );?></td>
+                        <td align="left" class="<?=$class?>"><?php echo number_format($r_detalle_cambio->PrecioU);?></td>
+                        <td align="left" class="<?=$class?>"><?php echo number_format($r_detalle_cambio->DescuentoRef);?></td>
+                        <td align="left" class="<?=$class?>"><?php echo number_format( ( $r_detalle_cambio->ValorU * $r_detalle_cambio->Cantidad ) * ( 1 - ( $r_detalle_cambio->DescuentoRef / 100 ) ) );?></td>
                     </tr>
                 <?php
 				$i++;
@@ -1054,7 +1054,7 @@ function print_formgarantia($id="",$newmode,$title,$submit_caption,$tipo_garanti
                 <input type=hidden name=IDCambio value=<?=$_GET[numero_cambio]?>>
 
 
-				<input type=submit name=submit value="<? echo $submit_caption ?>" id="boton_enviar_producto" class=submit >
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" id="boton_enviar_producto" class=submit >
 
 
 
@@ -1065,7 +1065,7 @@ function print_formgarantia($id="",$newmode,$title,$submit_caption,$tipo_garanti
 	</tr>
 </table>
 </form>
-	<?
+	<?php
 }// End function print_formgarantia()
 
 
@@ -1150,7 +1150,7 @@ function print_formfactura_cliente($id="",$newmode,$title,$submit_caption) {
 						if(strtotime($fecha_hoy) <= strtotime($nuevafecha_maxima) || $total_autorizacion>0):
 							$supera_limite = "N";
 						?>
-                        	<a href='<? echo "?mod=cambioreferencia&action=mostrar&numero_factura="; echo $r_detalle->NumeroFactura; ?>&puntoventa=<?php echo $r_detalle->IDPuntoVenta; ?>'><img src='admin/images/edit.gif' border='0'></a>
+                        	<a href='<?php echo "?mod=cambioreferencia&action=mostrar&numero_factura="; echo $r_detalle->NumeroFactura; ?>&puntoventa=<?php echo $r_detalle->IDPuntoVenta; ?>'><img src='admin/images/edit.gif' border='0'></a>
                         <?php else:
                         	$supera_limite = "S";
                         endif; ?>
@@ -1207,7 +1207,7 @@ function print_formfactura_cliente($id="",$newmode,$title,$submit_caption) {
 							$supera_limite = "N";
 						?>
 
-                        <a href='<? echo "?mod=cambioreferencia&action=mostrar&numero_factura="; echo $r_detalle->NumeroFacturaBono; ?>&puntoventa=<?php echo $r_detalle->IDPuntoVenta; ?>&tipofactura=facturabono'><img src='admin/images/edit.gif' border='0'></a>
+                        <a href='<?php echo "?mod=cambioreferencia&action=mostrar&numero_factura="; echo $r_detalle->NumeroFacturaBono; ?>&puntoventa=<?php echo $r_detalle->IDPuntoVenta; ?>&tipofactura=facturabono'><img src='admin/images/edit.gif' border='0'></a>
                         <?php else:
                         	$supera_limite = "S";
                         endif; ?>
@@ -1266,7 +1266,7 @@ function print_formfactura_cliente($id="",$newmode,$title,$submit_caption) {
 							//if(1<= 1):
 							$supera_limite = "N";
 						?>
-                        <a href='<? echo "?mod=cambioreferencia&action=mostrar&numero_cambio="; echo $r_detalle_cambio->IDCambio; ?>&puntoventa=<?php echo $r_detalle_cambio->IDPuntoVenta; ?>'><img src='admin/images/edit.gif' border='0'></a>
+                        <a href='<?php echo "?mod=cambioreferencia&action=mostrar&numero_cambio="; echo $r_detalle_cambio->IDCambio; ?>&puntoventa=<?php echo $r_detalle_cambio->IDPuntoVenta; ?>'><img src='admin/images/edit.gif' border='0'></a>
                         <?php else:
 						$meses_maximo_cambio = 6;
                         	$supera_limite = "S";
@@ -1298,7 +1298,7 @@ function print_formfactura_cliente($id="",$newmode,$title,$submit_caption) {
 				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" id="boton_enviar_producto" class=submit >
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" id="boton_enviar_producto" class=submit >
 
 
 
@@ -1309,7 +1309,7 @@ function print_formfactura_cliente($id="",$newmode,$title,$submit_caption) {
 	</tr>
 </table>
 </form>
-	<?
+	<?php
 }// End function print_formfactura_cliente()
 
 
@@ -1371,7 +1371,7 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 
 
 <br>
-	<FORM name="frm" id="frmcambio" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?}?>>
+	<FORM name="frm" id="frmcambio" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?php }?>>
 
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="500">
 
@@ -1506,7 +1506,7 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 													<td class=col1>Seleccione Vendedor</td>
 													<td class=col2>
 
-													<? echo formpopup("Empleado WHERE IDPuntoVenta = '".$datos["IDPuntoVenta"]."' and Publicar = 'S' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
+													<?php echo formpopup("Empleado WHERE IDPuntoVenta = '".$datos["IDPuntoVenta"]."' and Publicar = 'S' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
 													<td class=col1 colspan="2"></td>
 												</tr>
 												<tr>
@@ -1517,7 +1517,7 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 												</tr>
 												<tr>
 													<td class=col1>Excedente( $ )</td>
-													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?echo $r_factura->Excedente?>"></td>
+													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?php echo $r_factura->Excedente?>"></td>
 													<td class=col1></td>
 													<td class=col1></td>
 												</tr>
@@ -2023,7 +2023,7 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 													<td align="center"><b></b></td>
 													<td align="center"><b></b></td>
 												</tr>
-												<?
+												<?php
 												$contador_ref_cambio=1;
 												for( $i = 10; $i < 15; $i++ )
 												{
@@ -2043,7 +2043,7 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 													<td align="left"><input type=hidden name=Precio<?=$i?>></td>
 													<td align="left"><input type=hidden name=Descuento<?=$i?>></td>
 												</tr>
-												<?
+												<?php
 													$contador_ref_cambio++;
 												}//end for
 												?>
@@ -2119,7 +2119,7 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
   </script>
 
 </form>
-	<?
+	<?php
 }// End function print_formgarantia()
 
 

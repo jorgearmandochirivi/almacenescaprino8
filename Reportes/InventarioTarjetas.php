@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 
 $TitleMod ="Tarjetas Punto de Venta  ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta );
@@ -141,7 +141,7 @@ else
 ?>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <? echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	
@@ -161,7 +161,7 @@ else
                         <td class="titlemedium">Trasladar/Factura</td>
 						<td class="titlemedium">Descripcion</td>
                     </tr>
-                    <?
+                    <?php
 					$cont = 0;
                    	$sql_tarjetas = "SELECT * FROM TarjetaPunto WHERE IDPuntoVenta = '" . $IDPuntoVenta . "' order by Estado,CodigoTarjeta";
 					$qry_tarjetas = db_query( $sql_tarjetas );
@@ -174,22 +174,22 @@ else
                     	<tr>
                     	  <td class="row1"><?php echo $consecutivo++; ?></td>
                         	<td class="row1">
-                            	<?
+                            	<?php
                                 	echo $r_tarjetas["CodigoTarjeta"];
 								?>
                             </td>
                             <td class="row1">
-                            	<?
+                            	<?php
                                 	echo $r_tarjetas["Estado"];
 								?>
                             </td>
                             <td class="row1">
-                            	<?
+                            	<?php
                             		if( $r_tarjetas["Estado"] == "D" )
                             		{
                             	?>
                             			<input type="checkbox" name="Tarjeta[<?=$r_tarjetas["CodigoTarjeta"]?>]" value="<?=$r_tarjetas["CodigoTarjeta"]?>" >
-                            	<?
+                            	<?php
                             		}//end if
 									elseif($r_tarjetas["Estado"] == "V"){
 										$vendidas++;
@@ -209,7 +209,7 @@ else
 							</td>
 
                         </tr>
-                    <?
+                    <?php
 						$cont++;
 					}//ednw hile
 					?>
@@ -228,7 +228,7 @@ else
                		<tr>
                			<td>
                				<select name="IDPuntoVentaDestino" >
-									<option value="">Seleccione Un Punto de Venta</option><?								
+									<option value="">Seleccione Un Punto de Venta</option><?php								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
@@ -277,6 +277,6 @@ else
     </table>	
 
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

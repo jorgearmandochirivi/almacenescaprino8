@@ -1,4 +1,4 @@
-<%
+<?php
 	include("../config.inc.php");
 	require( "../lib/dhabiles.inc.php" );
 	Encabezado();
@@ -111,4 +111,4 @@
 	header("Expires: 0");
 
 	echo $strfile;
-%>
+  ?>

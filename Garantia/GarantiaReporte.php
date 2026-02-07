@@ -1,6 +1,6 @@
 <script src="admin/jscripts/Chart.js-master/Chart.js"></script>
 
-<?
+<?php
 	$TitleMod ="Factura";
 	
 	$Table = "Factura";
@@ -207,11 +207,11 @@ if(empty($sql))
 
 <table width=500 cellpadding=0 cellspacing=0 align=center >
 	<tr>
-		<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+		<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 	</tr>
-	<?filtrar();?>	
+	<?php filtrar();?>	
 	<tr>
-		<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+		<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
 	</tr>
 	<tr>
 	  <td class=texto  colspan= nowrap>
@@ -373,7 +373,7 @@ if(empty($sql))
 <table width=100% border=0 cellspacing=1 cellpadding=0>
 	<tr>
 	  <td colspan="8" align=left valign=middle bgcolor=#DBEAF5 class=rowform><span class="texto">
-	    <?
+	    <?php
 			print $pages;
 		?>
 	    </span></td>
@@ -383,31 +383,31 @@ if(empty($sql))
   </tr>
 <tr>
 						<td align=center class=rowform valign=middle bgcolor=#DBEAF5 width=69>Editar</td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Numero&nbsp;
-						    <% if($_GET['order_by']=="Nombre"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Cliente</a><a style="color: #3A4F6C;text-decoration: none" href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;
-						    <% if($_GET['order_by']=="Codigo"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Producto&nbsp;
-						    <% if($_GET['order_by']=="Publicar"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Factura&nbsp;
-						  <% if($_GET['order_by']=="FechaFacturaBono"){%>
-						  <img src="images/<%=$img%>" alt="" border=0>
-						  <%}%>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Nombre&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Numero&nbsp;
+						    <?php if($_GET['order_by']=="Nombre")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+						<td class=rowform nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Cliente</a><a style="color: #3A4F6C;text-decoration: none" href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Codigo&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;
+						    <?php if($_GET['order_by']=="Codigo")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=rowform nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Producto&nbsp;
+						    <?php if($_GET['order_by']=="Publicar")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Factura&nbsp;
+						  <?php if($_GET['order_by']=="FechaFacturaBono")<?php 
+						  <img src="images/<?php echo $img;?>" alt="" border=0>
+						  <?php };?>
 						  </a></td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Fecha</td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
 						<td class=navpic nowrap bgcolor=#DBEAF5>Punto de Venta</td>
 		</tr>
 
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 ?>
   	
 <tr>
 						<td align=center valign=middle nowrap width=69 class=row2>
-						  &nbsp;<a href='<? echo "?mod=SeguimientoGarantia&action=edit&id="; echo $r->IDGarantia; ?>'><img src='images/edit.gif' border='0'></a>
+						  &nbsp;<a href='<?php echo "?mod=SeguimientoGarantia&action=edit&id="; echo $r->IDGarantia; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap class="<?=$class?>"><? echo $r->IDGarantia; ?></td>
-						<td nowrap class="<?=$class?>"><?
+						<td nowrap class="<?=$class?>"><?php echo $r->IDGarantia; ?></td>
+						<td nowrap class="<?=$class?>"><?php
 									$id_cliente= get_field("Factura","IDCliente","IDFactura",$r->IDFactura);
 									echo get_field("Cliente","Nombre","IDCliente",$id_cliente)." ".get_field("Cliente","Apellido","IDCliente",$id_cliente)?></td>
 						<td nowrap class="<?=$class?>"><?php
@@ -420,16 +420,16 @@ if(empty($sql))
 
 									
 									?></td>
-						<td nowrap class="<?=$class?>"><? echo get_field("Factura","Numerofactura","IDFactura",$r->IDFactura); ?></td>
-						<td nowrap class="<?=$class?>"><? echo formatofecha(substr($r->FechaGarantia,0,10)) ?></td>
-						<td nowrap class="<?=$class?>"><? echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia); ?></td>
-						<td nowrap class="<?=$class?>"><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
+						<td nowrap class="<?=$class?>"><?php echo get_field("Factura","Numerofactura","IDFactura",$r->IDFactura); ?></td>
+						<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaGarantia,0,10)) ?></td>
+						<td nowrap class="<?=$class?>"><?php echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia); ?></td>
+						<td nowrap class="<?=$class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
 		</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <td class=texto bgcolor=#DBEAF5 colspan=8 nowrap>
-	<?
+	<?php
 		print $pages;
 		?>
 </td>
@@ -438,7 +438,7 @@ if(empty($sql))
 </tr>
 </table>
 </form>
-<?
+<?php
 }//end	mostrar($newmode,$submit_caption)
 
 
@@ -454,7 +454,7 @@ function print_formgarantia($id="",$newmode,$title,$submit_caption) {
 ?>
 	
 <br>
-<?
+<?php
 }// End function print_formgarantia()
 
 
@@ -472,7 +472,7 @@ function print_formfactura_cliente($id="",$newmode,$title,$submit_caption) {
 ?>
 	
 <br>
-<?
+<?php
 }// End function print_formfactura_cliente()
 
 
@@ -507,7 +507,7 @@ function print_form($id,$newmode,$title,$submit_caption,$frm=""){
 var Check = new Array('NumeroFactura','NumeroDocumento','IDPuntoVenta','IDCliente','IDEmpleado', 'Cantidad1', 'Nombre1', 'ValorTotal');
 </script>
 <br>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?>
 
@@ -535,7 +535,7 @@ var Check = new Array('NumeroFactura','NumeroDocumento','IDPuntoVenta','IDClient
 Punto de venta 
 				    <select class=tbox name=puntoventa>
 				    <option value="">Seleccione</option>
-				    <?
+				    <?php
 							$sql_puntos = "SELECT P.* FROM PuntoVenta P ";
 							$sql_puntos .= "WHERE 1 and IDPuntoVenta = '".$datos[IDPuntoVenta]."' Order By Nombre";
 							
@@ -568,7 +568,7 @@ Punto de venta
                     <option value="Remonta">Remonta</option>
 			      </select>
 				  <br>Estado
-                  <? echo formpopup("EstadoGarantia","Nombre","IDEstadoGarantia","IDEstadoGarantia",$r->IDEstadoGarantia,"input\" id=\"IDEstadoGarantia"); ?>
+                  <?php echo formpopup("EstadoGarantia","Nombre","IDEstadoGarantia","IDEstadoGarantia",$r->IDEstadoGarantia,"input\" id=\"IDEstadoGarantia"); ?>
                   
 				  Entre
                   
@@ -681,7 +681,7 @@ y
 	  </td>
 	  </tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 ?>
 

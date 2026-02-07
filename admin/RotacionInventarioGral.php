@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Codificacion Especifica";
 
@@ -51,7 +51,7 @@ function seleccionareferencia( $newmode)
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="bordertable" width="820">
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 			<tr>
-			<td class=col1 width=30%> 
+			<td class=col1 width=30;?> 
 				Buscar Referencia Por
 			</td>
 				<td class="col2" nowrap>
@@ -86,7 +86,7 @@ function seleccionareferencia( $newmode)
 			</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -104,13 +104,13 @@ function seleccionareferencia( $newmode)
 	Inventario<br>
 	Ventas / ( Ventas + Inventario )<br>
 	<br>
-	<?
+	<?php
 	if( !empty( $campo ) && !empty( $referencia ) )
 		$Titulo = " - ". echo $campo.":".$referencia;
 	?>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="820">
 		<tr>
-			<td class="maintitle"><b></b><span class="gen"><?=$Title?> <? echo $Titulo ?> </span></td>
+			<td class="maintitle"><b></b><span class="gen"><?=$Title?> <?php echo $Titulo ?> </span></td>
 		</tr>
 	</table>
 	<table width=820 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -119,7 +119,7 @@ function seleccionareferencia( $newmode)
 				<table cellspacing='0' cellpadding='2' border='0' align='center'  width="820">
 					<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 						<tr>
-							<td class=col1 width=30%> 
+							<td class=col1 width=30;?> 
 				Buscar Referencia Por
 				</td>
 							<td class="col2" nowrap>
@@ -152,7 +152,7 @@ function seleccionareferencia( $newmode)
 				</table>
 			</td>
 	</tr>
-<?
+<?php
 
 $sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta ORDER BY IDCiudad, Nombre ";
 $qry_puntos = db_query( $sql_puntos );
@@ -184,7 +184,7 @@ if( !empty( $referencia ) )
 		?>
 			<tr>
 				<td class="row1">
-					<? 
+					<?php 
 						$i = 0;
 						$r = array( );
 						while($r_codificacionesp = db_fetch_array($query_codificacion))
@@ -215,7 +215,7 @@ if( !empty( $referencia ) )
 							<tr>
 								
 								<td class="rowform" width="20%">Referencia</td>	
-								<?
+								<?php
 								$width=60 / count( $array_tallas_mostrar ); 
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 								{
@@ -226,15 +226,15 @@ if( !empty( $referencia ) )
 								<td class="rowform" width="20%" align="right" >TOTALES</td>
 							</tr>
 							
-							<?
+							<?php
 							foreach( $array_existencias as $numeroReferencia => $datosreferencia )	
 							{
 								$class = repetition()?"row1":"row2";
 							
 							?>
 							<tr>
-								<td class=rowform align=center><? echo $numeroReferencia; ?></td>
-								<?
+								<td class=rowform align=center><?php echo $numeroReferencia; ?></td>
+								<?php
 							
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 								{
@@ -258,25 +258,25 @@ if( !empty( $referencia ) )
 								
 								
 								?>	
-								<td class="rowform"  align="right" ><? echo $TotalVentasPunto[ $numeroReferencia ]."<br>".$TotalExistenciasPunto[ $numeroReferencia ]."<br>";echo number_format( $Rotacion = ( $TotalVentasPunto[ $numeroReferencia ] / ( $TotalVentasPunto[ $numeroReferencia ] + $TotalExistenciasPunto[ $numeroReferencia ] ) * 100 ), 2 ); ?></td>
+								<td class="rowform"  align="right" ><?php echo $TotalVentasPunto[ $numeroReferencia ]."<br>".$TotalExistenciasPunto[ $numeroReferencia ]."<br>";echo number_format( $Rotacion = ( $TotalVentasPunto[ $numeroReferencia ] / ( $TotalVentasPunto[ $numeroReferencia ] + $TotalExistenciasPunto[ $numeroReferencia ] ) * 100 ), 2 ); ?></td>
 							</tr>
-							<?
+							<?php
 								
 							}//end for
 							
 							?>
-							<?
+							<?php
 							/*
 							<tr>
 								<td class="rowform">TOTALES</td>	
-								<?
+								<?php
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 								{
 									//if( array_sum($array_existencias[ $numeroReferencia ]) > 0 )
 										echo "<td class=rowform align=right>".$TotalVentasTalla[ $idtalla ]."<br>".$TotalExistenciasTalla[ $idtalla ]."<br>".number_format( $Rotacion = ( $TotalVentasTalla[ $idtalla ] / ( $TotalVentasTalla[ $idtalla ] + $TotalExistenciasTalla[ $idtalla ] ) * 100 ), 2 )."</td>";
 								}//end for
 								?>	
-								<td class="rowform" align=right><? echo array_sum($TotalVentasTalla)."<br>".array_sum($TotalExistenciasTalla)."<br>";echo number_format( ( $Rotacion = ( array_sum($TotalVentasTalla) / ( array_sum($TotalVentasTalla) + array_sum($TotalExistenciasTalla) ) ) ) * 100, 2 ); ?></td>
+								<td class="rowform" align=right><?php echo array_sum($TotalVentasTalla)."<br>".array_sum($TotalExistenciasTalla)."<br>";echo number_format( ( $Rotacion = ( array_sum($TotalVentasTalla) / ( array_sum($TotalVentasTalla) + array_sum($TotalExistenciasTalla) ) ) ) * 100, 2 ); ?></td>
 							</tr>
 							*/
 							?>
@@ -284,7 +284,7 @@ if( !empty( $referencia ) )
 					</table>
 				</td>
 			</tr>
-		<?
+		<?php
 		}// End if$rows
 		else
 			echo "<tr><td><span class=col1list><b>No se encontraron registros con los par&aacute;metros proporcionados </b></span></td></tr>";
@@ -292,6 +292,6 @@ if( !empty( $referencia ) )
 ?>
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

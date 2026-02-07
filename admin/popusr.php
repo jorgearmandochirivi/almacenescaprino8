@@ -1,4 +1,4 @@
-<%
+<?php
 	include("config.inc.php3");
 	//Encabezado();
 	$datos = Verifica_Sesion();
@@ -6,11 +6,11 @@
 	$Nombre_Usuario = usr_datos($datos["IDUsuario"]);
 	$ID_Usuario = $datos["IDUsuario"];
 	$Nivel =  $datos["Nivel"];
-%>
+  ?>
 <link href="../../default.css" rel="stylesheet" media="screen">
 <title>Empleados</title>
 
-<%
+<?php
 echo "
 	<script>
 		function usuario(nombre,idusuario){
@@ -20,7 +20,7 @@ echo "
 		}
 	</script>
 "
-%>
+  ?>
 
 <table width="511" border="0" cellspacing="2" cellpadding="0">
 	<tr>
@@ -29,13 +29,13 @@ echo "
 			
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
-							<td class="tituloRP" align=center>[ <% 	for($i=0;$i<25;$i++){
-		if($i==14) echo " ] <br> [ ";%><a class="textoGP" href="?val=<?=$alfabet_array[$i]?>&action=list&obj=<?=$obj?>"><%=$alfabet_array[$i]%></a> <% if($i!=13){%>| <%}%><?}?><a href="../?val=<?=$alfabet_array[$i]?>&action=list&obj=<?=$obj?>" class="textoGP"><%=$alfabet_array[$i]%></a> ]</td>
+							<td class="tituloRP" align=center>[ <?php 	for($i=0;$i<25;$i++){
+		if($i==14) echo " ] <br> [ ";;?><a class="textoGP" href="?val=<?=$alfabet_array[$i]?>&action=list&obj=<?=$obj?>"><?php echo $alfabet_array[$i];?></a> <?php if($i!=13)<?php | <?php };?><?php }?><a href="../?val=<?=$alfabet_array[$i]?>&action=list&obj=<?=$obj?>" class="textoGP"><?php echo $alfabet_array[$i];?></a> ]</td>
 						</tr>
 					</table>
 					<form name="frm" action="" method="get" onsubmit="return validar(this)">
 					<input type="text" name="texto" id="req">
-					<input type="hidden" name="obj" value="<%=$obj%>">
+					<input type="hidden" name="obj" value="<?php echo $obj;?>">
 					<input type="hidden" name="action" value="list">
               &nbsp;&nbsp;<input type="submit" name="Buscar" value="Buscar"><!--<a href="popusr.php?"><input type="image" src="../../images/buscar.gif" width="54" height="12"></a>-->
 					</form>
@@ -44,7 +44,7 @@ echo "
 	</tr>
 	<tr>
 		<td align="center" class="menuAP">           
-<%
+<?php
 
 /*******************************************************************************************
 		Listar Personal
@@ -89,14 +89,14 @@ echo "
 		$info = $nav->show_info(); 
 		if($rows > 0)
 		{
-		%>
+		?>
 
 <table width="90%" border="0" cellspacing="0" cellpadding="2">
 <tr>
-<td class="tituloAM"bgcolor="#FFFFCC"><%=$titulo_busqueda%></td>
+<td class="tituloAM"bgcolor="#FFFFCC"><?php echo $titulo_busqueda;?></td>
 </tr>
 <tr>
-<td class="tituloAM"bgcolor="#FFFFCC"><?	print $info; ?></td>
+<td class="tituloAM"bgcolor="#FFFFCC"><?php	print $info; ?></td>
 </tr>
 </table>					
    <br>
@@ -104,7 +104,7 @@ echo "
 					<tr>
 							<td class="tituloRelacionados" colspan="3" bgcolor="#FFFFCC">Usuario</td>
 						</tr>
-					<? while ($directorio = db_fetch_object($result)){?>
+					<?php while ($directorio = db_fetch_object($result)){?>
 						
 						<tr>
 							<td nowrap class="textoGP" onmouseover="this.style.cursor='hand'">
@@ -112,21 +112,21 @@ echo "
 							</td>
 							<td nowrap class="textoAP"></td>
 						</tr>
-						<?}//END while?>
+						<?php }//END while?>
 					</table>
 
 <br>
 					
-					<p align="center" ><br><?	print $pages; ?></p>
-        <?	}//end if($rows > 0)
+					<p align="center" ><br><?php	print $pages; ?></p>
+        <?php	}//end if($rows > 0)
         else 
         	{?>
 			<p align="center" class=tituloAM>	
 				Su busqueda no arrojo resultados
 			</p>
-  			<?}?>     
-<%
-//****************************************************%>
+  			<?php }?>     
+<?php
+//****************************************************;?>
 		</td>
 	</tr>
 </table>

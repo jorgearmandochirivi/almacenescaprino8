@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -53,7 +53,7 @@ function printWindow() {
 
 <body>
 	
-	<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+	<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 			<table class="forumline" width="215" height="100" cellspacing="1" border="0" align="center">
 		<tr>
 			<td valign="top">
@@ -69,7 +69,7 @@ function printWindow() {
 															<td class=texto></td>
 															<td class=texto colspan="3" align="right" nowrap>Documento pago cuota credito. <?=$r->NumeroDocumento?></td>
 														</tr>
-														<?
+														<?php
 													$sql_puntoVenta = "SELECT * from PuntoVenta WHERE IDPuntoVenta = '$r->IDPuntoVenta' ";
 													$qry_puntoventa = db_query( $sql_puntoVenta );
 													$r_puntoventa = db_fetch_object( $qry_puntoventa );
@@ -107,13 +107,13 @@ function printWindow() {
 														</tr>
 														<tr>
 															<td class=texto>CLIENTE</td>
-															<td class=texto colspan="3" nowrap><? echo get_field("Cliente","CONCAT(Cedula,' ',Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?></td>
+															<td class=texto colspan="3" nowrap><?php echo get_field("Cliente","CONCAT(Cedula,' ',Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?></td>
 														</tr>
 														<tr>
 															<td class=texto>Cuotas Pendientes</td>
 															<td class=texto colspan="3" nowrap>
 																
-																<?
+																<?php
 																$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '$r_cuota->IDFactura' AND IDPuntoVenta = '$r_cuota->IDPuntoVenta' AND FechaPago = '0000-00-00 00:00:00' ";
 																$qry_cuotas = db_query( $sql_cuotas );
 																$r_cuotas = db_fetch_object( $qry_cuotas );

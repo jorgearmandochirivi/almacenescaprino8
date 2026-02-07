@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -153,7 +153,7 @@ table{
       </tr>
       <tr>
         <td class=texto>Cuotas Pendientes</td>
-        <td class=texto colspan="3" nowrap><?
+        <td class=texto colspan="3" nowrap><?php
 																$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '$r_cuota->IDFactura' AND IDPuntoVenta = '$r_cuota->IDPuntoVenta' AND FechaPago = '0000-00-00 00:00:00' ";
 																$qry_cuotas = db_query( $sql_cuotas );
 																$r_cuotas = db_fetch_object( $qry_cuotas );
@@ -166,14 +166,14 @@ table{
       </tr>
       <tr>
         <td class=texto>CLIENTE</td>
-        <td class=texto colspan="3" nowrap><?
+        <td class=texto colspan="3" nowrap><?php
 														  	 echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);
 															 //echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente) . "<br>".get_field("Cliente","Apellido","IDCliente",$r->IDCliente);
 														  ?></td>
       </tr>
       <tr>
         <td class=texto>IDENTIFICACION</td>
-        <td class=texto colspan="3" nowrap><? echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?></td>
+        <td class=texto colspan="3" nowrap><?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?></td>
       </tr>
       <tr>
         <td class=texto>Factura que abona:</td>
@@ -232,7 +232,7 @@ table{
 									</tr>
                                     -->
 
-									<?
+									<?php
 									$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 									$query_formapago = db_query( $sql_formapago );
 
@@ -241,14 +241,14 @@ table{
 										if($r_formapago->Valor <> 0)
 										{
 								?>
-									<? 									}//end if($r_formapago->Valor <> 0)
+									<?php 									}//end if($r_formapago->Valor <> 0)
 								}//end while( $r_formapago = db_fetch_object( $query_formapago ) )
 								?>
-									<?
+									<?php
                                     if( !empty( $array_fidelizacion ) && $club_suavidad=="S")
 									{
 									?>
-                                   	<?
+                                   	<?php
 									}//end if
 									?>
 

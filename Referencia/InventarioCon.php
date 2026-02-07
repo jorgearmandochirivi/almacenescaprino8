@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 function header_export($file){
 
@@ -96,7 +96,7 @@ function seleccionareferencia( $newmode)
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="650">
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 		<tr>
-			<td class=col1 width=30%>
+			<td class=col1 width=30;?>
 				Buscar Referencia Por
 			</td>
 			<td class="col2">
@@ -110,11 +110,11 @@ function seleccionareferencia( $newmode)
 		</tr>
 			<tr>
 				<td class="col1" width="117">Saldo</td>
-				<td class="col2" ><? echo formradiogroup(array('S'=>'S','N'=>'N'),$Saldo, 'Saldo'); ?>    <input type="submit" class="button" name="enviar" value="Consultar"></td>
+				<td class="col2" ><?php echo formradiogroup(array('S'=>'S','N'=>'N'),$Saldo, 'Saldo'); ?>    <input type="submit" class="button" name="enviar" value="Consultar"></td>
 			</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -131,13 +131,13 @@ function seleccionareferencia( $newmode)
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
 		<tr>
 			<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" /></td>
-			<td class="tbtbot"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <? echo fecha(); ?></span></td>
+			<td class="tbtbot"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 			<td class="tbtr"><img src="images/spacer.gif" alt="" width="124" height="22" /></td>
 		</tr>
 
 		<tr>
 			<td class="tbtl"></td>
-			<td class="tbtbot"><b></b><span class="gen"><a href="?mod=InventarioCon&action=exportar">Exportar - <? echo fecha(); ?></a></span></td>
+			<td class="tbtbot"><b></b><span class="gen"><a href="?mod=InventarioCon&action=exportar">Exportar - <?php echo fecha(); ?></a></span></td>
 			<td class="tbtr"><img src="images/spacer.gif" alt="" width="124" height="22" /></td>
 		</tr>
 
@@ -150,7 +150,7 @@ function seleccionareferencia( $newmode)
 	<table width=650 cellpadding=0 cellspacing=0 align=center class=bordertable>
 
 
-<?
+<?php
 
 //seleccionar tallas
 $sql_tallas = " SELECT * FROM Talla WHERE Publicar = 'S' AND IDTalla not in (19,26,25,24,27) ORDER BY Descripcion ";
@@ -170,17 +170,17 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					<td class="titlemedium">Tip.</td>
 					<!--<td class="navpic">Ref Antigua</td>-->
 					<td class="navpic">Dto</td>
-					<?
+					<?php
 					foreach( $array_tallas as $idtalla => $datostallas )
 					{
 					?>
-						<td class="navpic"><? echo  $datostallas[Descripcion] ?></td>
-					<?
+						<td class="navpic"><?php echo  $datostallas[Descripcion] ?></td>
+					<?php
 					}//end for
 					?>
 					<td class="navpic">Total</td>
 				</tr>
-				<?
+				<?php
 				if( !empty( $Saldo ) )
 					$condicion = " AND Saldo = '$Saldo' ";
 					$numero_ref="";
@@ -239,27 +239,27 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 								<td class="row0" align="left">&nbsp;</td>
 								<td class="row0" align="left">&nbsp;</td>
 
-								<?
+								<?php
 								foreach( $array_tallas as $idtalla => $datostallas )
 								{
 								?>
 									<td class="row0" align="right">
-										<?
+										<?php
 											echo  $array_linea[$linea][$idtalla];
 										?>
 									</td>
-								<?
+								<?php
 									//print_r( $arraydatos );
 
 								}//end for
 								?>
 								<td class="row0" align="right"><b><?=array_sum( $array_linea[$linea] ) ?></b></td>
 							</tr>
-							<?
+							<?php
 								$array_linea = array( );
 							}//end if
 							?>
-				<?
+				<?php
 						}//end if
 
 						$linea = substr( $r_referencia->Numero, 0, 2 );
@@ -275,38 +275,38 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 				?>
 						<tr>
-							<td class="row1" align="left"><? echo $r_referencia->Numero; ?></td>
+							<td class="row1" align="left"><?php echo $r_referencia->Numero; ?></td>
 							<td class="row1"><?php
 								echo get_field( "Tipologia","Nombre","IDTipologia",$r_referencia->IDTipologia );
 							//echo $r_referencia->NombreTipologia; ?></td>
-							<!--<td class="row1" align="left"><? if(!empty($r_referencia->NombreAnterior)) echo $r_referencia->NombreAnterior; ?></td>-->
+							<!--<td class="row1" align="left"><?php if(!empty($r_referencia->NombreAnterior)) echo $r_referencia->NombreAnterior; ?></td>-->
 							<td class="row1" align="center">
-							<?
+							<?php
 							echo $descuento_ref = get_field( "Precio","Descuento","IDPrecio",$r_referencia->IDPrecio );
 
 							 ?>%
                             </td>
 
-							<?
+							<?php
 							foreach( $array_tallas as $idtalla => $datostallas )
 							{
 							?>
 								<td class="row1" align="right">
-									<?
+									<?php
 										echo  $arraydatos[$idtalla][Existencia];
 										$array_linea[ $linea ][ $idtalla ] += 	$arraydatos[$idtalla][Existencia];
 										$totales[ $idtalla ] += $arraydatos[$idtalla][Existencia];
 										$totalreferencia +=  $arraydatos[$idtalla][Existencia];
 									?>
 								</td>
-							<?
+							<?php
 								//print_r( $arraydatos );
 
 							}//end for
 							?>
 							<td class="row1" align="right"><b><?=$totalreferencia ?></b></td>
 						</tr>
-				<?
+				<?php
 						}//end if mostrar
 					}//end if
 
@@ -316,16 +316,16 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					<td class="row0" align="left">Totales <?=$linea ?></td>
 					<td class="row0" align="left">&nbsp;</td>
 					<td class="row0" align="left">&nbsp;</td>
-					<?
+					<?php
 					foreach( $array_tallas as $idtalla => $datostallas )
 					{
 					?>
 						<td class="row0" align="right">
-							<?
+							<?php
 								echo  $array_linea[$linea][$idtalla];
 							?>
 						</td>
-					<?
+					<?php
 						//print_r( $arraydatos );
 
 					}//end for
@@ -336,16 +336,16 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					<td class="navpic" align="left">Total</td>
 					<td class="navpic" align="left">&nbsp;</td>
 					<td class="navpic" align="left">&nbsp;</td>
-					<?
+					<?php
 					foreach( $array_tallas as $idtalla => $datostallas )
 					{
 					?>
 						<td class="navpic" align="right">
-							<?
+							<?php
 								echo  $totales[$idtalla];
 							?>
 						</td>
-					<?
+					<?php
 						//print_r( $arraydatos );
 
 					}//end for
@@ -359,6 +359,6 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 </table>
 
-<?
+<?php
 }// Enf function list()
 ?>

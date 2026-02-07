@@ -1,5 +1,5 @@
 
-<body><?
+<body><?php
 
 $sql_actualiza_venta_empleado=db_query("INSERT IGNORE INTO VentasEmpleadoBck SELECT * FROM `VentasEmpleado` WHERE IDFactura >= 387606");
 		switch ($action) {
@@ -71,7 +71,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		
 		<br>
 		<br>
-		<?
+		<?php
 		if(!empty( $FechaDesde ) && !empty( $FechaHasta ) ){
 		?>
 		<tr>
@@ -83,7 +83,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								Reporte Ventas Empleados <b>Desde :</b> <?=formatofecha($FechaDesde)?>  <b>Hasta :</b> <?=formatofecha($FechaHasta)?> 
 							</td>
 						</tr>
-						<? 			
+						<?php 			
 						$condicionpunto=" and F.IDPuntoVenta = '$IDPuntoVenta'";
 						$qry_empleado = db_query( $sql_empleados = "SELECT IDEmpleado, CONCAT(Nombre,' ',Apellidos) as Nombre, Cedula FROM Empleado WHERE IDPuntoVenta = '$IDPuntoVenta'");
 						$i = 0;
@@ -351,7 +351,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="navpic" align="center" nowrap>Valor Parcial</td>
 										<td class="navpic" align="center" nowrap>Valor Vendido</td>
 									</tr>
-				<?
+				<?php
 						//print_r($array_ventasadmin);
 						
 						/*
@@ -377,11 +377,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['Cedula']?></td>
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['Nombre']?></td>
 										<td class="<?=$class?>" align="center" nowrap><?=$venta['Cargo']?></td>
-										<td class="<?=$class?>" align="center" nowrap><?echo $array_punto[ $idpunto ];?></td>
+										<td class="<?=$class?>" align="center" nowrap><?php echo $array_punto[ $idpunto ];?></td>
 										<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['admin'], 2 ); $totalb +=  $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['admin']?></td>
 										<td class="<?=$class?>" align="right" nowrap><?=number_format( $venta['ValorTotal'], 2); $total +=  $venta['ValorTotal']?></td>
 									</tr>
-				<?
+				<?php
 							}//end foreach( $array_ventasadmin[$valor['IDEmpleado']] as $llave => $venta  )
 							foreach( $array_ventasvendedor[$valor['IDEmpleado']] as $idpunto => $venta  )
 							{
@@ -394,7 +394,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['empleado'], 2 ) ; $totalb +=  $ValorParcial[$valor['IDEmpleado']][ $idpunto ]['empleado']?></td>
 										<td class="<?=$class?>" align="right" nowrap><?=number_format( $venta['ValorTotal'], 2) ; $total +=  $venta['ValorTotal']?></td>
 									</tr>
-				<?
+				<?php
 							}//end foreach( $array_ventasvendedor[$valor['IDEmpleado']] as $llave => $venta  )
 							
 						}//end foreach( $r_facturas as $key => $valor )
@@ -406,11 +406,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				</table>
 			</td>
 	</tr>
-	<? 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
 	?>
 	</table>
-	<?						
+	<?php						
 }// Enf function print()	
 
 ?>

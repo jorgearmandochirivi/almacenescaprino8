@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Recibir Traslado";
 
@@ -170,7 +170,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 													<tr>
 														<td class=col1>Origen </td>
 														<td class=col2 >
-															<?
+															<?php
 																echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen);
 															?><input type="hidden" value="<?=$r->IDPuntoVentaOrigen?>" name="IDPuntoVentaOrigen"></td>
 														<td class=col1>Fecha </td>
@@ -180,7 +180,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1>Estado</td>
-														<td class=col2 colspan="3"><? echo formpopup("EstadoTraslado","Descripcion","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado,"input\" id=\"Estado"); ?></td>
+														<td class=col2 colspan="3"><?php echo formpopup("EstadoTraslado","Descripcion","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado,"input\" id=\"Estado"); ?></td>
 													</tr>
 													<tr>
 														<td class=col1 >Observaciones</td>
@@ -208,7 +208,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 														<td align="center"><b>Nombre</b></td>
 														<td align="center"><b>Cantidad</b></td>
 													</tr>
-													<?
+													<?php
 														$sql_detalle = " SELECT * FROM $TableJoin WHERE $Key = '$r->IDTraslado' AND IDPuntoVentaOrigen = '$r->IDPuntoVentaOrigen' ";
 														$query_detalle = db_query($sql_detalle);
 														$i = 0;
@@ -224,23 +224,23 @@ function print_form($id,$newmode,$title,$submit_caption){
 															<b><?=$i?></b>
 															<input type="hidden" name="IDCodificacionEspecifica[]" value="<?=$r_detalle->IDCodificacionEspecifica?>">
 															<input type="hidden" name="Talla[]" value="<?=$Talla?>">
-															<input type="hidden" name="Cantidad[]" value="<? echo $r_detalle->Cantidad ?>">
+															<input type="hidden" name="Cantidad[]" value="<?php echo $r_detalle->Cantidad ?>">
 															<input type="hidden" name="IDReferencia[]" value="<?=get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)?>">
 
 														</td>
 														<td class="<?=$class?>">
-															<? echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
+															<?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
 														<td class="<?=$class?>">
-															<? echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
+															<?php echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
 														</td>
 														<td class="<?=$class?>">
-															<? echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?>
+															<?php echo get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?>
 														</td>
 														<td class="<?=$class?>">
-															<? echo $r_detalle->Cantidad ?>
+															<?php echo $r_detalle->Cantidad ?>
 														</td>
 													</tr>
-													<?
+													<?php
 														}//end while
 													?>
 												</table>
@@ -260,7 +260,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 	
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 /*******************************************************************************************
 		funcion Listar
@@ -297,7 +297,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 								$order="ASC";
 							}
 							
-							?><?
+							?><?php
 		if($rows > 0){
 ?><br>
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
@@ -307,10 +307,10 @@ function print_form($id,$newmode,$title,$submit_caption){
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				Listar <? echo $TitleMod ?>
+				Listar <?php echo $TitleMod ?>
 			</span>
 			<span class="gen">
-				<? echo $info ?>
+				<?php echo $info ?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -324,7 +324,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 			<tr>
 				<td class="forumlink" colspan="2">
-					<?filtrar();?>
+					<?php filtrar();?>
 				</td>
 			</tr>
 			<tr>
@@ -332,13 +332,13 @@ function print_form($id,$newmode,$title,$submit_caption){
 					<table width=100% border=0 cellspacing=1 cellpadding=0>
 							<tr>
 								<td align=center class=navpic valign=middle bgcolor=#DBEAF5 width=69>Ver</td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVentaDestino=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDPuntoVentaOrigen&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Almacen de Origen&nbsp;<% if($_GET['order_by']=="IDPuntoVentaOrigen"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVentaDestino=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDPuntoVentaDestino&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Almacen de Destino&nbsp;<% if($_GET['order_by']=="IDPuntoVentaDestino"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVentaDestino=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Fecha&nbsp;<% if($_GET['order_by']=="Fecha"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVentaDestino=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDEstadoTraslado&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Estado&nbsp;<% if($_GET['order_by']=="IDEstadoTraslado"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVentaDestino=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDPuntoVentaOrigen&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Almacen de Origen&nbsp;<?php if($_GET['order_by']=="IDPuntoVentaOrigen")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVentaDestino=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDPuntoVentaDestino&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Almacen de Destino&nbsp;<?php if($_GET['order_by']=="IDPuntoVentaDestino")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVentaDestino=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Fecha&nbsp;<?php if($_GET['order_by']=="Fecha")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVentaDestino=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDEstadoTraslado&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Estado&nbsp;<?php if($_GET['order_by']=="IDEstadoTraslado")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
 								</tr>
 							
-							<?
+							<?php
 							$i = 0;
 							while($r = db_fetch_object($result)){
 								$class = repetition()?"col1list":"col2list";
@@ -347,18 +347,18 @@ function print_form($id,$newmode,$title,$submit_caption){
 							  	
 							<tr>
 								<td align=center valign=middle nowrap width=50 class="<?=$class?>">
-								&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>&idpuntoorigen=<% echo $r->IDPuntoVentaOrigen; %>'><img src='images/edit.gif' border='0'></a>
+								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>&idpuntoorigen=<?php echo $r->IDPuntoVentaOrigen; ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-									<td nowrap class="<?=$class?>"><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen)?></td>
-									<td nowrap class="<?=$class?>"><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaDestino) ?></td>
-									<td nowrap class="<?=$class?>"><? echo formatofecha(substr($r->Fecha,0,10))." ".substr($r->Fecha,10) ?></td>
-									<td nowrap class="<?=$class?>"><? echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado) ?></td>
+									<td nowrap class="<?=$class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen)?></td>
+									<td nowrap class="<?=$class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaDestino) ?></td>
+									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->Fecha,0,10))." ".substr($r->Fecha,10) ?></td>
+									<td nowrap class="<?=$class?>"><?php echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado) ?></td>
 								</tr>
-							<? } // END for
+							<?php } // END for
 							?>
 							<tr>
 							<td class="navpic" bgcolor=#DBEAF5 colspan=5 nowrap>
-									<?
+									<?php
 										print $pages;
 									?>
 							</td>
@@ -370,7 +370,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 	</td>
 	</tr>
 </table>
-<? 			
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No hay traslados pendientes </b></span>";
@@ -432,6 +432,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 ?>

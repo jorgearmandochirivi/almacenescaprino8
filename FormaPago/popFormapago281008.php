@@ -1,9 +1,9 @@
-<%
+<?php
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
 	$IDPuntoVenta = $datos['IDPuntoVenta'];
-%>
+  ?>
 <html>
 
 	<head>
@@ -14,7 +14,7 @@
 	</head>
 
 	<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
-<?
+<?php
 
 $TitleMod ="Forma de Pago Factura";
 
@@ -229,11 +229,11 @@ function print_form($newmode,$submit_caption) {
 var Check = new Array('Nombre','Publicar');
 </script>
 		<br>
-		<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?> onsubmit="return EvaluaReg(this,Check)" <?}?>>
+		<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?> onsubmit="return EvaluaReg(this,Check)" <?php }?>>
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=navpic bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo "No. ".$id."  Valor: $".number_format(round($valor)); ?></td>
+		<td class=navpic bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo "No. ".$id."  Valor: $".number_format(round($valor)); ?></td>
 	</tr>
 	<tr>
 	<td>
@@ -242,7 +242,7 @@ var Check = new Array('Nombre','Publicar');
 				<td width="23%" class=titulodetablas align=center>Forma de Pago</td>
 								<td width="37%" class=titulodetablas align=center>Valor</td>
 							</tr>	
-		<?
+		<?php
 			while( $r = db_fetch_object($qid) )
 			{
 		?>
@@ -261,7 +261,7 @@ var Check = new Array('Nombre','Publicar');
 						<input type="hidden" name="IDBanco[<?=$r->IDPuntoVentaBanco?>]" value="<?=$r->IDBanco?>"></div>
 				</td>
 							</tr>
-		<?
+		<?php
 			}//end while( $r = db_fetch_object($qid) )
 		?>
 			<tr class=col1list>
@@ -279,7 +279,7 @@ var Check = new Array('Nombre','Publicar');
 	</tr>
 </table>
 </form>
-<?
+<?php
 }// End function print_form()
 ?>
 </body>

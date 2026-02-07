@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 $TitleMod ="Referencia";
 
 $Table = "Referencia";
@@ -221,7 +221,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left >
 	<tr>
-			<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+			<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 		</tr>
 	<tr>
 			<td>
@@ -232,12 +232,12 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 					
 					<form name="frmInv" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" onsubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
-							<td colspan="2"><%=Mensaje_Info("Asignar Referencias a los puntos")%></td>
+							<td colspan="2"><?php echo Mensaje_Info("Asignar Referencias a los puntos");?></td>
 						</tr>
 						<tr class=row2>
 							<td>Punto Venta</td>
 							<td><select name="IDPuntoVenta" class="input">
-									<? 								$sql_puntoventa = "SELECT * FROM PuntoVenta";
+									<?php 								$sql_puntoventa = "SELECT * FROM PuntoVenta";
 								$query_puntoventa = db_query($sql_puntoventa);
 								while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 								{
@@ -255,7 +255,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 			</td>
 	</tr>
 </table>
-<?
+<?php
 }// End function print_form()
 
 

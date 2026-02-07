@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 function header_export($file){
 
 
@@ -125,12 +125,12 @@ function seleccionareferencia( $newmode)
 						<tr>
 							<td width="117">Puntos de Venta::	</td>
 							<td><select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><%
+									<option value="">Seleccione Un Punto de Venta</option><?php
 								$qry_punto = db_query("SELECT * FROM PuntoVenta WHERE Publicar = 'S' ORDER BY IDCiudad, Nombre");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select>
 								</td>
 							<td>
@@ -138,12 +138,12 @@ function seleccionareferencia( $newmode)
 									<tr>
 										<td width="130">Tipo de Referencia</td>
 										<td><select name="IDTipoReferencia"  >
-												<option value="">Seleccione Un Tipo de Referencia</option><%
+												<option value="">Seleccione Un Tipo de Referencia</option><?php
 								$qry_tiporef = db_query("SELECT * FROM TipoReferencia ORDER BY Descripcion");
 								while($tiporef = db_fetch_object($qry_tiporef)){
 									 echo "<option value=$tiporef->IDTipoReferencia ";if($IDTipoReferencia == $tiporef->IDTipoReferencia ) echo "selected"; echo ">&nbsp;&nbsp;$tiporef->Descripcion</option>";
 								}
-							%>
+							?>
 											</select></td>
 									</tr>
 								</table>
@@ -152,7 +152,7 @@ function seleccionareferencia( $newmode)
 						
 						<tr>
 							<td width="117">Saldo</td>
-							<td><? echo formradiogroup(array('S'=>'S','N'=>'N'),$Saldo, 'Saldo'); ?>&nbsp;&nbsp;&nbsp;Exportar&nbsp;<? echo formradiogroup(array('S'=>'S','N'=>'N'),$Exportar, 'Exportar'); ?></td>
+							<td><?php echo formradiogroup(array('S'=>'S','N'=>'N'),$Saldo, 'Saldo'); ?>&nbsp;&nbsp;&nbsp;Exportar&nbsp;<?php echo formradiogroup(array('S'=>'S','N'=>'N'),$Exportar, 'Exportar'); ?></td>
 							<td><select name="campo" class="input">
 									<option value="Numero">Numero</option>
 									<option value="Nombre">Nombre</option>
@@ -169,7 +169,7 @@ function seleccionareferencia( $newmode)
 		</form>
 	</table>
 	
-	<?
+	<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -186,13 +186,13 @@ function seleccionareferencia( $newmode)
 ?>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <? echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
 
 
-<?
+<?php
 
 //seleccionar tallas
 $sql_tallas = " SELECT * FROM Talla WHERE Publicar = 'S' AND IDTalla not in (19,26,25,24,27) ORDER BY Descripcion ";
@@ -211,12 +211,12 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					<td class="titlemedium">Referencia</td>
 					<td class="titlemedium">Tipologia</td>
           <td class="titlemedium">Dto.</td>
-					<?
+					<?php
 					foreach( $array_tallas as $idtalla => $datostallas )
 					{
 					?>
-						<td class="titlemedium"><? echo  $datostallas[Descripcion] ?></td>
-					<?
+						<td class="titlemedium"><?php echo  $datostallas[Descripcion] ?></td>
+					<?php
 					}//end for
 					?>
 					<td class="titlemedium">Total</td>
@@ -230,7 +230,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					<?php } ?>
 
 				</tr>
-				<?
+				<?php
 
 				if( !empty( $Saldo ) ):
 					$condicion = " AND Saldo = '$Saldo' ";
@@ -284,27 +284,27 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 								<td class="rowform">Totales <?=$linea ?></td>
 								<td class="rowform">&nbsp;</td>
                                 <td class="rowform">&nbsp;</td>
-								<?
+								<?php
 								foreach( $array_tallas as $idtalla => $datostallas )
 								{
 								?>
 									<td class="rowform" align="right">
-										<?
+										<?php
 											echo  $array_linea[$linea][$idtalla];
 										?>
 									</td>
-								<?
+								<?php
 									//print_r( $arraydatos );
 
 								}//end for
 								?>
 								<td class="rowform" align="right"><b><?=array_sum( $array_linea[$linea] ) ?></b></td>
 							</tr>
-							<?
+							<?php
 								$array_linea = array( );
 							}//end if
 							?>
-				<?
+				<?php
 						}//end if
 
 						$linea = substr( $r_referencia->Numero, 0, 2 );
@@ -320,32 +320,32 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 				?>
 						<tr>
-							<td class="row1"><? echo "<b>".$r_referencia->Numero;  ?></td>
-							<td class="row1"><? echo get_field( "Tipologia","Nombre","IDTipologia",$r_referencia->IDTipologia ) ?> </td>
+							<td class="row1"><?php echo "<b>".$r_referencia->Numero;  ?></td>
+							<td class="row1"><?php echo get_field( "Tipologia","Nombre","IDTipologia",$r_referencia->IDTipologia ) ?> </td>
 
 
 							<!--
 							<td class="row1"><?php if(!empty($r_referencia->NombreAnterior)) echo $r_referencia->NombreAnterior ?></td>
 						-->
                             <td class="row1" align="center">
-							<?
+							<?php
 							echo $descuento_ref = get_field( "Precio","Descuento","IDPrecio",$r_referencia->IDPrecio );
 
 							 ?>%
                             </td>
-							<?
+							<?php
 							foreach( $array_tallas as $idtalla => $datostallas )
 							{
 							?>
 								<td class="row1">
-									<?
+									<?php
 										echo  $arraydatos[$idtalla][Existencia];
 										$array_linea[ $linea ][ $idtalla ] += 	$arraydatos[$idtalla][Existencia];
 										$totales[ $idtalla ] += $arraydatos[$idtalla][Existencia];
 										$totalreferencia +=  $arraydatos[$idtalla][Existencia];
 									?>
 								</td>
-							<?
+							<?php
 								//print_r( $arraydatos );
 
 							}//end for
@@ -386,7 +386,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 
 						</tr>
-				<?
+				<?php
 						}//end if mostrar
 					}//end if
 
@@ -398,17 +398,17 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					<td class="maintitle">Total</td>
 					<td class="maintitle">&nbsp;</td>
                     <td class="maintitle">&nbsp;</td>
-					<?
+					<?php
 					foreach( $array_tallas as $idtalla => $datostallas )
 					{
 					?>
 						<td class="maintitle">
-							<?
+							<?php
 
 								echo  $totales[$idtalla];
 							?>
 						</td>
-					<?
+					<?php
 						//print_r( $arraydatos );
 
 					}//end for
@@ -422,6 +422,6 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 </table>
 
-<?
+<?php
 }// Enf function list()
 ?>

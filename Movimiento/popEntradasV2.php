@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -40,7 +40,7 @@ table{
 
 
 <body>
-<?
+<?php
 
 //TALLAS
 	$sql_tallas = "SELECT IDTalla, Descripcion FROM Talla";
@@ -80,7 +80,7 @@ table{
                         <table width=101% border=0 cellspacing=1  class="texto forumline" >
                                 <tr>
                                   <td class="col1" nowrap>Almacen: <span class="col2">
-                                      <?
+                                      <?php
                                       $sql_almacen = db_query("Select * From PuntoVenta Where IDPuntoVenta = '".$id_punto_venta."'");
 									  $row_punto = db_fetch_array($sql_almacen);
 									  echo $row_punto["Nombre"];
@@ -102,7 +102,7 @@ table{
                         
                         <table width=100% border=0 cellspacing=1 cellpadding=1 class="texto forumline" >
                     
-                                <? 
+                                <?php 
                                 foreach( $array_referencias as $key => $valor ){
                                 
                                     $class = repetition()?"col1list":"col2list";
@@ -115,8 +115,8 @@ table{
                                     <td>
                                         <table width="10%" bgcolor="#FFFFFF">
                                             <tr>
-                                                <td nowrap><? echo $key ?></td>
-                                                <?												
+                                                <td nowrap><?php echo $key ?></td>
+                                                <?php												
                                                 foreach( $valor as $idtalla => $datos )
                                                 {
 													
@@ -125,12 +125,12 @@ table{
                                                         <table>
                                                             <tr>
                                                                 <td >
-                                                                    <b><? echo $array_tallas[ $idtalla ]; ?></b>
+                                                                    <b><?php echo $array_tallas[ $idtalla ]; ?></b>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
-                                                                    <?
+                                                                    <?php
                                                                         echo $datos[Cantidad];
                                                                         $TPares += $datos[Cantidad];
                                                                     ?>
@@ -139,7 +139,7 @@ table{
                                                         </table>
                                                         
                                                     </td>
-                                                <?
+                                                <?php
                                                 }
                                                 ?>
                                             </tr>
@@ -156,7 +156,7 @@ table{
                                     
                                     
                                     
-                                        <? } // END for
+                                        <?php } // END for
                                         if( $TPares > 0 )
                                         {
                                 ?>
@@ -165,15 +165,15 @@ table{
                                             Total Pares = <?=$TPares?>
                                             </td>
                                             </tr>
-                                        <?
+                                        <?php
                                         }
                                         ?>
                                         <tr>
                                             <td  bgcolor=#DBEAF5 colspan = "<?=$colspan+2?>" nowrap class="navpic" align="left">
-                                            <?
+                                            <?php
                                                 print $pages;
                                             ?>
-                                            <?
+                                            <?php
                                             if( $newmode == "entrada" )
                                             {
                                                 $caption = "Realizar Entrada";

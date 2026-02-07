@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 
 
@@ -83,19 +83,19 @@ table{
 
                                                 <tr>
 													<td nowrap width="50">Traslado: No. </td>
-													<td colspan="3" nowrap class=texto><font style="font-size:16px"><? echo $r_puntoventa->Codigo.$r->IDTraslado?></font></td>
+													<td colspan="3" nowrap class=texto><font style="font-size:16px"><?php echo $r_puntoventa->Codigo.$r->IDTraslado?></font></td>
 												</tr>
 
 
 												<tr>
 													<td class=texto>Almacen Destino</td>
-													<td class=texto colspan="3" nowrap><?
+													<td class=texto colspan="3" nowrap><?php
 																echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaDestino);
 															?> </td>
 												</tr>
 														<tr>
 													<td class=texto>Almacen Origen</td>
-															<td class=texto colspan="3" nowrap><?
+															<td class=texto colspan="3" nowrap><?php
 																echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen);
 															?></td>
 														</tr>
@@ -117,7 +117,7 @@ table{
 
                                                 <tr>
 													<td class=texto>Estado</td>
-													<td class=texto nowrap><? echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado); ?></td>
+													<td class=texto nowrap><?php echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado); ?></td>
 													<td class=texto></td>
 													<td class=texto></td>
 												</tr>
@@ -159,7 +159,7 @@ table{
                                                                 <td align="center"><b>Cantidad</b></td>
 																																<td align="center"><b>Nro Tarjetas</b></td>
                                                             </tr>
-                                                            <?
+                                                            <?php
                                                                 $sql_detalle = " SELECT * FROM DetalleTraslado WHERE $Key = '$r->IDTraslado' AND IDPuntoVentaOrigen = '$r->IDPuntoVentaOrigen' ";
                                                                 $query_detalle = db_query($sql_detalle);
                                                                 $i = 0;
@@ -172,23 +172,23 @@ table{
                                                             ?>
                                                             <tr >
                                                                 <td  style="background-color:#FFFFFF;" align="center">
-                                                                    <? echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
+                                                                    <?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
                                                                 <td style="background-color:#FFFFFF;" align="center">
-                                                                    <? echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
+                                                                    <?php echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
                                                                 </td>
                                                                 <td style="background-color:#FFFFFF;" align="center">
-                                                                    <?  $cantidad_total += $r_detalle->Cantidad;
+                                                                    <?php  $cantidad_total += $r_detalle->Cantidad;
 																		echo $r_detalle->Cantidad;
 
 																	?>
                                                                 </td>
 																																<td style="background-color:#FFFFFF;" align="center">
-																																		<?
+																																		<?php
 																																				echo $r_detalle->NumeroTarjeta;
 																																			?>
 																																</td>
                                                             </tr>
-                                                            <?
+                                                            <?php
 
 																if($i==58){
 																	$i=0;
@@ -211,7 +211,7 @@ table{
                                                                 <td align="center"><b></b></td>
                                                                 <td align="center"><b></b></td>
                                                                 <td align="center"><b>TOTAL</b></td>
-																																<td align="center"><b><? echo $cantidad_total ?></b></td>
+																																<td align="center"><b><?php echo $cantidad_total ?></b></td>
                                                             </tr>
                                                         </table>
                                                     </td>

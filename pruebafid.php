@@ -1,4 +1,24 @@
-<?
+<?php
+//crear script de pruena de conexion con musqy con estas credenciales
+define( "DBHOST" , "mysql" );
+define( "DBNAME" , "caprino" );
+define( "DBUSER" , "root" );
+define( "DBPASS" , "1234567" );
+
+$conn = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+echo "Connected successfully";
+mysqli_close($conn);
+exit;
+?>
+
+
+
+
+<?php
+
 
 include("admin/config.inc.php");
 require_once $libdir . 'codigobarras.php';

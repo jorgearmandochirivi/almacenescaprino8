@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	//Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -126,7 +126,7 @@ table{
 						<td class="navpic" align="center" nowrap>Valor Abono</td>
 						<td class="navpic" align="center" nowrap>Valor Saldo</td>
 					</tr>
-					<?
+					<?php
 					
 					foreach( $r_credito as $key => $valor )
 					{ 
@@ -140,7 +140,7 @@ table{
 						<td class="<?=$class?>" align="center" nowrap><?=$numero_cuota=$valor[IDCuota]?></td>
 						<td class="<?=$class?>" align="center" nowrap>
                         
-                        <?
+                        <?php
 									//$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '".$valor[IDFactura]."' AND IDPuntoVenta = '$valor[IDPuntoVenta]' AND FechaPago = '0000-00-00 00:00:00' ";
 									//$qry_cuotas = db_query( $sql_cuotas );
 									//$r_cuotas = db_fetch_object( $qry_cuotas );
@@ -158,7 +158,7 @@ table{
                         </td>
 					</tr>
 					
-					<?
+					<?php
 					}//end foreach( $r_facturas as $key => $valor )
 					?>
 						
@@ -185,7 +185,7 @@ table{
 
 </body>
 </html>
-<?
+<?php
 
 $page = ob_get_contents();
 $fw = fopen($file, "w");

@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 
 $TitleMod ="Codificacion Especifica  ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta );
@@ -43,7 +43,7 @@ else
 	<br>
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 		<tr>
-			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <? echo fecha(); ?></span></td>
+			<td class="titlemedium"><b></b><span class="gen"><?=$Title." ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta ) ?> - <?php echo fecha(); ?></span></td>
 		</tr>
 	</table>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -57,7 +57,7 @@ else
 					<td class="titlemedium">Fecha Inicio</td>
 					<td class="titlemedium">Eliminar Sesion</td>
 				</tr>
-				<?
+				<?php
 
 				$sql = "SELECT * FROM Sesion  ";
 				$qry = db_query( $sql );
@@ -78,7 +78,7 @@ else
 							</a>
 						</td>
 					</tr>
-							<?
+							<?php
 					
 				}//end while referencia
 				?>
@@ -88,6 +88,6 @@ else
 				
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

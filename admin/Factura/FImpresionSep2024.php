@@ -127,7 +127,7 @@ table{
 											</td>
 											</tr>
                                                 <tr>
-													<td class=texto colspan="4" nowrap>FACTURA DE VENTA: No. <? echo $r_puntoventa->Codigo.$r->NumeroFactura?></td>
+													<td class=texto colspan="4" nowrap>FACTURA DE VENTA: No. <?php echo $r_puntoventa->Codigo.$r->NumeroFactura?></td>
 												</tr>
 
 
@@ -136,7 +136,7 @@ table{
 													<td width="38%" class=texto>Almac&eacute;n</td>
 													<td class=texto colspan="3" nowrap>
 
-													<? echo $r_puntoventa->Nombre ?> </td>
+													<?php echo $r_puntoventa->Nombre ?> </td>
 												</tr>
 														<tr>
 													<td class=texto>Direcci&oacute;n</td>
@@ -148,7 +148,7 @@ table{
 														</tr>
                                                         <tr>
 													<td class=texto nowrap>Vendedor</td>
-													<td class=texto colspan="3" nowrap><? echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?></td>
+													<td class=texto colspan="3" nowrap><?php echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?></td>
 										</tr>
 														<tr>
 													<td class=texto nowrap>Fecha Factura</td>
@@ -167,13 +167,13 @@ table{
 
                                                 <tr>
 													<td class=texto>Cliente</td>
-													<td class=texto nowrap><? echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?></td>
+													<td class=texto nowrap><?php echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?></td>
 													<td class=texto></td>
 													<td class=texto></td>
 												</tr>
 												<tr>
 													<td class=texto nowrap>No. Documento</td>
-													<td class=texto colspan="3" ><? echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?></td>
+													<td class=texto colspan="3" ><?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?></td>
 												</tr>
 											</table>
 										</td>
@@ -189,7 +189,7 @@ table{
 										    <td align="center" class="texto"><b>Dto2</b></td>
 										    <td align="center" class="texto" nowrap><b>Vr s/ IVA</b></td>
 									      </tr>
-										  <?
+										  <?php
 												$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
 												$query_detalle = db_query($sql_detalle);
 												$i = 0;
@@ -226,15 +226,15 @@ table{
 
                                                                                                                 ?></td>
 										    <td align="center" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-										    <td align="center" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoRef);//number_format($r_detalle->DescuentoRef);?>%</td>
-										    <td align="right" class="<?=$class?>"><?echo number_format($r_detalle->PrecioU);?></td>
-										    <td align="center" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoPar);//number_format($r_detalle->DescuentoRef);?>%</td>
-										    <td align="left" class="<?=$class?>"><?
+										    <td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoRef);//number_format($r_detalle->DescuentoRef);?>%</td>
+										    <td align="right" class="<?=$class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
+										    <td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoPar);//number_format($r_detalle->DescuentoRef);?>%</td>
+										    <td align="left" class="<?=$class?>"><?php
 															$valorsin = ( $r_detalle->ValorU * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) ) * $r_detalle->Cantidad;
 															echo number_format( $valorsin );
 														?></td>
 									      </tr>
-										  <?
+										  <?php
 													$Movimiento = get_field("Referencia","IDMovimiento","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)));
 													if( !empty( $Movimiento ) )
 														$segunda = 1;
@@ -341,7 +341,7 @@ table{
 												FORMA DE PAGO</b></div>
 										</td>
 											</tr>
-									<?
+									<?php
 									$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 									$query_formapago = db_query( $sql_formapago );
 
@@ -359,12 +359,12 @@ table{
 										</td>
 										<td class=texto><?=number_format($r_formapago->Valor)?></td>
 									</tr>
-									<? 									}//end if($r_formapago->Valor <> 0)
+									<?php 									}//end if($r_formapago->Valor <> 0)
 								}//end while( $r_formapago = db_fetch_object( $query_formapago ) )
 								?>
 									<tr>
 										<td class="texto mensajefooter" colspan="4" align="justify">
-											<?
+											<?php
 												$sql_mensje = "SELECT Mensaje
 																	FROM Mensaje
 																	WHERE Publicar = 'S'
@@ -393,7 +393,7 @@ table{
 										</td>
 									</tr>
 
-                                    <?
+                                    <?php
                                     if( !empty( $array_fidelizacion ) && $club_suavidad=="S")
 									{
 									?>
@@ -403,25 +403,25 @@ table{
                                                 Puntos Ultima Compra: <?=$array_fidelizacion["puntosultimacompra"] ?>
                                                 Puntos redimidos en la &uacute;ltima compra: <?=$array_fidelizacion["puntoredimidos"] ?>
                                                 Puntos Totales Acumulados sin redimir: <?=$array_fidelizacion["puntostotal"] ?>
-                                                <?
+                                                <?php
                                                 if( !empty( $array_fidelizacion["puntosproxvence"] ) )
 												{
 												?>
                                                 	Puntos Pr&oacute;ximos a Vencer: <?=$array_fidelizacion["puntosproxvence"] ?>
-                                            	<?
+                                            	<?php
 												}//end if
 												?>
-                                                <?
+                                                <?php
                                                 if( !empty( $array_fidelizacion["bonosproxvence"] ) )
 												{
 												?>
                                                 	Bonos Pr&oacute;ximos a Vencer: <?=$array_fidelizacion["bonosproxvence"] ?>
-                                            	<?
+                                            	<?php
 												}//end if
 												?>
                                             </td>
                                         </tr>
-                                    <?
+                                    <?php
 									}//end if
 									?>
 

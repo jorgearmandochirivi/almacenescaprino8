@@ -1,6 +1,6 @@
 
 
-<?
+<?php
 
 //reviso si estab habilitado el link
 $sql_link = "Select * From LinkCambio Where 1 Limit 1";
@@ -154,7 +154,7 @@ function mostrarcedula($newmode,$submit_caption){
   </tr>
 </table>
 </form>
-<?
+<?php
 }//end	mostrar($newmode,$submit_caption)
 
 /*******************************************************************************************
@@ -171,7 +171,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption) {
 var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 </script>
 <br>
-	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?}?>>
+	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
 	
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="500">
 	
@@ -217,7 +217,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 							<td width="40%" class="col1">Direcci&oacute;n</td><td class="col2"><input type=text size=25 class=tbox   name=Direccion id=Direccion value="<?=$r->Direccion ?>"> </td>
 						</tr>
 						<tr >
-							<td width="40%" class="col1">Ciudad</td><td class="col2"><? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad"); ?></td>
+							<td width="40%" class="col1">Ciudad</td><td class="col2"><?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad"); ?></td>
 						</tr>
 						<tr >
 							<td width="40%" class="col1">Empleado</td><td class="col2"><input type=text size=25 class=tbox   name=IDEmpleado id=IDEmpleado value="<?=$r->IDEmpleado ?>"> </td>
@@ -227,7 +227,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 							<td class="col2">
 					<select name="Ano" id="A&ntilde;o de Nacimiento" class="tbox">
                       <option value="">A&ntilde;o</option>
-                      <?
+                      <?php
 	                      for($i = 1920; $i<1999; $i++)
 	                      {
 	                      	$op = "<option value=\"$i\" ";
@@ -243,23 +243,23 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 								
 								<select name="Mes" id="Mes de Nacimiento" class="tbox">
                                     <option value="">Mes</option>
-                                    <option value="1" <? if( $r->Mes == 1 ) echo " selected " ?>>Enero</option>
-                                    <option value="2" <? if( $r->Mes == 2 ) echo " selected " ?>>Febrero</option>
-                                    <option value="3" <? if( $r->Mes == 3 ) echo " selected " ?>>Marzo</option>
-                                    <option value="4" <? if( $r->Mes == 4 ) echo " selected " ?>>Abril</option>
-                                    <option value="5" <? if( $r->Mes == 5 ) echo " selected " ?>>Mayo</option>
-                                    <option value="6" <? if( $r->Mes == 6 ) echo " selected " ?>>Junio</option>
-                                    <option value="7" <? if( $r->Mes == 7 ) echo " selected " ?>>Julio</option>
-                                    <option value="8" <? if( $r->Mes == 8 ) echo " selected " ?>>Agosto</option>
-                                    <option value="9" <? if( $r->Mes == 9 ) echo " selected " ?>>Septiembre</option>
-                                    <option value="10" <? if( $r->Mes == 10 ) echo " selected " ?>>Octubre</option>
-                                    <option value="11" <? if( $r->Mes == 11 ) echo " selected " ?>>Noviembre</option>
-                                    <option value="12" <? if( $r->Mes == 12 ) echo " selected " ?>>Diciembre</option>
+                                    <option value="1" <?php if( $r->Mes == 1 ) echo " selected " ?>>Enero</option>
+                                    <option value="2" <?php if( $r->Mes == 2 ) echo " selected " ?>>Febrero</option>
+                                    <option value="3" <?php if( $r->Mes == 3 ) echo " selected " ?>>Marzo</option>
+                                    <option value="4" <?php if( $r->Mes == 4 ) echo " selected " ?>>Abril</option>
+                                    <option value="5" <?php if( $r->Mes == 5 ) echo " selected " ?>>Mayo</option>
+                                    <option value="6" <?php if( $r->Mes == 6 ) echo " selected " ?>>Junio</option>
+                                    <option value="7" <?php if( $r->Mes == 7 ) echo " selected " ?>>Julio</option>
+                                    <option value="8" <?php if( $r->Mes == 8 ) echo " selected " ?>>Agosto</option>
+                                    <option value="9" <?php if( $r->Mes == 9 ) echo " selected " ?>>Septiembre</option>
+                                    <option value="10" <?php if( $r->Mes == 10 ) echo " selected " ?>>Octubre</option>
+                                    <option value="11" <?php if( $r->Mes == 11 ) echo " selected " ?>>Noviembre</option>
+                                    <option value="12" <?php if( $r->Mes == 12 ) echo " selected " ?>>Diciembre</option>
                                   </select>
 
 								<select name="Dia" id="Dia de Nacimiento" class="tbox">
 			                      <option value="" selected>Dia</option>
-			                      <?
+			                      <?php
 				                      for($i = 1; $i<=31; $i++)
 				                      {
 				                      	$op = "<option value=\"$i\" ";
@@ -313,17 +313,17 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 									</tr>
 									<tr>
 										<td class="col2" width="33.33%">
-											<?
+											<?php
 												echo formcheckgroup($array_gustos,"","Gustos[]");
 											?>
 										</td>
 										<td class="col2" valign="top" width="33.33%">
-											<?
+											<?php
 												echo formcheckgroup($array_deportes,"","Deportes[]");
 											?>
 										</td>
 										<td class="col2" valign="top" width="33.33%">
-											<?
+											<?php
 												echo formcheckgroup($array_hobbies,"","Hobbies[]");
 											?>
 										</td>
@@ -346,7 +346,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 									</tr>
 									<tr>
 										<td class="col2" width="33.33%">
-											<?
+											<?php
 												echo formcheckgroup($array_musica,"","Musica[]");
 											?>
 										</td>
@@ -364,10 +364,10 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 						
 						<tr >
 							<td class="col1" width="40%">Autorizo a recibir e-mail con promociones o informaci&oacute;n</td>
-							<td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AutorizaMail, 'AutorizaMail'); ?></td>
+							<td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AutorizaMail, 'AutorizaMail'); ?></td>
 						</tr>
 						<tr >
-			<td width="40%" class="col1"> Publicar </td><td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
+			<td width="40%" class="col1"> Publicar </td><td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
 			</tr>
 			
 			<tr>
@@ -375,9 +375,9 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
 				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<? echo $r->$Key ?>">
+				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 				</tr>
 			</table>
@@ -385,7 +385,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 	</tr>
 </table>
 </form>
-	<?
+	<?php
 }// End function print_formcliente()
 
 
@@ -850,7 +850,7 @@ function EvaluarFunciones( Form, Check )
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?}?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?php }?>>
 <table class="forumline" width="580" cellspacing="1" border="0" align="center">
 	<tr>
 	<td width="100%">
@@ -889,13 +889,13 @@ function EvaluarFunciones( Form, Check )
 													</tr>
 													<tr>
 														<td class=col1>C&eacute;dula</td>
-														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?echo $r->Cedula;?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
+														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo $r->Cedula;?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
 														<td class=col1>Nombre</td>
-														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?echo $r->Nombre." ".$r->Apellido?>'></td>
+														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?php echo $r->Nombre." ".$r->Apellido?>'></td>
 													</tr>
 													<tr>
 														<td class=col1 nowrap>Telefono Cliente</td>
-														<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value='<?echo $r->Telefono?>'></td>
+														<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value='<?php echo $r->Telefono?>'></td>
 														<td class=col1></td>
 														<td class=col1></td>
 													</tr>
@@ -909,7 +909,7 @@ function EvaluarFunciones( Form, Check )
 													</tr>
 												<tr>
 													<td class=col1>SEleccione Vendedor</td>
-													<td class=col2><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
+													<td class=col2><?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
 													<td class=col1 colspan="2"></td>
 												</tr>
 												<tr>
@@ -920,7 +920,7 @@ function EvaluarFunciones( Form, Check )
 												</tr>
 												<tr>
 													<td class=col1>Excedente( $ )</td>
-													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?echo $r_factura->Excedente?>"></td>
+													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?php echo $r_factura->Excedente?>"></td>
 													<td class=col1></td>
 													<td class=col1></td>
 												</tr>
@@ -1001,7 +1001,7 @@ function EvaluarFunciones( Form, Check )
 													<td align="center"><b></b></td>
 													<td align="center"><b></b></td>
 												</tr>
-												<?
+												<?php
 												for( $i = 3; $i < 5; $i++ )
 												{
 												?>
@@ -1020,7 +1020,7 @@ function EvaluarFunciones( Form, Check )
 													<td align="left"><input type=hidden name=Precio<?=$i?>></td>
 													<td align="left"><input type=hidden name=Descuento<?=$i?>></td>
 												</tr>
-												<?
+												<?php
 												}//end for
 												?>
 												<tbody bgcolor=#e7ebef></tbody>
@@ -1073,6 +1073,6 @@ function EvaluarFunciones( Form, Check )
 	
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML> 

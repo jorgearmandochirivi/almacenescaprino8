@@ -8,7 +8,7 @@ function mostrar(){
 </script>
 
 
-<?
+<?php
 
 //envia_bienvenida_club(316657);
 //echo "Inactivo temporalmente";exit;
@@ -513,7 +513,7 @@ function mostrarcedula($newmode,$submit_caption, $IDPuntoVenta){
   </tr>
 </table>
 </form>
-<?
+<?php
 }//end	mostrar($newmode,$submit_caption)
 
 
@@ -578,7 +578,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class="texto forumline"  >
 
 
-                        <?
+                        <?php
                         if( !empty( $r->ClubSuavidad ) )
 						{
 							$msgfidelizado = "Cliente NO pertenece al Club de la Suavidad";
@@ -587,10 +587,10 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 						?>
                         <tr >
                             <td class="col2 msg_alert" colspan="2">
-                            	<? echo $msgfidelizado; ?>
+                            	<?php echo $msgfidelizado; ?>
                           	</td>
 						</tr>
-                        <?
+                        <?php
 						}//end if
 
 						if( $r->ClubSuavidad == "S" ) //SI ESTA FIDELIZADO SALE TODO Y LO DEJA ACTUALIZAR
@@ -607,7 +607,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                  </td>
                             </tr>
 
-                            <?
+                            <?php
                                 $readonly = "";
                                 if( !empty( $r->Nombre ) )
                                 {
@@ -635,7 +635,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                  else
 
                                  ?>
-                                <td class="col2"><? echo formradiogroup(array('Femenino'=>'F','Masculino'=>'M'),$r->Genero, 'Genero',$bloqueo); ?></td>
+                                <td class="col2"><?php echo formradiogroup(array('Femenino'=>'F','Masculino'=>'M'),$r->Genero, 'Genero',$bloqueo); ?></td>
                             </tr>
                             <tr >
                                 <td width="40%" class="col1"> Telefono ( <span class="rojo">*</span> )</td><td class="col2"><input type=number size=25 class="tbox obligatorio" title="Telefono"   name=Telefono id=Telefono value="<?=$r->Telefono ?>" <?php if (!empty($r->IDCliente) && !empty($r->Telefono)){?> readonly <?php  }?>> </td>
@@ -662,7 +662,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                else
 
                                ?>
-                              <td class="col2"><? echo formpopup("Departamento","Nombre","Nombre","IDDepartamento",$r->IDDepartamento,"input\" id=\"IDDepartamento","",$bloqueo); ?></td>
+                              <td class="col2"><?php echo formpopup("Departamento","Nombre","Nombre","IDDepartamento",$r->IDDepartamento,"input\" id=\"IDDepartamento","",$bloqueo); ?></td>
                             </tr>
 							-->
                             <tr >
@@ -672,7 +672,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                else
 
                                ?>
-                                <td width="40%" class="col1">Ciudad</td><td class="col2"><? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad","",$bloqueo); ?></td>
+                                <td width="40%" class="col1">Ciudad</td><td class="col2"><?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad","",$bloqueo); ?></td>
                             </tr>
 							<tr >
                                 <td width="40%" class="col1">Direcci&oacute;n</td><td class="col2"><input type=text size=25 class="tbox"   name=Direccion id=Direccion value="<?=$r->Direccion ?>" <?php if (!empty($r->IDCliente) && !empty($r->Direccion)){?> readonly <?php  }?>> </td>
@@ -690,12 +690,12 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                else
 
                                ?>
-                                <td width="40%" class="col1">Empleado:</td><td class="col2"><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDEmpleado,"input\" id=\"Empleado","",$bloqueo); ?></td>
+                                <td width="40%" class="col1">Empleado:</td><td class="col2"><?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDEmpleado,"input\" id=\"Empleado","",$bloqueo); ?></td>
                             </tr>
 
 							<tr >
                                 <td width="40%" class="col1">Medio por el que lleg&oacute;:</td>
-								<td class="col2"><? 
+								<td class="col2"><?php 
 												if(empty($r->MedioLlego))	
 													echo formradiogroup(array('Red. Social'=>'RedSocial','Correo Elec.'=>'Email','Referido'=>'Referido','Ocasional'=>'Ocasional'),$r->MedioLlego, 'MedioLlego',$bloqueo); 
 												else	
@@ -712,7 +712,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                else
 
                                ?>
-                              <td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaHabeas, 'AceptaHabeas',$bloqueo); ?></td>
+                              <td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaHabeas, 'AceptaHabeas',$bloqueo); ?></td>
                             </tr>
 
 							<?php
@@ -758,7 +758,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                else
 
                                ?>
-                              <td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),"S", 'AutorizaMail',$bloqueo); ?></td>
+                              <td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),"S", 'AutorizaMail',$bloqueo); ?></td>
                             </tr>
                             <tr >
                               <td class="col1">Autorizo a recibir mensajes de texto (SMS) ( <span class="rojo">*</span> )</td>
@@ -768,7 +768,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                else
 
                                ?>
-                              <td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaSMS, 'AceptaSMS',$bloqueo); ?></td>
+                              <td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaSMS, 'AceptaSMS',$bloqueo); ?></td>
                             </tr>
                             <tr >
                               <td class="col1">Acepta t&eacute;rminos y condiciones( <span class="rojo">*</span> )</td>
@@ -778,7 +778,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                else
 
                                ?>
-                              <td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaTerminos, 'AceptaTerminos',$bloqueo); ?></td>
+                              <td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaTerminos, 'AceptaTerminos',$bloqueo); ?></td>
                             </tr>
                             
                             <tr >
@@ -886,7 +886,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                   ?>
                                         <select name="Ano" id="A&ntilde;o de Nacimiento" class="tbox" >
                                           <option value="">A&ntilde;o</option>
-                                          <?
+                                          <?php
                                               for($i = 1920; $i<2005; $i++)
                                               {
                                                 $op = "<option value=\"$i\" ";
@@ -902,23 +902,23 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 
                                     <select name="Mes" id="Mes de Nacimiento" class="tbox" >
                                         <option value="">Mes</option>
-                                        <option value="1" <? if( $r->Mes == 1 ) echo " selected " ?>>Enero</option>
-                                        <option value="2" <? if( $r->Mes == 2 ) echo " selected " ?>>Febrero</option>
-                                        <option value="3" <? if( $r->Mes == 3 ) echo " selected " ?>>Marzo</option>
-                                        <option value="4" <? if( $r->Mes == 4 ) echo " selected " ?>>Abril</option>
-                                        <option value="5" <? if( $r->Mes == 5 ) echo " selected " ?>>Mayo</option>
-                                        <option value="6" <? if( $r->Mes == 6 ) echo " selected " ?>>Junio</option>
-                                        <option value="7" <? if( $r->Mes == 7 ) echo " selected " ?>>Julio</option>
-                                        <option value="8" <? if( $r->Mes == 8 ) echo " selected " ?>>Agosto</option>
-                                        <option value="9" <? if( $r->Mes == 9 ) echo " selected " ?>>Septiembre</option>
-                                        <option value="10" <? if( $r->Mes == 10 ) echo " selected " ?>>Octubre</option>
-                                        <option value="11" <? if( $r->Mes == 11 ) echo " selected " ?>>Noviembre</option>
-                                        <option value="12" <? if( $r->Mes == 12 ) echo " selected " ?>>Diciembre</option>
+                                        <option value="1" <?php if( $r->Mes == 1 ) echo " selected " ?>>Enero</option>
+                                        <option value="2" <?php if( $r->Mes == 2 ) echo " selected " ?>>Febrero</option>
+                                        <option value="3" <?php if( $r->Mes == 3 ) echo " selected " ?>>Marzo</option>
+                                        <option value="4" <?php if( $r->Mes == 4 ) echo " selected " ?>>Abril</option>
+                                        <option value="5" <?php if( $r->Mes == 5 ) echo " selected " ?>>Mayo</option>
+                                        <option value="6" <?php if( $r->Mes == 6 ) echo " selected " ?>>Junio</option>
+                                        <option value="7" <?php if( $r->Mes == 7 ) echo " selected " ?>>Julio</option>
+                                        <option value="8" <?php if( $r->Mes == 8 ) echo " selected " ?>>Agosto</option>
+                                        <option value="9" <?php if( $r->Mes == 9 ) echo " selected " ?>>Septiembre</option>
+                                        <option value="10" <?php if( $r->Mes == 10 ) echo " selected " ?>>Octubre</option>
+                                        <option value="11" <?php if( $r->Mes == 11 ) echo " selected " ?>>Noviembre</option>
+                                        <option value="12" <?php if( $r->Mes == 12 ) echo " selected " ?>>Diciembre</option>
                                       </select>
 
                                     <select name="Dia" id="Dia de Nacimiento" class="tbox" >
                                       <option value="" selected>Dia</option>
-                                      <?
+                                      <?php
                                           for($i = 1; $i<=31; $i++)
                                           {
                                             $op = "<option value=\"$i\" ";
@@ -942,7 +942,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 
 										<select name="Ano" id="A&ntilde;o de Nacimiento" class="tbox" required >
                                           <option value="">A&ntilde;o</option>
-                                          <?
+                                          <?php
                                               for($i = 1920; $i<2005; $i++)
                                               {
                                                 $op = "<option value=\"$i\" ";
@@ -979,7 +979,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 						<table width=100% border=0 cellspacing=1 cellpadding=1 class="texto forumline"  >
                             
 
-						<?
+						<?php
 						}//end if si esta fidelizado
 
 						//SI NO ESTA FIDELIZADO
@@ -1022,10 +1022,10 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                               <td class="col2"><input type=text size=25 class="tbox correo_no_club" title="EMail"  name="correo_no_club" id="correo_no_club"  value="<?=$r->EMail ?>"></td>
                                             </tr>
 											<tr >                                            	
-                                                <td width="40%" class="col1">Ciudad</td><td class="col2"><? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$ciudad_cliente,"input\" id=\"IDCiudad"); ?></td>
+                                                <td width="40%" class="col1">Ciudad</td><td class="col2"><?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$ciudad_cliente,"input\" id=\"IDCiudad"); ?></td>
                                             </tr>
                                             <tr >
-                                                <td width="40%" class="col1">Empleado:</td><td class="col2"><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDEmpleado,"input\" id=\"Empleado"); ?></td>
+                                                <td width="40%" class="col1">Empleado:</td><td class="col2"><?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDEmpleado,"input\" id=\"Empleado"); ?></td>
                                             </tr>
                                         </table>
 
@@ -1053,7 +1053,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                             </tr>
                                             <tr >
                                                 <td class="col1" width="40%">G&eacute;nero  ( <span class="rojo">*</span> )</td>
-                                                <td class="col2"><? echo formradiogroup(array('Femenino'=>'F','Masculino'=>'M'),$r->Genero, 'Genero'); ?></td>
+                                                <td class="col2"><?php echo formradiogroup(array('Femenino'=>'F','Masculino'=>'M'),$r->Genero, 'Genero'); ?></td>
                                             </tr>
 											
                                             <tr >
@@ -1082,19 +1082,19 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                             
                                             <tr >
 
-                                            	<?
+                                            	<?php
                                                 $ciudad_cliente = $r->IDCiudad;
 												if( empty( $ciudad_cliente ) )
 													$ciudad_cliente = $ciudadpunto ;
 												?>
-                                                <td width="40%" class="col1">Ciudad</td><td class="col2"><? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$ciudad_cliente,"input\" id=\"IDCiudad"); ?></td>
+                                                <td width="40%" class="col1">Ciudad</td><td class="col2"><?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$ciudad_cliente,"input\" id=\"IDCiudad"); ?></td>
                                             </tr>
                                             <tr >
-                                                <td width="40%" class="col1">Empleado</td><td class="col2"><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"IDEmpleadoFideliza"); ?></td>
+                                                <td width="40%" class="col1">Empleado</td><td class="col2"><?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"IDEmpleadoFideliza"); ?></td>
                                             </tr>
 											<tr >
 												<td width="40%" class="col1">Medio por el que lleg&oacute;:</td>
-												<td class="col2"><? 
+												<td class="col2"><?php 
 												if(empty($r->MedioLlego))	
 													echo formradiogroup(array('Red. Social'=>'RedSocial','Correo Elec.'=>'Email','Referido'=>'Referido','Ocasional'=>'Ocasional'),$r->MedioLlego, 'MedioLlego',$bloqueo); 
 												else	
@@ -1106,7 +1106,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 											<tr >
                                               <td class="col1">Acepta ley Habeas Data ( <span class="rojo">*</span> )</td>
                                               <td class="col2"
-											  <? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaHabeas, 'AceptaHabeas'); ?></td>
+											  <?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaHabeas, 'AceptaHabeas'); ?></td>
                                             </tr>
 
 											<!-- mostrar fidelizar solo si ya hizo alguna afctura -->
@@ -1136,15 +1136,15 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 											
                                             <tr >
                                                 <td class="col1" width="40%">Autorizo a recibir e-mail con promociones o informaci&oacute;n ( <span class="rojo">*</span> )</td>
-                                                <td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),"S", 'AutorizaMail'); ?></td>
+                                                <td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),"S", 'AutorizaMail'); ?></td>
                                             </tr>
                                             <tr >
                                                 <td class="col1" width="40%">Autorizo a recibir mensajes de texto (SMS) ( <span class="rojo">*</span> )</td>
-                                                <td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaSMS, 'AceptaSMS'); ?></td>
+                                                <td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaSMS, 'AceptaSMS'); ?></td>
                                             </tr>
                                           <tr >
                                               <td class="col1">Acepta t&eacute;rminos y condiciones( <span class="rojo">*</span> )</td>
-                                              <td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaTerminos, 'AceptaTerminos'); ?></td>
+                                              <td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AceptaTerminos, 'AceptaTerminos'); ?></td>
                                             </tr>
                                            
                                             <tr >
@@ -1169,7 +1169,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                                 <td class="col2">
                                         <select name="Ano" id="A&ntilde;o de Nacimiento" class="tbox" require>
                                           <option value="">A&ntilde;o</option>
-                                          <?
+                                          <?php
                                               for($i = 1920; $i<2005; $i++)
                                               {
                                                 $op = "<option value=\"$i\" ";
@@ -1185,23 +1185,23 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 
                                                     <select name="Mes" id="Mes de Nacimiento" class="tbox" require>
                                                         <option value="">Mes</option>
-                                                        <option value="1" <? if( $r->Mes == 1 ) echo " selected " ?>>Enero</option>
-                                                        <option value="2" <? if( $r->Mes == 2 ) echo " selected " ?>>Febrero</option>
-                                                        <option value="3" <? if( $r->Mes == 3 ) echo " selected " ?>>Marzo</option>
-                                                        <option value="4" <? if( $r->Mes == 4 ) echo " selected " ?>>Abril</option>
-                                                        <option value="5" <? if( $r->Mes == 5 ) echo " selected " ?>>Mayo</option>
-                                                        <option value="6" <? if( $r->Mes == 6 ) echo " selected " ?>>Junio</option>
-                                                        <option value="7" <? if( $r->Mes == 7 ) echo " selected " ?>>Julio</option>
-                                                        <option value="8" <? if( $r->Mes == 8 ) echo " selected " ?>>Agosto</option>
-                                                        <option value="9" <? if( $r->Mes == 9 ) echo " selected " ?>>Septiembre</option>
-                                                        <option value="10" <? if( $r->Mes == 10 ) echo " selected " ?>>Octubre</option>
-                                                        <option value="11" <? if( $r->Mes == 11 ) echo " selected " ?>>Noviembre</option>
-                                                        <option value="12" <? if( $r->Mes == 12 ) echo " selected " ?>>Diciembre</option>
+                                                        <option value="1" <?php if( $r->Mes == 1 ) echo " selected " ?>>Enero</option>
+                                                        <option value="2" <?php if( $r->Mes == 2 ) echo " selected " ?>>Febrero</option>
+                                                        <option value="3" <?php if( $r->Mes == 3 ) echo " selected " ?>>Marzo</option>
+                                                        <option value="4" <?php if( $r->Mes == 4 ) echo " selected " ?>>Abril</option>
+                                                        <option value="5" <?php if( $r->Mes == 5 ) echo " selected " ?>>Mayo</option>
+                                                        <option value="6" <?php if( $r->Mes == 6 ) echo " selected " ?>>Junio</option>
+                                                        <option value="7" <?php if( $r->Mes == 7 ) echo " selected " ?>>Julio</option>
+                                                        <option value="8" <?php if( $r->Mes == 8 ) echo " selected " ?>>Agosto</option>
+                                                        <option value="9" <?php if( $r->Mes == 9 ) echo " selected " ?>>Septiembre</option>
+                                                        <option value="10" <?php if( $r->Mes == 10 ) echo " selected " ?>>Octubre</option>
+                                                        <option value="11" <?php if( $r->Mes == 11 ) echo " selected " ?>>Noviembre</option>
+                                                        <option value="12" <?php if( $r->Mes == 12 ) echo " selected " ?>>Diciembre</option>
                                                       </select>
 
                                                     <select name="Dia" id="Dia de Nacimiento" class="tbox" require>
                                                       <option value="" selected>Dia</option>
-                                                      <?
+                                                      <?php
                                                           for($i = 1; $i<=31; $i++)
                                                           {
                                                             $op = "<option value=\"$i\" ";
@@ -1231,7 +1231,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
                                 </td>
 
                             </tr>
-                        <?
+                        <?php
 
 						}//end elseif no fidelizado
 
@@ -1246,29 +1246,29 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
 				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<? echo $r->IDCliente ?>">
-                <input type=hidden name=Comentarios value="<? echo $r->Comentarios ?>">
+				<input type=hidden name=ID value="<?php echo $r->IDCliente ?>">
+                <input type=hidden name=Comentarios value="<?php echo $r->Comentarios ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit >
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit >
 
-                <input type=hidden name=NombreAnt value="<? echo $r->Nombre ?>">
-                <input type=hidden name=ApellidoAnt value="<? echo $r->Apellido ?>">
-                <input type=hidden name=GeneroAnt value="<? echo $r->Genero ?>">
-                <input type=hidden name=TelefonoAnt value="<? echo $r->Telefono ?>">
-                <input type=hidden name=EMailAnt value="<? echo $r->EMail ?>">
-                <input type=hidden name=CelularAnt value="<? echo $r->Celular ?>">
-                <input type=hidden name=DireccionAnt value="<? echo $r->Direccion ?>">
-                <input type=hidden name=IDCiudadAnt value="<? echo $r->IDCiudad ?>">
-                <input type=hidden name=AutorizaMailAnt value="<? echo $r->AutorizaMail ?>">
-                <input type=hidden name=AceptaSMSAnt value="<? echo $r->AceptaSMS ?>">
-                <input type=hidden name=AceptaTerminosAnt value="<? echo $r->AceptaTerminos ?>">
-                <input type=hidden name=AceptaHabeasAnt value="<? echo $r->AceptaHabeas ?>">
-                <input type=hidden name=ClubSuavidadAnt value="<? echo $r->ClubSuavidad ?>">
-				<input type=hidden name=FechaClubSuavidadAnt value="<? echo $r->FechaClubSuavidad ?>">
-                <input type=hidden name=IDUsuarioFideliza value="<? echo $r->IDUsuarioFideliza ?>">
-                <input type=hidden name=IDPuntoVentaFideliza value="<? echo $r->IDPuntoVentaFideliza ?>">
-                <input type=hidden name=NumeroTarjetaAnt value="<? echo $r->NumeroTarjeta ?>">
-                <input type=hidden name=IDTarjetaFidelizacionAnt value="<? echo $r->IDTarjetaFidelizacion ?>">
+                <input type=hidden name=NombreAnt value="<?php echo $r->Nombre ?>">
+                <input type=hidden name=ApellidoAnt value="<?php echo $r->Apellido ?>">
+                <input type=hidden name=GeneroAnt value="<?php echo $r->Genero ?>">
+                <input type=hidden name=TelefonoAnt value="<?php echo $r->Telefono ?>">
+                <input type=hidden name=EMailAnt value="<?php echo $r->EMail ?>">
+                <input type=hidden name=CelularAnt value="<?php echo $r->Celular ?>">
+                <input type=hidden name=DireccionAnt value="<?php echo $r->Direccion ?>">
+                <input type=hidden name=IDCiudadAnt value="<?php echo $r->IDCiudad ?>">
+                <input type=hidden name=AutorizaMailAnt value="<?php echo $r->AutorizaMail ?>">
+                <input type=hidden name=AceptaSMSAnt value="<?php echo $r->AceptaSMS ?>">
+                <input type=hidden name=AceptaTerminosAnt value="<?php echo $r->AceptaTerminos ?>">
+                <input type=hidden name=AceptaHabeasAnt value="<?php echo $r->AceptaHabeas ?>">
+                <input type=hidden name=ClubSuavidadAnt value="<?php echo $r->ClubSuavidad ?>">
+				<input type=hidden name=FechaClubSuavidadAnt value="<?php echo $r->FechaClubSuavidad ?>">
+                <input type=hidden name=IDUsuarioFideliza value="<?php echo $r->IDUsuarioFideliza ?>">
+                <input type=hidden name=IDPuntoVentaFideliza value="<?php echo $r->IDPuntoVentaFideliza ?>">
+                <input type=hidden name=NumeroTarjetaAnt value="<?php echo $r->NumeroTarjeta ?>">
+                <input type=hidden name=IDTarjetaFidelizacionAnt value="<?php echo $r->IDTarjetaFidelizacion ?>">
 
 
 
@@ -1279,7 +1279,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption,$DiaSinIva="")
 	</tr>
 </table>
 </form>
-	<?
+	<?php
 }// End function print_formcliente()
 
 
@@ -3783,7 +3783,7 @@ if((int)$total_link_pto>0)
 
 
 
-<FORM name="frm" id="frmfactura" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg2(this,Check);disable(this);"<?}?>>
+<FORM name="frm" id="frmfactura" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg2(this,Check);disable(this);"<?php }?>>
 <table class="forumline" width="100%" cellspacing="1" border="0" align="center">
 	<tr>
 	<td width="100%">
@@ -3859,7 +3859,7 @@ if((int)$total_link_pto>0)
                         -->
 													<tr>
 														<td class=col1>Vendedor</td>
-														<td class=col2><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' and Publicar ='S' ","Nombre","Apellidos","IDEmpleado",$frm[IDEmpleado],"input\" id=\"Empleado"); ?></td>
+														<td class=col2><?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' and Publicar ='S' ","Nombre","Apellidos","IDEmpleado",$frm[IDEmpleado],"input\" id=\"Empleado"); ?></td>
 														<td class=col1 colspan="2"></td>
 													</tr>
 
@@ -3893,15 +3893,15 @@ if((int)$total_link_pto>0)
 													</tr>
 													<tr>
 														<td class=col1>Numero Documento</td>
-														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?echo $r->Cedula;?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
+														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo $r->Cedula;?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
 														<td class=col1>Nombre</td>
-														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?echo $r->Nombre." ".$r->Apellido?>'></td>
+														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?php echo $r->Nombre." ".$r->Apellido?>'></td>
 													</tr>
 													<tr>
 														<td class=col1 nowrap>Telefono Cliente</td>
-														<td class=col2><input type="number" class="tbox" name="TeleCli"  size="15" value='<?echo $r->Telefono?>'></td>
+														<td class=col2><input type="number" class="tbox" name="TeleCli"  size="15" value='<?php echo $r->Telefono?>'></td>
 														<td class="col1" nowrap="nowrap">Numero de Fidelizacion</td>
-														<td class="col2"><input name="NumeroTarjeta" type="text" class="tbox" id="NumeroTarjeta" value='<?echo $r->NumeroTarjeta?>' size="20" readonly /></td>
+														<td class="col2"><input name="NumeroTarjeta" type="text" class="tbox" id="NumeroTarjeta" value='<?php echo $r->NumeroTarjeta?>' size="20" readonly /></td>
 													</tr>
 													<tr>
 														<td class=col1><br></td>
@@ -3916,9 +3916,9 @@ if((int)$total_link_pto>0)
 													</tr>
 													<tr>
 														<td class=col1>Numero pedido payu</td>
-														<td class=col2><input type="text" class="tbox" name="NumeroPayu" size="15" value='<?echo $r->NumeroPayu;?>'></td>
+														<td class=col2><input type="text" class="tbox" name="NumeroPayu" size="15" value='<?php echo $r->NumeroPayu;?>'></td>
 														<td class=col1>N&uacute;mero registro</td>
-														<td class=col2><input type="number" class="tbox" name="NumeroRegistro" id="NumeroRegistro" class="NumeroRegistro" size="15" value='<?echo $r->NumeroRegistro;?>'></td>
+														<td class=col2><input type="number" class="tbox" name="NumeroRegistro" id="NumeroRegistro" class="NumeroRegistro" size="15" value='<?php echo $r->NumeroRegistro;?>'></td>
 													</tr>
 													<tr>
 														<td class=row1 colspan="4"><b>Addi</b></span>
@@ -3926,14 +3926,14 @@ if((int)$total_link_pto>0)
 													</tr>
 													<tr>
 														<td class=col1>Numero autorizaci&oacute;n Addi</td>
-														<td class=col2><input type="text" class="tbox" name="NumeroAddi" size="15" value='<?echo $r->NumeroAddi;?>'></td>														
+														<td class=col2><input type="text" class="tbox" name="NumeroAddi" size="15" value='<?php echo $r->NumeroAddi;?>'></td>														
 													</tr>
 													<tr>
 														<td class=row1 colspan="4"><b>VENTA CREDITO</b></td>
 													</tr>
 													<tr>
 														<td class=col1>Incremento</td>
-														<td class=col2 colspan="3"><input type="text" class="tbox" name="Descuento" id="Descuento" value="<? echo $frm[Descuento] ?>" size="3"  maxlength="3" onblur="recalcularvalores()">%</td>
+														<td class=col2 colspan="3"><input type="text" class="tbox" name="Descuento" id="Descuento" value="<?php echo $frm[Descuento] ?>" size="3"  maxlength="3" onblur="recalcularvalores()">%</td>
 													</tr>
                           <tr>
 														<td class=col1>Nro Pagar&eacute;</td>
@@ -3943,11 +3943,11 @@ if((int)$total_link_pto>0)
                                 $qry_pag = db_query( $sql_pag );
                                 $r_pag = db_fetch_array( $qry_pag ); ?>
                                 <input type="hidden" name="PagareConsecutivo"	 id="PagareConsecutivo" value="<?php echo $r_pag["CodigoPagare"]; ?>">
-                                <input type="text" class="tbox" name="NumeroPagare" id="NumeroPagare" value="<? echo $frm[NumeroPagare] ?>" ></td>
+                                <input type="text" class="tbox" name="NumeroPagare" id="NumeroPagare" value="<?php echo $frm[NumeroPagare] ?>" ></td>
 													</tr>
 													<tr>
 														<td class=col1>Comentario </td>
-														<td class=col2 colspan="3"><textarea class="tareabox" name="ObservacionDescuento" id="ObservacionDescuento" rows="4" cols="64" <?php if($habilita_descuento=="N" && $IDPuntoVenta !=21 ) echo "readonly"; ?>><? echo $frm[ObservacionDescuento] ?></textarea></td>
+														<td class=col2 colspan="3"><textarea class="tareabox" name="ObservacionDescuento" id="ObservacionDescuento" rows="4" cols="64" <?php if($habilita_descuento=="N" && $IDPuntoVenta !=21 ) echo "readonly"; ?>><?php echo $frm[ObservacionDescuento] ?></textarea></td>
 													</tr>
 
 													<?php
@@ -4099,7 +4099,7 @@ if((int)$total_link_pto>0)
 																		<input type="hidden"  id="Verificado<?php echo $r_bono[IDBonoFidelizacion]?>" name="Verificado<?php echo $r_bono[IDBonoFidelizacion]?>" value="N">
 																	</td>
 																</tr>
-																<? 
+																<?php 
 															} 
 
 															$sql_bono =  "SELECT * FROM BonoFidelizacion WHERE IDCliente = '" . $r->IDCliente . "' AND Estado = 'V' ORDER BY Fecha DESC ";
@@ -4172,7 +4172,7 @@ if((int)$total_link_pto>0)
 																			<div id="div_factura_redimir<?php echo $r_bono["IDBonoIva"]?>" style="display:none"><span style="color: #F00;">Factura aplicada:  <?php echo $r_bono["NumeroFactura"]; ?></span></div>
 																		</td>
 																	</tr>
-																	<? 
+																	<?php 
 																} 
 
 															} 
@@ -4200,8 +4200,8 @@ if((int)$total_link_pto>0)
 													        <tr>
 													          <td width="17%" class=row1>C&aacute;dula de quien Refiere:</td>
 													          <td width="83%">
-                                                              <input type="text" class="tbox" name="CedulaReferente" id="CedulaReferente" value="<? echo $frm[CedulaReferente] ?>">
-                                                              <input type="hidden" class="tbox" name="IDClienteReferente" id="IDClienteReferente" value="<? echo $frm[IDClienteReferente] ?>">
+                                                              <input type="text" class="tbox" name="CedulaReferente" id="CedulaReferente" value="<?php echo $frm[CedulaReferente] ?>">
+                                                              <input type="hidden" class="tbox" name="IDClienteReferente" id="IDClienteReferente" value="<?php echo $frm[IDClienteReferente] ?>">
                                                                <input type="button" name="BuscarReferente" id="BuscarReferente" value="Buscar">
                                                               </td>
 												            </tr>
@@ -4260,7 +4260,7 @@ if((int)$total_link_pto>0)
 													        <tr>
 													          <td class=row1><strong>Descuento por Alianza </strong></td>
 													          <td>
-																<? 
+																<?php 
 																if($r->ClubSuavidad=="S"){
 																	$condicion_fid=" and (SoloFidelizados = 'S' or SoloFidelizados = '' or SoloFidelizados = 'N' ) ";
 																}
@@ -4269,7 +4269,7 @@ if((int)$total_link_pto>0)
 																}
 																?>
 																
-                                                              <input type="hidden" class="tbox" name="TipoAlianza" id="TipoAlianza" value="<? echo $frm[TipoAlianza] ?>">
+                                                              <input type="hidden" class="tbox" name="TipoAlianza" id="TipoAlianza" value="<?php echo $frm[TipoAlianza] ?>">
                                                               <input type="hidden" class="tbox" name="ValorAlianza" id="ValorAlianza" value="">
                                                               <select name="IDAlianza" id="IDAlianza" class="input seleccion_alianza">
                                                               	<option value=""></option>
@@ -4380,7 +4380,7 @@ if((int)$total_link_pto>0)
                                                             <input type="hidden" name="CodigoTarjeta" value="">
                                                        	</td>
 													</tr>
-													<?
+													<?php
 													$campos = 10;
 													for( $i=1; $i<=$campos;$i++ )
 													{
@@ -4417,41 +4417,41 @@ if((int)$total_link_pto>0)
                                                         </td>
 
 														<td align="left">
-                                                        	<input  type=text  name=Numero<?=$i?> rel="<?=$i ?>" value="<? echo $frm[ $numero ] ?>" class="tbox tboxReferencia" size=8 autocomplete="off">
+                                                        	<input  type=text  name=Numero<?=$i?> rel="<?=$i ?>" value="<?php echo $frm[ $numero ] ?>" class="tbox tboxReferencia" size=8 autocomplete="off">
 
-                                 <?
+                                 <?php
                                  $styletarjeta = "style=\"display:none\"";
 								 if( !empty( $frm[ $codigotarjeta ] ) )
 								 	$styletarjeta = " ";
-								 ?>                           <input type="text" name="CodigoTarjeta<?=$i?>" id="CodigoTarjeta<?=$i?>" rel="<?=$i?>" value="<? echo $frm[ $codigotarjeta ] ?>" <?=$styletarjeta ?> class="tbox " title="Codigo Tarjeta" placeholder="Codigo Tarjeta" size=12 readonly />
-							                                 <input type="text" name="CodigoTarjetaDigitado<?=$i?>" id="CodigoTarjetaDigitado<?=$i?>" value="<? echo $frm[ $codigotarjeta ] ?>" alt="<?=$i?>" rel="<?=$i?>" <?=$styletarjeta ?> class="tbox tarjeta_digitada" placeholder="Codigo Tarjeta" title="Codigo Tarjeta" size=12 <?php if($submit_caption=="Confirmar Factura"): ?> style="display:none"<?php endif; ?> />
+								 ?>                           <input type="text" name="CodigoTarjeta<?=$i?>" id="CodigoTarjeta<?=$i?>" rel="<?=$i?>" value="<?php echo $frm[ $codigotarjeta ] ?>" <?=$styletarjeta ?> class="tbox " title="Codigo Tarjeta" placeholder="Codigo Tarjeta" size=12 readonly />
+							                                 <input type="text" name="CodigoTarjetaDigitado<?=$i?>" id="CodigoTarjetaDigitado<?=$i?>" value="<?php echo $frm[ $codigotarjeta ] ?>" alt="<?=$i?>" rel="<?=$i?>" <?=$styletarjeta ?> class="tbox tarjeta_digitada" placeholder="Codigo Tarjeta" title="Codigo Tarjeta" size=12 <?php if($submit_caption=="Confirmar Factura"): ?> style="display:none"<?php endif; ?> />
 
 
                                                             </td>
 														<td align="left">
 															<input type="hidden" id="segundos<?=$i?>" name="segundos<?=$i?>" value="Segundos">
-															<input type=text readonly name=Talla<?=$i?> value="<? echo $frm[ $talla ] ?>" class="tbox" size=5>
+															<input type=text readonly name=Talla<?=$i?> value="<?php echo $frm[ $talla ] ?>" class="tbox" size=5>
 														</td>
-														<td align="left"><input type=text readonly name=Nombre<?=$i?> value="<? echo $frm[ $nombre ] ?>" class="tbox" size=10 title="Nombre"></td>
-														<td align="left"><input type=hidden name=IDCodificacion<?=$i?> id="IDCodificacion<?=$i?>" value="<? echo $frm[ $idcodificacion ] ?>" ></td>
-														<!--<td align="center"><input type=text name=Cantidad<?=$i?> id=Cantidad<?=$i?> value="<? echo $frm[ $cantidad ] ?>" class="tbox" size=5 onblur=" pague_2_lleve_3();promo_segundo_par();promo_segundo_par_con_talla(); if(!compruebamaximo(this.value,<?=$i?>)) this.value = ''; else calculatotal(this.value,<?=$i?>);"></td>-->
-                            <td align="center"><input type=number name=Cantidad<?=$i?> id=Cantidad<?=$i?> value="<? echo $frm[ $cantidad ] ?>" class="tbox" size=5 onblur="promo_segundo_par(); promo_segundo_par_con_talla(); pague_2_lleve_3(); if(!compruebamaximo(this.value,<?=$i?>)) this.value = ''; else calculatotal(this.value,<?=$i?>);"  min="1" max="10" oninput="if(this.value > 10) this.value = 10; if(this.value < 1) this.value = 1;" ></td>
-													<td align="left"><input type=text readonly id="ValorU<?=$i?>" name=ValorU<?=$i?> value="<? echo $frm[ $valoru ] ?>" class="tbox" size=10 onblur=" setvalor(this.value,<?=$i?>);calculatotal(this.value,<?=$i?>); "></td>
+														<td align="left"><input type=text readonly name=Nombre<?=$i?> value="<?php echo $frm[ $nombre ] ?>" class="tbox" size=10 title="Nombre"></td>
+														<td align="left"><input type=hidden name=IDCodificacion<?=$i?> id="IDCodificacion<?=$i?>" value="<?php echo $frm[ $idcodificacion ] ?>" ></td>
+														<!--<td align="center"><input type=text name=Cantidad<?=$i?> id=Cantidad<?=$i?> value="<?php echo $frm[ $cantidad ] ?>" class="tbox" size=5 onblur=" pague_2_lleve_3();promo_segundo_par();promo_segundo_par_con_talla(); if(!compruebamaximo(this.value,<?=$i?>)) this.value = ''; else calculatotal(this.value,<?=$i?>);"></td>-->
+                            <td align="center"><input type=number name=Cantidad<?=$i?> id=Cantidad<?=$i?> value="<?php echo $frm[ $cantidad ] ?>" class="tbox" size=5 onblur="promo_segundo_par(); promo_segundo_par_con_talla(); pague_2_lleve_3(); if(!compruebamaximo(this.value,<?=$i?>)) this.value = ''; else calculatotal(this.value,<?=$i?>);"  min="1" max="10" oninput="if(this.value > 10) this.value = 10; if(this.value < 1) this.value = 1;" ></td>
+													<td align="left"><input type=text readonly id="ValorU<?=$i?>" name=ValorU<?=$i?> value="<?php echo $frm[ $valoru ] ?>" class="tbox" size=10 onblur=" setvalor(this.value,<?=$i?>);calculatotal(this.value,<?=$i?>); "></td>
 													<td align="center">
-                                                    <input type=text name="DescuentoLin<?=$i?>" value="<? echo $frm[ $descuentolin ] ?>" onblur="calculatotal(this.value,<?=$i?>);" onblur="calculatotal(this.value,<?=$i?>);" class="tbox descuento_linea" size=3 maxlength="3" <?php if($habilita_descuento=="N" ) echo "readonly"; ?> >
-                                                    <input type=hidden name="PrimerDescuentoLin<?=$i?>" value="<? echo $frm[ $descuentolin ] ?>">
+                                                    <input type=text name="DescuentoLin<?=$i?>" value="<?php echo $frm[ $descuentolin ] ?>" onblur="calculatotal(this.value,<?=$i?>);" onblur="calculatotal(this.value,<?=$i?>);" class="tbox descuento_linea" size=3 maxlength="3" <?php if($habilita_descuento=="N" ) echo "readonly"; ?> >
+                                                    <input type=hidden name="PrimerDescuentoLin<?=$i?>" value="<?php echo $frm[ $descuentolin ] ?>">
                                                     </td>
-													<td align="left"><input type=text readonly name=Total<?=$i?> value="<? echo $frm[ $total ] ?>" class="tbox" size=10></td>
-													<td align="left"><input type=hidden name=Maximo<?=$i?> value="<? echo $frm[ $maximo ] ?>"></td>
+													<td align="left"><input type=text readonly name=Total<?=$i?> value="<?php echo $frm[ $total ] ?>" class="tbox" size=10></td>
+													<td align="left"><input type=hidden name=Maximo<?=$i?> value="<?php echo $frm[ $maximo ] ?>"></td>
 														<td align="left">
-                                                        	<input type=hidden name=Precio<?=$i?> value="<? echo $frm[ $precio ] ?>">
-                                                            <input type=hidden name=ValorBruto<?=$i?> value="<? echo $frm[ $valorbruto ] ?>">
-                                                            <input type=hidden name=Sexo<?=$i?> value="<? echo $frm[ $sexo ] ?>">
-															<input type=hidden name=TipoTalla<?=$i?> value="<? echo $frm[ $TipoTalla ] ?>">
-															<input type=hidden name=TipoReferencia<?=$i?> value="<? echo $frm[ $TipoReferencia ] ?>">
+                                                        	<input type=hidden name=Precio<?=$i?> value="<?php echo $frm[ $precio ] ?>">
+                                                            <input type=hidden name=ValorBruto<?=$i?> value="<?php echo $frm[ $valorbruto ] ?>">
+                                                            <input type=hidden name=Sexo<?=$i?> value="<?php echo $frm[ $sexo ] ?>">
+															<input type=hidden name=TipoTalla<?=$i?> value="<?php echo $frm[ $TipoTalla ] ?>">
+															<input type=hidden name=TipoReferencia<?=$i?> value="<?php echo $frm[ $TipoReferencia ] ?>">
                                                             </td>
 														<td align="left">
-                                                        <input type=hidden name=Descuento<?=$i?> value="<? echo $frm[ $descuento ] ?>">
+                                                        <input type=hidden name=Descuento<?=$i?> value="<?php echo $frm[ $descuento ] ?>">
                                                         <?php if($submit_caption!="Confirmar Factura"): ?>
                                                        	 <input type=button name=Borrar<?=$i?> class=submit value=Borrar onclick="Borrar(<?=$i?>);">
                                                         <?php endif; ?>
@@ -4459,7 +4459,7 @@ if((int)$total_link_pto>0)
                                                         </td>
 
 													</tr>
-													<?
+													<?php
 													}//end for
 													?>
 												</table>
@@ -4481,10 +4481,10 @@ if((int)$total_link_pto>0)
 													Sub Total Factura
 												</div>
 											</td>
-										<td class=col2><input type=text readonly id="ValorTotal" name=ValorTotal value="<? echo $frm[ValorTotal] ?>" class="tbox" size=15>
-										  <input type="hidden" name="TotalFacturaNumero" id="TotalFacturaNumero" value="<? echo $frm[TotalFacturaNumero] ?>" />
-										  <input type="hidden" readonly value="<? echo $frm[TotalSinIVA] ?>" name="TotalSinIVA" class="tbox" size="15" />
-										  <input type="hidden" readonly name="ValorIVA" value="<? echo $frm[ValorIVA] ?>" class="tbox" size="15" /></td>
+										<td class=col2><input type=text readonly id="ValorTotal" name=ValorTotal value="<?php echo $frm[ValorTotal] ?>" class="tbox" size=15>
+										  <input type="hidden" name="TotalFacturaNumero" id="TotalFacturaNumero" value="<?php echo $frm[TotalFacturaNumero] ?>" />
+										  <input type="hidden" readonly value="<?php echo $frm[TotalSinIVA] ?>" name="TotalSinIVA" class="tbox" size="15" />
+										  <input type="hidden" readonly name="ValorIVA" value="<?php echo $frm[ValorIVA] ?>" class="tbox" size="15" /></td>
 										</tr>
 										<tr>
 										  <td class=col1></td>
@@ -4494,25 +4494,25 @@ if((int)$total_link_pto>0)
                                          Bonos de fidelizaci&oacute;n redimidos
                                           </div>
                                           </td>
-										  <td class=col2><input type="text" readonly name="SumaBono" id="SumaBono" value="<? if (empty($frm[SumaBono])) { echo "0"; } else{  echo $frm[SumaBono]; } ?>" class="tbox" size="15" />
+										  <td class=col2><input type="text" readonly name="SumaBono" id="SumaBono" value="<?php if (empty($frm[SumaBono])) { echo "0"; } else{  echo $frm[SumaBono]; } ?>" class="tbox" size="15" />
 										   <input type="hidden" name="ValorBonoParametro" id="ValorBonoParametro" value="<?php echo (int)get_field("ParametroFidelizacion","Valor","IDParametroFidelizacion","8")?>" />
 										   <input type="hidden" name="SumaBonoNumero" id="SumaBonoNumero" value="0" />
 										   <input type="hidden" name="BonoIva" id="BonoIva" value="0" />
 										   <input type="hidden" name="ProductoNoAplica" id="ProductoNoAplica" value="S" />
                                            <input type="hidden" name="SobranteBono" id="SobranteBono" value="<?php if ($frm[SobranteBono] !=0 ){ echo $frm[SobranteBono];  } else{ echo "0"; }?>" />
-										   <input type="hidden" readonly name="ValorTotalNoIva" value="<? echo $frm[ValorTotalNoIva] ?>" class="tbox" size="15" /></td>
+										   <input type="hidden" readonly name="ValorTotalNoIva" value="<?php echo $frm[ValorTotalNoIva] ?>" class="tbox" size="15" /></td>
 									  </tr>
 										<tr>
 										  <td class=col1></td>
 										  <td class=col1></td>
 										  <td class="col2"><div align="right"> sub total menos bonos de fidelizaci&oacute;n redimidos </div></td>
-										  <td class="col2"><input type="text" readonly name="ValorMenosBono" value="<? echo $frm[ValorMenosBono] ?>" class="tbox" size="15" /></td>
+										  <td class="col2"><input type="text" readonly name="ValorMenosBono" value="<?php echo $frm[ValorMenosBono] ?>" class="tbox" size="15" /></td>
 									  </tr>
 										<tr>
 										  <td class=col1></td>
 										  <td class=col1></td>
 										  <td class="col2"><div align="right"> Valor IVA </div></td>
-										  <td class="col2"><input type="text" readonly name="ValorIvaMenosBono" value="<? echo $frm[ValorIvaMenosBono] ?>" class="tbox" size="15" /></td>
+										  <td class="col2"><input type="text" readonly name="ValorIvaMenosBono" value="<?php echo $frm[ValorIvaMenosBono] ?>" class="tbox" size="15" /></td>
 									  </tr>
 									 
 									  <tr>
@@ -4532,7 +4532,7 @@ if((int)$total_link_pto>0)
 										  <td class=col1></td>
 										  <td class=col1></td>
 										  <td class="col2"><div align="right"> Valor a Pagar</div></td>
-										  <td class="col2"><input type="text" readonly name="ValorTotalFactura" value="<? echo $frm[ValorTotalFactura] ?>" class="tbox" size="15" /></td>
+										  <td class="col2"><input type="text" readonly name="ValorTotalFactura" value="<?php echo $frm[ValorTotalFactura] ?>" class="tbox" size="15" /></td>
 									  </tr>
 
 
@@ -4591,6 +4591,6 @@ if((int)$total_link_pto>0)
 
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML>

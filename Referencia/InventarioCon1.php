@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Codificacion Especifica";
 
@@ -57,7 +57,7 @@ function seleccionareferencia( $newmode)
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="650">
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 		<tr>
-			<td class=col1 width=30%> 
+			<td class=col1 width=30;?> 
 				Buscar Referencia Por
 			</td>
 			<td class="col2">
@@ -76,7 +76,7 @@ function seleccionareferencia( $newmode)
 		</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -93,7 +93,7 @@ function seleccionareferencia( $newmode)
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
 		<tr>
 			<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" /></td>
-			<td class="tbtbot"><b></b><span class="gen"><?=$Title?> - <? echo $campo.":".$referencia;  ?></span></td>
+			<td class="tbtbot"><b></b><span class="gen"><?=$Title?> - <?php echo $campo.":".$referencia;  ?></span></td>
 			<td class="tbtr"><img src="images/spacer.gif" alt="" width="124" height="22" /></td>
 		</tr>
 	</table>
@@ -103,7 +103,7 @@ function seleccionareferencia( $newmode)
 				<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="650">
 					<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 						<tr>
-							<td class=col1 width=30%> 
+							<td class=col1 width=30;?> 
 				Buscar Referencia Por
 				</td>
 							<td class="col2">
@@ -120,7 +120,7 @@ function seleccionareferencia( $newmode)
 				</table>
 			</td>
 	</tr>
-<?
+<?php
 if( !empty( $referencia ) )	
 {
  	
@@ -142,7 +142,7 @@ if( !empty( $referencia ) )
 		?>
 			<tr>
 				<td>
-					<? 
+					<?php 
 						$i = 0;
 						$r = array( );
 						while($r_codificacionesp = db_fetch_array($query_codificacion))
@@ -185,7 +185,7 @@ if( !empty( $referencia ) )
 								<td class="navpic" nowrap>
 									-
 								</td>
-							<?
+							<?php
 							foreach($r as $talla)
 							{
 								if(!empty($talla[IDTalla]))
@@ -196,11 +196,11 @@ if( !empty( $referencia ) )
 							
 							<tr>
 								<td class="col2" width=100>
-									<?
+									<?php
 										echo $r_referencia->$campo;
 									?>
 								</td>
-							<?
+							<?php
 							foreach($r as $talla)
 							{
 								if(!empty($talla[IDTalla]))
@@ -217,7 +217,7 @@ if( !empty( $referencia ) )
 					</table>
 				</td>
 			</tr>
-		<?
+		<?php
 		}// End if$rows
 		//else
 		//	echo "<tr><td><span class=col1list><b>No se encontraron registros con los par&aacute;metros proporcionados </b></span></td></tr>";
@@ -226,6 +226,6 @@ if( !empty( $referencia ) )
 ?>
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

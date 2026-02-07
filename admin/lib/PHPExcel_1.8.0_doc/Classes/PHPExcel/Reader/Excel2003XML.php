@@ -88,8 +88,8 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
 		//
 
 		$signature = array(
-				'<?xml version="1.0"',
-				'<?mso-application progid="Excel.Sheet"?>'
+				'<?php xml version="1.0"',
+				'<?php mso-application progid="Excel.Sheet"?>'
 			);
 
 		// Open file
@@ -110,7 +110,7 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
 		}
 
 		//	Retrieve charset encoding
-		if(preg_match('/<?xml.*encoding=[\'"](.*?)[\'"].*?>/um',$data,$matches)) {
+		if(preg_match('/<?php xml.*encoding=[\'"](.*?)[\'"].*?>/um',$data,$matches)) {
 			$this->_charSet = strtoupper($matches[1]);
 		}
 //		echo 'Character Set is ',$this->_charSet,'<br />';

@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -75,7 +75,7 @@ function printWindow() {
 
 <body>
 	
-	<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+	<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 			<table class="forumline" width="314" cellspacing="1" border="0" align="center" height="100" id="#content">
 		<tr>
 			<td valign="top">
@@ -107,7 +107,7 @@ function printWindow() {
 												</tr>
 														<tr>
 													<td class=texto>Cliente</td>
-													<td width="172" nowrap class=texto><? echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?></td>
+													<td width="172" nowrap class=texto><?php echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?></td>
 													<td width="28" class=texto>&nbsp;</td>
 													<td width="27" class=texto>&nbsp;</td>
 												</tr>
@@ -125,7 +125,7 @@ function printWindow() {
 															<td align="center" class="texto"><b>Desc.</b></td>
 															<td align="center" class="texto" nowrap><b>Vr. sin IVA</b></td>
 												</tr>
-												<?
+												<?php
 												$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
 												$query_detalle = db_query($sql_detalle);
 												$i = 0;
@@ -139,16 +139,16 @@ function printWindow() {
 													<td align="center" class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
 													<td align="center" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
 															<td align="center" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-															<td align="center" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoRef);//number_format($r_detalle->DescuentoRef);?>%</td>
-															<td align="right" class="<?=$class?>"><?echo number_format($r_detalle->PrecioU);?></td>
-															<td align="center" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoPar);//number_format($r_detalle->DescuentoRef);?>%</td>
+															<td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoRef);//number_format($r_detalle->DescuentoRef);?>%</td>
+															<td align="right" class="<?=$class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
+															<td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoPar);//number_format($r_detalle->DescuentoRef);?>%</td>
 															<td align="right" class="<?=$class?>">
-														<?
+														<?php
 															$valorsin = ( $r_detalle->ValorU * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) ) * $r_detalle->Cantidad;
 															echo number_format( $valorsin );
 														?>													</td>
 												</tr>
-												<?
+												<?php
 													$Movimiento = get_field("Referencia","IDMovimiento","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))); 											
 													if( !empty( $Movimiento ) )
 														$segunda = 1;
@@ -184,7 +184,7 @@ function printWindow() {
 														<b>
 												FORMA DE PAGO</b></div>										</td>
 								  </tr>
-									<? 									$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
+									<?php 									$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 									$query_formapago = db_query( $sql_formapago );
 									
 									while( $r_formapago = db_fetch_object( $query_formapago ) )
@@ -200,7 +200,7 @@ function printWindow() {
 												<?php echo get_field("FormaPago","Descripcion","IDFormaPago",$r_formapago->IDFormaPago)?></div>										</td>
 										<td class=texto><?=number_format($r_formapago->Valor)?></td>
 									</tr>
-									<? 									}//end if($r_formapago->Valor <> 0)
+									<?php 									}//end if($r_formapago->Valor <> 0)
 								}//end while( $r_formapago = db_fetch_object( $query_formapago ) )
 								?>
 									<tr>
@@ -208,16 +208,16 @@ function printWindow() {
 
                                         <tr>
                                           <td class=texto1><strong>Tiquete No.</strong></td>
-                                          <td class=texto1 nowrap><? echo $r_puntoventa->Codigo.$r->NumeroFactura?></td>
+                                          <td class=texto1 nowrap><?php echo $r_puntoventa->Codigo.$r->NumeroFactura?></td>
                                           <td class=texto1><strong>Vendedor</strong></td>
-                                          <td nowrap class=texto1><?echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?></td>
+                                          <td nowrap class=texto1><?php echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?></td>
                                         </tr>
 
                                       </table></td>
 								  </tr>
 									<tr>
 										<td class="texto" colspan="4" align="center">
-											<?
+											<?php
 												$sql_mensje = "SELECT Mensaje 
 																	FROM Mensaje 
 																	WHERE Publicar = 'S'

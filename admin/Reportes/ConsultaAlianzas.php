@@ -21,7 +21,7 @@ else{
 
 ?>
 
-<%
+<?php
 		switch ($action) {
 
 			case "view" :
@@ -53,7 +53,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
  	$IVA = 0.16;
  endif;
 
-%>
+  ?>
 
 	<table width="100%">
 
@@ -87,12 +87,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td  align='left' valign='middle' class="nav"><img src="images/house.png" border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav">Puntos de Venta	<select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><%
+									<option value="">Seleccione Un Punto de Venta</option><?php
 								$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select> <input type="hidden" name="mod" value="ConsultaAlianzas"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav"><input type="submit" value="Ver Reporte" name="submit" class="submit"></td>
 						</tr>
@@ -103,9 +103,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty($IDPuntoVenta)){
-		%>
+		?>
 		<tr>
 		<td>
 				&nbsp;&nbsp;&nbsp;&nbsp;  <img src="images/book_go.png" border="0" alt="">&nbsp;
@@ -121,7 +121,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						Reporte Ventas Diarias Almacen : <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
 					</td>
 				</tr>
-				<?
+				<?php
 					//Seleccionar Formas de Pago
 					$sql_formapago = "SELECT IDFormaPago, Descripcion FROM FormaPago ";
 					$qry_formaPago = db_query( $sql_formapago );
@@ -214,7 +214,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="titlemedium" align="center" nowrap>Cliente</td>
 
 									</tr>
-						<?
+						<?php
 						foreach( $r_facturas as $key => $valor )
 						{
 							//print_r( $valor );
@@ -225,7 +225,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['FechaFacturaF']?></td>
 										<td class="<?=$class?>" align="center" nowrap>
-										<?
+										<?php
 										unset($array_referencias);
                                         if($valor['Numero']=="Excedente"):
 											// consulto cliente
@@ -261,7 +261,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?=$class?>" align="center" nowrap><?=$id_ref = get_field("Talla","Descripcion","IDTalla",$valor['IDTalla']);?> </td>
 										<td class="<?=$class?>" align="right" nowrap><?=number_format( $ElValorUnitario = $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,2)?></td>
 							<td class="<?=$class?>" align="center" nowrap>
-                            <?
+                            <?php
 							if($valor['Numero']=="Excedente"):
 								echo "0";
 								//$Pares += $valor['Cantidad'];
@@ -275,7 +275,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                             </td>
 							<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoRef']?></td>
 
-										<td class="<?=$class?>" align="center" nowrap><?
+										<td class="<?=$class?>" align="center" nowrap><?php
 								$descuento_bono=0;
                                 if ((int)$valor['ValorBono']>0 && $numero_factura_ant !=  $valor['NumeroFactura']){
 									echo $descuento_bono=number_format($valor['ValorBono']);
@@ -293,7 +293,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								?></td>
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoPar']?></td>
 										<td class="<?=$class?>" align="center" nowrap>
-											<?
+											<?php
 												$TotalFactura = $valor[ValorTotal] ;
 												if( $valor['DescuentoPar'] > 0 )
 													$valordescuentopar = ( $valor['PrecioU'] * $valor['Cantidad'] ) *   ( $valor['DescuentoPar'] / 100 );
@@ -385,7 +385,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 						</tr>
 
-						<?
+						<?php
 						}//end foreach( $r_facturas as $key => $valor )
 						?>
 
@@ -409,12 +409,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</table>
 	</td>
 	</tr>
-	<%
+	<?php
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%
+	<?php
 }// Enf function print()
 
-%>
+  ?>
 </body>

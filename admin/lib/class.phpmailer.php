@@ -795,7 +795,7 @@ class PHPMailer
         if($this->Mailer != "mail")
             $result .= $this->HeaderLine("Subject", $this->EncodeHeader(trim($this->Subject)));
 
-        $result .= sprintf("Message-ID: <%s@%s>%s", $uniq_id, $this->ServerHostname(), $this->LE);
+        $result .= sprintf("Message-ID: <?php s@%s>%s", $uniq_id, $this->ServerHostname(), $this->LE);
         $result .= $this->HeaderLine("X-Priority", $this->Priority);
         $result .= $this->HeaderLine("X-Mailer", "PHPMailer [version " . $this->Version . "]");
         
@@ -1050,7 +1050,7 @@ class PHPMailer
             $mime[] = sprintf("Content-Transfer-Encoding: %s%s", $encoding, $this->LE);
 
             if($disposition == "inline")
-                $mime[] = sprintf("Content-ID: <%s>%s", $cid, $this->LE);
+                $mime[] = sprintf("Content-ID: <?php s>%s", $cid, $this->LE);
 
             $mime[] = sprintf("Content-Disposition: %s; filename=\"%s\"%s", 
                               $disposition, $name, $this->LE.$this->LE);

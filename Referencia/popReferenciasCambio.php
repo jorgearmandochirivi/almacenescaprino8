@@ -1,11 +1,11 @@
-<%
+<?php
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
 	$Nombre_Usuario = usr_datos($datos["IDUsuario"]);
 	$ID_Usuario = $datos["IDUsuario"];
 	$Nivel =  $datos["Nivel"];
-%>
+?>
 <html>
 
 	<head>
@@ -18,7 +18,7 @@
 	<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
 		
 		<link rel="stylesheet" href="../styles.css?1" type="text/css">
-		<%
+		<?php
 
 $TitleMod ="Referencias";
 $MOD = "breferencia";
@@ -97,7 +97,7 @@ return $qry_string;
 		$info = $nav->show_info(); 
 	
 	} // if(!empty($sql)){ 
-%>
+?>
 
 		<table width="100%" border="0" cellspacing="1" cellpadding="0" align=center>
 			<tr>
@@ -105,7 +105,7 @@ return $qry_string;
 					<table width="100%" border="0" cellspacing="1" cellpadding="1" class=bordertable align=center> 
 						<tr>
 							<td class="navpic">
-								<?
+								<?php
 									echo  Referencias." ".$info;
 								?>
 							</td>
@@ -114,16 +114,16 @@ return $qry_string;
 					<table>
 						<form action="<?=$PHP_SELF?>" method=get>
 							<tr>
-								<td class="<?=$class?>" colspan="3" nowrap align="left"><?print($pages)?></td>
+								<td class="<?=$class?>" colspan="3" nowrap align="left"><?php print($pages)?></td>
 							</tr>
 							<tr>
 								<td class="rowtable" colspan="3" nowrap>Por <select name="field" class="inputSelect">
 										<option selected value="Numero">Referencia</option>
 										<option value="Nombre">Nombre</option>
-									</select> <input class="text" type="text" class="tbox" size="18" name="QryString"> <input type="hidden" name="action" value="list"> <input type="hidden" name="mod" value="busuario"> <input type="hidden" name="cont" value="<%=$cont%>"> <input type="hidden" name="IDPuntoVenta" value="<%=$IDPuntoVenta%>"> <input type="submit" name="submit" value="Buscar" class="submit"></td>
+								</select> <input class="text" type="text" class="tbox" size="18" name="QryString"> <input type="hidden" name="action" value="list"> <input type="hidden" name="mod" value="busuario"> <input type="hidden" name="cont" value="<?=$cont?>"> <input type="hidden" name="IDPuntoVenta" value="<?=$IDPuntoVenta?>"> <input type="submit" name="submit" value="Buscar" class="submit"></td>
 							</tr>
 						</form>
-						<% 						for ($y = 1; $y <= $rows; $y++) {
+						<?php 						for ($y = 1; $y <= $rows; $y++) {
 						
 							if($y % 2 == 0)
 								$class="col1list";
@@ -150,37 +150,37 @@ $array_tallas = array();
 								$i++;
 							}//end while
 						  	
-						%>
+						?>
 						
 						<tr>
 							<td></td>
 							<td></td>
-							<? 							foreach( $array_tallas as $key => $tallas )
+							<?php 							foreach( $array_tallas as $key => $tallas )
 							{
 							?>
 							<td width="50" align="center"><br>
 							</td>
-							<? 							}//end foreach
+							<?php 							}//end foreach
 							?></tr>
 						<tr>
 							<td class="titulodetablas">Referencia</td>
 							<td class="titulodetablas">Nombre</td>
-							<? 							foreach( $array_tallas as $key => $tallas )
+							<?php 							foreach( $array_tallas as $key => $tallas )
 							{
 								$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
 							?>
-							<td width="50" class="titulodetablas" align="center"><? echo $talla; ?></td>
-							<? 							}//end foreach
+							<td width="50" class="titulodetablas" align="center"><?php echo $talla; ?></td>
+							<?php 							}//end foreach
 							?></tr>
 						<tr>
-							<td class="<?=$class?>" nowrap><% echo $r->Numero %></td>
-							<td class="<?=$class?>"><% echo $r->Nombre %></td>
-							<? 							$numcols = 100;
+							<td class="<?=$class?>" nowrap><?php echo $r->Numero ?></td>
+							<td class="<?=$class?>"><?php echo $r->Nombre ?></td>
+							<?php 							$numcols = 100;
 							$contador = 1;
 							foreach( $array_tallas as $key => $tallas )
 							{
 							?>
-							<td class="<?=$class?>" align="left"><? 											
+							<td class="<?=$class?>" align="left"><?php 											
 
 										$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
 										
@@ -221,14 +221,14 @@ $array_tallas = array();
 									echo "<td>NO HAY TALLAS DISPONIBLES</td>";
 							?></td>
 						</tr>
-						<% 						} // END for
-						%>
+						<?php 						} // END for
+						?>
 						
 					</table>
 				</td>
 		</tr>
 		</table>
-		<% 			
+		<?php 			
 }// Enf function list()				
-%></body>
+?></body>
 </html>

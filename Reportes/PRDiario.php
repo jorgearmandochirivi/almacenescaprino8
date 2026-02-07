@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	//Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -146,7 +146,7 @@ table{
 						<td class="navpic" align="center" nowrap>Pago</td>
 						<td class="navpic" align="center" nowrap>IVA</td>
 					</tr>
-					<?
+					<?php
 					foreach( $r_facturas as $key => $valor )
 					{
 						//print_r( $valor );
@@ -157,10 +157,10 @@ table{
 						<td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
 						<td class="<?=$class?>" align="center" nowrap><?=$valor['Numero']?> </td>
 						<td class="<?=$class?>" align="right" nowrap><?=number_format( $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,0)?></td>
-						<td class="<?=$class?>" align="center" nowrap><?echo $valor['Cantidad']; $Pares += $valor['Cantidad'];?></td>
+						<td class="<?=$class?>" align="center" nowrap><?php echo $valor['Cantidad']; $Pares += $valor['Cantidad'];?></td>
 						<!--<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoRef']?></td>-->
 									<td class="<?=$class?>" align="right" nowrap>
-										<?
+										<?php
 												$descuento_bono=0;
 												if ((int)$valor['ValorBono']>0 && $numero_factura_ant !=  $valor['NumeroFactura']){
 													$descuento_bono=number_format($valor['ValorBono']);
@@ -246,7 +246,7 @@ table{
                         </td>
 					</tr>
 
-					<?
+					<?php
 					}//end foreach( $r_facturas as $key => $valor )
 					?>
 
@@ -278,7 +278,7 @@ table{
 	</table>
 
 
-	<?
+	<?php
 	/* DESDE ACA PARA LAS FORMAS DE PAGO */
 	/*$sql_formapago = "SELECT PVB.IDFormaPago, FP.Descripcion, PVB.IDBanco
 					FROM PuntoVentaBanco PVB, FormaPago FP
@@ -308,7 +308,7 @@ table{
 				<td class="rowform"  align="right" nowrap>Valor</td>
 			</tr>
 
-		<?
+		<?php
 		foreach( $r_formapago as $key => $valor )
 		{
 
@@ -332,7 +332,7 @@ table{
 					<td class="rowform"  align="right" nowrap><?=$r_factura->cantidad ?> </td>
 					<td class="rowform"  align="right" nowrap><?=number_format( $r_factura->valor, 0 ); $totValor += $r_factura->valor;  ?> </td>
 				</tr>
-		<?
+		<?php
 			}//end if
 		}
 		?>
@@ -375,7 +375,7 @@ table{
 						<td class="navpic" align="center" nowrap>Val Abon</td>
 						<td class="navpic" align="center" nowrap>Val Sal</td>
 					</tr>
-					<?
+					<?php
 
 					foreach( $r_credito as $key => $valor )
 					{
@@ -389,7 +389,7 @@ table{
 						<td class="<?=$class?>" align="center" nowrap><?=$numero_cuota=$valor[IDCuota]?></td>
 						<td class="<?=$class?>" align="center" nowrap>
 
-                        <?
+                        <?php
 									//$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '".$valor[IDFactura]."' AND IDPuntoVenta = '$valor[IDPuntoVenta]' AND FechaPago = '0000-00-00 00:00:00' ";
 									//$qry_cuotas = db_query( $sql_cuotas );
 									//$r_cuotas = db_fetch_object( $qry_cuotas );
@@ -407,7 +407,7 @@ table{
                         </td>
 					</tr>
 
-					<?
+					<?php
 					}//end foreach( $r_facturas as $key => $valor )
 					?>
 
@@ -446,7 +446,7 @@ table{
 
 </body>
 </html>
-<?
+<?php
 
 $page = ob_get_contents();
 $fw = fopen($file, "w");

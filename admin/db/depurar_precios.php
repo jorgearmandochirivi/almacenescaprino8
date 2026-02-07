@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 $TitleMod ="Depurar Precios";
 
 $Table = "Referencia";
@@ -58,7 +58,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left >
 	<tr>
-			<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+			<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 		</tr>
 	<tr>
 			<td>
@@ -77,7 +77,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 			</td>
 	</tr>
 </table>
-<?
+<?php
 }// End function print_form()
 
 

@@ -1,4 +1,4 @@
-<body><%
+<body><?php
 		switch ($action) {
 			
 			case "view" :
@@ -27,7 +27,7 @@ function print_from($frm = ""){
 	
 	 
  
-%>
+  ?>
 	<script>
    		function showDIV(iddiv){
 			if (!document.getElementById)
@@ -71,22 +71,22 @@ function print_from($frm = ""){
 							<td  align='left' valign='middle' class="nav">Mes 
 								<select name="Mes" >
 									<option value="">Seleccione un mes...</option>
-									<% 								
+									<?php 								
 										foreach( $Mes_array as $keymes=>$mes ){
 											$keymes = $keymes+1;
 											echo "<option value=".$keymes." " ;if($Mes == $keymes ) echo "selected"; echo ">&nbsp;&nbsp;$mes</option>";
 										}
-									%>
+									?>
 								</select></td>
 							<td align="left" valign="middle" class="nav"><input type="hidden" name="mod" value="TotalesAlmacenReferencia"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav" align="right">Puntos de Venta  </td>
 							<td align="left" valign="middle" class="nav"><select name="IDPuntoVenta" onchange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><% 								
+									<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select></td>
 							<td align="left" valign="middle" class="nav">
 								
@@ -113,15 +113,15 @@ function print_from($frm = ""){
 							<tr>
 								<td valign="middle"></td>
 								<td  valign="middle" class="nav" align="right">Linea</td>
-								<td  valign="middle" class="nav" align="left"><? echo formpopup("Linea","Descripcion","IDLinea","IDLinea",$IDLinea,"InputSelect\" id=\"IDLinea"); ?></td>
+								<td  valign="middle" class="nav" align="left"><?php echo formpopup("Linea","Descripcion","IDLinea","IDLinea",$IDLinea,"InputSelect\" id=\"IDLinea"); ?></td>
 								<td align="left" valign="middle"  class="nav">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								<td  valign="middle" class="nav" align="right">Cuero</td>
-								<td  valign="middle" class="nav" align="left"><? echo formpopup("Cuero","Descripcion","IDCuero","IDCuero",$IDCuero,"InputSelect\" id=\"IDCuero"); ?></td>
+								<td  valign="middle" class="nav" align="left"><?php echo formpopup("Cuero","Descripcion","IDCuero","IDCuero",$IDCuero,"InputSelect\" id=\"IDCuero"); ?></td>
 							</tr>
 							<tr>
 								<td valign="middle"></td>
 								<td  valign="middle" class="nav" align="right">Proveedor</td>
-								<td  valign="middle" class="nav" align="left"><? echo formpopup("Proveedor","Nombre","IDProveedor","IDProveedor",$IDProveedor,"InputSelect\" id=\"IDProveedor"); ?></td>
+								<td  valign="middle" class="nav" align="left"><?php echo formpopup("Proveedor","Nombre","IDProveedor","IDProveedor",$IDProveedor,"InputSelect\" id=\"IDProveedor"); ?></td>
 								<td align="left" valign="middle"  class="nav"></td>
 								<td align="left" valign="middle" class="nav"></td>
 								<td align="left" valign="middle" class="nav"></td>
@@ -137,12 +137,12 @@ function print_from($frm = ""){
 		</td>
 		</tr>
 
-		<%
+		<?php
 		if(!empty( $Mes ) && !empty( $IDPuntoVenta ) ){
-		%>
+		?>
 		<tr>
 		<td>
-			<?
+			<?php
 				//QUERY REFERENCIAS DEL PUNTO DEL VENTA
 					$sql_referencias = " SELECT R.Numero, PVR.IDPuntoVentaReferencia 
 											FROM Referencia R, PuntoVentaReferencia PVR 
@@ -178,7 +178,7 @@ function print_from($frm = ""){
 						- Mostrando <?=$numero_referencias?> Referencias
 					</td>
 				</tr>
-				<?
+				<?php
 					
 					$i = 0;
 					while( $r_referencias = db_fetch_array( $qry_referencias ) )
@@ -223,19 +223,19 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						<tr>
 								<td class="titlemedium" align="center" nowrap>Referencia</td>
-							<?
+							<?php
 
 							for( $i = 33; $i <= 43; $i++ )
 							{
 							?>
 								<td class="titlemedium" align="center" nowrap><?=$i?></td>
-							<?
+							<?php
 							}//end for
 							?>
 								<td class="titlemedium" align="center" nowrap>TOTALES</td>
 									<td class="titlemedium" align="center" nowrap>GRAFICAR</td>
 								</tr>
-						<?
+						<?php
 						//print_r($array_referencias);
 						foreach( $array_referencias as $key => $valor )
 						{
@@ -244,12 +244,12 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 						?>
 							<tr>
 								<td class="<?=$class?>" align="center" nowrap><?=$valor['Numero']?></td>
-								<?
+								<?php
 								for( $i = 33; $i <= 43; $i++ )
 								{
 								?>
 									<td class="<?=$class?>" align="right" nowrap>
-										<?
+										<?php
 											
 											
 											foreach( $array_tallas[$valor['IDPuntoVentaReferencia']] as $llave => $talla )
@@ -279,11 +279,11 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 
 										?>
 									</td>
-								<?
+								<?php
 								}//end for
 								?>
 								<td class="<?=$class?>" align="center" nowrap>
-									<?
+									<?php
 										echo number_format( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] , 2);
 										if( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] > 0 )
 										{
@@ -295,7 +295,7 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 								</td>
 										<td class="<?=$class?>" align="center" nowrap>
 										
-											<?
+											<?php
 											if( $totalesreferencia[$valor['IDPuntoVentaReferencia']]['Totales'] > 0 )
 											{
 												$datos_referencia = implode(",",$datosreferencia[$valor['IDPuntoVentaReferencia']]);
@@ -305,23 +305,23 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 											<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_referencia?>&opciones=<?=$opciones_referencia?>&titulo=<?=$titulo_referencia?>','','width=550, height=400');" >
 												<img src="images/chart_pie.png" border="0">
 											</a>
-											<?
+											<?php
 											}
 											?>
 										</td>
 									</tr>
 						
-						<?
+						<?php
 						}//while( $r_referencias = db_fetch_object( $qry_referencias ) )
 						?>
 						<tr >
 							<td class="row1" align="center" nowrap></td>
-							<?
+							<?php
 							for( $i = 33; $i <= 43; $i++ )
 							{
 							?>
 								<td class="row1" align="center" nowrap>
-									<?
+									<?php
 									if( $totalestalla[$i]['Totales'] > 0 )
 									{	
 										$datos_tallas = implode(",",$datostallas[$i]);
@@ -331,15 +331,15 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_tallas?>&opciones=<?=$opciones_tallas?>&titulo=<?=$titulo_tallas?>','','width=550, height=400');" >
 										<img src="images/chart_pie.png" border="0">
 									</a>
-									<?
+									<?php
 									}
 									?>
 								</td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="row1" align="center" nowrap>
-								<?
+								<?php
 								if( $total > 0 )
 									{
 										$datos_totales = implode(",",$datostotales);
@@ -349,7 +349,7 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_totales?>&opciones=<?=$opciones_totales?>&titulo=<?=$titulo_totales?>','','width=550, height=400');" >
 										<img src="images/chart_pie.png" border="0">
 									</a>
-								<?
+								<?php
 									}
 								?>
 							</td>
@@ -358,20 +358,20 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 						
 						<tr>
 							<td class="titlemedium" align="center" nowrap>TOTALES</td>
-							<?
+							<?php
 							for( $i = 33; $i <= 43; $i++ )
 							{
 							?>
 								<td class="titlemedium" align="right" nowrap>
-									<?
+									<?php
 										echo number_format( $totalestalla[$i]['Totales'] );
 									?>
 								</td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="titlemedium" align="center" nowrap>
-								<?
+								<?php
 									echo number_format( $total, 2);
 									
 								?>
@@ -389,12 +389,12 @@ while( $r_facturas = db_fetch_object( $qry_facturas ) )
 		</table>
 	</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

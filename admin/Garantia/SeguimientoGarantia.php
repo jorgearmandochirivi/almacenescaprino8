@@ -4,7 +4,7 @@ function imprimir_garantia(IDGarantia, IDPuntoVenta){
 	window.open("Garantia/popBoucherGarantia.php?id="+IDGarantia+"&idpunto="+IDPuntoVenta,"","width=550, height=350, scrollbars=yes");
 }
 </script>
-<?
+<?php
 $TitleMod ="Seguimiento Garantia";
 
 $Table = "Garantia";
@@ -232,7 +232,7 @@ function Comprobar(formulario)
                     </tr>
                     <tr>
                       <td>Fecha Estimada para resolver garantia</td>
-                      <td colspan="3" class="row2"><span class="<?=$class?>"><? echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></span></td>
+                      <td colspan="3" class="row2"><span class="<?=$class?>"><?php echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></span></td>
                     </tr>
                     <tr>
                       <td>Almac&eacute;n Compra</td>
@@ -796,7 +796,7 @@ function Comprobar(formulario)
 											<input type=hidden name=IDGarantia value="<?=$r->IDGarantia ?>">
                                             <input type=hidden name=TipoProductoGarantia id="TipoProductoGarantia" value="<?=$r->TipoProducto ?>">
                                             <input type=hidden name=IDPuntoVenta value="<?=$r->IDPuntoVenta ?>">
-											<input type=hidden name=ID value="<? echo $r->$Key ?>">
+											<input type=hidden name=ID value="<?php echo $r->$Key ?>">
                                             <input type=hidden name="FechaSalidaAlmacenAnt" value="<?=$r->FechaSalidaAlmacen ?>">
                                             <input type=hidden name="FechaEntradaAlmacenAnt" value="<?=$r->FechaEntradaAlmacen ?>">
                                             <input type=hidden name="FechaEntregaClienteAnt" value="<?=$r->FechaEntregaCliente ?>">
@@ -873,7 +873,7 @@ function Comprobar(formulario)
 
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 /*******************************************************************************************
 		funcion Listar
@@ -907,7 +907,7 @@ function Comprobar(formulario)
 								$order="ASC";
 							}
 
-							?><?
+							?><?php
 		if($rows > 0){
 ?><br>
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
@@ -917,10 +917,10 @@ function Comprobar(formulario)
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				Listar <? echo $TitleMod ?>
+				Listar <?php echo $TitleMod ?>
 			</span>
 			<span class="gen">
-				<? echo $info ?>
+				<?php echo $info ?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -934,7 +934,7 @@ function Comprobar(formulario)
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class="texto forumline" >
 			<tr>
 				<td class="forumlink" colspan="2">
-					<?filtrar();?>
+					<?php filtrar();?>
 				</td>
 			</tr>
 			<tr>
@@ -944,13 +944,13 @@ function Comprobar(formulario)
 								<td align=center class=navpic valign=middle bgcolor=#DBEAF5 width=69>Ver</td>
 								<td class=navpic nowrap bgcolor=#DBEAF5>Numero</td>
 								<td class=navpic nowrap bgcolor=#DBEAF5>Tipo</td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Cliente
-									    <% if($_GET['order_by']=="IDCliente"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Cliente
+									    <?php if($_GET['order_by']=="IDCliente")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Ref</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Talla</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Tipo</td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Factura&nbsp;
-									    <% if($_GET['order_by']=="FechaFacturaBono"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFacturaBono&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Factura&nbsp;
+									    <?php if($_GET['order_by']=="FechaFacturaBono")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Fecha Ingreso</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Almacen Compra</td>
@@ -959,7 +959,7 @@ function Comprobar(formulario)
 									<td class=navpic nowrap bgcolor=#DBEAF5 align="center">Alertas</td>
 								</tr>
 
-							<? while($r = db_fetch_object($result)){
+							<?php while($r = db_fetch_object($result)){
 								$class = repetition()?"col1list":"col2list";
 								$i++;
 								$tallap="";
@@ -968,12 +968,12 @@ function Comprobar(formulario)
 
 							<tr>
 								<td align=center valign=middle nowrap width=50 class="<?=$class?>">
-								&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-								<td nowrap class="<?=$class?>"><? echo $r->IDGarantia; ?></td>
-								<td nowrap class="<?=$class?>"><? echo $r->TipoRegistro; ?></td>
+								<td nowrap class="<?=$class?>"><?php echo $r->IDGarantia; ?></td>
+								<td nowrap class="<?=$class?>"><?php echo $r->TipoRegistro; ?></td>
 									<td nowrap class="<?=$class?>">
-									<?
+									<?php
 									if(!empty($r->IDDetalleCambio)){
 									  $array_cambio_detalle=explode("|",$r->IDDetalleCambio);
 									  $sql_datos_factura=db_query("Select * From Cambio Where IDCambio = '".$array_cambio_detalle[0]."'");
@@ -1102,7 +1102,7 @@ function Comprobar(formulario)
 							else:
 								echo $tipop;
 							endif;	 ?></td>
-									<td nowrap class="<?=$class?>"><?
+									<td nowrap class="<?=$class?>"><?php
 									if ($r->TipoFactura=="facturabono"):
 										echo $r_factura[NumeroFacturaBono]  . "(bono)";
 									else:
@@ -1110,12 +1110,12 @@ function Comprobar(formulario)
 									endif;
 
 									?></td>
-									<td nowrap class="<?=$class?>"><? echo formatofecha(substr($r->FechaTrCr,0,10)) ?></td>
-									<td nowrap class="<?=$class?>"><? echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia); ?></td>
-									<td nowrap class="<?=$class?>"><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaFactura); ?></td>
-									<td nowrap class="<?=$class?>"><? echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></td>
+									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaTrCr,0,10)) ?></td>
+									<td nowrap class="<?=$class?>"><?php echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia); ?></td>
+									<td nowrap class="<?=$class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaFactura); ?></td>
+									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaEstimadaEntrega,0,10)) ?></td>
 									<td nowrap class="<?=$class?>">
-										<?
+										<?php
                                             echo $r->RequiereNotaCredito;
                                             if ($r->RequiereNotaCredito=="S"){ echo " Numero: " . $r->NumeroNotaCredito ; }
                                         ?>
@@ -1181,11 +1181,11 @@ function Comprobar(formulario)
 
                                     </td>
 								</tr>
-							<? } // END for
+							<?php } // END for
 							?>
 							<tr>
 							<td  class="navpic" colspan=14 nowrap>
-									<?
+									<?php
 										print $pages;
 									?>
 							</td>
@@ -1197,7 +1197,7 @@ function Comprobar(formulario)
 	</td>
 	</tr>
 </table>
-<?
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -1268,6 +1268,6 @@ else
 			</td>
 		</tr>
 
-<?
+<?php
 	}//End function filtrar
 ?>

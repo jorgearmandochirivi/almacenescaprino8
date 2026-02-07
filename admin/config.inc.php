@@ -1,11 +1,11 @@
-<?
+<?php
 date_default_timezone_set('America/Bogota');
 error_reporting(E_ALL);
 
-$dbhost = "localhost";
-$dbname = "Caprino";
-$dbuser = "almacenescaprino";
-$dbpass = "c4prin0";
+$dbhost = "mysql";
+$dbname = "caprino";
+$dbuser = "root";
+$dbpass = "1234567";
 
 /* PARAMETROS FACTRA ELECTRONICA */
 define( "USER_FAC_ELECTRONICA" , "860033182" );
@@ -47,9 +47,9 @@ require($libdir."entradas_caprino.php");
 require($libdir."Calc.php");
 require($libdir."fidelizacion_caprino.php");
 require($libdir."fidelizacion_new.php"); //agregado por John Escobar Junio 2013
-require($libdir."/dompdf/dompdf_config.inc.php");
-
+//require($libdir."/dompdf/dompdf_config.inc.php");
 require($libdir."SIMReg.inc.php");
+
 
 
 $imagedir = $dirroot."imagenes/";

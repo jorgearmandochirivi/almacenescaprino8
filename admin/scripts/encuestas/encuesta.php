@@ -1,4 +1,4 @@
-<%
+<?php
 include("../../admin/config.inc.php3");
 $datos = Verifica_SesionCliente();
 	$Nombre_Usuario = $datos["Nombre"];
@@ -15,21 +15,21 @@ $qry_verificarvoto = db_query("SELECT * FROM $poll_userTableName WHERE pollID='$
 			if($poll_result && $result_user)
 			{
 	
-				%>
+				?>
 				<script languaje ="JavaScript"> 
-					location.href='<%echo $posicion;%>';
+					location.href='<?php echo $posicion;;?>';
 				</script>
-				<%
+				<?php
 			}
 		}//end if($num<0)
 		else
 		{
 			window_alert("Ud ya opino en esta encuesta!")
-		%>
+		?>
 			<script languaje ="JavaScript"> 
-					location.href='<%echo $posicion;%>';
+					location.href='<?php echo $posicion;;?>';
 			</script>
-		<%
+		<?php
 		}
-%>
+  ?>
 

@@ -1,6 +1,6 @@
 
 
-<?
+<?php
 
 	$TitleMod ="FacturaBono";
 
@@ -150,7 +150,7 @@ function mostrarcedula($newmode,$submit_caption){
   </tr>
 </table>
 </form>
-<?
+<?php
 }//end	mostrar($newmode,$submit_caption)
 
 
@@ -168,7 +168,7 @@ function print_formcliente($id="",$newmode,$title,$submit_caption) {
 var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 </script>
 <br>
-	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?}?>>
+	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
 
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="500">
 
@@ -214,7 +214,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 							<td width="40%" class="col1">Direcci&oacute;n</td><td class="col2"><input type=text size=25 class=tbox   name=Direccion id=Direccion value="<?=$r->Direccion ?>"> </td>
 						</tr>
 						<tr >
-							<td width="40%" class="col1">Ciudad</td><td class="col2"><? echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad"); ?></td>
+							<td width="40%" class="col1">Ciudad</td><td class="col2"><?php echo formpopup("Ciudad","Descripcion","Descripcion","IDCiudad",$r->IDCiudad,"input\" id=\"IDCiudad"); ?></td>
 						</tr>
 						<tr >
 							<td width="40%" class="col1">Empleado</td><td class="col2"><input type=text size=25 class=tbox   name=IDEmpleado id=IDEmpleado value="<?=$r->IDEmpleado ?>"> </td>
@@ -224,7 +224,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 							<td class="col2">
 					<select name="Ano" id="A&ntilde;o de Nacimiento" class="tbox">
                       <option value="">A&ntilde;o</option>
-                      <?
+                      <?php
 	                      for($i = 1920; $i<1999; $i++)
 	                      {
 	                      	$op = "<option value=\"$i\" ";
@@ -240,23 +240,23 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 
 								<select name="Mes" id="Mes de Nacimiento" class="tbox">
                                     <option value="">Mes</option>
-                                    <option value="1" <? if( $r->Mes == 1 ) echo " selected " ?>>Enero</option>
-                                    <option value="2" <? if( $r->Mes == 2 ) echo " selected " ?>>Febrero</option>
-                                    <option value="3" <? if( $r->Mes == 3 ) echo " selected " ?>>Marzo</option>
-                                    <option value="4" <? if( $r->Mes == 4 ) echo " selected " ?>>Abril</option>
-                                    <option value="5" <? if( $r->Mes == 5 ) echo " selected " ?>>Mayo</option>
-                                    <option value="6" <? if( $r->Mes == 6 ) echo " selected " ?>>Junio</option>
-                                    <option value="7" <? if( $r->Mes == 7 ) echo " selected " ?>>Julio</option>
-                                    <option value="8" <? if( $r->Mes == 8 ) echo " selected " ?>>Agosto</option>
-                                    <option value="9" <? if( $r->Mes == 9 ) echo " selected " ?>>Septiembre</option>
-                                    <option value="10" <? if( $r->Mes == 10 ) echo " selected " ?>>Octubre</option>
-                                    <option value="11" <? if( $r->Mes == 11 ) echo " selected " ?>>Noviembre</option>
-                                    <option value="12" <? if( $r->Mes == 12 ) echo " selected " ?>>Diciembre</option>
+                                    <option value="1" <?php if( $r->Mes == 1 ) echo " selected " ?>>Enero</option>
+                                    <option value="2" <?php if( $r->Mes == 2 ) echo " selected " ?>>Febrero</option>
+                                    <option value="3" <?php if( $r->Mes == 3 ) echo " selected " ?>>Marzo</option>
+                                    <option value="4" <?php if( $r->Mes == 4 ) echo " selected " ?>>Abril</option>
+                                    <option value="5" <?php if( $r->Mes == 5 ) echo " selected " ?>>Mayo</option>
+                                    <option value="6" <?php if( $r->Mes == 6 ) echo " selected " ?>>Junio</option>
+                                    <option value="7" <?php if( $r->Mes == 7 ) echo " selected " ?>>Julio</option>
+                                    <option value="8" <?php if( $r->Mes == 8 ) echo " selected " ?>>Agosto</option>
+                                    <option value="9" <?php if( $r->Mes == 9 ) echo " selected " ?>>Septiembre</option>
+                                    <option value="10" <?php if( $r->Mes == 10 ) echo " selected " ?>>Octubre</option>
+                                    <option value="11" <?php if( $r->Mes == 11 ) echo " selected " ?>>Noviembre</option>
+                                    <option value="12" <?php if( $r->Mes == 12 ) echo " selected " ?>>Diciembre</option>
                                   </select>
 
 								<select name="Dia" id="Dia de Nacimiento" class="tbox">
 			                      <option value="" selected>Dia</option>
-			                      <?
+			                      <?php
 				                      for($i = 1; $i<=31; $i++)
 				                      {
 				                      	$op = "<option value=\"$i\" ";
@@ -310,17 +310,17 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 									</tr>
 									<tr>
 										<td class="col2" width="33.33%">
-											<?
+											<?php
 												echo formcheckgroup($array_gustos,"","Gustos[]");
 											?>
 										</td>
 										<td class="col2" valign="top" width="33.33%">
-											<?
+											<?php
 												echo formcheckgroup($array_deportes,"","Deportes[]");
 											?>
 										</td>
 										<td class="col2" valign="top" width="33.33%">
-											<?
+											<?php
 												echo formcheckgroup($array_hobbies,"","Hobbies[]");
 											?>
 										</td>
@@ -343,7 +343,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 									</tr>
 									<tr>
 										<td class="col2" width="33.33%">
-											<?
+											<?php
 												echo formcheckgroup($array_musica,"","Musica[]");
 											?>
 										</td>
@@ -361,10 +361,10 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 
 						<tr >
 							<td class="col1" width="40%">Autorizo a recibir e-mail con promociones o informaci&oacute;n</td>
-							<td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AutorizaMail, 'AutorizaMail'); ?></td>
+							<td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->AutorizaMail, 'AutorizaMail'); ?></td>
 						</tr>
 						<tr >
-			<td width="40%" class="col1"> Publicar </td><td class="col2"><? echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
+			<td width="40%" class="col1"> Publicar </td><td class="col2"><?php echo formradiogroup(array('Si'=>'S','No'=>'N'),$r->Publicar, 'Publicar'); ?></td>
 			</tr>
 
 			<tr>
@@ -372,9 +372,9 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
 				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
-				<input type=hidden name=ID value="<? echo $r->$Key ?>">
+				<input type=hidden name=ID value="<?php echo $r->$Key ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
-				<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+				<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 			</td>
 				</tr>
 			</table>
@@ -382,7 +382,7 @@ var Check = new Array('Cedula','Nombre','Apellido','Telefono');
 	</tr>
 </table>
 </form>
-	<?
+	<?php
 }// End function print_formcliente()
 
 
@@ -1444,7 +1444,7 @@ function EvaluarFunciones( Form, Check )
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?}?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?php }?>>
 <table class="forumline" width="580" cellspacing="1" border="0" align="center">
 	<tr>
 	<td width="100%">
@@ -1497,7 +1497,7 @@ function EvaluarFunciones( Form, Check )
 													</tr>
 													<tr>
 														<td class=col1>Vendedor</td>
-														<td class=col2><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' and Publicar = 'S' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
+														<td class=col2><?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' and Publicar = 'S' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
 														<td class=col1 colspan="2"></td>
 													</tr>
 													<tr>
@@ -1512,13 +1512,13 @@ function EvaluarFunciones( Form, Check )
 													</tr>
 													<tr>
 														<td class=col1>C&eacute;dula</td>
-														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?echo $r->Cedula;?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
+														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo $r->Cedula;?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
 														<td class=col1>Nombre</td>
-														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?echo $r->Nombre." ".$r->Apellido?>'></td>
+														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?php echo $r->Nombre." ".$r->Apellido?>'></td>
 													</tr>
 													<tr>
 														<td class=col1 nowrap>Telefono Cliente</td>
-														<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value='<?echo $r->Telefono?>'></td>
+														<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value='<?php echo $r->Telefono?>'></td>
 														<td class=col1></td>
 														<td class=col1></td>
 													</tr>
@@ -1533,11 +1533,11 @@ function EvaluarFunciones( Form, Check )
 												</tr>
 												<tr>
 													<td class=col1>Valor Descuento</td>
-													<td class=col2 colspan="3"><input type="text" class="tbox" name="Descuento" value="<? echo $frm[Descuento] ?>" size="5"  maxlength="3" onblur="recalcularvalores()">%</td>
+													<td class=col2 colspan="3"><input type="text" class="tbox" name="Descuento" value="<?php echo $frm[Descuento] ?>" size="5"  maxlength="3" onblur="recalcularvalores()">%</td>
 												</tr>
 												<tr>
 													<td class=col1>Comentario Descuento</td>
-													<td class=col2 colspan="3"><textarea class="tareabox" name="ObservacionDescuento" id="ObservacionDescuento" rows="4" cols="64"><? echo $frm[ObservacionDescuento] ?></textarea></td>
+													<td class=col2 colspan="3"><textarea class="tareabox" name="ObservacionDescuento" id="ObservacionDescuento" rows="4" cols="64"><?php echo $frm[ObservacionDescuento] ?></textarea></td>
 												</tr>
 												<tr>
 														<td class=col1><br></td>
@@ -1561,53 +1561,53 @@ function EvaluarFunciones( Form, Check )
 																<?php endwhile; ?>
                                                         </select>
 
-														<? //echo formpopup("FormaPagoBono","Descripcion","Descripcion","IDFormaPagoBono",$r->IDFormaPagoBono,"input\" id=\"Bono"); ?>
+														<?php //echo formpopup("FormaPagoBono","Descripcion","Descripcion","IDFormaPagoBono",$r->IDFormaPagoBono,"input\" id=\"Bono"); ?>
                                                     </td>
 													<td class=col1>Numero Bono</td>
 													<td class=col2>
-														1.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono" id="NumeroBono" consecutivo=1 size="10" value='<?echo $r->NumeroBono?>'>
+														1.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono" id="NumeroBono" consecutivo=1 size="10" value='<?php echo $r->NumeroBono?>'>
 														<div id="DivBono2" style="display:none" >
 														<br>2.
-														<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono2" id="NumeroBono2" consecutivo=2 size="10" value='<?echo $r->NumeroBono2?>'>
+														<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono2" id="NumeroBono2" consecutivo=2 size="10" value='<?php echo $r->NumeroBono2?>'>
 													 </div>
 													 <div id="DivBono3" style="display:none" >
-														<br>3.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono3" id="NumeroBono3" consecutivo=3 size="10" value='<?echo $r->NumeroBono3?>'>
+														<br>3.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono3" id="NumeroBono3" consecutivo=3 size="10" value='<?php echo $r->NumeroBono3?>'>
 													 </div>
 														<div id="DivBono4" style="display:none" >
-														<br>4.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono4" id="NumeroBono4" consecutivo=4 size="10" value='<?echo $r->NumeroBono4?>'>
+														<br>4.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono4" id="NumeroBono4" consecutivo=4 size="10" value='<?php echo $r->NumeroBono4?>'>
 												   </div>
 														<div id="DivBono5" style="display:none" >
-														<br>5.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono5" id="NumeroBono5" consecutivo=5 size="10" value='<?echo $r->NumeroBono5?>'>
+														<br>5.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono5" id="NumeroBono5" consecutivo=5 size="10" value='<?php echo $r->NumeroBono5?>'>
 												   </div>
 														<div id="DivBono6" style="display:none" >
-														<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+														<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 													 </div>
 													 <div id="DivBono6" style="display:none" >
-													 <br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													 <br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 													</div>
 													<div id="DivBono6" style="display:none" >
-													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 												 </div>
 												 <div id="DivBono6" style="display:none" >
-													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 												 </div>
 												 <div id="DivBono6" style="display:none" >
-													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 												 </div>
 												 <div id="DivBono6" style="display:none" >
-													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 												 </div>
 												 <div id="DivBono6" style="display:none" >
-													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 												 </div>
 												 <div id="DivBono6" style="display:none" >
-													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 												 </div>
 												 <div id="DivBono6" style="display:none" >
-													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 												 </div>
 												 <div id="DivBono6" style="display:none" >
-													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?echo $r->NumeroBono6?>'>
+													<br>6.<input type="text" class="tbox tboxBonoRegalo" name="NumeroBono6" id="NumeroBono6" consecutivo=6 size="10" value='<?php echo $r->NumeroBono6?>'>
 												 </div>
 												 <?php for($fila_b=7;$fila_b<=30;$fila_b++){ ?>
 													 <div id="DivBono<?php echo $fila_b; ?>" style="display:none" >
@@ -1622,7 +1622,7 @@ function EvaluarFunciones( Form, Check )
 
 												<tr>
 													<td class=col1 nowrap>Codigo Tarjeta</td>
-													<td class=col2><input type="text" class="tbox tboxCodTarjeta" name="CodigoTarjeta" id="CodigoTarjeta" size="20" value="<?echo $r->CodigoTarjeta?>" >
+													<td class=col2><input type="text" class="tbox tboxCodTarjeta" name="CodigoTarjeta" id="CodigoTarjeta" size="20" value="<?php echo $r->CodigoTarjeta?>" >
 														<input type="hidden" name="BonoValido" id="BonoValido" value="N">
 													</td>
 													<td class=col1></td>
@@ -1631,9 +1631,9 @@ function EvaluarFunciones( Form, Check )
 
 													<tr>
 													<td class=col1 nowrap>Valor ( $ )</td>
-													<td class=col2><input type="text" class="tbox" name="ValorBono" id="ValorBono" size="20" value="<?echo $r->ValorBono?>" onblur="recalcularvalores()"></td>
+													<td class=col2><input type="text" class="tbox" name="ValorBono" id="ValorBono" size="20" value="<?php echo $r->ValorBono?>" onblur="recalcularvalores()"></td>
 													<td class=col1>Excedente( $ )</td>
-													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="20" value='<?echo $r->Excedente?>'></td>
+													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="20" value='<?php echo $r->Excedente?>'></td>
 												</tr>
 
 
@@ -1772,7 +1772,7 @@ function EvaluarFunciones( Form, Check )
                                                                 </td>
 																<td><?php echo $r_bono[FechaVencimiento]; ?></td>
                                                             </tr>
-                                                        <? } ?>
+                                                        <?php } ?>
                                                         </table>
 
 
@@ -1910,7 +1910,7 @@ function EvaluarFunciones( Form, Check )
 																													</td>
 													<td><?php echo $r_bono[FechaVencimiento]; ?></td>
 																											</tr>
-																									<? } ?>
+																									<?php } ?>
 																									</table>
 
 																								</td>
@@ -1977,7 +1977,7 @@ function EvaluarFunciones( Form, Check )
                                                           <input type="hidden" name="CodigoTarjeta2" value="">
 														</b><input type=hidden name=ITEM value=10></td>
 													</tr>
-													<?
+													<?php
 													$campos = 10;
 													for( $i=1; $i<=$campos;$i++ )
 													{
@@ -1990,15 +1990,15 @@ function EvaluarFunciones( Form, Check )
 														<td align="left"><input type=hidden name=IDCodificacion<?=$i?>></td>
 														<td align="center"><input type=text name=Cantidad<?=$i?> class=tbox size=5 onblur="pague_2_lleve_3();promo_segundo_par();promo_segundo_par_con_talla(); if(!compruebamaximo(this.value,<?=$i?>)) this.value = ''; else calculatotal(this.value,<?=$i?>);"></td>
 													<td align="left"><input type=text readonly name=ValorU<?=$i?> class=tbox size=10 onblur="calculatotal(this.value,<?=$i?>); "></td>
-													<td align="center"><input type=text name="DescuentoLin<?=$i?>" value="<? echo $frm[ $descuentolin ] ?>" onblur="calculatotal(this.value,<?=$i?>);" class=tbox size=2 maxlength="2">
-													  <input type=hidden name="PrimerDescuentoLin<?=$i?>" value="<? echo $frm[ $descuentolin ] ?>"></td>
+													<td align="center"><input type=text name="DescuentoLin<?=$i?>" value="<?php echo $frm[ $descuentolin ] ?>" onblur="calculatotal(this.value,<?=$i?>);" class=tbox size=2 maxlength="2">
+													  <input type=hidden name="PrimerDescuentoLin<?=$i?>" value="<?php echo $frm[ $descuentolin ] ?>"></td>
 													<td align="left"><input type=text readonly name=Total<?=$i?> class=tbox size=10></td>
-													<td align="left"><input type=hidden name=Maximo<?=$i?> value="<? echo $frm[ $maximo ] ?>"></td>
-														<td align="left"><input type=hidden name=Precio<?=$i?> value="<? echo $frm[ $precio ] ?>">
-                                                        <input type=hidden name=ValorBruto<?=$i?> value="<? echo $frm[ $valorbruto ] ?>"></td>
+													<td align="left"><input type=hidden name=Maximo<?=$i?> value="<?php echo $frm[ $maximo ] ?>"></td>
+														<td align="left"><input type=hidden name=Precio<?=$i?> value="<?php echo $frm[ $precio ] ?>">
+                                                        <input type=hidden name=ValorBruto<?=$i?> value="<?php echo $frm[ $valorbruto ] ?>"></td>
 														<td align="left"><input type=button name=Borrar<?=$i?> class=submit value=Borrar onclick="Borrar(<?=$i?>);"><input type=hidden name=Descuento<?=$i?>></td>
 													</tr>
-													<?
+													<?php
 													}//end for
 													?>
 												</table>
@@ -2016,38 +2016,38 @@ function EvaluarFunciones( Form, Check )
 											<td class=col1></td>
 											<td class=col1 width="250"></td>
 											<td class=col2><div align="right"> Sub Total Factura </div></td>
-											<td class=col2><input type=text readonly name=ValorTotal value="<? echo $frm[ValorTotal] ?>" class="tbox" size=15>
+											<td class=col2><input type=text readonly name=ValorTotal value="<?php echo $frm[ValorTotal] ?>" class="tbox" size=15>
 											  <input type="hidden" name="TotalFacturaNumero" id="TotalFacturaNumero" value="" />
-											  <input type="hidden" readonly value="<? echo $frm[TotalSinIVA] ?>" name="TotalSinIVA" class="tbox" size="15" />
-											  <input type="hidden" readonly name="ValorIVA" value="<? echo $frm[ValorIVA] ?>" class="tbox" size="15" /></td>
+											  <input type="hidden" readonly value="<?php echo $frm[TotalSinIVA] ?>" name="TotalSinIVA" class="tbox" size="15" />
+											  <input type="hidden" readonly name="ValorIVA" value="<?php echo $frm[ValorIVA] ?>" class="tbox" size="15" /></td>
 										</tr>
 										<tr>
 											<td class=col1></td>
 											<td class=col1 width="250"></td>
 											<td class=col2><div align="right"> Bonos de fidelizaci&oacute;n redimidos </div></td>
-											<td class=col2><input type="text" readonly name="SumaBono" id="SumaBono" value="<? if (empty($frm[SumaBono])) { echo "0"; } else{  echo $frm[SumaBono]; } ?>" class="tbox" size="15" />
+											<td class=col2><input type="text" readonly name="SumaBono" id="SumaBono" value="<?php if (empty($frm[SumaBono])) { echo "0"; } else{  echo $frm[SumaBono]; } ?>" class="tbox" size="15" />
 											  <input type="hidden" name="ValorBonoParametro" id="ValorBonoParametro" value="<?php echo (int)get_field("ParametroFidelizacion","Valor","IDParametroFidelizacion","8")?>" />
 											  <input type="hidden" name="SumaBonoNumero" id="SumaBonoNumero" value="0" />
 											  <input type="hidden" name="SobranteBono" id="SobranteBono" value="<?php if ($frm[SobranteBono] !=0 ){ echo $frm[SobranteBono];  } else{ echo "0"; }?>" />
-											  <input type="hidden" readonly name="ValorTotalNoIva" value="<? echo $frm[ValorTotalNoIva] ?>" class="tbox" size="15" /></td>
+											  <input type="hidden" readonly name="ValorTotalNoIva" value="<?php echo $frm[ValorTotalNoIva] ?>" class="tbox" size="15" /></td>
 										</tr>
 										<tr>
 											<td class=col1></td>
 											<td class=col1 width="250"></td>
 											<td class="col2"><div align="right"> sub total menos bonos de fidelizaci&oacute;n redimidos </div></td>
-											<td class="col2"><input type="text" readonly name="ValorMenosBono" value="<? echo $frm[ValorMenosBono] ?>" class="tbox" size="15" /></td>
+											<td class="col2"><input type="text" readonly name="ValorMenosBono" value="<?php echo $frm[ValorMenosBono] ?>" class="tbox" size="15" /></td>
 										</tr>
 										<tr>
 										  <td class=col1></td>
 										  <td class=col1></td>
 										  <td class="col2"><div align="right"> Valor IVA </div></td>
-										  <td class="col2"><input type="text" readonly name="ValorIvaMenosBono" value="<? echo $frm[ValorIvaMenosBono] ?>" class="tbox" size="15" /></td>
+										  <td class="col2"><input type="text" readonly name="ValorIvaMenosBono" value="<?php echo $frm[ValorIvaMenosBono] ?>" class="tbox" size="15" /></td>
 									  </tr>
 										<tr>
 										  <td class=col1></td>
 										  <td class=col1></td>
 										  <td class="col2"><div align="right"> Valor a Pagar</div></td>
-										  <td class="col2"><input type="text" readonly name="ValorTotalFactura" value="<? echo $frm[ValorTotalFactura] ?>" class="tbox" size="15" /></td>
+										  <td class="col2"><input type="text" readonly name="ValorTotalFactura" value="<?php echo $frm[ValorTotalFactura] ?>" class="tbox" size="15" /></td>
 									  </tr>
 
 
@@ -2063,6 +2063,6 @@ function EvaluarFunciones( Form, Check )
 
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML>

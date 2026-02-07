@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -144,16 +144,16 @@ function printWindow() {
 												</tr>
 														<tr>
 													<td class=texto>Cliente</td>
-													<td class=texto colspan="3"><? echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?></td>
+													<td class=texto colspan="3"><?php echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?></td>
 													
 												</tr>
 												<tr>
 													<td class=texto>Vendedor</td>
-													<td class="texto" colspan="3"><?echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?></td>
+													<td class="texto" colspan="3"><?php echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?></td>
 												</tr>
 												<tr>
 													<td class=texto nowrap>No. Documento</td>
-													<td class=texto colspan="3"><? echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?></td>
+													<td class=texto colspan="3"><?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?></td>
 												</tr>
 											</table>
 										</td>
@@ -169,7 +169,7 @@ function printWindow() {
 													<td align="center" class="texto"><b>Descuento U.</b></td>
 													<td align="center" class="texto" nowrap><b>Vr.</b></td>
 												</tr>
-												<?
+												<?php
 												$sql_detalle = "SELECT * FROM DetalleFacturaBono WHERE IDFacturaBono = '$r->IDFacturaBono' AND IDPuntoVenta = '$r->IDPuntoVenta'  ";
 												$query_detalle = db_query($sql_detalle);
 												$i = 0;
@@ -182,11 +182,11 @@ function printWindow() {
 													<td align="center" class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
 													<td align="center" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
 													<td align="center" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-													<td align="right" class="<?=$class?>"><?echo number_format($r_detalle->PrecioU);?></td>
-													<td align="center" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoRef);?></td>
-													<td align="right" class="<?=$class?>"><?echo number_format($r_detalle->ValorU * $r_detalle->Cantidad);?></td>
+													<td align="right" class="<?=$class?>"><?php echo number_format($r_detalle->PrecioU);?></td>
+													<td align="center" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoRef);?></td>
+													<td align="right" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU * $r_detalle->Cantidad);?></td>
 												</tr>
-												<? 											}
+												<?php 											}
 											?>
 											</table>
 										</td>
@@ -232,7 +232,7 @@ function printWindow() {
 </script>
 </body>
 </html>
-<?
+<?php
 
 $page = ob_get_contents();
 $fw = fopen($file, "w");

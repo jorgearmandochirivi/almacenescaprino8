@@ -1,5 +1,5 @@
 
-<body> <?
+<body> <?php
 
 $TitleMod ="Factura";
 
@@ -139,7 +139,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 <table class="forumline" width="550" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
@@ -196,7 +196,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 													<tr>
 														<td class=col1>Nro Pagare</td>
 														<td class=col2 colspan="3">
-														<input type="text" class="tbox" name="NumeroPagare" size="15" value='<?echo $r->NumeroPagare;?>' <? if(!empty($r->NumeroPagare)) echo "readOnly"; ?> >
+														<input type="text" class="tbox" name="NumeroPagare" size="15" value='<?php echo $r->NumeroPagare;?>' <?php if(!empty($r->NumeroPagare)) echo "readOnly"; ?> >
 														</td>
 													</tr>
 
@@ -212,15 +212,15 @@ function print_form($id,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1>C&eacute;dula</td>
-														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
+														<td class=col2><input type="text" class="tbox" name="Cedula" readonly size="15" value='<?php echo get_field("Cliente","Cedula","IDCliente",$r->IDCliente);?>'><input type="hidden" name="IDCliente" id="Cliente" value="<?=$r->IDCliente?>"></td>
 														<td class=col1>Nombre</td>
-														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<? echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?>'></td>
+														<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?php echo get_field("Cliente","CONCAT(Nombre,' ',Apellido)","IDCliente",$r->IDCliente);?>'></td>
 													</tr>
 													<tr>
 														<td class=col1 nowrap>Telefono Cliente</td>
-														<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value='<?echo get_field("Cliente","Telefono","IDCliente",$r->IDCliente);?>'></td>
+														<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value='<?php echo get_field("Cliente","Telefono","IDCliente",$r->IDCliente);?>'></td>
 														<td class="col1" nowrap="nowrap">Numero de Fidelizacion</td>
-														<td class="col2"><input name="NumeroFidelizacion" type="text" class="tbox" id="NumeroFidelizacion" value='<?echo $r->NumeroFidelizacion?>' size="20" readonly /></td>
+														<td class="col2"><input name="NumeroFidelizacion" type="text" class="tbox" id="NumeroFidelizacion" value='<?php echo $r->NumeroFidelizacion?>' size="20" readonly /></td>
 													</tr>
 													<tr>
 														<td class=col1 nowrap>Numero Payu<br></td>
@@ -234,9 +234,9 @@ function print_form($id,$newmode,$title,$submit_caption){
 													</tr>
 													<tr>
 														<td class=col1>C&eacute;dula</td>
-														<td class=col2><input type="text" class="tbox" name="CedulaEmpleado" readonly size="15" value='<?echo get_field("Empleado","Cedula","IDEmpleado",$r->IDEmpleado);?>'> <input type="hidden" id="Empleado" name="IDEmpleado" value=""></td>
+														<td class=col2><input type="text" class="tbox" name="CedulaEmpleado" readonly size="15" value='<?php echo get_field("Empleado","Cedula","IDEmpleado",$r->IDEmpleado);?>'> <input type="hidden" id="Empleado" name="IDEmpleado" value=""></td>
 														<td class=col1>Nombre</td>
-														<td class=col2><input type="text" class="tbox" name="NombreEmpleado" readonly size="20" value='<?echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?>'></td>
+														<td class=col2><input type="text" class="tbox" name="NombreEmpleado" readonly size="20" value='<?php echo get_field("Empleado","Nombre","IDEmpleado",$r->IDEmpleado)." ".get_field("Empleado","Apellidos","IDEmpleado",$r->IDEmpleado);?>'></td>
 													</tr>
 													<tr>
 														<td class=col1><br></td>
@@ -287,7 +287,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 														<td align="center"><b>Desc. Par.</b></td>
 														<td align="center"><b>Total</b></td>
 													</tr>
-													<?
+													<?php
 														$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$IDPuntoVenta' ";
 														$query_detalle = db_query($sql_detalle);
 														$i = 0;
@@ -310,11 +310,11 @@ function print_form($id,$newmode,$title,$submit_caption){
 														<td align="left" class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica))?></td>
 														<td align="left" class="<?=$class?>"><?php echo $ref=get_field("Referencia","Nombre","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)))?></td>
 														<td align="left" class="<?=$class?>"><?php echo $r_detalle->Cantidad?></td>
-														<td align="left" class="<?=$class?>"><?echo number_format($r_detalle->ValorU);?></td>
-														<td align="left" class="<?=$class?>"><?echo number_format($r_detalle->DescuentoPar);?>%</td>
-														<td align="left" class="<?=$class?>"><?echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?></td>
+														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->ValorU);?></td>
+														<td align="left" class="<?=$class?>"><?php echo number_format($r_detalle->DescuentoPar);?>%</td>
+														<td align="left" class="<?=$class?>"><?php echo number_format( ( $r_detalle->ValorU * $r_detalle->Cantidad ) * ( 1 - ( $r_detalle->DescuentoPar / 100 ) ) );?></td>
 													</tr>
-													<?
+													<?php
 													}
 													?>
 												</table>
@@ -411,7 +411,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 													FORMA DE PAGO</div>
 											</td>
 										</tr>
-										<?
+										<?php
 											$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
 											$query_formapago = db_query( $sql_formapago );
 
@@ -429,7 +429,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 											</td>
 											<td class=col2><input type=text readonly name="formapago[<?=$r_formapago->IDFormaPago?>]" value="<?=number_format($r_formapago->Valor)?>" class=tbox size=15></td>
 										</tr>
-										<?
+										<?php
 											}//end if($r_formapago->Valor <> 0)
 										}//end while( $r_formapago = db_fetch_object( $query_formapago ) )
 
@@ -457,7 +457,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 														<td align="center"><b>Valor Cuota</b></td>
 													</tr>
 
-										<?
+										<?php
 											$sql_cuotas = "SELECT * FROM CreditoCuota WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
 											$qry_cuotas = db_query( $sql_cuotas );
 											while( $r_cuotas = db_fetch_object( $qry_cuotas ) )
@@ -468,7 +468,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 													<td class="<?=$class?>" align="center"><?=$r_cuotas->IDCuota?></td>
 													<td class="<?=$class?>" align="center"><?=$r_cuotas->FechaCuota?></td>
 													<td class="<?=$class?>" align="center">
-														<?
+														<?php
 															if( $r_cuotas->FechaPago <> "0000-00-00 00:00:00" )
 																echo $r_cuotas->FechaPago;
 															else
@@ -481,7 +481,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 																			document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaPago<?=$r_cuotas->IDCuota?>,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 																	//-->
 																</script>
-														<?
+														<?php
 															}//end else
 														?>
 													</td>
@@ -496,7 +496,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 												</tr>
 
 
-										<?
+										<?php
 											}//end while
 										?>
 
@@ -516,13 +516,13 @@ function print_form($id,$newmode,$title,$submit_caption){
 												<input type="submit" name="Submit" value="Actualizar Pagos" class="submit" >
 											</td>
 										</tr>
-										<?
+										<?php
 										}//end if cuotas
 										?>
 
 										<tr>
 											<td class="navpic" colspan="4" align="center">
-												<?
+												<?php
 													echo $r->Resolucion;
 													echo "  Facturas desde ".$r->RDesde." Hasta ".$r->RHasta;
 												?>
@@ -542,7 +542,7 @@ function print_form($id,$newmode,$title,$submit_caption){
                             <a href="#" onClick="window.open( 'Factura/FImpresion.php?id=<?php echo $r->IDFactura ?>&idpunto=<?=$IDPuntoVenta ?>','','width=426, height=350' )">
                             Reimprimir
                             </a>
-							<? } ?>
+							<?php } ?>
                         </td>
                     </tr>
 				-->
@@ -581,7 +581,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 /*******************************************************************************************
 		funcion Listar
@@ -615,7 +615,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 								$order="ASC";
 							}
 
-							?><?
+							?><?php
 		if($rows > 0){
 ?><br>
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
@@ -625,10 +625,10 @@ function print_form($id,$newmode,$title,$submit_caption){
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				Listar <? echo $TitleMod ?>
+				Listar <?php echo $TitleMod ?>
 			</span>
 			<span class="gen">
-				<? echo $info ?>
+				<?php echo $info ?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -642,7 +642,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 			<tr>
 				<td class="forumlink" colspan="2">
-					<?filtrar();?>
+					<?php filtrar();?>
 				</td>
 			</tr>
 			<tr>
@@ -651,10 +651,10 @@ function print_form($id,$newmode,$title,$submit_caption){
 					<table width=100% border=0 cellspacing=1 cellpadding=0>
 							<tr>
 								<td align=center class=navpic valign=middle bgcolor=#DBEAF5 width=69>Ver</td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Cliente&nbsp;<% if($_GET['order_by']=="IDCliente"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Nro Comprobante&nbsp;<% if($_GET['order_by']=="NumeroFactura"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">FechaFactura&nbsp;<% if($_GET['order_by']=="FechaFactura"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">ValorTotal&nbsp;<% if($_GET['order_by']=="ValorTotal"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDCliente&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Cliente&nbsp;<?php if($_GET['order_by']=="IDCliente")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Nro Comprobante&nbsp;<?php if($_GET['order_by']=="NumeroFactura")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">FechaFactura&nbsp;<?php if($_GET['order_by']=="FechaFactura")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=ValorTotal&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">ValorTotal&nbsp;<?php if($_GET['order_by']=="ValorTotal")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
 									<td class=navpic nowrap bgcolor=#DBEAF5>Factura Electr&oacute;nica</td>
 									<?php if($IDPuntoVenta==16) { ?>
@@ -663,20 +663,20 @@ function print_form($id,$newmode,$title,$submit_caption){
 									<?php } ?>
 								</tr>
 
-							<? while($r = db_fetch_object($result)){
+							<?php while($r = db_fetch_object($result)){
 								$class = repetition()?"col1list":"col2list";
 								$i++;
 							?>
 
 							<tr>
 								<td align=center valign=middle nowrap width=50 class="<?=$class?>">
-								&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+								&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 								</td>
-									<td nowrap class="<?=$class?>"><? echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
-									<td nowrap class="<?=$class?>"><? echo $r->NumeroFactura ?></td>
-									<td nowrap class="<?=$class?>"><? echo formatofecha(substr($r->FechaFactura,0,10))." ".substr($r->FechaFactura,10) ?></td>
-									<td align="right" nowrap class="<?=$class?>"><? echo number_format($r->ValorTotal) ?></td>
-									<td align="center" nowrap class="<?=$class?>"><? echo $r->Estado ?></td>
+									<td nowrap class="<?=$class?>"><?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente)." ".get_field("Cliente","Apellido","IDCliente",$r->IDCliente)?></td>
+									<td nowrap class="<?=$class?>"><?php echo $r->NumeroFactura ?></td>
+									<td nowrap class="<?=$class?>"><?php echo formatofecha(substr($r->FechaFactura,0,10))." ".substr($r->FechaFactura,10) ?></td>
+									<td align="right" nowrap class="<?=$class?>"><?php echo number_format($r->ValorTotal) ?></td>
+									<td align="center" nowrap class="<?=$class?>"><?php echo $r->Estado ?></td>
 									<td nowrap class=row1>
 
 									<?php 
@@ -703,7 +703,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 							}
 							?>
 							<div name='msgupdate<?php echo $r->$Key ?>' id='msgupdate<?php echo $r->$Key ?>'></div>
-							<?
+							<?php
 						//echo $r->NumeroFideliazcion ?>
 						<?php } ?>	
 					</td>
@@ -725,11 +725,11 @@ function print_form($id,$newmode,$title,$submit_caption){
 					<?php } ?>		
 
 								</tr>
-							<? } // END for
+							<?php } // END for
 							?>
 							<tr>
 							<td  class="navpic" colspan=6 nowrap>
-									<?
+									<?php
 										print $pages;
 									?>
 							</td>
@@ -741,7 +741,7 @@ function print_form($id,$newmode,$title,$submit_caption){
 	</td>
 	</tr>
 </table>
-<?
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -808,6 +808,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?
+<?php
 	}//End function filtrar
 ?>

@@ -1,4 +1,4 @@
-	<body><?
+	<body><?php
 
 
 $Table = "CodificacionEspecifica";
@@ -76,12 +76,12 @@ function print_from($Mes="", $Ano=""){
 						<tr>
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav"><select name="Mes" >
-									<option value="">Seleccione un mes...</option><%
+									<option value="">Seleccione un mes...</option><?php
 										foreach( $Mes_array as $keymes=>$mes ){
 											$keymes = $keymes+1;
 											echo "<option value=".$keymes." " ;if($Mes == $keymes ) echo "selected"; echo ">&nbsp;&nbsp;$mes</option>";
 										}
-									%>
+									?>
 								</select></td>
 							<td  align='left' valign='middle' class="nav"><img src='images/house.png' border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav"><select name="Ano" >
@@ -106,9 +106,9 @@ function print_from($Mes="", $Ano=""){
 
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty($Mes)){
-		%>
+		?>
 		<tr>
 		<td><br>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">
@@ -119,7 +119,7 @@ function print_from($Mes="", $Ano=""){
 						Reporte Ventas Almacenes : Mes <?=$Mes ?>&nbsp; &nbsp; A&ntilde;o: <?=$Ano?>
 					</td>
 				</tr>
-				<?
+				<?php
 				if($_POST["AlmacenPublicado"]=="P"):
 					$condicion_almacen = " Publicar = 'S' ";
 				else:
@@ -493,19 +493,19 @@ function print_from($Mes="", $Ano=""){
 							<td class="titlemedium" align="center" nowrap>Fecha</td>
 
 
-							<?
+							<?php
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
 							<td class="titlemedium" align="center" nowrap><?=$nombrepunto?></td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="titlemedium" align="center" nowrap>Totales</td>
 							<td class="titlemedium" align="center" nowrap>Credito<br>Addi</td>
 							<td class="titlemedium" align="center" nowrap>BOLD</td>
 						</tr>
-						<?
+						<?php
 						foreach($Fechas as $key => $ValorFecha )
 						{
 							//print_r( $valor );
@@ -515,22 +515,22 @@ function print_from($Mes="", $Ano=""){
 						<tr>
 							<td class="<?=$class?>" align="center" nowrap><?=$key?></td>
 
-							<?
+							<?php
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
 
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 
 									echo number_format(  $array_facturas[ $key ][ $idpuntoventa ]  , 2 );
 								?>
 							</td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format( $tarray_facturasfecha[ $key ]  , 2 );
 								?>
 							</td>
@@ -547,18 +547,18 @@ function print_from($Mes="", $Ano=""){
 							
 						</tr>
 
-						<?
+						<?php
 						}//end foreach($Fechas as $key => $ValorFecha )
 						?>
 
 						<tr>
 							<td class="titlemedium" align="right" nowrap>Total</td>
-							<?
+							<?php
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
 							<td class="titlemedium" align="right" nowrap><?=number_format( $tarray_facturas[ $idpuntoventa ] , 2)?></td>
-							<?
+							<?php
 							}
 							?>
 							<td class="titlemedium" align="right" nowrap><?=number_format( array_sum( $tarray_facturas ) , 2)?></td>
@@ -576,12 +576,12 @@ function print_from($Mes="", $Ano=""){
 		</table>
 			</td>
 	</tr>
-	<%
+	<?php
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%
+	<?php
 }// Enf function print()
 
-%>
+  ?>
 </body>

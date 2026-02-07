@@ -1,5 +1,5 @@
 <body>
-<?
+<?php
 
 $TitleMod ="Generar Pedido Sugerido";
 
@@ -68,7 +68,7 @@ function CheckAll()
 	<br>
 	<table width=500 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td id=large class=row1><b><? echo $TitleMod ?></b></td>
+			<td id=large class=row1><b><?php echo $TitleMod ?></b></td>
 		</tr>
 		<tr>
 			<td>
@@ -91,7 +91,7 @@ function CheckAll()
 									<tr>
 										<td width="30%">Punto de Venta</td>
 										<td>
-											<? echo formpopup("PuntoVenta","Nombre","Nombre","IDPuntoVenta",$r->IDPuntoVenta,"input\" id=\"PuntoVenta\" onchange=\"document.greferencia.submit();"); ?>
+											<?php echo formpopup("PuntoVenta","Nombre","Nombre","IDPuntoVenta",$r->IDPuntoVenta,"input\" id=\"PuntoVenta\" onchange=\"document.greferencia.submit();"); ?>
 											<input type="hidden" name="action" value="generarreferencia">
 										</td>
 									</tr>
@@ -120,7 +120,7 @@ function CheckAll()
 											<div align="left">
 												<br>
 												<input type="hidden" name="action" value="generarpunto">
-												<?
+												<?php
 													$query_puntos = db_query( "SELECT * FROM PuntoVenta " );
 													
 													$puntos = array();
@@ -160,6 +160,6 @@ function CheckAll()
 			</td>
 		</tr>
 	</table>	
-<?
+<?php
 }// Enf function print_form()				
 ?>

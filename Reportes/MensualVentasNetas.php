@@ -1,4 +1,4 @@
-<body><%
+<body><?php
 		switch ($action) {
 			
 			case "view" :
@@ -20,7 +20,7 @@
 function print_from($IDPuntoVenta="", $Fecha=""){
  Global $dblink,$total_records,$row,$numtoshow,$Nivel,$IVA, $FechaHasta;
  
-%>
+  ?>
 	
 	<table width="100%">
 		
@@ -49,12 +49,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td  align='left' valign='middle' class="nav"><img src='images/house.png' border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav">Puntos de Venta	<select name="IDPuntoVenta" onchange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><% 								
+									<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta ORDER BY IDCiudad, Nombre");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select> <input type="hidden" name="mod" value="MensualNetas"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav">
 								<input type="submit" value="Ver Reporte" name="submit" class="submit">
@@ -68,9 +68,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty($IDPuntoVenta)){
-		%>
+		?>
 		<tr>
 		<td><br>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
@@ -82,7 +82,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						 - <?=formatofecha( $FechaHasta )?>
 					</td>
 				</tr>
-				<?
+				<?php
 					echo $sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, F.ValorBono, R.Numero, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura ,DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 										FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P 
 										WHERE F.IDPuntoVenta = '$IDPuntoVenta' 
@@ -214,7 +214,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="titlemedium" align="center" nowrap>IVA</td>
 							<td class="titlemedium" align="center" nowrap>Valor Bruto</td>
 						</tr>
-						<?
+						<?php
 						foreach( $array_facturas as $key => $valor )
 						{ 
 							//print_r( $valor );
@@ -224,38 +224,38 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						<tr>
 							<td class="<?=$class?>" align="center" nowrap><?=$key?></td>
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format( $valor[Pago], 2 );
 								?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format( $valor[Saldo],2 );
 								?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format( $valor[Comision],2 );
 								?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format( $valor[ValorParcial],2 );
 								?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format( $valor[IVA],2 );
 								?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format( $valor[ValorBruto],2 );
 								?>
 							</td>
 						</tr>
 						
-						<?
+						<?php
 						}//end foreach( $r_facturas as $key => $valor )
 						?>
 							
@@ -278,12 +278,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</table>
 			</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

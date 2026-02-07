@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Entrada de Pedidos";
 
@@ -89,7 +89,7 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 			</td>
 			<td class="tbtbot"><b></b>
 				<span class="gen">
-					<? echo $TitleMod." - ".$info ?>
+					<?php echo $TitleMod." - ".$info ?>
 				</span>
 			</td>
 			<td class="tbtr">
@@ -127,12 +127,12 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 											
 											<input type="hidden" name="Fecha" value="<?=fecha()?>"><input type="hidden" name="IDPuntoVenta" value="<?=$r->IDPuntoVenta;?>"></td>
 										<td class=col1>Tipo de Movimiento</td>
-										<td class=col2><input type="text" class="input" name="TMovimiento" readonly size="24" value="Ingreso Contra Pedido"><input type="hidden" name="IDTipoMovimiento" value="<?if($newmode == "insert") echo "1"; else echo  $r->IDTipoMovimiento;?>"><br>
+										<td class=col2><input type="text" class="input" name="TMovimiento" readonly size="24" value="Ingreso Contra Pedido"><input type="hidden" name="IDTipoMovimiento" value="<?php if($newmode == "insert") echo "1"; else echo  $r->IDTipoMovimiento;?>"><br>
 										</td>
 									</tr>
 									<tr>
 										<td class=col1>Empleado</td>
-										<td class=col2><input type="text" class=input name="Empleado" value="<?if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>" readonly></td>
+										<td class=col2><input type="text" class=input name="Empleado" value="<?php if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>" readonly></td>
 										<td class=col1></td>
 										<td class=col1></td>
 									</tr>
@@ -151,14 +151,14 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 									</tr>
 									<tr>
 										<td class=row1 colspan="4">
-											<?verdetallemovimiento($r->IDOrdenCompra);?>
+											<?php verdetallemovimiento($r->IDOrdenCompra);?>
 										</td>
 									</tr>
 									<tr>
 										<td class=col1 colspan="4" align="center">
 											<input type="hidden" name="action" value="<?=$newmode?>">
 											<input type="hidden" name="ID" value="<?=$id?>">
-											<input type="hidden" name="IDOrdenCompra" value="<?=$r->IDOrdenCompra?>"><input type="hidden" name="IDEmpleado" value="<?if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>">
+											<input type="hidden" name="IDOrdenCompra" value="<?=$r->IDOrdenCompra?>"><input type="hidden" name="IDEmpleado" value="<?php if($newmode == "insert") echo $ID_Usuario; else echo  $r->IDEmpleado;?>">
 											<input type="submit" class="submit" name="submit" value="<?=$submit_caption?>">
 										</td>
 									</tr>
@@ -170,7 +170,7 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 			</td>
 		</tr>
 	</table>
-	<?
+	<?php
 }// End function print_form()
 
 /*******************************************************************************************
@@ -205,7 +205,7 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 			$order="ASC";
 		}
 							
-							?><?
+							?><?php
 	if($rows > 0){
 ?>
 	<br>
@@ -216,7 +216,7 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 			</td>
 			<td class="tbtbot"><b></b>
 				<span class="gen">
-					<? echo $TitleMod." - ".$info ?>
+					<?php echo $TitleMod." - ".$info ?>
 				</span>
 			</td>
 			<td class="tbtr">
@@ -229,7 +229,7 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 	<table class="forumline" width="550" cellspacing="1" border="0" align="center">
 	<tr>
 	<td>
-		<?
+		<?php
 			filtrar();
 		?>
 	</td>
@@ -239,13 +239,13 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 					<tr>
 					<td align=center class=navpic valign=middle nowrap bgcolor=#DBEAF5>Crear</td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Punto de Venta</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;<% if($_GET['order_by']=="IDPuntoVenta"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Numero de Orden</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;<% if($_GET['order_by']=="NumeroOrden"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-					<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Fecha de Orden</a><a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">&nbsp;<% if($_GET['order_by']=="FechaOrden"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDEstadoPedido&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Estado Pedido</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDEstadoPedido&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'><% if($_GET['order_by']=="IDEstadoPedido"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Punto de Venta</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="IDPuntoVenta")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Numero de Orden</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="NumeroOrden")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+					<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Fecha de Orden</a><a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">&nbsp;<?php if($_GET['order_by']=="FechaOrden")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDEstadoPedido&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Estado Pedido</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDEstadoPedido&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php if($_GET['order_by']=="IDEstadoPedido")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
 					</tr>
 	
-				<? 
+				<?php 
 				while($r = db_fetch_object($result)){
 				
 					$class = repetition()?"col1list":"col2list";
@@ -253,17 +253,17 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 	  	
 					<tr>
 						<td align=center valign=middle nowrap width=50 class="<?=$class?>">
-							&nbsp;<a href='<? echo "?mod=$MOD&action=add&id="; echo $r->$Key; ?>'  title="Crear Movimiento"><img src='images/edit.gif' border='0'></a>
+							&nbsp;<a href='<?php echo "?mod=$MOD&action=add&id="; echo $r->$Key; ?>'  title="Crear Movimiento"><img src='images/edit.gif' border='0'></a>
 						</td>
 						<td nowrap class="<?=$class?>"><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta)?></td>
-						<td nowrap class="<?=$class?>"><? echo $r->NumeroOrden?></td> <td nowrap class="<?=$class?>"><? echo $r->FechaOrden?></td>
-						<td nowrap class="<?=$class?>"><? echo get_field("EstadoPedido","Descripcion","IDEstadoPedido",$r->IDEstadoPedido); ?></td>
+						<td nowrap class="<?=$class?>"><?php echo $r->NumeroOrden?></td> <td nowrap class="<?=$class?>"><?php echo $r->FechaOrden?></td>
+						<td nowrap class="<?=$class?>"><?php echo get_field("EstadoPedido","Descripcion","IDEstadoPedido",$r->IDEstadoPedido); ?></td>
 					</tr>
-				<? } // END for
+				<?php } // END for
 				?>
 					<tr>
 						<td class=col1 bgcolor=#DBEAF5 colspan=5 nowrap>
-							<?
+							<?php
 								print $pages;
 							?>
 						</td>
@@ -272,7 +272,7 @@ var Check = new Array('IDMovimiento','IDTipoMovimiento','Remision','FechaRemisio
 			</td>
 		</tr>
 	</table>
-	<? 			
+	<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -336,7 +336,7 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 	
 /*******************************************************************************************
@@ -359,7 +359,7 @@ function verdetallemovimiento($id)
 	$i=0;
 ?>
 	<table width=97% cellpadding=1 cellspacing=1 align=center bgcolor=#DEE3E7>
-<?
+<?php
 	while( $r_referencias = db_fetch_object( $query_referencias ) )
 	{
 		
@@ -397,12 +397,12 @@ function verdetallemovimiento($id)
 			<tr>
 				<td  align=center>
 					<b>
-				<?
+				<?php
 					echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_referencias->IDPuntoVentaReferencia));	
 				?>
 					</b>
 				</td>
-				<?
+				<?php
 					foreach($r_detalle as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -415,7 +415,7 @@ function verdetallemovimiento($id)
 				<td class="col2list" align=center>
 					CANTIDAD PEDIDA
 				</td>
-				<?
+				<?php
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -430,7 +430,7 @@ function verdetallemovimiento($id)
 				<td class="col2list" align=center>
 					CANTIDAD RECIBIDA
 				</td>
-				<?
+				<?php
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -454,7 +454,7 @@ function verdetallemovimiento($id)
 				<td class="col2list" align=center>
 					INGRESO
 				</td>
-				<?
+				<?php
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -467,7 +467,7 @@ function verdetallemovimiento($id)
 				?>
 			</tr>
 		
-	<?
+	<?php
 	
 	$r_detalle = array();
 	$r_codificacion = array();
@@ -475,6 +475,6 @@ function verdetallemovimiento($id)
 	}//end while( $r_referencias = db_fetch_object( $query_referencias ) )
 	?>
 	</table>
-<?
+<?php
 }// end function verdetallepedido($id)
 ?>

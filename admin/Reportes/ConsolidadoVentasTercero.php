@@ -134,7 +134,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						Reporte Ventas Diarias Almacen : <?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta) ?>&nbsp; &nbsp; Fecha: <?=formatofecha( $Fecha )?>
 					</td>
 				</tr>
-				<?
+				<?php
 					//Seleccionar Formas de Pago
 					$sql_formapago = "SELECT IDFormaPago, Descripcion FROM FormaPago ";
 					$qry_formaPago = db_query( $sql_formapago );
@@ -229,7 +229,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="titlemedium" align="center" nowrap>Ingreso</td>
                                         -->
 									</tr>
-						<?
+						<?php
 						foreach( $r_facturas as $key => $valor )
 						{ 
 							//print_r( $valor );
@@ -241,7 +241,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['FechaFacturaF']?></td>
 										<td class="<?=$class?>" align="center" nowrap>
-										<?
+										<?php
 										unset($array_referencias);
                                         if($valor['Numero']=="Excedente"):
 											// consulto cliente
@@ -277,7 +277,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                                         </td>
 										<td class="<?=$class?>" align="right" nowrap><?=number_format( $ElValorUnitario = $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,2)?></td>
 							<td class="<?=$class?>" align="center" nowrap>                            
-                            <? 
+                            <?php 
 							if($valor['Numero']=="Excedente"):
 								echo "0"; 
 								//$Pares += $valor['Cantidad'];
@@ -294,7 +294,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                            
 							<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoRef']?></td>
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoFactura']?> </td>
-										<td class="<?=$class?>" align="center" nowrap><?
+										<td class="<?=$class?>" align="center" nowrap><?php
 								$descuento_bono=0;
                                 if ((int)$valor['ValorBono']>0 && $numero_factura_ant !=  $valor['NumeroFactura']){
 									echo $descuento_bono=number_format($valor['ValorBono']);	
@@ -312,7 +312,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								?></td>
 										<td class="<?=$class?>" align="center" nowrap><?=$valor['DescuentoPar']?></td>
 										<td class="<?=$class?>" align="right" nowrap>
-											<?
+											<?php
 												$TotalFactura = $valor[ValorTotal] ;
 												if( $valor['DescuentoPar'] > 0 )
 													$valordescuentopar = ( $valor['PrecioU'] * $valor['Cantidad'] ) *   ( $valor['DescuentoPar'] / 100 );
@@ -385,12 +385,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 											?>
 										</td>
 										<td class="<?=$class?>" align="right" nowrap>
-											<?
+											<?php
 												echo number_format( $saldo ,2); $Saldo += $saldo;
 											?>
 										</td>
 										<td class="<?=$class?>" align="right" nowrap>
-										<? 
+										<?php 
 										echo number_format( $comision  ,2 ); 
 										$ComisionBancos += $comision;?>
                                         </td>
@@ -439,8 +439,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                             
                             
 							<td class="<?=$class?>" align="right" nowrap>
-								<table width=100%>
-									<?
+								<table width=100;?>
+									<?php
 									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 									{
 									?>
@@ -449,11 +449,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												<?php echo $array_formapago[  $valuefp[IDFormaPago] ][Descripcion] ?>
 											</td>
 										</tr>
-									<?
+									<?php
 									}//end for
 									?>
 								</table>
-								<?    
+								<?php    
 									
 									
 									
@@ -463,8 +463,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
-								<table width=100%>
-									<?
+								<table width=100;?>
+									<?php
 									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 									{
 									?>
@@ -473,18 +473,18 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												<?php echo $array_banco[   $valuefp[IDBanco] ][Nombre] ?>
 											</td>
 										</tr>
-									<?
+									<?php
 									}//end for
 									?>
 								</table>
 								
-								<?  
+								<?php  
 									//echo $array_banco[ $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][IDBanco] ][Nombre];
 								?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
 								<table>
-									<?
+									<?php
 									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 									{
 										$ValorReteICA = 0;
@@ -509,14 +509,14 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												?>
 											</td>
 										</tr>
-									<?
+									<?php
 										}//end if
 									}//end for
 									?>
 								</table>
 								
 								
-								<?
+								<?php
 									/*
 									
 									Asi era antes
@@ -542,19 +542,19 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
 							
-							<?
+							<?php
 							$IvaTotal+=$ValorReteIVA;
 							echo number_format( $ValorReteIVA, 2 );
 							?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
-							<?
+							<?php
 							$IcaTotal+=$ValorReteICA;
 							echo number_format( $ValorReteICA, 2 );
 							?>
 							</td>
 							<td class="<?=$class?>" align="right" nowrap>
-							<?
+							<?php
 							 
 							$valor_ingreso = $valorparcial  - ($ValorReteICA + $ValorReteIVA + $ValorReteFuente + $valoriva + $comision );
 							
@@ -570,7 +570,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                            
 						</tr>
                          -->
-						<?
+						<?php
 						}//end foreach( $r_facturas as $key => $valor )
 						?>
                         

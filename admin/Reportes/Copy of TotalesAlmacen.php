@@ -1,4 +1,4 @@
-<body><%
+<body><?php
 		switch ($action) {
 			
 			case "view" :
@@ -27,7 +27,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 	
 	 
  
-%>
+  ?>
 	<br>
 	<a class="menuppal" href="?mod=TotalesAlmacen">
 		<img src="images/house.png" border="0">&nbsp;&nbsp;Consolidado almacenes - meses
@@ -75,9 +75,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</td>
 		</tr>
 
-		<%
+		<?php
 		if(!empty( $FechaDesde ) && !empty( $FechaHasta ) ){
-		%>
+		?>
 		<tr>
 		<td>
 			<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
@@ -87,7 +87,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						
 					</td>
 				</tr>
-				<?
+				<?php
 					
 					$daybegin = substr( $FechaDesde, 8 , 10 );
 					$monthbegin = substr( $FechaDesde, 5 , 2 );
@@ -145,19 +145,19 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						<tr>
 								<td class="titlemedium" align="center" nowrap>Punto</td>
-							<?
+							<?php
 							$monthbegin = ( $monthbegin * 1 ) - 1;
 							for( $i = $monthbegin; $i < $monthend; $i++ )
 							{
 							?>
 								<td class="titlemedium" align="center" nowrap><?=$Mes_array[$i]?></td>
-							<?
+							<?php
 							}//end for
 							?>
 								<td class="titlemedium" align="center" nowrap>TOTALES</td>
 										<td class="titlemedium" align="center" nowrap>GRAFICAR</td>
 									</tr>
-						<?
+						<?php
 						//print_r($datosfechas);
 						//print_r($array_puntos);
 						foreach( $array_puntos as $key => $valor )
@@ -166,13 +166,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						?>
 							<tr>
 								<td class="<?=$class?>" align="center" nowrap><?=$valor['Nombre']?></td>
-								<?
+								<?php
 								$monthbegin = ( $monthbegin * 1 );
 								for( $i = $monthbegin; $i < $monthend; $i++ )
 								{
 								?>
 									<td class="<?=$class?>" align="right" nowrap>
-										<?
+										<?php
 											echo number_format( $datosfechas[$i+1][$valor['IDPuntoVenta']] , 2);
 											$totalespunto[$valor['IDPuntoVenta']]['Totales'] += $datosfechas[$i+1][$valor['IDPuntoVenta']];
 											$totalesmes[$i+1]['Totales'] += $datosfechas[$i+1][$valor['IDPuntoVenta']];
@@ -188,17 +188,17 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 										?>
 									</td>
-								<?
+								<?php
 								}//end for
 								?>
 								<td class="<?=$class?>" align="center" nowrap>
-									<?
+									<?php
 										echo number_format( $totalespunto[$valor['IDPuntoVenta']]['Totales'] , 2);
 									?>
 								</td>
 										<td class="<?=$class?>" align="center" nowrap>
 										
-											<?
+											<?php
 											if( $totalespunto[$valor['IDPuntoVenta']]['Totales'] > 0 )
 											{
 												$datos_mes = implode(",",$datospunto[$valor['IDPuntoVenta']]);
@@ -208,24 +208,24 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 											<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_mes?>&opciones=<?=$opciones_mes?>&titulo=<?=$titulopunto?>','','width=550, height=400');" >
 												<img src="images/chart_pie.png" border="0">
 											</a>
-											<?
+											<?php
 											}
 											?>
 										</td>
 									</tr>
 						
-						<?
+						<?php
 						}//while( $r_puntos = db_fetch_object( $qry_puntos ) )
 						?>
 						<tr >
 							<td class="row1" align="center" nowrap></td>
-							<?
+							<?php
 							$monthbegin = ( $monthbegin * 1 );
 							for( $i = $monthbegin; $i < $monthend; $i++ )
 							{
 							?>
 								<td class="row1" align="center" nowrap>
-									<?
+									<?php
 									if( $totalesmes[$i+1]['Totales'] > 0 )
 									{	
 										$datos_mes = implode(",",$datos[$i+1]);
@@ -235,11 +235,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									<a href="javascript:;" onclick="window.open('Reportes/graficar.php?datos=<?=$datos_mes?>&opciones=<?=$opciones_mes?>&titulo=<?=$titulo?>','','width=550, height=400');" >
 										<img src="images/chart_pie.png" border="0">
 									</a>
-									<?
+									<?php
 									}
 									?>
 								</td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="row1" align="center" nowrap>
@@ -250,20 +250,20 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						
 						<tr>
 							<td class="titlemedium" align="center" nowrap>TOTALES</td>
-							<?
+							<?php
 							$monthbegin = ( $monthbegin * 1 );
 							for( $i = $monthbegin; $i < $monthend; $i++ )
 							{
 							?>
 								<td class="titlemedium" align="right" nowrap>
-									<?
+									<?php
 										echo number_format( $totalesmes[$i+1]['Totales'] );
 									?>
 								</td>
-							<?
+							<?php
 							}//end for
 							?>
-							<td class="titlemedium" align="center" nowrap><?echo number_format( $total, 2);?></td>
+							<td class="titlemedium" align="center" nowrap><?php echo number_format( $total, 2);?></td>
 										<td class="titlemedium" align="center" nowrap></td>
 									</tr>
 						
@@ -277,12 +277,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</table>
 	</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

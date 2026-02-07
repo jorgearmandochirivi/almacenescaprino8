@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Entradas";
 
@@ -58,22 +58,22 @@ else
 			$order="ASC";
 		}
 							
-							?><?
+							?><?php
 	if($rows > 0){
 ?><br>
 	<br>
 	<br>
 	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
 		<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Listar <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod ?></b></td>
 		</tr>
-	<?filtrar();?>	
+	<?php filtrar();?>	
 	<tr>
-			<td class=titlemedium  bgcolor=#9daac6><% echo $info;%></td>
+			<td class=titlemedium  bgcolor=#9daac6><?php echo $info;;?></td>
 		</tr>
 	<tr>
 	<td class=texto bgcolor=#DBEAF5 colspan=11 nowrap>
-	<?
+	<?php
 		print $pages;
 	?>
 	</td>
@@ -82,40 +82,40 @@ else
 			<td>
 <table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 					<tr>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Punto de Venta</a></td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Remision&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Remisi&oacute;n</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Remision&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;<% if($_GET['order_by']=="Remision"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Numero Factura</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;<% if($_GET['order_by']=="NumeroFactura"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-							<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Referencia</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>&nbsp;<% if($_GET['order_by']=="Referencia.Numero"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-							<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Talla</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'><% if($_GET['order_by']=="IDTalla"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Cantidad&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Cantidad</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Cantidad&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'><% if($_GET['order_by']=="Cantidad"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
-						<td class=navpic nowrap bgcolor=#DBEAF5>&nbsp;&nbsp;&nbsp;&nbsp;<a href='<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'>Fecha</a><a href='<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; %>'><% if($_GET['order_by']=="Fecha"){%><img src="images/<%=$img%>" border=0><%}%></a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Punto de Venta</a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Remision&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Remisi&oacute;n</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Remision&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="Remision")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Numero Factura</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="NumeroFactura")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+							<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Referencia</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php if($_GET['order_by']=="Referencia.Numero")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+							<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Talla</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php if($_GET['order_by']=="IDTalla")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Cantidad&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Cantidad</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Cantidad&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php if($_GET['order_by']=="Cantidad")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
+						<td class=navpic nowrap bgcolor=#DBEAF5>&nbsp;&nbsp;&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Fecha</a><a href='<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php if($_GET['order_by']=="Fecha")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a></td>
 					</tr>
 	
-				<? 
+				<?php 
 				while($r = db_fetch_object($result)){
 				
 					$class = repetition()?"col1list":"col2list";
 				?>
 	  	
 					<tr>
-						<td align="right" style="text-align:right;" nowrap class="<?=$class?>"><a href="javascript:;" onClick="window.open( 'Movimiento/popEntradas.php?Remision=<?=$r->Remision?>&IDPuntoVenta=<?=$r->IDPuntoVenta?>','','width=500, height=500, scrollbars=1, resize=yes' )"><? echo  get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta ) ; ?></a></td>
+						<td align="right" style="text-align:right;" nowrap class="<?=$class?>"><a href="javascript:;" onClick="window.open( 'Movimiento/popEntradas.php?Remision=<?=$r->Remision?>&IDPuntoVenta=<?=$r->IDPuntoVenta?>','','width=500, height=500, scrollbars=1, resize=yes' )"><?php echo  get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta ) ; ?></a></td>
 						<td align="right" style="text-align:right;" nowrap class="<?=$class?>">
-								<a href='javascript:;' onClick="window.open( 'Movimiento/popEntradas.php?Remision=<?=$r->Remision?>&IDPuntoVenta=<?=$r->IDPuntoVenta?>','','width=500, height=500, scrollbars=1, resize=yes' )"><? echo  $r->Remision ; ?></a>
+								<a href='javascript:;' onClick="window.open( 'Movimiento/popEntradas.php?Remision=<?=$r->Remision?>&IDPuntoVenta=<?=$r->IDPuntoVenta?>','','width=500, height=500, scrollbars=1, resize=yes' )"><?php echo  $r->Remision ; ?></a>
 							</td>
-						<td align="right" style="text-align:right;" nowrap class="<?=$class?>"><? echo  $r->NumeroFactura ; ?></td>
-							<td align="right" style="text-align:right;" nowrap class="<?=$class?>"><? echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r->IDPuntoVentaReferencia))?></td>
-							<td nowrap class="<?=$class?>"><? echo get_field("Talla","Descripcion","IDTalla",$r->IDTalla); ?></td>
+						<td align="right" style="text-align:right;" nowrap class="<?=$class?>"><?php echo  $r->NumeroFactura ; ?></td>
+							<td align="right" style="text-align:right;" nowrap class="<?=$class?>"><?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r->IDPuntoVentaReferencia))?></td>
+							<td nowrap class="<?=$class?>"><?php echo get_field("Talla","Descripcion","IDTalla",$r->IDTalla); ?></td>
 						<td align="right" style="text-align:right;" nowrap class="<?=$class?>">
-							<? echo number_format($r->Cantidad); ?>   </td>
+							<?php echo number_format($r->Cantidad); ?>   </td>
 						<td align="left" style="text-align:left;" nowrap class="<?=$class?>">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? echo formatofecha(substr($r->Fecha,0,10))." a las ".substr($r->Fecha,10)?>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo formatofecha(substr($r->Fecha,0,10))." a las ".substr($r->Fecha,10)?>
 						</td>
 					</tr>
-				<? } // END for
+				<?php } // END for
 				?>
 					<tr>
 						<td class=col1 bgcolor=#DBEAF5 nowrap></td>
-						<td class=col1 bgcolor=#DBEAF5 colspan=6 nowrap><?
+						<td class=col1 bgcolor=#DBEAF5 colspan=6 nowrap><?php
 								print $pages;
 							?><input type="hidden" name="action" value="insert"></td>
 						
@@ -128,7 +128,7 @@ else
 				</table>			</td>
 		</tr>
 	</table>
-	<? 			
+	<?php 			
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -193,7 +193,7 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 	
 /*******************************************************************************************
@@ -216,7 +216,7 @@ function verdetallemovimiento($id)
 	$i=0;
 ?>
 	<table width=80% cellpadding=1 cellspacing=0 align=center bgcolor=#DEE3E7 class=bordertable>
-<?
+<?php
 	while( $r_referencias = db_fetch_object( $query_referencias ) )
 	{
 		
@@ -253,7 +253,7 @@ function verdetallemovimiento($id)
 				<td class=rowform align=center>
 					EXISTENCIAS
 				</td>
-				<?
+				<?php
 					foreach($r_codificacion as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -265,11 +265,11 @@ function verdetallemovimiento($id)
 			
 			<tr>
 				<td class=rowform align=center>
-				<?
+				<?php
 					echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_referencias->IDPuntoVentaReferencia));	
 				?>
 				</td>
-				<?
+				<?php
 					foreach($r_detalle as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -282,7 +282,7 @@ function verdetallemovimiento($id)
 				<td class="row1" align=center>
 					<b>CANTIDAD PEDIDA</b>
 				</td>
-				<?
+				<?php
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -297,7 +297,7 @@ function verdetallemovimiento($id)
 				<td class="row2" align=center>
 					<b>CANTIDAD RECIBIDA</b>
 				</td>
-				<?
+				<?php
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -321,7 +321,7 @@ function verdetallemovimiento($id)
 				<td class="row1" align=center>
 					<b>INGRESO</b>
 				</td>
-				<?
+				<?php
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -336,7 +336,7 @@ function verdetallemovimiento($id)
 			<tr>
 				<td class="row2" align=center><br>
 				</td>
-				<?
+				<?php
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -346,7 +346,7 @@ function verdetallemovimiento($id)
 				}
 				?>
 			</tr>
-	<?
+	<?php
 	
 	$r_detalle = array();
 	$r_codificacion = array();
@@ -354,6 +354,6 @@ function verdetallemovimiento($id)
 	}//end while( $r_referencias = db_fetch_object( $query_referencias ) )
 	?>
 	</table>
-<?
+<?php
 }// end function verdetallepedido($id)
 ?>

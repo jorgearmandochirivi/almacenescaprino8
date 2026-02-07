@@ -1,4 +1,4 @@
-<body><%
+<body><?php
 		switch ($action) {
 			
 			case "view" :
@@ -20,7 +20,7 @@
 function print_from($Mes="", $Ano=""){
  Global $dblink,$total_records,$row,$numtoshow,$Nivel,$IVA, $FechaHasta, $Mes_array;
  
-%>
+  ?>
 	
 	<table width="100%">
 		
@@ -31,16 +31,16 @@ function print_from($Mes="", $Ano=""){
 						<tr>
 							<td valign="middle"><img src="images/calendar_edit.png" border="0" alt=""></td>
 							<td  align='left' valign='middle' class="nav"><select name="Mes" >
-									<option value="">Seleccione un mes...</option><% 								
+									<option value="">Seleccione un mes...</option><?php 								
 										foreach( $Mes_array as $keymes=>$mes ){
 											$keymes = $keymes+1;
 											echo "<option value=".$keymes." " ;if($Mes == $keymes ) echo "selected"; echo ">&nbsp;&nbsp;$mes</option>";
 										}
-									%>
+									?>
 								</select></td>
 							<td  align='left' valign='middle' class="nav"><img src='images/house.png' border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav"><select name="Ano" >
-									<option value="">Seleccione un a&ntilde;o...</option><% 								
+									<option value="">Seleccione un a&ntilde;o...</option><?php 								
 										
 											echo "<option value='2006' "; ;if($Ano == "2006" ) echo "selected"; echo ">&nbsp;&nbsp;2006</option>";
 											echo "<option value='2007' "; ;if($Ano == "2007" ) echo "selected"; echo ">&nbsp;&nbsp;2007</option>";
@@ -54,7 +54,7 @@ function print_from($Mes="", $Ano=""){
 											echo "<option value='2015' "; ;if($Ano == "2015" ) echo "selected"; echo ">&nbsp;&nbsp;2015</option>";
 											echo "<option value='2016' "; ;if($Ano == "2016" ) echo "selected"; echo ">&nbsp;&nbsp;2016</option>";
 											echo "<option value='2017' "; ;if($Ano == "2017" ) echo "selected"; echo ">&nbsp;&nbsp;2017</option>";
-									%>
+									?>
 								</select><input type="hidden" name="mod" value="NetasAlmacenes"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav">
 								<input type="submit" value="Ver Reporte" name="submit" class="submit">
@@ -68,9 +68,9 @@ function print_from($Mes="", $Ano=""){
 		
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty($Mes)){
-		%>
+		?>
 		<tr>
 		<td><br>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#345487">	
@@ -81,7 +81,7 @@ function print_from($Mes="", $Ano=""){
 						Reporte Ventas Almacenes : Mes <?=$Mes ?>&nbsp; &nbsp; A&ntilde;o: <?=$Ano?>
 					</td>
 				</tr>
-				<?
+				<?php
 				
 				//TRAER ARRAY DE LOS PUNTOS DE VENTA
 				$sql_puntos = " SELECT Nombre, IDPuntoVenta FROM PuntoVenta ORDER BY IDCiudad, Nombre  ";
@@ -218,17 +218,17 @@ function print_from($Mes="", $Ano=""){
 							<td class="titlemedium" align="center" nowrap>Fecha</td>
 							
 							
-							<?
+							<?php
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
 							<td class="titlemedium" align="center" nowrap><?=$nombrepunto?></td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="titlemedium" align="center" nowrap>Totales</td>
 						</tr>
-						<?
+						<?php
 						foreach($Fechas as $key => $ValorFecha )
 						{ 
 							//print_r( $valor );
@@ -238,38 +238,38 @@ function print_from($Mes="", $Ano=""){
 						<tr>
 							<td class="<?=$class?>" align="center" nowrap><?=$key?></td>
 							
-							<?
+							<?php
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
 							
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format(  $array_facturas[ $key ][ $idpuntoventa ]  , 2 );
 								?>
 							</td>
-							<?
+							<?php
 							}//end for
 							?>
 							<td class="<?=$class?>" align="right" nowrap>
-								<?
+								<?php
 									echo number_format( $tarray_facturasfecha[ $key ]  , 2 );
 								?>
 							</td>
 						</tr>
 						
-						<?
+						<?php
 						}//end foreach($Fechas as $key => $ValorFecha )
 						?>
 							
 						<tr>
 							<td class="titlemedium" align="right" nowrap>Total</td>
-							<?
+							<?php
 							foreach( $array_puntos as $idpuntoventa => $nombrepunto )
 							{
 							?>
 							<td class="titlemedium" align="right" nowrap><?=number_format( $tarray_facturas[ $idpuntoventa ] , 2)?></td>
-							<?
+							<?php
 							}
 							?>
 							<td class="titlemedium" align="right" nowrap><?=number_format( array_sum( $tarray_facturas ) , 2)?></td>
@@ -284,12 +284,12 @@ function print_from($Mes="", $Ano=""){
 		</table>
 			</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

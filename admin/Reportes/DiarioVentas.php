@@ -1,4 +1,4 @@
-<body><?
+<body><?php
 
 $Table = "CodificacionEspecifica";
 $TableJoin = "Referencia";
@@ -75,12 +75,12 @@ endif;
 							</td>
 							<td  align='left' valign='middle' class="nav"><img src='images/house.png' border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav">Puntos de Venta	<select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><%
+									<option value="">Seleccione Un Punto de Venta</option><?php
 								$qry_punto = db_query("SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 								</select> <input type="hidden" name="mod" value="Reportes"><input type="hidden" name="action" value="view"></td>
 							<td align="left" valign="middle" class="nav">
 								<input type="submit" value="Ver Reporte" name="submit" class="submit">
@@ -94,9 +94,9 @@ endif;
 
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty($IDPuntoVenta)){
-		%>
+		?>
 		<tr>
 		<td>
 				&nbsp;&nbsp;&nbsp;&nbsp;  <img src="images/book_go.png" border="0" alt="">&nbsp;
@@ -114,7 +114,7 @@ endif;
 				        &nbsp; &nbsp; Fecha:
 				        <?=formatofecha( $Fecha )?></td>
 			        </tr>
-				    <?
+				    <?php
 					//Seleccionar Formas de Pago
 					$sql_formapago = "SELECT IDFormaPago, Descripcion FROM FormaPago ";
 					$qry_formaPago = db_query( $sql_formapago );
@@ -197,7 +197,7 @@ endif;
 				          <td class="titlemedium" align="center" nowrap>Rete ICA</td>
 				          <td class="titlemedium" align="center" nowrap>Ingreso</td>
 			            </tr>
-				        <?
+				        <?php
 						$array_factura_con_comision=array();
 						foreach( $r_facturas as $key => $valor )
 						{
@@ -209,7 +209,7 @@ endif;
 				        <tr>
 				          <td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
 				          <td class="<?=$class?>" align="center" nowrap><?=$valor['FechaFacturaF']?></td>
-				          <td class="<?=$class?>" align="center" nowrap><? 
+				          <td class="<?=$class?>" align="center" nowrap><?php 
 										unset($array_referencias);
                                         if($valor['Numero']=="Excedente"):
 											// consulto cliente
@@ -242,14 +242,14 @@ endif;
 										endif;
 										?></td>
 				           <td class="<?=$class?>" align="right" nowrap>
-										<?
+										<?php
 										$ElValorUnitarioExc=  $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) );
 										$SumaUnitario+=$ElValorUnitarioExc;
 										echo number_format( $ElValorUnitario = $valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ) ,2);
 										?>
 
 							</td>
-				          <td class="<?=$class?>" align="center" nowrap><?
+				          <td class="<?=$class?>" align="center" nowrap><?php
 							if($valor['Numero']=="Excedente"):
 								echo "0";
 								//$Pares += $valor['Cantidad'];
@@ -271,7 +271,7 @@ endif;
 
 
 
-				            <?
+				            <?php
 							
 
 
@@ -421,7 +421,7 @@ endif;
 						  echo number_format( $ventadia ,2);
 						  $TotalVentaDia += $ventadia;
 						  ?></td>
-				          <td class="<?=$class?>" align="center" nowrap><?
+				          <td class="<?=$class?>" align="center" nowrap><?php
 								
 								
 								echo $valor_bono_impr;
@@ -429,7 +429,7 @@ endif;
 								$numero_factura_ant = $valor['NumeroFactura'];
 								?></td>
 				          <td class="<?=$class?>" align="center" nowrap>
-						  <?
+						  <?php
 						 	$TotaleDescuentoPar+=$valor['DescuentoPar'];
 						 	echo  $valor['DescuentoPar'];						 
 						 ?></td>
@@ -459,12 +459,12 @@ endif;
 
 															?>
                           </td>
-				          <td class="<?=$class?>" align="right" nowrap><?
+				          <td class="<?=$class?>" align="right" nowrap><?php
 												echo number_format( $saldo ,2); $Saldo += $saldo;
 											?></td>
 				          <td class="<?=$class?>" align="right" nowrap>
 						 			<!-- COMISION BANCOS --> 
-						  			<? 
+						  			<?php 
 									
 										$comision=$array_forma_pago[ $valor[IDFactura] ][ValorComision];										
 										echo number_format( $comision  ,2 );
@@ -520,19 +520,19 @@ endif;
 							echo number_format( $valor_bruto_item ,2 );
 							$ValorBruto += ( $valorparcial - $valoriva );
 							?></td>
-				          <td class="<?=$class?>" align="right" nowrap><table width=100%>
-				            <?
+				          <td class="<?=$class?>" align="right" nowrap><table width=100;?>
+				            <?php
 									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 									{
 									?>
 				            <tr>
 				              <td align="right"><?php echo $array_formapago[  $valuefp[IDFormaPago] ][Descripcion] ?></td>
 			                </tr>
-				            <?
+				            <?php
 									}//end for
 									?>
 				            </table>
-				            <?
+				            <?php
 
 
 
@@ -540,23 +540,23 @@ endif;
 
 
 								?></td>
-				          <td class="<?=$class?>" align="right" nowrap><table width=100%>
-				            <?
+				          <td class="<?=$class?>" align="right" nowrap><table width=100;?>
+				            <?php
 									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 									{
 									?>
 				            <tr>
 				              <td align="right"><?php echo $array_banco[   $valuefp[IDBanco] ][Nombre] ?></td>
 			                </tr>
-				            <?
+				            <?php
 									}//end for
 									?>
 				            </table>
-				            <?
+				            <?php
 									//echo $array_banco[ $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][IDBanco] ][Nombre];
 								?></td>
 				          <td class="<?=$class?>" align="right" nowrap><table>
-				            <?
+				            <?php
 									$AgregaValorRteFte="N";
 									$TotRteIca=0;
 									$TotRteIva=0;
@@ -588,7 +588,7 @@ endif;
 													$valorretefuente += $ValorReteFuente;
 												?></td>
 			                </tr>
-				            <?
+				            <?php
 										}//end if
 									}//end for
 
@@ -597,7 +597,7 @@ endif;
 								  
 									?>
 				            </table>
-				            <?
+				            <?php
 									/*
 
 									Asi era antes
@@ -620,7 +620,7 @@ endif;
 									}
 									*/
 								?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?
+				          <td class="<?=$class?>" align="right" nowrap><?php
 	 						$AgregaValorRteIva="N";
 							
 							foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
@@ -644,7 +644,7 @@ endif;
 						  		$ValorReteIVA=0;
 
 							?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?
+				          <td class="<?=$class?>" align="right" nowrap><?php
 						  $AgregaValorIca="N";
 						  foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
 						  {
@@ -666,7 +666,7 @@ endif;
 						  	$ValorReteICA=0;
 
 							?></td>
-				          <td class="<?=$class?>" align="right" nowrap><?
+				          <td class="<?=$class?>" align="right" nowrap><?php
 
 							if($valoriva==0){
 								$valorparcial=$pago;
@@ -693,7 +693,7 @@ endif;
 
 							?></td>
 			            </tr>
-				        <?
+				        <?php
 						}//end foreach( $r_facturas as $key => $valor )
 						?>
 				        <tr>
@@ -705,9 +705,9 @@ endif;
 				          <td class="titlemedium" align="center" nowrap></td>
 				          <td class="titlemedium" align="center" nowrap></td>
 				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $TotalVentaDia ,2); ?></td>
-				          <td class="titlemedium" align="center" nowrap><? echo number_format( $TotalBono , 2);  ?></td>
-				          <td class="titlemedium" align="right" nowrap><? echo number_format( $TotaleDescuentoPar , 2);  ?></td>
-				          <td class="titlemedium" align="right" nowrap><? echo number_format( $PagoVerdadero , 2); //number_format( $Pago , 2); ?></td>
+				          <td class="titlemedium" align="center" nowrap><?php echo number_format( $TotalBono , 2);  ?></td>
+				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $TotaleDescuentoPar , 2);  ?></td>
+				          <td class="titlemedium" align="right" nowrap><?php echo number_format( $PagoVerdadero , 2); //number_format( $Pago , 2); ?></td>
 				          <td class="titlemedium" align="right" nowrap><?=number_format( $Saldo , 2)?></td>
 				          <td class="titlemedium" align="right" nowrap><?=number_format( $ComisionBancos , 2)?></td>
 				          <td class="titlemedium" align="right" nowrap><?=number_format( $ValorParcial , 2)?></td>
@@ -744,7 +744,7 @@ endif;
 								  <td class="titlemedium" align="right" nowrap>Medio de Pago</td>
 				                  <td class="titlemedium" align="right" nowrap>Valor</td>
 			                    </tr>
-				                <?
+				                <?php
 
 						//$sql_credito = "SELECT * FROM CreditoCuota WHERE DATE_FORMAT(FechaPago,'%Y-%m-%d' ) = '$Fecha' AND IDPuntoVenta = '$IDPuntoVenta'";
 						$sql_credito = "SELECT * FROM CreditoCuota WHERE (MedioPago = 'Efectivo' or MedioPago = '' ) and DATE_FORMAT(FechaPago,'%Y-%m-%d' ) = '$Fecha' AND (IDPuntoVentaPago = '$IDPuntoVenta' or ( IDPuntoVenta = '$IDPuntoVenta' and IDPuntoVentaPago = 0 )) ";
@@ -764,7 +764,7 @@ endif;
 								  $ValorEfec += $r_credito->ValorTotal;
 								  ?></td>
 			                    </tr>
-				                <?
+				                <?php
 						}//ebd while
 						?>
 				                <tr>
@@ -786,7 +786,7 @@ endif;
 								  <td class="titlemedium" align="right" nowrap>Medio de Pago</td>
 				                  <td class="titlemedium" align="right" nowrap>Valor</td>
 			                    </tr>
-				                <?
+				                <?php
 								//$sql_credito = "SELECT * FROM CreditoCuota WHERE DATE_FORMAT(FechaPago,'%Y-%m-%d' ) = '$Fecha' AND IDPuntoVenta = '$IDPuntoVenta'";
 								$sql_credito = "SELECT * FROM CreditoCuota WHERE MedioPago = 'Transferencia' and DATE_FORMAT(FechaPago,'%Y-%m-%d' ) = '$Fecha' AND (IDPuntoVentaPago = '$IDPuntoVenta' or ( IDPuntoVenta = '$IDPuntoVenta' and IDPuntoVentaPago = 0 )) ";
 								$qry_credito = db_query( $sql_credito );
@@ -805,7 +805,7 @@ endif;
 										$ValorTrans += $r_credito->ValorTotal;
 										?></td>
 										</tr>
-										<?
+										<?php
 								}//ebd while
 								?>
 				                <tr>
@@ -835,12 +835,12 @@ endif;
 			      </form>
 		  </table></td>
 	</tr>
-	<%
+	<?php
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%
+	<?php
 }// Enf function print()
 
-%>
+  ?>
 </body>

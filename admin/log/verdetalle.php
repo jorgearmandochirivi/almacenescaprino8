@@ -4,7 +4,7 @@
 	</title>
 	<link rel="stylesheet" href="../styles.css" type="text/css">
 </head>
-<body> <?
+<body> <?php
 include("../config.inc.php");
 $TitleMod ="Log";
 $Table = "Log";
@@ -38,19 +38,19 @@ $permisos = get_permiso($ID_Usuario,$m,$Table);
 	</table>
 	<table width="440"  cellpadding=0 cellspacing=0 class=bordertable>
 		<tr>
-			<td class=titlemedium bgcolor=#9daac6><b>Operacion Realizada <? echo $TitleMod ?></b></td>
+			<td class=titlemedium bgcolor=#9daac6><b>Operacion Realizada <?php echo $TitleMod ?></b></td>
 		</tr>
 		<tr><td>
 	<table width=440 border=0 cellspacing=1 cellpadding=0>
 	<tr >
 		<td class=rowform nowrap bgcolor=#DBEAF5>Modulo</td>
-		<td class=row3 nowrap bgcolor=#DBEAF5><? echo $r->Modulo ?></td>
+		<td class=row3 nowrap bgcolor=#DBEAF5><?php echo $r->Modulo ?></td>
 		<td class=rowform nowrap bgcolor=#DBEAF5>Fecha</td>
-		<td class=row3 nowrap bgcolor=#DBEAF5><? echo $r->Fecha?></td>
+		<td class=row3 nowrap bgcolor=#DBEAF5><?php echo $r->Fecha?></td>
 	</tr>
 	<tr>
 		<td  class=row2>Operacion Realizada</td>
-		<td colspan="3" align="justify"  class=row1><? echo urldecode($r->Operacion); ?></td>
+		<td colspan="3" align="justify"  class=row1><?php echo urldecode($r->Operacion); ?></td>
 	</tr>
 	<tr>
 		<td class=texto bgcolor=#DBEAF5 colspan=4 nowrap align=center><input type=button name=cerrar value=Cerrar onclick="window.close()"></td>
@@ -59,7 +59,7 @@ $permisos = get_permiso($ID_Usuario,$m,$Table);
 </tr>
 </table>	
 
-<? 			
+<?php
 }// End if$rows
 else
 	echo "<br><br><p class=subtitle align=center><b>No existen registros en  $TitleMod </b></p>";

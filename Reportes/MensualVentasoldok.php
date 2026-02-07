@@ -1,4 +1,4 @@
-<body><%
+<body><?php
 
 $MOD = "mensual";
 		
@@ -31,7 +31,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
  $ReteIVA = get_field( "ReteIVA","Valor","IDReteIVA",1 ) / 100;
  $ReteFuente = get_field( "ReteFuente","Valor","IDReteFuente",1 ) / 100;
  
-%>
+  ?>
 	
 	<table width="100%">
 		
@@ -78,13 +78,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		
 		<br>
 		<br>
-		<%
+		<?php
 		if(!empty($IDPuntoVenta) && !empty( $FechaDesde ) && !empty( $FechaHasta ) ){
-		%>
+		?>
 		<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp; <br>
 				<br>
-	<?
+	<?php
 	$filedir = $dirroot."files/";
 	ob_start();	
 	?>
@@ -95,7 +95,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 			</td>
 			<td class="tbtbot"><b></b>
 				<span class="gen">
-						<?
+						<?php
 						echo "MENSUAL CONSIGNACIONES ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta )." ".$FechaDesde." - ".$FechaHasta;
 						?>
 				</span>
@@ -107,7 +107,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 	</table>
 				<table width="100%" border="0" align='center' cellspacing="1" cellpadding="0" bgcolor="#FFFFFF">	
 			<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return Evalua(document.frm)">
-				<?
+				<?php
 					
 					$array_fechas = dhabiles($FechaDesde, $FechaHasta);
 					
@@ -190,7 +190,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="navpic" align="center" nowrap>Rte. ICA</td>
 							<td class="navpic" align="center" nowrap>Ingreso</td>
 						</tr>
-						<?
+						<?php
 						
 						//voltear el array porque viene al reves
 						
@@ -257,10 +257,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorRetefuente = $datos[ValorRetefuente],2 ); $tValorRetefuente += $ValorRetefuente;?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $Neto = $datos[Neto] ,2 ); $tNeto += $Neto; ?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorRIVA = $datos[ValorRIVA] ,2 ); $tValorRIVA += $ValorRIVA; ?> </td>
-									<td class="<?=$class?>" align="right" nowrap><?echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
-									<td class="<?=$class?>" align="right" nowrap><?echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
+									<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
+									<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
 								</tr>
-						<?
+						<?php
 							}//end for
 						}//end for
 						
@@ -316,10 +316,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorRetefuente = $datos[ValorRetefuente],2 ); $tValorRetefuente += $ValorRetefuente;?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $Neto = $datos[Neto] ,2 ); $tNeto += $Neto; ?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorRIVA = $datos[ValorRIVA] ,2 ); $tValorRIVA += $ValorRIVA; ?> </td>
-									<td class="<?=$class?>" align="right" nowrap><?echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
-									<td class="<?=$class?>" align="right" nowrap><?echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
+									<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
+									<td class="<?=$class?>" align="right" nowrap><?php echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
 								</tr>
-						<?
+						<?php
 						}//end for
 						
 						/********************** FIN DE MOSTRAR LAS FECHAS CON EFECTIVO *********************************************/
@@ -343,7 +343,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</form>
 	
 		</table>
-		<?
+		<?php
 		$page = ob_get_contents();
 		$fecha = date( "Y-m-d H:i:s" );
 		$name = "MensualVentas$fecha.xls";
@@ -359,12 +359,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		?>
 			</td>
 	</tr>
-	<% 
+	<?php 
 	 } // END if(!empty($IDEmpresa))
-	%>
+	?>
 	</table>
-	<%						
+	<?php						
 }// Enf function print()	
 
-%>
+  ?>
 </body>

@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<?
+<?php
 
 
 
@@ -324,7 +324,7 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 														<td class=col1>Destino</td>
 														<td class=col2 colspan="3">
 															<select name="IDPuntoVentaDestino" class="InputSelect">
-															<?
+															<?php
 																$sql_puntoventa = "SELECT * FROM PuntoVenta";
 																$query_puntoventa = db_query($sql_puntoventa);
 																while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
@@ -369,31 +369,31 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 														<td align="center"><b></b></td>
 														<td align="center"><b></b></td>
 													</tr>
-													<?
+													<?php
 													for( $i = 1; $i <= 20; $i++  )
 													{
 													?>
 													<tr >
 														<td align="center"><b><?=$i?></b></td>
 													
-                                                                                                                <td align="center"><input type=text  id=Numero<?=$i?> name=Numero<?=$i?> rel="<?=$i ?>" value="<? echo $frm[ $numero ] ?>" class="tbox tboxReferencia" size=8></td>
+                                                                                                                <td align="center"><input type=text  id=Numero<?=$i?> name=Numero<?=$i?> rel="<?=$i ?>" value="<?php echo $frm[ $numero ] ?>" class="tbox tboxReferencia" size=8></td>
 														
                                                                                                        
-                                                                                                                <td align="center"><input type=text readonly id=Talla<?=$i?> name=Talla<?=$i?> value="<? echo $frm[ $talla ] ?>" class=tbox size=5></td>
+                                                                                                                <td align="center"><input type=text readonly id=Talla<?=$i?> name=Talla<?=$i?> value="<?php echo $frm[ $talla ] ?>" class=tbox size=5></td>
 														
                                                                                                     
-                                                                                                                <td align="center"><input type=text readonly id=Nombre<?=$i?> name=Nombre<?=$i?> value="<? echo $frm[ $nombre ] ?>" class=tbox size=15></td>
+                                                                                                                <td align="center"><input type=text readonly id=Nombre<?=$i?> name=Nombre<?=$i?> value="<?php echo $frm[ $nombre ] ?>" class=tbox size=15></td>
 														
                                                                                                               
-                                                                                                                <td align="center"><input type=hidden name=IDCodificacion<?=$i?> value="<? echo $frm[ $idcodificacion ] ?>" ></td>
+                                                                                                                <td align="center"><input type=hidden name=IDCodificacion<?=$i?> value="<?php echo $frm[ $idcodificacion ] ?>" ></td>
                                                                                                                 
                                                                                                               
-														<td align="center"><input type=text id="Cantidad<?=$i?>" name=Cantidad<?=$i?> value="<? echo $frm[ $cantidad ] ?>" class=tbox size=5 onBlur="if(!compruebamaximo(this.value,<?=$i?>)) this.value = ''; else calculatotal(this.value,<?=$i?>);"></td>
+														<td align="center"><input type=text id="Cantidad<?=$i?>" name=Cantidad<?=$i?> value="<?php echo $frm[ $cantidad ] ?>" class=tbox size=5 onBlur="if(!compruebamaximo(this.value,<?=$i?>)) this.value = ''; else calculatotal(this.value,<?=$i?>);"></td>
 														<td align="center"><input type=button name=Agregar<?=$i?> class=submit value=Referencia onClick="window.open('Referencia/popReferencias.php?IDPuntoVenta=<?=$IDPuntoVenta?>&cont=<?=$i?>','','width=600,height=400');"></td>
 														<td align="center"><input type=hidden name=Maximo<?=$i?>></td>
 														<td align="center"><input type=hidden name=Precio<?=$i?>></td>
 													</tr>
-													<?
+													<?php
 													}
 													?>
 													<tbody bgcolor=#e7ebef></tbody>
@@ -413,6 +413,6 @@ var Check = new Array('IDPuntoVentaDestino','Numero1','Talla1','Nombre1','Cantid
 	
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML> 

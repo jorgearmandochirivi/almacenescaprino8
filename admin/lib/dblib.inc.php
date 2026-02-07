@@ -1,4 +1,4 @@
-<?
+<?php
 
 if (!isset($DB_DIE_ON_FAIL)) { $DB_DIE_ON_FAIL = true; }
 if (!isset($DB_DEBUG)) { $DB_DEBUG = false; }
@@ -6,11 +6,11 @@ if (!isset($DB_DEBUG)) { $DB_DEBUG = false; }
 function db_connect($dbhost, $dbname, $dbuser, $dbpass) {
 
 	global $DB_DIE_ON_FAIL, $DB_DEBUG;
-
-	if (! $dbh = mysql_connect($dbhost, $dbuser, $dbpass)) {
+	
+	if (! $dbh = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname)) {
 		if ($DB_DEBUG) {
 			echo "<h2>Can't connect to $dbhost as $dbuser</h2>";
-			echo "<p><b>MySQL Error</b>: ", mysql_error();
+			echo "<p><b>MySQL Error</b>: ", mysqli_connect_error();
 		} else {
 			echo "<h2>Database error encountered</h2>";
 		}
@@ -19,34 +19,36 @@ function db_connect($dbhost, $dbname, $dbuser, $dbpass) {
 			echo "<p>This script cannot continue, terminating.";
 			die();
 		}
+		return false;
 	}
 
-	if (! mysql_select_db($dbname)) {
-		if ($DB_DEBUG) {
-			echo "<h2>Can't select database $dbname</h2>";
-			echo "<p><b>MySQL Error</b>: ", mysql_error();
-		} else {
-			echo "<h2>Database error encountered</h2>";
-		}
+	// Set charset to utf8mb4 for better compatibility
+	mysqli_set_charset($dbh, 'utf8mb4');
 
-		if ($DB_DIE_ON_FAIL) {
-			echo "<p>This script cannot continue, terminating.";
-			die();
-		}
-	}
+	// Store connection globally for use by other db_* functions
+	$GLOBALS['DB_LINK'] = $dbh;
 
 	return $dbh;
 }
 
 function db_disconnect($dblink) {
 
-	mysql_close($dblink);
+	mysqli_close($dblink);
 }
 
 function db_query($query, $debug=false, $die_on_debug=true, $silent=false) {
 
 	global $DB_DIE_ON_FAIL, $DB_DEBUG;
 
+	// Get the global database connection
+	$dblink = $GLOBALS['DB_LINK'] ?? null;
+
+	if (!$dblink) {
+		if (!$silent) {
+			echo "<h2>No database connection available</h2>";
+		}
+		return false;
+	}
 
 	if ($debug) {
 		echo "<pre>" . htmlspecialchars($query) . "</pre>";
@@ -54,16 +56,14 @@ function db_query($query, $debug=false, $die_on_debug=true, $silent=false) {
 		if ($die_on_debug) die;
 	}
 
-
-
-	$qid = mysql_query($query);
+	$qid = mysqli_query($dblink, $query);
 
 	if (! $qid && ! $silent) {
 		if ($DB_DEBUG) {
 			echo "<h2>Can't execute query</h2>";
 		        echo "<pre>" . htmlspecialchars($query) . "</pre>";
-			echo "<p><b>MySQL Error ".mysql_errno()." :</b> ".mysql_error();
-			mysql_query("ROLLBACK");
+			echo "<p><b>MySQL Error ".mysqli_errno($dblink)." :</b> ".mysqli_error($dblink);
+			mysqli_query($dblink, "ROLLBACK");
 		} else {
 			echo "<h2>Database error encountered</h2>";
 		}
@@ -81,69 +81,72 @@ function db_fetch_array($qid) {
 /* grab the next row from the query result identifier $qid, and return it
  * as an associative array.  if there are no more results, return FALSE */
 
-	return mysql_fetch_array($qid);
+	return mysqli_fetch_array($qid);
 }
 
 function db_fetch_row($qid) {
 /* grab the next row from the query result identifier $qid, and return it
  * as an array.  if there are no more results, return FALSE */
 
-	return mysql_fetch_row($qid);
+	return mysqli_fetch_row($qid);
 }
 
 function db_fetch_object($qid) {
 /* grab the next row from the query result identifier $qid, and return it
  * as an object.  if there are no more results, return FALSE */
 
-	return mysql_fetch_object($qid);
+	return mysqli_fetch_object($qid);
 }
 
 function db_num_rows($qid) {
 /* return the number of records (rows) returned from the SELECT query with
  * the query result identifier $qid. */
 
-	return mysql_num_rows($qid);
+	return mysqli_num_rows($qid);
 }
 
 function db_affected_rows() {
 /* return the number of rows affected by the last INSERT, UPDATE, or DELETE
  * query */
 
-	return mysql_affected_rows();
+	$dblink = $GLOBALS['DB_LINK'] ?? null;
+	return $dblink ? mysqli_affected_rows($dblink) : 0;
 }
 
 function db_insert_id() {
 /* if you just INSERTed a new row into a table with an autonumber, call this
  * function to give you the ID of the new autonumber value */
 
-	return mysql_insert_id();
+	$dblink = $GLOBALS['DB_LINK'] ?? null;
+	return $dblink ? mysqli_insert_id($dblink) : 0;
 }
 
 function db_free_result($qid) {
 /* free up the resources used by the query result identifier $qid */
 
-	mysql_free_result($qid);
+	mysqli_free_result($qid);
 }
 
 function db_num_fields($qid) {
 /* return the number of fields returned from the SELECT query with the
  * identifier $qid */
 
-	return mysql_num_fields($qid);
+	return mysqli_num_fields($qid);
 }
 
 function db_field_name($qid, $fieldno) {
 /* return the name of the field number $fieldno returned from the SELECT query
  * with the identifier $qid */
 
-	return mysql_field_name($qid, $fieldno);
+	$field = mysqli_fetch_field_direct($qid, $fieldno);
+	return $field ? $field->name : false;
 }
 
 function db_data_seek($qid, $row) {
 /* move the database cursor to row $row on the SELECT query with the identifier
  * $qid */
 
-	if (db_num_rows($qid)) { return mysql_data_seek($qid, $row); }
+	if (db_num_rows($qid)) { return mysqli_data_seek($qid, $row); }
 }
 
 
@@ -165,8 +168,9 @@ function insert_with_key($frm){
 function insert($frm){
 
 	Global $TitleMod,$Table,$Key,$ID_Usuario;
-	Global $MOD,$idnot, $m;
+	Global $MOD, $m;
 	Global $permisos,$error_acceso;
+	$idnot = $idnot ?? '';
 	if($permisos[0]!=2){
 		$qid = db_query("Select MAX($Key) AS maximo FROM $Table ");
 
@@ -200,7 +204,7 @@ function insert($frm){
 		if( $MOD <> "GenerarFactura" && $MOD <> "GenerarFacturaBono" && $MOD <> "cambiar" && $MOD <> "SalidaMerca" && $MOD <> "CostoReferencia" )
 			echo "
 				<script>
-					location.href='?mod=".$MOD."&action=edit&id=".$frm[$Key]."&idnot=".$idnot."'
+					location.href='?mod=".$MOD."&action=edit&id=".$frm[$Key].(isset($idnot) ? "&idnot=".$idnot : '')."'
 				</script>
 			";
 
@@ -217,8 +221,9 @@ function insert($frm){
 function insert_width_table($frm,$Table,$Key){
 
 	Global $TitleMod,$ID_Usuario;
-	Global $MOD,$idnot, $m;
+	Global $MOD, $m;
 	Global $permisos,$error_acceso;
+	$idnot = $idnot ?? '';
 	if($permisos[0]!=2){
 		$qid = db_query("Select MAX($Key) AS maximo FROM $Table ");
 
@@ -238,7 +243,7 @@ function insert_width_table($frm,$Table,$Key){
 
 		//Si el modulo es el de referencia se insertan los registros necesarios
 		//para llevar el inventario
-
+		$mod = $MOD ?? '';
 		if(!$m && $MOD <> "GenerarFactura"){
 			echo "
 				<script>
@@ -263,7 +268,7 @@ function insert_width_table($frm,$Table,$Key){
 function update($frm){
 	Global $Table,$TitleMod,$Key,$ID_Usuario,$m,$MOD;
 	Global $permisos,$error_acceso;
-
+	$idnot = $idnot ?? '';
 
 	if($permisos[0]!=2){
 //            print_r( $frm );
@@ -274,13 +279,14 @@ function update($frm){
 
 		//echo $sql_update;
 		//exit;
-		$qry_update = mysql_query($sql_update);
+		$qry_update = db_query($sql_update);
 
 		//insertar el log
 		insertlog($ID_Usuario,$Table,$frm['ID'],"Actualizar",$sql_update);
 		if($MOD!="GenerarFactura" && $MOD <> "GenerarFacturaBono" )
 			window_alert("Registro Actualizado correctamente ");
 
+		$mod = $MOD ?? '';
 		if(!$m && $mod != "GenerarFactura")
 			print_form($frm['ID'],"update","Actualizar $TitleMod","Realizar Cambios");
 	}
@@ -303,7 +309,7 @@ function update($frm){
 	{
 			echo "
 				<script>
-					location.href='?mod=".$MOD."&action=edit&id=".$frm[$Key]."&idnot=".$idnot."'
+					location.href='?mod=".$MOD."&action=edit&id=".$frm[$Key].(isset($idnot) ? "&idnot=".$idnot : '')."'
 				</script>
 			";
 	}
@@ -311,11 +317,12 @@ function update($frm){
 
 function delete($id){
 
-	Global $Table,$Key,$TableJoin,$action,$ID_Usuario,$m;
+	Global $Table,$Key,$TableJoin,$action,$ID_Usuario,$m,$TitleMod;
 
+	$strpunto = '';
 	//Si es Traslado o factura o MOvimiento
 	if( ( $Table == "Factura" ) || ( $Table == "Movimiento" ) || ( $Table == "Traslado" ) )
-		$strpunto = " AND IDPuntoVenta = '$frm[IDPuntoVenta]' ";
+		$strpunto = " AND IDPuntoVenta = (SELECT IDPuntoVenta FROM $Table WHERE $Key = '$id' LIMIT 1) ";
 
 	if (!empty( $TableJoin))
 	{
@@ -367,8 +374,11 @@ function str_qry_insert($Table,$frm){
 
 	 $result = db_query("SHOW FIELDS FROM $Table");
 
+	$fields = '';
+	$values = '';
+	$field = array();
     while($row = db_fetch_array($result))
-		$field[] = $row[Field];
+		$field[] = $row['Field'];
 
 	$str = "INSERT INTO $Table ( ";
 
@@ -399,10 +409,10 @@ function str_qry_update($Table,$frm){
 	$value_array = array();
 	while($row = db_fetch_array($result)){
 		if($row['Field'] <> "Password")
-			$array_field[] = $row[Field];
+			$array_field[] = $row['Field'];
 		else
-			if(!empty($row[Field]))
-				$array_field[] = $row[Field];
+			if(!empty($row['Field']))
+				$array_field[] = $row['Field'];
 	}
 
 	if( ( $Table == "Factura" ) || ( $Table == "Movimiento" )  )
@@ -486,6 +496,7 @@ function make_qry_string($frm){
 		$var = explode(".",$field);
 		if($var[1] == "")
 			$field = $Table.".".$field;
+		$keyword = '';
 		$keyword = $keyword.makeboolean($field,$frm['QryString']);
 		$where .= "AND $keyword ";
 	}
@@ -536,7 +547,7 @@ function make_qry_string($frm){
 		$var = explode(".",$field_order);
 
 		if($var[1] != "" ){
-			if($var[0]!=$frm['tjoin'] && $var[0] != $frm[tlevel]){
+			if($var[0]!=$frm['tjoin'] && $var[0] != $frm['tlevel']){
 				$IDJoinKey2 = db_fetch_object(db_query("SHOW KEYS FROM $var[0]"));
 				$select .= ", ".$var[0].".".$IDJoinKey2->Column_name;
 				$from .=", ".$var[0];
@@ -551,40 +562,40 @@ function make_qry_string($frm){
 		$select .= ", ".$frm['tjoin'].".".$IDJoinKey->Column_name;
 		$from .=", ".$frm['tjoin'];
 		$where .=" AND ".$Table.".".$IDJoinKey->Column_name." = ".$frm['tjoin'].".".$IDJoinKey->Column_name;
-		if($Join_Table && $frm['tjoin']!=$Join_Table && $frm[tlevel] != $Join_Table && $Join_Table!=$var[0]){
+		if($Join_Table && $frm['tjoin']!=$Join_Table && (!empty($frm['tlevel']) && $frm['tlevel'] != $Join_Table) && $Join_Table!=$var[0]){
 			$IDJoinKey3 = db_fetch_object(db_query("SHOW KEYS FROM $Join_Table"));
 			$select .= ", ".$Join_Table.".".$IDJoinKey3->Column_name;
 			$from .=", ".$Join_Table;
 			$where .= " AND ".$Join_Table.".".$IDJoinKey3->Column_name." = ".$frm['tjoin'].".".$IDJoinKey3->Column_name;
 		}
 
-		if($frm[tlevel]){ //la tabla join tiene el mismo nivel con $frm[tlevel]
-			$IDJoinKey4 = db_fetch_object(db_query("SHOW KEYS FROM $frm[tlevel]"));
-			$select .= ", ".$frm[tlevel].".".$IDJoinKey4->Column_name;
-			$from .=", ".$frm[tlevel];
-			$where .= " AND ".$frm[tlevel].".".$IDJoinKey4->Column_name." = ".$Table.".".$IDJoinKey4->Column_name;
+		if(!empty($frm['tlevel'])){ //la tabla join tiene el mismo nivel con $frm['tlevel']
+			$IDJoinKey4 = db_fetch_object(db_query("SHOW KEYS FROM {$frm['tlevel']}"));
+			$select .= ", ".$frm['tlevel'].".".$IDJoinKey4->Column_name;
+			$from .=", ".$frm['tlevel'];
+			$where .= " AND ".$frm['tlevel'].".".$IDJoinKey4->Column_name." = ".$Table.".".$IDJoinKey4->Column_name;
 		}
 		if($idnot)
 			$where .=" AND $Table.$joinKey = '$idnot'";
 	}
 	//********************************** FIN DETERMINAR TABLAS JOINS ***********************************************
 
-	if( !empty($frm[ubicacion]) ){
-		if($frm[ubicacion]=="INDICE" || $frm[ubicacion]=="INDICESEC" || $frm[ubicacion]=="MODULO" || $frm[ubicacion]=="SECCION"){
-			$where .= " AND FIND_IN_SET('$frm[ubicacion]',Noticia.Ubicacion) > 0"; // GROUP BY Noticia.Ubicacion";
+	if( !empty($frm['ubicacion']) ){
+		if($frm['ubicacion']=="INDICE" || $frm['ubicacion']=="INDICESEC" || $frm['ubicacion']=="MODULO" || $frm['ubicacion']=="SECCION"){
+			$where .= " AND FIND_IN_SET('{$frm['ubicacion']}',Noticia.Ubicacion) > 0"; // GROUP BY Noticia.Ubicacion";
 		}
 	}
 
-	if( !empty($frm[Publicar]) ){
-		$where .= " AND Noticia.Publicar = '$frm[Publicar]' "; // GROUP BY Noticia.Ubicacion";
+	if( !empty($frm['Publicar']) ){
+		$where .= " AND Noticia.Publicar = '{$frm['Publicar']}' "; // GROUP BY Noticia.Ubicacion";
 	}
 
 	if($field_order=="Entrada.IDPuntoVentaReferencia"){
 		$field_order="Entrada.Fecha";
-		$frm[in_order] = " DESC";
+		$frm['in_order'] = " DESC";
 	}
 
-	$order = " ORDER BY $field_order $frm[in_order] ";
+	$order = " ORDER BY $field_order {$frm['in_order']} ";
 
 	$qry_string = $select.$from.$where.$between.$order;
 	if($k)
@@ -599,7 +610,7 @@ function insertlog($ID_Usuario,$Table,$ID,$transaccion,$operacion)
 	$IP=get_IP();
 	$fechalog=fecha()." ".hora();
 	$IDLog=get_maxID("Log","IDLog");
-	$operacion=substr($operacion,0,200);
+	$operacion = isset($operacion) ? substr($operacion,0,200) : '';
 	$sentencia=urlencode($operacion); // sentencia sql realizada en la transaccion
 	$sql_log=("INSERT INTO Log (IDLog,IDUsuario,Fecha,Modulo,IDModulo,Transaccion,Operacion,DireccionIP)
 				VALUES('$IDLog','$ID_Usuario','$fechalog','$Table','$ID','$transaccion','$sentencia','$IP')");
@@ -611,8 +622,6 @@ function insertlog_acceso($ID_Usuario,$IDPuntoVenta,$Usuario)
 {
 	$IP = get_IP();
 	$IDLog = get_maxID("LogAcceso","IDLog");
-	$operacion = substr($operacion,0,200);
-	$sentencia = urlencode($operacion); // sentencia sql realizada en la transaccion
 	$sql_log = "INSERT INTO LogAcceso (IDLog,IDUsuario,Fecha,IDPuntoVenta,Usuario,DireccionIP)
 				VALUES('$IDLog','$ID_Usuario',NOW(),'$IDPuntoVenta','$Usuario','$IP')";
 
@@ -662,7 +671,7 @@ $sep = "\t"; //tabbed character
 
 //start of printing column names as names of MySQL fields
 for ($i = 0; $i < db_num_fields($result); $i++) {
-echo mysql_field_name($result,$i) . "\t";
+echo db_field_name($result,$i) . "\t";
 }
 print("\n");
 //end of printing column names

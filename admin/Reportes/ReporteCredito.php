@@ -141,12 +141,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp;
 
-						<?
+						<?php
 						echo "CREDITOS ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta )." ".$FechaDesde." - ".$FechaHasta;
 						?>
 					</td>
 				</tr>
-				<?
+				<?php
 
 
 
@@ -201,7 +201,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
             	<td class="titlemedium" align="center" nowrap>Vr Castigado</td>
 							<td class="titlemedium" width="300px" align="left" nowrap>Comentario</td>
 									</tr>
-						<?
+						<?php
 
 						//print_r( $array_fechas );
 
@@ -341,7 +341,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									</td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $ValorCuotaPago,2 ); ?></td>
 									<td class="<?=$class?>" align="center" nowrap>
-										<?
+										<?php
 											echo $candeladas;
 										?>
 									</td>
@@ -349,7 +349,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $TotalCuotaPagada,2 ); ?></td>
 									 <td class="<?=$class?>" align="right" nowrap><?php echo $FechasAbono; ?></td>
 										<td class="<?=$class?>" align="center" nowrap>
-										<?
+										<?php
 											//echo $pendientes = db_num_rows( $qry_cuotas ) - $candeladas;
 											echo $pendientes = 5 - $candeladas;
 										?>
@@ -367,7 +367,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 											$tValorTotal += $faltante_cuotas;
 											?></td>
 
-										<td class="<?=$class?>" align="center" nowrap><?
+										<td class="<?=$class?>" align="center" nowrap><?php
 											$alerta_cuota_vencida=0;
 											if( date( "Y-m-d" ) >= $fechaproximo && $pendientes > 0  ):
 												//echo " <img src='images/iconalert.gif' border=0>    &nbsp;&nbsp;";
@@ -385,7 +385,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 											<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[FechaReporteCredito] ?></td>
 
 
-                                        <td class="<?=$class?>" align="center" nowrap ><?
+                                        <td class="<?=$class?>" align="center" nowrap ><?php
 											if($mostrar_cartera == 1):
 												echo '<span style="color:#06306F; font-weight:bold">C Castigada</span> &nbsp;&nbsp;';
 												//$valor_total_cartera += $r_facturas[ ValorTotal ];
@@ -402,17 +402,17 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 										?></td>
 
-                                        <td class="<?=$class?>" align="center" nowrap><?
+                                        <td class="<?=$class?>" align="center" nowrap><?php
 											if($mostrar_cartera == 1):
 												echo $cartera_castigada;
 											endif;
 
 										?></td>
                                         <td class="<?=$class?>" align="center" nowrap>$<?php echo number_format($valor_cartera,'0',',','.'); ?></td>
-																				<td class="<?=$class?>" align="left"><? echo $r_facturas[ComentarioCredito]; if($r_facturas[FechaUtimoComentario]!="0000-00-00") echo "<br>".$r_facturas[FechaUtimoComentario]; ?></td>
+																				<td class="<?=$class?>" align="left"><?php echo $r_facturas[ComentarioCredito]; if($r_facturas[FechaUtimoComentario]!="0000-00-00") echo "<br>".$r_facturas[FechaUtimoComentario]; ?></td>
 
 									</tr>
-									<?
+									<?php
 									}
 						}//end for
 

@@ -3,7 +3,7 @@
  * @package dompdf
  * @link    http://www.dompdf.com/
  * @author  Benj Carson <benjcarson@digitaljunkies.ca>
- * @author  Fabien Ménager <fabien.menager@gmail.com>
+ * @author  Fabien Mï¿½nager <fabien.menager@gmail.com>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @version $Id: text_frame_reflower.cls.php 462 2012-01-29 22:44:23Z fabien.menager $
  */
@@ -370,16 +370,18 @@ class Text_Frame_Reflower extends Frame_Reflower {
       // faster than doing a single-pass character by character scan.  Heh,
       // yes I took the time to bench it ;)
       $words = array_flip(preg_split("/[\s-]+/u",$str, -1, PREG_SPLIT_DELIM_CAPTURE));
-      array_walk($words, create_function('&$val,$str',
-                                         '$val = Font_Metrics::get_text_width($str, "'.addslashes($font).'", '.$size.', '.$word_spacing.', '.$char_spacing.');'));
+      array_walk($words, function(&$val, $str) use ($font, $size, $word_spacing, $char_spacing) {
+        $val = Font_Metrics::get_text_width($str, $font, $size, $word_spacing, $char_spacing);
+      });
       arsort($words);
       $min = reset($words);
       break;
 
     case "pre":
       $lines = array_flip(preg_split("/\n/u", $str));
-      array_walk($lines, create_function('&$val,$str',
-                                         '$val = Font_Metrics::get_text_width($str, "'.addslashes($font).'", '.$size.', '.$word_spacing.', '.$char_spacing.');'));
+      array_walk($lines, function(&$val, $str) use ($font, $size, $word_spacing, $char_spacing) {
+        $val = Font_Metrics::get_text_width($str, $font, $size, $word_spacing, $char_spacing);
+      });
 
       arsort($lines);
       $min = reset($lines);
@@ -406,8 +408,9 @@ class Text_Frame_Reflower extends Frame_Reflower {
     case "pre-wrap":
       // Find the longest word (i.e. minimum length)
       $lines = array_flip(preg_split("/\n/", $text));
-      array_walk($lines, create_function('&$val,$str',
-                                         '$val = Font_Metrics::get_text_width($str, "'.$font.'", '.$size.', '.$word_spacing.', '.$char_spacing.');'));
+      array_walk($lines, function(&$val, $str) use ($font, $size, $word_spacing, $char_spacing) {
+        $val = Font_Metrics::get_text_width($str, $font, $size, $word_spacing, $char_spacing);
+      });
       arsort($lines);
       reset($lines);
       $str = key($lines);

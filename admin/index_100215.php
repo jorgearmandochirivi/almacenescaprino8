@@ -1,4 +1,4 @@
-<%
+<?php
 	include("config.inc.php");
 	Encabezado();
 	$datos = Verifica_Sesion();
@@ -7,11 +7,11 @@
 	$ID_Usuario = $datos["IDUsuario"];
 	$Nivel =  $datos["Nivel"];
 	$IVA = $datos["IVA"];
-%>
+  ?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><% echo $app_title;%></title>
+<title><?php echo $app_title;;?></title>
 <link rel="stylesheet" href="styles.css?1" type="text/css">
 
 <link rel="stylesheet" href="jscripts/choosen/chosen.css">
@@ -167,10 +167,10 @@
 													<td  align="left" > - </td>
 													<td align="left" nowrap ><a class="menuppal" href="?mod=InventarioCon">Reportes Pares</a></td>
 												</tr>
-												<%
+												<?php
 												if( $Nivel == 0 )
 												{
-												%>
+												?>
 												<tr>
 													<td  align="left" > - </td>
 													<td align="left" nowrap ><a class="menuppal" href="?mod=VerSesion">Sesiones admin</a></td>
@@ -179,9 +179,9 @@
 													<td  align="left" > - </td>
 													<td align="left" nowrap ><a class="menuppal" href="?mod=LogAcceso">Log de Accesos</a></td>
 												</tr>
-												<%
+												<?php
 												}//end if
-												%>
+												?>
 											</table>
 										</td>
 									</tr>
@@ -230,8 +230,8 @@
 							<td valign="top" bgcolor="white" width="100%">
 								<table width="27%" border="0" cellspacing="0" cellpadding="0" align="right" height="16">
 									<tr align="right" valign="middle">
-										<td width="14%"><span class="rowform"><% echo date("F j, Y");%> 
-											Sesi&oacute;n Activa <%=usr_datos($ID_Usuario)%></span><br>
+										<td width="14%"><span class="rowform"><?php echo date("F j, Y");;?> 
+											Sesi&oacute;n Activa <?php echo usr_datos($ID_Usuario);?></span><br>
 										</td>
 									</tr>
 								</table>

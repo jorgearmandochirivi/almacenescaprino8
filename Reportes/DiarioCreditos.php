@@ -82,7 +82,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 			</td>
 		</tr>
 	</table>
-	<?
+	<?php
 	$filedir = $dirroot."files/";
 	ob_start();	
 	?>
@@ -113,7 +113,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								<td class="titlemedium" align="right" nowrap>Fecha de Pago</td>
 								<td class="titlemedium" align="right" nowrap>Valor</td>
 							</tr>
-						<?
+						<?php
 						//$sql_credito = "SELECT * FROM CreditoCuota WHERE DATE_FORMAT(FechaPago,'%Y-%m-%d' ) = '$Fecha' AND IDPuntoVentaPago = '$IDPuntoVenta'";
 						$sql_credito = "SELECT * FROM CreditoCuota WHERE DATE_FORMAT(FechaPago,'%Y-%m-%d' ) = '$Fecha' AND (IDPuntoVentaPago = '$IDPuntoVenta' or ( IDPuntoVenta = '$IDPuntoVenta' and IDPuntoVentaPago = 0 )) ";
 						
@@ -128,7 +128,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								<td class="<?=$class?>" align="center" nowrap><?=$r_credito->Consecutivo ?></td>
 								<td class="<?=$class?>" align="center" colspan="2" nowrap><?=$r_credito->IDCuota?></td>
 								<td class="<?=$class?>" align="center" nowrap>
-								<?
+								<?php
 									$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '".$r_credito->IDFactura."' AND IDPuntoVenta = '$r_credito->IDPuntoVenta' AND FechaPago = '0000-00-00 00:00:00' ";
 									$qry_cuotas = db_query( $sql_cuotas );
 									$r_cuotas = db_fetch_object( $qry_cuotas );
@@ -139,7 +139,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								<td class="<?=$class?>" align="right" nowrap><?=$r_credito->FechaPago?></td>
 								<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_credito->ValorTotal , 2); $ValorTotal += $r_credito->ValorTotal?></td>
 							</tr>
-						<?	
+						<?php	
 						}//ebd while
 						?>	
 							<tr>
@@ -165,7 +165,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		</form>
 	
 		</table>
-		<?
+		<?php
 		$page = ob_get_contents();
 		$fecha = date( "Y-m-d H:i:s" );
 		$name = "DiarioVentas$fecha.xls";

@@ -1,4 +1,4 @@
-<?
+<?php
 	include ("../../admin/config.inc.php3");
 	$datos = Verifica_SesionCliente();
 	$Nombre_Usuario = $datos["Nombre"];

@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Orden de Compra";
 
@@ -107,7 +107,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 </td>
 										<td class=row1>Estado </td>
 										<td class=row1>
-											<? echo formpopup("EstadoPedido","Descripcion","IDEstadoPedido","IDEstadoPedido",$r_pedido->IDEstadoPedido,"input\" id=\"IDEstadoPedido"); ?>
+											<?php echo formpopup("EstadoPedido","Descripcion","IDEstadoPedido","IDEstadoPedido",$r_pedido->IDEstadoPedido,"input\" id=\"IDEstadoPedido"); ?>
 										</td>
 									</tr>
 									<tr>
@@ -140,7 +140,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		</tr>
 	</table>
 	</form>
-	<?
+	<?php
 }// End function print_form()
 
 /*******************************************************************************************
@@ -203,7 +203,7 @@ if($rows > 0){
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 			<tr>
 				<td class="forumlink" colspan="2">
-					<?filtrar();?>
+					<?php filtrar();?>
 				</td>
 			</tr>
 			<tr>
@@ -211,28 +211,28 @@ if($rows > 0){
 					<table width=100% border=0 cellspacing=1 cellpadding=0>
 						<tr>
 							<td align=center class=navpic valign=middle bgcolor=#DBEAF5 width=69>Ver</td>
-							<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">NumeroOrden&nbsp;<% if($_GET['order_by']=="NumeroOrden"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-							<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">FechaOrden&nbsp;<% if($_GET['order_by']=="FechaOrden"){%><img src="images/<%=$img%>" border=0><%}%></a> </td>
-									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; %>">Items<% if($_GET['order_by']=="FechaOrden"){%><img src="images/<%=$img%>" border=0><%}%></a>  </td>
+							<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">NumeroOrden&nbsp;<?php if($_GET['order_by']=="NumeroOrden")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+							<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">FechaOrden&nbsp;<?php if($_GET['order_by']=="FechaOrden")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </td>
+									<td class=navpic nowrap bgcolor=#DBEAF5> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=FechaOrden&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>">Items<?php if($_GET['order_by']=="FechaOrden")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a>  </td>
 								</tr>
 	
-						<? while($r = db_fetch_object($result)){
+						<?php while($r = db_fetch_object($result)){
 							$class = repetition()?"col1list":"col2list";
 						?>
 			 	
 						<tr>
 							<td align=center valign=middle nowrap width=50 class="<?=$class?>">
-							&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+							&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 						</td>
 							<td nowrap class="<?=$class?>"><?php echo $r->NumeroOrden ?></td>
 							<td nowrap class="<?=$class?>"><?php echo $r->FechaOrden ?></td>
 									<td nowrap class="<?=$class?>"><?php echo get_field("DetalleOrdenCompra","count(IDDetalleOrdenCompra)","IDOrdenCompra",$r->IDOrdenCompra);?></td>
 								</tr>
-						<? } // END for
+						<?php } // END for
 						?>
 						<tr>
 							<td class=texto bgcolor=#DBEAF5 colspan=4 nowrap>
-								<?
+								<?php
 								print $pages;
 								?>
 							</td>
@@ -308,7 +308,7 @@ Global $dblink,$total_records,$row,$numtoshow,$MOD;
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 
 
@@ -363,11 +363,11 @@ function verdetallepedido($id)
 		
 			<tr>
 				<td class=navpic align=center>
-				<?
+				<?php
 					echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_referencias->IDPuntoVentaReferencia));	
 				?>
 				</td>
-				<?
+				<?php
 					foreach($r_detalle as $talla)
 					{
 						if(!empty($talla[IDTalla]))
@@ -380,7 +380,7 @@ function verdetallepedido($id)
 				<td class=col1 align=center>
 					Existencias
 				</td>
-				<?
+				<?php
 					foreach($r_detalle as $talladetalle)
 					{
 						foreach($r_codificacion as $talla)
@@ -396,7 +396,7 @@ function verdetallepedido($id)
 				<td class=col1 align=center>
 					M&aacute;ximo
 				</td>
-				<?
+				<?php
 					foreach($r_detalle as $talladetalle)
 					{
 						foreach($r_codificacion as $talla)
@@ -412,7 +412,7 @@ function verdetallepedido($id)
 				<td class=col1 align=center>
 					Minimo
 				</td>
-				<?
+				<?php
 					foreach($r_detalle as $talladetalle)
 					{
 						foreach($r_codificacion as $talla)
@@ -430,7 +430,7 @@ function verdetallepedido($id)
 				<td class="col1" align=center>
 					PEDIDO
 				</td>
-				<?
+				<?php
 				foreach($r_detalle as $talla)
 				{
 					if(!empty($talla[IDTalla]))
@@ -442,7 +442,7 @@ function verdetallepedido($id)
 				}
 				?>
 			</tr>
-	<?
+	<?php
 	
 	$r_detalle = array();
 	$r_codificacion = array();
@@ -450,6 +450,6 @@ function verdetallepedido($id)
 	}//end while( $r_referencias = db_fetch_object( $query_referencias ) )
 	?>
 	</table>
-<?
+<?php
 }// end function verdetallesugerido($id)
 ?>

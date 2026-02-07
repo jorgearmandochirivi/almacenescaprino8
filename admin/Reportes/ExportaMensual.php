@@ -1,4 +1,4 @@
-<?
+<?php
 
 $Table = "CodificacionEspecifica";
 $TableJoin = "Referencia";
@@ -80,7 +80,7 @@ function print_from($IDPuntoVenta="", $FechaDesde="", $FechaHasta=""){
 							</td>
 							<td  align='left' valign='middle' class="nav"><img src='images/house.png' border='0'  alt=''></td>
 							<td align="left" valign="middle" class="nav">Puntos de Venta	<select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
-									<option value="">Seleccione Un Punto de Venta</option><? 								
+									<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta ORDER BY IDCiudad, Nombre ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
@@ -98,7 +98,7 @@ function print_from($IDPuntoVenta="", $FechaDesde="", $FechaHasta=""){
 		</tr>
 		
 		
-		<?
+		<?php
 }//end function
 
 

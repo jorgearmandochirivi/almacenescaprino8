@@ -293,7 +293,7 @@ table{
 </table>
 
 
-<?
+<?php
 
 $page = ob_get_contents();
 $fw = fopen($file, "w");

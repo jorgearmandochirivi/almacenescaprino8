@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 $TitleMod ="Referencia";
 
 $Table = "Referencia";
@@ -204,7 +204,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=left >
 	<tr>
-			<td class=maintitle bgcolor=#9daac6>&nbsp;<? echo $TitleMod ?> <? echo $r->$Key ?></td>
+			<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
 		</tr>
 	<tr>
 			<td>
@@ -215,7 +215,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				
 					<form name="frmInv" action="<?=$PhP_SELF?>" method="post" enctype="multipart/form-data" onsubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
-							<td colspan="2"><%=Mensaje_Info("Importar Inventario Referencias")%></td>
+							<td colspan="2"><?php echo Mensaje_Info("Importar Inventario Referencias");?></td>
 						</tr>
 						<tr class=row2>
 							<td>Importar desde Excel</td>
@@ -242,7 +242,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 			</td>
 	</tr>
 </table>
-<?
+<?php
 }// End function print_form()
 
 ?>

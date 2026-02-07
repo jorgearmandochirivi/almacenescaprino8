@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 $TitleMod ="Modulo";
 
@@ -129,14 +129,14 @@ function reload(){
 </script>
 <table cellspacing='0' cellpadding='2' border='0' align=center width='600' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folders.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folders.gif border=0> 
+			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table><br>
 
 
-<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="setSelectOptions(document.frm.Tabla);return EvaluaReg(this,Check)"<?}?>>
+<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="setSelectOptions(document.frm.Tabla);return EvaluaReg(this,Check)"<?php }?>>
 	<table width=600 border=0 cellspacing=1 cellpadding=1 class=bordertable align=center>
 			<tr><td class=maintitle colspan=2>
 					<?=$TitleMod?>
@@ -146,7 +146,7 @@ function reload(){
 				<td class=row1 align=right>Directorio</td>
 				<td class=row2><input type=text size=25 class=tbox   name=DirectorioModulo value="<?=$r->DirectorioModulo ?>"></td>
 			</tr>
-			<?
+			<?php
 			if($newmode != "insert")
 			{
 			?>
@@ -159,45 +159,45 @@ function reload(){
 			<tr>
 				<td class=row1 align=right>Tablas</td>
 				<td class=row2 align="left">
-						<a href="javascript:;" onclick="window.open('<% echo $url %>Permisos/popTablas.php?modulo=<% echo $r->IDModuloSite %>','','width=500,height=480'); this.value=''">
+						<a href="javascript:;" onclick="window.open('<?php echo $url ?>Permisos/popTablas.php?modulo=<?php echo $r->IDModuloSite ?>','','width=500,height=480'); this.value=''">
 							<img src="images/mas.gif" alt="Agregar Tabla" border="0">
 						</a>
 						<a href="javascript:;" onclick="removeitem(document.frm.Tabla);">
 							<img src="images/trash.gif" alt="Eliminar Usuarios" border="0">
 						</a><br>
-						<?
+						<?php
 							$sql_Tabla = "SELECT S.Descripcion, MS.IDTabla FROM Tabla S, ModuloSite_Tabla MS, ModuloSite M WHERE MS.IDModuloSite IN ('$r->IDModuloSite') AND MS.IDTabla = S.IDTabla GROUP BY S.IDTabla ORDER BY S.Descripcion ";
 							$qry_Tabla = db_query($sql_Tabla);
 						?>
 						<select name="Tabla" STYLE="width:160px" size="6" multiple>
-						<% 	
+						<?php 	
 						//for($k=0;$k<=$numd;$k++){
 						
 						
 					
 						while ($rsubEspecialidad = db_fetch_object($qry_Tabla) ) {
-						%>
-							<option value="<% pv($rsubEspecialidad->IDTabla) %>" ><% echo $rsubEspecialidad->Descripcion %></option>
-						<% 
+						?>
+							<option value="<?php pv($rsubEspecialidad->IDTabla) ?>" ><?php echo $rsubEspecialidad->Descripcion ?></option>
+						<?php 
 						} //} // End while directorio
-						%>
+						?>
 						</select>
 				</td>
 			</tr>
 			
-			<?
+			<?php
 			}//end if($newmode != "insert")
 			?>
 			
 			<tr>
-			<td colspan=2 align=center class=row2><input type=hidden class=tbox   name=FechaTrEd value="<?=$r->FechaTrEd ?>"><input type=hidden class=tbox   name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>"><input type=hidden class=tbox   name=FechaTrCr value="<?=$r->FechaTrCr ?>"><input type=hidden  name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>"><input type=hidden name=IDModuloSite value="<?=$r->IDModuloSite ?>"><input type=hidden name=ID value="<? echo $r->$Key ?>">
+			<td colspan=2 align=center class=row2><input type=hidden class=tbox   name=FechaTrEd value="<?=$r->FechaTrEd ?>"><input type=hidden class=tbox   name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>"><input type=hidden class=tbox   name=FechaTrCr value="<?=$r->FechaTrCr ?>"><input type=hidden  name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>"><input type=hidden name=IDModuloSite value="<?=$r->IDModuloSite ?>"><input type=hidden name=ID value="<?php echo $r->$Key ?>">
 <input type=hidden name=action value=<?=$newmode?>>
-<input type=submit name=submit value="<? echo $submit_caption ?>" class=submit>
+<input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit>
 </td>
 </tr>
 </table>
 </form>
-<?
+<?php
 }// End function print_form()
 
 /*******************************************************************************************
@@ -235,12 +235,12 @@ if($_GET['in_order']=="DESC"){
 
 <table cellspacing='0' align=center cellpadding='2' border='0'  width='600' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folders.gif border=0> 
-			<a href="./?mod=<%=$MOD%>">Administrar <% echo $TitleMod%></a> </td>
-			<td><a href="./?mod=<%=$MOD%>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
+			<td class=nav width=76;?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folders.gif border=0> 
+			<a href="./?mod=<?php echo $MOD;?>">Administrar <?php echo $TitleMod;?></a> </td>
+			<td><a href="./?mod=<?php echo $MOD;?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 		</tr>
 </table><br>
-<?
+<?php
 if($rows > 0){
 ?>		
 <br>
@@ -249,7 +249,7 @@ if($rows > 0){
 
 <tr>
 <th class="maintitle">
-<?
+<?php
 	print $info;
 ?>
 </th>
@@ -258,28 +258,28 @@ if($rows > 0){
 			<table width=100% border=0 cellspacing=1 cellpadding=0>
 			<tr>
 				<th class=titlemedium nowrap>Editar</th>
-				<th class=titlemedium> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NombreModulo&in_order=".$order."&listar=".$nav->limit; %>">NombreModulo&nbsp;<% if($_GET['order_by']=="NombreModulo"){%><img src="images/<%=$img%>" border=0><%}%></a> </th>
-						<th class=titlemedium> <a style="color: #3A4F6C;text-decoration: none" href="<% echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit; %>">Publicar&nbsp;<% if($_GET['order_by']=="Publicar"){%><img src="images/<%=$img%>" border=0><%}%></a> </th>
+				<th class=titlemedium> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NombreModulo&in_order=".$order."&listar=".$nav->limit; ?>">NombreModulo&nbsp;<?php if($_GET['order_by']=="NombreModulo")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </th>
+						<th class=titlemedium> <a style="color: #3A4F6C;text-decoration: none" href="<?php echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Publicar&in_order=".$order."&listar=".$nav->limit; ?>">Publicar&nbsp;<?php if($_GET['order_by']=="Publicar")<?php <img src="images/<?php echo $img;?>" border=0><?php };?></a> </th>
 						<th class=titlemedium>Eliminar</th>
 					</tr>
-<? while($r = db_fetch_object($result)){
+<?php while($r = db_fetch_object($result)){
 $class = repetition()?"row1":"row2";
 ?>
 <tr class=<?=$class?>>
 						<td align=center valign=middle nowrap width=5>
-	&nbsp;<a href='<? echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
+	&nbsp;<a href='<?php echo "?mod=$MOD&action=edit&id="; echo $r->$Key; ?>'><img src='images/edit.gif' border='0'></a>
 </td>
-						<td nowrap><? echo $r->NombreModulo ?></td>
-						<td nowrap><? echo $r->DirectorioModulo ?></td>
+						<td nowrap><?php echo $r->NombreModulo ?></td>
+						<td nowrap><?php echo $r->DirectorioModulo ?></td>
 						<td align=center valign=middle nowrap width=60>
-&nbsp;<a href='<? echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
+&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>
 					</tr>
-<? } // END for
+<?php } // END for
 ?>
 <tr>
 <th bgcolor=#DBEAF5 colspan=5 nowrap>
-	<?
+	<?php
 		print $pages;
 	?>
 </th>
@@ -290,7 +290,7 @@ $class = repetition()?"row1":"row2";
 </tr>
 </table>	
 
-<? 			
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";

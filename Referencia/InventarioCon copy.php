@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 function header_export($file){
 
@@ -86,7 +86,7 @@ function seleccionareferencia( $newmode)
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="650">
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 		<tr>
-			<td class=col1 width=30%> 
+			<td class=col1 width=30;?> 
 				Buscar Referencia Por
 			</td>
 			<td class="col2">
@@ -105,7 +105,7 @@ function seleccionareferencia( $newmode)
 		</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -122,14 +122,14 @@ function seleccionareferencia( $newmode)
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
 		<tr>
 			<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" /></td>
-			<td class="tbtbot"><b></b><span class="gen"><?=$Title?> - <? echo $campo.":".$referencia;  ?></span></td>
+			<td class="tbtbot"><b></b><span class="gen"><?=$Title?> - <?php echo $campo.":".$referencia;  ?></span></td>
 			<td class="tbtr"><img src="images/spacer.gif" alt="" width="124" height="22" /></td>
 		</tr>
 	</table>
 	<table width=650 cellpadding=0 cellspacing=0 align=center class=bordertable>
 	
 	
-<?
+<?php
 
 //seleccionar tallas
 $sql_tallas = " SELECT * FROM Talla WHERE Publicar = 'S' ORDER BY Descripcion ";
@@ -146,17 +146,17 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 			<table width="100%">
 				<tr>
 					<td class="navpic">Referencia</td>
-					<?
+					<?php
 					foreach( $array_tallas as $idtalla => $datostallas )
 					{
 					?>
-						<td class="navpic"><? echo  $datostallas[Descripcion] ?></td>
-					<?
+						<td class="navpic"><?php echo  $datostallas[Descripcion] ?></td>
+					<?php
 					}//end for
 					?>
 					<td class="navpic">Total</td>
 				</tr>
-				<?
+				<?php
 
 				$sql_referencia = "SELECT * FROM Referencia ORDER BY Numero, Sexo ";
 				$qry_referencia = db_query( $sql_referencia );
@@ -185,23 +185,23 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 						{
 				?>			<tr>
 								<td class="row0">Totales <?=$linea ?></td>
-								<?
+								<?php
 								foreach( $array_tallas as $idtalla => $datostallas )
 								{
 								?>
 									<td class="row0">
-										<? 
+										<?php 
 											echo  $array_linea[$linea][$idtalla];
 										?>
 									</td>
-								<?
+								<?php
 									//print_r( $arraydatos );
 								
 								}//end for
 								?>
 								<td class="row0"><b><?=array_sum( $array_linea[$linea] ) ?></b></td>
 							</tr>
-				<?			
+				<?php			
 						}//end if
 						
 						$linea = substr( $r_referencia->Numero, 0, 2 );
@@ -218,26 +218,26 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 				?>
 						<tr>
 							<td class="row1"><?=$r_referencia->Numero ?></td>
-							<?
+							<?php
 							foreach( $array_tallas as $idtalla => $datostallas )
 							{
 							?>
 								<td class="row1">
-									<? 
+									<?php 
 										echo  $arraydatos[$idtalla][Existencia];
 										$array_linea[ $linea ][ $idtalla ] += 	$arraydatos[$idtalla][Existencia];
 										$totales[ $idtalla ] += $arraydatos[$idtalla][Existencia];
 										$totalreferencia +=  $arraydatos[$idtalla][Existencia];
 									?>
 								</td>
-							<?
+							<?php
 								//print_r( $arraydatos );
 							
 							}//end for
 							?>
 							<td class="row1"><b><?=$totalreferencia ?></b></td>
 						</tr>
-				<?
+				<?php
 						}//end if mostrar
 					}//end if
 					
@@ -246,16 +246,16 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 				
 				<tr>
 					<td class="navpic">Total</td>
-					<?
+					<?php
 					foreach( $array_tallas as $idtalla => $datostallas )
 					{
 					?>
 						<td class="navpic">
-							<? 
+							<?php 
 								echo  $totales[$idtalla];
 							?>
 						</td>
-					<?
+					<?php
 						//print_r( $arraydatos );
 					
 					}//end for
@@ -269,6 +269,6 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
 		function header_export($file)
 		{
@@ -70,16 +70,16 @@
 			<form name="frm" action="<?= $PHP_SELF ?>" method="post" onSubmit="return EvaluaReg(this,Check);">
 				<tr>
 					<td class=maintitle colspan="2">Puntos de Venta <select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();">
-							<option value="">Seleccione Un Punto de Venta</option><% 								
+							<option value="">Seleccione Un Punto de Venta</option><?php 								
 								$qry_punto = db_query("SELECT * FROM PuntoVenta ");
 								while($punto = db_fetch_object($qry_punto)){
 									 echo "<option value=$punto->IDPuntoVenta ";if($IDPuntoVenta == $punto->IDPuntoVenta ) echo "selected"; echo ">&nbsp;&nbsp;$punto->Nombre</option>";
 								}
-							%>
+							?>
 						</select></td>
 				</tr>
 				<tr>
-					<td class=maintitle width=30%>
+					<td class=maintitle width=30;?>
 						Buscar Referencia Por
 					</td>
 					<td class="maintitle">
@@ -98,7 +98,7 @@
 				</tr>
 			</form>
 		</table>
-	<?
+	<?php
 		}//end function seleccionapuntoventa($idreferencia)
 
 
@@ -121,7 +121,7 @@
 		<br>
 		<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
 			<tr>
-				<td class="titlemedium"><b></b><span class="gen"><?= $Title . " " . get_field("PuntoVenta", "Nombre", "IDPuntoVenta", $IDPuntoVenta) ?> - <? echo fecha(); ?></span></td>
+				<td class="titlemedium"><b></b><span class="gen"><?= $Title . " " . get_field("PuntoVenta", "Nombre", "IDPuntoVenta", $IDPuntoVenta) ?> - <?php echo fecha(); ?></span></td>
 			</tr>
 		</table>
 		<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
@@ -137,7 +137,7 @@
 							<td class="titlemedium">Saldo</td>
 							<td class="titlemedium">Costo</td>
 						</tr>
-						<?
+						<?php
 
 						$sql_referencia = "SELECT * FROM Referencia WHERE IDReferencia <> '160' and Publicar = 'S' ORDER BY  IDTipoTalla, Numero ";
 						$qry_referencia = db_query($sql_referencia);
@@ -148,19 +148,19 @@
 								<!--<td class="row1"><?= $r_referencia->NumeroAnterior ?></td>-->
 								<td class="row1"><?= get_field("Tipologia", "Nombre", "IDTipologia", $r_referencia->IDTipologia) ?></td>
 								<td class="row1">
-									<?
+									<?php
 									echo  number_format($arrayprecios[$r_referencia->IDPrecio]["ValorVenta"], 2);
 
 									?>
 								</td>
 								<td class="row1">
-									<?
+									<?php
 									echo  number_format($arrayprecios[$r_referencia->IDPrecio]["Descuento"], 2);
 
 									?>
 								</td>
 								<td class="row1">
-									<?
+									<?php
 									echo  $r_referencia->Saldo;
 
 									?>
@@ -175,7 +175,7 @@
 									?>
 								</td>
 							</tr>
-						<?
+						<?php
 						} //end while referencia
 						?>
 					</table>
@@ -183,6 +183,6 @@
 			</tr>
 		</table>
 
-	<?
+	<?php
 		} // Enf function list()				
 	?>

@@ -1,5 +1,5 @@
 <body>
-	<?
+	<?php
 
 $TitleMod ="Novedades Bancos";
 
@@ -79,7 +79,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	$qid = db_query(" SELECT * FROM PuntoVentaBanco WHERE IDPuntoVenta = '$IDPuntoVenta' ");
 
 ?><br>
-	<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?}?>>
+	<form name="frm" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="return EvaluaReg(this,Check)"<?php }?>>
 
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="550">
 	
@@ -88,10 +88,10 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				<? echo $TitleMod ?> <? echo $r->$Key ?>
+				<?php echo $TitleMod ?> <?php echo $r->$Key ?>
 			</span>
 			<span class="gen">
-				<? echo $info ?>
+				<?php echo $info ?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -108,7 +108,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				<tr>
 					<td class="forumlink" colspan="2">
 						<table width=100% border=0 cellspacing=0 cellpadding=0>
-						<?
+						<?php
 							
 							$Fechainicio = $Fecha." "."00:00:00";
 							$Fechafin = $Fecha." "."23:59:59";
@@ -127,17 +127,17 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							<tr>
 								<td width="30%" align="right" class=col1><b>Total Vendido</b></td>
 								<td align="left" class=col2>
-									<?echo "$ ".number_format( $r_factura->Total )?>
+									<?php echo "$ ".number_format( $r_factura->Total )?>
 								</td>
 							</tr>
-						<?		
+						<?php		
 							
 							}//end while( $r_factura = db_fetch_object( $query_factura ) )
 						?>
 						</table>
 					</td>
 				</tr>
-			<?
+			<?php
 			//INFORMACION DE TOTAL VENDIDO EL DIA QUE SE SELECCIONA
 			?>
 			
@@ -150,7 +150,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 									<b>Valor</b>
 								</td>
 							</tr>
-							<?
+							<?php
 								$sql_novedad = "SELECT NB.* 
 												FROM NovedadBanco NB, PuntoVentaBanco PB 
 												WHERE NB.Fecha = '$Fecha' AND NB.IDPuntoVentaBanco = PB.IDPuntoVentaBanco
@@ -165,10 +165,10 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							<tr>
 								<td width="30%" align="center" class=col1list><?=get_field("Banco","Nombre","IDBanco",get_field("PuntoVentaBanco","IDBanco","IDPuntoVentaBanco",$r_novedad->IDPuntoVentaBanco))?></td>
 								<td align="center" class=col1list>
-									<?echo number_format( $r_novedad->Valor )?>
+									<?php echo number_format( $r_novedad->Valor )?>
 								</td>
 							</tr>
-							<?		
+							<?php		
 								
 								}//end while( $r_novedad = db_fetch_object( $query_novedad ) )
 							?>
@@ -176,7 +176,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 					</td>
 				</tr>
 				
-				<?
+				<?php
 				//INFORMACION DEL DIA QUE SE SELECCIONA 
 				?>
 			
@@ -185,7 +185,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						Ingrese los Valores Correspondientes a la novedad
 					</td>
 				</tr>
-				<?
+				<?php
 				while( $r = db_fetch_object( $qid ) )
 				{
 				?>
@@ -193,16 +193,16 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							<td>
 						<table width=100% border=0 cellspacing=0 cellpadding=0 class=texto>
 							<tr>
-								<td class="col1" width="30%"><?echo get_field( "Banco","Nombre","IDBanco", $r->IDBanco )."-<b>".get_field( "FormaPago","Descripcion","IDFormaPago", $r->IDFormaPago)."</b>"?></td>
+								<td class="col1" width="30%"><?php echo get_field( "Banco","Nombre","IDBanco", $r->IDBanco )."-<b>".get_field( "FormaPago","Descripcion","IDFormaPago", $r->IDFormaPago)."</b>"?></td>
 								<td class="col2">
-									<input type=text class=input name="valor[<?echo $r->IDBanco?>]" value="">
-									<input type=hidden name="Banco[<?echo $r->IDBanco?>]" value="<?echo $r->IDBanco?>">
+									<input type=text class=input name="valor[<?php echo $r->IDBanco?>]" value="">
+									<input type=hidden name="Banco[<?php echo $r->IDBanco?>]" value="<?php echo $r->IDBanco?>">
 								</td>
 							</tr>
 						</table>
 					</td>
 						</tr>
-				<?
+				<?php
 				}//end while( $r = db_fetch_object( $qid ) )
 				?>
 				
@@ -219,7 +219,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	</tr>
 </table>
 </form>
-<?
+<?php
 }// End function print_form()
 
 /*******************************************************************************************
@@ -298,7 +298,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 </table>
 </form>
 
-<?
+<?php
 	if($rows > 0){
 ?>		
 <br>
@@ -310,7 +310,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		</td>
 		<td class="tbtbot"><b></b>
 			<span class="gen">
-				Novedades - <% echo $info;%>
+				Novedades - <?php echo $info;;?>
 			</span>
 		</td>
 		<td class="tbtr">
@@ -322,7 +322,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 <table width=550 border=0 cellspacing=1 align="center" cellpadding=0  class="forumline" >
 	<tr>
 		<td colspan="2" >
-			<?filtrar();?>	
+			<?php filtrar();?>	
 		</td>
 	</tr>
 	<tr>
@@ -337,19 +337,19 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 								<td class=rowform nowrap bgcolor=#DBEAF5>Fecha</td>
 									<td align=center  class=rowform valign=middle bgcolor=#DBEAF5 width=69>Valor</td>
 								</tr>
-							<? while($r = db_fetch_object($result)){
+							<?php while($r = db_fetch_object($result)){
 							?>
 			  				<tr>
-									<td nowrap class=row1><? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",get_field("PuntoVentaBanco","IDPuntoVenta","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
-									<td nowrap class=row1><? echo get_field("Banco","Nombre","IDBanco",get_field("PuntoVentaBanco","IDBanco","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
-								<td nowrap class=row1><? echo formatofecha( $r->Fecha )?></td>
-									<td align=center valign=middle nowrap width=60 class=row2><? echo "$ ".number_format($r->Valor) ?>&nbsp;&nbsp;</td>
+									<td nowrap class=row1><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",get_field("PuntoVentaBanco","IDPuntoVenta","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
+									<td nowrap class=row1><?php echo get_field("Banco","Nombre","IDBanco",get_field("PuntoVentaBanco","IDBanco","IDPuntoVentaBanco",$r->IDPuntoVentaBanco))?></td>
+								<td nowrap class=row1><?php echo formatofecha( $r->Fecha )?></td>
+									<td align=center valign=middle nowrap width=60 class=row2><?php echo "$ ".number_format($r->Valor) ?>&nbsp;&nbsp;</td>
 								</tr>
-							<? } // END for
+							<?php } // END for
 							?>
 							<tr>
 								<td class=texto bgcolor=#DBEAF5 colspan=4 nowrap>
-									<?
+									<?php
 										print $pages;
 										?>
 								</td>
@@ -361,7 +361,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 		</td>
 	</tr>
 </table>
-<? 			
+<?php
 }// End if$rows
 else
 	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
@@ -430,6 +430,6 @@ else
 			</td>
 		</tr>
 	</form>
-<?		
+<?php
 	}//End function filtrar
 ?>

@@ -1,4 +1,4 @@
-<body> <?
+<body> <?php
 
  $TitleMod ="Codificacion Especifica";
 
@@ -57,7 +57,7 @@ function seleccionareferencia( $newmode)
 	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="650">
 		<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 		<tr>
-			<td class=col1 width=30%> 
+			<td class=col1 width=30;?> 
 				Buscar Referencia Por
 			</td>
 			<td class="col2">
@@ -75,9 +75,9 @@ function seleccionareferencia( $newmode)
 			</td>
 		</tr>
 			<tr>
-				<td class=col1 width=30%>Punto de Venta</td>
+				<td class=col1 width=30;?>Punto de Venta</td>
 				<td class="col2">&nbsp;&nbsp;&nbsp; <select name="IDPuntoVentaR" class="InputSelect">
-					<?
+					<?php
 						$sql_puntoventa = "SELECT * FROM PuntoVenta Where Publicar = 'S' ORDER BY IDCiudad, Nombre";
 						$query_puntoventa = db_query($sql_puntoventa);
 						while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
@@ -90,7 +90,7 @@ function seleccionareferencia( $newmode)
 			</tr>
 		</form>
 	</table>
-<?
+<?php
 }//end function seleccionapuntoventa($idreferencia)
 
 
@@ -107,7 +107,7 @@ function seleccionareferencia( $newmode)
 	<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="650">
 		<tr>
 			<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" /></td>
-			<td class="tbtbot"><b></b><span class="gen"><?=$Title?> - <? echo $campo.":".$referencia;  ?></span></td>
+			<td class="tbtbot"><b></b><span class="gen"><?=$Title?> - <?php echo $campo.":".$referencia;  ?></span></td>
 			<td class="tbtr"><img src="images/spacer.gif" alt="" width="124" height="22" /></td>
 		</tr>
 	</table>
@@ -117,7 +117,7 @@ function seleccionareferencia( $newmode)
 				<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="650">
 					<form name="frm" action="<?=$PHP_SELF?>" method="post" onsubmit="return EvaluaReg(this,Check);">
 						<tr>
-							<td class=col1 width=30%> 
+							<td class=col1 width=30;?> 
 				Buscar Referencia Por
 				</td>
 							<td class="col2">
@@ -131,9 +131,9 @@ function seleccionareferencia( $newmode)
 		<input type=hidden name=action value='<?="list"?>'></td>
 						</tr>
 						<tr>
-							<td class=col1 width=30%>Punto de Venta</td>
+							<td class=col1 width=30;?>Punto de Venta</td>
 							<td class="col2">&nbsp;&nbsp;&nbsp; <select name="IDPuntoVentaR" class="InputSelect">
-									<? 						$sql_puntoventa = "SELECT * FROM PuntoVenta";
+									<?php 						$sql_puntoventa = "SELECT * FROM PuntoVenta";
 						$query_puntoventa = db_query($sql_puntoventa);
 						while( $r_puntoventa = db_fetch_object( $query_puntoventa ) )
 						{
@@ -146,7 +146,7 @@ function seleccionareferencia( $newmode)
 				</table>
 			</td>
 	</tr>
-<?
+<?php
 //if( !empty( $referencia ) )	
 //{
 exit;
@@ -170,7 +170,7 @@ $campo = "Numero";
 		?>
 			<tr>
 				<td>
-					<? 
+					<?php 
 						$i = 0;
 						$r = array( );
 						while($r_codificacionesp = db_fetch_array($query_codificacion))
@@ -213,7 +213,7 @@ $campo = "Numero";
 								<td class="navpic" nowrap>
 									
 								</td>
-							<?
+							<?php
 							foreach($r as $talla)
 							{
 								if(!empty($talla[IDTalla]))
@@ -224,11 +224,11 @@ $campo = "Numero";
 							
 							<tr>
 								<td class="col2" width=100>
-									<?
+									<?php
 										echo $r_referencia->$campo;
 									?>
 								</td>
-							<?
+							<?php
 							foreach($r as $talla)
 							{
 								if(!empty($talla[IDTalla]))
@@ -245,7 +245,7 @@ $campo = "Numero";
 					</table>
 				</td>
 			</tr>
-		<?
+		<?php
 		}// End if$rows
 		else
 			echo "<tr><td><span class=col1list><b>No se encontraron registros con los par&aacute;metros proporcionados </b></span></td></tr>";
@@ -254,6 +254,6 @@ $campo = "Numero";
 ?>
 </table>	
 
-<? 			
+<?php
 }// Enf function list()				
 ?>

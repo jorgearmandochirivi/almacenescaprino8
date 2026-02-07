@@ -1,4 +1,4 @@
-<?
+<?php
 	include("../admin/config.inc.php");
 	//Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -105,19 +105,19 @@ table{
 
 
                                                 <tr>
-													<td class=texto colspan="4" nowrap>Traslado: No. <? echo $r_puntoventa->Codigo.$r->IDTraslado?></td>
+													<td class=texto colspan="4" nowrap>Traslado: No. <?php echo $r_puntoventa->Codigo.$r->IDTraslado?></td>
 												</tr>
 
 
 												<tr>
 													<td class=texto>Almacen Destino</td>
-													<td class=texto colspan="3" nowrap><?
+													<td class=texto colspan="3" nowrap><?php
 																echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaDestino);
 															?> </td>
 												</tr>
 														<tr>
 													<td class=texto>Almacen Origen</td>
-															<td class=texto colspan="3" nowrap><?
+															<td class=texto colspan="3" nowrap><?php
 																echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVentaOrigen);
 															?></td>
 														</tr>
@@ -133,7 +133,7 @@ table{
                                                 
                                                 <tr>
 													<td class=texto>Estado</td>
-													<td class=texto nowrap><? echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado); ?></td>
+													<td class=texto nowrap><?php echo get_field("EstadoTraslado","Descripcion","IDEstadoTraslado",$r->IDEstadoTraslado); ?></td>
 													<td class=texto></td>
 													<td class=texto></td>
 												</tr>
@@ -157,7 +157,7 @@ table{
                                                                 <td align="center"><b>Talla</b></td>
                                                                 <td align="center"><b>Cantidad</b></td>
                                                             </tr>
-                                                            <?
+                                                            <?php
                                                                 $sql_detalle = " SELECT * FROM DetalleTraslado WHERE $Key = '$r->IDTraslado' AND IDPuntoVentaOrigen = '$r->IDPuntoVentaOrigen' ";
                                                                 $query_detalle = db_query($sql_detalle);
                                                                 $i = 0;
@@ -170,15 +170,15 @@ table{
                                                             ?>
                                                             <tr >
                                                                 <td class="<?=$class?>">
-                                                                    <? echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
+                                                                    <?php echo get_field("Referencia","Numero","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$PuntoVentaReferencia)); ?></td>
                                                                 <td class="<?=$class?>">
-                                                                    <? echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
+                                                                    <?php echo get_field("Talla","Descripcion","IDTalla",$Talla) ?>
                                                                 </td>
                                                                 <td class="<?=$class?>">
-                                                                    <? echo $r_detalle->Cantidad ?>
+                                                                    <?php echo $r_detalle->Cantidad ?>
                                                                 </td>
                                                             </tr>
-                                                            <?
+                                                            <?php
                                                                 }//end while
                                                             ?>
                                                         </table>
@@ -208,7 +208,7 @@ table{
 	</table>
 </body>
 </html>
-<?
+<?php
 
 $page = ob_get_contents();
 $fw = fopen($file, "w");

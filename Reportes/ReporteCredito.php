@@ -105,12 +105,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				<tr>
 					<td class="maintitle" valign="middle">&nbsp;
 
-						<?
+						<?php
 						echo "CREDITOS ".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta )." ".$FechaDesde." - ".$FechaHasta;
 						?>
 					</td>
 				</tr>
-				<?
+				<?php
 
 
 
@@ -152,7 +152,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                                         <td class="titlemedium" align="center" nowrap>Nro Cuotas</td>
                                         <td class="titlemedium" align="center" nowrap>Vr Castigado</td>
 									</tr>
-						<?
+						<?php
 
 						//print_r( $array_fechas );
 
@@ -275,18 +275,18 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[NumeroFactura]?></td>
 									<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_facturas[ValorTotal],2 ); $tValorTotal += $r_facturas[ValorTotal];?></td>
 									<td class="<?=$class?>" align="center" nowrap>
-										<?
+										<?php
 											echo $candeladas;
 										?>
 									</td>
 										<td class="<?=$class?>" align="center" nowrap>
-										<?
+										<?php
 											echo $pendientes = db_num_rows( $qry_cuotas ) - $candeladas;
 										?>
 									 </td>
 										<td class="<?=$class?>" align="center" nowrap>$<?php $faltante_cuotas=$ValorCuotaPago*$pendientes;  echo number_format($faltante_cuotas,'0',',','.') ; $TotalPendiente +=  $faltante_cuotas; ?></td>
 
-										<td class="<?=$class?>" align="center" nowrap><?
+										<td class="<?=$class?>" align="center" nowrap><?php
 											$alerta_cuota_vencida=0;
 											if( date( "Y-m-d" ) >= $fechaproximo && $pendientes > 0  ):
 												//echo " <img src='images/iconalert.gif' border=0>    &nbsp;&nbsp;";
@@ -297,7 +297,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 										?></td>
 
-                                        <td class="<?=$class?>" align="center" nowrap ><?
+                                        <td class="<?=$class?>" align="center" nowrap ><?php
 											if($mostrar_cartera == 1):
 												echo '<span style="color:#06306F; font-weight:bold">C Castigada</span> &nbsp;&nbsp;';
 											elseif($pendientes==0):
@@ -310,7 +310,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 										?></td>
 
-                                        <td class="<?=$class?>" align="center" nowrap><?
+                                        <td class="<?=$class?>" align="center" nowrap><?php
 											if($mostrar_cartera == 1):
 												echo $cartera_castigada;
 											endif;
@@ -320,7 +320,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 									</tr>
 
-									<?
+									<?php
 								}
 						}//end for
 

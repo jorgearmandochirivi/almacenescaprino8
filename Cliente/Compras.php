@@ -1,6 +1,6 @@
 
 
-<?
+<?php
 	$TitleMod ="Bonos Clientes";
 	
 	$Table = "Cliente";
@@ -87,7 +87,7 @@ function mostrarcedula($newmode,$submit_caption){
   </tr>
 </table>
 </form>
-<?
+<?php
 }//end	mostrar($newmode,$submit_caption)
 
 
@@ -114,7 +114,7 @@ function print_form($idCliente,$submit_caption) {
 var Check = new Array('Cedula','Nombre','Apellido');
 </script>
 <br>
-	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?}?>>
+	<form name="frmcliente" action="<?=$PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluaReg(this,Check)"<?php }?>>
 	
 <table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="800">
 	
@@ -134,7 +134,7 @@ var Check = new Array('Cedula','Nombre','Apellido');
 
 
 
-<?
+<?php
 if($rows > 0){
 ?>
 
@@ -153,13 +153,13 @@ if($rows > 0){
 										<td align="center" class="rowform">Valor Factura</td>
 										<td align="center" class="rowform">Ver Detalle</td>
 									</tr>
-									<?
+									<?php
 									while( $r_factura = db_fetch_object( $qid ) )
 									{
 										$class = repetition()?"row1":"row2";
 									?>
 									<tr>
-										<td align="center" class="<?=$class?>"><?echo $r_factura->NumeroFactura;?></td>
+										<td align="center" class="<?=$class?>"><?php echo $r_factura->NumeroFactura;?></td>
 										<td align="center" class="<?=$class?>">
                                         <?php 
 										$sql_ref="Select * from DetalleFactura Where IDFactura = '".$r_factura->IDFactura."' and IDPuntoVenta = '".$r_factura->IDPuntoVenta."'";
@@ -172,13 +172,13 @@ if($rows > 0){
 										
 										?>
                                         </td>
-										<td align="center" class="<?=$class?>"><?echo formatofecha( substr( $r_factura->FechaFactura, 0, 10) );?></td>
-										<td align="center" class="<?=$class?>"><?echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_factura->IDPuntoVenta );?></td>
-										<td align="center" class="<?=$class?>"><?echo get_field("DetalleFactura","COUNT( IDDetalleFactura )","IDFactura",$r_factura->IDFactura."' AND IDPuntoVenta = '$r_factura->IDPuntoVenta");?></td>
-										<td align="right" class="<?=$class?>"><?echo number_format($r_factura->ValorTotal, 2 );?></td>
+										<td align="center" class="<?=$class?>"><?php echo formatofecha( substr( $r_factura->FechaFactura, 0, 10) );?></td>
+										<td align="center" class="<?=$class?>"><?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_factura->IDPuntoVenta );?></td>
+										<td align="center" class="<?=$class?>"><?php echo get_field("DetalleFactura","COUNT( IDDetalleFactura )","IDFactura",$r_factura->IDFactura."' AND IDPuntoVenta = '$r_factura->IDPuntoVenta");?></td>
+										<td align="right" class="<?=$class?>"><?php echo number_format($r_factura->ValorTotal, 2 );?></td>
 										<td align="center" class="<?=$class?>"><a href="?mod=Factura&action=edit&id=<?=$r_factura->IDFactura?>&IDPuntoVenta=<?=$r_factura->IDPuntoVenta?>" target="_blank"><img src="admin/images/attach.png" border="0"></a></td>
 									</tr>
-									<?
+									<?php
 									}//end while
 									?>
 			</table>
@@ -189,7 +189,7 @@ if($rows > 0){
 
 
 </form>
-	<?
+	<?php
 }// End function print_formcliente()
 
 

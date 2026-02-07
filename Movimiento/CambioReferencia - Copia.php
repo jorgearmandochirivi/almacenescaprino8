@@ -1,6 +1,6 @@
 
 
-<?
+<?php
 	$TitleMod ="Cambio";
 	
 	$Table = "Cambio";
@@ -515,7 +515,7 @@ function EvaluarFunciones( Form, Check )
 		</td>
 	</tr>
 </table>
-<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?}?>>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?php if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?php }?>>
 <table class="forumline" width="580" cellspacing="1" border="0" align="center">
 	<tr>
 	<td width="100%">
@@ -554,7 +554,7 @@ function EvaluarFunciones( Form, Check )
 												</tr>
 												<tr>
 													<td class=col1>Vendedor</td>
-													<td class=col2><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
+													<td class=col2><?php echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
 													<td class=col1 colspan="2"></td>
 												</tr>
 												<tr>
@@ -565,7 +565,7 @@ function EvaluarFunciones( Form, Check )
 												</tr>
 												<tr>
 													<td class=col1>Excedente( $ )</td>
-													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?echo $r_factura->Excedente?>"></td>
+													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?php echo $r_factura->Excedente?>"></td>
 													<td class=col1></td>
 													<td class=col1></td>
 												</tr>
@@ -646,7 +646,7 @@ function EvaluarFunciones( Form, Check )
 													<td align="center"><b></b></td>
 													<td align="center"><b></b></td>
 												</tr>
-												<?
+												<?php
 												for( $i = 3; $i < 5; $i++ )
 												{
 												?>
@@ -665,7 +665,7 @@ function EvaluarFunciones( Form, Check )
 													<td align="left"><input type=hidden name=Precio<?=$i?>></td>
 													<td align="left"><input type=hidden name=Descuento<?=$i?>></td>
 												</tr>
-												<?
+												<?php
 												}//end for
 												?>
 												<tbody bgcolor=#e7ebef></tbody>
@@ -718,6 +718,6 @@ function EvaluarFunciones( Form, Check )
 	
 </table>
 </FORM>
-<?
+<?php
 } // END function print_form_fotos($id,$numfotos)
 ?></BODY></HTML> 
