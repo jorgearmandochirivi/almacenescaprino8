@@ -1,0 +1,416 @@
+<body> <?
+
+$TitleMod ="Codificacion Especifica";
+
+$Table = "CodificacionEspecifica";
+$TableJoin = "Referencia";
+$Key = "IDCodificacionEspecifica";
+$MOD = "CodEspecifica";
+$m="Referencia";
+		$permisos = get_permiso($ID_Usuario,$m,$Table);
+if($permisos[0] >= 2)
+{
+		switch (nvl($action)) {
+			case "add" :
+				print_form("","insert","Nuevo Registro $TitleMod","Agregar Registro");
+			break;
+			case "insert" :
+				$frm= vars_LOG($HTTP_POST_VARS);
+				$id = insert($frm);
+				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
+			break;
+			case "edit":
+				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
+			break ;
+			
+			case "update" :
+				$frm= vars_LOG($HTTP_POST_VARS);
+				
+				//array con los campos de la tabla a actualizar
+				$array_campos = array("Existencias","Minimo","Maximo");
+				
+				actualizamatriz($frm, $array_campos);
+				
+				echo "<SCRIPT>location.href='?mod=".$MOD."&idReferencia=".$frm[id]."';</SCRIPT>";
+			break;
+
+			case "eliminatarjeta":
+				$tarjetas_eliminar=$_POST[IDTarjeta];
+				db_query("SET AUTOCOMMIT=0");
+				db_query("BEGIN");
+				
+				foreach($tarjetas_eliminar as $id_tarjeta => $valor_tarjeta){
+					$array_tarjeta=explode("|",$valor_tarjeta);
+					$codigo_tarjeta=$array_tarjeta[0];
+					$punto_venta=$array_tarjeta[1];
+
+					$sql_borra_tarjeta="Delete from TarjetaPunto where CodigoTarjeta = '".$codigo_tarjeta."' and IDPuntoVenta = '".$punto_venta."'";
+					$qry_borra_tarjeta=db_query($sql_borra_tarjeta);
+
+					$sql =  "SELECT * FROM CodificacionEspecifica CE, PuntoVentaReferencia PR WHERE PR.IDPuntoVenta = '".$punto_venta."' ";
+					$sql .= "AND PR.IDReferencia = '".$_POST[id]."' AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia ";
+					$qry_codesp=db_query($sql);
+					$row_espec=db_fetch_array($qry_codesp);
+					
+					$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias - 1 WHERE IDCodificacionEspecifica = '".$row_espec[IDCodificacionEspecifica]."'";
+					$qry_cod = db_query( $sql_cod );
+					
+				}
+				db_query("COMMIT");
+				window_alert("Tarjetas actualizadas con exito ");
+				echo "<SCRIPT>location.href='?mod=".$MOD."&idReferencia=".$_POST[id]."';</SCRIPT>";
+				
+			break ;
+
+			
+			case "del":
+				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
+			break ;
+			case "delete" :
+				$HTTP_GET_VARS[action]="";
+				delete($ID);
+			break;
+			case "list" :	
+				list_r($HTTP_POST_VARS['puntoventa']);
+			break;
+			default : 
+					
+				seleccionapuntoventa($idReferencia, "list");
+				//list_r();
+			break;
+		
+		} // End switch
+
+}//end if(permisos[0] > 2)
+else
+	echo Mensaje_Info("No tiene Permisos Suficientes","row2");
+
+/*******************************************************************************************
+	seleccionapuntoventa: Selecciona un punto de venta para ver la codificacion especifica de la referencia
+	Parametros:
+			$idreferencia : id de la referencia a mostrar
+			$newmode : nieva accion a tomar con el submit
+	Retorna:	
+			Void
+*******************************************************************************************/
+function seleccionapuntoventa($idreferencia, $newmode)
+{
+	Global $idReferencia;
+?>	
+	<br><br><br><br>
+	<?
+	$TABsel = 1;
+ 	include("Referencia/menutabReferencia.php");
+	?>	
+	<table cellspacing='0' cellpadding='2' border='0' align='left' class=bordertable width=300>
+		<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+		<tr>
+			<td class=row1 width=76%> 
+				Seleccione Punto de Venta>
+			</td>
+			<td>
+				<select class=input name=puntoventa onChange="document.frm.submit();">
+					<option value="">Seleccione</option>
+				<?
+					$sql_puntos = "SELECT P.* FROM PuntoVenta P, PuntoVentaReferencia PR ";
+					$sql_puntos .= "WHERE PR.IDReferencia = '$idreferencia' AND PR.IDPuntoVenta = P.IDPuntoVenta and P.Publicar = 'S' GROUP BY P.IDPuntoVenta";
+					
+					$query_puntos = db_query( $sql_puntos );
+				
+					while( $r_puntos = db_fetch_object( $query_puntos ) )
+					{
+						
+						echo "<option value=$r_puntos->IDPuntoVenta>$r_puntos->Nombre</option>";
+						
+					}
+				?>
+				</select>
+				<input type=hidden name=idReferencia value=<?=$idreferencia?>>
+				<input type=hidden name=action value=<?=$newmode?>>
+			</td>
+		</tr>
+		</form>
+	</table>
+<?
+}//end function seleccionapuntoventa($idreferencia)
+
+
+/*******************************************************************************************
+		funcion Listar
+*******************************************************************************************/
+	function list_r($puntoventa){
+		Global $TitleMod,$MOD,$Table,$Key,$listar,$idReferencia;
+	 	$sql =  "SELECT * FROM $Table CE, PuntoVentaReferencia PR WHERE PR.IDPuntoVenta = '$puntoventa' ";
+	 	$sql .= "AND PR.IDReferencia = '$idReferencia' AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia ";
+	 	
+	
+	$query_codificacion = db_query($sql);
+	$rows = db_num_rows($query_codificacion);
+?>
+
+<table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
+	<tr>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<%=Referencia%>">Administrar <%=Referencia%></a> </td>
+		<td></td>
+	</tr>
+</table>
+<?
+if($rows > 0){
+?>		
+<br>
+<?
+	$TABsel = 1;
+ 	include("Referencia/menutabReferencia.php");
+?>	
+<table width=500 cellpadding=0 cellspacing=0 align=left class=bordertable>
+	<tr>
+		<td class="maintitle" bgcolor="#9daac6">
+			<table cellspacing='0' cellpadding='2' border='0' align='left' class=bordertable width=100% >
+				<form name="frm1" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+				<tr>
+					<td width=70%> 
+						<b>
+							<? echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$puntoventa) ?> - Referencia: <?echo get_field("Referencia","Numero","IDReferencia",$idReferencia)?>
+						</b>
+					</td>
+					<td>
+						<select class=input name=puntoventa onChange="document.frm1.submit();">
+							<option value="">Seleccione</option>
+						<?
+							$sql_puntos = "SELECT P.* FROM PuntoVenta P, PuntoVentaReferencia PR ";
+							$sql_puntos .= "WHERE PR.IDReferencia = '$idReferencia' AND PR.IDPuntoVenta = P.IDPuntoVenta GROUP BY P.IDPuntoVenta";
+							
+							$query_puntos = db_query( $sql_puntos );
+						
+							while( $r_puntos = db_fetch_object( $query_puntos ) )
+							{
+								
+								echo "<option value=$r_puntos->IDPuntoVenta>$r_puntos->Nombre</option>";
+								
+							}
+						?>
+						</select>
+						<input type=hidden name=idReferencia value=<?=$idReferencia?>>
+						<input type=hidden name=action value=list>
+					</td>
+				</tr>
+				</form>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<? 
+				$i = 0;
+				while($r[$i] = db_fetch_array($query_codificacion))
+				{
+					$i++;
+				} //end while($r[$i] = db_fetch_array($query_codificacion))
+				//print_r($r);
+				
+				//VALIDACION DE LOS CAMPOS DE LA MATRIZ
+				
+				$contcampos = 1;
+				$poscheck = 0;
+				while ( $contcampos <= $i )
+				{
+					$NamesCheck[$poscheck] = "Existencias[$contcampos]";
+					$Check[$poscheck] = "Existencias[$contcampos]";
+					$poscheck++;
+					
+					$NamesCheck[$poscheck] = "Minimo[$contcampos]";
+					$Check[$poscheck] = "Minimo[$contcampos]";
+					$poscheck++;
+					
+					$NamesCheck[$poscheck] = "Maximo[$contcampos]";
+					$Check[$poscheck] = "Maximo[$contcampos]";
+					$poscheck++;
+					
+					$contcampos++;
+				}// end while ( $contcampos <= $i )
+				
+				$chek=implode("','",$Check);
+				$namesCheck=implode("','",$NamesCheck);
+				echo "<script>var NamesCheck = new Array('$namesCheck');</script>";
+				echo "<script>var Check = new Array('$chek');</script>";
+			?>
+			
+			<table width="100%" border="0" cellspacing="1" cellpadding="0">
+				<form name="frm" action="<?=$PHP_SELF?>" method="post" onSubmit="return EvaluaReg(this,Check);">
+					<tr>
+						<td class="titlemedium" nowrap>
+							<?echo get_field("Referencia","Nombre","IDReferencia",$idReferencia)?>
+						</td>
+					<?
+					foreach($r as $talla)
+					{
+						if(!empty($talla[IDTalla]))
+							echo "<td class=titlemedium align=center>".get_field("Talla","Descripcion","IDTalla",$talla[IDTalla])."</td>";
+					}
+					?>	
+					</tr>
+					
+					<tr>
+						<td class="rowform">
+							Existencias
+						</td>
+					<?
+					foreach($r as $talla)
+					{
+						if(!empty($talla[IDTalla]))
+							echo "<td class=row1 align=center><input type=text size=5  value=".$talla[Existencias]." name=Existencias[$talla[IDCodificacionEspecifica]]></td>";
+					}
+					?>	
+					</tr>
+					
+					<tr>
+						<td class="rowform">
+							Minimo
+						</td>
+					<?
+					foreach($r as $talla)
+					{
+						if(!empty($talla[IDTalla]))
+							echo "<td class=row1 align=center><input type=text size=5 value=".$talla[Minimo]." name=Minimo[$talla[IDCodificacionEspecifica]]></td>";
+					}
+					?>	
+					</tr>
+					
+					<tr>
+						<td class="rowform">
+							Maximo
+						</td>
+					<?
+					$i = 1;
+					foreach($r as $talla)
+					{
+						if(!empty($talla[IDTalla]))
+						{
+							echo "<td class=row1 align=center><input type=text size=5 value=".$talla[Maximo]." name=Maximo[$talla[IDCodificacionEspecifica]]></td>";
+							$i++;
+						}
+					}
+					
+					?>	
+					</tr>
+					
+					<tr>
+						<td class="titlemedium" colspan=<?=$i?> align="right">
+							<?
+							foreach($r as $talla)
+							{
+								if(!empty($talla[IDTalla]))
+								{
+									echo "<input type=hidden value=".$talla[IDCodificacionEspecifica]." name=Codigos[$talla[IDCodificacionEspecifica]]>";
+									$i++;
+								}
+							}
+							?>
+							<input type="hidden" name="action" value="update">
+							<input type="hidden" name="id" value="<?=$idReferencia?>">
+							<input type="submit" class="submit" value="Actualizar">
+						</td>
+					</tr>
+					
+				</form>
+			</table>            
+		</td>
+	</tr>
+    
+    <tr>
+    	<td>
+        
+        
+        
+
+<?php if($_GET[idReferencia]==7615){ 
+	$sql_tarjetas="Select * from TarjetaPunto Where IDPuntoVenta = '".$puntoventa."'";
+	$qry_tarjetas=db_query($sql_tarjetas);
+?>
+
+<form name="frmtarjeta" action="<?=$PHP_SELF?>" method="post">
+<table width="100%" border="0" cellspacing="1" cellpadding="0">
+	<tr>
+    	<td>
+        	Numero
+        </td>
+    	<td>
+        	Codigo Tarjeta
+        </td>
+    	<td>
+        	Estado
+        </td>        
+    	<td>
+        	Eliminar
+        </td>        
+        
+    </tr>
+    <?php 
+	$disponibles=0;
+	$vendidas=0;
+	while ($row_tarjeta=db_fetch_array($qry_tarjetas)){ 
+		$conta_tar++;	
+		if ($row_tarjeta[Estado]=="D")
+			$disponibles++;
+		elseif($row_tarjeta[Estado]=="V")
+			$vendidas++;
+		
+		
+	?>
+	<tr>
+    	<td>
+        	<?php echo $conta_tar; ?>
+        </td>
+    	<td>
+        	<!-- <input type="text" name="CodigoTarjeta" id="CodigoTarjeta" value="<?php echo $row_tarjeta[CodigoTarjeta]; ?>"> -->
+            <?php echo $row_tarjeta[CodigoTarjeta]; ?>
+        </td>
+    	<td>
+        	<!--<input type="text" name="Estado" id="Estado" value="<?php echo $row_tarjeta[Estado]; ?>">-->
+            <?php echo $row_tarjeta[Estado]; ?>
+        </td>        
+    	<td>
+        	<input type="checkbox" name="IDTarjeta[]" value="<?php echo $row_tarjeta[CodigoTarjeta]."|".$puntoventa; ?>">
+        </td>        
+        
+    </tr>
+	<?php } ?>    
+
+	<tr>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>
+        <input type="hidden" name="action" value="eliminatarjeta">
+        <input type="hidden" name="id" value="<?=$idReferencia?>">
+        <input type="submit" class="submit" value="Eliminar">      
+      </td>
+	  </tr>
+        
+</table>
+</form>
+            
+<?php } ?>         
+
+<br>Resumen: <br>
+Disponibles: <?php echo $disponibles; ?>
+<br>Vendidas: <?php echo $vendidas; ?>
+        
+       </td>
+    </tr>
+    
+    
+</table>	
+
+           
+
+
+
+
+<? 			
+}// End if$rows
+else
+	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
+}// Enf function list()				
+?>

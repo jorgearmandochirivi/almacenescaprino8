@@ -1,0 +1,693 @@
+
+
+<?
+	$TitleMod ="Cambio";
+	
+	$Table = "Cambio";
+	$TableJoin = "DetalleCambio";
+	$Key = "IDCambio";
+	$MOD = "cambiar";
+	$m = "Movimientos";
+		$permisos = get_permiso($ID_Usuario,$m,$Table);
+if($permisos[0] >= 2)
+{
+		switch (nvl($action)) {
+			case "insert" :
+				
+				db_query("SET AUTOCOMMIT=0");
+				db_query("BEGIN");
+				
+				$HTTP_POST_VARS['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$HTTP_POST_VARS['Excedente']);
+				
+				$frm= vars_LOG($HTTP_POST_VARS);
+				$frm['IDCambio'] = insert($frm);
+				if( empty( $frm['Observaciones'] ) )
+					$frm['Observaciones'] = "Excedente Generado por Cambio";
+				$frm= vars_LOG($frm);
+								
+				$frm = ventacambio($frm);
+				
+				//print_r($frm);
+				
+				//db_query( "tales" );
+				db_query("COMMIT");
+				
+				echo "<script>alert('Operacion de cambio Generada Correctamente');</script>";
+				
+				if( isset( $frm['IDFactura'] ) && !empty( $frm['IDFactura'] ) && $frm['IDFactura'] <> 0 )
+				{
+				
+					//Imprimir la factura
+					echo "<script>window.open('FormaPago/popFormapago.php?id=".$frm['IDFactura']."&idpunto=".$IDPuntoVenta."','','width=550, height=350, scrollbars=yes');location.href='?mod=Factura&action=edit&id=".$frm['IDFactura']."';</script>";
+				}
+				else
+				{
+					//Imprimir la factura
+					echo "<script>location.href='?mod=GenerarFactura&msg=2';</script>";
+				}	
+				
+				//print_form($id,"update","Actualizar $TitleMod","Realizar Movimiento");
+			break;
+			case "edit":
+				print_form($id,"update","Actualizar $TitleMod","Realizar Movimiento");
+			break ;
+			default : 
+				print_form($dato,"insert","Realizar $TitleMod","Realizar Movimiento");
+			break;
+		
+		} // End switch
+
+}//end if(permisos[0] > 2)
+else
+	echo Mensaje_Info("No tiene Permisos Suficientes","col1");
+	
+
+
+/*******************************************************************************************
+		funtcion Print_form
+*******************************************************************************************/
+
+function print_form($id,$newmode,$title,$submit_caption){
+	GLOBAL $TitleMod,$Table,$MOD,$Key, $ID_Usuario, $IVA,$IDPuntoVenta,$crypt;
+
+	$qid = db_query(" SELECT * FROM Cliente WHERE IDCliente = '$id' ");
+		
+	$r = db_fetch_object($qid);
+	
+	$dato = md5_decrypt($id,$crypt);
+	$array_dato = explode(",",$dato);
+	$array_dato['DetalleFactura'] = $array_dato[0];
+	$array_dato['Factura'] = $array_dato[1];
+	$array_dato['Referencia'] = $array_dato[2];
+	$array_dato['Punto'] = $array_dato[3];
+	//print_r( $array_dato );
+	
+	$sql_factura = " SELECT F.IDFactura, F.IDCliente,C.Cedula,C.Telefono, CONCAT( C.Nombre,' ',C.Apellido ) as Nombre, DF.* 
+						FROM Factura F, Cliente C, DetalleFactura DF 
+						WHERE  F.IDFactura = '$array_dato[Factura]' 
+						AND F.IDPuntoVenta = '$array_dato[Punto]'
+						AND F.IDCliente = C.IDCliente 
+						AND F.IDFactura = DF.IDFactura 
+						AND DF.IDDetalleFactura = '$array_dato[DetalleFactura]' ";
+						
+	$qry_factura = db_query( $sql_factura );
+	
+	$r_factura = db_fetch_object( $qry_factura );
+	
+?>
+
+<script language="JavaScript">
+<!--
+
+
+function addCell(label){
+	var cell = document.createElement("TD"); 
+	if(label)
+		cell.innerHTML = label; 
+	return cell;
+}
+function addInput(size,type,name,value,keypress, blur,cont){
+	var input =  document.createElement("INPUT"); 
+	if(keypress==1)
+		input.setAttribute("onKeyPress","if((event.keyCode < 48 || event.keyCode > 57) ) event.returnValue = false;"); 
+	if(blur==1)
+		input.setAttribute("onblur","CalculaMontoTotalIngreso(this);"); 
+	if(keypress==2)
+		input.setAttribute("onKeyPress","return KeyCheck(this,window.event.keyCode);"); 
+	if(blur==2)
+		input.setAttribute("onblur","formatCurrency(this);CalculaMontoTotalIngreso(this);"); 
+	
+	if(keypress==4){
+		var URL = "'Referencia/popReferencias.php?IDPuntoVenta=<?=$IDPuntoVenta?>&cont="+cont+"&IDFacturaBono=<?=$IDFacturaBono?>'";
+		
+		var funcion = "window.open("+URL+",'','width=400,height=400');";
+		
+		input.setAttribute("onclick",funcion); 
+	}
+	
+	if(blur==5)
+		input.setAttribute("onblur","if(!compruebamaximo(this.value, cont)) this.value = ''; else calculatotal(this.value,cont);"); 
+	
+	
+	if(type == "text")
+	{
+		input.setAttribute("class","tbox"); 
+		input.setAttribute("size",size); 
+		input.setAttribute("type",type); 
+		input.setAttribute("name",name); 
+		input.setAttribute("value",value);
+		if(name != "Cantidad"+cont)
+			input.setAttribute("readonly","true");
+		
+	}
+	if(type == "button")
+	{
+		input.setAttribute("class","submit"); 
+		input.setAttribute("type",type); 
+		input.setAttribute("name",name); 
+		input.setAttribute("value",value);
+	}
+	if(type == "hidden")
+	{
+		input.setAttribute("type",type); 
+		input.setAttribute("name",name); 
+		input.setAttribute("value",value);
+	}
+
+	return input;
+}
+
+var cont=1;
+
+function addRow(){ 
+cont ++;
+var tbody = document.getElementById("table1").getElementsByTagName("tbody")[0];
+var row = document.createElement("TR"); 
+
+var cell1 = addCell("<b>" + cont + "</b>");
+var cell2 = addCell("");
+var cell3 = addCell("");
+var cell4 = addCell("");
+var cell5 = addCell("");
+var cell6 = addCell("");
+var cell7 = addCell("");
+var cell8 = addCell("");
+var cell9 = addCell("");
+var cell10 = addCell("");
+var cell11 = addCell("");
+var cell12 = addCell("");
+
+var inp1 = addInput(5,"text","Numero" + cont,"",0,0,cont);
+cell2.appendChild(inp1);
+
+var inp2 = addInput(5,"text","Talla" + cont,"",0,0,cont);
+cell3.appendChild(inp2);
+
+var inp3 = addInput(15,"text","Nombre" + cont,"",0,0,cont);
+cell4.appendChild(inp3);
+
+var inp4 = addInput(5,"hidden","IDCodificacion" + cont,"",0,0,cont);
+cell5.appendChild(inp4);
+
+var inp5 = addInput(5,"text","Cantidad" + cont,"",0,5,cont);
+cell6.appendChild(inp5);
+
+var inp6 = addInput(15,"text","ValorU" + cont,"",0,0,cont);
+cell7.appendChild(inp6);  
+  
+var inp7 = addInput(15,"text","Total" + cont,"",0,0,cont);
+cell8.appendChild(inp7);
+
+var inp8 = addInput(5,"button","Agregar" + cont,"Referencia",4,0,cont);
+cell9.appendChild(inp8);
+
+var inp9 = addInput(5,"hidden","Maximo" + cont,"",0,0,cont);
+cell10.appendChild(inp9);
+
+var inp10 = addInput(5,"hidden","Precio" + cont,"",0,0,cont);
+cell11.appendChild(inp10);
+var inp11 = addInput(5,"hidden","Descuento" + cont,"",0,0,cont);
+cell12.appendChild(inp11);
+
+row.appendChild(cell1); 
+row.appendChild(cell2);
+row.appendChild(cell3);
+row.appendChild(cell4);
+row.appendChild(cell5);
+row.appendChild(cell6);
+row.appendChild(cell7);
+row.appendChild(cell8);
+row.appendChild(cell9);
+row.appendChild(cell10); 
+row.appendChild(cell11);  
+row.appendChild(cell12);   
+
+tbody.appendChild(row); 
+} 
+
+function delRow(){
+	var tbl = document.getElementById('table1');
+	var lastRow = tbl.rows.length;
+	if (lastRow > 2) {
+		tbl.deleteRow(lastRow - 1);
+		cont--;
+	}
+}
+
+function selreferencia(REFERENCIA, NOMBRE, TALLA, CODIFICACION, CONT, MAXIMO, VALORU, DESCUENTOREF){
+	document.frm.elements["Numero"+CONT].value = REFERENCIA;
+	document.frm.elements["Nombre"+CONT].value = NOMBRE;
+	document.frm.elements["Talla"+CONT].value = TALLA;
+	document.frm.elements["IDCodificacion"+CONT].value = CODIFICACION;
+	
+	/*******Si la FacturaBono tiene descuento especial se hace la operacion**************/
+	var PRECIO = 0;
+	var iva = 1;
+	
+	document.frm.elements["Precio"+CONT].value = VALORU;
+	
+	/****Fin Si la FacturaBono tiene descuento especial se hace la operacion************/
+	
+	
+	//VALORU = VALORU - ( VALORU * iva );	
+	
+	document.frm.elements["ValorU"+CONT].value = VALORU;
+	formatCurrency(document.frm.elements["ValorU"+CONT]);
+	
+	document.frm.elements["Maximo"+CONT].value = MAXIMO;
+	document.frm.elements["ITEM"].value = CONT;
+}
+
+function selcliente(IDCLIENTE, CEDULA, NOMBRE, TELEFONO){
+	document.frm.elements["IDCliente"].value = IDCLIENTE;
+	document.frm.elements["Cedula"].value = CEDULA;
+	document.frm.elements["NombreCliente"].value = NOMBRE;
+	document.frm.elements["TeleCli"].value = TELEFONO;
+}
+
+function selempleado(IDEMPLEADO, CEDULA, NOMBRE){
+	document.frm.elements["IDEmpleado"].value = IDEMPLEADO;
+	document.frm.elements["CedulaEmpleado"].value = CEDULA;
+	document.frm.elements["NombreEmpleado"].value = NOMBRE;
+}
+
+function compruebamaximo(value, cont)
+{
+	
+	var maximo = document.frm.elements["Maximo"+cont].value;
+	//alert(value);
+	//alert(maximo);
+	if( eval(value) > eval(maximo) )
+	{	
+		alert("El maximo es " + maximo);
+		return false;
+	}
+	else
+	{
+		
+		return true;
+	}
+}
+
+function getNum(strNum)
+
+{
+
+	num = strNum.toString().replace(/\$|\,/g,'');
+	if(isNaN(num))
+		num = "0";
+	return num;
+
+}
+
+function formatCurrency(InpunObject) 
+{
+
+	num = InpunObject.value;
+	num = num.toString().replace(/\$|\,/g,'');
+	if(isNaN(num))
+		num = "0";
+	sign = (num == (num = Math.abs(num)));
+	num = Math.floor(num*100+0.50000000001);
+	cents = num%100;
+	num = Math.floor(num/100).toString();
+	if(cents<10)
+	cents = "0" + cents;
+	for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+		num = num.substring(0,num.length-(4*i+3))+','+
+
+	num.substring(num.length-(4*i+3));
+
+	InpunObject.value = (((sign)?'':'-') + '$' + num + '.' + cents);
+
+}
+
+
+function calculatotal(value, cont)
+{
+	//alert("este");
+	var TotalSinIva = 0;
+	var Iva = 0;
+	var Excedente = 0;
+	TotalCambio = 0;
+	var iva = <?=$IVA?>;
+	
+	for(i=1;i<= document.frm.ITEM.value;i++){
+
+		if(document.frm.elements["ValorU"+i].value  != '' && document.frm.elements["Cantidad"+i].value != '')
+		{	
+
+			var total = getNum(document.frm.elements["Cantidad"+i].value) * getNum(document.frm.elements["ValorU"+i].value);
+			document.frm.elements["Total"+i].value = total;
+			formatCurrency(document.frm.elements["Total"+i]);
+			
+			TotalSinIva = TotalSinIva + total;
+			
+			//Iva = Iva + ( ((getNum(document.frm.elements["Precio"+i].value)*1) - (getNum(document.frm.elements["ValorU"+i].value)*1)) * (getNum(document.frm.elements["Cantidad"+i].value)*1) );
+			
+		}
+
+	}
+	
+	Excendente = TotalSinIva - (getNum(document.frm.elements["TotalC1"].value)*1);
+
+	if( Excendente > 0 )
+	{	
+		Iva = Excendente - ( Excendente / ( 1 + <?=$IVA?>) ) ;
+		document.frm.elements["Excedente"].value = Excendente;
+		formatCurrency(document.frm.elements["Excedente"]);;
+		
+	}
+	else
+		document.frm.elements["Excedente"].value = "";
+	
+	TotalFacturaBono = TotalSinIva + Iva;
+	
+	
+	document.frm.elements["TotalSinIVA"].value = TotalSinIva - Iva;
+	formatCurrency(document.frm.elements["TotalSinIVA"]);
+	
+	document.frm.elements["ValorIVA"].value = Iva;
+	formatCurrency(document.frm.elements["ValorIVA"]);
+	
+	document.frm.elements["ValorTotal"].value = TotalFacturaBono - Iva;
+	formatCurrency(document.frm.elements["ValorTotal"]);
+	
+}
+	
+	
+	/*var totalsiniva = (getNum(document.frm.elements["TotalSinIVA"].value)*1) + (getNum(total)*1);
+	document.frm.elements["TotalSinIVA"].value = totalsiniva;
+	
+	var iva = ((getNum(document.frm.elements["Precio"+cont].value)*1) - (getNum(document.frm.elements["ValorU"+cont].value)*1)) * (getNum(document.frm.elements["Cantidad"+cont].value)*1);
+	document.frm.elements["ValorIVA"].value = getNum(document.frm.elements["ValorIVA"].value) + getNum(iva);
+	
+	totalFacturaBono = (getNum(document.frm.elements["ValorIVA"].value)*1) + (getNum(document.frm.elements["TotalSinIVA"].value)*1) + (getNum(document.frm.elements["ValorTotal"].value)*1);
+	document.frm.elements["ValorTotal"].value = totalFacturaBono;
+		
+}*/
+
+function recalcularvalores()
+{
+	
+	var i = 0;
+	
+	for(i=1;i<= document.frm.ITEM.value;i++){
+
+		if( document.frm.elements["Precio"+i].value  != '' )
+		{	
+
+			document.frm.elements["ValorU"+i].value = document.frm.elements["Precio"+i].value;
+
+			document.frm.elements["ValorU"+i].value = document.frm.elements["ValorU"+i].value - ( document.frm.elements["ValorU"+i].value * <?=$IVA?> );	
+			formatCurrency(document.frm.elements["ValorU"+i]);
+									
+			calculatotal( document.frm.elements["ValorU"+i].value , i );
+			
+			document.frm.elements["ValorTotal"].value = (getNum( document.frm.elements["TotalSinIVA"].value )*1) + (getNum( document.frm.elements["ValorIVA"].value)*1 );
+						
+			formatCurrency(document.frm.elements["ValorTotal"]);
+			
+		}
+	}
+	
+	
+	
+}
+
+
+function recalcularbono()
+{
+	
+	var i = 0;
+	for(i=1;i<= document.frm.ITEM.value;i++){
+
+		if( document.frm.elements["Precio"+i].value  != '' )
+		{	
+
+									
+			calculatotal( document.frm.elements["ValorU"+i].value , i );
+			
+			document.frm.elements["ValorTotal"].value = (getNum( document.frm.elements["TotalSinIVA"].value )*1) + (getNum( document.frm.elements["ValorIVA"].value)*1 );
+						
+			formatCurrency(document.frm.elements["ValorTotal"]);
+			
+		}
+	}
+	
+	
+	
+}
+		
+
+
+var Check = new Array('NumeroFacturaBono','NumeroDocumento','IDPuntoVenta','IDCliente','IDEmpleado', 'Cantidad1', 'Nombre1', 'ValorTotal');
+function EvaluarFunciones( Form, Check )
+{
+
+		if( EvaluaReg(Form, Check) )
+		{
+			return true;
+		}
+		else
+		{
+			enable(Form);
+			return false;
+		}
+	
+}//end function
+	-->
+</script>
+<br>
+<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="580">
+	
+	<tr>
+		<td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" />
+		</td>
+		<td class="tbtbot"><b></b>
+			<span class="gen">
+				<?=$title?>
+			</span>
+		</td>
+		<td class="tbtr">
+			<img src="images/spacer.gif" alt="" width="124" height="22" />
+		</td>
+	</tr>
+</table>
+<FORM name="frm" method="post" enctype="multipart/form-data" action="<?=$PHP_SELF?>" <?if($newmode!="delete"){?>onsubmit="disable(this);return EvaluarFunciones(this , Check);"<?}?>>
+<table class="forumline" width="580" cellspacing="1" border="0" align="center">
+	<tr>
+	<td width="100%">
+		<table width="100%" border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff" >
+		
+				<tr >
+					<td colspan="2" width="100%">
+						
+								<div align="center">
+								<table width="100%" border=0 align="center">
+									<tr>
+										<td colspan="4">
+											<table class=rowtable width="100%">
+												<tr>
+													<td class=col1>No. Registro Cambio</td>
+													<td class=col2 colspan="3"><input type="text" class="tbox" name="RegistroCambio" id="Numero FacturaBono" size="24" value='<?=get_maxID("Cambio WHERE IDPuntoVenta = '$IDPuntoVenta'","IDCambio") ?>'></td>
+												</tr>
+												<tr>
+													<td class=col1>No Factura Cambio</td>
+													<td class=col2 colspan="3"><input type="text" class="tbox" name="IDFacturaCambio" id="Numero FacturaBono" size="24" value='<?=$array_dato[Factura] ?>'></td>
+												</tr>
+												<tr>
+													<td class=col1>Fecha Registro Factura</td>
+													<td class=col2 colspan="3"><input type="text" class="tbox" name="FechaCambio" size="19" value='<?=fecha()." ".hora()?>' readonly> 
+														<script language="JavaScript1.2">
+															<!--
+																if (!document.layers)
+																	document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaFacturaBono,\"yyyy-mm-dd\")' width=16 height=16 border=0>")							
+															//-->
+														</script>
+														<input type="hidden" value="<?=$IDPuntoVenta?>" name="IDPuntoVenta"></td>
+												</tr>
+												<tr>
+													<td class=col1>Observaciones</td>
+													<td class=col2 colspan="3"><textarea class="tareabox" name="Observaciones" rows="4" cols="64"><?=$r->Observaciones?></textarea></td>
+												</tr>
+												<tr>
+													<td class=col1>Vendedor</td>
+													<td class=col2><? echo formpopup("Empleado WHERE IDPuntoVenta = '$IDPuntoVenta' ","Nombre","Apellidos","IDEmpleado",$r->IDIDEmpleado,"input\" id=\"Empleado"); ?></td>
+													<td class=col1 colspan="2"></td>
+												</tr>
+												<tr>
+													<td class=col1></td>
+													<td class=col1></td>
+													<td class=col1></td>
+													<td class=col1></td>
+												</tr>
+												<tr>
+													<td class=row1 colspan="4"><b>CLIENTE</b></td>
+												</tr>
+												<tr>
+													<td class=col1>C&eacute;dula</td>
+													<td class=col2>
+														<input type="text" class="tbox" name="Cedula" readonly size="15" value="<?echo  $r_factura->Cedula;?>">
+														<input type="hidden" name="IDCliente" id="Cliente" value="<?=$r_factura->IDCliente?>">
+													</td>
+													<td class=col1>Nombre</td>
+													<td class=col2><input type="text" class="tbox" name="NombreCliente" readonly size="20" value='<?echo  $r_factura->Nombre;?>'></td>
+												</tr>
+												<tr>
+													<td class=col1 nowrap>Telefono Cliente</td>
+													<td class=col2><input type="text" class="tbox" name="TeleCli" readonly size="15" value="<?echo ,$r_factura->Telefono?>"></td>
+													<td class=col1></td>
+													<td class=col1></td>
+												</tr>
+												<tr>
+													<td class=col1 nowrap></td>
+													<td class=col2></td>
+													<td class=col1></td>
+													<td class=col1></td>
+												</tr>
+											
+												<tr>
+													<td class=col1>Excedente( $ )</td>
+													<td class=col2><input type="text" class="tbox" name="Excedente" readonly size="15" value="<?echo $r_factura->Excedente?>"></td>
+													<td class=col1></td>
+													<td class=col1></td>
+												</tr>
+												<tr>
+													<td class=col1></td>
+													<td class=col1></td>
+													<td class=col1></td>
+													<td class=col1></td>
+												</tr>
+												<tr>
+													<td class=navpic colspan="4">Referencia ENTRA Cambio </td>
+												</tr>
+												<tr>
+													<td colspan="4">
+														<table class="texto" width="100%" border="0" cellspacing="1" cellpadding="0" id=table1>
+															<tr bgcolor="#dfe3e7">
+																<td align="center"><b></b></td>
+																<td align="center"><b>Referencia</b></td>
+																<td align="center"><b>Talla</b></td>
+																<td align="center"><b>Nombre</b></td>
+																<td align="center" width="100%"><b>Cantidad</b></td>
+																<td align="center"><b>Valor U.</b></td>
+																<td align="center"><b>Total</b></td>
+															</tr>
+															<tr>
+																<td align="left"><b>1</b></td>
+																<td align="left">
+																	<input type=text readonly value="<%=$array_dato['Referencia']%>" name=NumeroC1 class=tbox size=7>
+																</td>
+																<td align="left">
+																	<%
+																	$talla = get_field( "Talla","Descripcion","IDTalla", get_field( "CodificacionEspecifica","IDTalla","IDCodificacionEspecifica", $r_factura->IDCodificacionEspecifica));
+																	%>
+																	<input type=text readonly name=TallaC1 class=tbox value="<%=$talla%>" size=5>
+																</td>
+																<td align="left"><input type=text  readonly  name=NombreC1 value="<%=$array_dato['Referencia']%>" class=tbox size=15></td>
+																<td align="center" width="100%"><input type=hidden name=IDCodificacionC1 value="<?echo $r_factura->IDCodificacionEspecifica?>"><input type=text name=CantidadC1 class=tbox value="<?echo $r_factura->Cantidad?>" size=5 ></td>
+																<td align="left"><input type=text readonly name=ValorUC1 class=tbox size=15 value="<?echo number_format($r_factura->PrecioU,2)?>"></td>
+																<td align="left"><input type=text readonly name=TotalC1 class=tbox value="<?echo number_format($r_factura->PrecioU * $r_factura->Cantidad,2)?>" size=15></td>
+															</tr>
+															<tbody bgcolor=#e7ebef></tbody>
+														</table>
+													</td>
+												</tr>
+												<tr>
+													<td class=col1><br>
+													</td>
+													<td class=col1></td>
+													<td class=col1></td>
+													<td class=col1></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class=navpic colspan="4"><b>Detalle Cambio</b></td>
+									</tr>
+									<tr bgcolor=#e7ebef>
+										<td colspan="4">
+											<table class="texto" border="0" cellspacing="1" cellpadding="0" id=table1>
+												<tr bgcolor="#dfe3e7">
+													<td align="center"><b></b></td>
+													<td align="center"><b>Referencia</b></td>
+													<td align="center"><b>Talla</b></td>
+													<td align="center"><b>Nombre</b></td>
+													<td align="center"><b></b></td>
+													<td align="center"><b>Cantidad</b></td>
+													<td align="center"><b>Valor U.</b></td>
+													<td align="center"><b>Total</b></td>
+													<td align="center"><b>Agregar</b></td>
+													<td align="center"><b></b></td>
+													<td align="center"><b></b></td>
+													<td align="center"><b></b></td>
+												</tr>
+												<tr>
+													<td align="left"><b>1</b></td>
+													<td align="left"><input type=text readonly name=Numero1 class=tbox size=7></td>
+													<td align="left"><input type=text readonly name=Talla1 class=tbox size=5></td>
+													<td align="left"><input type=text readonly name=Nombre1 class=tbox size=15></td>
+													<td align="left"><input type=hidden name=IDCodificacion1><input type=hidden name=ITEM></td>
+													<td align="left"><input type=text name=Cantidad1 class=tbox size=5 onblur="if(!compruebamaximo(this.value,1)) this.value = ''; else calculatotal(this.value,cont);"></td>
+													<td align="left"><input type=text readonly name=ValorU1 class=tbox size=15></td>
+													<td align="left"><input type=text readonly name=Total1 class=tbox size=15></td>
+													<td align="left"><input type=button name=Agregar1 class=submit value=Referencia onclick="window.open('Referencia/popReferencias.php?IDPuntoVenta=<?=$IDPuntoVenta?>&cont=1','','width=450,height=400');"></td>
+													<td align="left"><input type=hidden name=Maximo1></td>
+													<td align="left"><input type=hidden name=Precio1></td>
+													<td align="left"><input type=hidden name=Descuento1></td>
+												</tr>
+												<tbody bgcolor=#e7ebef></tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class=col1></td>
+										<td class=col1 width="250"></td>
+										<td class=navpic colspan="2">
+											<div align="left">RESUMEN CAMBIO</div>
+										</td>
+									</tr>
+									<tr>
+										<td class=col1></td>
+										<td class=col1 width="250"></td>
+										<td class=col2>
+											<div align="right">
+												Total Sin IVA</div>
+										</td>
+										<td class=col2><input type=text readonly name=TotalSinIVA class=tbox size=15></td>
+									</tr>
+									<tr>
+										<td class=col1></td>
+										<td class=col1 width="250"></td>
+										<td class=col2>
+											<div align="right">
+												Valor IVA</div>
+										</td>
+										<td class=col2><input type=text readonly name=ValorIVA class=tbox size=15></td>
+									</tr>
+									<tr>
+										<td class=col1></td>
+										<td class=col1 width="250"></td>
+										<td class=col2>
+											<div align="right">
+												Total Factura</div>
+										</td>
+										<td class=col2><input type=text readonly name=ValorTotal class=tbox size=15></td>
+									</tr>
+								</table>
+								<input type="hidden" name="action" value="<?=$newmode?>">
+									<input type="submit" class="button" name="submit" value="<?=$submit_caption?>"></div>
+							
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	
+</table>
+</FORM>
+<?
+} // END function print_form_fotos($id,$numfotos)
+?></BODY></HTML> 

@@ -1,0 +1,269 @@
+<?php
+	include("../admin/config.inc.php");
+	Encabezado();
+	$datos = Verifica_SesionCliente();
+	$Nombre_Usuario = usr_datos($datos["IDUsuario"]);
+	$ID_Usuario = $datos["IDUsuario"];
+	$Nivel =  $datos["Nivel"];
+?>
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=ISO-8859-1">
+		<meta name="generator" content="Adobe GoLive 6">
+		<title>Caprino :: Referencias</title>
+	
+	</head>
+
+	<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
+		
+		<link rel="stylesheet" href="../styles.css?1" type="text/css">
+		<?php
+
+$TitleMod ="Referencias";
+$MOD = "breferencia";
+$Table = "Referencia";
+$TableJoin = "PuntoVentaReferencia";
+$Key = "IDReferencia";
+$KeyLength = 15;
+$m="Referencia";
+
+		$permisos = get_permiso($ID_Usuario,$m,$Table);
+if($permisos[0] >= 2)
+{
+		switch (nvl($action)) {
+			case "list" :
+					$sql = make_qry_string_repuestos($HTTP_GET_VARS);
+					list_r($sql);
+			break;
+			default : 
+					
+					$sql = " SELECT * FROM $Table WHERE Publicar = 'S'";
+					list_r($sql);
+					
+			break;
+		
+		} // End switch
+
+}//end if(permisos[0] > 2)
+else
+	echo Mensaje_Info("No tiene Permisos Suficientes","col2");
+
+/******************************************************************************
+ * FUNCTIONS
+ *****************************************************************************/
+
+
+function make_qry_string_repuestos($frm){
+	GLOBAL $Table,$TableJoin;
+	
+	$select = "Select * From $Table ";
+	
+		if(!empty($frm['field']))
+			$where = " Where $frm[field] LIKE '%$frm[QryString]%' AND Publicar = 'S' ORDER BY Numero ASC ";
+        else
+			$where = " Where Publicar = 'S' ORDER BY Numero ASC ";
+	
+	$qry_string = $select.$where;
+
+return $qry_string;
+
+}
+	
+/*******************************************************************************************
+		funcion Listar
+*******************************************************************************************/
+
+	function list_r($sql=" "){
+		Global $dblink,$TitleMod,$MOD,$Table,$Key,$campo,$form,$IDPuntoVenta, $cont;
+
+	
+    
+    
+    if(!empty($sql)){
+	
+		$nav = new buildNav;
+		$nav->offset = 'offset';
+   		$nav->number_type = 'number';// (or 'alpha' 'number')
+   		$nav->limit = 20;
+   		$nav->execute($sql,$dblink);
+		$total_records =  $nav->total_result;
+		$rows = $nav->rows;
+		$result = $nav->sql_result;
+		$row = $offset;
+		
+		$startrow = $offset + 1;
+		$finalrow = ($row * $nav->limit) + $rows;
+	
+	 	$pages = $nav->show_num_pages('&laquo;','&laquo; prev','&raquo;','next &raquo;','|','class=navvar');   // show pages
+		
+		$info = $nav->show_info(); 
+	
+	} // if(!empty($sql)){ 
+    
+    
+?>
+
+		<table width="100%" border="0" cellspacing="1" cellpadding="0" align=center>
+			<tr>
+				<td>
+					<table width="100%" border="0" cellspacing="1" cellpadding="1" class=bordertable align=center> 
+						<tr>
+							<td class="navpic">
+								<?
+									echo  Referencias." ".$info;
+								?>
+							</td>
+						</tr>
+					</table>
+					<table>
+						<form action="<?=$PHP_SELF?>" method=get>
+							<tr>
+								<td class="<?=$class?>" colspan="3" nowrap align="left"><?print($pages)?></td>
+							</tr>
+							<tr>
+								<td class="rowtable" colspan="3" nowrap>Por <select name="field" class="inputSelect">
+										<option selected value="Numero">Referencia</option>
+										<option value="Nombre">Nombre</option>
+									</select> <input  type="text" class="tbox" size="18" name="QryString"> <input type="hidden" name="action" value="list"> <input type="hidden" name="mod" value="busuario"> <input type="hidden" name="cont" value="<?php=$cont?>"> <input type="hidden" name="IDPuntoVenta" value="<?php=$IDPuntoVenta?>"> <input type="submit" name="submit" value="Buscar" class="submit"></td>
+							</tr>
+						</form>
+						<?php 						for ($y = 1; $y <= $rows; $y++) {
+						
+							if($y % 2 == 0)
+								$class="col1list";
+							else
+								$class="col2list"; 
+							
+						  	$r = db_fetch_object($result);
+						  	
+						  	//Query Para Traer Las Tallas y La Codificacion Especifica.
+						  	
+						  	$sql_tallas  = "SELECT C.* FROM PuntoVentaReferencia PVR, CodificacionEspecifica C, Referencia R ";
+						  	$sql_tallas .= "WHERE PVR.IDReferencia = '$r->IDReferencia' AND PVR.IDPuntoVenta = '$IDPuntoVenta' ";
+						  	$sql_tallas .= "AND C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia GROUP BY C.IDCodificacionEspecifica";
+						  	
+						  	$query_tallas = db_query( $sql_tallas );
+						  	
+						  	//$r_codificacion = db_fetch_object( $query_tallas );
+						  	
+						  	$i=0;
+$array_tallas = array();
+						  	while( $r_tallas = db_fetch_array( $query_tallas ) )
+							{
+								$array_tallas[$i] = $r_tallas;
+								$i++;
+							}//end while
+						  	
+						?>
+						
+						<tr>
+							<td></td>
+							<td></td>
+							<? 							foreach( $array_tallas as $key => $tallas )
+							{
+							?>
+							<td width="50" align="center"><br>
+							</td>
+							<? 							}//end foreach
+							?></tr>
+						<tr>
+							<td class="titulodetablas">Referencia</td>
+							<td class="titulodetablas">Nombre</td>
+							<? 							foreach( $array_tallas as $key => $tallas )
+							{
+								$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
+							?>
+							<td width="50" class="titulodetablas" align="center"><? echo $talla; ?></td>
+							<? 							}//end foreach
+							?></tr>
+						<tr>
+							<td class="<?=$class?>" nowrap><?php echo $r->Numero ?></td>
+							<td class="<?=$class?>"><?php echo $r->Nombre ?></td>
+							<? 							$numcols = 100;
+							$contador = 1;
+							foreach( $array_tallas as $key => $tallas )
+							{
+							?>
+							<td class="<?=$class?>" align="left"><? 											
+									if( $tallas[Existencias] > 0 )
+									{
+										if( $tallas[Existencias] > 0 )
+										{
+											$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
+											
+											/**********Consulta de Valor de la Referencia***********/
+											
+											$Precio = get_field("Precio","ValorVenta","IDPrecio",$r->IDPrecio);
+											$Descuento = get_field("Precio","Descuento","IDPrecio",$r->IDPrecio);
+											
+											if( ( ($Descuento <> "") && ($Descuento <> 0) ) )
+												$ValorUnitario = $Precio - ( $Precio * ( $Descuento/100 ) );
+											else
+												$ValorUnitario = $Precio;
+											
+											/********Fin Consulta de Valor de la Referencia*********/
+											if( $r->Numero == "TARJETA" )
+											{
+												$sql_codigo = " SELECT * FROM TarjetaPunto WHERE Estado <> 'V' AND IDPuntoVenta = '" . $IDPuntoVenta . "' ORDER BY CAST(SUBSTRING(CodigoTarjeta,LOCATE(' ', CodigoTarjeta)+1) AS SIGNED) ASC ";
+												$qry_codigo = db_query( $sql_codigo );
+												$contador_tarjeta=1;
+												while($r_codigo = db_fetch_array( $qry_codigo )){
+													switch($contador_tarjeta):
+														case "1":
+															$tarjeta1 = $r_codigo["CodigoTarjeta"];	
+														break;
+														case "2":
+															$tarjeta2 = $r_codigo["CodigoTarjeta"];	
+														break;
+														case "3":
+															$tarjeta3 = $r_codigo["CodigoTarjeta"];	
+														break;
+														case "4":
+															$tarjeta4 = $r_codigo["CodigoTarjeta"];	
+														break;
+													endswitch;
+													$contador_tarjeta++;
+												}
+												$jstarjeta = ";javascript:window.opener.setcodigotarjeta('".$tarjeta1."','".$tarjeta2."','".$tarjeta3."','".$tarjeta4."','".$cont."');";
+											}//end if
+											
+											echo "<a href=\"javascript:window.opener.selreferencia('".$r->Numero."','".$r->Nombre."','".$talla."','".$tallas[IDCodificacionEspecifica]."','".$cont."','".$tallas[Existencias]."','".$ValorUnitario."','".$Descuento."')" . $jstarjeta . ";javascript:window.close()\">";
+										
+										}//end if( $r_tallas->Existencias > 0 )
+											
+										echo $tallas[Existencias];
+										if( $tallas[Existencias] > 0 )
+											echo "</a>";
+																							
+										if( $contador % $numcols == 0 )
+										{
+										
+											echo "</tr><tr>";
+											$contador = 0;
+											
+										}//end if( $contador % $numcols == 0 )
+										
+										$contador++;
+										
+										$disponibles = "SI";
+									
+									}//end if( $r_tallas->Existencias > 0 )
+									
+								}//end while( $r_tallas = db_fetch_object( $query_tallas ) )
+								
+								if($disponibles <> "SI")
+									echo "<td>NO HAY TALLAS DISPONIBLES</td>";
+							?></td>
+						</tr>
+						<?php 						} // END for
+						?>
+						
+					</table>
+				</td>
+		</tr>
+		</table>
+		<?php 			
+}// Enf function list()				
+?></body>
+</html>

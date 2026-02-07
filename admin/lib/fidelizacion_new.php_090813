@@ -1,0 +1,110 @@
+<?
+
+/*******************************************************************************************
+	Libreria de funciones para el Sistema de Puntos de Venta de Caprino - Sistema de Fidelizaciona
+	Creador por: John Escobar
+	Iniciado: Septiembre /2011
+*******************************************************************************************/
+
+function fid_actualizapuntos( $frm )
+{
+	Global $Nombre_Usuario, $ID_Usuario, $IDPuntoVenta;
+	$array_return = array();
+	
+	$sql_cliente = " SELECT Fidelizado FROM Cliente WHERE IDCliente = '" . $frm["IDCliente"] . "' ";
+	$qry_cliente = db_query( $sql_cliente );
+	$r_cliente = db_fetch_array( $qry_cliente );
+		
+	if( $r_cliente["Fidelizado"] == 'S' )
+	{
+	
+		//cada 100 pesos vale 1 punto
+		$valorpunto = 100;
+		
+		$puntos = $frm["ValorTotal"] / $valorpunto;
+		
+		//los puntos se vencen en 1 año a partir del ultimo dia del mes
+		$array_fecha_factura = explode("-", substr( $frm["FechaFactura"], 0, 10 ) );
+				
+		$mes = $array_fecha_factura[1];
+		$year = date("Y") + 1;
+		
+		$m = mktime( 0, 0, 0, $mes, 1, $year ); 
+		$dia = date("t",$m);
+		
+		$fechavencimiento = $year . "-" . $mes . "-" . $dia;
+		
+		$sql_puntos = " INSERT INTO PuntosCliente (IDCliente, IDPuntoVenta, IDFactura, Puntos, FechaVencimiento, FechaTrCr) VALUES ('" . $frm["IDCliente"] . "','" . $frm["IDPuntoVenta"] . "','" . $frm["IDFactura"] . "','" . $puntos . "','" . $fechavencimiento . "',NOW() ) ";
+		$qry_puntos = db_query( $sql_puntos );
+		
+		//return puntos
+		$array_return = fid_get_puntos( $idcliente );
+	
+	}//end if
+	
+		
+}//end function actualiza_puntos_fid( $frm )
+
+function fid_get_puntos( $idcliente )
+{
+	$estemes = date("Y-m");
+	$array_return = array();
+	//puntos total
+	$sql_puntos_total = "SELECT SUM(Puntos) as PuntosTotales FROM PuntosCliente WHERE IDCliente = '" . $idcliente . "' AND FechaVencimiento >= CURDATE() AND Redimido = 'N' ";
+	$qry_puntos_total = db_query( $sql_puntos_total );
+	$r_puntos_total = db_fetch_array( $qry_puntos_total );
+	
+	$array_return["puntostotal"] = $r_puntos_total["PuntosTotales"];;
+	
+	//puntos del mes
+	$sql_puntos_mes = "SELECT SUM(Puntos) as PuntosTotales FROM PuntosCliente WHERE IDCliente = '" . $idcliente . "' AND FechaVencimiento >= CURDATE() AND Redimido = 'N' AND DATE_FORMAT( FechaVencimiento, '%Y-%m' ) = '" . $estemes . "' ";
+	$qry_puntos_mes = db_query( $sql_puntos_mes );
+	$r_puntos_mes = db_fetch_array( $qry_puntos_mes );
+	
+	$array_return["puntosmes"] = $r_puntos_mes["PuntosTotales"];
+
+
+	//puntos de la ultima compra
+	$sql_puntos_compra = "SELECT Puntos FROM PuntosCliente WHERE IDCliente = '" . $idcliente . "' AND Redimido = 'N' ORDER BY FechaTrCr DESC LIMIT 1";
+	$qry_puntos_compra = db_query( $sql_puntos_compra );
+	$r_puntos_compra = db_fetch_array( $qry_puntos_compra );
+	
+	$array_return["ultimacompra"] = $r_puntos_compra["Puntos"];
+
+	
+	return $array_return;
+	
+}//end fucntion
+
+function fid_redimir( $idcliente, $idredimir )
+{
+	
+	$sql_tabla_puntos = " SELECT * FROM ValorPuntos WHERE IDValorPuntos = '" . $idredimir . "' LIMIT 1 ";
+	$qry_tabla_puntos = db_query( $sql_tabla_puntos );
+	$r_tabla_puntos = db_fetch_array( $qry_tabla_puntos );
+	
+	$falta = $r_tabla_puntos["PuntosNecesarios"]; //La cantidad de puntos que faltan
+	
+	do{
+		$sql_redimir = " SELECT * FROM PuntosCliente WHERE IDCliente = '" . $idcliente . "' AND Redimido = 'N' AND FechaVencimiento >= CURDATE() LIMIT 1 ORDER BY FechaVencimiento ASC ";
+		$qry_redimir = db_query( $sql_redimir );
+		$r_redimir = db_fetch_array( $qry_redimir );
+		
+		if( $r_redimir["Puntos"] > $falta )
+		{
+			$puntosquedan = $r_redimir["Puntos"] - $falta;
+			$sql_update = " UPDATE PuntosCliente SET Puntos = '" . $puntosquedan . "', FechaTrEd = NOW() WHERE IDCliente = '" . $r_redimir["IDCliente"] . "' AND IDPuntoVenta = '" . $r_redimir["IDPuntoVenta"] . "' AND IDFactura = '" . $r_redimir["IDFactura"] . "' ";
+			$qry_update = db_query( $sql_update );
+			$falta = 0;
+		}//end if
+		else
+		{
+			$sql_update = " UPDATE PuntosCliente SET Redimido = 'S', FechaTrEd = NOW() WHERE IDCliente = '" . $r_redimir["IDCliente"] . "' AND IDPuntoVenta = '" . $r_redimir["IDPuntoVenta"] . "' AND IDFactura = '" . $r_redimir["IDFactura"] . "' ";
+			$qry_update = db_query( $sql_update );
+			$falta = $falta - $r_redimir["Puntos"];
+		}//end else
+	}while( $falta > 0 );
+	
+}//end function
+
+?>

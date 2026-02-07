@@ -1,0 +1,92 @@
+#nomostrar{ 
+   visibility:hidden; 
+   display: none; 
+} 
+#pienomostrar{ 
+   visibility:hidden; 
+   display: none; 
+} 
+#tabcontentcontainer{ 
+   visibility:hidden; 
+   display: none; 
+} 
+#datossession{ 
+   visibility:hidden; 
+   display: none; 
+} 
+
+
+
+.bgTop		{  background-image:  url(images/bg_top.gif); background-repeat: repeat-x}
+.bordertable {border: solid 1px; color:#9DAAC6}
+.rowform  { font-weight:bold; color:#3A4F6C; height: 22px; background-color: #D1DCEB;}
+.maintitle  { color:#FFFFFF;font-size: 11px;height: 22px;background-image: url(images/tile_back.gif);}
+.titlemedium { font-weight:bold; color:#3A4F6C;height: 23px; background-color: #9FBCE3; background-image: url(images/tile_sub.gif);}
+.navvar { color: #FF9900 }
+a:link, a:visited, a:active { text-decoration: underline; color: #000000 }
+a:hover { color: #465584 }
+a.menuppal,a.menuppal:link{ font-size: 11px; font-family: Verdana, Arial, Helvetica, sans-serif ; color: #000000;text-decoration:none }
+.menuppal:hover{ font-size: 11px; font-family: Verdana, Arial, Helvetica; color: #465584;text-decoration:none }
+.nav { font-weight: bold; color: #000000; font-size: 11px }
+.row1	{ background-color: #EFEFEF; }
+.row2	{ background-color: #DEE3E7; }
+.row3	{ background-color: #D1D7DC; }
+.rowtable  { font-weight:bold; color:#3A4F6C; height: 22px; background-color: #F2F2F2;}
+.rowtablesoft  { font-size:11px; color:#3A4F6C; height: 22px; background-color: #FDFDFD;}
+.rowgrid1	{ background-color: #EFEFEF; }
+.tdgrid {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color: #3A4F6C;}
+.rowgrid2	{ background-color: #FFFFFF; }
+TABLE, TR, TD { font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;  }
+.small{font-size: 10px}
+.mainbg { background-color: #FFFFFF }
+input.submit { background-color: #4C77B6; color: #FFFFFF; font-family:Verdana, Arial; font-size:10px }
+input.text { background-color: #FFFFFF; color:?#000000; font-family:Verdana, Arial; font-size:10px }
+.copyright		{ font-size: 11px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #444444; letter-spacing: -1px;}
+a.copyright		{ color: #444444; text-decoration: none;}
+a.copyright:hover { color: #000000; text-decoration: underline;}
+
+.category { font-weight: bold; line-height: 150%; color: #4C77B6; background-color: #C2CFDF }
+.category   a:link, #category   a:visited, #category   a:active { text-decoration: none; color: #4C77B6 }
+#large { font-family: verdana, arial; font-size:18px; color:#4C77B6; font-weight:bold; letter-spacing:-1px }
+#subtitle { font-family: Arial,Verdana; font-size:16px; color:#FF9900; font-weight:bold }
+.subtitle { font-family: Arial,Verdana; font-size:16px; color:#FF9900; font-weight:bold }
+.titulo { font-family: verdana, arial; font-size:18px; color:#4C77B6; font-weight:bold; letter-spacing:-1px }
+.LeftCurve
+{
+background-image: url(images/FFFFFFl.gif);
+background-repeat: no-repeat;
+background-position: left top;
+background-attachment: scroll;
+}
+.RightCurve{
+background-image: url(images/FFFFFFr.gif);
+background-repeat: no-repeat;
+background-position: right top;
+background-attachment: scroll;
+}
+a.TAB:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	text-decoration: none;
+}
+a.TAB:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	text-decoration: underline;
+}
+a.TAB:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	text-decoration: underline;
+}
+a.TAB:active {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	text-decoration: underline;
+}
+a.TAB { font-family: verdana, arial; font-size:11px; color:#ffffff; font-weight:bold; letter-spacing:-1px}
+.atribNot	{ font-size: 9px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000; letter-spacing: -1px;}

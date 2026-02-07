@@ -1,0 +1,361 @@
+<?
+/*******************************************************************************************
+	Libreria de funciones para el Sistema de Puntos de Venta de Caprino
+	Creador por: John Escobar
+	Iniciado: Jul 14/2005
+	Ultima Modificaci?n: Jul 14/2005
+*******************************************************************************************/
+/*******************************************************************************************
+	insert_codEspecifica: Inserta los registros en la tabla codificacion especifica,
+	necesarios para el inventario de la nueva referencia
+	Parametros:
+			$id : ID de la Referencia a Controlar
+	Retorna:	
+			Void
+*******************************************************************************************/
+
+function insert_codEspecifica($id)
+{
+	Global $Nombre_Usuario;
+	
+	$sql_puntosreferencia = "SELECT * FROM PuntoVentaReferencia WHERE IDReferencia = $id";
+	$query_puntosreferencia = db_query($sql_puntosreferencia);
+	
+	$sql_tallas = "SELECT IDTalla FROM TipoTalla Tt, Talla T, Referencia R ";
+	$sql_tallas .= "WHERE R.IDReferencia = '$id' AND Tt.IDTipoTalla = R.IDTipoTalla ";
+	$sql_tallas .= "AND Tt.IDTipoTalla = T.IDTipoTalla";
+	
+	$query_tallas = db_query( $sql_tallas );
+	
+	if(db_num_rows($query_tallas) > 0)
+	{
+		
+		$i = 0;
+		while( $r_tallas[$i] = db_fetch_array( $query_tallas ) )
+			$i++;		
+	
+		while($r_puntosreferencia = db_fetch_object( $query_puntosreferencia ))
+		{
+		
+			$query_borra_codesp = db_query( "DELETE FROM CodificacionEspecifica WHERE IDPuntoVentaReferencia = $r_puntosreferencia->IDPuntoVentaReferencia" );
+		
+			foreach( $r_tallas as $talla )
+			{
+			
+				if( !empty( $talla['IDTalla'] ) )
+				{
+					$qid = db_query("Select MAX(IDCodificacionEspecifica) AS maximo FROM CodificacionEspecifica");
+						
+					$result = db_fetch_object($qid);
+				
+					if (isset ($result->maximo))
+						$idCodEsp = $result->maximo + 1;
+					else
+						$idCodEsp = 1;	
+				
+					$sql_insert = "INSERT INTO CodificacionEspecifica (IDCodificacionEspecifica, IDPuntoVentaReferencia, IDTalla, Publicar, UsuarioTrCr, FechaTrCr, Maximo) ";
+					$sql_insert .= "VALUES ('$idCodEsp', '$r_puntosreferencia->IDPuntoVentaReferencia', '$talla[IDTalla]', 'S', '$Nombre_Usuario', now(),'10')";
+					
+					db_query($sql_insert);
+					
+				}//end if( !empty( $talla['IDTalla'] ) )
+			
+			}//end foreach( $r_tallas as $talla )
+		
+		}//end while($r_puntosreferencia = db_fetch_object( $query_puntosreferencia ))
+		
+		window_alert("Codificacion Especifica Creada Correctamente ");
+	
+	}//end if(db_num_rows($query_tallas))
+	else
+		window_alert("No Hay Tallas");	
+
+}//end function insert_codEspecifica($id)
+
+/*******************************************************************************************
+	Libreria de funciones para el Sistema de Puntos de Venta de Caprino
+	Creador por: John Escobar
+	Iniciado: Jul 14/2005
+	Ultima Modificaci?n: Jul 14/2005
+*******************************************************************************************/
+/*******************************************************************************************
+	actualizamatriz: Actualiza una matriz determinada de tallas y Referencias,
+	necesarios para el inventario de la nueva referencia
+	Parametros:
+			$frm : formulario con los valores de los campos
+			$array_campos : array con los campos de la tabla a insertar
+	Retorna:	
+			Void
+*******************************************************************************************/
+
+function actualizamatriz($frm, $array_campos)
+{
+	Global $Table,$TitleMod,$Key,$ID_Usuario,$m;
+	Global $permiso,$error_acceso;
+	
+	if($permiso[0]!=2)
+	{
+		foreach($frm[Codigos] as $key => $valor)
+		{
+			$strupdatematriz = "UPDATE $Table SET ";
+			
+			foreach($array_campos as $campo)
+			{	
+				if($temp == 1)
+					$campos .= ", ".$campo." = ".$frm[$campo][$valor];
+				else
+				{
+					$campos .= $campo." = ".$frm[$campo][$valor];
+					$temp = 1;
+				}
+			}
+			
+			$temp = 0;
+			
+			$strupdatematriz .= $campos." WHERE ".$Key." = ".$frm[Codigos][$valor];
+			
+			$campos = "";
+			
+			db_query($strupdatematriz);
+			
+			//insertar el log
+			insertlog($ID_Usuario,$Table,$frm[Codigos][$valor],"Actualizar",$strupdatematriz);
+			
+		}//end foreach($frm[Codigos] as $key => $valor)
+	
+		window_alert("Matriz actualizada correctamente ");
+	
+	}
+	else{
+		window_alert($error_acceso);
+		return false;
+	}	
+}//end function actualizamatriz($frm, $array_campos)
+
+/*******************************************************************************************
+	delitem: Borra un Item ( Referencia del Pedido ).
+	Parametros:
+			$idref : id de la referencia a borrar del sugerido
+	Retorna:	
+			$idsugerido: ID del pedido sugerido.
+*******************************************************************************************/
+function delitem($idref, $id)
+{
+	Global $Key, $ID_Usuario, $Nombre_Usuario,$TableJoin;
+	
+	$sql_delitem = "DELETE FROM $TableJoin WHERE $Key = $id AND IDReferencia = $idref";
+	$query_delitem = db_query( $sql_delitem );
+	
+	//insertar el log
+	insertlog($ID_Usuario,$TableJoin,$id,"Eliminar",$sql_delitem);
+
+	window_alert( "Item Borrado del Pedido Sugerido" );
+	return $id;
+
+}//end delitem($idref, $id)
+
+
+/*******************************************************************************************
+	generarpedido: Genera un pedido de acuerdo al pedido sugerido generado.
+	Parametros:
+			$frm : array con las variables del pedido a generar
+	Retorna:	
+			$id: ID del pedido generado.
+*******************************************************************************************/
+function generarpedido($frm)
+{
+	Global $ID_Usuario, $Nombre_Usuario;
+	
+	print_r($frm);
+	
+	$sql_detalle_sugerido = "SELECT * FROM DetalleSugeridoPedido WHERE IDSugeridoPedido = '$frm[idsugerido]' GROUP BY IDPuntoVentaReferencia";
+	$query_detalle_sugerido = db_query( $sql_detalle_sugerido );
+	
+	if( db_num_rows( $query_detalle_sugerido ) )
+	{
+
+		$idpedido = get_maxID("OrdenCompra","IDOrdenCompra");
+		
+		$strinsert_encabezado  = "INSERT INTO OrdenCompra (IDOrdenCompra, IDSugerido, IDEmpleado, NumeroOrden, ";
+		$strinsert_encabezado .= "FechaOrden, IDEstadoPedido, Observaciones, UsuarioTrCr, FechaTrCr) ";
+		$strinsert_encabezado .= "VALUES ('$idpedido', '$frm[idsugerido]', '$ID_Usuario', '$frm[NumeroPedido]', ";
+		$strinsert_encabezado .= "now(), '1', '$frm[Observaciones]', '$frm[UsuarioTrEd]', now()) ";
+		
+		$query_encabezado = db_query( $strinsert_encabezado );
+
+		//insertar el log
+		insertlog($ID_Usuario,"OrdenCompra",$idpedido,"Insertar",$strinsert_encabezado);
+		
+		while( $r_detalle_sugerido = db_fetch_object( $query_detalle_sugerido ) )
+		{
+
+			foreach( $frm[get_field("Referencia","Numero","IDReferencia",$r_detalle_sugerido->IDReferencia)] as $key => $valor )
+			{
+				
+				$iddetalle = get_maxID("DetalleOrdenCompra","IDDetalleOrdenCompra");
+				
+				$str_detalle  = "INSERT INTO DetalleOrdenCompra (IDDetalleOrdenCompra, IDOrdenCompra, IDReferencia, ";
+				$str_detalle .= "IDTalla, IDEstadoPedido, Cantidad, Publicar, UsuarioTrCr, FechaTrCr) ";
+				$str_detalle .= "VALUES ('$iddetalle', '$idpedido', '$r_detalle_sugerido->IDReferencia', ";
+				$str_detalle .= "'$key', '1', '$valor', 'S', '$frm[UsuarioTrEd]', now()) ";
+				
+				$query_detalle = db_query( $str_detalle );
+		
+				//insertar el log
+				insertlog($ID_Usuario,"DetalleOrdenCompra",$iddetalle,"Insertar",$str_detalle);
+				
+			}//end foreach( $frm['$r_detalle_sugerido->IDReferencia'] as $key => $valor )
+			
+		}//while( $r_detalle_sugerido = db_fetch_object( $sql_detalle_sugerido ) )
+		
+		window_alert( "Pedido Generado" );
+		return $idpedido;
+	
+	}//end if( db_num_rows( $query_detalle_sugerido ) )
+	else
+	{
+		window_alert( "Sugerido no existe o no hay items" );
+		//echo "<SCRIPT>location.href='?mod=mPedido';</SCRIPT>";
+	}//end else
+	
+
+}//end delitem($idref, $id)
+
+/*******************************************************************************************
+	actualizadetalleorden: Actualiza el detalle de las ordenes con el estado
+	Parametros:
+			$frm : array con los estados a actualizar
+	Retorna:	
+			$frm: array con los datos
+*******************************************************************************************/
+function actualizadetalleorden($frm)
+{
+	Global $Key, $ID_Usuario, $Nombre_Usuario,$TableJoin, $Table;
+	
+	$str_actualizadetalle = "UPDATE $TableJoin SET IDEstadoPedido = '$frm[IDEstadoPedido]' WHERE IDOrdenCompra = '$frm[IDOrdenCompra]'";
+	
+	$query_actualizadetalle = db_query( $str_actualizadetalle );
+	
+	//insertar el log
+	insertlog($ID_Usuario,$TableJoin,$frm[IDOrdenCompra],"Actualizar",$str_actualizadetalle);
+
+	return $frm;
+
+}//end function actualizadetalleorden($frm)
+
+
+
+
+/*******************************************************************************************
+	actualizapunto: Actualiza las tablas de PuntoVentaReferencia, codificacion especifica 
+					cuando el usuario actualiza una referencia
+	Parametros:
+			$ID : ID de la refeencia a actualizar
+			$PuntoVenta : Puntos de Venta seleccionados por el usuario
+			$IDTipoTalla : Tipo de Talla de la Referencia
+	Retorna:	
+			Void
+*******************************************************************************************/
+function actualizapunto($ID,$PuntoVenta,$IDTipoTalla)
+{
+	Global $Nombre_Usuario,$ID_Usuario;
+	
+	$sql_puntoref = "SELECT * FROM PuntoVentaReferencia WHERE IDReferencia = '$ID'";
+	$query_puntoref = db_query($sql_puntoref);
+	
+	$i = 0;
+	while( $r_puntoref[$i] = db_fetch_array( $query_puntoref ) )
+	{
+		$i++;
+	}//end while( $r_puntoref[$i] = db_fetch_array( $query_puntoref ) )
+
+	//recorrer los que hay de la referencia y comparalos.... si no estan se agrega junto con la codificacion especifica
+	
+	$existepunto = 0;
+	
+	foreach ($PuntoVenta as $IDPuntoVenta)
+	{
+		foreach( $r_puntoref as $puntoref )
+		{
+		
+			if( !empty( $puntoref['IDReferencia'] ) )
+			{
+				if( $puntoref['IDPuntoVenta'] == $IDPuntoVenta )
+				{
+					$existepunto = 1;
+				}
+			}//end if( !empty( $puntoref ) )
+			
+		}//end foreach( $r_puntoref as $puntoref )
+		
+		if( $existepunto <> 1 )
+		{
+			$idpuntoventareferencia = get_maxID("PuntoVentaReferencia","IDPuntoVentaReferencia");
+			$sql_PuntoVentaReferencia = "INSERT INTO PuntoVentaReferencia values('$idpuntoventareferencia', '$ID','$IDPuntoVenta')";
+			$qry_PuntoVentaReferencia = db_query($sql_PuntoVentaReferencia);
+			
+			insertlog($ID_Usuario,"PuntoVentaReferencia",$idpuntoventareferencia,"Insertar",$sql_PuntoVentaReferencia);
+			
+			//Insertar la cod especifica para el PuntoVentaReferencia
+			
+			$sql_tallas = "SELECT T.IDTalla FROM TipoTalla Tt, Talla T ";
+			$sql_tallas .= "WHERE Tt.IDTipoTalla = '$IDTipoTalla' ";
+			$sql_tallas .= "AND Tt.IDTipoTalla = T.IDTipoTalla";
+			
+			$query_tallas = db_query( $sql_tallas );
+			
+			while( $r_talla = db_fetch_object( $query_tallas ) )
+			{
+				$idCodEsp = get_maxID("CodificacionEspecifica","IDCodificacionEspecifica");
+			
+				$sql_insert = "INSERT INTO CodificacionEspecifica (IDCodificacionEspecifica, IDPuntoVentaReferencia, IDTalla, Publicar, UsuarioTrCr, FechaTrCr) ";
+				$sql_insert .= "VALUES ('$idCodEsp', '$idpuntoventareferencia', '$r_talla->IDTalla', 'S', '$Nombre_Usuario', now())";
+				
+				db_query($sql_insert);
+				
+				insertlog($ID_Usuario,"CodificacionEspecifica",$idCodEsp,"Insertar",$sql_insert);
+			}
+			
+		}//end if( $existepunto <> 1 )
+		
+		$existepunto = 0;
+		
+	}//end foreach ($PuntoVenta as $IDPuntoVenta)
+	
+	//revisar los que estan en la base de datos y si no estan en el array eliminarlos
+
+	$existepunto = 0;
+	
+	foreach( $r_puntoref as $puntoref )
+	{
+		
+		if( !empty( $puntoref['IDReferencia'] ) )
+		{
+			foreach ($PuntoVenta as $IDPuntoVenta)
+			{
+				if( $puntoref['IDPuntoVenta'] == $IDPuntoVenta )
+				{
+					$existepunto = 1;
+				}
+			}//end foreach ($PuntoVenta as $IDPuntoVenta)
+			
+			if( $existepunto <> 1 )
+			{
+				$qry = db_query("DELETE FROM PuntoVentaReferencia WHERE IDPuntoVentaReferencia = '$puntoref[IDPuntoVentaReferencia]' ");
+				
+				insertlog($ID_Usuario,"PuntoVentaReferencia",'$puntoref[IDPuntoVentaReferencia]',"Eliminar","DELETE FROM PuntoVentaReferencia WHERE IDPuntoVentaReferencia = '$puntoref[IDPuntoVentaReferencia]' ");
+				
+				$qry = db_query("DELETE FROM CodificacionEspecifica WHERE IDPuntoVentaReferencia = '$puntoref[IDPuntoVentaReferencia]' ");
+			
+				insertlog($ID_Usuario,"CodificacionEspecifica",'$puntoref[IDPuntoVentaReferencia]',"Eliminar","DELETE FROM CodificacionEspecifica WHERE IDPuntoVentaReferencia = '$puntoref[IDPuntoVentaReferencia]' ");
+				
+			}//end if( $existepunto <> 1 )
+		
+			$existepunto = 0;
+		
+		}//end if( !empty( $puntoref ) )
+										
+	}//end foreach( $r_puntoref as $puntoref )
+	
+}//end function actualizapunto($ID,$PuntoVenta)
+?>

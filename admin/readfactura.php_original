@@ -1,0 +1,323 @@
+<% 
+
+//error_reporting(0);
+include("simple_html_dom.php");
+
+$filename ="/var/www/vhosts/almacenescaprino.com/httpdocs/admin/files/facturas/FacturaSD23994.html";//README.txt";
+							//		echo $filename;
+$filename = "/var/www/vhosts/almacenescaprino.com/httpdocs/admin/files/facturas/FacturaGA79662.html";
+
+$filenameArray = array("FacturaSD23994.html",
+		  "FacturaGA79662.html",
+		  "FacturaSF8770.html",
+		    "FacturaF44579.html","FacturaSF8770.html","FacturaF44579.html");
+
+$arraycodPunto = array("UN"=>"1",
+"S"=>"3",
+"B"=>"4",
+"H"=>"5",
+"GA"=>"6",
+"F"=>"7",
+"C"=>"8",
+"L"=>"9",
+"K"=>"10",
+"M"=>"12",
+"AV"=>"13",
+"R"=>"14",
+"PA"=>"15",
+"FV"=>"16",
+"SP"=>"17",
+"OV"=>"18",
+"UM"=>"19",
+"U"=>"20",
+"Fabrica"=>"21",
+"GE"=>"22",
+"MY"=>"23",
+"SD"=>"24",
+"CH"=>"25",
+"PL"=>"26",
+"SF"=>"27",
+"CM"=>"28",
+"TP"=>"29",
+"SM"=>"30",
+""=>"31",
+"UB"=>"32");
+
+$FormaPago = array (
+"Efectivo"=>"1",
+"Cheque"=>"2",
+"Visa Credito"=>"3",
+"MC Credito"=>"4",
+"Dinners"=>"5",
+"A. Express"=>"6",
+"MC Debito"=>"7",
+"Visa Debito"=>"8",
+"Bono sodexho"=>"9",
+"Bono big pass"=>"10",
+"Club"=>"12",
+"Saldo"=>"13",
+"Electron"=>"14",
+"Maestro"=>"15",
+"Falabella"=>"16",
+"Puntos Fidelizacion"=>"17",
+"Credito Facil"=>"18",
+"Tarjeta Exito"=>"19",
+"Tarjeta de Regalo"=>"20"
+);
+
+$directorio = '/var/www/vhosts/almacenescaprino.com/httpdocs/admin/files/facturas2/';
+
+
+function listDir( $dirname )
+	{ 
+		if( $dirname[ strlen( $dirname ) - 1 ] != "/" )
+			$dirname.="/";
+		
+		$result_array = array();
+		
+		$mode = fileperms($dirname);
+		
+		if( ( $mode & 0x4000 ) == 0x4000 && ( $mode & 0x00004 ) == 0x00004)
+		{ 
+			chdir( $dirname ); 
+			$handle = @opendir( $dirname) ;
+		}
+		
+		if( isset( $handle ) )
+		{
+			while ( $file = readdir( $handle ) )
+			{
+				if( $file == '.' || $file == '..' ) 
+					continue; 
+				
+				if( is_file( $dirname . $file ) ) 
+					$result_array[] = $file;
+			} 
+			
+			closedir( $handle );
+		} 
+		return $result_array;
+	}
+	
+$files = listDir($directorio);
+
+
+//print_r($files);
+
+//exit;
+
+ // $filenameArray
+
+foreach($filenameArray As $filename){
+   
+	$arrayPie = array();
+	$arrayDetalle = array();
+	 
+	$strNumfac = str_replace(".html","",$filename);
+	$strNumfac = str_replace("Factura","",$strNumfac);
+	
+	$codPunto = ereg_replace("[^A-Z]", "", $strNumfac)."\t"; 
+	$Numfac = ereg_replace("[^0-9]", "", $strNumfac)."\t"; 
+
+	echo $codPunto = trim($codPunto);
+	echo $Numfac = trim($Numfac);
+	
+	echo " IDPto ";
+	echo $IDPuntoVenta = $arraycodPunto["$codPunto"];
+	
+	echo "\n";
+	
+	$html =  file_get_html($directorio.$filename);//->plaintext;
+	
+	//header('Content-type: application/ms-excel');
+	//header('Content-Disposition: attachment; filename=sample.csv');
+	
+	$fpcsv = fopen("/var/www/vhosts/almacenescaprino.com/httpdocs/admin/files/facturas.csv", "ab+");
+	
+	//$fpcsv = fopen("php://output", "w");
+	
+	//$tableHeader// =  $html->find('table[class=texto]',0);
+	
+	 $tableHeader =  $html->find('div[align=center]',0);
+	
+	 $tableHeader =  $tableHeader->find('table',0);
+	
+	 $htmlHeader = $tableHeader->find('table[class=rowtable]',0);
+	
+	//exit;
+	//echo $tableHeader =  $html->find('table[class=rowtable]',0);
+	$cont=0;
+	$flagDet = 0;
+	
+	foreach($tableHeader->find('tr') as $element)
+	{
+	$cont++;
+	 
+	 if($htmlHeader = $element->find('table[class=rowtable]',0)){
+	    
+	    $contHeader = 0;
+	   
+	    $dataFactura = array();
+	   
+	    foreach($htmlHeader->find('tr') as $elementH) // OBTENER DATOs CABECERA
+	    {
+		
+		$td = array();
+		
+		if($contHeader >= 4 && $contHeader <= 7){
+		    
+		    foreach( $elementH->find('td') as $row)  
+		    {
+			$colval = trim(str_replace("\n","",$row->plaintext));
+			$colval = trim(str_replace("\r","",$row->plaintext));
+			
+			$colval = trim(str_replace("\t","",$colval));
+			
+			if(!empty($colval)){
+			    
+			    $td = $colval;
+			}
+		    }
+		    $dataFactura[] = $td;
+
+		 //   echo "\n";
+		    
+		}
+		
+		$contHeader++;
+	    }
+	    if($contHeader == 8){
+	
+		$dataFactura["IDPuntoVenta"] = $IDPuntoVenta;
+		
+			$dataFactura["CodPunto"] = $codPunto;
+			$dataFactura["NumFact"]  = $Numfac;
+			
+		print_r($dataFactura);
+		fputcsv($fpcsv, $dataFactura,"\t");
+	    }
+	    
+	    
+	}// end if find
+	elseif( ($htmlDetalle = $tableHeader->find('table[class=bordertable]',0)) && !$flagDet){ // OBTERNER DETALLE ARTICULOS
+	    
+	    $flagDet = 0;
+	    
+	    foreach($htmlDetalle->find('tr') as $elementD)
+	    {
+		//$td = array();
+		    
+		if($flagDet){
+		    
+			$data = explode(" ",trim($elementD->plaintext));
+			$data = str_replace("\r","",$data);
+			$data = str_replace("\t","",$data);
+			$data = str_replace("\n","",$data);
+			$data = str_replace(",","",$data);
+			$data = str_replace("%","",$data);
+			$dataDetalle = array_filter($data, "strlen");// array_unique($data);
+			
+			//print_r($dataDetalle);
+			
+			$arrayDetalle[] = $dataDetalle;
+			
+		//	echo "\n";
+		        
+			fputcsv($fpcsv, $arrayDetalle,"\t");
+		}
+		 $flagDet = 1;
+	    }
+	    
+	} // End if find2
+	
+	elseif($cont >= 10){ // OBTENER PIE DE FACTURA
+	    
+	 //  $td = array();
+	 
+	     $col = 0;
+	     
+		if($element->find('td[width=171]')){
+		    
+		    foreach( $element->find('td') as $row)  
+		    {
+			$colval = trim(str_replace("\n","",$row->plaintext));
+			$colval = str_replace("\t","",$colval);
+			 $colval = str_replace(",","",$colval);
+		  	    
+			      if(!empty($colval)){
+				
+				if(!$col){
+				   $colname = $colval;
+				    $col = 1;
+				}
+				else    
+				    $arrayPie[$colname] = $colval;
+				 
+				  // echo $colval."\t";
+			    }
+		    }
+		  
+		    fputcsv($fpcsv, $arrayPie,"\t");
+		    
+		  //  echo "\n";
+		} 
+	    }
+	}
+	
+	print_r($arrayDetalle);	
+	print_r($arrayPie);
+	
+	echo " ****************************************** \n";
+	
+//	exit;
+	
+} // END foreach file
+
+
+exit;
+	
+
+$filename = "/var/www/vhosts/almacenescaprino.com/httpdocs/admin/files/facturas/FacturaGA79662.html";							
+	//	$line = file($filename);
+				
+								//	for($i=1;$i <= count($line);$i++)
+								//	echo "$i $line[$i]<br>";
+								
+								$i = 1;
+								if($fd = fopen ($filename, "rb"))
+								while (!feof($fd)) {
+								    $buffer = fgets($fd, 4096);
+								    echo "$i $buffer <br>";
+									$i++;
+								}
+								fclose ($fd);
+								
+							exit;	
+								
+	// funciona OK leyendo el archiv
+	
+								$filename = $filedir.$frm['Archivo'];
+								
+							if(!empty($frm['Archivo'])){
+									$i = 1;
+									$fd = fopen ($filename, "rb");
+									while (!feof($fd)) {
+									    $buffer = fgets($fd, 4096);
+									    echo "<a href=\"javascript:OpenWin('add_comentario.php3?id=$id&ln=$i')\">$i </a>";
+									    echo " $buffer <br>";
+										
+										$qry_coment = db_query("SELECT NoLinea,User,Comentario,Fecha
+																FROM Comentario 
+																WHERE IDDocumento = '$id' 
+																AND NoLinea = '$i'");
+										if(db_num_rows($qry_coment))
+											while ($Comentario = db_fetch_object($qry_coment)){
+												echo "<span class=fontBlue><b>$Comentario->Fecha $Comentario->User : </b>$Comentario->Comentario </span> <br>";
+											}
+											
+										$i++;
+									}
+									fclose ($fd);
+								}
+								
+%>

@@ -1,0 +1,281 @@
+<%
+	include("admin/config.inc.php");
+	Encabezado();
+	$datos = Verifica_SesionCliente();
+//	print_r($datos);
+	$Nombre_Usuario = usr_datos($datos["IDUsuario"]);
+	$ID_Usuario = $datos["IDUsuario"];
+	$Nivel =  $datos["Nivel"];
+	$IVA = $datos["IVA"];
+	$IDPuntoVenta = $datos["IDPuntoVenta"];
+	include("admin/jscripts/tabs.php");
+%>
+<html>
+
+	<head>
+		<link href="styles.css" rel="stylesheet" media="screen">
+		<link href="admin/styles.css" rel="stylesheet" media="screen">
+		<link rel="STYLESHEET" type="text/css" href="admin/styles_imp.css" media="print"> 
+		<style type="text/css" media="screen"><!--
+#layer1 { position: absolute; top: 64px; left: 930px; width: 100px; height: 100px; visibility: visible; display: block }
+--></style>
+		<!--<script language="JavaScript1.2" src="admin/jscripts/preloadtabs.js?<?=rand(1,100)?>"></script>-->
+		<script language="JavaScript1.2" src="admin/jscripts/formdetect.js?<?=rand(1,100)?>"></script>
+		<script language="JavaScript1.2" src="admin/jscripts/popcalendar.js?<?=rand(1,100)?>"></script>
+		<script language="JavaScript1.2" src="admin/jscripts/validaForm.js?<?=rand(1,100)?>"></script>
+		
+		<script language="JavaScript1.2" src="jscripts/jquery-1.3.2.min.js?<?=rand(1,100)?>"></script>
+		<script language="JavaScript1.2" src="jscripts/common.js?<?=rand(1,100)?>"></script>
+
+		
+		
+		<title><?=$app_title?></title>
+	</head>
+
+	<body bgcolor="#ffffff" onLoad="init();">
+		<table width="850" border="0" cellspacing="0" cellpadding="0" align="center">
+			<div id="nomoimprimir">
+			<tr height="42">
+				<td align="right" valign="top"  width="850" height="74" style="background-repeat:no-repeat;background-position: top right;" background="images/header_right.gif?<?=rand(1,100)?>" >
+					
+					<div id="datossession">
+					
+					<font color="#000000">Sesi&oacute;n Activa:</font> <font color="#000000"><b><?=$Nombre_Usuario?></b></font><br>
+					<font color="#000000"><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$IDPuntoVenta)?><br>
+					<a href="login.php?action=LogOut" class="menuppal" style="color:#000000;">
+						Terminar Sesi&oacute;n
+					</a>
+					</font>
+					
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" valign="bottom" width="850"><br>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="bottom" width="850">
+					<div id="ddimagetabs">
+						<a href="javascript:;" onClick="expandcontent('Factura', this)" >Facturas</a>
+						<a href="javascript:;" onClick="expandcontent('Movimiento', this)">Movimientos</a>
+						<a href="javascript:;" onClick="expandcontent('Pedido', this)">Pedidos</a>
+						<a href="javascript:;" onClick="expandcontent('Traslado', this)">Traslados</a>
+						<a href="javascript:;" onClick="expandcontent('Inventario', this)">Inventario</a>
+						<a href="javascript:;" onClick="expandcontent('Reporte', this)">Reportes</a>
+					</div>
+					
+				</td>
+			</tr>
+			</div>
+			
+			<tr>
+				<td valign="top" width="850" height="50">
+				
+					<DIV id="tabcontentcontainer">
+						
+						<div id="Factura" class="tabcontent">
+							<a href="?mod=GenerarFactura" class="copyright">Generar Factura</a> |
+							<a href="?mod=GenerarFacturaBono" class="copyright">Redimir Bonos</a> |
+							<a href="?mod=Factura" class="copyright">Ver Facturas</a>
+						</div>
+						
+						
+						<div id="Movimiento" class="tabcontent">
+							
+							<a href="?mod=Movimiento" class="copyright"> Entradas de Pedido </a> |
+							<a href="?mod=SalidaMerca" class="copyright">Salida de Mercancia </a>|
+							<a href="?mod=FacturaBono" class="copyright">Ver Registros Bonos</a> |
+							<a href="?mod=verentrada" class="copyright">Ver Entradas de Pedido </a>|
+							<a href="?mod=cambioreferencia" class="copyright">Cambio Referencia </a>|
+							<a href="?mod=VerMovimiento" class="copyright">Ver Salidas </a> |
+							<a href="?mod=vercambios" class="copyright"> Ver Cambios </a> 
+						</div>
+						
+						<div id="Pedido" class="tabcontent">
+							<a href="?mod=Pedido" class="copyright"> Ver Pedidos </a>
+						</div>
+						
+						<div id="Traslado" class="tabcontent" >
+							
+							<a href="?mod=Traslado" class="copyright"> Traslado </a> |
+							<a href="?mod=RecibirTraslado" class="copyright"> Recibir Traslado </a> |
+							<a href="?mod=vertraslado" class="copyright"> Ver Traslado </a> 
+							
+						</div>
+						<div id="Inventario" class="tabcontent" >
+							
+							<a href="?mod=Inventario" class="copyright"> Consultar Inventario </a> !
+							<a href="?mod=InventarioCon" class="copyright"> Consultar Inventario Consolidado </a> !
+							<a href="?mod=InventarioConalm" class="copyright"> Consultar Inventario Consolidado Otros Almacenes </a> !
+							<a href="?mod=BuscReferencia" class="copyright"> Inventario x Referencia </a> !
+						</div>
+						
+						<div id="Reporte" class="tabcontent" >
+							
+							<a href="?mod=diario" class="copyright"> Reporte Diario </a> !
+							<a href="?mod=mensual" class="copyright"> Reporte Mensual </a> !
+							<a href="?mod=vendedores" class="copyright"> Ventas Vendedores </a> !
+							<a href="?mod=pares" class="copyright"> Ventas Pares </a>
+						</div>
+						
+					</DIV>
+			
+					<table width="100%">
+						<tr>
+							<td>
+							<%
+							  	switch(nvl($mod)){
+
+							  		/******************* INICIO FACTURA ******************/
+							  		case "Factura" :
+							  			include("Factura/Factura.php");
+							  		break;
+							  		case "FacturaBono" :
+							  			include("Factura/FacturaBono.php");
+							  		break;
+							  		case "vercambios" :
+							  			include("Factura/Cambio.php");
+							  		break;
+							  		
+							  		/******************* FIN FACTURA ******************/
+							  		/******************* INICIO PEDIDO ******************/
+							  		case "Pedido" :
+										include("Pedido/OrdenCompra.php");
+							  		break;
+							  		/******************* FIN PEDIDO ******************/
+							  		/******************* INICIO MOVIMIENTOS ******************/
+							  		case "Movimiento" :
+										include("Movimiento/Movimiento.php");
+							  		break;
+							  		case "IngresoOtros" :
+										include("Movimiento/EntradaOtros.php");
+									break;
+									case "cambioreferencia" :
+										include("Movimiento/CambioReferencia.php");
+									break;
+							  		case "VerMovimiento" :
+										include("Movimiento/VerMovimiento.php");
+							  		break;
+							  		case "verentrada" :
+										include("Movimiento/verentrada.php");
+							  		break;
+							  		/******************* FIN MOVIMIENTOS ******************/
+							  		/******************* INICIO SALIDAS ******************/
+							  		case "GenerarFactura" :
+							  			include("Movimiento/Factura.php");
+							  		break;
+							  		case "GenerarFacturaNew" :
+							  			include("Movimiento/FacturaNew.php");
+							  		break;
+							  		case "GenerarFacturaBono" :
+							  			include("Movimiento/FacturaBono.php");
+							  		break;
+							  		case "cambiar" :
+							  			include("Movimiento/Cambio.php");
+							  		break;
+							  		case "SalidaMerca" :
+							  			include("Movimiento/salidaotro.php");
+							  		break;
+							  		/******************* FIN SALIDAS ******************/
+							  		/******************* INICIO TRASLADOS ******************/
+							  		case "Traslado" :
+										include("Traslado/Traslado.php");
+							  		break;
+							  		case "RecibirTraslado" :
+										include("Traslado/Recibir.php");
+									break;
+									case "vertraslado" :
+										include("Traslado/VerTraslado.php");
+									break;
+							  		/******************* FIN TRASLADOS ******************/
+							  		
+							  		/******************* INICIO INVENTARIO ******************/
+							  		case "Inventario" :
+										include("Referencia/CodificacionEspecifica.php");
+							  		break;
+							  		case "InventarioCon" :
+										include("Referencia/InventarioCon.php");
+							  		break;
+							  		case "InventarioConalm" :
+										include("Referencia/InventarioConalm.php");
+							  		break;
+							  		case "BuscReferencia" :
+										include("Referencia/InventarioConalmacen.php");
+							  		break;
+							  		/******************* FIN INVENTARIO ******************/
+							  		
+							  		/******************* INICIO REPORTES ******************/
+							  		case "diario" :
+										include("Reportes/DiarioVentas.php");
+							  		break;
+							  		case "pagos" :
+										include("Reportes/DiarioPagos.php");
+							  		break;
+							  		case "mensual" :
+										include("Reportes/MensualVentas.php");
+							  		break;
+							  		case "vendedores" :
+										include("Reportes/VentasVendedor.php");
+							  		break;
+							  		case "pares" :
+										include("Reportes/AlmacenReferenciaPares.php");
+							  		break;
+							  		/******************* FIN REPORTES ******************/
+
+							  		default :
+							  			include("Movimiento/Factura.php");
+							  		break;
+							  		
+							  	}// End switch
+							  %>
+							
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div align="center"><span class="copyright"><br />
+
+								<table width="100%" cellpadding="0" cellspacing="0" border="0">
+								  <tr>
+									<td align="right"></td>
+								  </tr>
+								</table>
+														<div id="pienomostrar" >
+
+								<table width="100%" cellpadding="0" cellspacing="0" border="0">
+								  <tr>
+									<td><br>
+													<img src="images/bt_left.gif" border="0" /></td>
+									<td width="100%" class="indexbom" valign="bottom" align="center">
+										<span class="copyright">Desarrollado por 
+										<a href="http://www.solucionesdeinternetymercadeo.com/" target="_blank" class="copyright">
+											Soluciones de Internet y Mercadeo Ltda.</a> &copy; 2006 <br />
+											Calzado Caprino &copy; 2006<br />
+														
+<br />
+											<br>
+											<br />
+											<br />
+											<br />
+											<br />
+										</span></td>
+									<td><br>
+													<img src="images/bt_right.gif" border="0" /></td>
+								  </tr>
+								</table>
+							</div>
+							
+							</td>
+						</tr>
+					</table>
+					
+					
+				</td>
+			</tr>
+			
+		</table>
+		
+	</body>
+
+</html>

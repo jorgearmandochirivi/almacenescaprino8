@@ -1,0 +1,47 @@
+update DetallePedido SET Pagado = 1 WHERE IDPedido = 252 AND Item = 2;
+
+UPDATE Stock_Empresa SET Stock = Stock + 2, Reserva = Reserva +2 WHERE IDMovil = 16 AND IDEmpresa = 1; 
+-----------------
+update DetallePedido SET Pagado = 3 WHERE IDPedido = 46 AND Item = 1; 6
+
+update DetallePedido SET Pagado = 1 WHERE IDPedido = 539 AND Item = 2;  2
+
+UPDATE Stock_Empresa SET Stock = Stock + 8, Reserva = Reserva +8 WHERE IDMovil = 10 AND IDEmpresa = 1; 
+
+-----------------
+update DetallePedido SET Pagado = 2 WHERE IDPedido = 877 AND Item = 1; 4
+
+update DetallePedido SET Pagado = 2 WHERE IDPedido = 914 AND Item = 1;  4
+
+UPDATE Stock_Empresa SET Stock = Stock + 8, Reserva = Reserva +8 WHERE IDMovil = 19 AND IDEmpresa = 1; 
+
+-----------------
+update DetallePedido SET Pagado = 1 WHERE IDPedido = 598 AND Item = 1; 1
+
+update DetallePedido SET Pagado = 3 WHERE IDPedido = 1391 AND Item = 1;  6
+
+UPDATE Stock_Empresa SET Stock = Stock + 7, Reserva = Reserva +7 WHERE IDMovil = 1 AND IDEmpresa = 1; 
+
+-----------------
+update DetallePedido SET Pagado = 2 WHERE IDPedido = 252 AND Item = 1; 4
+
+update DetallePedido SET Pagado = 1 WHERE IDPedido = 598 AND Item = 2;  1
+
+UPDATE Stock_Empresa SET Stock = Stock + 5, Reserva = Reserva +6 WHERE IDMovil = 5 AND IDEmpresa = 1; 
+
+-----------------
+update DetallePedido SET Pagado = 1 WHERE IDPedido = 350 AND Item = 3; 4
+
+update DetallePedido SET Pagado = 2 WHERE IDPedido = 539 AND Item = 1;  4
+
+UPDATE Stock_Empresa SET Stock = Stock + 8, Reserva = Reserva +8 WHERE IDMovil = 9 AND IDEmpresa = 1; 
+
+-----------------
+update DetallePedido SET Pagado = 1 WHERE IDPedido = 350 AND Item = 1; 4
+
+UPDATE Stock_Empresa SET Stock = Stock + 4, Reserva = Reserva +3 WHERE IDMovil = 33 AND IDEmpresa = 1; 
+
+-----------------
+update DetallePedido SET Pagado = 1 WHERE IDPedido = 350 AND Item = 2; 4
+
+UPDATE Stock_Empresa SET Stock = Stock + 4, Reserva = Reserva +4 WHERE IDMovil = 4 AND IDEmpresa = 1; 

@@ -1,0 +1,103 @@
+1234|Soporte |Empleado|Unicentro|178,500.00|178,500.00
+|Admin |Administrador|Unicentro|23,110,516.89|23,401,535.00
+51819295|Maria Ordoñez|Administrador|Unicentro|157,524,028.68|159,878,686.00
+51819295|Maria Ordoñez|Empleado|Unicentro|2,719,562.08|2,729,200.00
+32609278|Marcela Enciso|Empleado|Unicentro|23,685,414.06|23,847,610.00
+1013639825|Diana Zerda|Empleado|Unicentro|23,588,568.84|23,811,845.00
+52448393|Diana Suarez|Administrador|Unicentro|19,631,360.98|19,910,790.00
+52448393|Diana Suarez|Empleado|Unicentro|77,525,357.65|78,251,140.00
+|Calle 122 |Empleado|Calle 122|1,053,225.67|1,062,620.00
+950930-04370|Karen Fraile|Administrador|Calle 122|6,941,724.67|7,035,720.00
+950930-04370|Karen Fraile|Empleado|Calle 122|630,494.85|641,450.00
+1020809178|Tatiana Ortiz|Empleado|Calle 122|7,566,744.60|7,693,650.00
+1000783830|Tihany Cardenas|Administrador|Calle 122|32,740,591.89|33,267,931.20
+1000783830|Tihany Cardenas|Empleado|Calle 122|4,104,214.46|4,148,910.00
+21016180|Carolina Marroquin|Administrador|Bulevar|115,204,780.62|116,814,490.00
+21016180|Carolina Marroquin|Empleado|Bulevar|960,856.20|973,480.00
+1018481434|Diana Lopez|Administrador|Bulevar|10,675,627.33|10,874,810.00
+1018481434|Diana Lopez|Empleado|Bulevar|71,047,576.13|71,683,600.00
+1022998967|Marisela Bautista|Empleado|Bulevar|20,325,744.73|20,621,810.00
+1032399760|Luz Dary Fajardo|Administrador|Galerias|175,826,271.24|178,356,064.40
+94041802957|Gina Carvajal|Empleado|Galerias|18,133,525.03|18,341,490.00
+1038118421|Bertha Gonzalez|Administrador|Galerias|10,597,401.53|10,784,625.00
+1038118421|Bertha Gonzalez|Empleado|Galerias|84,623,851.69|85,335,744.40
+52427980|Ximena Martrinez|Empleado|Galerias|35,646,146.22|35,840,763.00
+50980686|Sandra Aguilar|Administrador|Fripo|67,556,645.03|68,445,812.10
+1069434533|Lorena Guioth|Empleado|Fripo|36,459,581.96|36,528,012.10
+|Country |Empleado|Country|502,786.32|508,900.00
+1033769857|Ingrid Sanpedro|Administrador|Country|7,903,693.32|7,997,540.00
+1033769857|Ingrid Sanpedro|Empleado|Country|406,400.00|406,400.00
+80894643|Richard Qimbay|Administrador|Lago|95,684,551.08|97,182,599.00
+80894643|Richard Qimbay|Empleado|Lago|568,093.84|571,200.00
+|Lago |Empleado|Lago|337,665.56|339,150.00
+1104421496|Ana Gabriela Blanco|Empleado|Lago|21,574,271.77|21,653,390.00
+30337620|Luz M Castano|Administrador|Calle 60|98,950,322.44|100,272,799.80
+96072705693|Heidy Bustos|Administrador|Calle 60|4,435,364.72|4,497,918.00
+96072705693|Heidy Bustos|Empleado|Calle 60|65,221,716.71|65,753,297.30
+1022936391|Elizabeth Pinchao|Empleado|Calle 60|2,014,117.52|2,023,850.00
+42780431|Eucaris Monsalve|Empleado|Maracaibo|81,336,976.75|81,482,780.41
+21526872|Carolina Acosta Grajales|Administrador|Maracaibo|70,360,133.93|70,912,720.40
+21526872|Carolina Acosta Grajales|Empleado|Maracaibo|38,780.00|38,780.00
+1128453643|Leidy Yuliana Jimenez Mesa|Administrador|Maracaibo|26,272,741.95|26,457,316.97
+29685454|Carolina Diaz|Administrador|Avenida 19|66,268,267.60|66,937,499.60
+52288720|Ana Hernandez|Empleado|Avenida 19|43,767,642.14|43,974,380.00
+65811050|Maria Vargas|Empleado|Granahorrar|469,417.97|468,300.00
+102626087|Catalina Díaz |Administrador|Granahorrar|16,453,549.88|16,695,360.00
+52067788|Ilma Edith Ramirez|Administrador|Granahorrar|28,978,821.02|29,436,668.00
+|Venta Directa |Administrador|Vta. Fca.|12,230,865.14|12,508,930.00
+|Encargado |Empleado|Vta. Fca.|12,271,381.60|12,448,896.00
+7895462158|Salitre Plaza |Empleado|Salitre|142,800.00|142,800.00
+1031145028|Sandra Jimenez|Administrador|Salitre|31,137,448.05|31,506,280.00
+1031145028|Sandra Jimenez|Empleado|Salitre|421,400.00|421,400.00
+96051409512|Paola Huertas|Administrador|Salitre|4,364,285.49|4,421,270.00
+96051409512|Paola Huertas|Empleado|Salitre|24,411,910.34|24,514,000.00
+1022389589|Monica  Salazar|Empleado|Salitre|5,134,487.66|5,150,500.00
+|Unicentro  Medellin |Empleado|Unillin|33,437.87|33,400.00
+43209150|Yaneth Astrid Ospina Gomez|Administrador|Unillin|114,029,682.79|115,224,211.00
+43209150|Yaneth Astrid Ospina Gomez|Empleado|Unillin|63,907.24|65,200.00
+1068660769|Nini Johana Soto Almanza|Empleado|Unillin|27,861,238.06|27,933,365.00
+0|Junin |Empleado|Junin|983,406.14|984,700.00
+43874797|Alexandra George Oliver|Administrador|Junin|90,553,383.25|91,185,383.97
+43200157|Lina Marcela Betancur Londoño|Empleado|Junin|60,721,954.24|60,919,172.00
+94041120694|Leidy Johanna Ortiz|Empleado|Gran Estacion|31,484,593.55|31,840,720.00
+52175247|Olga Lucia  Pulido|Administrador|Gran Estacion|110,437,603.58|112,029,204.00
+52175247|Olga Lucia  Pulido|Empleado|Gran Estacion|863,933.38|885,470.00
+1030569609|Laura Villalobos|Administrador|Gran Estacion|3,916,799.99|3,954,410.00
+1030569609|Laura Villalobos|Empleado|Gran Estacion|35,921,891.17|36,335,835.00
+|Mayorca |Empleado|Mayorca|275,791.51|277,100.00
+43493472|Olga Lucia Velez|Administrador|Mayorca|57,642,072.39|58,407,115.02
+43493472|Olga Lucia Velez|Empleado|Mayorca|285,600.00|285,600.00
+1128405133|Laura Milena Muñoz Muñoz|Administrador|Mayorca|12,540,690.57|12,693,265.99
+32391845|Mariela Marin|Administrador|San Diego|148,173,551.54|149,953,126.07
+1017182703|Katherin Yesenia Gomez Benitez|Administrador|San Diego|15,332,839.68|15,522,036.99
+1017182703|Katherin Yesenia Gomez Benitez|Empleado|San Diego|75,992,592.82|76,581,437.03
+57105940|Yeimy Torregrosa|Administrador|Chia|80,704,035.07|81,708,300.50
+57105940|Yeimy Torregrosa|Empleado|Chia|1,623,497.62|1,640,650.00
+|Natalia Fonseca|Empleado|Chia|2,095,585.75|2,132,365.00
+1234|María Angelica De La Hoz|Empleado|Chia|11,766,175.59|11,814,570.00
+52328105|Maria Teresa Omaña|Administrador|Palatino|47,759,749.02|48,404,250.00
+52328105|Maria Teresa Omaña|Empleado|Palatino|868,617.37|884,270.00
+0|Centro Comercial Palatino |Empleado|Palatino|175,342.40|178,500.00
+51874834|Maria Fda Herrera|Administrador|Santafé|89,786,697.77|91,039,140.00
+1234|Claudia Fonseca|Empleado|Santafé|29,956,750.77|30,264,890.00
+1013613910|Carolina Ramos|Administrador|Centro.M|10,858,549.76|11,017,291.00
+1013613910|Carolina Ramos|Empleado|Centro.M|1,136,486.64|1,164,300.00
+80775253|Johan Salinas|Empleado|Centro.M|4,828,046.30|4,890,520.00
+0|Centro Mayor |Empleado|Centro.M|334,140.13|334,050.00
+51747649|Patricia Riveros|Administrador|Titan|149,945,858.53|152,222,645.00
+51747649|Patricia Riveros|Empleado|Titan|4,747,944.07|4,761,740.00
+1012327892|Maryie Bustos|Administrador|Titan|1,296,386.82|1,307,600.00
+22820415|Nury Beleño|Empleado|Titan|13,123,716.45|13,259,570.00
+52218446|Johana Rueda|Administrador|Titan|3,367,497.46|3,424,230.00
+52218446|Johana Rueda|Empleado|Titan|98,659,927.62|99,499,445.00
+1023948820|Jesica Liliana Ladino|Empleado|Titan|861,250.37|867,200.00
+1020415993|Yeicy Lorena Campos Murillo|Administrador|Santafé M.|5,551,166.48|5,610,305.00
+1020415993|Yeicy Lorena Campos Murillo|Empleado|Santafé M.|2,220,175.21|2,227,580.00
+101199803|Vanesa Cifuentes Garcia|Administrador|Americas|45,053,559.66|45,663,220.00
+1030570005|Mónica  Martínez |Empleado|Americas|183,965.80|188,900.00
+1033786048|Alexandra Gonsalez|Empleado|Americas|3,664,141.15|3,683,900.00
+20644747|Rocio Peña|Administrador|Unicentro 2|1,755,031.81|1,769,200.00
+20644747|Rocio Peña|Empleado|Unicentro 2|7,987,645.59|8,013,680.00
+1020807113|Mateo Torres|Empleado|Unicentro 2|7,103,001.40|7,162,110.00
+46362537|Jackeline Colmenares|Administrador|Unicentro 2|14,065,033.83|14,267,880.00
+46362537|Jackeline Colmenares|Empleado|Unicentro 2|67,156,220.11|67,887,685.00
