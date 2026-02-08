@@ -30,26 +30,26 @@ if($permisos[0] >= 2)
 			
 				
 					
-				if(!empty($_GET[IDGarantia]))
-					$condiciones.=" and G.IDGarantia = '".$_GET[IDGarantia]."'";
+				if(!empty($_GET['IDGarantia']))
+					$condiciones.=" and G.IDGarantia = '".$_GET['IDGarantia']."'";
 	
-				if(!empty($_GET[TipoRegistro]))
-					$condiciones.=" and G.TipoRegistro = '".$_GET[TipoRegistro]."'";
+				if(!empty($_GET['TipoRegistro']))
+					$condiciones.=" and G.TipoRegistro = '".$_GET['TipoRegistro']."'";
 					
-				if(!empty($_GET[IDEstadoGarantia]))
-					$condiciones.=" and G.IDEstadoGarantia = '".$_GET[IDEstadoGarantia]."'";
+				if(!empty($_GET['IDEstadoGarantia']))
+					$condiciones.=" and G.IDEstadoGarantia = '".$_GET['IDEstadoGarantia']."'";
 					
-				if(!empty($_GET[IDPuntoVenta]))
-					$condiciones.=" and G.IDPuntoVenta = '".$_GET[IDPuntoVenta]."'";
+				if(!empty($_GET['IDPuntoVenta']))
+					$condiciones.=" and G.IDPuntoVenta = '".$_GET['IDPuntoVenta']."'";
 					
-				if(!empty($_GET[CantidadVeces]))
-					$condiciones.=" and G.CantidadVeces = '".$_GET[CantidadVeces]."'";
+				if(!empty($_GET['CantidadVeces']))
+					$condiciones.=" and G.CantidadVeces = '".$_GET['CantidadVeces']."'";
 					
-				if(!empty($_GET[TipoProducto]))
-					$condiciones.=" and G.TipoProducto = '".$_GET[TipoProducto]."'";
+				if(!empty($_GET['TipoProducto']))
+					$condiciones.=" and G.TipoProducto = '".$_GET['TipoProducto']."'";
 					
-				if(!empty($_GET[Alerta])):
-					switch($_GET[Alerta]):
+				if(!empty($_GET['Alerta'])):
+					switch($_GET['Alerta']):
 						case "V":
 						  $condiciones .= " and G.IDEstadoGarantia not in (9,8,10)";
 						  $condiciones .= " and FechaEstimadaEntrega < CURDATE()";						
@@ -68,49 +68,49 @@ if($permisos[0] >= 2)
 					
 				endif;	
 
-				if (!empty($_GET[limit1]) && !empty($_GET[limit2]))
-					$condiciones.=" and G.FechaTrCr between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+				if (!empty($_GET['limit1']) && !empty($_GET['limit2']))
+					$condiciones.=" and G.FechaTrCr between '".$_GET['limit1']."' and '".$_GET['limit2']."'";
 
 				
 				
 				
-				if (!empty($_GET[TipoContrafuerte]))
+				if (!empty($_GET['TipoContrafuerte']))
 					$condiciones.=" and G.TipoContrafuerte = 'S'";
 
-				if (!empty($_GET[TipoCuero]))
+				if (!empty($_GET['TipoCuero']))
 					$condiciones.=" and G.TipoCuero = 'S'";
 					
-				if (!empty($_GET[TipoPlantilla]))
+				if (!empty($_GET['TipoPlantilla']))
 					$condiciones.=" and G.TipoPlantilla = 'S'";
 					
-				if (!empty($_GET[TipoCremallera]))
+				if (!empty($_GET['TipoCremallera']))
 					$condiciones.=" and G.TipoCremallera = 'S'";
 					
-				if (!empty($_GET[TipoDespegue]))
+				if (!empty($_GET['TipoDespegue']))
 					$condiciones.=" and G.TipoDespegue = 'S'";
 					
-				if (!empty($_GET[TipoCambrion]))
+				if (!empty($_GET['TipoCambrion']))
 					$condiciones.=" and G.TipoCambrion = 'S'";
 					
-				if (!empty($_GET[TipoTacon]))
+				if (!empty($_GET['TipoTacon']))
 					$condiciones.=" and G.TipoTacon = 'S'";
 					
-				if (!empty($_GET[TipoCerco]))
+				if (!empty($_GET['TipoCerco']))
 					$condiciones.=" and G.TipoCerco = 'S'";
 					
-				if (!empty($_GET[TipoCardado]))
+				if (!empty($_GET['TipoCardado']))
 					$condiciones.=" and G.TipoCardado = 'S'";
 					
-				if (!empty($_GET[TipoSuela]))
+				if (!empty($_GET['TipoSuela']))
 					$condiciones.=" and G.TipoSuela = 'S'";
 					
-				if (!empty($_GET[TipoGuarnicion]))
+				if (!empty($_GET['TipoGuarnicion']))
 					$condiciones.=" and G.TipoGuarnicion = 'S'";
 					
-				if (!empty($_GET[TipoPuntera]))
+				if (!empty($_GET['TipoPuntera']))
 					$condiciones.=" and G.TipoPuntera = 'S'";
 					
-				if (!empty($_GET[TipoHerraje]))				
+				if (!empty($_GET['TipoHerraje']))				
 					$condiciones.=" and G.TipoHerraje = 'S'";
 
 
@@ -134,34 +134,38 @@ if($permisos[0] >= 2)
 			//consulto totales para el resumen
 			$result_garantia=db_query($sql);
 			
-			$totales[contador_garantia]=0;
-			$totales[promedio_fabrica]=0;
-			$totales[promedio_entrega_cliente]=0;
+			$totales['contador_garantia']=0;
+			$totales['promedio_fabrica']=0;
+			$totales['promedio_entrega_cliente']=0;
+			$array_tiempo_fabrica = array();
+			$array_tiempo_entrega = array();
+			$suma_dias_fabrica = 0;
+			$suma_dias_entrega = 0;
 			
 			while($row_garantia=db_fetch_array($result_garantia)){
-				$totales[contador_garantia]++;
+				$totales['contador_garantia']++;
 				$fecha_ingreso_garantia = substr($r->FechaTrCr,0,10);
 
 				//Fecha Recibido en fabrica
-				$sql_recibido_fabrica = "Select * From ComentarioGarantia Where IDGarantia = '".$row_garantia[IDGarantia]."' and IDEstadoGarantia in (5, 12)";
+				$sql_recibido_fabrica = "Select * From ComentarioGarantia Where IDGarantia = '".$row_garantia['IDGarantia']."' and IDEstadoGarantia in (5, 12)";
 				$result_recibido_fabrica = db_query($sql_recibido_fabrica);
 				$row_recibido_fabrica = db_fetch_array($result_recibido_fabrica);
 				
 				//Fecha Enviado Almacen
-				$sql_enviada_tienda = "Select * From ComentarioGarantia Where IDGarantia = '".$row_garantia[IDGarantia]."' and IDEstadoGarantia in (7)";
+				$sql_enviada_tienda = "Select * From ComentarioGarantia Where IDGarantia = '".$row_garantia['IDGarantia']."' and IDEstadoGarantia in (7)";
 				$result_enviada_tienda = db_query($sql_enviada_tienda);
 				$row_enviada_tienda = db_fetch_array($result_enviada_tienda);
 				
 				//Fecha Entrega Cliente
-				$sql_entrega_cliente = "Select * From ComentarioGarantia Where IDGarantia = '".$row_garantia[IDGarantia]."' and IDEstadoGarantia in (9)";
+				$sql_entrega_cliente = "Select * From ComentarioGarantia Where IDGarantia = '".$row_garantia['IDGarantia']."' and IDEstadoGarantia in (9)";
 				$result_entrega_cliente = db_query($sql_entrega_cliente);
 				$row_entrega_cliente = db_fetch_array($result_entrega_cliente);
 				
 				
 				// Calculo de dias
 				
-				$fecha_inicio_fabrica = substr($row_recibido_fabrica[FechaComentario],0,10);
-				$fecha_fin_fabrica = substr($row_enviada_tienda[FechaComentario],0,10);
+				$fecha_inicio_fabrica = substr($row_recibido_fabrica['FechaComentario'],0,10);
+				$fecha_fin_fabrica = substr($row_enviada_tienda['FechaComentario'],0,10);
 				
 				if(!empty($fecha_inicio_fabrica) && !empty($fecha_fin_fabrica)):
 					$datetime1 = new DateTime($fecha_inicio_fabrica);
@@ -171,8 +175,8 @@ if($permisos[0] >= 2)
 					$array_tiempo_fabrica[] = $interval->format('%a');
 				endif;	
 
-				$fecha_inicio = substr($row_garantia[FechaTrCr],0,10);
-				$fecha_fin = substr($row_entrega_cliente[FechaComentario],0,10);
+				$fecha_inicio = substr($row_garantia['FechaTrCr'],0,10);
+				$fecha_fin = substr($row_entrega_cliente['FechaComentario'],0,10);
 				
 				if(!empty($fecha_inicio) && !empty($fecha_fin)):
 					$datetime1 = new DateTime($fecha_inicio);
@@ -188,19 +192,19 @@ if($permisos[0] >= 2)
 				foreach($array_tiempo_fabrica as $valor):
 					$suma_dias_fabrica += $valor;
 				endforeach;
-				$promedio_fabrica = (int) ($suma_dias_fabrica / count($array_tiempo_fabrica));
+				$promedio_fabrica = (count($array_tiempo_fabrica) > 0) ? (int) ($suma_dias_fabrica / count($array_tiempo_fabrica)) : 0;
 				
 				//Promedio Entrega Cliente
 				foreach($array_tiempo_entrega as $valor):
 					$suma_dias_entrega += $valor;
 				endforeach;
-				$promedio_entrega = (int) ($suma_dias_entrega / count($array_tiempo_entrega));
+				$promedio_entrega = (count($array_tiempo_entrega) > 0) ? (int) ($suma_dias_entrega / count($array_tiempo_entrega)) : 0;
 	
 				
 				
 				
-				$totales[promedio_fabrica]=$promedio_fabrica;
-				$totales[promedio_entrega_cliente]=$promedio_entrega;
+				$totales['promedio_fabrica']=$promedio_fabrica;
+				$totales['promedio_entrega_cliente']=$promedio_entrega;
 	
 			
 			
@@ -305,11 +309,11 @@ var Check = new Array('Nombre','Publicar');
           </tr>
 	      <tr>
 	        <td width="40%">Dias Promedio en Fabrica</td>
-	        <td width="60%">&nbsp;<?php  echo $totales[promedio_fabrica]; ?></td>
+	        <td width="60%">&nbsp;<?php  echo $totales['promedio_fabrica']; ?></td>
         </tr>
 	      <tr>
 	        <td>Dias Promedio entrega al cliente (tiempo total)</td>
-	        <td>&nbsp;<?php echo $totales[promedio_entrega_cliente];	 ?></td>
+	        <td>&nbsp;<?php echo $totales['promedio_entrega_cliente'];	 ?></td>
         </tr>
 	      <tr>
 	        <td colspan="2"><hr></td>
@@ -350,7 +354,7 @@ al	cliente
 		  $sql_recibido_fabrica = "Select * From ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia in (5, 12)";
 		  $result_recibido_fabrica = db_query($sql_recibido_fabrica);
 		  $row_recibido_fabrica = db_fetch_array($result_recibido_fabrica);
-		  echo substr($row_recibido_fabrica[FechaComentario],0,10);
+		  echo substr($row_recibido_fabrica['FechaComentario'],0,10);
 		  ?>
           
           </td>
@@ -359,7 +363,7 @@ al	cliente
 		  $sql_enviada_tienda = "Select * From ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia in (7)";
 		  $result_enviada_tienda = db_query($sql_enviada_tienda);
 		  $row_enviada_tienda = db_fetch_array($result_enviada_tienda);
-		  echo substr($row_enviada_tienda[FechaComentario],0,10);
+		  echo substr($row_enviada_tienda['FechaComentario'],0,10);
 		  ?>
           
           </td>
@@ -367,13 +371,13 @@ al	cliente
 		  $sql_entrega_cliente = "Select * From ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia in (9)";
 		  $result_entrega_cliente = db_query($sql_entrega_cliente);
 		  $row_entrega_cliente = db_fetch_array($result_entrega_cliente);
-		  echo substr($row_entrega_cliente[FechaComentario],0,10);
+		  echo substr($row_entrega_cliente['FechaComentario'],0,10);
 		  ?></td>
 	      <td nowrap class="<?php echo $class?>" align="center"><?php
 				
 				
-				$fecha_inicio_fabrica = substr($row_recibido_fabrica[FechaComentario],0,10);
-				$fecha_fin_fabrica = substr($row_enviada_tienda[FechaComentario],0,10);
+				$fecha_inicio_fabrica = substr($row_recibido_fabrica['FechaComentario'],0,10);
+				$fecha_fin_fabrica = substr($row_enviada_tienda['FechaComentario'],0,10);
 				
 				if(!empty($fecha_inicio_fabrica) && !empty($fecha_fin_fabrica)):
 					$datetime1 = new DateTime($fecha_inicio_fabrica);
@@ -389,7 +393,7 @@ al	cliente
 				
 				
 				$fecha_inicio = substr($r->FechaTrCr,0,10);
-				$fecha_fin = substr($row_entrega_cliente[FechaComentario],0,10);
+				$fecha_fin = substr($row_entrega_cliente['FechaComentario'],0,10);
 				
 				if(!empty($fecha_inicio) && !empty($fecha_fin)):
 					$datetime1 = new DateTime($fecha_inicio);
@@ -520,63 +524,63 @@ else
                     </tr>
                     <tr>
                       <td class="row2">Contrafuerte</td>
-                      <td class="row2"><input type="checkbox" name="TipoContrafuerte" id="TipoContrafuerte" value="S" <?php if ($_GET[TipoContrafuerte]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoContrafuerte" id="TipoContrafuerte" value="S" <?php if ($_GET['TipoContrafuerte']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpContrafuerte" id="tmpContrafuerte" value="<?php echo $r->TipoContrafuerte; ?>"></td>
                       <td >Despegue</td>
-                      <td ><input type="checkbox" name="TipoDespegue" id="TipoDespegue" value="S" <?php if ($_GET[TipoDespegue]=="S"){ echo "checked"; } ?>  />
+                      <td ><input type="checkbox" name="TipoDespegue" id="TipoDespegue" value="S" <?php if ($_GET['TipoDespegue']=="S"){ echo "checked"; } ?>  />
                         <span class="row2">
                           <input type="hidden" name="tmpTipoDespegue" id="tmpTipoDespegue" value="<?php echo $r->TipoDespegue; ?>">
                         </span></td>
                       <td class="row2">Cardado</td>
-                      <td class="row2"><input type="checkbox" name="TipoCardado" id="TipoCardado" value="S" <?php if ($_GET[TipoCardado]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCardado" id="TipoCardado" value="S" <?php if ($_GET['TipoCardado']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCardado" id="tmpTipoCardado" value="<?php echo $r->TipoCardado; ?>"></td>
                     </tr>
                     <tr>
                       <td class="row2">Cuero</td>
-                      <td class="row2"><input type="checkbox" name="TipoCuero" id="TipoCuero" value="S" <?php if ($_GET[TipoCuero]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCuero" id="TipoCuero" value="S" <?php if ($_GET['TipoCuero']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCuero" id="tmpTipoCuero" value="<?php echo $r->TipoCuero; ?>"></td>
                       <td >Cambrion</td>
-                      <td><input type="checkbox" name="TipoCambrion" id="TipoCambrion" value="S" <?php if ($_GET[TipoCambrion]=="S"){ echo "checked"; } ?>  />
+                      <td><input type="checkbox" name="TipoCambrion" id="TipoCambrion" value="S" <?php if ($_GET['TipoCambrion']=="S"){ echo "checked"; } ?>  />
                         <span class="row2">
                           <input type="hidden" name="tmpTipoCambrion" id="tmpTipoCambrion" value="<?php echo $r->TipoCambrion; ?>">
                         </span></td>
                       <td class="row2">Suela Rota</td>
-                      <td class="row2"><input type="checkbox" name="TipoSuela" id="TipoSuela" value="S" <?php if ($_GET[TipoSuela]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoSuela" id="TipoSuela" value="S" <?php if ($_GET['TipoSuela']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoSuela" id="tmpTipoSuela" value="<?php echo $r->TipoRemonta; ?>"></td>
                     </tr>
                     <tr>
                       <td class="row2">Plantilla estructural</td>
-                      <td class="row2"><input type="checkbox" name="TipoPlantilla" id="TipoPlantilla" value="S" <?php if ($_GET[TipoPlantilla]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoPlantilla" id="TipoPlantilla" value="S" <?php if ($_GET['TipoPlantilla']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoPlantilla" id="tmpTipoPlantilla" value="<?php echo $r->TipoPlantilla; ?>"></td>
                       <td >Tacon</td>
                       <td ><span class="row2">
-                        <input type="checkbox" name="TipoTacon" id="TipoTacon" value="S" <?php if ($_GET[TipoTacon]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoTacon" id="TipoTacon" value="S" <?php if ($_GET['TipoTacon']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoTacon" id="tmpTipoTacon" value="<?php echo $r->TipoTacon; ?>">
                       </span></td>
                       <td class="row2">Guarnicion</td>
                       <td class="row2"><span class="row2">
-                        <input type="checkbox" name="TipoGuarnicion" id="TipoGuarnicion" value="S" <?php if ($_GET[TipoGuarnicion]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoGuarnicion" id="TipoGuarnicion" value="S" <?php if ($_GET['TipoGuarnicion']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoGuarnicion" id="tmpTipoGuarnicion" value="<?php echo $r->TipoGuarnicion; ?>">
                       </span></td>
                     </tr>
                     <tr>
                       <td height="27" class="row2">Cremallera</td>
-                      <td class="row2"><input type="checkbox" name="TipoCremallera" id="TipoCremallera" value="S" <?php if ($_GET[TipoCremallera]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCremallera" id="TipoCremallera" value="S" <?php if ($_GET['TipoCremallera']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCremallera" id="tmpTipoCremallera" value="<?php echo $r->TipoCremallera; ?>"></td>
                       <td >Cerco</td>
-                      <td><input type="checkbox" name="TipoCerco" id="TipoCerco" value="S" <?php if ($_GET[TipoCerco]=="S"){ echo "checked"; } ?>  />
+                      <td><input type="checkbox" name="TipoCerco" id="TipoCerco" value="S" <?php if ($_GET['TipoCerco']=="S"){ echo "checked"; } ?>  />
                         <span class="row2">
                           <input type="hidden" name="tmpTipoCerco" id="tmpTipoCerco" value="<?php echo $r->TipoCerco; ?>">
                         </span></td>
                       <td class="row2">Puntera</td>
                       <td class="row2"><span class="row2">
-                        <input type="checkbox" name="TipoPuntera" id="TipoPuntera" value="S" <?php if ($_GET[TipoPuntera]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoPuntera" id="TipoPuntera" value="S" <?php if ($_GET['TipoPuntera']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoPuntera" id="tmpTipoPuntera" value="<?php echo $r->TipoPuntera; ?>">
                       </span></td>
                     </tr>
                     <tr>
                       <td class="row2">Herraje</td>
-                      <td class="row2"><input type="checkbox" name="TipoHerraje" id="TipoHerraje" value="S" <?php if ($_GET[TipoHerraje]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoHerraje" id="TipoHerraje" value="S" <?php if ($_GET['TipoHerraje']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoHerraje" id="tmpTipoHerraje" value="<?php echo $r->TipoHerraje; ?>"></td>
                       <td class="row2">&nbsp;</td>
                       <td class="row2">&nbsp;</td>

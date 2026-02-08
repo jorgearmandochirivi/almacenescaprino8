@@ -32,7 +32,7 @@ if($permisos[0] >= 2)
 				list_r($sql);
 			break;
 			case "modificafecha":
-				$sql_cambia_fecha="Update BonoFidelizacion Set FechaVencimiento = '".$_POST[FechaVencimientoBono]."', Estado = '".$_POST["EstadoBono"]."'  Where IDBonoFidelizacion = '".$_POST[IDBonoFidelizacion]."'";
+				$sql_cambia_fecha="Update BonoFidelizacion Set FechaVencimiento = '".$_POST['FechaVencimientoBono']."', Estado = '".$_POST["EstadoBono"]."'  Where IDBonoFidelizacion = '".$_POST['IDBonoFidelizacion']."'";
 				db_query($sql_cambia_fecha);
 				echo "<script>alert('Fecha Modificada con exito');location.href='?mod=BonoFidelizado';</script>";
 			break;
@@ -54,7 +54,7 @@ else
 /*******************************************************************************************
 		funcion Listar
 *******************************************************************************************/
-	function list_r( $sql ){
+	function list_r( $sql = "" ){
 		Global $TitleMod,$MOD,$Table,$Key,$listar;
 
 
@@ -116,9 +116,9 @@ else
 
 
 
-<?php if ($_GET[accion]=="edit_fecha_vencimiento"){
+<?php if ($_GET['accion']=="edit_fecha_vencimiento"){
  // consulto los datos de los puntos
- $sql_bono="Select * From BonoFidelizacion Where IDBonoFidelizacion = '".$_GET[IDBonoFidelizacion]."'";
+ $sql_bono="Select * From BonoFidelizacion Where IDBonoFidelizacion = '".$_GET['IDBonoFidelizacion']."'";
  $qry_bono=db_query($sql_bono);
  $row_bono=db_fetch_array($qry_bono);
  ?>
@@ -168,7 +168,7 @@ else
             </tr>
             <tr>
 				<td colspan=3 align=center class=row2>
-                    <input type=hidden name=IDBonoFidelizacion id=IDPuntosClienteFidelizacion value="<?php echo $_GET[IDBonoFidelizacion] ?>">
+                    <input type=hidden name=IDBonoFidelizacion id=IDPuntosClienteFidelizacion value="<?php echo $_GET['IDBonoFidelizacion'] ?>">
                     <input type=hidden name=action value="modificafecha">
                     <input type=hidden name=mod value="BonoFidelizado">
                     <input type=submit name=submit value="Modificar fecha" class="submit">

@@ -117,9 +117,9 @@ else
 	function list_r($frm,$newmode){
 		Global $TitleMod,$MOD,$Table,$Key,$listar,$IDPuntoVenta,$_POST;
 
-	 	sql =  "SELECT * FROM  Referencia R, PuntoVentaReferencia PR
+	 	$sql =  "SELECT * FROM  Referencia R, PuntoVentaReferencia PR
 	 			WHERE  PR.IDPuntoVenta = '$IDPuntoVenta'
-	 			AND PR.IDPuntoVentaReferencia IN ($frm['Referencias'])
+	 			AND PR.IDPuntoVentaReferencia IN ({$frm['Referencias']})
 	 				AND PR.IDReferencia = R.IDReferencia
 	 				GROUP BY PR.IDPuntoVentaReferencia
 	 				ORDER BY R.Numero ASC";

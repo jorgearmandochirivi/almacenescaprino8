@@ -192,7 +192,7 @@ var Check = new Array('Fecha','Dia');
 </td>
 						<td nowrap class=row1><?php echo  $r->Nombre ?></td>
 						<td nowrap class=row1><?php echo  $r->Descripcion ?></td>
-						<td nowrap class=row1><?php echo number_format( $r->Valor, 0) ?></td>
+						<td nowrap class=row1><?php echo is_numeric($r->Valor) ? number_format( $r->Valor, 0) : $r->Valor ?></td>
 						<td align=center valign=middle nowrap width=60 class=row2>
 	&nbsp;&nbsp;<a href='<?php echo "?mod=$MOD&action=del&id="; echo $r->$Key; ?>'><img src='images/trash.gif' border='0'></a>	
 </td>

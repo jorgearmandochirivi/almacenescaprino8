@@ -1279,7 +1279,7 @@ var Check = new Array('Nombre','Publicar');
                   $sql_finalizacion=db_query("Select * From TipoFinalizacionGarantia Where 1 and Publicar = 'S' Order By Nombre");
                   while($row_finalizacion=db_fetch_array($sql_finalizacion)){
                   ?>
-                    <option value="<?php echo $row_finalizacion[IDTipoFinalizacionGarantia]; ?>"><?php echo $row_finalizacion[Nombre]; ?></option>
+                    <option value="<?php echo $row_finalizacion['IDTipoFinalizacionGarantia']; ?>"><?php echo $row_finalizacion['Nombre']; ?></option>
                   <?php
                   }
                   ?>
@@ -1544,7 +1544,7 @@ var Check = new Array('Nombre','Publicar');
 										echo $r->NombreMayorista;
 									}
 									else{
-										$id_cliente= $r_factura[IDCliente];
+										$id_cliente= $r_factura['IDCliente'];
 										echo get_field("Cliente","Nombre","IDCliente",$id_cliente)." ".get_field("Cliente","Apellido","IDCliente",$id_cliente);
 									}
 									?></td>
@@ -1659,9 +1659,9 @@ var Check = new Array('Nombre','Publicar');
                         </td>
 						<td nowrap class="<?php echo $class?>"><?php 
 						if ($r->TipoFactura=="facturabono"):
-							echo $r_factura[NumeroFacturaBono]  . "(bono)";
+							echo $r_factura['NumeroFacturaBono']  . "(bono)";
 						else:
-							echo $r_factura[NumeroFactura];
+							echo $r_factura['NumeroFactura'];
 						endif;
 							?>
                         </td>

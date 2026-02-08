@@ -391,7 +391,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 </table>
 <br>
 
-<div id="Pedido" style=" <?php if ($_GET[tab]=="detalle" && !empty($id)){ ?> display:none;  <?php } ?>">
+<div id="Pedido" style=" <?php if ($_GET['tab']=="detalle" && !empty($id)){ ?> display:none;  <?php } ?>">
 
 <form name="frm" id="frmPedidoTercero" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){ ?> onSubmit="return EvaluaReg(this,Check)" <?php } ?>>
 
@@ -405,7 +405,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 
 
                 <?php
-						if($_GET[tab]=="" || $_GET[tab]=="pedido" ):
+						if($_GET['tab']=="" || $_GET['tab']=="pedido" ):
 							$color_tab = "#18C3D5";
 						else:
 							$color_tab = "#02387A";
@@ -423,7 +423,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 				<td width="4"></td>
 				<td >
                 	<?php
-						if($_GET[tab]=="detalle"):
+						if($_GET['tab']=="detalle"):
 							$color_tab = "#18C3D5";
 						else:
 							$color_tab = "#02387A";
@@ -441,7 +441,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 				<td>&nbsp;</td>
                 <td >
                 	<?php
-						if($_GET[tab]=="verificacion"):
+						if($_GET['tab']=="verificacion"):
 							$color_tab = "#18C3D5";
 						else:
 							$color_tab = "#02387A";
@@ -491,7 +491,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
                     <?php
 						$sql_prov = db_query("Select * From Proveedor where Publicar = 'S' order by Nombre asc");
 						while ($row_prov = db_fetch_array($sql_prov)): ?>
-                        	<option value="<?php echo $row_prov[IDProveedor];?>" <?php if($row_prov[IDProveedor]==$r->IDProveedor) echo "selected"; ?>><?php echo $row_prov[Nombre];?></option>
+                        	<option value="<?php echo $row_prov['IDProveedor'];?>" <?php if($row_prov['IDProveedor']==$r->IDProveedor) echo "selected"; ?>><?php echo $row_prov['Nombre'];?></option>
 						<?php
 						endwhile;
 					?>
@@ -507,7 +507,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 									if( !empty($r->IDProveedor)){
 									 	 $sql_datos_proveedor = db_query("Select * From Proveedor Where IDProveedor = '" . $r->IDProveedor . "'");
 										 $datos_proveedor = db_fetch_array($sql_datos_proveedor);
-										 $datos_proveedor[Ciudad]=get_field("Ciudad","Descripcion","IDCiudad",$datos_proveedor[IDCiudad]);
+										 $datos_proveedor['Ciudad']=get_field("Ciudad","Descripcion","IDCiudad",$datos_proveedor['IDCiudad']);
 
 									}
 									?>
@@ -515,19 +515,19 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			        </tr>
 				    <tr>
 				      <td width="16%"><strong>Nombre</strong></td>
-				      <td width="31%"><span id="NombreProveedor"><?php echo $datos_proveedor[Nombre] ?></span></td>
+				      <td width="31%"><span id="NombreProveedor"><?php echo $datos_proveedor['Nombre'] ?></span></td>
 				      <td width="19%"><strong>Direccion</strong></td>
-				      <td width="34%"><span id="DireccionProveedor"><?php echo $datos_proveedor[Direccion] ?></span></td>
+				      <td width="34%"><span id="DireccionProveedor"><?php echo $datos_proveedor['Direccion'] ?></span></td>
 			        </tr>
 				    <tr>
 				      <td><strong>Telefono</strong></td>
-				      <td><span id="TelefonoProveedor"><?php echo $datos_proveedor[Telefono] ?></span></td>
+				      <td><span id="TelefonoProveedor"><?php echo $datos_proveedor['Telefono'] ?></span></td>
 				      <td><strong>Ciudad</strong></td>
-				      <td><span id="CiudadProveedor"><?php echo $datos_proveedor[Ciudad] ?></span></td>
+				      <td><span id="CiudadProveedor"><?php echo $datos_proveedor['Ciudad'] ?></span></td>
 			        </tr>
 				    <tr>
 				      <td><strong>Email</strong></td>
-				      <td colspan="3"><span id="EmailProveedor"><?php echo $datos_proveedor[Email] ?></span></td>
+				      <td colspan="3"><span id="EmailProveedor"><?php echo $datos_proveedor['Email'] ?></span></td>
 			        </tr>
 			      </tbody>
 				  </table></td>
@@ -760,7 +760,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
                         	<option value=""></option>
 						<?php $sql_curvas = db_query("Select * From CurvaTercero Where Publicar = 'S' Order By Nombre");
 							  while($row_curva = db_fetch_array($sql_curvas)){ ?>
-								  	<option value="<?php echo $row_curva[IDCurvaTercero]; ?>" <?php if($array_detalle_orden[$i]["IDCurvaTercero"]==$row_curva[IDCurvaTercero]) echo "selected"; ?>><?php echo $row_curva[Nombre]; ?></option>
+								  	<option value="<?php echo $row_curva['IDCurvaTercero']; ?>" <?php if($array_detalle_orden[$i]["IDCurvaTercero"]==$row_curva['IDCurvaTercero']) echo "selected"; ?>><?php echo $row_curva['Nombre']; ?></option>
 							   <?php } ?>
                         </select>
 						</td>
@@ -807,7 +807,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
                           <?php
                           $sql_prioridad_alta=db_query("Select Nombre from PuntoVenta Where IDTipoPrioridad = 1 and IDCiudad = 1 and Publicar = 'S' Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_alta)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto['Nombre'] ."<br>";
 						  }
 						  ?>
 
@@ -815,13 +815,13 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			              <td><?php
                           $sql_prioridad_media=db_query("Select Nombre from PuntoVenta Where IDTipoPrioridad = 2 and IDCiudad = 1 and Publicar = 'S' Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_media)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto['Nombre'] ."<br>";
 						  }
 						  ?></td>
 			              <td><?php
                           $sql_prioridad_baja=db_query("Select Nombre from PuntoVenta Where IDTipoPrioridad = 3 and IDCiudad = 1 and Publicar = 'S' Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_baja)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto['Nombre'] ."<br>";
 						  }
 						  ?></td>
 		                </tr>
@@ -841,19 +841,19 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 			              <td><?php
                           $sql_prioridad_alta=db_query("Select Nombre from PuntoVenta Where IDTipoPrioridad = 1 and IDCiudad = 2 and Publicar = 'S' Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_alta)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto['Nombre'] ."<br>";
 						  }
 						  ?></td>
 			              <td><?php
                           $sql_prioridad_media=db_query("Select Nombre from PuntoVenta Where IDTipoPrioridad = 2 and IDCiudad = 2 and Publicar = 'S' Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_media)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto['Nombre'] ."<br>";
 						  }
 						  ?></td>
 			              <td><?php
                           $sql_prioridad_baja=db_query("Select Nombre from PuntoVenta Where IDTipoPrioridad = 3 and IDCiudad = 2 and Publicar = 'S' Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_baja)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto['Nombre'] ."<br>";
 						  }
 						  ?></td>
 		                </tr>
@@ -967,7 +967,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 
 
 
-<div id="DetallePedido" style=" <?php if ($_GET[tab]!="detalle" && !empty($id)){ ?> display:none;  <?php } ?>">
+<div id="DetallePedido" style=" <?php if ($_GET['tab']!="detalle" && !empty($id)){ ?> display:none;  <?php } ?>">
 
 <form name="frm" id="frmPedidoTercero" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){ ?> onSubmit="return EvaluaReg(this,Check)" <?php } ?>>
 
@@ -980,7 +980,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 
 
                 <?php
-						if($_GET[tab]=="" || $_GET[tab]=="pedido" ):
+						if($_GET['tab']=="" || $_GET['tab']=="pedido" ):
 							$color_tab = "#18C3D5";
 						else:
 							$color_tab = "#02387A";
@@ -998,7 +998,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 				<td width="4"></td>
 				<td >
                 	<?php
-						if($_GET[tab]=="detalle"):
+						if($_GET['tab']=="detalle"):
 							$color_tab = "#18C3D5";
 						else:
 							$color_tab = "#02387A";
@@ -1016,7 +1016,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 				<td>&nbsp;</td>
                 <td >
                 	<?php
-						if($_GET[tab]=="verificacion"):
+						if($_GET['tab']=="verificacion"):
 							$color_tab = "#18C3D5";
 						else:
 							$color_tab = "#02387A";
@@ -1064,19 +1064,19 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 			        </tr>
 				    <tr>
 				      <td width="16%"><strong>Nombre</strong></td>
-				      <td width="31%"><span id="NombreProveedor"><?php echo $datos_proveedor[Nombre] ?></span></td>
+				      <td width="31%"><span id="NombreProveedor"><?php echo $datos_proveedor['Nombre'] ?></span></td>
 				      <td width="19%"><strong>Direccion</strong></td>
-				      <td width="34%"><span id="DireccionProveedor"><?php echo $datos_proveedor[Direccion] ?></span></td>
+				      <td width="34%"><span id="DireccionProveedor"><?php echo $datos_proveedor['Direccion'] ?></span></td>
 			        </tr>
 				    <tr>
 				      <td><strong>Telefono</strong></td>
-				      <td><span id="TelefonoProveedor"><?php echo $datos_proveedor[Telefono] ?></span></td>
+				      <td><span id="TelefonoProveedor"><?php echo $datos_proveedor['Telefono'] ?></span></td>
 				      <td><strong>Ciudad</strong></td>
-				      <td><span id="CiudadProveedor"><?php echo $datos_proveedor[Ciudad] ?></span></td>
+				      <td><span id="CiudadProveedor"><?php echo $datos_proveedor['Ciudad'] ?></span></td>
 			        </tr>
 				    <tr>
 				      <td><strong>Email</strong></td>
-				      <td colspan="3"><span id="EmailProveedor"><?php echo $datos_proveedor[Email] ?></span></td>
+				      <td colspan="3"><span id="EmailProveedor"><?php echo $datos_proveedor['Email'] ?></span></td>
 			        </tr>
 			      </tbody>
 				  </table></td>
@@ -1172,7 +1172,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 							if ($r->IDEstadoPedidoTercero<>1):
 								$sql_total_pedido=db_query("Select SUM(Cantidad) as Total_Producto From DetallePedidoTerceroReferencia
 												   Where IDPedidoTercero= '".$r->IDPedidoTercero."' and
-													     IDPuntoVenta = '".$datos_punto_venta[IDPuntoVenta]."'");
+													     IDPuntoVenta = '".$datos_punto_venta['IDPuntoVenta']."'");
 								$row_total_producto = db_fetch_array($sql_total_pedido);
 								if((int)$row_total_producto["Total_Producto"]<=0):
 									$flag_total_producto = 1;
@@ -1192,9 +1192,9 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
                           <table width="100%" border="0" cellspacing="1" cellpadding="0">
 						    <tbody>
 
-                            <?php if ($datos_punto_venta[IDCiudad]!=$id_ciudad_ant){
-									$id_ciudad_ant= $datos_punto_venta[IDCiudad];
-									if ($datos_punto_venta[IDCiudad]=="1")
+                            <?php if ($datos_punto_venta['IDCiudad']!=$id_ciudad_ant){
+									$id_ciudad_ant= $datos_punto_venta['IDCiudad'];
+									if ($datos_punto_venta['IDCiudad']=="1")
 										$color="#B1CFE6";
 									else
 										$color="#BDD9BF";
@@ -1202,12 +1202,12 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 
 							?>
                             <tr>
-								  <td bgcolor="<?php echo $color; ?>"  colspan=3 align=center style="font-size:14px; color:#EB373A"><?php echo get_field("Ciudad","Descripcion","IDCiudad",$datos_punto_venta[IDCiudad]); ?></td>
+								  <td bgcolor="<?php echo $color; ?>"  colspan=3 align=center style="font-size:14px; color:#EB373A"><?php echo get_field("Ciudad","Descripcion","IDCiudad",$datos_punto_venta['IDCiudad']); ?></td>
 						    </tr>
                             <?php } ?>
 
 						      <tr>
-						        <td class="maintitle" bgcolor="#9daac6" colspan="3" ><?php echo $datos_punto_venta[Nombre]; ?></td>
+						        <td class="maintitle" bgcolor="#9daac6" colspan="3" ><?php echo $datos_punto_venta['Nombre']; ?></td>
 					          </tr>
 						      <tr>
 						        <td class="titlemedium">Talla:</td>
@@ -1217,7 +1217,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 									$total_tienda="0";
 									foreach($array_talla as $id_talla => $datos_talla):
 									?>
-							        <td class="titlemedium" nowrap align="center" width="50px"><?php echo $datos_talla[Nombre]; ?></td>
+							        <td class="titlemedium" nowrap align="center" width="50px"><?php echo $datos_talla['Nombre']; ?></td>
 
                                     <?php endforeach;
 								endif;
@@ -1274,8 +1274,8 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 									?>
 							        <td class=row1 align=center>
 									<?php
-										$total_curva +=$array_datos_curva[$datos_punto_venta[IDPuntoVenta]][$datos_talla[IDTalla]] ["Maximo"];
-										echo $maximo_item[$id_talla]=$array_datos_curva[$datos_punto_venta[IDPuntoVenta]][$datos_talla[IDTalla]] ["Maximo"];
+$total_curva +=$array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_talla['IDTalla']] ["Maximo"];
+									echo $maximo_item[$id_talla]=$array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_talla['IDTalla']] ["Maximo"];
 
 										?></td>
 
@@ -1318,7 +1318,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 												$nombre_talla = get_field("Talla","Descripcion","IDTalla",$id_talla);
 												$sql_tallas_rel = db_query("Select * From Talla Where Descripcion = '".$nombre_talla."'");
 												while($row_talla = db_fetch_array($sql_tallas_rel)):
-													$array_tallas_rel []=$row_talla[IDTalla];
+													$array_tallas_rel []=$row_talla['IDTalla'];
 												endwhile;
 
 												if (count($array_tallas_rel)>0):
@@ -1428,8 +1428,8 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 
 
 											//Si lo que hay en existencia es mayor a la curva lo marco como sobrante para que en otro almacen no lo pida y asi respetar la curva
-											if((int)$total_existencias> (int)$maximo_item[$id_talla]=$array_datos_curva[$datos_punto_venta[IDPuntoVenta]][$datos_talla[IDTalla]] ["Maximo"]):
-												$sobran = (int)$total_existencias> (int)$maximo_item[$id_talla]-$array_datos_curva[$datos_punto_venta[IDPuntoVenta]][$datos_talla[IDTalla]] ["Maximo"];
+											if((int)$total_existencias> (int)$maximo_item[$id_talla]=$array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_talla['IDTalla']] ["Maximo"]):
+												$sobran = (int)$total_existencias> (int)$maximo_item[$id_talla]-$array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_talla['IDTalla']] ["Maximo"];
 												$array_contador_sobra[$id_referencia][$nombre_talla]+=$sobran;
 												echo '<br><span style="color:#EE080C !important; font-weight:bold">Sobran ('.$sobran.') </span>';
 											endif;
@@ -1480,45 +1480,39 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 	                            <?php
 								if (count($array_talla)>0):
 									foreach($array_talla as $id_talla => $datos_talla):
-									// Verifico si ya existe algo guardado para no reemplazar
-									$sql_detalle_pedido_ref = "Select Cantidad
-															  From DetallePedidoTerceroReferencia
-															  Where IDPedidoTercero= '".$r->IDPedidoTercero."' and
-															  IDDetallePedidoTercero = '".$array_detalle_orden[$i]["IDDetallePedidoTercero"]."' and
-															  IDPuntoVenta = '".$datos_punto_venta[IDPuntoVenta]."' and
-															  IDTalla = '".$datos_talla[IDTalla]."'";
+										// Verifico si ya existe algo guardado para no reemplazar
+										$sql_detalle_pedido_ref = "Select Cantidad
+																From DetallePedidoTerceroReferencia
+																Where IDPedidoTercero= '".$r->IDPedidoTercero."' and
+																IDDetallePedidoTercero = '".$array_detalle_orden[$i]["IDDetallePedidoTercero"]."' and
+																	IDPuntoVenta = '".$datos_punto_venta['IDPuntoVenta']."' and
+																	IDTalla = '".$datos_talla['IDTalla']."'";
 
-															  
-
-
-									$result_detalle_pedido_ref = db_query($sql_detalle_pedido_ref);
-									$row_detalle_pedido_ref=db_fetch_array($result_detalle_pedido_ref);
+										$result_detalle_pedido_ref = db_query($sql_detalle_pedido_ref);
+										$row_detalle_pedido_ref=db_fetch_array($result_detalle_pedido_ref);
 
 
 
 
-									if (is_numeric($row_detalle_pedido_ref["Cantidad"])){
-										$entra_en = "AA";
-										$valor_pedir_item = (int)$row_detalle_pedido_ref["Cantidad"];
-									}
-									else{
-										$entra_en = "BB";
-										$valor_pedir_item = (int)$maximo_item[$id_talla] - (int)$existencias_item[$id_talla];
-										if ($valor_pedir_item<0 && is_numeric($valor_pedir_item))
-											$valor_pedir_item="";
+										if (is_numeric($row_detalle_pedido_ref["Cantidad"])){
+											$entra_en = "AA";
+											$valor_pedir_item = (int)$row_detalle_pedido_ref["Cantidad"];
+										}
+										else{
+											$entra_en = "BB";
+											$valor_pedir_item = (int)$maximo_item[$id_talla] - (int)$existencias_item[$id_talla];
+											if ($valor_pedir_item<0 && is_numeric($valor_pedir_item))
+												$valor_pedir_item="";
 
-									}
-
-
-									if((int)db_num_rows($result_detalle_pedido_ref)<=0 && (int)$valor_pedir_item==0)
-										$valor_pedir_item =0;
-
-									 	$suma_item_pedir+=$valor_pedir_item;
-										$suma_item_pedir_talla[$datos_talla[IDTalla]] +=  $valor_pedir_item;
+										}
 
 
+										if((int)db_num_rows($result_detalle_pedido_ref)<=0 && (int)$valor_pedir_item==0)
+											$valor_pedir_item =0;
 
-									?>
+											$suma_item_pedir+=$valor_pedir_item;
+											$suma_item_pedir_talla[$datos_talla['IDTalla']] +=  $valor_pedir_item;
+										?>
 							        <td class=row1 align=center>
                                     <?php
 									//echo $entra_en;
@@ -1529,7 +1523,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
                                     	<?php
 										if($r->IDEstadoPedidoTercero == 1):
 											//Si no se ha superado el maximo a pedir segun la curva
-											$nombre_talla = get_field("Talla","Descripcion","IDTalla",$datos_talla[IDTalla]);
+											$nombre_talla = get_field("Talla","Descripcion","IDTalla",$datos_talla['IDTalla']);
 											//echo (int)$array_pedido_talla_ref[$id_referencia][$nombre_talla] ."<". (int)$array_maximo_a_pedir[$id_referencia][$nombre_talla] . " TOT REF ". $total_codificacion_exis . "IDRef " . $id_referencia;
 											//print_r($array_maximo_a_pedir);
 											if((int)$array_pedido_talla_ref[$id_referencia][$nombre_talla] < (int)$array_maximo_a_pedir[$id_referencia][$nombre_talla]):
@@ -1545,30 +1539,25 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 														$array_contador_sobra[$id_referencia][$nombre_talla]=0;
 													endif;
 												endif;
-
-
 												$array_pedido_talla_ref[$id_referencia][$nombre_talla]+=$valor_pedir_item;
 											else:
-
 												$valor_pedir_item=0;
-												//if((int)$super_total_talla[$datos_talla[IDTalla]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]>0)
-													//$super_total_talla[$datos_talla[IDTalla]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]--;
+												//if((int)$super_total_talla[$datos_talla['IDTalla']][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]>0)
+													//$super_total_talla[$datos_talla['IDTalla']][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]--;
 											endif;
 											?>
-	    	                                	<input type="text" name="Pedido[<?php echo $datos_talla[IDTalla]; ?>][<?php echo $datos_punto_venta[IDPuntoVenta] ?>][<?php echo $array_detalle_orden[$i]["IDDetallePedidoTercero"] ?>]"  size="5" value="<?php if (is_numeric($valor_pedir_item)) echo (int)$valor_pedir_item; ?>" style="text-align:center">
+	    	                                	<input type="text" name="Pedido[<?php echo $datos_talla['IDTalla']; ?>][<?php echo $datos_punto_venta['IDPuntoVenta'] ?>][<?php echo $array_detalle_orden[$i]["IDDetallePedidoTercero"] ?>]"  size="5" value="<?php if (is_numeric($valor_pedir_item)) echo (int)$valor_pedir_item; ?>" style="text-align:center">
 
-                                        <?php
-
-
-										else:
+											<?php 
+										 else:
 											if (is_numeric($valor_pedir_item)) echo (int)$valor_pedir_item;
 										endif; ?>
                                     <?php }
 
-									$super_total_talla[$datos_talla[IDTalla]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]+=$valor_pedir_item;
+									$super_total_talla[$datos_talla['IDTalla']][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]+=$valor_pedir_item;
 
 
-									//if($datos_punto_venta[IDPuntoVenta]==22)
+									//if($datos_punto_venta['IDPuntoVenta']==22)
 										//echo $sql_detalle_pedido_ref;
 
 
@@ -1629,7 +1618,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 								?>
                                 <td bgcolor="#F1CFCF" align="center" style="font-weight:bold">
 								<?php
-								$total_ciudad[$datos_punto_venta[IDCiudad]] += $total_tienda;
+								$total_ciudad[$datos_punto_venta['IDCiudad']] += $total_tienda;
 								echo number_format($total_tienda,0,",","."); ?>
                                 </td>
 					          </tr>
@@ -1683,7 +1672,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 									foreach($array_talla as $id_talla => $datos_talla):
 									$suma_talla_resumen="0";
 									?>
-			        <td bgcolor="#FEFFBB" align="center" style="font-weight:bold"><?php echo $datos_talla[Nombre]; ?></td>
+			        <td bgcolor="#FEFFBB" align="center" style="font-weight:bold"><?php echo $datos_talla['Nombre']; ?></td>
 			        <?php endforeach;
 								endif;
 								?>
@@ -1711,7 +1700,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 									foreach($array_talla as $id_talla => $datos_talla):
 
 									 	$suma_item_pedir+=$valor_pedir_item;
-										$suma_item_pedir_talla[$datos_talla[IDTalla]] +=  $valor_pedir_item;
+										$suma_item_pedir_talla[$datos_talla['IDTalla']] +=  $valor_pedir_item;
 
 									?>
 			        <td class=row1 align=center>
@@ -1719,7 +1708,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 
 							echo $super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]];
 							$suma_talla_resumen+=$super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]];
-							$suma_talla[$datos_talla[IDTalla]]+=$super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]];
+							$suma_talla[$datos_talla['IDTalla']]+=$super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]];
 
 						 ?>
                     </td>
@@ -1966,7 +1955,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
                         </td>
 						<td nowrap class=row1>
 						<?php 
-						echo estado_tercero($r->IDPedidoTercero);
+						echo estado_tercero($r->IDPedidoTercero, $r->IDEstadoPedidoTercero);
 						//echo get_field("EstadoPedidoTercero","Descripcion","IDEstadoPedidoTercero",$r->IDEstadoPedidoTercero)
 
 						$sql_sinfact="SELECT IDDetallePedidoTerceroReferencia FROM `DetallePedidoTerceroReferencia` WHERE `IDPedidoTercero` = ".$r->$Key." and FechaEntregaContabilidad = '' Limit 1";

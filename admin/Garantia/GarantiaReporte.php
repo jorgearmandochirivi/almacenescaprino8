@@ -33,26 +33,26 @@ if($permisos[0] >= 2)
 			
 				
 					
-				if(!empty($_GET[IDGarantia]))
-					$condiciones.=" and G.IDGarantia = '".$_GET[IDGarantia]."'";
+			if(!empty($_GET['IDGarantia']))
+					$condiciones.=" and G.IDGarantia = '".$_GET['IDGarantia']."'";
 	
-				if(!empty($_GET[TipoRegistro]))
-					$condiciones.=" and G.TipoRegistro = '".$_GET[TipoRegistro]."'";
+			if(!empty($_GET['TipoRegistro']))
+					$condiciones.=" and G.TipoRegistro = '".$_GET['TipoRegistro']."'";
 					
-				if(!empty($_GET[IDEstadoGarantia]))
-					$condiciones.=" and G.IDEstadoGarantia = '".$_GET[IDEstadoGarantia]."'";
+			if(!empty($_GET['IDEstadoGarantia']))
+					$condiciones.=" and G.IDEstadoGarantia = '".$_GET['IDEstadoGarantia']."'";
 					
-				if(!empty($_GET[IDPuntoVenta]))
-					$condiciones.=" and G.IDPuntoVenta = '".$_GET[IDPuntoVenta]."'";
+			if(!empty($_GET['IDPuntoVenta']))
+					$condiciones.=" and G.IDPuntoVenta = '".$_GET['IDPuntoVenta']."'";
 					
-				if(!empty($_GET[CantidadVeces]))
-					$condiciones.=" and G.CantidadVeces = '".$_GET[CantidadVeces]."'";
+			if(!empty($_GET['CantidadVeces']))
+					$condiciones.=" and G.CantidadVeces = '".$_GET['CantidadVeces']."'";
 					
-				if(!empty($_GET[TipoProducto]))
-					$condiciones.=" and G.TipoProducto = '".$_GET[TipoProducto]."'";
+			if(!empty($_GET['TipoProducto']))
+					$condiciones.=" and G.TipoProducto = '".$_GET['TipoProducto']."'";
 					
-				if(!empty($_GET[Alerta])):
-					switch($_GET[Alerta]):
+			if(!empty($_GET['Alerta'])):
+					switch($_GET['Alerta']):
 						case "V":
 						  $condiciones .= " and G.IDEstadoGarantia not in (9,8,10)";
 						  $condiciones .= " and FechaEstimadaEntrega < CURDATE()";						
@@ -71,49 +71,49 @@ if($permisos[0] >= 2)
 					
 				endif;	
 
-				if (!empty($_GET[limit1]) && !empty($_GET[limit2]))
-					$condiciones.=" and G.FechaTrCr between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+				if (!empty($_GET['limit1']) && !empty($_GET['limit2']))
+					$condiciones.=" and G.FechaTrCr between '".$_GET['limit1']."' and '".$_GET['limit2']."'";
 
 				
 				
 				
-				if (!empty($_GET[TipoContrafuerte]))
+				if (!empty($_GET['TipoContrafuerte']))
 					$condiciones.=" and G.TipoContrafuerte = 'S'";
 
-				if (!empty($_GET[TipoCuero]))
+				if (!empty($_GET['TipoCuero']))
 					$condiciones.=" and G.TipoCuero = 'S'";
 					
-				if (!empty($_GET[TipoPlantilla]))
+				if (!empty($_GET['TipoPlantilla']))
 					$condiciones.=" and G.TipoPlantilla = 'S'";
 					
-				if (!empty($_GET[TipoCremallera]))
+				if (!empty($_GET['TipoCremallera']))
 					$condiciones.=" and G.TipoCremallera = 'S'";
 					
-				if (!empty($_GET[TipoDespegue]))
+				if (!empty($_GET['TipoDespegue']))
 					$condiciones.=" and G.TipoDespegue = 'S'";
 					
-				if (!empty($_GET[TipoCambrion]))
+				if (!empty($_GET['TipoCambrion']))
 					$condiciones.=" and G.TipoCambrion = 'S'";
 					
-				if (!empty($_GET[TipoTacon]))
+				if (!empty($_GET['TipoTacon']))
 					$condiciones.=" and G.TipoTacon = 'S'";
 					
-				if (!empty($_GET[TipoCerco]))
+				if (!empty($_GET['TipoCerco']))
 					$condiciones.=" and G.TipoCerco = 'S'";
 					
-				if (!empty($_GET[TipoCardado]))
+				if (!empty($_GET['TipoCardado']))
 					$condiciones.=" and G.TipoCardado = 'S'";
 					
-				if (!empty($_GET[TipoSuela]))
+				if (!empty($_GET['TipoSuela']))
 					$condiciones.=" and G.TipoSuela = 'S'";
 					
-				if (!empty($_GET[TipoGuarnicion]))
+				if (!empty($_GET['TipoGuarnicion']))
 					$condiciones.=" and G.TipoGuarnicion = 'S'";
 					
-				if (!empty($_GET[TipoPuntera]))
-					$condiciones.=" and G.TipoPuntera = 'S'";
-					
-				if (!empty($_GET[TipoHerraje]))				
+if (!empty($_GET['TipoPuntera']))
+				$condiciones.=" and G.TipoPuntera = 'S'";
+				
+			if (!empty($_GET['TipoHerraje']))				
 					$condiciones.=" and G.TipoHerraje = 'S'";
 
 
@@ -136,89 +136,88 @@ if($permisos[0] >= 2)
 			
 			//consulto totales para el resumen
 			$result_garantia=db_query($sql);
-			$totales[contador_garantia]=0;
-			$totales[contador_tipo_garantia]=0;
-			$totales[contador_tipo_servicio]=0;
-			$totales[contador_tipo_reproceso]=0;
-			$totales[contador_remonta]=0;
-			$totales[contador_autoriza_especial]=0;
-			$totales[contador_par_nuevo]=0;
-			$totales[contador_no_aceptado]=0;
+		$totales['contador_garantia']=0;
+		$totales['contador_tipo_garantia']=0;
+		$totales['contador_tipo_servicio']=0;
+		$totales['contador_tipo_reproceso']=0;
+		$totales['contador_remonta']=0;
+		$totales['contador_autoriza_especial']=0;
+		$totales['contador_par_nuevo']=0;
+		$totales['contador_no_aceptado']=0;
+		
+		$totales['contador_una_vez']=0;
+		$totales['contador_segunda_vez']=0;
+		$totales['contador_tercera_vez']=0;
+		
+		$totales['contador_contrafuerte']=0;
+		$totales['contador_cuero']=0;
+		$totales['contador_plantilla']=0;
+		$totales['contador_cremallera']=0;
+		$totales['contador_despegue']=0;
+		$totales['contador_cambrion']=0;
+		$totales['contador_tacon']=0;
+		$totales['contador_cerco']=0;
+		$totales['contador_cardado']=0;
+		$totales['contador_suela_rota']=0;
+		$totales['contador_guarnicion']=0;
+		$totales['contador_puntera']=0;
+		$totales['contador_herraje']=0;
+		$totales['contador_otros']=0;
+		while($row_garantia=db_fetch_array($result_garantia)){
+			$totales['contador_garantia']++;
+			if ($row_garantia['TipoRegistro']=="Garantia")
+				$totales['contador_tipo_garantia']++;
+			elseif($row_garantia['TipoRegistro']=="Servicio")	
+				$totales['contador_tipo_servicio']++;	
+			elseif($row_garantia['TipoRegistro']=="Reproceso")	
+				$totales['contador_tipo_reproceso']++;
 			
-			$totales[contador_una_vez]=0;
-			$totales[contador_segunda_vez]=0;
-			$totales[contador_tercera_vez]=0;
 			
-			$totales[contador_contrafuerte]=0;
-			$totales[contador_cuero]=0;
-			$totales[contador_plantilla]=0;
-			$totales[contador_cremallera]=0;
-			$totales[contador_despegue]=0;
-			$totales[contador_cambrion]=0;
-			$totales[contador_tacon]=0;
-			$totales[contador_cerco]=0;
-			$totales[contador_cardado]=0;
-			$totales[contador_suela_rota]=0;
-			$totales[contador_guarnicion]=0;
-			$totales[contador_puntera]=0;
-			$totales[contador_herraje]=0;
-			while($row_garantia=db_fetch_array($result_garantia)){
-				$totales[contador_garantia]++;
-				if ($row_garantia[TipoRegistro]=="Garantia")
-					$totales[contador_tipo_garantia]++;
-				elseif($row_garantia[TipoRegistro]=="Servicio")	
-					$totales[contador_tipo_servicio]++;	
-				elseif($row_garantia[TipoRegistro]=="Reproceso")	
-					$totales[contador_tipo_reproceso]++;
+			if ($row_garantia['Remonta']=="S")	
+				$totales['contador_remonta']++;
+			if ($row_garantia['IDTipoFinalizacionGarantia']!="0")
+				$totales['contador_autoriza_especial']++;
+			if ($row_garantia['IDTipoFinalizacionGarantia']=="1")	
+				$totales['contador_par_nuevo']++;
+			if ($row_garantia['IDTipoFinalizacionGarantia']=="3")
+				$totales['contador_no_aceptado']++;
+			if ($row_garantia['CantidadVeces']=="1")	
+				$totales['contador_una_vez']++;
+			if ($row_garantia['CantidadVeces']=="2")	
+				$totales['contador_segunda_vez']++;				
+			if ($row_garantia['CantidadVeces']=="3")
+				$totales['contador_tercera_vez']++;
 				
-				
-				if ($row_garantia[Remonta]=="S")	
-					$totales[contador_remonta]++;
-				if ($row_garantia[IDTipoFinalizacionGarantia]!="0")
-					$totales[contador_autoriza_especial]++;
-				if ($row_garantia[IDTipoFinalizacionGarantia]=="1")	
-					$totales[contador_par_nuevo]++;
-				if ($row_garantia[IDTipoFinalizacionGarantia]=="3")
-					$totales[contador_no_aceptado]++;
-				if ($row_garantia[CantidadVeces]=="1")	
-					$totales[contador_una_vez]++;
-				if ($row_garantia[CantidadVeces]=="2")	
-					$totales[contador_segunda_vez]++;				
-				if ($row_garantia[CantidadVeces]=="3")
-					$totales[contador_tercera_vez]++;
-					
-				
-				
-				if ($row_garantia[TipoContrafuerte]=="S")	
-					$totales[contador_contrafuerte]++;
-				if ($row_garantia[TipoCuero]=="S")	
-					$totales[contador_cuero]++;
-				if ($row_garantia[TipoPlantilla]=="S")	
-					$totales[contador_plantilla]++;
-				if ($row_garantia[TipoCremallera]=="S")	
-					$totales[contador_cremallera]++;
-				if ($row_garantia[TipoDespegue]=="S")	
-					$totales[contador_despegue]++;
-				if ($row_garantia[TipoCambrion]=="S")	
-					$totales[contador_cambrion]++;
-				if ($row_garantia[TipoTacon]=="S")	
-					$totales[contador_tacon]++;
-				if ($row_garantia[TipoOtro]!="")	
-					$totales[contador_otros]++;
-				if ($row_garantia[TipoCerco]=="S")	
-					$totales[contador_cerco]++;
-				if ($row_garantia[TipoCardado]=="S")	
-					$totales[contador_cardado]++;
-				if ($row_garantia[TipoSuela]=="S")	
-					$totales[contador_suela_rota]++;
-				if ($row_garantia[TipoGuarnicion]=="S")	
-					$totales[contador_guarnicion]++;
-				if ($row_garantia[TipoPuntera]=="S")	
-					$totales[contador_puntera]++;
-				if ($row_garantia[TipoHerraje]=="S")	
-					$totales[contador_herraje]++;
-					
-					
+			
+			
+			if ($row_garantia['TipoContrafuerte']=="S")	
+				$totales['contador_contrafuerte']++;
+			if ($row_garantia['TipoCuero']=="S")	
+				$totales['contador_cuero']++;
+			if ($row_garantia['TipoPlantilla']=="S")	
+				$totales['contador_plantilla']++;
+			if ($row_garantia['TipoCremallera']=="S")	
+				$totales['contador_cremallera']++;
+			if ($row_garantia['TipoDespegue']=="S")	
+				$totales['contador_despegue']++;
+			if ($row_garantia['TipoCambrion']=="S")	
+				$totales['contador_cambrion']++;
+			if ($row_garantia['TipoTacon']=="S")	
+				$totales['contador_tacon']++;
+			if ($row_garantia['TipoOtro']!="")	
+				$totales['contador_otros']++;
+			if ($row_garantia['TipoCerco']=="S")	
+				$totales['contador_cerco']++;
+			if ($row_garantia['TipoCardado']=="S")	
+				$totales['contador_cardado']++;
+			if ($row_garantia['TipoSuela']=="S")	
+				$totales['contador_suela_rota']++;
+			if ($row_garantia['TipoGuarnicion']=="S")	
+				$totales['contador_guarnicion']++;
+			if ($row_garantia['TipoPuntera']=="S")	
+				$totales['contador_puntera']++;
+			if ($row_garantia['TipoHerraje']=="S")	
+				$totales['contador_herraje']++;
 					
 					
 			}
@@ -328,25 +327,25 @@ var Check = new Array('Nombre','Publicar');
           </tr>
 	      <tr>
 	        <td>Cantidad Garantias</td>
-	        <td>&nbsp;<?php echo $totales[contador_tipo_garantia]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_tipo_garantia']; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
         </tr>
 	      <tr>
 	        <td>Cantidad Servicios</td>
-	        <td>&nbsp;<?php echo $totales[contador_tipo_servicio]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_tipo_servicio']; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
         </tr>
 	      <tr>
 	        <td>Cantidad Reprocesos</td>
-	        <td>&nbsp;<?php echo $totales[contador_tipo_reproceso]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_tipo_reproceso']; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
         </tr>
 	      <tr>
 	        <td><strong>TOTAL PROCESOS</strong></td>
-	        <td>&nbsp;<strong><?php echo $totales[contador_garantia]; ?></strong> </td>
+	        <td>&nbsp;<strong><?php echo $totales['contador_garantia']; ?></strong> </td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
         </tr>
@@ -355,25 +354,25 @@ var Check = new Array('Nombre','Publicar');
         </tr>
 	      <tr>
 	        <td>Cantidad Remontas</td>
-	        <td>&nbsp;<?php echo $totales[contador_remonta]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_remonta']; ?></td>
 	        <td>Pares una vez</td>
-	        <td>&nbsp;<?php echo $totales[contador_una_vez]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_una_vez']; ?></td>
         </tr>
 	      <tr>
 	        <td>Autorizaciones especiales</td>
-	        <td>&nbsp;<?php echo $totales[contador_autoriza_especial]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_autoriza_especial']; ?></td>
 	        <td>Pares segunda vez</td>
-	        <td>&nbsp;<?php echo $totales[contador_segunda_vez]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_segunda_vez']; ?></td>
         </tr>
 	      <tr>
 	        <td>Pares nuevos</td>
-	        <td>&nbsp;<?php echo $totales[contador_par_nuevo]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_par_nuevo']; ?></td>
 	        <td>Pares tercera vez</td>
-	        <td>&nbsp;<?php echo $totales[contador_tercera_vez]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_tercera_vez']; ?></td>
         </tr>
 	      <tr>
 	        <td>No aceptadas</td>
-	        <td>&nbsp;<?php echo $totales[contador_no_aceptado]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_no_aceptado']; ?></td>
 	        <td>&nbsp;</td>
 	        <td>&nbsp;</td>
         </tr>
@@ -382,45 +381,45 @@ var Check = new Array('Nombre','Publicar');
           </tr>
 	      <tr>
 	        <td>Contrafuerte</td>
-	        <td>&nbsp;<?php echo $totales[contador_contrafuerte]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_contrafuerte']; ?></td>
 	        <td>Tacon</td>
-	        <td>&nbsp;<?php echo $totales[contador_tacon]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_tacon']; ?></td>
           </tr>
 	      <tr>
 	        <td>Cuero</td>
-	        <td>&nbsp;<?php echo $totales[contador_cuero]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cuero']; ?></td>
 	        <td>Cerco</td>
-	        <td>&nbsp;<?php echo $totales[contador_cerco]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cerco']; ?></td>
           </tr>
 	      <tr>
 	        <td>Plantilla estructural</td>
-	        <td>&nbsp;<?php echo $totales[contador_plantilla]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_plantilla']; ?></td>
 	        <td>Cardado</td>
-	        <td>&nbsp;<?php echo $totales[contador_cardado]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cardado']; ?></td>
           </tr>
 	      <tr>
 	        <td>Cremallera</td>
-	        <td>&nbsp;<?php echo $totales[contador_cremallera]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cremallera']; ?></td>
 	        <td>Suela rota</td>
-	        <td>&nbsp;<?php echo $totales[contador_suela_rota]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_suela_rota']; ?></td>
           </tr>
 	      <tr>
 	        <td>Despegue</td>
-	        <td>&nbsp;<?php echo $totales[contador_despegue]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_despegue']; ?></td>
 	        <td>Guarnicion</td>
-	        <td>&nbsp;<?php echo $totales[contador_guarnicion]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_guarnicion']; ?></td>
           </tr>
 	      <tr>
 	        <td>Cambrion</td>
-	        <td>&nbsp;<?php echo $totales[contador_cambrion]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_cambrion']; ?></td>
 	        <td>Puntera</td>
-	        <td>&nbsp;<?php echo $totales[contador_puntera]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_puntera']; ?></td>
           </tr>
 	      <tr>
 	        <td>Herraje</td>
-	        <td>&nbsp;<?php echo $totales[contador_herraje]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_herraje']; ?></td>
 	        <td>Otros</td>
-	        <td>&nbsp;<?php echo $totales[contador_otros]; ?></td>
+	        <td>&nbsp;<?php echo $totales['contador_otros']; ?></td>
         </tr>
       </table></td>
   </tr>
@@ -444,20 +443,20 @@ var Check = new Array('Nombre','Publicar');
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
 				data : [
-						"<?php echo $totales[contador_contrafuerte]; ?>",
-						"<?php echo $totales[contador_cuero]; ?>",
-						"<?php echo $totales[contador_plantilla]; ?>",
-						"<?php echo $totales[contador_cremallera]; ?>",
-						"<?php echo $totales[contador_despegue]; ?>",
-						"<?php echo $totales[contador_cambrion]; ?>",
-						"<?php echo $totales[contador_tacon]; ?>",
-						"<?php echo $totales[contador_cerco]; ?>",
-						"<?php echo $totales[contador_cardado]; ?>",
-						"<?php echo $totales[contador_suela_rota]; ?>",
-						"<?php echo $totales[contador_guarnicion]; ?>",
-						"<?php echo $totales[contador_puntera]; ?>",
-						"<?php echo $totales[contador_herraje]; ?>",
-						"<?php echo $totales[contador_otros]; ?>",
+					"<?php echo $totales['contador_contrafuerte']; ?>",
+					"<?php echo $totales['contador_cuero']; ?>",
+					"<?php echo $totales['contador_plantilla']; ?>",
+					"<?php echo $totales['contador_cremallera']; ?>",
+					"<?php echo $totales['contador_despegue']; ?>",
+					"<?php echo $totales['contador_cambrion']; ?>",
+					"<?php echo $totales['contador_tacon']; ?>",
+					"<?php echo $totales['contador_cerco']; ?>",
+					"<?php echo $totales['contador_cardado']; ?>",
+					"<?php echo $totales['contador_suela_rota']; ?>",
+					"<?php echo $totales['contador_guarnicion']; ?>",
+					"<?php echo $totales['contador_puntera']; ?>",
+					"<?php echo $totales['contador_herraje']; ?>",
+					"<?php echo $totales['contador_otros']; ?>",
 						]
 			},
 		]
@@ -475,23 +474,19 @@ var Check = new Array('Nombre','Publicar');
 
 		var pieData = [
 				{
-					value: <?php echo $totales[contador_tipo_garantia]; ?>,
-					color:"#F7464A",
-					highlight: "#FF5A5E",
-					label: "Garantia"
-				},
-				{
-					value: <?php echo $totales[contador_tipo_servicio]; ?>,
-					color: "#46BFBD",
-					highlight: "#5AD3D1",
-					label: "Servicios"
-				},
-				{
-					value: <?php echo $totales[contador_tipo_reproceso]; ?>,
-					color: "#E4C43F",
-					highlight: "#CEC58E",
-					label: "Reprocesos"
-				}
+				value: <?php echo $totales['contador_tipo_garantia']; ?>,
+				color:"#F7464A",
+				highlight: "#FF5A5E",
+				label: "Garantia"
+			},
+			{
+				value: <?php echo $totales['contador_tipo_servicio']; ?>,
+				color: "#46BFBD",
+				highlight: "#5AD3D1",
+				label: "Servicios"
+			},
+			{
+				value: <?php echo $totales['contador_tipo_reproceso']; ?>,
 				
 
 			];
@@ -802,63 +797,63 @@ else
                     </tr>
                     <tr>
                       <td class="row2">Contrafuerte</td>
-                      <td class="row2"><input type="checkbox" name="TipoContrafuerte" id="TipoContrafuerte" value="S" <?php if ($_GET[TipoContrafuerte]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoContrafuerte" id="TipoContrafuerte" value="S" <?php if ($_GET['TipoContrafuerte']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpContrafuerte" id="tmpContrafuerte" value="<?php echo $r->TipoContrafuerte; ?>"></td>
                       <td >Despegue</td>
-                      <td ><input type="checkbox" name="TipoDespegue" id="TipoDespegue" value="S" <?php if ($_GET[TipoDespegue]=="S"){ echo "checked"; } ?>  />
+                      <td ><input type="checkbox" name="TipoDespegue" id="TipoDespegue" value="S" <?php if ($_GET['TipoDespegue']=="S"){ echo "checked"; } ?>  />
                         <span class="row2">
                           <input type="hidden" name="tmpTipoDespegue" id="tmpTipoDespegue" value="<?php echo $r->TipoDespegue; ?>">
                         </span></td>
                       <td class="row2">Cardado</td>
-                      <td class="row2"><input type="checkbox" name="TipoCardado" id="TipoCardado" value="S" <?php if ($_GET[TipoCardado]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCardado" id="TipoCardado" value="S" <?php if ($_GET['TipoCardado']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCardado" id="tmpTipoCardado" value="<?php echo $r->TipoCardado; ?>"></td>
                     </tr>
                     <tr>
                       <td class="row2">Cuero</td>
-                      <td class="row2"><input type="checkbox" name="TipoCuero" id="TipoCuero" value="S" <?php if ($_GET[TipoCuero]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCuero" id="TipoCuero" value="S" <?php if ($_GET['TipoCuero']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCuero" id="tmpTipoCuero" value="<?php echo $r->TipoCuero; ?>"></td>
                       <td >Cambrion</td>
-                      <td><input type="checkbox" name="TipoCambrion" id="TipoCambrion" value="S" <?php if ($_GET[TipoCambrion]=="S"){ echo "checked"; } ?>  />
+                      <td><input type="checkbox" name="TipoCambrion" id="TipoCambrion" value="S" <?php if ($_GET['TipoCambrion']=="S"){ echo "checked"; } ?>  />
                         <span class="row2">
                           <input type="hidden" name="tmpTipoCambrion" id="tmpTipoCambrion" value="<?php echo $r->TipoCambrion; ?>">
                         </span></td>
                       <td class="row2">Suela Rota</td>
-                      <td class="row2"><input type="checkbox" name="TipoSuela" id="TipoSuela" value="S" <?php if ($_GET[TipoSuela]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoSuela" id="TipoSuela" value="S" <?php if ($_GET['TipoSuela']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoSuela" id="tmpTipoSuela" value="<?php echo $r->TipoRemonta; ?>"></td>
                     </tr>
                     <tr>
                       <td class="row2">Plantilla estructural</td>
-                      <td class="row2"><input type="checkbox" name="TipoPlantilla" id="TipoPlantilla" value="S" <?php if ($_GET[TipoPlantilla]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoPlantilla" id="TipoPlantilla" value="S" <?php if ($_GET['TipoPlantilla']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoPlantilla" id="tmpTipoPlantilla" value="<?php echo $r->TipoPlantilla; ?>"></td>
                       <td >Tacon</td>
                       <td ><span class="row2">
-                        <input type="checkbox" name="TipoTacon" id="TipoTacon" value="S" <?php if ($_GET[TipoTacon]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoTacon" id="TipoTacon" value="S" <?php if ($_GET['TipoTacon']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoTacon" id="tmpTipoTacon" value="<?php echo $r->TipoTacon; ?>">
                       </span></td>
                       <td class="row2">Guarnicion</td>
                       <td class="row2"><span class="row2">
-                        <input type="checkbox" name="TipoGuarnicion" id="TipoGuarnicion" value="S" <?php if ($_GET[TipoGuarnicion]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoGuarnicion" id="TipoGuarnicion" value="S" <?php if ($_GET['TipoGuarnicion']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoGuarnicion" id="tmpTipoGuarnicion" value="<?php echo $r->TipoGuarnicion; ?>">
                       </span></td>
                     </tr>
                     <tr>
                       <td height="27" class="row2">Cremallera</td>
-                      <td class="row2"><input type="checkbox" name="TipoCremallera" id="TipoCremallera" value="S" <?php if ($_GET[TipoCremallera]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoCremallera" id="TipoCremallera" value="S" <?php if ($_GET['TipoCremallera']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoCremallera" id="tmpTipoCremallera" value="<?php echo $r->TipoCremallera; ?>"></td>
                       <td >Cerco</td>
-                      <td><input type="checkbox" name="TipoCerco" id="TipoCerco" value="S" <?php if ($_GET[TipoCerco]=="S"){ echo "checked"; } ?>  />
+                      <td><input type="checkbox" name="TipoCerco" id="TipoCerco" value="S" <?php if ($_GET['TipoCerco']=="S"){ echo "checked"; } ?>  />
                         <span class="row2">
                           <input type="hidden" name="tmpTipoCerco" id="tmpTipoCerco" value="<?php echo $r->TipoCerco; ?>">
                         </span></td>
                       <td class="row2">Puntera</td>
                       <td class="row2"><span class="row2">
-                        <input type="checkbox" name="TipoPuntera" id="TipoPuntera" value="S" <?php if ($_GET[TipoPuntera]=="S"){ echo "checked"; } ?>  />
+                        <input type="checkbox" name="TipoPuntera" id="TipoPuntera" value="S" <?php if ($_GET['TipoPuntera']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoPuntera" id="tmpTipoPuntera" value="<?php echo $r->TipoPuntera; ?>">
                       </span></td>
                     </tr>
                     <tr>
                       <td class="row2">Herraje</td>
-                      <td class="row2"><input type="checkbox" name="TipoHerraje" id="TipoHerraje" value="S" <?php if ($_GET[TipoHerraje]=="S"){ echo "checked"; } ?>  />
+                      <td class="row2"><input type="checkbox" name="TipoHerraje" id="TipoHerraje" value="S" <?php if ($_GET['TipoHerraje']=="S"){ echo "checked"; } ?>  />
                         <input type="hidden" name="tmpTipoHerraje" id="tmpTipoHerraje" value="<?php echo $r->TipoHerraje; ?>"></td>
                       <td class="row2">&nbsp;</td>
                       <td class="row2">&nbsp;</td>

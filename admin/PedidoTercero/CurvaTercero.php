@@ -332,7 +332,7 @@ var Check = new Array('Fecha','Dia');
 								if (count($array_talla)>0):
 									foreach($array_talla as $id_talla => $datos_talla):
 									?>
-							        <td class="titlemedium" nowrap><?php echo $datos_talla[Nombre]; ?></td>
+						        <td class="titlemedium" nowrap><?php echo $datos_talla['Nombre']; ?></td>
                                     <?php endforeach;
 								endif;
 								?>
@@ -346,14 +346,14 @@ var Check = new Array('Fecha','Dia');
 								$total_fila=0;
 							   ?>
                                 <tr>
-                                    <td class="rowform"><?php echo $datos_punto_venta[Nombre] ?></td>
+                                    <td class="rowform"><?php echo $datos_punto_venta['Nombre'] ?></td>
                                     <?php
                                     if (count($array_talla)>0):
                                         foreach($array_talla as $id_talla => $datos_talla):
-										$total_fila+=$array_datos_curva[$datos_punto_venta[IDPuntoVenta]][$datos_talla[IDTalla]] ["Maximo"];
-										$suma_talla[$id_talla] += $array_datos_curva[$datos_punto_venta[IDPuntoVenta]][$datos_talla[IDTalla]] ["Maximo"];
+										$total_fila+=$array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_talla['IDTalla']] ["Maximo"];
+										$suma_talla[$id_talla] += $array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_talla['IDTalla']] ["Maximo"];
                                         ?>
-                                        <td class=row1 align=center><input type="number" name="Maximo[<?php echo $datos_talla[IDTalla]; ?>][<?php echo $datos_punto_venta[IDPuntoVenta]; ?>]"  size="5" value="<?php if(!empty($maximo_inicial)) echo $maximo_inicial; echo $array_datos_curva[$datos_punto_venta[IDPuntoVenta]][$datos_talla[IDTalla]] ["Maximo"] ?>" style="text-align:center; width:50px;" ></td>
+                                        <td class=row1 align=center><input type="number" name="Maximo[<?php echo $datos_talla['IDTalla']; ?>][<?php echo $datos_punto_venta['IDPuntoVenta']; ?>]"  size="5" value="<?php if(!empty($maximo_inicial)) echo $maximo_inicial; echo $array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_talla['IDTalla']] ["Maximo"] ?>" style="text-align:center; width:50px;" ></td>
                                         <?php endforeach;
                                     endif;
                                     ?>

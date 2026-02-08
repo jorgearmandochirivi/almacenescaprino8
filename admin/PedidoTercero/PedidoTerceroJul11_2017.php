@@ -1648,7 +1648,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 						?></td>
 						<td nowrap class=row1>
 						<?php 
-						echo estado_tercero($r->IDPedidoTercero);
+						echo estado_tercero($r->IDPedidoTercero, $r->IDEstadoPedidoTercero);
 						//echo get_field("EstadoPedidoTercero","Descripcion","IDEstadoPedidoTercero",$r->IDEstadoPedidoTercero) 
 						?>
                         </td>

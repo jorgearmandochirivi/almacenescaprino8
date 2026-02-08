@@ -1181,7 +1181,7 @@ global $dirroot;
 	$mensaje=get_field("EmailFidelizacion","Mensaje","IDEmailFidelizacion",10);
 	$Msg=str_replace("[Nombre]",$nombre_cliente,$mensaje);
 
-	if (count($id_bonos)>0){
+	if (is_array($id_bonos) && count($id_bonos)>0){
 		
 		foreach($id_bonos as $id_bono_value){
 			$id_bono=$id_bono_value;
