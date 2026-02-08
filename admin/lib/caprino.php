@@ -211,7 +211,7 @@ function actualizamatriz($frm, $array_campos)
 	
 	if($permiso[0]!=2)
 	{
-		foreach($frm[Codigos] as $key => $valor)
+		foreach($frm['Codigos'] as $key => $valor)
 		{
 			$strupdatematriz = "UPDATE $Table SET ";
 			
@@ -228,16 +228,16 @@ function actualizamatriz($frm, $array_campos)
 			
 			$temp = 0;
 			
-			$strupdatematriz .= $campos." WHERE ".$Key." = ".$frm[Codigos][$valor];
+			$strupdatematriz .= $campos." WHERE ".$Key." = ".$frm['Codigos'][$valor];
 			
 			$campos = "";
 			
 			db_query($strupdatematriz);
 			
 			//insertar el log
-			insertlog($ID_Usuario,$Table,$frm[Codigos][$valor],"Actualizar",$strupdatematriz);
+			insertlog($ID_Usuario,$Table,$frm['Codigos'][$valor],"Actualizar",$strupdatematriz);
 			
-		}//end foreach($frm[Codigos] as $key => $valor)
+		}//end foreach($frm['Codigos'] as $key => $valor)
 	
 		window_alert("Matriz actualizada correctamente ");
 	
@@ -353,7 +353,7 @@ function actualizadetalleorden($frm)
 	$query_actualizadetalle = db_query( $str_actualizadetalle );
 	
 	//insertar el log
-	insertlog($ID_Usuario,$TableJoin,$frm[IDOrdenCompra],"Actualizar",$str_actualizadetalle);
+	insertlog($ID_Usuario,$TableJoin,$frm['IDOrdenCompra'],"Actualizar",$str_actualizadetalle);
 
 	return $frm;
 

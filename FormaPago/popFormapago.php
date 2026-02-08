@@ -37,10 +37,10 @@ $Key = "IDPuntoVentaBanco";
 			case "buscarbono" :
 				$msg_busca_bono="<br>Bono no existe";
 				//Busco el id del cliente
-				$id_cliente=get_field("Cliente","IDCliente","Cedula",$_GET[BuscarCedula]);
+				$id_cliente=get_field("Cliente","IDCliente","Cedula",$_GET['BuscarCedula']);
 				//Busco el bono del tercero si existe el cliente
 				if (!empty($id_cliente)){
-					$array_bonos=explode(",",$_GET[BuscarNumero]);
+					$array_bonos=explode(",",$_GET['BuscarNumero']);
 					if(count($array_bonos)>0){
 						foreach($array_bonos as $numero_bono_buscar){
 							$condicion_numero_bono[]="'".(int)trim($numero_bono_buscar)."'";
@@ -49,13 +49,13 @@ $Key = "IDPuntoVentaBanco";
 					$numeros_buscar=implode(",",$condicion_numero_bono);
 
 
-					//$sql_bono_tercero =  "SELECT * FROM BonoFidelizacion WHERE IDBonoFidelizacion = '" . $_GET[BuscarNumero] . "' AND IDCliente = '".$id_cliente."' AND FechaVencimiento >= CURDATE() AND Estado = 'D' ORDER BY Fecha DESC ";
+					//$sql_bono_tercero =  "SELECT * FROM BonoFidelizacion WHERE IDBonoFidelizacion = '" . $_GET['BuscarNumero'] . "' AND IDCliente = '".$id_cliente."' AND FechaVencimiento >= CURDATE() AND Estado = 'D' ORDER BY Fecha DESC ";
 					$sql_bono_tercero =  "SELECT * FROM BonoFidelizacion WHERE IDBonoFidelizacion in (".$numeros_buscar.") AND IDCliente = '".$id_cliente."' AND FechaVencimiento >= CURDATE() AND Estado = 'D' ORDER BY Fecha DESC ";
 					$query_bono_tercero=db_query($sql_bono_tercero);
 					while($row_bono_tercero=db_fetch_array($query_bono_tercero)){
 						$bono_tercero_encontrado=1;
 						$id_cliente_bono_pertenece=$id_cliente;
-						$id_bono_tercero[]=$row_bono_tercero[IDBonoFidelizacion];
+						$id_bono_tercero[]=$row_bono_tercero['IDBonoFidelizacion'];
 						$msg_busca_bono="<br>Bono encontrado y disponible para forma de pago";
 					}
 				}
@@ -82,32 +82,38 @@ function insertarformapago($frm)
 {
 	GLOBAL $Table, $Key, $ID_Usuario, $idpunto,$datos, $numerocuotas, $diascuota;
 
+	$Valor = 0; // Inicializar variable antes de su uso
 
+	if (!empty($frm['IDPuntoVentaBanco']) && is_array($frm['IDPuntoVentaBanco'])) {
+		foreach( $frm['IDPuntoVentaBanco'] as $FormaPago )
+		{
 
-	foreach( $frm['IDPuntoVentaBanco'] as $FormaPago )
-	{
+			$FormaPago;
+			$Valor = $Valor + (float)($frm['Valor'][$FormaPago] ?? 0);
 
-		$FormaPago;
-		$Valor = $Valor + $frm[Valor][$FormaPago];
-
-	}//end foreach( $frm['IDFormaPago'] as $FormaPago )
+		}//end foreach( $frm['IDFormaPago'] as $FormaPago )
+	}
 
 
 	//Verificar si vienen puntos de fidelizaci�n y cumple con el valor
 
 
-	foreach( $frm[IDBono] as $key_fid => $valor_fid )
-	{
-		//consulto valor bono
-		$valor_bono=get_field("BonoFidelizacion","Valor","IDBonoFidelizacion",$valor_fid);
-		$Valor = $Valor + $valor_bono;
-	}//end for
+	if (!empty($frm['IDBono']) && is_array($frm['IDBono'])) {
+		foreach( $frm['IDBono'] as $key_fid => $valor_fid )
+		{
+			//consulto valor bono
+			$valor_bono=get_field("BonoFidelizacion","Valor","IDBonoFidelizacion",$valor_fid);
+			$Valor = $Valor + (float)($valor_bono ?? 0);
+		}//end for
+	}
 
 
-	foreach( $frm[ValorFidelizacion] as $key_fid => $valor_fid )
-	{
-		$Valor = $Valor + $valor_fid;
-	}//end for
+	if (!empty($frm['ValorFidelizacion']) && is_array($frm['ValorFidelizacion'])) {
+		foreach( $frm['ValorFidelizacion'] as $key_fid => $valor_fid )
+		{
+			$Valor = $Valor + (float)($valor_fid ?? 0);
+		}//end for
+	}
 
 
 
@@ -120,20 +126,20 @@ function insertarformapago($frm)
 		foreach( $frm['IDPuntoVentaBanco'] as $FormaPago )
 		{
 
-			if( $frm[IDFormaPago][$FormaPago] <> 17 ) //Hacer lo de siempre
+			if( $frm['IDFormaPago'][$FormaPago] <> 17 ) //Hacer lo de siempre
 			{
 
 
-			if(!empty( $frm[Valor][$FormaPago] ))
+			if(!empty( $frm['Valor'][$FormaPago] ))
 			{
 				$IDFormaPagoFactura = get_maxID( "FormaPagoFactura","IDFormaPagoFactura" );
 
-				$Valor = $frm[Valor][$FormaPago];
-				$DocSoporte = $frm[DocSoporte][$FormaPago];
-				$IDFPago = $frm[IDFormaPago][$FormaPago];
+				$Valor = $frm['Valor'][$FormaPago];
+				$DocSoporte = $frm['DocSoporte'][$FormaPago];
+				$IDFPago = $frm['IDFormaPago'][$FormaPago];
 
 				//Query Comision Banco
-				$sql_banco = "SELECT * FROM NovedadBanco WHERE IDPuntoVentaBanco = '$FormaPago' AND Fecha = '$frm[FechaFactura]'";
+				$sql_banco = "SELECT * FROM NovedadBanco WHERE IDPuntoVentaBanco = '$FormaPago' AND Fecha = '{$frm['FechaFactura']}'";
 				$query_banco = db_query($sql_banco);
 				$Comision = $frm['Comision'][$FormaPago];
 				$Banco = $frm['IDBanco'][$FormaPago];
@@ -142,26 +148,26 @@ function insertarformapago($frm)
 
 
 				$sql_insertar_formapago  = "INSERT INTO FormaPagoFactura (IDFormaPagoFactura,IDFactura,IDFormaPago,Valor,IDPuntoVenta,Comision,IDBanco, CodigoTarjeta) ";
-				$sql_insertar_formapago .= "VALUES ('$IDFormaPagoFactura', '$frm[id]', '$IDFPago', '$Valor','$frm[idpunto]','$Comision','$Banco','$CodigoTarjeta')";
+				$sql_insertar_formapago .= "VALUES ('$IDFormaPagoFactura', '{$frm['id']}', '$IDFPago', '$Valor','{$frm['idpunto']}','$Comision','$Banco','$CodigoTarjeta')";
 				db_query( $sql_insertar_formapago );
 
 				//insertar el log
 				//insertlog($ID_Usuario,"FormaPagoFactura",$IDFormaPagoFactura,"Insertar",$sql_insertar_formapago);
 
 				//Actualizar Novedad Banco
-				$frm[FechaFactura] = substr($frm[FechaFactura],0,10);
+				$frm['FechaFactura'] = substr($frm['FechaFactura'],0,10);
 
 				if(db_num_rows($query_banco) == 0)
 				{
 					$idnovedad = get_maxID( "NovedadBanco","IDNovedadBanco" );
-					$sql_insert = "INSERT INTO NovedadBanco (IDNovedadBanco, IDPuntoVentaBanco, Fecha, Valor, Comision) VALUES('$idnovedad','$FormaPago','$frm[FechaFactura]','$Valor','$Comision') ";
+					$sql_insert = "INSERT INTO NovedadBanco (IDNovedadBanco, IDPuntoVentaBanco, Fecha, Valor, Comision) VALUES('$idnovedad','$FormaPago','{$frm['FechaFactura']}','$Valor','$Comision') ";
 					db_query($sql_insert);
 				}
 				else
 				{
 					$r_novedad = db_fetch_object($query_banco);
 					$ValorActualizar = $Valor + $r_novedad->Valor;
-					$sql_update = "UPDATE NovedadBanco SET Valor = '$ValorActualizar' WHERE IDPuntoVentaBanco = '$FormaPago' AND Fecha = '$frm[FechaFactura]' ";
+					$sql_update = "UPDATE NovedadBanco SET Valor = '$ValorActualizar' WHERE IDPuntoVentaBanco = '$FormaPago' AND Fecha = '{$frm['FechaFactura']}' ";
 					db_query($sql_update);
 				}
 
@@ -170,18 +176,18 @@ function insertarformapago($frm)
 				if( $IDFPago == 13 )
 				{
 					//Seleccionar Factura
-					$sql_factura = " SELECT NumeroFactura, IDCliente FROM Factura WHERE IDFactura = '$frm[id]' AND IDPuntoVenta = '$frm[idpunto]' ";
+					$sql_factura = " SELECT NumeroFactura, IDCliente FROM Factura WHERE IDFactura = '{$frm['id']}' AND IDPuntoVenta = '{$frm['idpunto']}' ";
 					$qry_factura = db_query( $sql_factura );
 					$r_factura = db_fetch_object( $qry_factura );
 
-					$NoDocumento = get_maxID( " Credito WHERE IDPuntoVenta = '$frm[idpunto]' ","NumeroDocumento" );
+					$NoDocumento = get_maxID( " Credito WHERE IDPuntoVenta = '{$frm['idpunto']}' ","NumeroDocumento" );
 					$sql_credito = " INSERT INTO Credito ( IDFactura, IDCliente, NumeroDocumento, NumeroFactura, IDPuntoVenta,
-										FechaFactura,  ValorTotal, UsuarioTrCr, FechaTrCr ) VALUES ( '$frm[id]','$r_factura->IDCliente',
-										'$NoDocumento','$r_factura->NumeroFactura','$frm[idpunto]','$frm[FechaFactura]','$Valor','$datos[IDUsuario]',
+										FechaFactura,  ValorTotal, UsuarioTrCr, FechaTrCr ) VALUES ( '{$frm['id']}','$r_factura->IDCliente',
+										'$NoDocumento','$r_factura->NumeroFactura','{$frm['idpunto']}','{$frm['FechaFactura']}','$Valor','{$datos['IDUsuario']}',
 										NOW() ) ";
 					$qry_credito = db_query( $sql_credito );
 
-					$fechacuota = $frm[FechaFactura];
+					$fechacuota = $frm['FechaFactura'];
 					$valorcuota = $frm['ValorTotal'] / $numerocuotas ;
 
 					$valorcuota = floor($valorcuota);
@@ -190,13 +196,13 @@ function insertarformapago($frm)
 
 					//Hacer las cuotas
 					for( $j = 0; $j < $numerocuotas; $j++ )
-						if( $fechacuota <> $frm[FechaFactura] )
+						if( $fechacuota <> $frm['FechaFactura'] )
 						{
 
-						    $ITEM = get_maxID( " CreditoCuota WHERE IDFactura = '$frm[id]' ","IDCuota" );
+						    $ITEM = get_maxID( " CreditoCuota WHERE IDFactura = '{$frm['id']}' ","IDCuota" );
 						   	$sql_cuota = " INSERT INTO CreditoCuota ( IDFactura, IDCuota, NumeroFactura, IDPuntoVenta, FechaCuota,
-						    				FechaPago, ValorTotal, UsuarioTrCr, FechaTrCr ) VALUES ( '$frm[id]','$ITEM',
-						    				'$r_factura->NumeroFactura','$frm[idpunto]','$fechacuota','','$valorcuota','$datos[IDUsuario]',
+						    				FechaPago, ValorTotal, UsuarioTrCr, FechaTrCr ) VALUES ( '{$frm['id']}','$ITEM',
+						    				'$r_factura->NumeroFactura','{$frm['idpunto']}','$fechacuota','','$valorcuota','{$datos['IDUsuario']}',
 											NOW()  ) ";
 							$qry_cuota = db_query( $sql_cuota );
 
@@ -236,7 +242,7 @@ function insertarformapago($frm)
 			else //PROCESO DE FIDELIZACION
 			{
 				//HAcer iteraciioin por cada ValorFidelizacion
-				foreach( $frm[IDBono] as $key_fid => $valor_fid )
+				foreach( $frm['IDBono'] as $key_fid => $valor_fid )
 				{
 
 
@@ -246,20 +252,20 @@ function insertarformapago($frm)
 					$IDFormaPagoFactura = get_maxID( "FormaPagoFactura","IDFormaPagoFactura" );
 
 					$Valor = $valor_bono;
-					$IDFPago = $frm[IDFormaPago][$FormaPago];
+					$IDFPago = $frm['IDFormaPago'][$FormaPago];
 					$Banco = $frm['IDBanco'][$FormaPago];
 
 					$sql_insertar_formapago  = "INSERT INTO FormaPagoFactura (IDFormaPagoFactura,IDFactura,IDFormaPago,Valor,IDPuntoVenta,Comision,IDBanco) ";
-					$sql_insertar_formapago .= "VALUES ('$IDFormaPagoFactura', '$frm[id]', '$IDFPago', '$Valor','$frm[idpunto]','$Comision','$Banco')";
+					$sql_insertar_formapago .= "VALUES ('$IDFormaPagoFactura', '{$frm['id']}', '$IDFPago', '$Valor','{$frm['idpunto']}','$Comision','$Banco')";
 
 					db_query( $sql_insertar_formapago );
 
 					//envio notificacion de bono redimido
-					envia_bono_redimido($frm["IDCliente"],$valor_fid,$frm[idpunto]);
+					envia_bono_redimido($frm["IDCliente"],$valor_fid,$frm['idpunto']);
 
 					//redimir puntos
 					//redimir_fid( $frm["IDCliente"], 5 );
-					fid_redimir_bono( $frm["IDCliente"], $valor_fid,$frm[id], $frm[idpunto],$frm[IDClienteRedimioBono]  );
+					fid_redimir_bono( $frm["IDCliente"], $valor_fid,$frm['id'], $frm['idpunto'],$frm['IDClienteRedimioBono']  );
 				}//end for
 
 			}//end else
@@ -271,7 +277,7 @@ function insertarformapago($frm)
 
 
 		//CALCULO PUNTOS COMPRA DE ACUERDO A LO PAGADO
-		$fidelizado_club=get_field("Cliente","ClubSuavidad","IDCliente",$frm[IDCliente]);
+		$fidelizado_club=get_field("Cliente","ClubSuavidad","IDCliente",$frm['IDCliente']);
 		if ($fidelizado_club=="S")
 			fid_calculapuntos( $frm );
 
@@ -370,9 +376,9 @@ var Check = new Array('Nombre','Publicar');
                   <td class=col2>
                     <input type="text" name="BuscarNumero" id="BuscarNumero" placeholder="Numero">
                     <input type="text" name="BuscarCedula" id="BuscarCedula" placeholder="Cedula Pertenece">
-                    <input type="hidden" name="id" id="id" value="<?php echo $_GET[id] ?>">
+                    <input type="hidden" name="id" id="id" value="<?php echo $_GET['id'] ?>">
                     <input type="hidden" name="action" id="action" value="buscarbono">
-                    <input type="hidden" name="idpunto" id="idpunto" value="<?php echo $_GET[idpunto] ?>">
+                    <input type="hidden" name="idpunto" id="idpunto" value="<?php echo $_GET['idpunto'] ?>">
                     <input type="submit" name="BuscarBono" id="BuscarBono">
                     <?php echo $msg_busca_bono; ?>
                   </td>

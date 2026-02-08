@@ -24,20 +24,20 @@
 
 							//inserto los punto spor la cuota
 							//consulto los puntos
-							$sql_puntos_anterior = "Select * from PuntosClienteFidelizacion Where IDCliente='" . $_POST[IDCliente] . "' and IDPuntoVenta = '" . $_POST[IDPuntoVenta] . "' and IDFactura = '" . $_POST[IDFactura] . "' limit 1";
+							$sql_puntos_anterior = "Select * from PuntosClienteFidelizacion Where IDCliente='" . $_POST['IDCliente'] . "' and IDPuntoVenta = '" . $_POST['IDPuntoVenta'] . "' and IDFactura = '" . $_POST['IDFactura'] . "' limit 1";
 							$qry_puntos_anterior = db_query($sql_puntos_anterior);
 							while ($row_punto = db_fetch_array($qry_puntos_anterior)) {
-								echo $sql_puntos = " INSERT INTO PuntosClienteFidelizacion (IDCliente, IDPuntoVenta, IDFactura,IDReglaPunto,NombreRegla, DescripcionRegla, Puntos, FechaVencimiento,ObservacionesRegla, FechaTrCr) VALUES ('" . $_POST[IDCliente] . "','" . $_POST[IDPuntoVenta] . "','" . $_POST[IDFactura] . "', '" . $row_punto[IDReglaPunto] . "',  '" . $row_punto[NombreRegla] . "','" . $row_punto[DescripcionRegla] . "','" . (int)$row_punto[Puntos] . "','" . $row_punto[FechaVencimiento] . "', '" . $row_punto[ObservacionesRegla] . " Cuota" . "',  NOW() ) ";
+								echo $sql_puntos = " INSERT INTO PuntosClienteFidelizacion (IDCliente, IDPuntoVenta, IDFactura,IDReglaPunto,NombreRegla, DescripcionRegla, Puntos, FechaVencimiento,ObservacionesRegla, FechaTrCr) VALUES ('" . $_POST['IDCliente'] . "','" . $_POST['IDPuntoVenta'] . "','" . $_POST['IDFactura'] . "', '" . $row_punto['IDReglaPunto'] . "',  '" . $row_punto['NombreRegla'] . "','" . $row_punto['DescripcionRegla'] . "','" . (int)$row_punto['Puntos'] . "','" . $row_punto['FechaVencimiento'] . "', '" . $row_punto['ObservacionesRegla'] . " Cuota" . "',  NOW() ) ";
 								$qry_puntos = db_query($sql_puntos);
 							}
 
-							//$sql_update = " UPDATE CreditoCuota SET FechaPago = '$_POST[$fechapago]' WHERE IDFactura = '$_POST[IDFactura]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDCuota = '$key' ";
+							//$sql_update = " UPDATE CreditoCuota SET FechaPago = '$_POST[$fechapago]' WHERE IDFactura = '$_POST['IDFactura']' AND IDPuntoVenta = '$_POST['IDPuntoVenta']' AND IDCuota = '$key' ";
 							//$qry_update = db_query( $sql_update );
 
 						} //end if
 					} //end for
 
-					//$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '$_POST[IDFactura]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' AND FechaPago = '0000-00-00 00:00:00'  ";
+					//$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '$_POST['IDFactura']' AND IDPuntoVenta = '$_POST['IDPuntoVenta']' AND FechaPago = '0000-00-00 00:00:00'  ";
 					//$qry_cuotas = db_query( $sql_cuotas );
 					//if( db_num_rows( $qry_cuotas ) == 0  )
 					//{
@@ -48,7 +48,7 @@
 					//db_query( "tales" );
 					db_query("COMMIT");
 
-					echo "<script>location.href='?mod=" . $MOD . "&action=edit&id=" . $_POST[IDFactura] . "'</script>";
+					echo "<script>location.href='?mod=" . $MOD . "&action=edit&id=" . $_POST['IDFactura'] . "'</script>";
 
 					break;
 				case "edit":
@@ -98,8 +98,8 @@
 		{
 			global $TitleMod, $Table, $MOD, $Key, $ID_Usuario, $IVA, $IDPuntoVenta, $crypt;
 
-			if (!empty($_GET[IDPuntoVenta]))
-				$IDPuntoVenta = $_GET[IDPuntoVenta];
+			if (!empty($_GET['IDPuntoVenta']))
+				$IDPuntoVenta = $_GET['IDPuntoVenta'];
 
 
 			$qid = db_query(" SELECT * FROM Factura WHERE IDFactura = '$id' AND IDPuntoVenta = '$IDPuntoVenta' ");

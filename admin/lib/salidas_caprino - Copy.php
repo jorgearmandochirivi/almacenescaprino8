@@ -18,6 +18,7 @@ function venta( $frm )
 {
 	Global $Nombre_Usuario, $ID_Usuario, $Table, $Key, $MOD, $IDPuntoVenta;
 	
+	echo "llega";exit;
 	//Insertar los Items en la tabla de detalles
 	
 	$Items = $frm['ITEM'];

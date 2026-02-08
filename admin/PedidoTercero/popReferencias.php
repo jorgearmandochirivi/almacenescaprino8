@@ -111,7 +111,7 @@ return $qry_string;
 						<tr>
 							<td class="navpic">
 								<?php 
-									echo  Referencias." ".$info;
+									echo  "Referencias"." ".$info;
 								?>
 							</td>
 						</tr>

@@ -20,6 +20,7 @@ function venta( $frm )
 
 	//Insertar los Items en la tabla de detalles
 
+	
 	$Items = $frm['ITEM'];
 
 	//print_r( $frm );
@@ -27,7 +28,7 @@ function venta( $frm )
 	for($i = 1; $i <= $Items; $i++)
 	{
 
-		$iddetalle = get_maxID("DetalleFactura WHERE IDFactura = '$frm[IDFactura]' ","IDDetalleFactura");
+		$iddetalle = get_maxID("DetalleFactura WHERE IDFactura = '".$frm["IDFactura"]."' ","IDDetalleFactura");
 		$IDCodificacion = "IDCodificacion".$i;
 		$Cantidad = "Cantidad".$i;
 		$CodigoTarjeta = "CodigoTarjeta".$i;
@@ -36,8 +37,8 @@ function venta( $frm )
 		$DescuentoRef = "Descuento".$i;
 		$DescuentoPar = "DescuentoLin".$i;
 
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$ValorU]);
+		$PrecioU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 		$DescuentoPar = $frm[$DescuentoPar];
 
@@ -45,7 +46,7 @@ function venta( $frm )
 		{
 
 			$str_insert_detalle  = "INSERT INTO DetalleFactura ( IDDetalleFactura,IDFactura,IDPuntoVenta,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,DescuentoPar, UsuarioTrCr,FechaTrCr, CodigoTarjeta ) ";
-			$str_insert_detalle .= "VALUES ( '$iddetalle','$frm[IDFactura]','$frm[IDPuntoVenta]','$frm[$IDCodificacion]','$frm[$Cantidad]','$ValorU','$PrecioU','$DescuentoRef','$DescuentoPar','$frm[UsuarioTrCr]','$frm[FechaTrCr]','$frm[$CodigoTarjeta]' )";
+			$str_insert_detalle .= "VALUES ( '$iddetalle','".$frm['IDFactura']."','".$frm["IDPuntoVenta"]."','$frm[$IDCodificacion]','$frm[$Cantidad]','$ValorU','$PrecioU','$DescuentoRef','$DescuentoPar','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."','$frm[$CodigoTarjeta]' )";
 			//echo $str_insert_detalle .= "<br>";
 
 			db_query( $str_insert_detalle );
@@ -98,11 +99,11 @@ function venta( $frm )
 
 	}//end for($i = 1; $i < $Items; $i++)
 
-	$frm['ValorIVA'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
+	$frm['ValorIVA'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorIVA']);
 
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorTotal']);
 
-	$sql_actualizafactura = "UPDATE Factura SET ValorIVA = '$frm[ValorIVA]', ValorTotal = '$frm[ValorTotal]', FechaCreacion = NOW() WHERE IDFactura = '$frm[IDFactura]' AND IDPuntoVenta = '$frm[IDPuntoVenta]'";
+	$sql_actualizafactura = "UPDATE Factura SET ValorIVA = '".$frm["ValorIVA"]."', ValorTotal = '".$frm['ValorTotal']."', FechaCreacion = NOW() WHERE IDFactura = '".$frm['IDFactura']."' AND IDPuntoVenta = '".$frm['IDPuntoVenta']."'";
 	db_query($sql_actualizafactura);
 
 	//Actualiza Pagare
@@ -113,7 +114,7 @@ function venta( $frm )
 	}//end if
 
 	//insertar el log
-	insertlog($ID_Usuario,"Factura",$frm[IDFactura],"Actualizar",$sql_actualizafactura);
+	insertlog($ID_Usuario,"Factura",$frm['IDFactura'],"Actualizar",$sql_actualizafactura);
 
 
 	//insertar puntos fidelizacion
@@ -126,11 +127,11 @@ function venta( $frm )
 	$RDesde = get_field("PuntoVenta","RDesde","IDPuntoVenta",$frm['IDPuntoVenta']);
 	$RHasta = get_field("PuntoVenta","RHasta","IDPuntoVenta",$frm['IDPuntoVenta']);
 
-	$sql_actualizafactura = "UPDATE Factura SET Resolucion = '$Resolucion', RDesde = '$RDesde', RHasta = '$RHasta', FechaCreacion = NOW() WHERE IDFactura = '$frm[IDFactura]'  AND IDPuntoVenta = '$frm[IDPuntoVenta]'";
+	$sql_actualizafactura = "UPDATE Factura SET Resolucion = '".$Resolucion."', RDesde = '".$RDesde."', RHasta = '".$RHasta."', FechaCreacion = NOW() WHERE IDFactura = '".$frm['IDFactura']."'  AND IDPuntoVenta = '".$frm['IDPuntoVenta']."'";	
 	db_query($sql_actualizafactura);
 
 	//insertar el log
-	insertlog($ID_Usuario,"Factura",$frm[IDFactura],"Actualizar",$sql_actualizafactura);
+	insertlog($ID_Usuario,"Factura",$frm['IDFactura'],"Actualizar",$sql_actualizafactura);
 
 }//end function venta( $frm )
 
@@ -149,17 +150,17 @@ function agregarventaempleado( $frm )
 	else
 		$cargo = "Empleado";
 
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorTotal']);
 
 	$idadministrador = get_field("PuntoVenta","IDEmpleado","IDPuntoVenta",$frm['IDPuntoVenta']);
 	$idventaempleado = get_maxID("VentasEmpleado","IDVentasEmpleado");
-	$sql_ventaadministrador = "INSERT INTO VentasEmpleado VALUES ('$idventaempleado','$idadministrador','Administrador','$frm[IDPuntoVenta]','$frm[IDFactura]','$frm[ValorTotal]')";
+	$sql_ventaadministrador = "INSERT INTO VentasEmpleado VALUES ('$idventaempleado','$idadministrador','Administrador','".$frm["IDPuntoVenta"]."','".$frm["IDFactura"]."','".$frm["ValorTotal"]."')";
 	$queryventaadministrador = db_query($sql_ventaadministrador);
 
 	if($cargo == "Empleado")
 	{
 		$idventaempleado = get_maxID("VentasEmpleado","IDVentasEmpleado");
-		$sql_ventaempleado = "INSERT INTO VentasEmpleado VALUES ('$idventaempleado','$frm[IDEmpleado]','$cargo','$frm[IDPuntoVenta]','$frm[IDFactura]','$frm[ValorTotal]')";
+		$sql_ventaempleado = "INSERT INTO VentasEmpleado VALUES ('$idventaempleado','".$frm["IDEmpleado"]."','$cargo','".$frm["IDPuntoVenta"]."','".$frm["IDFactura"]."','".$frm["ValorTotal"]."')";
 		$queryventaempleado = db_query($sql_ventaempleado);
 	}
 }
@@ -191,7 +192,7 @@ function ventabono( $frm )
 	for($i = 1; $i <= $Items; $i++)
 	{
 
-		$iddetalle = get_maxID("DetalleFacturaBono WHERE IDFacturaBono = '$frm[IDFacturaBono]' ","IDDetalleFacturaBono");
+		$iddetalle = get_maxID("DetalleFacturaBono WHERE IDFacturaBono = '".$frm['IDFacturaBono']."' ","IDDetalleFacturaBono");
 		$IDCodificacion = "IDCodificacion".$i;
 		$Cantidad = "Cantidad".$i;
 		$ValorU = "ValorU".$i;
@@ -199,12 +200,12 @@ function ventabono( $frm )
 		//$DescuentoRef = "Descuento".$i;
 		$DescuentoRef = "DescuentoLin".$i;
 
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$ValorU]);
+		$PrecioU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 
 		$str_insert_detalle  = "INSERT INTO DetalleFacturaBono ( IDDetalleFacturaBono,IDFacturaBono,IDPuntoVenta,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,UsuarioTrCr,FechaTrCr ) ";
-		$str_insert_detalle .= "VALUES ( '$iddetalle','$frm[IDFacturaBono]','$frm[IDPuntoVenta]','$frm[$IDCodificacion]','$frm[$Cantidad]','$ValorU','$PrecioU','$DescuentoRef','$frm[UsuarioTrCr]','$frm[FechaTrCr]' )";
+		$str_insert_detalle .= "VALUES ( '$iddetalle','".$frm['IDFacturaBono']."','".$frm['IDPuntoVenta']."','".$frm[$IDCodificacion]."','".$frm[$Cantidad]."','$ValorU','$PrecioU','$DescuentoRef','".$frm['UsuarioTrCr']."','".$frm['FechaTrCr']."' )";
 
 		db_query( $str_insert_detalle );
 
@@ -231,17 +232,17 @@ function ventabono( $frm )
 
 	}//end for($i = 1; $i < $Items; $i++)
 
-	$frm['ValorIVA'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
+	$frm['ValorIVA'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorIVA']);
 
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorTotal']);
 
-	$sql_actualizaFacturaBono = "UPDATE FacturaBono SET  ValorTotal = '$frm[ValorTotal]' WHERE IDFacturaBono = '$frm[IDFacturaBono]' AND IDPuntoVenta = '$frm[IDPuntoVenta]'";
+	$sql_actualizaFacturaBono = "UPDATE FacturaBono SET  ValorTotal = '".$frm['ValorTotal']."' WHERE IDFacturaBono = '".$frm["IDFacturaBono"]."' AND IDPuntoVenta = '".$frm['IDPuntoVenta']."'";
 	db_query($sql_actualizaFacturaBono);
 
 	//insertar el log
-	insertlog($ID_Usuario,"FacturaBono",$frm[IDFacturaBono],"Actualizar",$sql_actualizaFacturaBono);
+	insertlog($ID_Usuario,"FacturaBono",$frm['IDFacturaBono'],"Actualizar",$sql_actualizaFacturaBono);
 
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['Excedente']);
 	if( $frm['Excedente'] > 0 )
 	{
 		//INSERTAR FACTURA CON EL EXCEDENTE
@@ -250,27 +251,27 @@ function ventabono( $frm )
 		$RDesde = get_field("PuntoVenta","RDesde","IDPuntoVenta",$frm['IDPuntoVenta']);
 		$RHasta = get_field("PuntoVenta","RHasta","IDPuntoVenta",$frm['IDPuntoVenta']);
 
-		$idfactura = get_maxID( "Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]'","IDFactura" );
-		//$numerofactura = get_maxID( "Factura WHERE IDPuntoventa = '$frm[IDPuntoVenta]' ","NumeroFactura" );
+		$idfactura = get_maxID( "Factura WHERE IDPuntoVenta = '".$frm['IDPuntoVenta']."'","IDFactura" );
+		//$numerofactura = get_maxID( "Factura WHERE IDPuntoventa = '".$frm['IDPuntoVenta']."' ","NumeroFactura" );
 
-	   //$sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2021-12-01 09:00:00' Limit 1";
-	   $sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2022-11-21 09:00:00' Limit 1";
+	   //$sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '".$frm['IDPuntoVenta']."' and FechaFactura >='2021-12-01 09:00:00' Limit 1";
+	   $sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '".$frm['IDPuntoVenta']."' and FechaFactura >='2022-11-21 09:00:00' Limit 1";
 	   $qry_facturas = db_query($sql_facturas);
 	   $row_facturas = db_fetch_array($qry_facturas);
 	   $ultima_fac = (int)$row_facturas["IDFactura"];
 	   if($ultima_fac==0):
 			$numerofactura=5001;
 	   else:
-			//$numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2021-12-01 09:00:00'","NumeroFactura");
-			$numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2022-11-21 09:00:00'","NumeroFactura");
+			//$numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '$frm['IDPuntoVenta']' and FechaFactura >='2021-12-01 09:00:00'","NumeroFactura");
+			$numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '".$frm['IDPuntoVenta']."' and FechaFactura >='2022-11-21 09:00:00'","NumeroFactura");
 	   endif;
 
 
 
 		$sql_insert_factura = " INSERT INTO Factura ( IDFactura, IDCliente, NumeroFactura, IDPuntoVenta, IDEmpleado, FechaFactura, ValorIVA,
 								ValorTotal, Resolucion, RDesde, RHasta, UsuarioTrCr, FechaTrCr )
-								VALUES ( '$idfactura','$frm[IDCliente]','$numerofactura','$frm[IDPuntoVenta]','$frm[IDEmpleado]',NOW(),'$frm[ValorIVA]','$frm[Excedente]',
-								'$Resolucion','$RDesde','$RHasta','$frm[UsuarioTrCr]','$frm[FechaTrCr]' ) ";
+								VALUES ( '$idfactura','".$frm['IDCliente']."','".$numerofactura."','".$frm['IDPuntoVenta']."','".$frm['IDEmpleado']."',NOW(),'".$frm['ValorIVA']."','".$frm['Excedente']."',
+								'$Resolucion','$RDesde','$RHasta','".$frm["UsuarioTrCr"]."','".$frm['FechaTrCr']."' ) ";
 
 		db_query( $sql_insert_factura );
 
@@ -281,10 +282,10 @@ function ventabono( $frm )
 		//se agrega el excedente como una referencia - el id de la referencia excedente esta guardada en la tabla parametros IDParametro = 1
 
 		$IDExcedente = get_field( "Parametros","Parametro","IDParametro",1 );
-		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '$frm[IDPuntoVenta] " ) );
+		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '".$frm['IDPuntoVenta']."' " ) );
 		$ValorU = $frm['Excedente'] / ( 1 + $IVA );
 		$sql_detalle = " INSERT INTO DetalleFactura (IDDetalleFactura, IDFactura,IDPuntoVenta, IDCodificacionEspecifica, Cantidad, ValorU, PrecioU, DescuentoPar)
-							VALUES ( '1','$idfactura','$frm[IDPuntoVenta]','$IDCod','1','$ValorU','$frm[Excedente]','$frm[$DescuentoRef]' ) ";
+							VALUES ( '1','$idfactura','".$frm['IDPuntoVenta']."','$IDCod','1','$ValorU','".$frm['Excedente']."','".$frm[$DescuentoRef]."' ) ";
 
 		db_query( $sql_detalle );
 
@@ -293,7 +294,7 @@ function ventabono( $frm )
 
 		//ACTUALIZAR FACTURA BONO CON EL ID DE LA FACTURA
 		//SE CAMBIA LA ACTUALIZACION DE LA FACTURA CON EL PUNTO DE VENTA COMO PARTE DE LA LLAVE PRINCIPAL
-		$sql_actualizafacturaBono = "UPDATE FacturaBono SET IDFactura = '$idfactura' WHERE IDFacturaBono = '$frm[IDFacturaBono]' AND IDPuntoVenta = '$frm[IDPuntoVenta]'";
+		$sql_actualizafacturaBono = "UPDATE FacturaBono SET IDFactura = '$idfactura' WHERE IDFacturaBono = '".$frm["IDFacturaBono"]."' AND IDPuntoVenta = '".$frm['IDPuntoVenta']."'";
 		db_query( $sql_actualizafacturaBono );
 
 		//insertar el log
@@ -306,7 +307,7 @@ function ventabono( $frm )
 
 
 
-	}//end if $frm[Excedente]
+	}//end if $frm['Excedente']
 
 	return $frm;
 
@@ -345,7 +346,7 @@ function ventacambio( $frm )
 	 $iniciar;
 	for($i = $iniciar; $i <= $Items; $i++)
 	{
-		//echo  $iddetalle = get_maxID("DetalleCambio WHERE IDCambio = '$frm[IDCambio]' AND IDPuntoVenta = '$frm[IDPuntoVenta]' ","IDDetalleCambio");
+		//echo  $iddetalle = get_maxID("DetalleCambio WHERE IDCambio = '$frm['IDCambio']' AND IDPuntoVenta = '$frm['IDPuntoVenta']' ","IDDetalleCambio");
 		$iddetalle = $i;
 		//echo "<br>";
 		$IDCodificacion = "IDCodificacion".$i;
@@ -356,30 +357,23 @@ function ventacambio( $frm )
 		$PrecioU = "Precio".$i;
 		$DescuentoRef = "Descuento".$i;
 
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
-		$DescuentoRef = $frm[$DescuentoRef];
+		$ValorU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$ValorU]);
+		$PrecioU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$PrecioU]).".00";
 
-		if( !empty( $frm[$Cantidad] ) )
+
+		db_query( $str_insert_detalle );
+
+		$str_insert_detalle = "";
+
+		//descargar de inventario
+		if( $i >= 10 )
 		{
-			 $str_insert_detalle  = "INSERT INTO DetalleCambio ( IDDetalleCambio,IDCambio,IDPuntoVenta,IDCodificacionEspecificaCambio,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,UsuarioTrCr,FechaTrCr ) ";
-			 $str_insert_detalle .= "VALUES ( '$iddetalle','$frm[IDCambio]','$frm[IDPuntoVenta]','$frm[$IDCodificacionCambio]','$frm[$IDCodificacion]','$frm[$Cantidad]','$ValorU','$PrecioU','$DescuentoRef','$frm[UsuarioTrCr]','$frm[FechaTrCr]' )";
-
-
-			db_query( $str_insert_detalle );
-
-			$str_insert_detalle = "";
-
-			//descargar de inventario
-			if( $i >= 10 )
-			{
-				 $str_actualiza_inventario  = "UPDATE CodificacionEspecifica SET Existencias = Existencias - '$frm[$Cantidad]' WHERE IDCodificacionEspecifica = '$frm[$IDCodificacion]'";
-
-				db_query( $str_actualiza_inventario );
-			}
+			$str_actualiza_inventario  = "UPDATE CodificacionEspecifica SET Existencias = Existencias - '$frm[$Cantidad]' WHERE IDCodificacionEspecifica = '$frm[$IDCodificacion]'";
+			db_query( $str_actualiza_inventario );
+		}
 			//insertar el log
 			insertlog($ID_Usuario,"DetalleCambio",$iddetalle,"Insertar",$str_insert_detalle);
-		}//end if
+		
 	}//end for($i = 1; $i < $Items; $i++)
 	//exit;
 	//Realizar el Movimiento correspondiente en la tabla de Codificacion especifica
@@ -400,7 +394,7 @@ function ventacambio( $frm )
 		//insertar el log
 		insertlog($ID_Usuario,"CodificacionEspecifica",$frm[$IDCodificacion],"Insertar",$str_actualiza_inventario);
 		$str_insert_detalle_producto  = "INSERT INTO DetalleProductoCambio ( IDCambio,IDPuntoVenta,IDCodificacionEspecificaCambio,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,UsuarioTrCr,FechaTrCr ) ";
-		$str_insert_detalle_producto .= "VALUES ( '$frm[IDCambio]','$frm[IDPuntoVenta]','$frm[$IDCodificacion]','$frm[$IDCodificacion]','$frm[$Cantidad]','$frm[$ValorU]','$frm[$PrecioU]','$frm[$DescuentoRef]','$frm[UsuarioTrCr]','$frm[FechaTrCr]' )";
+		$str_insert_detalle_producto .= "VALUES ( '".$frm["IDCambio"]."','".$frm["IDPuntoVenta"]."','".$frm[$IDCodificacion]."','".$frm[$IDCodificacion]."','".$frm[$Cantidad]."','".$frm[$ValorU]."','".$frm[$PrecioU]."','".$frm[$DescuentoRef]."','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."' )";
 		db_query( $str_insert_detalle_producto );
 	}
 
@@ -420,17 +414,17 @@ function ventacambio( $frm )
 	insertlog($ID_Usuario,"CodificacionEspecifica",$frm[$IDCodificacion],"Insertar",$str_actualiza_inventario);
 
 
-	$frm['ValorIVA'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
+	$frm['ValorIVA'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorIVA']);
 
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorTotal']);
 
-	$sql_actualizaFacturaBono = "UPDATE Cambio SET  ValorTotal = '$frm[ValorTotal]' WHERE IDCambio = '$frm[RegistroCambio]'";
+	$sql_actualizaFacturaBono = "UPDATE Cambio SET  ValorTotal = '".$frm["ValorTotal"]."' WHERE IDCambio = '".$frm["RegistroCambio"]."'";
 	db_query($sql_actualizaFacturaBono);
 
 	//insertar el log
-	insertlog($ID_Usuario,"Cambio",$frm[RegistroCambio],"Actualizar",$sql_actualizaFacturaBono);
+	insertlog($ID_Usuario,"Cambio",$frm['RegistroCambio'],"Actualizar",$sql_actualizaFacturaBono);
 
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['Excedente']);
 	if( $frm['Excedente'] > 0 )
 	{
 		//INSERTAR FACTURA CON EL EXCEDENTE
@@ -439,24 +433,24 @@ function ventacambio( $frm )
 		$RDesde = get_field("PuntoVenta","RDesde","IDPuntoVenta",$frm['IDPuntoVenta']);
 		$RHasta = get_field("PuntoVenta","RHasta","IDPuntoVenta",$frm['IDPuntoVenta']);
 
-		$idfactura = get_maxID( "Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]'","IDFactura" );
+		$idfactura = get_maxID( "Factura WHERE IDPuntoVenta = '".$frm["IDPuntoVenta"]."'","IDFactura" );
 
 
-	   $sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2021-12-01 09:00:00' Limit 1";
+	   $sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '".$frm["IDPuntoVenta"]."' and FechaFactura >='2021-12-01 09:00:00' Limit 1";
 	   $qry_facturas = db_query($sql_facturas);
 	   $row_facturas = db_fetch_array($qry_facturas);
 	   $ultima_fac = (int)$row_facturas["IDFactura"];
 	   if($ultima_fac==0):
 			$numerofactura=1;
 	   else:
-			$numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2021-12-01 09:00:00'","NumeroFactura");
+			$numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '".$frm["IDPuntoVenta"]."' and FechaFactura >='2021-12-01 09:00:00'","NumeroFactura");
 	   endif;
 
-		//$numerofactura = get_maxID( "Factura WHERE IDPuntoventa = '$frm[IDPuntoVenta]' ","NumeroFactura" );
+		//$numerofactura = get_maxID( "Factura WHERE IDPuntoventa = '$frm['IDPuntoVenta']' ","NumeroFactura" );
 		$sql_insert_factura = " INSERT INTO Factura ( IDFactura, IDCliente, NumeroFactura, IDPuntoVenta, IDEmpleado, FechaFactura, FechaCreacion, ValorIVA,
 								ValorTotal, Resolucion, RDesde, RHasta, UsuarioTrCr, FechaTrCr )
-								VALUES ( '$idfactura','$frm[IDCliente]','$numerofactura','$frm[IDPuntoVenta]','$frm[IDEmpleado]',NOW(),NOW(),'$frm[ValorIVA]','$frm[Excedente]',
-								'$Resolucion','$RDesde','$RHasta','$frm[UsuarioTrCr]','$frm[FechaTrCr]' ) ";
+								VALUES ( '$idfactura','".$frm["IDCliente"]."','$numerofactura','".$frm["IDPuntoVenta"]."','".$frm["IDEmpleado"]."',NOW(),NOW(),'".$frm["ValorIVA"]."','".$frm["Excedente"]."',
+								'$Resolucion','$RDesde','$RHasta','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."' ) ";
 
 		db_query( $sql_insert_factura );
 
@@ -467,10 +461,10 @@ function ventacambio( $frm )
 		//se agrega el excedente como una referencia - el id de la referencia excedente esta guardada en la tabla parametros IDParametro = 1
 
 		$IDExcedente = get_field( "Parametros","Parametro","IDParametro",1 );
-		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '$frm[IDPuntoVenta] " ) );
+		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '".$frm["IDPuntoVenta"]."' " ) );
 		$ValorU = $frm['Excedente'] / ( 1 + $IVA );
 		$sql_detalle = " INSERT INTO DetalleFactura (IDDetalleFactura, IDFactura,IDPuntoVenta, IDCodificacionEspecifica, Cantidad, ValorU, PrecioU)
-							VALUES ( '1','$idfactura','$frm[IDPuntoVenta]','$IDCod','1','$ValorU','$frm[Excedente]' ) ";
+							VALUES ( '1','$idfactura','".$frm["IDPuntoVenta"]."','$IDCod','1','$ValorU','".$frm["Excedente"]."' ) ";
 
 		db_query( $sql_detalle );
 
@@ -478,7 +472,7 @@ function ventacambio( $frm )
 		insertlog($ID_Usuario,"DetalleFactura",$idfactura,"Insertar",$sql_detalle);
 
 		//ACTUALIZAR FACTURA BONO CON EL ID DE LA FACTURA
-		$sql_actualizafacturaBono = "UPDATE Cambio SET IDFactura = '$idfactura' WHERE IDCambio = '$frm[RegistroCambio]' AND IDPuntoVenta = '$frm[IDPuntoVenta]' ";
+		$sql_actualizafacturaBono = "UPDATE Cambio SET IDFactura = '$idfactura' WHERE IDCambio = '".$frm["RegistroCambio"]."' AND IDPuntoVenta = '".$frm["IDPuntoVenta"]."' ";
 		db_query( $sql_actualizafacturaBono );
 
 		//insertar el log
@@ -491,7 +485,7 @@ function ventacambio( $frm )
 
 
 
-	}//end if $frm[Excedente]
+	}//end if $frm['Excedente']
 
 	return $frm;
 
@@ -519,7 +513,7 @@ function ventacambioant( $frm )
 
 	for($i = $iniciar; $i <= $Items; $i++)
 	{
-		//echo  $iddetalle = get_maxID("DetalleCambio WHERE IDCambio = '$frm[IDCambio]' AND IDPuntoVenta = '$frm[IDPuntoVenta]' ","IDDetalleCambio");
+		//echo  $iddetalle = get_maxID("DetalleCambio WHERE IDCambio = '$frm['IDCambio']' AND IDPuntoVenta = '$frm['IDPuntoVenta']' ","IDDetalleCambio");
 		$iddetalle = $i;
 		echo "<br>";
 		$IDCodificacion = "IDCodificacion".$i;
@@ -530,14 +524,14 @@ function ventacambioant( $frm )
 		$PrecioU = "Precio".$i;
 		$DescuentoRef = "Descuento".$i;
 
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$ValorU]);
+		$PrecioU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 
 		if( !empty( $frm[$Cantidad] ) )
 		{
 			 $str_insert_detalle  = "INSERT INTO DetalleCambio ( IDDetalleCambio,IDCambio,IDPuntoVenta,IDCodificacionEspecificaCambio,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,UsuarioTrCr,FechaTrCr ) ";
-			 echo $str_insert_detalle .= "VALUES ( '$iddetalle','$frm[IDCambio]','$frm[IDPuntoVenta]','$frm[$IDCodificacionCambio]','$frm[$IDCodificacion]','$frm[$Cantidad]','$ValorU','$PrecioU','$DescuentoRef','$frm[UsuarioTrCr]','$frm[FechaTrCr]' )";
+			 echo $str_insert_detalle .= "VALUES ( '$iddetalle','".$frm["IDCambio"]."','".$frm["IDPuntoVenta"]."','".$frm[$IDCodificacionCambio]."','".$frm[$IDCodificacion]."','".$frm[$Cantidad]."','$ValorU','$PrecioU','$DescuentoRef','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."' )";
 
 
 			db_query( $str_insert_detalle );
@@ -583,17 +577,17 @@ function ventacambioant( $frm )
 	insertlog($ID_Usuario,"CodificacionEspecifica",$frm[$IDCodificacion],"Insertar",$str_actualiza_inventario);
 
 
-	$frm['ValorIVA'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
+	$frm['ValorIVA'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorIVA']);
 
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['ValorTotal']);
 
-	$sql_actualizaFacturaBono = "UPDATE Cambio SET  ValorTotal = '$frm[ValorTotal]' WHERE IDCambio = '$frm[RegistroCambio]'";
+	$sql_actualizaFacturaBono = "UPDATE Cambio SET  ValorTotal = '".$frm["ValorTotal"]."' WHERE IDCambio = '".$frm["RegistroCambio"]."'";
 	db_query($sql_actualizaFacturaBono);
 
 	//insertar el log
-	insertlog($ID_Usuario,"Cambio",$frm[RegistroCambio],"Actualizar",$sql_actualizaFacturaBono);
+	insertlog($ID_Usuario,"Cambio",$frm['RegistroCambio'],"Actualizar",$sql_actualizaFacturaBono);
 
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['Excedente']);
 	if( $frm['Excedente'] > 0 )
 	{
 		//INSERTAR FACTURA CON EL EXCEDENTE
@@ -602,23 +596,23 @@ function ventacambioant( $frm )
 		$RDesde = get_field("PuntoVenta","RDesde","IDPuntoVenta",$frm['IDPuntoVenta']);
 		$RHasta = get_field("PuntoVenta","RHasta","IDPuntoVenta",$frm['IDPuntoVenta']);
 
-		$idfactura = get_maxID( "Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]'","IDFactura" );
+		$idfactura = get_maxID( "Factura WHERE IDPuntoVenta = '".$frm["IDPuntoVenta"]."'","IDFactura" );
 
 
-		$sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2021-12-01 09:00:00' Limit 1";
+		$sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '".$frm["IDPuntoVenta"]."' and FechaFactura >='2021-12-01 09:00:00' Limit 1";
 		$qry_facturas = db_query($sql_facturas);
 		$row_facturas = db_fetch_array($qry_facturas);
 		$ultima_fac = (int)$row_facturas["IDFactura"];
 		if($ultima_fac==0):
 		 $numerofactura=5000;
 		else:
-		 $numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2021-12-01 09:00:00'","NumeroFactura");
+		 $numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '".$frm["IDPuntoVenta"]."' and FechaFactura >='2021-12-01 09:00:00'","NumeroFactura");
 		endif;
 
 		$sql_insert_factura = " INSERT INTO Factura ( IDFactura, IDCliente, NumeroFactura, IDPuntoVenta, IDEmpleado, FechaFactura, ValorIVA,
 								ValorTotal, Resolucion, RDesde, RHasta, UsuarioTrCr, FechaTrCr )
-								VALUES ( '$idfactura','$frm[IDCliente]','$numerofactura','$frm[IDPuntoVenta]','$frm[IDEmpleado]',NOW(),'$frm[ValorIVA]','$frm[Excedente]',
-								'$Resolucion','$RDesde','$RHasta','$frm[UsuarioTrCr]','$frm[FechaTrCr]' ) ";
+								VALUES ( '$idfactura','".$frm["IDCliente"]."','$numerofactura','".$frm["IDPuntoVenta"]."','".$frm["IDEmpleado"]."',NOW(),'".$frm["ValorIVA"]."','".$frm["Excedente"]."',
+								'$Resolucion','$RDesde','$RHasta','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."' ) ";
 
 		db_query( $sql_insert_factura );
 
@@ -629,10 +623,10 @@ function ventacambioant( $frm )
 		//se agrega el excedente como una referencia - el id de la referencia excedente esta guardada en la tabla parametros IDParametro = 1
 
 		$IDExcedente = get_field( "Parametros","Parametro","IDParametro",1 );
-		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '$frm[IDPuntoVenta] " ) );
+		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '".$frm["IDPuntoVenta"]."' " ) );
 		$ValorU = $frm['Excedente'] / ( 1 + $IVA );
 		$sql_detalle = " INSERT INTO DetalleFactura (IDDetalleFactura, IDFactura,IDPuntoVenta, IDCodificacionEspecifica, Cantidad, ValorU, PrecioU)
-							VALUES ( '1','$idfactura','$frm[IDPuntoVenta]','$IDCod','1','$ValorU','$frm[Excedente]' ) ";
+							VALUES ( '1','$idfactura','".$frm["IDPuntoVenta"]."','$IDCod','1','$ValorU','".$frm["Excedente"]."' ) ";
 
 		db_query( $sql_detalle );
 
@@ -640,7 +634,7 @@ function ventacambioant( $frm )
 		insertlog($ID_Usuario,"DetalleFactura",$idfactura,"Insertar",$sql_detalle);
 
 		//ACTUALIZAR FACTURA BONO CON EL ID DE LA FACTURA
-		$sql_actualizafacturaBono = "UPDATE Cambio SET IDFactura = '$idfactura' WHERE IDCambio = '$frm[RegistroCambio]' AND IDPuntoVenta = '$frm[IDPuntoVenta]' ";
+		$sql_actualizafacturaBono = "UPDATE Cambio SET IDFactura = '$idfactura' WHERE IDCambio = '".$frm["RegistroCambio"]."' AND IDPuntoVenta = '".$frm["IDPuntoVenta"]."' ";
 		db_query( $sql_actualizafacturaBono );
 
 		//insertar el log
@@ -653,7 +647,7 @@ function ventacambioant( $frm )
 
 
 
-	}//end if $frm[Excedente]
+	}//end if $frm['Excedente']
 
 	return $frm;
 
@@ -695,14 +689,14 @@ function ventacambiofactura( $frm )
 		$PrecioU = "Precio".$i;
 		$DescuentoRef = "Descuento".$i;
 
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$ValorU]);
+		$PrecioU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 
 		if( !empty( $frm[$Cantidad] ) )
 		{
 			 $str_insert_detalle  = "INSERT INTO DetalleCambioFacturaEntrada ( IDDetalleCambioFacturaEntrada,IDCambioFactura,IDPuntoVenta,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,UsuarioTrCr,FechaTrCr ) ";
-			 $str_insert_detalle .= "VALUES ( '$iddetalle','$frm[IDCambioFactura]','$frm[IDPuntoVenta]','$frm[$IDCodificacion]','$frm[$Cantidad]','$ValorU','$PrecioU','$DescuentoRef','$frm[UsuarioTrCr]','$frm[FechaTrCr]' )";
+			 $str_insert_detalle .= "VALUES ( '$iddetalle','".$frm["IDCambioFactura"]."','".$frm["IDPuntoVenta"]."','".$frm[$IDCodificacion]."','".$frm[$Cantidad]."','$ValorU','$PrecioU','$DescuentoRef','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."' )";
 
 
 			db_query( $str_insert_detalle );
@@ -731,14 +725,14 @@ function ventacambiofactura( $frm )
 		$PrecioU = "Precio".$i;
 		$DescuentoRef = "Descuento".$i;
 
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$ValorU]);
+		$PrecioU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 
 		if( !empty( $frm[$Cantidad] ) )
 		{
 			 $str_insert_detalle  = "INSERT INTO DetalleCambioFacturaSalida ( IDDetalleCambioFacturaSalida,IDCambioFactura,IDPuntoVenta,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,UsuarioTrCr,FechaTrCr ) ";
-			 $str_insert_detalle .= "VALUES ( '$iddetalle','$frm[IDCambioFactura]','$frm[IDPuntoVenta]','$frm[$IDCodificacion]','$frm[$Cantidad]','$ValorU','$PrecioU','$DescuentoRef','$frm[UsuarioTrCr]','$frm[FechaTrCr]' )";
+			 $str_insert_detalle .= "VALUES ( '$iddetalle','".$frm["IDCambioFactura"]."','".$frm["IDPuntoVenta"]."','".$frm[$IDCodificacion]."','".$frm[$Cantidad]."','$ValorU','$PrecioU','$DescuentoRef','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."' )";
 
 
 			db_query( $str_insert_detalle );
@@ -759,7 +753,7 @@ function ventacambiofactura( $frm )
 	//Realizar el Movimiento correspondiente en la tabla de Codificacion especifica
 	//Aumentar inventario
 
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['Excedente']);
 	if( $frm['Excedente'] > 0 )
 	{
 		//INSERTAR FACTURA CON EL EXCEDENTE
@@ -768,26 +762,26 @@ function ventacambiofactura( $frm )
 		$RDesde = get_field("PuntoVenta","RDesde","IDPuntoVenta",$frm['IDPuntoVenta']);
 		$RHasta = get_field("PuntoVenta","RHasta","IDPuntoVenta",$frm['IDPuntoVenta']);
 
-		$idfactura = get_maxID( "Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]'","IDFactura" );
+		$idfactura = get_maxID( "Factura WHERE IDPuntoVenta = '".$frm['IDPuntoVenta']."'","IDFactura" );
 
 
-		//$numerofactura = get_maxID( "Factura WHERE IDPuntoventa = '$frm[IDPuntoVenta]' ","NumeroFactura" );
-	   $sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2021-12-01 09:00:00' Limit 1";
+		//$numerofactura = get_maxID( "Factura WHERE IDPuntoventa = '$frm['IDPuntoVenta']' ","NumeroFactura" );
+	   $sql_facturas = "Select IDFactura From Factura WHERE IDPuntoVenta = '".$frm['IDPuntoVenta']."' and FechaFactura >='2021-12-01 09:00:00' Limit 1";
 	   $qry_facturas = db_query($sql_facturas);
 	   $row_facturas = db_fetch_array($qry_facturas);
 	   $ultima_fac = (int)$row_facturas["IDFactura"];
 	   if($ultima_fac==0):
 			$numerofactura=5000;
 	   else:
-			$numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '$frm[IDPuntoVenta]' and FechaFactura >='2021-12-01 09:00:00'","NumeroFactura");
+			$numerofactura=get_maxID("Factura WHERE IDPuntoVenta = '".$frm['IDPuntoVenta']."' and FechaFactura >='2021-12-01 09:00:00'","NumeroFactura");
 	   endif;
 
 
 
 		$sql_insert_factura = " INSERT INTO Factura ( IDFactura, IDCliente, NumeroFactura, IDPuntoVenta, IDEmpleado, FechaFactura, ValorIVA,
 								ValorTotal, Resolucion, RDesde, RHasta, UsuarioTrCr, FechaTrCr )
-								VALUES ( '$idfactura','$frm[IDCliente]','$numerofactura','$frm[IDPuntoVenta]','$frm[IDEmpleado]',NOW(),'$frm[ValorIVA]','$frm[Excedente]',
-								'$Resolucion','$RDesde','$RHasta','$frm[UsuarioTrCr]','$frm[FechaTrCr]' ) ";
+								VALUES ( '$idfactura','".$frm["IDCliente"]."','$numerofactura','".$frm["IDPuntoVenta"]."','".$frm["IDEmpleado"]."',NOW(),'".$frm["ValorIVA"]."','".$frm["Excedente"]."',
+								'$Resolucion','$RDesde','$RHasta','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."' ) ";
 
 		db_query( $sql_insert_factura );
 
@@ -796,16 +790,16 @@ function ventacambiofactura( $frm )
 		//se agrega el excedente como una referencia - el id de la referencia excedente esta guardada en la tabla parametros IDParametro = 1
 
 		$IDExcedente = get_field( "Parametros","Parametro","IDParametro",1 );
-		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '$frm[IDPuntoVenta] " ) );
+		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '".$frm['IDPuntoVenta']."' " ) );
 		$ValorU = $frm['Excedente'] / ( 1 + $IVA );
 		$sql_detalle = " INSERT INTO DetalleFactura (IDDetalleFactura, IDFactura,IDPuntoVenta, IDCodificacionEspecifica, Cantidad, ValorU, PrecioU)
-							VALUES ( '1','$idfactura','$frm[IDPuntoVenta]','$IDCod','1','$ValorU','$frm[Excedente]' ) ";
+							VALUES ( '1','$idfactura','".$frm['IDPuntoVenta']."','$IDCod','1','$ValorU','".$frm['Excedente']."' ) ";
 
 		db_query( $sql_detalle );
 
 
 		//ACTUALIZAR FACTURA BONO CON EL ID DE LA FACTURA
-		$sql_actualizafacturaBono = "UPDATE CambioFactura SET IDFactura = '$idfactura' WHERE IDCambioFactura = '$frm[RegistroCambio]' AND IDPuntoVenta = '$frm[IDPuntoVenta]' ";
+		$sql_actualizafacturaBono = "UPDATE CambioFactura SET IDFactura = '$idfactura' WHERE IDCambioFactura = '".$frm['RegistroCambio']."' AND IDPuntoVenta = '".$frm['IDPuntoVenta']."' ";
 		db_query( $sql_actualizafacturaBono );
 
 		$frm['IDFactura'] = $idfactura;
@@ -816,7 +810,7 @@ function ventacambiofactura( $frm )
 
 
 
-	}//end if $frm[Excedente]
+	}//end if $frm['Excedente']
 
 	return $frm;
 
@@ -839,17 +833,17 @@ function agregarventaempleadobono( $frm )
 	else
 		$cargo = "Empleado";
 
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm['Excedente']);
 
 	$idadministrador = get_field("PuntoVenta","IDEmpleado","IDPuntoVenta",$frm['IDPuntoVenta']);
 	$idventaempleado = get_maxID("VentasEmpleado","IDVentasEmpleado");
-	$sql_ventaadministrador = "INSERT INTO VentasEmpleado VALUES ('$idventaempleado','$idadministrador','Administrador','$frm[IDPuntoVenta]','$frm[IDFactura]','$frm[Excedente]')";
+	$sql_ventaadministrador = "INSERT INTO VentasEmpleado VALUES ('$idventaempleado','$idadministrador','Administrador','".$frm['IDPuntoVenta']."','".$frm['IDFactura']."','".$frm['Excedente']."')";
 	$queryventaadministrador = db_query($sql_ventaadministrador);
 
 	if($cargo == "Empleado")
 	{
 		$idventaempleado = get_maxID("VentasEmpleado","IDVentasEmpleado");
-		$sql_ventaempleado = "INSERT INTO VentasEmpleado VALUES ('$idventaempleado','$frm[IDEmpleado]','$cargo','$frm[IDPuntoVenta]','$frm[IDFactura]','$frm[Excedente]')";
+		$sql_ventaempleado = "INSERT INTO VentasEmpleado VALUES ('$idventaempleado','".$frm['IDEmpleado']."','$cargo','".$frm['IDPuntoVenta']."','".$frm['IDFactura']."','".$frm['Excedente']."')";
 		$queryventaempleado = db_query($sql_ventaempleado);
 	}
 }
@@ -871,14 +865,14 @@ function salidamercancia( $frm )
 	for($i = 1; $i <= $Items; $i++)
 	{
 
-		$iddetalle = get_maxID("DetalleMovimiento WHERE IDMovimiento = '$frm[IDMovimiento]' ","IDDetalleMovimiento");
+		$iddetalle = get_maxID("DetalleMovimiento WHERE IDMovimiento = '".$frm['IDMovimiento']."' ","IDDetalleMovimiento");
 		$IDCodificacion = "IDCodificacion".$i;
 		$Cantidad = "Cantidad".$i;
 		$IDPuntoVentaReferencia = get_field( "CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica", $frm[$IDCodificacion]);
 		$IDTalla = get_field( "CodificacionEspecifica","IDTalla","IDCodificacionEspecifica", $frm[$IDCodificacion]);
 
 		$str_insert_detalle  = "INSERT INTO DetalleMovimiento ( IDDetalleMovimiento,IDMovimiento,IDPuntoVentaReferencia,IDPuntoVenta, IDTalla,Cantidad,UsuarioTrCr,FechaTrCr ) ";
-		$str_insert_detalle .= "VALUES ( '$iddetalle','$frm[IDMovimiento]','$IDPuntoVentaReferencia','$frm[IDPuntoVenta]','$IDTalla','$frm[$Cantidad]','$frm[UsuarioTrCr]','$frm[FechaTrCr]' )";
+		$str_insert_detalle .= "VALUES ( '$iddetalle','".$frm['IDMovimiento']."','$IDPuntoVentaReferencia','".$frm['IDPuntoVenta']."','$IDTalla','".$frm[$Cantidad]."','".$frm['UsuarioTrCr']."','".$frm['FechaTrCr']."' )";
 		//echo $str_insert_detalle .= "<br>";
 
 		db_query( $str_insert_detalle );
@@ -899,7 +893,7 @@ function salidamercancia( $frm )
 
 		$existencias = $existencias - $frm[$Cantidad];
 
-		$str_actualiza_inventario  = "UPDATE CodificacionEspecifica SET Existencias = '$existencias' WHERE IDCodificacionEspecifica = '$frm[$IDCodificacion]'";
+		$str_actualiza_inventario  = "UPDATE CodificacionEspecifica SET Existencias = '$existencias' WHERE IDCodificacionEspecifica = '".$frm[$IDCodificacion]."'";
 		//echo $str_actualiza_inventario .= "<br>";
 
 		db_query( $str_actualiza_inventario );

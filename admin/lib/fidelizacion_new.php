@@ -62,7 +62,7 @@ function genera_bonos($idcliente, $frm)
 			$id_nuevo_punto = $qry_puntos = db_query($sql_puntos);
 
 			//Actualizo el total de puntos de la ultima factura 			
-			$sql_actualiza_puntos = db_query("Update Factura set PuntosDisponiblesFactura = '" . (int)$puntos_sobran . "' where IDFactura = '" . $frm[id] . "'");
+			$sql_actualiza_puntos = db_query("Update Factura set PuntosDisponiblesFactura = '" . (int)$puntos_sobran . "' where IDFactura = '" . $frm['id'] . "'");
 		}
 
 		//Crear los bonos
@@ -78,7 +78,7 @@ function genera_bonos($idcliente, $frm)
 			$fecha_vence_bono = strtotime('+' . $vigencia_bonos . ' month', strtotime($fecha_actual_calcular));
 			$fecha_vence_bono = date('Y-m-d', $fecha_vence_bono);
 
-			$sql_inserta_bono = db_query("Insert into BonoFidelizacion (IDCliente, IDPuntoVenta, IDFacturaPadre, Valor, Fecha, Estado, FechaVencimiento, UsuarioTrCr, FechaTrCr) Values ('" . $idcliente . "','" . $frm[idpunto] . "','" . $frm["id"] . "','" . $valor_bono . "',NOW(),'D','" . $fecha_vence_bono . "','" . $frm[UsuarioTrCr] . "',NOW())");
+			$sql_inserta_bono = db_query("Insert into BonoFidelizacion (IDCliente, IDPuntoVenta, IDFacturaPadre, Valor, Fecha, Estado, FechaVencimiento, UsuarioTrCr, FechaTrCr) Values ('" . $idcliente . "','" . $frm['idpunto'] . "','" . $frm["id"] . "','" . $valor_bono . "',NOW(),'D','" . $fecha_vence_bono . "','" . $frm['UsuarioTrCr'] . "',NOW())");
 			$id_bonos[] = db_insert_id();
 		}
 
@@ -113,7 +113,7 @@ function genera_bonos($idcliente, $frm)
 		}
 	} else {
 		//Actualizo el total de puntos de la ultima factura 			
-		$sql_actualiza_puntos = db_query("Update Factura set PuntosDisponiblesFactura = '" . (int)$total_puntos_disponibles . "' where IDFactura = '" . $frm[id] . "'");
+		$sql_actualiza_puntos = db_query("Update Factura set PuntosDisponiblesFactura = '" . (int)$total_puntos_disponibles . "' where IDFactura = '" . $frm['id'] . "'");
 	}
 }
 
@@ -126,29 +126,30 @@ function fid_calculapuntos($frm)
 	$array_return = array();
 	$puntos_esta_factura = "";
 	//convierto valor total de compra en numerico
-	$total_compra_factura = (int)$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]", "", $frm['ValorTotal']);
+	$total_compra_factura = (int)$frm['ValorTotal'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorTotal']);
 
 	// Solo se dan puntos con el valor de formas de pago diferente a bono 
+	$total_compra = 0; // Inicializar variable
 	foreach ($frm['IDPuntoVentaBanco'] as $FormaPago) {
-		if ($frm[IDFormaPago][$FormaPago] <> 17 && $frm[IDFormaPago][$FormaPago] <> 13) { // si no es con bono y cuando no es con credito como se hace en medellin
-			if (!empty($frm[Valor][$FormaPago])) {
-				$total_compra += $frm[Valor][$FormaPago];
+		if ($frm['IDFormaPago'][$FormaPago] <> 17 && $frm['IDFormaPago'][$FormaPago] <> 13) { // si no es con bono y cuando no es con credito como se hace en medellin
+			if (!empty($frm['Valor'][$FormaPago])) {
+				$total_compra += $frm['Valor'][$FormaPago];
 			}
 		}
 	}
 
 
 
-	$id_cliente = $frm[IDCliente];
+	$id_cliente = $frm['IDCliente'];
 	$cedula_cliente = get_field("Cliente", "Cedula", "IDCliente", $id_cliente);
 
 
 	//consulto el detalle de la factura
-	$sql_detalle_factura = "Select * From  DetalleFactura Where IDFactura = '" . $frm[id] . "' and IDPuntoVenta = '" . $frm[idpunto] . "'";
+	$sql_detalle_factura = "Select * From  DetalleFactura Where IDFactura = '" . $frm['id'] . "' and IDPuntoVenta = '" . $frm['idpunto'] . "'";
 	$query_detalle = db_query($sql_detalle_factura);
 	while ($row_detalle = db_fetch_array($query_detalle)) {
-		$referencia_item = get_field("Referencia", "Numero", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $row_detalle[IDCodificacionEspecifica])));
-		$Cantidad = $row_detalle[Cantidad];
+		$referencia_item = get_field("Referencia", "Numero", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $row_detalle['IDCodificacionEspecifica'])));
+		$Cantidad = $row_detalle['Cantidad'];
 		$num_ref = $referencia_item;
 		$array_genero_item[] = get_field("Referencia", "Sexo", "Numero", $num_ref);
 		$array_referencia_item[] = get_field("Referencia", "IDReferencia", "Numero", $num_ref);
@@ -179,12 +180,12 @@ function fid_calculapuntos($frm)
 		$obser_regla = "";
 
 		//verifico que el valor de la compra aplique para la regla
-		if ($total_compra >= $r_regla[Valor])
+		if ($total_compra >= $r_regla['Valor'])
 			$aplica_regla = 1;
 
 		//GENERO
-		if ($r_regla[Genero] != "") {
-			$array_genero_regla = explode("|", $r_regla[Genero]);
+		if ($r_regla['Genero'] != "") {
+			$array_genero_regla = explode("|", $r_regla['Genero']);
 			//verifico que la compra tenga solo los generos requeridos
 			if (count($array_genero_item) > 0) {
 				foreach ($array_genero_item as $genero_value) {
@@ -201,8 +202,8 @@ function fid_calculapuntos($frm)
 
 
 		//LINEA
-		if ($r_regla[IDLinea] != "") {
-			$array_linea_regla = explode("|", $r_regla[IDLinea]);
+		if ($r_regla['IDLinea'] != "") {
+			$array_linea_regla = explode("|", $r_regla['IDLinea']);
 
 			//verifico que la compra tenga solo los generos requeridos
 			if (count($array_linea_item) > 0) {
@@ -220,8 +221,8 @@ function fid_calculapuntos($frm)
 
 
 		//REFERENCIA
-		if ($r_regla[IDReferencia] != "") {
-			$array_referencia_regla = explode("|", $r_regla[IDReferencia]);
+		if ($r_regla['IDReferencia'] != "") {
+			$array_referencia_regla = explode("|", $r_regla['IDReferencia']);
 
 			//verifico que la compra tenga solo los generos requeridos
 			if (count($array_referencia_item) > 0) {
@@ -239,8 +240,8 @@ function fid_calculapuntos($frm)
 
 
 		//TIPO REFERENCIA
-		if ($r_regla[IDTipoReferencia] != "") {
-			$array_tiporeferencia_regla = explode("|", $r_regla[IDTipoReferencia]);
+		if ($r_regla['IDTipoReferencia'] != "") {
+			$array_tiporeferencia_regla = explode("|", $r_regla['IDTipoReferencia']);
 
 			//verifico que la compra tenga solo los generos requeridos
 			if (count($array_tiporeferencia_item) > 0) {
@@ -258,8 +259,8 @@ function fid_calculapuntos($frm)
 
 
 		//COLOR
-		if ($r_regla[IDColor] != "") {
-			$array_color_regla = explode("|", $r_regla[IDColor]);
+		if ($r_regla['IDColor'] != "") {
+			$array_color_regla = explode("|", $r_regla['IDColor']);
 
 			//verifico que la compra tenga solo los generos requeridos
 			if (count($array_color_item) > 0) {
@@ -277,7 +278,7 @@ function fid_calculapuntos($frm)
 
 
 
-		if ($r_regla[ArchivoCliente] != "") {
+		if ($r_regla['ArchivoCliente'] != "") {
 			//consulto las cedulas ligadas a la regla
 			$sql_cedula_regla = db_query("Select * from ReglaCedula Where Cedula = '" . $cedula_cliente . "'");
 			if ($total_cedula = db_num_rows($sql_cedula_regla) > 0) {
@@ -307,20 +308,20 @@ function fid_calculapuntos($frm)
 			$cumple_condicion_cedula = true
 		) {
 
-			$nombre_regla_utilizada = $r_regla[Nombre];
-			$descrip_regla_utilizada = $r_regla[Descripcion];
+			$nombre_regla_utilizada = $r_regla['Nombre'];
+			$descrip_regla_utilizada = $r_regla['Descripcion'];
 
 			//cada X Valor pesos vale X puntos
-			$cantidas_puntos = $r_regla[Puntos];
-			$por_cada_valor = $r_regla[Valor];
+			$cantidas_puntos = $r_regla['Puntos'];
+			$por_cada_valor = $r_regla['Valor'];
 
 			//si hay sobrantes en otras facturas lo sumo al total de la factura								
-			$sql_sobrante_otra_fac = db_query("select * from ClienteSobrante Where IDCliente = '" . $id_cliente . "' and IDFactura <> '" . $frm[id] . "' and IDFacturaSumado = 0");
+			$sql_sobrante_otra_fac = db_query("select * from ClienteSobrante Where IDCliente = '" . $id_cliente . "' and IDFactura <> '" . $frm['id'] . "' and IDFacturaSumado = 0");
 			if (db_num_rows($sql_sobrante_otra_fac) > 0) {
 				$row_sobrante = db_fetch_array($sql_sobrante_otra_fac);
-				$total_compra += (int)$row_sobrante[Valor];
+				$total_compra += (int)$row_sobrante['Valor'];
 				//actualizo el sobrante con la factura en la que se utilizo para no utilizar nunca mas					
-				$sql_actualiza_sobrante = db_query("Update ClienteSobrante Set IDFacturaSumado = '" . $frm[id] . "', FechautilizoSobrante = CURDATE(), UsuarioTrEd = 'Venta Factura', FechatrEd = NOW() Where IDClienteSobrante = '" . $row_sobrante[IDClienteSobrante] . "'");
+				$sql_actualiza_sobrante = db_query("Update ClienteSobrante Set IDFacturaSumado = '" . $frm['id'] . "', FechautilizoSobrante = CURDATE(), UsuarioTrEd = 'Venta Factura', FechatrEd = NOW() Where IDClienteSobrante = '" . $row_sobrante['IDClienteSobrante'] . "'");
 			}
 
 			$puntos_esta_factura = (int)$total_compra * (int)$cantidas_puntos / $por_cada_valor;
@@ -328,10 +329,10 @@ function fid_calculapuntos($frm)
 
 			if ($valor_sobrante > 0) {
 				//verifico si ya existe un registro con un valor sobrante
-				$sql_sobrante = db_query("select * from ClienteSobrante Where IDCliente = '" . $id_cliente . "' and IDFactura = '" . $frm[id] . "' and IDPuntoVenta = '" . $frm[idpunto] . "'");
+				$sql_sobrante = db_query("select * from ClienteSobrante Where IDCliente = '" . $id_cliente . "' and IDFactura = '" . $frm['id'] . "' and IDPuntoVenta = '" . $frm['idpunto'] . "'");
 				// inserto el valor $$ sobrante para poder utilizarlo en una factura factura diferente a la actual
 				if (db_num_rows($sql_sobrante) == 0) {
-					$sql_inserta_valor_sobrante = db_query("Insert into ClienteSobrante (IDCliente,IDFactura,IDPuntoVenta,Valor,Fecha,UsuariotrCr,FechaTrCr) Values ('" . $id_cliente . "','" . $frm[id] . "','" . $frm[idpunto] . "','" . $valor_sobrante . "',CURDATE(),'Venta Factura',NOW())");
+					$sql_inserta_valor_sobrante = db_query("Insert into ClienteSobrante (IDCliente,IDFactura,IDPuntoVenta,Valor,Fecha,UsuariotrCr,FechaTrCr) Values ('" . $id_cliente . "','" . $frm['id'] . "','" . $frm['idpunto'] . "','" . $valor_sobrante . "',CURDATE(),'Venta Factura',NOW())");
 				}
 			}
 
@@ -359,7 +360,7 @@ function fid_calculapuntos($frm)
 				//$puntos_esta_factura=(int)$puntos_esta_factura*2;
 			}
 
-			$sql_puntos = " INSERT INTO PuntosClienteFidelizacion (IDCliente, IDPuntoVenta, IDFactura,IDReglaPunto,NombreRegla, DescripcionRegla, Puntos, FechaVencimiento,ObservacionesRegla, FechaTrCr) VALUES ('" . $frm["IDCliente"] . "','" . $frm["idpunto"] . "','" . $frm["id"] . "', '" . $r_regla[IDReglaPunto] . "',  '" . $nombre_regla_utilizada . "','" . $descrip_regla_utilizada . "','" . (int)$puntos_esta_factura . "','" . $fechavencimiento . "', '" . $obser_regla . "',  NOW() ) ";
+			$sql_puntos = " INSERT INTO PuntosClienteFidelizacion (IDCliente, IDPuntoVenta, IDFactura,IDReglaPunto,NombreRegla, DescripcionRegla, Puntos, FechaVencimiento,ObservacionesRegla, FechaTrCr) VALUES ('" . $frm["IDCliente"] . "','" . $frm["idpunto"] . "','" . $frm["id"] . "', '" . $r_regla['IDReglaPunto'] . "',  '" . $nombre_regla_utilizada . "','" . $descrip_regla_utilizada . "','" . (int)$puntos_esta_factura . "','" . $fechavencimiento . "', '" . $obser_regla . "',  NOW() ) ";
 			$qry_puntos = db_query($sql_puntos);
 
 

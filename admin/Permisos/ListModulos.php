@@ -105,7 +105,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 	
 	<table cellspacing='0' cellpadding='2' border='0'  width='454' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/usrperm.png border=0> 
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/usrperm.png border=0> 
 			<a href="./?mod=<?php echo $MOD?>&idnot=<?php echo $idnot?>">Administrar <?php  echo $TitleMod?></a> </td>
 		</tr>
 	</table>

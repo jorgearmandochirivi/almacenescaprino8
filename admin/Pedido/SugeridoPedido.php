@@ -68,7 +68,7 @@ function print_form($id,$newmode,$TitleMod,$submit_option)
 
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;
 				<img src=images/folderopen.gif border=0> 
 					<a href="./?mod=Sugerido">
 						Administrar Pedidos Sugeridos

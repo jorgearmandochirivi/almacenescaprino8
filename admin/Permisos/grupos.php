@@ -60,7 +60,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 ?>
 <table cellspacing='0' cellpadding='2' border='0'  width='600' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/usrperm.png border=0> 
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/usrperm.png border=0> 
 			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNrol.gif' border='0'></a></td>
 		</tr>
@@ -75,7 +75,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 				<td>
 					<table width=500 border=0 cellspacing=1 cellpadding=1 class=texto>
 						<tr >
-							<td class=maintitle colspan="3"><?php echo TitleMod?></td>
+							<td class=maintitle colspan="3"><?php echo $TitleMod?></td>
 						</tr>
 						<tr >
 							<td class=row1>Nombre</td>
@@ -133,7 +133,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 ?>
 <table cellspacing='0' cellpadding='2' border='0'  width='600' bgcolor='#FFFFFF'>
 		<tr>
-			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/usrperm.png' border=0> 
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/usrperm.png' border=0> 
 			<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
 			<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNrol.gif' border='0'></a></td>
 		</tr>

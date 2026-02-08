@@ -71,7 +71,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 <br>
 	<table cellspacing="0" cellpadding="2" border="0" align="center" width="100%" bgcolor="#FFFFFF">
 		<tr>
-			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> <a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a></td>
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> <a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a></td>
 			<td></td>
 		</tr>
 	</table>
@@ -194,7 +194,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							?>
 	<table cellspacing="0" cellpadding="2" border="0" align="center" width="100%" bgcolor="#FFFFFF">
 		<tr>
-			<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> <a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a></td>
+			<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> <a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a></td>
 			<td></td>
 		</tr>
 	</table>

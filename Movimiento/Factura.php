@@ -74,12 +74,13 @@ if ($permisos[0] >= 2) {
 				$_POST['ValorIVA'] = $_POST['ValorIvaMenosBono'];
 				$_POST['ValorTotal'] = $_POST['ValorTotalFactura'];
 
-
-				$frm = vars_LOG($_POST);
-
-				$frm['ValorTotalSinBono'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]", "", $frm['ValorTotalSinBono']);
-				$frm['ValorIVASinBono'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]", "", $frm['ValorIVASinBono']);
-				$frm['ValorBono'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]", "", $frm['ValorBono']);
+				
+				$frm = vars_LOG($_POST);				
+				$frm['IDFactura'] = insert($frm);
+				
+				$frm['ValorTotalSinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorTotalSinBono']);
+				$frm['ValorIVASinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorIVASinBono']);
+				$frm['ValorBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorBono']);
 				$frm['IDClienteRedimioBono'] = $frm['IDCliente'];
 
 				venta($frm);

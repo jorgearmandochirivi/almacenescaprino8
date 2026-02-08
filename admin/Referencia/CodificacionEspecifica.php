@@ -31,11 +31,11 @@ if($permisos[0] >= 2)
 				
 				actualizamatriz($frm, $array_campos);
 				
-				echo "<SCRIPT>location.href='?mod=".$MOD."&idReferencia=".$frm[id]."';</SCRIPT>";
+				echo "<SCRIPT>location.href='?mod=".$MOD."&idReferencia=".$frm['id']."';</SCRIPT>";
 			break;
 
 			case "eliminatarjeta":
-				$tarjetas_eliminar=$_POST[IDTarjeta];
+				$tarjetas_eliminar=$_POST['IDTarjeta'];
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 				
@@ -48,26 +48,24 @@ if($permisos[0] >= 2)
 					$qry_borra_tarjeta=db_query($sql_borra_tarjeta);
 
 					$sql =  "SELECT * FROM CodificacionEspecifica CE, PuntoVentaReferencia PR WHERE PR.IDPuntoVenta = '".$punto_venta."' ";
-					$sql .= "AND PR.IDReferencia = '".$_POST[id]."' AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia ";
+				$sql .= "AND PR.IDReferencia = '".$_POST['id']."' AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia ";
 					$qry_codesp=db_query($sql);
 					$row_espec=db_fetch_array($qry_codesp);
 					
-					$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias - 1 WHERE IDCodificacionEspecifica = '".$row_espec[IDCodificacionEspecifica]."'";
+					$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias - 1 WHERE IDCodificacionEspecifica = '".$row_espec['IDCodificacionEspecifica']."'";
 					$qry_cod = db_query( $sql_cod );
 					
 				}
 				db_query("COMMIT");
 				window_alert("Tarjetas actualizadas con exito ");
-				echo "<SCRIPT>location.href='?mod=".$MOD."&idReferencia=".$_POST[id]."';</SCRIPT>";
-				
-			break ;
+			echo "<SCRIPT>location.href='?mod=".$MOD."&idReferencia=".$_POST['id']."';</SCRIPT>";
 
 			
 			case "del":
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS['action']="";
 				delete($ID);
 			break;
 			case "list" :	
@@ -150,8 +148,8 @@ function seleccionapuntoventa($idreferencia, $newmode)
 
 <table cellspacing='0' cellpadding='2' border='0' align='center' width='100%' bgcolor='#FFFFFF'>
 	<tr>
-		<td class=nav width=76?>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
-		<a href="./?mod=<?php echo Referencia?>">Administrar <?php echo Referencia?></a> </td>
+		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0> 
+		<a href="./?mod=<?php echo "Referencia"?>">Administrar <?php echo "Referencia"?></a> </td>
 		<td></td>
 	</tr>
 </table>
@@ -245,8 +243,8 @@ if($rows > 0){
 					<?php 
 					foreach($r as $talla)
 					{
-						if(!empty($talla[IDTalla]))
-							echo "<td class=titlemedium align=center>".get_field("Talla","Descripcion","IDTalla",$talla[IDTalla])."</td>";
+					if(!empty($talla['IDTalla']))
+						echo "<td class=titlemedium align=center>".get_field("Talla","Descripcion","IDTalla",$talla['IDTalla'])."</td>";
 					}
 					?>	
 					</tr>
@@ -258,8 +256,8 @@ if($rows > 0){
 					<?php 
 					foreach($r as $talla)
 					{
-						if(!empty($talla[IDTalla]))
-							echo "<td class=row1 align=center><input type=text size=5  value=".$talla[Existencias]." name=Existencias[$talla[IDCodificacionEspecifica]]></td>";
+					if(!empty($talla['IDTalla']))
+						echo "<td class=row1 align=center><input type=text size=5  value=".$talla['Existencias']." name=Existencias[".$talla['IDCodificacionEspecifica']."]]></td>";
 					}
 					?>	
 					</tr>
@@ -271,8 +269,8 @@ if($rows > 0){
 					<?php 
 					foreach($r as $talla)
 					{
-						if(!empty($talla[IDTalla]))
-							echo "<td class=row1 align=center><input type=text size=5 value=".$talla[Minimo]." name=Minimo[$talla[IDCodificacionEspecifica]]></td>";
+					if(!empty($talla['IDTalla']))
+						echo "<td class=row1 align=center><input type=text size=5 value=".$talla['Minimo']." name=Minimo[".$talla['IDCodificacionEspecifica']."]]></td>";
 					}
 					?>	
 					</tr>
@@ -285,9 +283,9 @@ if($rows > 0){
 					$i = 1;
 					foreach($r as $talla)
 					{
-						if(!empty($talla[IDTalla]))
+						if(!empty($talla['IDTalla']))
 						{
-							echo "<td class=row1 align=center><input type=text size=5 value=".$talla[Maximo]." name=Maximo[$talla[IDCodificacionEspecifica]]></td>";
+							echo "<td class=row1 align=center><input type=text size=5 value=".$talla['Maximo']." name=Maximo[".$talla['IDCodificacionEspecifica']."]]></td>";
 							$i++;
 						}
 					}
@@ -300,9 +298,9 @@ if($rows > 0){
 							<?php 
 							foreach($r as $talla)
 							{
-								if(!empty($talla[IDTalla]))
+								if(!empty($talla['IDTalla']))
 								{
-									echo "<input type=hidden value=".$talla[IDCodificacionEspecifica]." name=Codigos[$talla[IDCodificacionEspecifica]]>";
+									echo "<input type=hidden value=".$talla['IDCodificacionEspecifica']." name=Codigos[".$talla['IDCodificacionEspecifica']."]]>";
 									$i++;
 								}
 							}
@@ -324,7 +322,7 @@ if($rows > 0){
         
         
 
-<?php if($_GET[idReferencia]==7615){ 
+<?php if($_GET['idReferencia']==7615){ 
 	$sql_tarjetas="Select * from TarjetaPunto Where IDPuntoVenta = '".$puntoventa."'";
 	$qry_tarjetas=db_query($sql_tarjetas);
 ?>
@@ -351,9 +349,9 @@ if($rows > 0){
 	$vendidas=0;
 	while ($row_tarjeta=db_fetch_array($qry_tarjetas)){ 
 		$conta_tar++;	
-		if ($row_tarjeta[Estado]=="D")
+		if ($row_tarjeta['Estado']=="D")
 			$disponibles++;
-		elseif($row_tarjeta[Estado]=="V")
+		elseif($row_tarjeta['Estado']=="V")
 			$vendidas++;
 		
 		
@@ -363,15 +361,15 @@ if($rows > 0){
         	<?php echo $conta_tar; ?>
         </td>
     	<td>
-        	<!-- <input type="text" name="CodigoTarjeta" id="CodigoTarjeta" value="<?php echo $row_tarjeta[CodigoTarjeta]; ?>"> -->
-            <?php echo $row_tarjeta[CodigoTarjeta]; ?>
+        	<!-- <input type="text" name="CodigoTarjeta" id="CodigoTarjeta" value="<?php echo $row_tarjeta['CodigoTarjeta']; ?>"> -->
+            <?php echo $row_tarjeta['CodigoTarjeta']; ?>
         </td>
     	<td>
-        	<!--<input type="text" name="Estado" id="Estado" value="<?php echo $row_tarjeta[Estado]; ?>">-->
-            <?php echo $row_tarjeta[Estado]; ?>
+        	<!--<input type="text" name="Estado" id="Estado" value="<?php echo $row_tarjeta['Estado']; ?>">-->
+            <?php echo $row_tarjeta['Estado']; ?>
         </td>        
     	<td>
-        	<input type="checkbox" name="IDTarjeta[]" value="<?php echo $row_tarjeta[CodigoTarjeta]."|".$puntoventa; ?>">
+        	<input type="checkbox" name="IDTarjeta[]" value="<?php echo $row_tarjeta['CodigoTarjeta']."|".$puntoventa; ?>">
         </td>        
         
     </tr>

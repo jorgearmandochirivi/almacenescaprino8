@@ -180,7 +180,7 @@ function insert($frm){
 						$frm[$Key] = $result->maximo + 1;
 					else
 						$frm[$Key] = 1;
-
+					
 		$sql_insert=(str_qry_insert($Table,$frm));
 		$qry_insert = db_query($sql_insert);
 		//log de transaccion
@@ -644,7 +644,7 @@ function get_nodos($cat, $Table, $key, $IDPadre) {
 }// end function
 
 
-function export2xls($DB_TBLName,$sql="",$nombre){
+function export2xls($DB_TBLName,$nombre,$sql=""){
 
 //define date for title: EDIT this to create the time-format you need
 $now_date = date('m-d-Y H:i');

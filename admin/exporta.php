@@ -1,5 +1,5 @@
 <?php
 	include("config.inc.php");
         Encabezado();
-        export2xls("Contactenos",$sql,"Contactenos");
+        export2xls("Contactenos","Contactenos",$sql);
 ?>
