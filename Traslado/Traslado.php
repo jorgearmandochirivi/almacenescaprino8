@@ -5,9 +5,8 @@
 
 <body>
 
-	<?php
+	<?php	
 	$TitleMod = "Traslados2";
-
 	$Table = "Traslado";
 	$TableJoin = "DetalleTraslado";
 	$Key = "IDTraslado";
@@ -17,8 +16,7 @@
 	if ($permisos[0] >= 2) {
 		switch (nvl($action)) {
 			case "insert":
-
-
+				
 				//print_r($HTTP_POST_VARS);
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
