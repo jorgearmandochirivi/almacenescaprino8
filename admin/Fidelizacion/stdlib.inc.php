@@ -460,7 +460,7 @@ function formatofecha($fecha) {
 			$frm: Array con los datos del formulario y los n uevos datos de usuario hora y fecha de modificacion o creacion
 *******************************************************************************************/
 function view_max_words($texto,$max) {
-	$words = split(" ",$texto);
+	$words = explode(" ", $texto);
 	for($i=0;$i < $max; $i++){
 		$short_text .= $words[$i]." ";
 	}//end for

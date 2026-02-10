@@ -484,10 +484,11 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 		Global $TitleMod,$MOD,$Table,$Key,$listar;
 		
 	// selecciono las facturas que contienen la promocion	
+		$array_facturas = array();
 		$sql_facturas_promocion=db_query("Select F.IDFactura from Factura F where ObservacionDescuento = 'pague 2 lleva 3'");
 
 	while($result_facturas=db_fetch_array($sql_facturas_promocion)){
-		$array_facturas[]=$result_facturas[IDFactura];	
+		$array_facturas[]=$result_facturas["IDFactura"];	
 	}
 	
 	$id_facturas=implode(",",$array_facturas);

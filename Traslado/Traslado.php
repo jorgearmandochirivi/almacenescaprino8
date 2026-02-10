@@ -70,12 +70,7 @@
 						$NumeroTarjeta = $frm[$num_tarj];
 
 						$sql_insert = "INSERT INTO DetalleTraslado (IDDetalleTraslado, IDTraslado,IDPuntoVentaOrigen, IDCodificacionEspecifica, Cantidad, NumeroTarjeta, UsuarioTrCr, FechaTrCr ) ";
-						$sql_insert .= "VALUES ('$iddetalle','$frm[IDTraslado]','$frm[IDPuntoVentaOrigen]','$Codificacion','$Cantidad','$NumeroTarjeta','$frm[UsuarioTrCr]','$frm[FechaTrCr]')";
-
-						db_query($sql_insert);
-
-						//insertar el log
-						insertlog($ID_Usuario, "DetalleTraslado", $iddetalle, "Insertar", $sql_insert);
+					$sql_insert .= "VALUES ('$iddetalle','{$frm['IDTraslado']}','{$frm['IDPuntoVentaOrigen']}','$Codificacion','$Cantidad','$NumeroTarjeta','{$frm['UsuarioTrCr']}','{$frm['FechaTrCr']}')";
 					}
 				}
 

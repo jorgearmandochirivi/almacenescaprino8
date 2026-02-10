@@ -145,7 +145,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 							$monthnow = $monthnow * 1;
 							$sql_facturas = " SELECT ( SUM(F.ValorTotal) )  as Venta
 												FROM Factura F
-												WHERE F.IDPuntoVenta = '$valor[IDPuntoVenta]' 
+												WHERE F.IDPuntoVenta = '".$valor["IDPuntoVenta"]."' 
 												AND DATE_FORMAT( F.FechaFactura,'%c' ) = '$monthnow'
 												AND DATE_FORMAT( F.FechaFactura,'%Y' ) = '$yearnow'
 												ORDER BY FechaFactura ASC ";
@@ -155,7 +155,7 @@ if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
 							
 							$array_facturas = db_fetch_array( $qry_facturas );
 
-							$datosfechas[$yearnow][$monthnow][$valor['IDPuntoVenta']] = $array_facturas['Venta'] . "||";
+							$datosfechas[$yearnow][$monthnow][$valor['IDPuntoVenta']] = (float)($array_facturas['Venta'] ?? 0);
 							
 						
 						}//end for	

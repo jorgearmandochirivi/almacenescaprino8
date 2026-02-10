@@ -180,25 +180,16 @@ function seleccionareferencia( $newmode)
 							<?php
 							foreach($r as $talla)
 							{
-								if(!empty($talla[IDTalla]))
-									echo "<td class=navpic align=center>".get_field("Talla","Descripcion","IDTalla",$talla[IDTalla])."</td>";
-							}
-							?>	
-							</tr>
-							
-							<tr>
+							if(!empty($talla['IDTalla']))
+								echo "<td class=navpic align=center>".get_field("Talla","Descripcion","IDTalla",$talla['IDTalla'])."</td>";
 								<td class="col2">
 									Existencias
 								</td>
 							<?php
 							foreach($r as $talla)
 							{
-								if(!empty($talla[IDTalla]))
-									echo "<td class=row1 align=center><input type=text size=5 readOnly value=".$talla[Existencias]." name=Existencias[$talla[IDCodificacionEspecifica]]></td>";
-							}
-							?>	
-							</tr>
-							
+							if(!empty($talla['IDTalla']))
+								echo "<td class=row1 align=center><input type=text size=5 readOnly value=".$talla['Existencias']." name=Existencias[$talla['IDCodificacionEspecifica']]></td>";
 							<tr>
 								<td class="col2">
 									Minimo
@@ -206,12 +197,8 @@ function seleccionareferencia( $newmode)
 							<?php
 							foreach($r as $talla)
 							{
-								if(!empty($talla[IDTalla]))
-									echo "<td class=row1 align=center><input type=text readOnly size=5 value=".$talla[Minimo]." name=Minimo[$talla[IDCodificacionEspecifica]]></td>";
-							}
-							?>	
-							</tr>
-							
+							if(!empty($talla['IDTalla']))
+								echo "<td class=row1 align=center><input type=text readOnly size=5 value=".$talla['Minimo']." name=Minimo[$talla['IDCodificacionEspecifica']]></td>";
 							<tr>
 								<td class="col2">
 									Maximo
@@ -220,13 +207,9 @@ function seleccionareferencia( $newmode)
 							$i = 1;
 							foreach($r as $talla)
 							{
-								if(!empty($talla[IDTalla]))
-								{
-									echo "<td class=row1 align=center><input type=text readOnly size=5 value=".$talla[Maximo]." name=Maximo[$talla[IDCodificacionEspecifica]]></td>";
-									$i++;
-								}
-							}
-							
+				if(!empty($talla['IDTalla']))
+				{
+					echo "<td class=row1 align=center><input type=text readOnly size=5 value=".$talla['Maximo']." name=Maximo[$talla['IDCodificacionEspecifica']]></td>";
 							?>	
 							</tr>
 							
@@ -234,9 +217,9 @@ function seleccionareferencia( $newmode)
 								<td class="navpic" colspan=<?=$i?> align="right"><?php
 									foreach($r as $talla)
 									{
-										if(!empty($talla[IDTalla]))
+										if(!empty($talla['IDTalla']))
 										{
-											echo "<input type=hidden value=".$talla[IDCodificacionEspecifica]." name=Codigos[$talla[IDCodificacionEspecifica]]>";
+											echo "<input type=hidden value=".$talla['IDCodificacionEspecifica']." name=Codigos[$talla['IDCodificacionEspecifica']]>";
 											$i++;
 										}
 									}

@@ -41,7 +41,7 @@ function insert_curva($filename,$id_curva_tercero){
 						foreach ($cellIterator as $cell) {
 							if($fila!=1){ // Encabezados
 								$valor = $cell->getValue();
-								$valor = ereg_replace("[^0-9]", "", $valor);
+								$valor = preg_replace("[^0-9]", "", $valor);
 								if($columna==1){
 									$codigo_almacen=$valor;
 								}
@@ -132,7 +132,7 @@ if($permisos[0] >= 2)
 							$nombre_archivo=date("Y-m-d_H:s:i").$file['name'];
 							if(copy($file['tmp_name'], $filedir.$nombre_archivo )){
 								$_POST['ArchivoCliente'] = $nombre_archivo;
-								insert_curva($filedir.$nombre_archivo,$frm[IDCurvaTercero]);
+								insert_curva($filedir.$nombre_archivo,$frm["IDCurvaTercero"]);
 								$resultado_carga = 1;
 								//unlink($filedir.$nombre_archivo);
 							}
@@ -146,15 +146,15 @@ if($permisos[0] >= 2)
 
 				if ($resultado_carga=="0"){
 					//ACTUALIZO LOS MINIMOS Y MAXIMOS POR PUNTO
-					$borrar_datos_curva = db_query("DELETE FROM DetalleCurvaTercero Where  IDCurvaTercero = '".$frm[IDCurvaTercero]."'");
+						$borrar_datos_curva = db_query("DELETE FROM DetalleCurvaTercero Where  IDCurvaTercero = '".$frm["IDCurvaTercero"]."'");
 					foreach($frm as $id_dato => $datos1){
 						if ($id_dato=="Minimo" || $id_dato=="Maximo"){
 							foreach($datos1 as $id_talla => $dato_talla)	{
 								foreach($dato_talla as $id_punto => $cantidad)	{
 									//echo "<br>ES Talla " . 	$id_talla . " Punto " . $id_punto . " Valor = " . $cantidad;
 									if ((int)$cantidad>0){
-										$sql_minimos = db_query("Insert Into DetalleCurvaTercero (IDCurvaTercero, IDPuntoVenta, IDTalla, Tipo, Valor)
-														Values('".$frm[IDCurvaTercero]."','".$id_punto."','".$id_talla."','".$id_dato."','".$cantidad."')");
+											$sql_minimos = db_query("Insert Into DetalleCurvaTercero (IDCurvaTercero, IDPuntoVenta, IDTalla, Tipo, Valor)
+															Values('".$frm["IDCurvaTercero"]."','".$id_punto."','".$id_talla."','".$id_dato."','".$cantidad."')");
 									}
 								}
 							}
@@ -196,11 +196,11 @@ if($permisos[0] >= 2)
 			break ;
 
 			case "duplicar":
-				$nombre = get_field("CurvaTercero","Nombre","IDCurvaTercero",$_GET[id]);
-				$sql_duplicar = "Insert Into CurvaTercero (Nombre,Descripcion,UsuarioTrCr,FechaTrCr) Select '".$nombre." Duplicado',Descripcion,UsuarioTrCr,FechaTrCr From CurvaTercero Where IDCurvaTercero = '".$_GET[id]."'";
+				$nombre = get_field("CurvaTercero","Nombre","IDCurvaTercero",$_GET["id"]);
+				$sql_duplicar = "Insert Into CurvaTercero (Nombre,Descripcion,UsuarioTrCr,FechaTrCr) Select '".$nombre." Duplicado',Descripcion,UsuarioTrCr,FechaTrCr From CurvaTercero Where IDCurvaTercero = '".$_GET["id"]."'";
 				db_query($sql_duplicar);
 				$id_nuevo=db_insert_id();
-				echo $sql_duplicar_detalle = "Insert Into DetalleCurvaTercero (IDCurvaTercero,IDPuntoVenta,IDTalla,Tipo, Valor) Select '".$id_nuevo."',IDPuntoVenta,IDTalla,Tipo,Valor From DetalleCurvaTercero Where IDCurvaTercero = '".$_GET[id]."'";
+				echo $sql_duplicar_detalle = "Insert Into DetalleCurvaTercero (IDCurvaTercero,IDPuntoVenta,IDTalla,Tipo, Valor) Select '".$id_nuevo."',IDPuntoVenta,IDTalla,Tipo,Valor From DetalleCurvaTercero Where IDCurvaTercero = '".$_GET["id"]."'";
 				db_query($sql_duplicar_detalle);
 
 
@@ -214,7 +214,7 @@ if($permisos[0] >= 2)
 			break;
 
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS["action"]="";
 				$borrar_datos_curva = db_query("DELETE FROM DetalleCurvaTercero Where  IDCurvaTercero = '".$ID."'");
 				delete($ID);
 			break;

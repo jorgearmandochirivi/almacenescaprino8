@@ -162,10 +162,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 					
 					//Puntos de Venta
-					$sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta ";
-					$qry_puntos = db_query( $sql_puntos );
-					while( $r_puntos = db_fetch_array( $qry_puntos ) )
-						$array_puntos[ $r_puntos[ IDPuntoVenta ] ] = $r_puntos[ Nombre ];
+						$sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta ";
+						$qry_puntos = db_query( $sql_puntos );
+						while( $r_puntos = db_fetch_array( $qry_puntos ) )
+							$array_puntos[ $r_puntos["IDPuntoVenta"] ] = $r_puntos["Nombre"];
 
 
 				?>
@@ -225,16 +225,16 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							$FechasAbono="";
 
 							//SELECT CLIENTE
-							$sql_cliente = "SELECT IDCliente, Cedula, Nombre, Apellido FROM Cliente WHERE IDCliente = '$r_facturas[IDCliente]'";
+							$sql_cliente = "SELECT IDCliente, Cedula, Nombre, Apellido FROM Cliente WHERE IDCliente = '".$r_facturas["IDCliente"]."'";
 							$qry_cliente = db_query( $sql_cliente );
 							$cliente = db_fetch_array( $qry_cliente );
 							//SELECT CUOTAS
-							$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '$r_facturas[IDFactura]' AND IDPuntoVenta = '$r_facturas[IDPuntoVenta]' and FechaPago <= '".$FechaHasta."' ORDER BY FechaCuota ";
+							$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '".$r_facturas["IDFactura"]."' AND IDPuntoVenta = '".$r_facturas["IDPuntoVenta"]."' and FechaPago <= '".$FechaHasta."' ORDER BY FechaCuota ";
 							$qry_cuotas = db_query( $sql_cuotas );
 							while( $r_cuotas = db_fetch_array($qry_cuotas) )
 							{
 								$ValorCuotaPago = $r_cuotas[ "ValorTotal" ];
-								$cuotas[ $r_cuotas[IDCuota] ] = $r_cuotas;
+								$cuotas[ $r_cuotas["IDCuota"] ] = $r_cuotas;
 								if( $r_cuotas[ FechaPago ] <> "0000-00-00 00:00:00" )
 								{
 									$candeladas++;
@@ -317,22 +317,22 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 						?>
 								<tr>
-										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaFacturaF]?></td>
-										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[NumeroDocumento]?></td>
-											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[NumeroPagare]?></td>
-										<td class="<?php echo $class?>" align="center" nowrap><?php echo $cliente[Cedula] ?></td>
-										<td class="<?php echo $class?>" align="center" ><?php echo $cliente[Nombre]." ".$cliente[Apellido] ?></td>
-									<td class="<?php echo $class?>" align="center" nowrap><?php echo $array_puntos[$r_facturas[IDPuntoVenta]]?> </td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas["FechaFacturaF"]?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas["NumeroDocumento"]?></td>
+											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas["NumeroPagare"]?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $cliente["Cedula"] ?></td>
+										<td class="<?php echo $class?>" align="center" ><?php echo $cliente["Nombre"]." ".$cliente["Apellido"] ?></td>
+									<td class="<?php echo $class?>" align="center" nowrap><?php echo $array_puntos[$r_facturas["IDPuntoVenta"]]?> </td>
 									<td class="<?php echo $class?>" align="center" nowrap>
-											<a target="_blank" href="?mod=Factura&action=edit&id=<?php echo $r_facturas[IDFactura]?>&idpunto=<?php echo $IDPuntoVenta?>">
-													<?php echo $r_facturas[NumeroFactura]?>
+											<a target="_blank" href="?mod=Factura&action=edit&id=<?php echo $r_facturas["IDFactura"]?>&idpunto=<?php echo $IDPuntoVenta?>">
+													<?php echo $r_facturas["NumeroFactura"]?>
 											</a>
 									</td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $r_facturas[ValorTotalSinBono],2 ); ?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $r_facturas["ValorTotalSinBono"],2 ); ?></td>
 									<td class="<?php echo $class?>" align="right" nowrap>
 										<?php
 										
-										$TotalSaldo+=$r_facturas[ValorTotal]; echo number_format( $r_facturas[ValorTotal],2 );
+										$TotalSaldo+=$r_facturas["ValorTotal"]; echo number_format( $r_facturas["ValorTotal"],2 );
 										/*
 										$ValorSaldo=(int)$r_facturas["ValorTotal"] - ((int)$ValorCuotaPago*((int)$candeladas));
 										$TotalSaldo+=$ValorSaldo; echo number_format( $ValorSaldo,2 ); 
@@ -379,10 +379,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										?></td>
 
 
-											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaUltimaGestion] ?></td>
+											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas["FechaUltimaGestion"] ?></td>
 
-											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaCartaNotificacion] ?></td>
-											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaReporteCredito] ?></td>
+											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas["FechaCartaNotificacion"] ?></td>
+											<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas["FechaReporteCredito"] ?></td>
 
 
                                         <td class="<?php echo $class?>" align="center" nowrap ><?php
@@ -409,7 +409,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 										?></td>
                                         <td class="<?php echo $class?>" align="center" nowrap>$<?php echo number_format($valor_cartera,'0',',','.'); ?></td>
-																				<td class="<?php echo $class?>" align="left"><?php echo $r_facturas[ComentarioCredito]; if($r_facturas[FechaUtimoComentario]!="0000-00-00") echo "<br>".$r_facturas[FechaUtimoComentario]; ?></td>
+																				<td class="<?php echo $class?>" align="left"><?php echo $r_facturas["ComentarioCredito"]; if($r_facturas["FechaUtimoComentario"]!="0000-00-00") echo "<br>".$r_facturas["FechaUtimoComentario"]; ?></td>
 
 									</tr>
 									<?php

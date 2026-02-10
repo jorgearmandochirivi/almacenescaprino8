@@ -36,7 +36,7 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS["action"]="";
 				delete($id);
 			break;
 
@@ -45,7 +45,7 @@ if($permisos[0] >= 2)
 				include_once("../admin/lib/class.phpmailer.php");
 				include_once("../admin/lib/class.smtp.php");
 				
-				$ID=$_GET[id];
+				$ID=$_GET["id"];
 				
 				
 				$mensaje=get_field("EmailFidelizacion","Mensaje","IDEmailFidelizacion",$ID);

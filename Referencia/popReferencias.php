@@ -60,7 +60,7 @@ function make_qry_string_repuestos($frm){
 	$select = "Select * From $Table ";
 
 		if(!empty($frm['field']))
-			$where = " Where $frm[field] LIKE '%$frm[QryString]%' AND Publicar = 'S' ORDER BY Numero ASC ";
+			$where = " Where {$frm['field']} LIKE '%{$frm['QryString']}%' AND Publicar = 'S' ORDER BY Numero ASC ";
         else
 			$where = " Where Publicar = 'S' ORDER BY Numero ASC ";
 
@@ -172,7 +172,7 @@ $array_tallas = array();
 							<td class="titulodetablas">Nombre</td>
 							<?php 							foreach( $array_tallas as $key => $tallas )
 							{
-								$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
+								$talla = get_field( "Talla","Descripcion","IDTalla",$tallas['IDTalla'] );
 							?>
 							<td width="50" class="titulodetablas" align="center"><?php echo $talla; ?></td>
 							<?php 							}//end foreach
@@ -186,11 +186,11 @@ $array_tallas = array();
 							{
 							?>
 							<td class="<?=$class?>" align="left"><?php
-									if( $tallas[Existencias] > 0 )
+									if( $tallas['Existencias'] > 0 )
 									{
-										if( $tallas[Existencias] > 0 )
+										if( $tallas['Existencias'] > 0 )
 										{
-											$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
+											$talla = get_field( "Talla","Descripcion","IDTalla",$tallas['IDTalla'] );
 
 											/**********Consulta de Valor de la Referencia***********/
 
@@ -228,15 +228,12 @@ $array_tallas = array();
 												$jstarjeta = ";javascript:window.opener.setcodigotarjeta('".$tarjeta1."','".$tarjeta2."','".$tarjeta3."','".$tarjeta4."','".$cont."');";
 											}//end if
 
-											echo "<a href=\"javascript:window.opener.selreferencia('".$r->Numero."','".$r->Nombre."','".$talla."','".$tallas[IDCodificacionEspecifica]."','".$cont."','".$tallas[Existencias]."','".$ValorUnitario."','".$Descuento."','','".$r->Sexo."')" . $jstarjeta . ";javascript:window.close()\">";
+										echo "<a href=\"javascript:window.opener.selreferencia('".$r->Numero."','".$r->Nombre."','".$talla."','{$tallas['IDCodificacionEspecifica']}','".$cont."','{$tallas['Existencias']}','".$ValorUnitario."','".$Descuento."','','".$r->Sexo."')" . $jstarjeta . ";javascript:window.close()\">";
 
-										}//end if( $r_tallas->Existencias > 0 )
+									}//end if( $r_tallas->Existencias > 0 )
 
-										echo $tallas[Existencias];
-										if( $tallas[Existencias] > 0 )
-											echo "</a>";
-
-										if( $contador % $numcols == 0 )
+									echo $tallas['Existencias'];
+									if( $tallas['Existencias'] > 0 )
 										{
 
 											echo "</tr><tr>";

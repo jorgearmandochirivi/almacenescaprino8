@@ -28,7 +28,7 @@ function dhabiles($FechaInicio, $FechaFin){
 	$i = 0;
 	while( $r_festivos = db_fetch_array( $qry_festivos ) )
 	{
-		$array_festivos[$i] = $r_festivos[Fecha]; 
+		$array_festivos[$i] = $r_festivos["Fecha"]; 
 		$i++;
 	}//end while
 	
@@ -37,7 +37,7 @@ function dhabiles($FechaInicio, $FechaFin){
 	$i = 0;
 	while( $r_especiales = db_fetch_array( $qry_especiales ) )
 	{
-		$array_especiales[$i] = $r_especiales[Fecha]; 
+		$array_especiales[$i] = $r_especiales["Fecha"]; 
 		$i++;
 	}//end while
 		

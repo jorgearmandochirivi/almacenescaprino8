@@ -19,7 +19,7 @@ if($permisos[0] >= 2)
 			case "insert" :
 				$frm= vars_LOG($HTTP_POST_VARS);
 
-				$id_cliente=$frm[IDCliente];
+				$id_cliente=$frm["IDCliente"];
 
 
 			break;
@@ -28,7 +28,7 @@ if($permisos[0] >= 2)
 			break ;
 			case "update" :
 				$frm= vars_LOG($HTTP_POST_VARS);
-				$id_cliente=$frm[IDCliente];
+				$id_cliente=$frm["IDCliente"];
 				update($frm);
 
 			break;
@@ -36,7 +36,7 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS["action"]="";
 				delete($ID);
 			break;
 			case "list" :

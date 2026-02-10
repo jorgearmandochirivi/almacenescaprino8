@@ -27,7 +27,7 @@
 					db_query("SET AUTOCOMMIT = 0");
 					db_query("BEGIN");
 
-					$sql_update = " SELECT IDEstadoTraslado FROM $Table WHERE IDTraslado = '$frm[IDTraslado]' AND IDPuntoVentaOrigen = '$frm[IDPuntoVentaOrigen]' ";
+				$sql_update = " SELECT IDEstadoTraslado FROM $Table WHERE IDTraslado = '{$frm['IDTraslado']}' AND IDPuntoVentaOrigen = '{$frm['IDPuntoVentaOrigen']}' ";
 					$qry_update = db_query($sql_update);
 					$r_update = db_fetch_object($qry_update);
 
@@ -105,7 +105,7 @@
 
 
 					foreach ($frm["NumeroTarjeta"] as $key_tarjeta => $valor_tarjeta):
-						$sql_tras = " SELECT * FROM $Table WHERE IDTraslado = '$frm[IDTraslado]' AND IDPuntoVentaOrigen = '$frm[IDPuntoVentaOrigen]' ";
+						$sql_tras = " SELECT * FROM $Table WHERE IDTraslado = '{$frm['IDTraslado']}' AND IDPuntoVentaOrigen = '{$frm['IDPuntoVentaOrigen']}' ";
 						$qry_tras = db_query($sql_tras);
 						$r_tras = db_fetch_object($qry_tras);
 

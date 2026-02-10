@@ -19,7 +19,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 {
     //$array_tallas[$r_tallas[IDTalla]] = $r_tallas;
     //con descripcion
-    $array_tallas[$r_tallas[Descripcion]] = $r_tallas;
+    $array_tallas[$r_tallas["Descripcion"]] = $r_tallas;
 }//end while
 ?>
 <?php
@@ -43,7 +43,7 @@ while($_pto_vta=db_fetch_object( $qry_pto_venta )){
         $array_codificacion = array( );
         while($r_codificacionesp = db_fetch_array($query_codificacion))
         {
-            $array_codificacion[ $ref ][ $r_codificacionesp[Talla] ] = array( "Numero"=>$r_referencia->Numero,"Existencia"=>$r_codificacionesp[Existencias] );
+            $array_codificacion[ $ref ][ $r_codificacionesp["Talla"] ] = array( "Numero"=>$r_referencia->Numero,"Existencia"=>$r_codificacionesp["Existencias"] );
         }//end while
         $totalreferencia = 0;
         foreach( $array_codificacion as $ref => $arraydatos )

@@ -286,7 +286,7 @@
 			else{
 				echo " " . $sep;
 			}
-			echo eregi_replace("[\n|\r|\n\r]", " ", $row["TipoOtro"]) . $sep;
+			echo preg_replace("[\n|\r|\n\r]", " ", $row["TipoOtro"]) . $sep;
 
 			echo $row["FechaSalidaAlmacen"] . $sep;
 			//Fecha Enviada Reparacion
@@ -307,12 +307,12 @@
 			$r_fechaaut=db_fetch_object($qry_fechaaut);
 			echo substr($r_fechaaut->FechaComentario,0,10) . $sep;
 			//Descripcion autorizacion Especial
-			//echo eregi_replace("[\n|\r|\n\r]", " ", $r_fechaaut->Descripcion) . $sep;
+			//echo preg_replace("[\n|\r|\n\r]", " ", $r_fechaaut->Descripcion) . $sep;
 			echo get_field("TipoFinalizacionGarantia","Nombre","IDTipoFinalizacionGarantia",$row["IDTipoFinalizacionGarantia"]) . $sep;
 
 			echo $row["FechaEntradaAlmacen"] . $sep;
 			echo $row["FechaEntregaCliente"] . $sep;
-			echo eregi_replace("[\n|\r|\n\r]", " ", $row["Descripcion"]) . $sep;
+			echo preg_replace("[\n|\r|\n\r]", " ", $row["Descripcion"]) . $sep;
 
 			print "\n";
 

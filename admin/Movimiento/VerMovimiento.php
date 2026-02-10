@@ -31,7 +31,7 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS["action"]="";
 				delete($ID);
 			break;
 			case "list" :
@@ -405,8 +405,8 @@ function verdetallemovimiento($id,$idpunto)
 				<?php 
 					foreach($r_detalle as $talla)
 					{
-						if(!empty($talla[IDTalla]))
-							echo "<td class=rowform align=center>".get_field("Talla","Descripcion","IDTalla",$talla[IDTalla])."</td>";
+						if(!empty($talla["IDTalla"]))
+							echo "<td class=rowform align=center>".get_field("Talla","Descripcion","IDTalla",$talla["IDTalla"])."</td>";
 					}//end foreach($r_detalle as $talla)
 				?>
 			</tr>
@@ -420,9 +420,9 @@ function verdetallemovimiento($id,$idpunto)
 				<?php 
 				foreach($r_detalle as $talla)
 				{
-					if(!empty($talla[IDTalla]))
+					if(!empty($talla["IDTalla"]))
 					{
-						echo "<td class=row2 align=center>".$talla[Cantidad]."</td>";
+						echo "<td class=row2 align=center>".$talla["Cantidad"]."</td>";
 					}
 				}
 				?>

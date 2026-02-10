@@ -108,8 +108,8 @@ function seleccionareferencia( $newmode)
 	                	<option value="">[Seleccione]</option>
 	                    <?php
 							$sql_prov = db_query("Select * From Proveedor where Publicar = 'S' order by Nombre asc");
-							while ($row_prov = db_fetch_array($sql_prov)): ?>
-	                        	<option value="<?php echo $row_prov[IDProveedor];?>" <?php if($row_prov[IDProveedor]==$r->IDProveedor) echo "selected"; ?>><?php echo $row_prov[Nombre];?></option>
+								while ($row_prov = db_fetch_array($sql_prov)): ?>
+		                        	<option value="<?php echo $row_prov["IDProveedor"];?>" <?php if($row_prov["IDProveedor"]==($_POST["IDProveedor"] ?? "")) echo "selected"; ?>><?php echo $row_prov["Nombre"];?></option>
 							<?php
 							endwhile;
 						?>
@@ -200,7 +200,7 @@ function seleccionareferencia( $newmode)
 				                    <?php
 										$sql_prov = db_query("Select * From Proveedor where Publicar = 'S' order by Nombre asc");
 										while ($row_prov = db_fetch_array($sql_prov)): ?>
-				                        	<option value="<?php echo $row_prov[IDProveedor];?>" <?php if($row_prov[IDProveedor]==$r->IDProveedor) echo "selected"; ?>><?php echo $row_prov[Nombre];?></option>
+					                        	<option value="<?php echo $row_prov["IDProveedor"];?>" <?php if($row_prov["IDProveedor"]==($_POST["IDProveedor"] ?? "")) echo "selected"; ?>><?php echo $row_prov["Nombre"];?></option>
 										<?php
 										endwhile;
 									?>
@@ -233,14 +233,14 @@ if( !empty( $referencia ) ||  !empty( $_POST["IDPuntoVenta"] ) || !empty( $_POST
 	//PUNTOS DE VENTA
 	$sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta Where Publicar = 'S' ".$condicion_punto." ORDER BY IDCiudad, Nombre ";
 	$qry_puntos = db_query( $sql_puntos );
-	while( $r_puntos = db_fetch_array( $qry_puntos ) )
-		$array_puntos[$r_puntos[IDPuntoVenta]] = $r_puntos[Nombre];
+		while( $r_puntos = db_fetch_array( $qry_puntos ) )
+			$array_puntos[$r_puntos["IDPuntoVenta"]] = $r_puntos["Nombre"];
 
 	//Tallas
 	$sql_tallas = " SELECT IDTalla, Descripcion FROM Talla Order by Descripcion ";
 	$qry_tallas = db_query( $sql_tallas );
-	while( $r_tallas = db_fetch_array( $qry_tallas ) )
-		$array_tallas[$r_tallas[IDTalla]] = $r_tallas[Descripcion];
+		while( $r_tallas = db_fetch_array( $qry_tallas ) )
+			$array_tallas[$r_tallas["IDTalla"]] = $r_tallas["Descripcion"];
 
 	 	if( !empty( $_POST["IDTipoReferencia"]  ) )
 			$condicion = " AND IDTipoReferencia = '".$_POST["IDTipoReferencia"]."%' ";
@@ -261,10 +261,10 @@ if( !empty( $referencia ) ||  !empty( $_POST["IDPuntoVenta"] ) || !empty( $_POST
 					<?php
 						$i = 0;
 						$r = array( );
-						while($r_codificacionesp = db_fetch_array($query_codificacion))
-						{
-							$array_existencias[ $r_codificacionesp[IDPuntoVenta] ][ $r_codificacionesp[IDTalla] ] += $r_codificacionesp[Existencias];
-							$array_tallas_mostrar[ $r_codificacionesp[IDTalla] ] = $array_tallas[ $r_codificacionesp[IDTalla] ];
+							while($r_codificacionesp = db_fetch_array($query_codificacion))
+							{
+								$array_existencias[ $r_codificacionesp["IDPuntoVenta"] ][ $r_codificacionesp["IDTalla"] ] += $r_codificacionesp["Existencias"];
+								$array_tallas_mostrar[ $r_codificacionesp["IDTalla"] ] = $array_tallas[ $r_codificacionesp["IDTalla"] ];
 						} //end while($r[$i] = db_fetch_array($query_codificacion))
 						//print_r($r);
 					?>

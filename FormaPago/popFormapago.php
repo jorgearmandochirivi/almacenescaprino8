@@ -317,9 +317,9 @@ class Fecha {
 function suma_fechas($fecha,$ndias)
 {
       if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha))
-              list($dia,$mes,$a�o)=split("/", $fecha);
+              list($dia,$mes,$a�o)=explode("/", $fecha);
       if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha))
-              list($dia,$mes,$a�o)=split("-",$fecha);
+              list($dia,$mes,$a�o)=explode("-", $fecha);
         $nueva = mktime(0,0,0, $mes,$dia,$a�o) + $ndias * 24 * 60 * 60;
         $nuevafecha=date("d-m-Y",$nueva);
       return ($nuevafecha);

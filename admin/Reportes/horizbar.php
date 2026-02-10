@@ -5,8 +5,8 @@ include ("../lib/pglib/jpgraph/src/jpgraph_bar.php");
 //$datay=array(2,3,5,8,12,6,3);
 //$datax=array("320x240","640x480","600x800","1024x768","1280x1024(16)","1280x1024(32)",
 //	     "1600x1200(32)");
-$datay= split(",",$_GET['datos']);
-$datax=split(",",$_GET['leyenda']);
+$datay= explode(", ",$_GET['datos']);
+$datax=explode(", ",$_GET['leyenda']);
 // Size of graph
 $width=700; 
 $height=300;

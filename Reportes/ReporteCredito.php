@@ -114,9 +114,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 
 
-					 /********************* TRAER DATOS DE VENTAS CON TARJETAS DE CREDITO Y DEBITO 'ID'S MAYOR QUE 2'*********************/
-					if( !empty( $IDPuntoVenta ) )
-						$condicion = " C.IDPuntoVenta = '$IDPuntoVenta' AND F.IDPuntoVenta = '" . $IDPuntoVenta . "' AND ";
+						/********************* TRAER DATOS DE VENTAS CON TARJETAS DE CREDITO Y DEBITO 'ID'S MAYOR QUE 2'*********************/
+						$condicion = "";
+						if( !empty( $IDPuntoVenta ) )
+							$condicion = " C.IDPuntoVenta = '$IDPuntoVenta' AND F.IDPuntoVenta = '" . $IDPuntoVenta . "' AND ";
 					 $sql_facturas = " SELECT C.*,  DATE_FORMAT( C.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF,F.NumeroPagare
 											FROM Credito C, Factura F
 											WHERE $condicion C.IDFactura = F.IDFactura AND C.IDPuntoVenta = F.IDPuntoVenta AND C.FechaFactura BETWEEN '$FechaDesde' AND '$FechaHasta'
@@ -128,7 +129,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					$sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta ";
 					$qry_puntos = db_query( $sql_puntos );
 					while( $r_puntos = db_fetch_array( $qry_puntos ) )
-						$array_puntos[ $r_puntos[ IDPuntoVenta ] ] = $r_puntos[ Nombre ];
+						$array_puntos[ $r_puntos['IDPuntoVenta'] ] = $r_puntos['Nombre'];
 
 
 				?>
@@ -174,34 +175,34 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							$valor_cartera = 0;
 
 							//SELECT CLIENTE
-							$sql_cliente = "SELECT IDCliente, Cedula, Nombre, Apellido FROM Cliente WHERE IDCliente = '$r_facturas[IDCliente]'";
+							$sql_cliente = "SELECT IDCliente, Cedula, Nombre, Apellido FROM Cliente WHERE IDCliente = '" . $r_facturas['IDCliente'] . "'";
 							$qry_cliente = db_query( $sql_cliente );
 							$cliente = db_fetch_array( $qry_cliente );
 							//SELECT CUOTAS
-							$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '$r_facturas[IDFactura]' AND IDPuntoVenta = '$r_facturas[IDPuntoVenta]' ORDER BY FechaCuota ";
+							$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '" . $r_facturas['IDFactura'] . "' AND IDPuntoVenta = '" . $r_facturas['IDPuntoVenta'] . "' ORDER BY FechaCuota ";
 							$qry_cuotas = db_query( $sql_cuotas );
 							$valor_faltante=0;
 							while( $r_cuotas = db_fetch_array($qry_cuotas) )
 							{
 								$ValorCuotaPago = $r_cuotas[ "ValorTotal" ];
-								$cuotas[ $r_cuotas[IDCuota] ] = $r_cuotas;
-								if( $r_cuotas[ FechaPago ] <> "0000-00-00 00:00:00" )
+								$cuotas[ $r_cuotas['IDCuota'] ] = $r_cuotas;
+								if( $r_cuotas['FechaPago'] <> "0000-00-00 00:00:00" )
 								{
 									$candeladas++;
 								}//end if
 								elseif( $mostrar == 0 )
 								{
-									$fechaproximo = $r_cuotas[ FechaCuota ];
+									$fechaproximo = $r_cuotas['FechaCuota'];
 									$mostrar = 1;
 
 								}//end end else
 
 								//Calcular Cartera
-								if( !empty($r_cuotas[ Estado ])  )
+								if( !empty($r_cuotas['Estado'])  )
 								{
 									$cartera_castigada++;
-									$valor_total_cartera += $r_cuotas[ ValorTotal ];
-									$valor_cartera += $r_cuotas[ ValorTotal ];
+									$valor_total_cartera += $r_cuotas['ValorTotal'];
+									$valor_cartera += $r_cuotas['ValorTotal'];
 									$mostrar_cartera = 1;
 								}//end if
 
@@ -267,13 +268,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 						?>
 								<tr>
-										<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[FechaFacturaF]?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[NumeroPagare]?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$cliente[Cedula] ?></td>
-										<td class="<?=$class?>" align="center" nowrap><?=$cliente[Nombre]." ".$cliente[Apellido] ?></td>
-									<td class="<?=$class?>" align="center" nowrap><?=$array_puntos[$r_facturas[IDPuntoVenta]]?> </td>
-									<td class="<?=$class?>" align="center" nowrap><?=$r_facturas[NumeroFactura]?></td>
-									<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_facturas[ValorTotal],2 ); $tValorTotal += $r_facturas[ValorTotal];?></td>
+										<td class="<?=$class?>" align="center" nowrap><?=$r_facturas['FechaFacturaF']?></td>
+										<td class="<?=$class?>" align="center" nowrap><?=$r_facturas['NumeroPagare']?></td>
+										<td class="<?=$class?>" align="center" nowrap><?=$cliente['Cedula'] ?></td>
+										<td class="<?=$class?>" align="center" nowrap><?=$cliente['Nombre']." ".$cliente['Apellido'] ?></td>
+									<td class="<?=$class?>" align="center" nowrap><?=$array_puntos[$r_facturas['IDPuntoVenta']]?> </td>
+									<td class="<?=$class?>" align="center" nowrap><?=$r_facturas['NumeroFactura']?></td>
+									<td class="<?=$class?>" align="right" nowrap><?=number_format( $r_facturas['ValorTotal'],2 ); $tValorTotal += $r_facturas['ValorTotal'];?></td>
 									<td class="<?=$class?>" align="center" nowrap>
 										<?php
 											echo $candeladas;

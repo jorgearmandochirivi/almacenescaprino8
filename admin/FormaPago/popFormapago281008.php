@@ -206,9 +206,9 @@ class Fecha {
 function suma_fechas($fecha,$ndias)
 {
       if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha))
-              list($dia,$mes,$año)=split("/", $fecha);
+              list($dia,$mes,$año)=explode("/", $fecha);
       if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha))
-              list($dia,$mes,$año)=split("-",$fecha);
+              list($dia,$mes,$año)=explode("-", $fecha);
         $nueva = mktime(0,0,0, $mes,$dia,$año) + $ndias * 24 * 60 * 60;
         $nuevafecha=date("d-m-Y",$nueva);
       return ($nuevafecha);  

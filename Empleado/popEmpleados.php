@@ -61,9 +61,9 @@ function make_qry_string_empleados($frm){
 	$select = "Select * From $Table WHERE IDPuntoVenta = '$IDPuntoVenta' ";
 	
 		if( !empty($frm['field']) && ( $frm['field'] <> "Nombre" ) )
-			$where = " AND $frm[field] LIKE '$frm[QryString]%' ORDER BY Nombre ASC ";
+			$where = " AND {$frm['field']} LIKE '{$frm['QryString']}%' ORDER BY Nombre ASC ";
 		elseif( !empty($frm['field']) && ( $frm['field'] == "Nombre" ) )
-			$where = " AND $frm[field] LIKE '$frm[QryString]%' OR Apellidos LIKE '$frm[QryString]%' ORDER BY Nombre ASC ";
+			$where = " AND {$frm['field']} LIKE '{$frm['QryString']}%' OR Apellidos LIKE '{$frm['QryString']}%' ORDER BY Nombre ASC ";
 	
 	$qry_string = $select.$where;
 

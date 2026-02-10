@@ -364,9 +364,9 @@ if( !empty( $referencia ) )
 
 	$qry_puntos = db_query( $sql_puntos );
 
-	while( $r_puntos = db_fetch_array( $qry_puntos ) )
+		while( $r_puntos = db_fetch_array( $qry_puntos ) )
 
-		$array_puntos[$r_puntos[IDPuntoVenta]] = $r_puntos[Nombre];
+			$array_puntos[$r_puntos["IDPuntoVenta"]] = $r_puntos["Nombre"];
 
  	
 
@@ -379,8 +379,8 @@ if( !empty( $referencia ) )
 	if( !empty( $IDTipoReferencia ) )
 			$condicion = " AND R.IDTipoReferencia = '".$IDTipoReferencia."%' ";
 
-	while( $r_tallas = db_fetch_array( $qry_tallas ) )
-		$array_tallas[$r_tallas[IDTalla]] = $r_tallas[Descripcion];
+		while( $r_tallas = db_fetch_array( $qry_tallas ) )
+			$array_tallas[$r_tallas["IDTalla"]] = $r_tallas["Descripcion"];
 
 	 	
 
@@ -427,8 +427,8 @@ if( !empty( $referencia ) )
 
 						{
 
-							$array_ventas[ $r_codificacionesp[IDPuntoVenta] ][ $r_codificacionesp[IDTalla] ] += 
-$r_codificacionesp[Cantidad];
+								$array_ventas[ $r_codificacionesp["IDPuntoVenta"] ][ $r_codificacionesp["IDTalla"] ] += 
+$r_codificacionesp["Cantidad"];
 
 						} //end while($r[$i] = db_fetch_array($query_codificacion))
 
@@ -459,10 +459,10 @@ $r_codificacionesp[Cantidad];
 
 						{
 
-							$array_existencias[ $r_codificacionesp[IDPuntoVenta] ][ $r_codificacionesp[IDTalla] ] += 
-$r_codificacionesp[Existencias];
+								$array_existencias[ $r_codificacionesp["IDPuntoVenta"] ][ $r_codificacionesp["IDTalla"] ] += 
+$r_codificacionesp["Existencias"];
 
-							$array_tallas_mostrar[ $r_codificacionesp[IDTalla] ] = $array_tallas[ $r_codificacionesp[IDTalla] ];
+								$array_tallas_mostrar[ $r_codificacionesp["IDTalla"] ] = $array_tallas[ $r_codificacionesp["IDTalla"] ];
 
 						}
 
@@ -528,24 +528,27 @@ $r_codificacionesp[Existencias];
 
 									echo "<td class=".$class." align=right>";
 
-									echo $array_ventas[ $idpunto ][ $idtalla ]."</br>";
+										$ventas_talla = $array_ventas[$idpunto][$idtalla] ?? 0;
+										$inventario_talla = $array_existencias[$idpunto][$idtalla] ?? 0;
+										echo $ventas_talla."</br>";
 
-									echo $array_existencias[ $idpunto ][ $idtalla ]."</br>";
+										echo $inventario_talla."</br>";
 
-									echo number_format( $Rotacion = ( $array_ventas[ $idpunto ][ $idtalla ] / ( $array_ventas[ 
-$idpunto ][ $idtalla ] + $array_existencias[ $idpunto ][ $idtalla ] ) * 100 ) , 2 )." % ";
+										$den_rot = $ventas_talla + $inventario_talla;
+										$Rotacion = ($den_rot > 0) ? (($ventas_talla / $den_rot) * 100) : 0;
+										echo number_format($Rotacion, 2)." % ";
 
 									echo "</td>";
 
 									
 
-									$TotalVentasTalla[ $idtalla ] += $array_ventas[ $idpunto ][ $idtalla ];
+										$TotalVentasTalla[ $idtalla ] += $ventas_talla;
 
-									$TotalExistenciasTalla[ $idtalla ] += $array_existencias[ $idpunto ][ $idtalla ];
+										$TotalExistenciasTalla[ $idtalla ] += $inventario_talla;
 
 									
 
-									$TotalVentasPunto[ $idpunto ] += $array_ventas[ $idpunto ][ $idtalla ];
+										$TotalVentasPunto[ $idpunto ] += $ventas_talla;
 
 									$TotalExistenciasPunto[ $idpunto ] += $array_existencias[ $idpunto ][ $idtalla ];
 
@@ -561,9 +564,14 @@ $idpunto ][ $idtalla ] + $array_existencias[ $idpunto ][ $idtalla ] ) * 100 ) , 
 
 								?>	
 
-								<td class="rowform"  align="right" ><?php echo $TotalVentasPunto[ $idpunto ]."<br>".$TotalExistenciasPunto[ 
-$idpunto ]."<br>";echo number_format( $Rotacion = ( $TotalVentasPunto[ $idpunto ] / ( $TotalVentasPunto[ $idpunto ] + $TotalExistenciasPunto[ $idpunto ] ) * 100 ), 2 ); 
-?></td>
+								<td class="rowform"  align="right" ><?php
+								$total_ventas_punto = $TotalVentasPunto[$idpunto] ?? 0;
+								$total_exist_punto = $TotalExistenciasPunto[$idpunto] ?? 0;
+								echo $total_ventas_punto."<br>".$total_exist_punto."<br>";
+								$den_rot_punto = $total_ventas_punto + $total_exist_punto;
+								$Rotacion = ($den_rot_punto > 0) ? (($total_ventas_punto / $den_rot_punto) * 100) : 0;
+								echo number_format($Rotacion, 2);
+								?></td>
 
 							</tr>
 
@@ -587,17 +595,24 @@ $idpunto ]."<br>";echo number_format( $Rotacion = ( $TotalVentasPunto[ $idpunto 
 
 									//if( array_sum($array_existencias[ $idpunto ]) > 0 )
 
-										echo "<td class=rowform align=right>".$TotalVentasTalla[ $idtalla 
-]."<br>".$TotalExistenciasTalla[ $idtalla ]."<br>".number_format( $Rotacion = ( $TotalVentasTalla[ $idtalla ] / ( $TotalVentasTalla[ $idtalla ] + 
-$TotalExistenciasTalla[ $idtalla ] ) * 100 ), 2 )."</td>";
+										$total_ventas_talla = $TotalVentasTalla[$idtalla] ?? 0;
+										$total_exist_talla = $TotalExistenciasTalla[$idtalla] ?? 0;
+										$den_rot_talla = $total_ventas_talla + $total_exist_talla;
+										$Rotacion = ($den_rot_talla > 0) ? (($total_ventas_talla / $den_rot_talla) * 100) : 0;
+										echo "<td class=rowform align=right>".$total_ventas_talla."<br>".$total_exist_talla."<br>".number_format($Rotacion, 2)."</td>";
 
 								}//end for
 
 								?>	
 
-								<td class="rowform" align=right><?php echo 
-array_sum($TotalVentasTalla)."<br>".array_sum($TotalExistenciasTalla)."<br>";echo number_format( ( $Rotacion = ( array_sum($TotalVentasTalla) / ( 
-array_sum($TotalVentasTalla) + array_sum($TotalExistenciasTalla) ) ) ) * 100, 2 ); ?></td>
+								<td class="rowform" align=right><?php
+								$suma_ventas_talla = array_sum(is_array($TotalVentasTalla ?? null) ? $TotalVentasTalla : array());
+								$suma_exist_talla = array_sum(is_array($TotalExistenciasTalla ?? null) ? $TotalExistenciasTalla : array());
+								echo $suma_ventas_talla."<br>".$suma_exist_talla."<br>";
+								$den_rot_total = $suma_ventas_talla + $suma_exist_talla;
+								$Rotacion = ($den_rot_total > 0) ? (($suma_ventas_talla / $den_rot_total) * 100) : 0;
+								echo number_format($Rotacion, 2);
+								?></td>
 
 							</tr>
 

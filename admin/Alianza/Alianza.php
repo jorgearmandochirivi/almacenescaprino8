@@ -28,13 +28,16 @@ function table_check_list_desc($Table,$Key,$key_value,$table_option,$key_option,
 
 	$str_qry = "SELECT $key_option FROM $table_reference WHERE $Key = $key_value ";
 	
+	$qry_option = null;
 	if($newmode <> "insert")
 		$qry_option = db_query($str_qry);
 	
 	$option_checked = array();
 	
-	while($option = db_fetch_object($qry_option))
-		$option_checked[] = $option->$key_option;
+	if ($qry_option) {
+		while($option = db_fetch_object($qry_option))
+			$option_checked[] = $option->$key_option;
+	}
 	
 		
 	$qry = db_query("SELECT * FROM $table_option WHERE 1 ".$condicion);
@@ -96,7 +99,7 @@ if($permisos[0] >= 2)
 				$frm["FechaFin"]=$frm["limit2"];
 				
 					if(isset($PuntoVenta)):
-					$qry_PuntoVentaAlianza = db_query("DELETE FROm PuntoVentaAlianza Where IDAlianza = '".$frm[ID]."'");
+					$qry_PuntoVentaAlianza = db_query("DELETE FROm PuntoVentaAlianza Where IDAlianza = '".$frm["ID"]."'");
 					foreach ($PuntoVenta as $IDPuntoVenta)
 					{
 						$idpuntoventaalianza = get_maxID("PuntoVentaAlianza","IDPuntoVentaAlianza");
@@ -105,7 +108,7 @@ if($permisos[0] >= 2)
 				endif;
 
 				if(isset($TipoReferencia)):
-					$qry_TipoReferenciaAlianza = db_query("DELETE FROm TipoReferenciaAlianza Where IDAlianza = '".$frm[ID]."'");
+					$qry_TipoReferenciaAlianza = db_query("DELETE FROm TipoReferenciaAlianza Where IDAlianza = '".$frm["ID"]."'");
 					foreach ($TipoReferencia as $IDTipoReferencia)
 					{
 						$idtiporefalianza = get_maxID("TipoReferenciaAlianza","IDTipoReferenciaAlianza");
@@ -122,7 +125,7 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$_GET[action]="";
+				$_GET["action"]="";
 				$qry_PuntoVentaAlianza = db_query("DELETE FROm PuntoVentaAlianza Where IDAlianza = '".$ID."'");
 				delete($ID);
 			break;

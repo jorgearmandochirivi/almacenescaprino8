@@ -2,8 +2,8 @@
 include ("../lib/pglib/jpgraph/src/jpgraph.php");
 include ("../lib/pglib/jpgraph/src/jpgraph_line.php");
 
-$datay1 = split(",",$_GET['datos']);
-$datax1= split(",",$_GET['opciones']);
+$datay1 = explode(", ",$_GET['datos']);
+$datax1= explode(", ",$_GET['opciones']);
 //$datay2 = array(12,9,42,8);
 //$datay3 = array(5,17,32,24);
 

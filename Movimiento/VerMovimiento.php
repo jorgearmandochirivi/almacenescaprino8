@@ -490,8 +490,8 @@
 					</td>
 					<?php
 					foreach ($r_detalle as $talla) {
-						if (!empty($talla[IDTalla]))
-							echo "<td class=col2list align=center><b>" . get_field("Talla", "Descripcion", "IDTalla", $talla[IDTalla]) . "</b></td>";
+						if (!empty($talla["IDTalla"]))
+							echo "<td class=col2list align=center><b>" . get_field("Talla", "Descripcion", "IDTalla", $talla["IDTalla"]) . "</b></td>";
 					} //end foreach($r_detalle as $talla)
 					?>
 				</tr>
@@ -504,10 +504,10 @@
 					</td>
 					<?php
 					foreach ($r_detalle as $talla) {
-						if (!empty($talla[IDTalla])) {
-							$cantidad_total = $talla[Cantidad];
-							$cantidad_suma += $talla[Cantidad];
-							echo "<td class=col1list align=center><input type=text size=5 value=" . $talla[Cantidad] . " name=" . $r_referencias->IDPuntoVentaReferencia . "[$talla[IDTalla]]>";
+						if (!empty($talla["IDTalla"])) {
+							$cantidad_total = $talla["Cantidad"];
+							$cantidad_suma += $talla["Cantidad"];
+							echo "<td class=col1list align=center><input type=text size=5 value=" . $talla["Cantidad"] . " name=" . $r_referencias->IDPuntoVentaReferencia . "[" . $talla["IDTalla"] . "]>";
 						}
 					}
 					?>
@@ -569,8 +569,8 @@
 					</td>
 					<?php
 					foreach ($r_detalle as $talla) {
-						if (!empty($talla[IDTalla]))
-							echo "<td align=left>" . get_field("Talla", "Descripcion", "IDTalla", $talla[IDTalla]) . "</td>";
+						if (!empty($talla["IDTalla"]))
+							echo "<td align=left>" . get_field("Talla", "Descripcion", "IDTalla", $talla["IDTalla"]) . "</td>";
 					} //end foreach($r_detalle as $talla)
 					?>
 				</tr>
@@ -583,9 +583,9 @@
 					</td>
 					<?php
 					foreach ($r_detalle as $talla) {
-						if (!empty($talla[IDTalla])) {
-							$total_cantidad += $talla[Cantidad];
-							echo "<td align=left>" . $talla[Cantidad] . "</td>";
+						if (!empty($talla["IDTalla"])) {
+							$total_cantidad += $talla["Cantidad"];
+							echo "<td align=left>" . $talla["Cantidad"] . "</td>";
 						}
 					}
 					?>

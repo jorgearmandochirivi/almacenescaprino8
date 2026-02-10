@@ -10,8 +10,7 @@ if($permisos[0] >= 2)
 			break;
 			default :
 
-				seleccionareferencia("list");
-				//list_r();
+					// flujo manejado por el switch inferior que llama print_from(...)
 			break;
 
 		} // End switch
@@ -55,7 +54,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
  if(strtotime($FechaDesde)<=strtotime("2017-01-31")):
  	$IVA = 0.16;
  endif;
- $array_lastallas = array( 1=>1, 33=>33, 34=>34, 35=>35, 36=>36, 37=>37, 38=>38, 39=>39, 40=>40, 41=>41, 42=>42, 43=>43, 44=>44 , S=>S , M=>M , L=>L , XL=>XL  );
+ $array_lastallas = array( 1=>1, 33=>33, 34=>34, 35=>35, 36=>36, 37=>37, 38=>38, 39=>39, 40=>40, 41=>41, 42=>42, 43=>43, 44=>44 , "S"=>"S" , "M"=>"M" , "L"=>"L" , "XL"=>"XL"  );
  
 ?>
 	
@@ -96,7 +95,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						      <?php 
 						$sql_prov = db_query("Select * From Proveedor where Publicar = 'S' order by Nombre asc");
 						while ($row_prov = db_fetch_array($sql_prov)): ?>
-						      <option value="<?php echo $row_prov[IDProveedor];?>" <?php if($_POST["IDProveedor"]==$row_prov[IDProveedor]) echo "selected"; ?>><?php echo $row_prov[Nombre];?></option>
+					      <option value="<?php echo $row_prov["IDProveedor"];?>" <?php if($_POST["IDProveedor"]==$row_prov["IDProveedor"]) echo "selected"; ?>><?php echo $row_prov["Nombre"];?></option>
 						      <?php	
 						endwhile;
 					?>
@@ -183,14 +182,14 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						//QUERY TALLAS DE LA REFERENCIA
 						$sql_tallas = "SELECT T.Descripcion, T.IDTalla, C.IDCodificacionEspecifica 
 										FROM Talla T, CodificacionEspecifica C
-										WHERE C.IDPuntoVentaReferencia = '$r_referencias[IDPuntoVentaReferencia]' 
+										WHERE C.IDPuntoVentaReferencia = '".$r_referencias["IDPuntoVentaReferencia"]."' 
 										AND C.IDTalla = T.IDTalla ";
 						$qry_tallas = db_query( $sql_tallas );
 						$ventas = 0;
 						while( $r_tallas = db_fetch_array( $qry_tallas ) )
 						{
 						
-							$array_tallas[$r_referencias[IDPuntoVentaReferencia]][$j] = $r_tallas;
+							$array_tallas[$r_referencias["IDPuntoVentaReferencia"]][$j] = $r_tallas;
 							$j++;
 							
 							//QUERY TOTAL VENDIDO DE LA REFERENCIA
@@ -201,7 +200,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							/*****************/
 							
 							$sql_facturas = " SELECT SUM( DF.Cantidad ) as ValorVentas FROM Factura F, DetalleFactura DF WHERE F.IDPuntoVenta = '$IDPuntoVenta' 
-										AND F.IDFactura = DF.IDFactura AND F.IDPuntoVenta = DF.IDPuntoVenta AND DF.IDCodificacionEspecifica = '$r_tallas[IDCodificacionEspecifica]' ";
+										AND F.IDFactura = DF.IDFactura AND F.IDPuntoVenta = DF.IDPuntoVenta AND DF.IDCodificacionEspecifica = '".$r_tallas["IDCodificacionEspecifica"]."' ";
 							
 							if( !empty( $FechaDesde ) && !empty( $FechaHasta ) )
 								$sql_facturas .= " AND DATE_FORMAT(F.FechaFactura,'%Y-%m-%d') >= '$FechaDesde' AND DATE_FORMAT(F.FechaFactura,'%Y-%m-%d') <= '$FechaHasta' ";

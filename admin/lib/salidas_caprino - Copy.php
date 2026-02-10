@@ -36,8 +36,8 @@ function venta( $frm )
 		$DescuentoRef = "Descuento".$i;
 		$DescuentoPar = "DescuentoLin".$i;
 		
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
+		$PrecioU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 		$DescuentoPar = $frm[$DescuentoPar];
 
@@ -78,9 +78,9 @@ function venta( $frm )
 		
 	}//end for($i = 1; $i < $Items; $i++)
 	
-	$frm['ValorIVA'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
+	$frm['ValorIVA'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
 	
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
 			
 	$sql_actualizafactura = "UPDATE Factura SET ValorIVA = '$frm[ValorIVA]', ValorTotal = '$frm[ValorTotal]' WHERE IDFactura = '$frm[IDFactura]' AND IDPuntoVenta = '$frm[IDPuntoVenta]'";
 	db_query($sql_actualizafactura);
@@ -122,7 +122,7 @@ function agregarventaempleado( $frm )
 	else
 		$cargo = "Empleado";
 	
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
 	
 	$idadministrador = get_field("PuntoVenta","IDEmpleado","IDPuntoVenta",$frm['IDPuntoVenta']);
 	$idventaempleado = get_maxID("VentasEmpleado","IDVentasEmpleado");
@@ -171,8 +171,8 @@ function ventabono( $frm )
 		$PrecioU = "Precio".$i;
 		$DescuentoRef = "Descuento".$i;
 		
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
+		$PrecioU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 		
 		$str_insert_detalle  = "INSERT INTO DetalleFacturaBono ( IDDetalleFacturaBono,IDFacturaBono,IDPuntoVenta,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,UsuarioTrCr,FechaTrCr ) ";
@@ -202,9 +202,9 @@ function ventabono( $frm )
 		
 	}//end for($i = 1; $i < $Items; $i++)
 	
-	$frm['ValorIVA'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
+	$frm['ValorIVA'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
 	
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
 			
 	$sql_actualizaFacturaBono = "UPDATE FacturaBono SET  ValorTotal = '$frm[ValorTotal]' WHERE IDFacturaBono = '$frm[IDFacturaBono]' AND IDPuntoVenta = '$frm[IDPuntoVenta]'";
 	db_query($sql_actualizaFacturaBono);
@@ -212,7 +212,7 @@ function ventabono( $frm )
 	//insertar el log
 	insertlog($ID_Usuario,"FacturaBono",$frm[IDFacturaBono],"Actualizar",$sql_actualizaFacturaBono);
 	
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
 	if( $frm['Excedente'] > 0 )
 	{
 		//INSERTAR FACTURA CON EL EXCEDENTE
@@ -310,8 +310,8 @@ function ventacambio( $frm )
 		$PrecioU = "Precio".$i;
 		$DescuentoRef = "Descuento".$i;
 		
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
+		$PrecioU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 		
 		if( !empty( $frm[$Cantidad] ) )
@@ -363,9 +363,9 @@ function ventacambio( $frm )
 	insertlog($ID_Usuario,"CodificacionEspecifica",$frm[$IDCodificacion],"Insertar",$str_actualiza_inventario);
 		
 	
-	$frm['ValorIVA'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
+	$frm['ValorIVA'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorIVA']);
 	
-	$frm['ValorTotal'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
+	$frm['ValorTotal'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['ValorTotal']);
 			
 	$sql_actualizaFacturaBono = "UPDATE Cambio SET  ValorTotal = '$frm[ValorTotal]' WHERE IDCambio = '$frm[RegistroCambio]'";
 	db_query($sql_actualizaFacturaBono);
@@ -373,7 +373,7 @@ function ventacambio( $frm )
 	//insertar el log
 	insertlog($ID_Usuario,"Cambio",$frm[RegistroCambio],"Actualizar",$sql_actualizaFacturaBono);
 	
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
 	if( $frm['Excedente'] > 0 )
 	{
 		//INSERTAR FACTURA CON EL EXCEDENTE
@@ -464,8 +464,8 @@ function ventacambiofactura( $frm )
 		$PrecioU = "Precio".$i;
 		$DescuentoRef = "Descuento".$i;
 		
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
+		$PrecioU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 		
 		if( !empty( $frm[$Cantidad] ) )
@@ -500,8 +500,8 @@ function ventacambiofactura( $frm )
 		$PrecioU = "Precio".$i;
 		$DescuentoRef = "Descuento".$i;
 		
-		$ValorU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
-		$PrecioU = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
+		$ValorU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$ValorU]);
+		$PrecioU = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm[$PrecioU]).".00";
 		$DescuentoRef = $frm[$DescuentoRef];
 		
 		if( !empty( $frm[$Cantidad] ) )
@@ -528,7 +528,7 @@ function ventacambiofactura( $frm )
 	//Realizar el Movimiento correspondiente en la tabla de Codificacion especifica
 	//Aumentar inventario
 		
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
 	if( $frm['Excedente'] > 0 )
 	{
 		//INSERTAR FACTURA CON EL EXCEDENTE
@@ -594,7 +594,7 @@ function agregarventaempleadobono( $frm )
 	else
 		$cargo = "Empleado";
 	
-	$frm['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
+	$frm['Excedente'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$frm['Excedente']);
 	
 	$idadministrador = get_field("PuntoVenta","IDEmpleado","IDPuntoVenta",$frm['IDPuntoVenta']);
 	$idventaempleado = get_maxID("VentasEmpleado","IDVentasEmpleado");

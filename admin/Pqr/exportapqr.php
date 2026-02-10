@@ -61,8 +61,8 @@
 			echo get_field("Cliente","Celular","IDCliente",$id_cliente) . $sep;
 			echo get_field("Cliente","Direccion","IDCliente",$id_cliente) . $sep;
 			echo get_field("PqrSolucion","Nombre","IDPqrSolucion",$row["IDPqrSolucion"]). $sep;
-			echo eregi_replace("[\n|\r|\n\r]", " ", $row["Asunto"])  . $sep;
-			echo eregi_replace("[\n|\r|\n\r]", " ", $row["Descripcion"]) . $sep;
+			echo preg_replace("[\n|\r|\n\r]", " ", $row["Asunto"])  . $sep;
+			echo preg_replace("[\n|\r|\n\r]", " ", $row["Descripcion"]) . $sep;
 			echo $row["Fecha"] . $sep;
 			print "\n";
 

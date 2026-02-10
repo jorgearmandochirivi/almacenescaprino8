@@ -23,7 +23,7 @@ if($permisos[0] >= 2)
 				db_query("SET AUTOCOMMIT = 0");
 				db_query("BEGIN");
 				
-				$sql_update = " SELECT IDEstadoTraslado FROM $Table WHERE IDTraslado = '$frm[IDTraslado]' AND IDPuntoVentaOrigen = '$frm[IDPuntoVentaOrigen]' ";
+				$sql_update = " SELECT IDEstadoTraslado FROM $Table WHERE IDTraslado = '{$frm['IDTraslado']}' AND IDPuntoVentaOrigen = '{$frm['IDPuntoVentaOrigen']}' ";
 				$qry_update = db_query( $sql_update );
 				$r_update = db_fetch_object( $qry_update );
 				

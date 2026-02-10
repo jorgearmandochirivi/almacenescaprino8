@@ -34,7 +34,7 @@ $Table = "Entrada";
 $TableJoin = "";
 $Key = "IDEntrada";
 
-$Remision = $_GET[Remision];
+$Remision = $_GET["Remision"];
 
 
 		switch (nvl($action)) {
@@ -56,16 +56,16 @@ function print_form($Remision,$IDPuntoVenta) {
 	$sql_tallas = "SELECT IDTalla, Descripcion FROM Talla";
 	$qry_tallas = db_query( $sql_tallas );
 	while( $r_tallas = db_fetch_array( $qry_tallas ) )
-		$array_tallas[ $r_tallas[IDTalla] ] = $r_tallas[Descripcion];
+		$array_tallas[ $r_tallas["IDTalla"] ] = $r_tallas["Descripcion"];
 	
 	$sql_remision = " SELECT E.*, R.Numero FROM Entrada E, PuntoVentaReferencia P, Referencia R WHERE E.Remision = '$Remision' AND E.IDPuntoVenta = '$IDPuntoVenta'
 						AND E.IDPuntoVentaReferencia = P.IDPuntoVentaReferencia AND P.IDReferencia = R.IDReferencia  ";	
 	$qry_remision = db_query( $sql_remision );
 	while( $r_remision = db_fetch_array( $qry_remision ) ){
-		$array_total[ $r_remision[Numero] ][ $r_remision[IDTalla] ] += $r_remision[Cantidad];	
-		$r_remision[Cantidad] = $array_total[ $r_remision[Numero] ][ $r_remision[IDTalla] ];
-		$array_referencias[ $r_remision[Numero] ][ $r_remision[IDTalla] ] = $r_remision;
-		$fechaRemision = $r_remision[FechaRemision];
+		$array_total[ $r_remision["Numero"] ][ $r_remision["IDTalla"] ] += $r_remision["Cantidad"];	
+		$r_remision["Cantidad"] = $array_total[ $r_remision["Numero"] ][ $r_remision["IDTalla"] ];
+		$array_referencias[ $r_remision["Numero"] ][ $r_remision["IDTalla"] ] = $r_remision;
+		$fechaRemision = $r_remision["FechaRemision"];
 	}
 	
 	
@@ -122,8 +122,8 @@ var Check = new Array('Nombre','Publicar');
 											<tr>
 												<td>
 													<?php
-														echo $datos[Cantidad];
-														$TPares += $datos[Cantidad];
+										echo $datos["Cantidad"];
+										$TPares += $datos["Cantidad"];
 													?>
 												</td>
 											</tr>
@@ -241,8 +241,8 @@ var Check = new Array('Nombre','Publicar');
                                                             <tr>
                                                                 <td>
                                                                     <?php
-                                                                        echo $datos[Cantidad];
-                                                                        $TPares += $datos[Cantidad];
+												echo $datos["Cantidad"];
+												$TPares += $datos["Cantidad"];
                                                                     ?>
                                                                 </td>
                                                             </tr>

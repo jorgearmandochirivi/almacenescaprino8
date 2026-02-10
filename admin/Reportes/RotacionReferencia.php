@@ -76,8 +76,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								}		
 
 						
-						while ($row_prov = db_fetch_array($sql_prov)): ?>
-						      <option value="<?php echo $row_prov[IDProveedor];?>" <?php if($_POST["IDProveedor"]==$row_prov[IDProveedor]) echo "selected"; ?>><?php echo $row_prov[Nombre];?></option>
+							while ($row_prov = db_fetch_array($sql_prov)): ?>
+							      <option value="<?php echo $row_prov["IDProveedor"];?>" <?php if($_POST["IDProveedor"]==$row_prov["IDProveedor"]) echo "selected"; ?>><?php echo $row_prov["Nombre"];?></option>
 						      <?php
 						endwhile;
 					?>
@@ -173,14 +173,14 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					//Seleccionar Formas de Pago
 					$sql_formapago = "SELECT IDFormaPago, Descripcion FROM FormaPago ";
 					$qry_formaPago = db_query( $sql_formapago );
-					while( $r_formapago =  db_fetch_array( $qry_formaPago ) )
-						$array_formapago[ $r_formapago[IDFormaPago] ] = $r_formapago;
+						while( $r_formapago =  db_fetch_array( $qry_formaPago ) )
+							$array_formapago[ $r_formapago["IDFormaPago"] ] = $r_formapago;
 
 					//Seleccionar Banco
 					$sql_banco = "SELECT * FROM Banco ";
 					$qry_banco = db_query( $sql_banco );
-					while( $r_banco =  db_fetch_array( $qry_banco ) )
-						$array_banco[ $r_banco[IDBanco] ] = $r_banco;
+						while( $r_banco =  db_fetch_array( $qry_banco ) )
+							$array_banco[ $r_banco["IDBanco"] ] = $r_banco;
 
 
 					if($_POST["IDProveedor"])
@@ -212,12 +212,15 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					//print_r( $array_banco );
 					//Seleccionar Bancos
 
-					$sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, F.IDCliente, R.Numero, R.IDTipologia, R.IDPrecio, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura, F.ValorBono as ValorBono,
-										DF.IVA, DF.IDDetalleFactura, DF.ReteIVA, DF.ReteICA, F.IDFactura, F.IDPuntoVenta, DATE_FORMAT( F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
-										FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P
-										WHERE
-										F.FechaFactura >= '".$FechaDesde . ' 00:00:00'."' and F.FechaFactura <= '".$FechaHasta . ' 23:59:59'."'
-										AND F.IDFactura = DF.IDFactura
+						$fecha_desde_q = !empty($FechaDesde) ? $FechaDesde : date("Y-m-d");
+						$fecha_hasta_q = !empty($FechaHasta) ? $FechaHasta : $fecha_desde_q;
+
+						$sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, F.IDCliente, R.Numero, R.IDTipologia, R.IDPrecio, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura, F.ValorBono as ValorBono,
+											DF.IVA, DF.IDDetalleFactura, DF.ReteIVA, DF.ReteICA, F.IDFactura, F.IDPuntoVenta, DATE_FORMAT( F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
+											FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P
+											WHERE
+											F.FechaFactura >= '".$fecha_desde_q." 00:00:00' and F.FechaFactura <= '".$fecha_hasta_q." 23:59:59'
+											AND F.IDFactura = DF.IDFactura
 										AND F.IDPuntoVenta = DF.IDPuntoVenta
 										AND DF.IDCodificacionEspecifica = C.IDCodificacionEspecifica
 										AND C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia
@@ -421,7 +424,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoPar']?></td>
 										<td class="<?php echo $class?>" align="right" nowrap>
 											<?php
-												$TotalFactura = $valor[ValorTotal] ;
+												$TotalFactura = $valor["ValorTotal"] ;
 												if( $valor['DescuentoPar'] > 0 )
 													$valordescuentopar = ( $valor['PrecioU'] * $valor['Cantidad'] ) *   ( $valor['DescuentoPar'] / 100 );
 												else
@@ -429,7 +432,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 
 												//consultar forma de pago pa saber si se le resta
-												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$IDPuntoVenta' ";
+												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '$IDPuntoVenta' ";
 												$qry_formasdepago = db_query( $sql_formasdepago );
 												$saldo = 0;
 												while( $r_formasdepago = db_fetch_object( $qry_formasdepago ) )
@@ -475,7 +478,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												//Traer Comision
 												$pcomision = 0;
 												$comision = 0;
-												$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$valor[IDPuntoVenta]' ";
+												$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '".$valor["IDPuntoVenta"]."' ";
 												$qry_comisiones = db_Query( $sql_comisiones );
 												$array_forma_pago = array();
 												$k = 0;
@@ -484,10 +487,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 													$pcomision = $r_comisiones->Comision / 100;
 													$comision +=  ( $valorparcial / (1 + $IVA) ) * $pcomision;
 													$k++;
-													$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][IDFormaPago] = $r_comisiones->IDFormaPago;
-													$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][Valor] = $r_comisiones->Valor;
-													$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][Comision] = $r_comisiones->Comision;
-													$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][IDBanco] = $r_comisiones->IDBanco;
+													$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["IDFormaPago"] = $r_comisiones->IDFormaPago;
+													$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["Valor"] = $r_comisiones->Valor;
+													$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["Comision"] = $r_comisiones->Comision;
+													$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["IDBanco"] = $r_comisiones->IDBanco;
 												}
 
 											?>
@@ -549,12 +552,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="<?php echo $class?>" align="right" nowrap>
 								<table width=100;?>
 									<?php
-									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
+									foreach(  $array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ] as $keyfp => $valuefp )
 									{
 									?>
 										<tr>
 											<td align="right">
-												<?php echo $array_formapago[  $valuefp[IDFormaPago] ][Descripcion] ?>
+												<?php echo $array_formapago[  $valuefp["IDFormaPago"] ]["Descripcion"] ?>
 											</td>
 										</tr>
 									<?php
@@ -573,12 +576,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="<?php echo $class?>" align="right" nowrap>
 								<table width=100;?>
 									<?php
-									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
+									foreach(  $array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ] as $keyfp => $valuefp )
 									{
 									?>
 										<tr>
 											<td align="right">
-												<?php echo $array_banco[   $valuefp[IDBanco] ][Nombre] ?>
+												<?php echo $array_banco[   $valuefp["IDBanco"] ]["Nombre"] ?>
 											</td>
 										</tr>
 									<?php
@@ -593,14 +596,14 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="<?php echo $class?>" align="right" nowrap>
 								<table>
 									<?php
-									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
+									foreach(  $array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ] as $keyfp => $valuefp )
 									{
 										$ValorReteICA = 0;
 										$ValorReteIVA = 0;
 
-										if( $valuefp[IDFormaPago] <> 1 )
+										if( $valuefp["IDFormaPago"] <> 1 )
 										{
-											$Valor = $valuefp[Valor];
+											$Valor = $valuefp["Valor"];
 
 											$ValorReteICA = ( $Valor / (1 + $IVA ) ) * $ReteICA;
 											$ValorReteIVA = ( $Valor - ( $Valor / (1 + $IVA ) ) ) * $ReteIVA;
@@ -661,22 +664,27 @@ function print_from($IDPuntoVenta="", $Fecha=""){
                         <?php
 
 
-							//Ordeno el resultado
-							foreach($array_referencia_resumen as $id => $valor ):
-								$Rotacion = number_format(  ( $valor["Pares"] / ( $valor["Pares"] + $valor["Inventario"] ) * 100 ) , 1 );
-								$valor["Rotacion"] =  $Rotacion;
-								$datos[]= $valor;
-							endforeach;
+								//Ordeno el resultado
+								$datos = array();
+								$referencia = array();
+								$rotacion = array();
+								foreach((array)$array_referencia_resumen as $id => $valor ):
+									$Rotacion = number_format(  ( $valor["Pares"] / ( $valor["Pares"] + $valor["Inventario"] ) * 100 ) , 1 );
+									$valor["Rotacion"] =  $Rotacion;
+									$datos[]= $valor;
+								endforeach;
 
-							// Obtener una lista de columnas
-							foreach ($datos as $clave => $fila) {
-								$referencia[$clave] = $fila['Referencia'];
-								$rotacion[$clave] = $fila['Rotacion'];
-							}
+								// Obtener una lista de columnas
+								foreach ($datos as $clave => $fila) {
+									$referencia[$clave] = $fila['Referencia'];
+									$rotacion[$clave] = $fila['Rotacion'];
+								}
 
 							// Ordenar los datos con volumen descendiente, edición ascendiente
 							// Agregar $datos como el último parámetro, para ordenar por la clave común
-							array_multisort($rotacion, SORT_DESC, $referencia, SORT_ASC, $datos);
+								if (!empty($datos)) {
+									array_multisort($rotacion, SORT_DESC, $referencia, SORT_ASC, $datos);
+								}
 
 						?>
 
@@ -732,7 +740,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							<td class="titlemedium" align="center" nowrap><?php echo $Pares ?></td>
 							<td class="titlemedium" align="center" nowrap><?php echo $TotalInventario ?></td>
 							<td class="titlemedium" align="center" nowrap>
-									<?php $PromedioRotacion=$TotalRotacion/$contador_fila;
+									<?php $PromedioRotacion = ((int)$contador_fila > 0) ? ($TotalRotacion / $contador_fila) : 0;
 									echo substr($PromedioRotacion,0,5);
 
 									?>

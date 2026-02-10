@@ -36,9 +36,9 @@ if($permisos[0] >= 2)
 
 
 				//Armar el codigo del pedido
-				$codigo_proveedor=get_field("Proveedor","Codigo","IDProveedor",$frm[IDProveedor]);
+				$codigo_proveedor=get_field("Proveedor","Codigo","IDProveedor",$frm["IDProveedor"]);
 				//Siguiente Consecutivo
-				$sql_num_pedido = db_query("Select count(IDProveedor) as Total From PedidoTercero Where IDProveedor = '".$frm[IDProveedor]."'");
+				$sql_num_pedido = db_query("Select count(IDProveedor) as Total From PedidoTercero Where IDProveedor = '".$frm["IDProveedor"]."'");
 				$row_total = db_fetch_array($sql_num_pedido);
 				$siguiente=(int)$row_total["Total"]+1;
 
@@ -52,7 +52,7 @@ if($permisos[0] >= 2)
 
 
 				$numero_orden=$codigo_proveedor.$ceros.$siguiente;
-				$frm[IDEstadoPedidoTercero] = "1";
+				$frm["IDEstadoPedidoTercero"] = "1";
 				$frm["NumeroOrdenCompra"]=$numero_orden;
 				//Subir imagenes
 				$frm = copy_imgs($frm,$_FILES);
@@ -726,7 +726,7 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
                   </tr>
                   <?php
 
-				  if (count($array_detalle_orden)>0)
+				  if (count(is_array($array_detalle_orden ?? null) ? $array_detalle_orden : array())>0)
 				  		$detalle_inicial=(int)count($array_detalle_orden)+10;
 				else
 					  $detalle_inicial=9;
@@ -1129,7 +1129,7 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
                   </tr>
                   <?php
 
-				 $detalle_inicial=(int)count($array_detalle_orden);
+				 $detalle_inicial=(int)count(is_array($array_detalle_orden ?? null) ? $array_detalle_orden : array());
 
 				  for($i=1;$i<=$detalle_inicial;$i++):  ?>
                       <tr>

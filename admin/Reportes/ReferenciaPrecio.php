@@ -115,7 +115,7 @@ function seleccionareferencia( $newmode)
 	 	$sql_precios = " SELECT * FROM Precio ";
 	 	$qry_precios = db_query( $sql_precios );
 	 	while( $r_precios = db_fetch_array( $qry_precios ) )
-	 		$arrayprecios[ $r_precios[IDPrecio] ] = $r_precios;
+	 		$arrayprecios[ $r_precios["IDPrecio"] ] = $r_precios;
 	 		
 	 	//print_r( $arrayprecios );
 ?>
@@ -132,7 +132,7 @@ function seleccionareferencia( $newmode)
 				<tr>
 					<td class="titlemedium">Referencia</td>
 					<td class="titlemedium">Ref Antigua</td>
-					<td class="titlemedium"><?php echo  $datostallas[Descripcion] ?></td>
+					<td class="titlemedium"><?php echo  $datostallas["Descripcion"] ?></td>
 					<td class="titlemedium">Descuento</td>
 					<td class="titlemedium">Saldo</td>
 				</tr>
@@ -148,13 +148,13 @@ function seleccionareferencia( $newmode)
 							<td class="row1"><?php echo $r_referencia->NumeroAnterior ?></td>
 							<td class="row1">
 								<?php 
-									echo  number_format( $arrayprecios[$r_referencia->IDPrecio][ValorVenta],2);
+										echo  number_format( $arrayprecios[$r_referencia->IDPrecio]["ValorVenta"],2);
 									
 								?>
 							</td>
 							<td class="row1">
 								<?php 
-									echo  number_format( $arrayprecios[$r_referencia->IDPrecio][Descuento],2);
+										echo  number_format( $arrayprecios[$r_referencia->IDPrecio]["Descuento"],2);
 									
 								?>
 							</td>

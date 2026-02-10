@@ -567,7 +567,7 @@ var Check = new Array('Nombre','Publicar');
 										echo $r->NombreMayorista;	
 									}
 									else{
-										$id_cliente= $r_factura[IDCliente];
+											$id_cliente= $r_factura["IDCliente"];
 										echo get_field("Cliente","Nombre","IDCliente",$id_cliente)." ".get_field("Cliente","Apellido","IDCliente",$id_cliente);
 									}
 									?></td>
@@ -615,8 +615,8 @@ var Check = new Array('Nombre','Publicar');
 										if ($id_referencia_item==160){ // Cuando son excedentes consulto la referencia de la compra										
 											$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
 											$r_facturabono=db_fetch_array($sql_facturabono);							
-											if (!empty($r_facturabono[IDFacturaBono])){											
-												$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono[IDFacturaBono]."'");
+											if (!empty($r_facturabono["IDFacturaBono"])){											
+												$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono["IDFacturaBono"]."'");
 												$r_detallefacturabono=db_fetch_array($sql_detallefacturabono);								
 												$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
 												$tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"]));
@@ -671,7 +671,7 @@ var Check = new Array('Nombre','Publicar');
 							if ($r->IDEstadoGarantia==10): // si es autorizacion especial consulto quien la dio								
 								$sql_usuario_especial=db_query("Select * from ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia = 10");
 								$row_usuario_especial = db_fetch_array($sql_usuario_especial);
-								echo "<br><font style='color: #000;'>Por:" . get_field("Empleado","Nombre","IDEmpleado",$row_usuario_especial[IDEmpleado]) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_usuario_especial[IDEmpleado])."</font>";
+								echo "<br><font style='color: #000;'>Por:" . get_field("Empleado","Nombre","IDEmpleado",$row_usuario_especial["IDEmpleado"]) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_usuario_especial["IDEmpleado"])."</font>";
 							endif;
 							
 							

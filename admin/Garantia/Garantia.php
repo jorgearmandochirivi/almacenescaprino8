@@ -427,37 +427,37 @@ if($permisos[0] >= 2)
 
 
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS["action"]="";
 				delete($ID);
 			break;
 			case "list" :
 
-				if(!empty($_GET[NumeroFactura])):
-					$condiciones .=" and F.Numerofactura LIKE '%".$_GET[NumeroFactura]."%'";
+				if(!empty($_GET["NumeroFactura"])):
+					$condiciones .=" and F.Numerofactura LIKE '%".$_GET["NumeroFactura"]."%'";
 					$tabla_join = ",Factura F";
 					$condicion_join = " and G.IDFactura = F.IDFactura";
 				endif;
 
-				if(!empty($_GET[IDGarantia]))
-					$condiciones.=" and G.IDGarantia = '".$_GET[IDGarantia]."'";
+				if(!empty($_GET["IDGarantia"]))
+					$condiciones.=" and G.IDGarantia = '".$_GET["IDGarantia"]."'";
 
-				if(!empty($_GET[TipoRegistro]))
-					$condiciones.=" and G.TipoRegistro = '".$_GET[TipoRegistro]."'";
+				if(!empty($_GET["TipoRegistro"]))
+					$condiciones.=" and G.TipoRegistro = '".$_GET["TipoRegistro"]."'";
 
-				if(!empty($_GET[IDEstadoGarantia]))
-					$condiciones.=" and G.IDEstadoGarantia = '".$_GET[IDEstadoGarantia]."'";
+				if(!empty($_GET["IDEstadoGarantia"]))
+					$condiciones.=" and G.IDEstadoGarantia = '".$_GET["IDEstadoGarantia"]."'";
 
-				if(!empty($_GET[IDPuntoVenta]))
-					$condiciones.=" and G.IDPuntoVenta = '".$_GET[IDPuntoVenta]."'";
+				if(!empty($_GET["IDPuntoVenta"]))
+					$condiciones.=" and G.IDPuntoVenta = '".$_GET["IDPuntoVenta"]."'";
 
-				if(!empty($_GET[CantidadVeces]))
-					$condiciones.=" and G.CantidadVeces = '".$_GET[CantidadVeces]."'";
+				if(!empty($_GET["CantidadVeces"]))
+					$condiciones.=" and G.CantidadVeces = '".$_GET["CantidadVeces"]."'";
 
-				if(!empty($_GET[TipoProducto]))
-					$condiciones.=" and G.TipoProducto = '".$_GET[TipoProducto]."'";
+				if(!empty($_GET["TipoProducto"]))
+					$condiciones.=" and G.TipoProducto = '".$_GET["TipoProducto"]."'";
 
-				if(!empty($_GET[NumeroReferencia])):
-					$sql_ref="SELECT IDReferencia FROM Referencia WHERE Numero like '%".$_GET[NumeroReferencia]."%'";
+				if(!empty($_GET["NumeroReferencia"])):
+					$sql_ref="SELECT IDReferencia FROM Referencia WHERE Numero like '%".$_GET["NumeroReferencia"]."%'";
 					$r_ref=db_query($sql_ref);
 					while($row_ref=db_fetch_array($r_ref)){
 						$array_ref[]=$row_ref["IDReferencia"];
@@ -470,7 +470,7 @@ if($permisos[0] >= 2)
 					}
 					//$id_referencia = get_field("Referencia","IDReferencia","Numero",$_GET[NumeroReferencia]);
 					//$condiciones.=" and G.IDReferencia = '".$id_referencia."'";
-				$condiciones.=" and ( G.IDReferencia in (".$id_ref_buscar.") or  Referencia = '".$_GET[NumeroReferencia]."') ";
+				$condiciones.=" and ( G.IDReferencia in (".$id_ref_buscar.") or  Referencia = '".$_GET["NumeroReferencia"]."') ";
 
 				//Consulto las garantias con factura con esa ref
 				$sql_ref="SELECT IDGarantia
@@ -481,8 +481,8 @@ if($permisos[0] >= 2)
 
 				endif;
 
-				if(!empty($_GET[Alerta])):
-					switch($_GET[Alerta]):
+				if(!empty($_GET["Alerta"])):
+					switch($_GET["Alerta"]):
 						case "V":
 						  $condiciones .= " and G.IDEstadoGarantia not in (9,8,10,12)";
 						  $condiciones .= " and FechaEstimadaEntrega < CURDATE()";
@@ -502,8 +502,8 @@ if($permisos[0] >= 2)
 				endif;
 
 
-				if (!empty($_GET[limit1]) && !empty($_GET[limit2]) )
-					$condiciones.=" and G.FechaTrCr between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+				if (!empty($_GET["limit1"]) && !empty($_GET["limit2"]) )
+					$condiciones.=" and G.FechaTrCr between '".$_GET["limit1"]."' and '".$_GET["limit2"]."'";
 
 
 
@@ -645,7 +645,7 @@ var Check = new Array('Nombre','Publicar');
 										echo $r->NombreMayorista;
 									}
 									else{
-									  $id_cliente=$r_factura_compra[IDCliente];
+									  $id_cliente=$r_factura_compra["IDCliente"];
 									  echo get_field("Cliente","Nombre","IDCliente",$id_cliente) ." ". get_field("Cliente","Apellido","IDCliente",$id_cliente) .  " - " . get_field("Cliente","Cedula","IDCliente",$id_cliente);
 									}
 
@@ -671,8 +671,8 @@ var Check = new Array('Nombre','Publicar');
                     <tr>
                       <td>Factura de Venta N&ordm;</td>
                       <td class="row2"><?php
-					  if ($r->TipoFactura=="facturabono"):
-						  echo $r_factura_compra[NumeroFacturaBono] . " (bono) ";
+						  if ($r->TipoFactura=="facturabono"):
+							  echo $r_factura_compra["NumeroFacturaBono"] . " (bono) ";
 					  else:
 					  	echo get_field("Factura","NumeroFactura","IDFactura",$r->IDFactura);
 					  endif;
@@ -759,8 +759,8 @@ var Check = new Array('Nombre','Publicar');
 									if ($id_referencia_item==160){ // Cuando son excedentes consulto la referencia de la compra
 										$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
 										$r_facturabono=db_fetch_array($sql_facturabono);
-										if (!empty($r_facturabono[IDFacturaBono])){
-											$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono[IDFacturaBono]."'");
+										if (!empty($r_facturabono["IDFacturaBono"])){
+											$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono["IDFacturaBono"]."'");
 											$r_detallefacturabono=db_fetch_array($sql_detallefacturabono);
 											$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
 											$nombre_talla=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"]));
@@ -1595,8 +1595,8 @@ var Check = new Array('Nombre','Publicar');
 										if ($id_referencia_item==160){ // Cuando son excedentes consulto la referencia de la compra
 											$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
 											$r_facturabono=db_fetch_array($sql_facturabono);
-											if (!empty($r_facturabono[IDFacturaBono])){
-												$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono[IDFacturaBono]."'");
+											if (!empty($r_facturabono["IDFacturaBono"])){
+												$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono["IDFacturaBono"]."'");
 												$r_detallefacturabono=db_fetch_array($sql_detallefacturabono);
 												$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
 												$tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"]));
@@ -1673,7 +1673,7 @@ var Check = new Array('Nombre','Publicar');
 							if ($r->IDEstadoGarantia==10): // si es autorizacion especial consulto quien la dio
 								$sql_usuario_especial=db_query("Select * from ComentarioGarantia Where IDGarantia = '".$r->IDGarantia."' and IDEstadoGarantia = 10");
 								$row_usuario_especial = db_fetch_array($sql_usuario_especial);
-								echo "(<font style='color: #000;'>Por:" . get_field("Empleado","Nombre","IDEmpleado",$row_usuario_especial[IDEmpleado]) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_usuario_especial[IDEmpleado])." <br> ".$row_usuario_especial["Descripcion"]."</font>)";
+								echo "(<font style='color: #000;'>Por:" . get_field("Empleado","Nombre","IDEmpleado",$row_usuario_especial["IDEmpleado"]) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row_usuario_especial["IDEmpleado"])." <br> ".$row_usuario_especial["Descripcion"]."</font>)";
 							endif;
 
 

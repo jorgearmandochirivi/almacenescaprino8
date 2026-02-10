@@ -41,7 +41,7 @@
 
 									//insertar entrada
 									$identrada = get_maxID("Entrada", "IDEntrada");
-									$sql_entrada = "INSERT INTO Entrada VALUES('$identrada','$frm[Remision]','$frm[NumeroFactura]','$frm[Fecha]','$idpuntoref','$idtalla','$valor',NOW(),'$IDPuntoVenta')";
+										$sql_entrada = "INSERT INTO Entrada VALUES('$identrada','" . $frm['Remision'] . "','" . $frm['NumeroFactura'] . "','" . $frm['Fecha'] . "','$idpuntoref','$idtalla','$valor',NOW(),'$IDPuntoVenta')";
 									db_query($sql_entrada);
 
 									$sql_actualizacod = "UPDATE CodificacionEspecifica SET Existencias = '$existencias' WHERE IDPuntoVentaReferencia = '$idpuntoref' AND IDTalla = '$idtalla'";
@@ -74,9 +74,9 @@
 				entradapedido($frm);*/
 					db_query("COMMIT");
 
-					if ($msg <> 1):
-						echo "<script>window.open( 'Movimiento/popEntradas.php?Remision=" . $frm[Remision] . "','','width=500, height=500, scrollbars=1, resize=yes' );</script>";
-					endif;
+						if ($msg <> 1):
+							echo "<script>window.open( 'Movimiento/popEntradas.php?Remision=" . $frm['Remision'] . "','','width=500, height=500, scrollbars=1, resize=yes' );</script>";
+						endif;
 					break;
 				case "edit":
 					print_form($id, "update", "Actualizar $TitleMod", "Realizar Movimiento");
@@ -88,8 +88,8 @@
 				case "del":
 					print_form($id, "delete", "Eliminar $TitleMod", "Remover Registro");
 					break;
-				case "delete":
-					$_GET[action] = "";
+					case "delete":
+						$_GET['action'] = "";
 					delete($ID);
 					break;
 				case "list":
@@ -124,9 +124,21 @@
 		/*******************************************************************************************
 		funcion Listar
 		 *******************************************************************************************/
-		function list_r($frm, $newmode)
-		{
-			global $TitleMod, $MOD, $Table, $Key, $listar, $IDPuntoVenta, $_POST;
+			function list_r($frm, $newmode)
+			{
+				global $TitleMod, $MOD, $Table, $Key, $listar, $IDPuntoVenta, $_POST;
+				$referencias_csv = "";
+				if (is_array($frm) && isset($frm['Referencias'])) {
+					$referencias_csv = (string)$frm['Referencias'];
+				}
+				$referencias_ids = array();
+				foreach (explode(",", $referencias_csv) as $ref_id) {
+					$ref_id = (int)trim($ref_id);
+					if ($ref_id > 0) {
+						$referencias_ids[] = $ref_id;
+					}
+				}
+				$referencias_sql = !empty($referencias_ids) ? implode(",", $referencias_ids) : "0";
 
 			/*
 	 	$sql =  "SELECT * FROM Pendientes P, Referencia R, PuntoVentaReferencia PR 
@@ -139,7 +151,7 @@
 	 			*/
 			$sql =  "SELECT * FROM  Referencia R, PuntoVentaReferencia PR 
 	 				WHERE  PR.IDPuntoVenta = '$IDPuntoVenta' 
-	 				AND PR.IDPuntoVentaReferencia IN ($frm[Referencias])
+	 				AND PR.IDPuntoVentaReferencia IN ($referencias_sql)
 	 				AND PR.IDReferencia = R.IDReferencia 
 	 				ORDER BY R.Numero ASC";
 			$nav = new buildNav;
@@ -174,13 +186,13 @@
 				while ($r = db_fetch_array($result)) {
 					$array_referencias[$i] = $r;
 					//$sql_tallas = " SELECT * FROM Pendientes WHERE IDPuntoVenta = '$IDPuntoVenta' AND CantidadPendiente > 0 AND IDPuntoVentaReferencia = '$r[IDPuntoVentaReferencia]' ";
-					$sql_tallas = " SELECT * FROM CodificacionEspecifica WHERE IDPuntoVentaReferencia = '$r[IDPuntoVentaReferencia]' ";
-					$qry_tallas = db_query($sql_tallas);
-					$j = 0;
-					while ($r_tallas = db_fetch_array($qry_tallas)) {
-						$array_tallas[$r[IDPuntoVentaReferencia]][$j] = $r_tallas;
-						$j++;
-					} //end while
+						$sql_tallas = " SELECT * FROM CodificacionEspecifica WHERE IDPuntoVentaReferencia = '" . $r['IDPuntoVentaReferencia'] . "' ";
+						$qry_tallas = db_query($sql_tallas);
+						$j = 0;
+						while ($r_tallas = db_fetch_array($qry_tallas)) {
+							$array_tallas[$r['IDPuntoVentaReferencia']][$j] = $r_tallas;
+							$j++;
+						} //end while
 
 					if ($j > $colspan)
 						$colspan = $j;
@@ -191,23 +203,23 @@
 				} //end while
 
 
-				$sql_entradas = " SELECT E.*, R.Numero FROM Entrada E, PuntoVentaReferencia PR, Referencia R
-						WHERE E.Remision = '$frm[Remision]' 
-						AND E.IDPuntoVenta = '$IDPuntoVenta'
-						AND E.IDPuntoVentaReferencia = PR.IDPuntoVentaReferencia
-						AND PR.IDReferencia = R.IDReferencia
-						ORDER BY R.Numero";
+					$sql_entradas = " SELECT E.*, R.Numero FROM Entrada E, PuntoVentaReferencia PR, Referencia R
+							WHERE E.Remision = '" . $frm['Remision'] . "' 
+							AND E.IDPuntoVenta = '$IDPuntoVenta'
+							AND E.IDPuntoVentaReferencia = PR.IDPuntoVentaReferencia
+							AND PR.IDReferencia = R.IDReferencia
+							ORDER BY R.Numero";
 				$qry_entradas = db_query($sql_entradas);
 				while ($r_entradas = db_fetch_array($qry_entradas)) {
 
-					if (empty($array_tallas_ya[$r_entradas[Numero]][$r_entradas[IDTalla]]))
-						$tallas++;
+						if (empty($array_tallas_ya[$r_entradas['Numero']][$r_entradas['IDTalla']]))
+							$tallas++;
 
-					$array_entradas_ya[$r_entradas[Numero]][$r_entradas[IDTalla]] = $r_entradas[Cantidad];
-					$array_tallas_ya[$r_entradas[Numero]][$r_entradas[IDTalla]]++;
+						$array_entradas_ya[$r_entradas['Numero']][$r_entradas['IDTalla']] = $r_entradas['Cantidad'];
+						$array_tallas_ya[$r_entradas['Numero']][$r_entradas['IDTalla']]++;
 
-					if (empty($array_tallas_ya[$r_entradas[Numero]][$r_entradas[IDTalla]]))
-						$tallas++;
+						if (empty($array_tallas_ya[$r_entradas['Numero']][$r_entradas['IDTalla']]))
+							$tallas++;
 				} //ed while
 
 
@@ -246,18 +258,18 @@
 							<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline">
 								<tr>
 									<?php
-									if (empty($frm[Remision]))
-										$frm[Remision] = get_maxID("Entrada WHERE IDPuntoVenta = '$IDPuntoVenta'", "Remision");
-									?>
-									<td class="col1" nowrap>Entrada No.</td>
-									<td class="col2"><input type="input" name="Remision" readonly value="<?= $frm[Remision] ?>" class="tbox" id="Remision"></td>
-									<td class="col1" nowrap>Numero de Factura</td>
-									<td class="col2"><input type="input" name="NumeroFactura" readonly value="<?= $frm[NumeroFactura] ?>" class="tbox" required></td>
+										if (empty($frm['Remision']))
+											$frm['Remision'] = get_maxID("Entrada WHERE IDPuntoVenta = '$IDPuntoVenta'", "Remision");
+										?>
+										<td class="col1" nowrap>Entrada No.</td>
+										<td class="col2"><input type="input" name="Remision" readonly value="<?= $frm['Remision'] ?>" class="tbox" id="Remision"></td>
+										<td class="col1" nowrap>Numero de Factura</td>
+										<td class="col2"><input type="input" name="NumeroFactura" readonly value="<?= $frm['NumeroFactura'] ?>" class="tbox" required></td>
 								</tr>
 								<tr>
 									<td class="col1" nowrap>Fecha</td>
 									<td class="col2" nowrap>
-										<input type="input" name="Fecha" readonly value="<?= $frm[Fecha] ?>" id="Fecha" class="tbox">
+											<input type="input" name="Fecha" readonly value="<?= $frm['Fecha'] ?>" id="Fecha" class="tbox">
 									</td>
 									<td class="col1" colspan="2">
 
@@ -277,14 +289,14 @@
 								foreach ($array_entradas_ya as $key => $valor) {
 
 									$class = repetition() ? "col1list" : "col2list";
-									$tamanoarray = count($array_tallas[$valor[IDPuntoVentaReferencia]]);
+										$tamanoarray = isset($array_tallas_ya[$key]) ? count($array_tallas_ya[$key]) : 0;
 									$columnasmas = $colspan - $tamanoarray;
 								?>
 
 									<tr>
 										<td nowrap class="navpic"></td>
 										<?php
-										foreach ($array_tallas_ya[$key] as $idtalla => $numerodetallas) {
+											foreach (($array_tallas_ya[$key] ?? array()) as $idtalla => $numerodetallas) {
 										?>
 											<td nowrap class="navpic"><b><?php echo get_field("Talla", "Descripcion", "IDTalla", $idtalla); ?></b></td>
 										<?php
@@ -338,16 +350,16 @@
 								foreach ($array_referencias as $key => $valor) {
 
 									$class = repetition() ? "col1list" : "col2list";
-									$tamanoarray = count($array_tallas[$valor[IDPuntoVentaReferencia]]);
+											$tamanoarray = isset($array_tallas[$valor['IDPuntoVentaReferencia']]) ? count($array_tallas[$valor['IDPuntoVentaReferencia']]) : 0;
 									$columnasmas = $colspan - $tamanoarray;
 								?>
 
 									<tr>
 										<td nowrap class="<?= $class ?>"></td>
 										<?php
-										foreach ($array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos) {
-										?>
-											<td nowrap class="<?= $class ?>"><b><?php echo get_field("Talla", "Descripcion", "IDTalla", $datos[IDTalla]); ?></b></td>
+												foreach (($array_tallas[$valor['IDPuntoVentaReferencia']] ?? array()) as $preferencia => $datos) {
+											?>
+												<td nowrap class="<?= $class ?>"><b><?php echo get_field("Talla", "Descripcion", "IDTalla", $datos['IDTalla']); ?></b></td>
 										<?php
 										}
 										//anadir las columnas que falten (DISENO)
@@ -363,26 +375,26 @@
 									</tr>
 
 									<tr>
-										<td nowrap class="<?= $class ?>"><?php echo get_field("Referencia", "Numero", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", $valor[IDPuntoVentaReferencia])) ?></td>
-										<?php
-										$TIngreso = 0;
-										foreach ($array_tallas[$valor[IDPuntoVentaReferencia]] as $preferencia => $datos) {
-										?>
-											<td nowrap class="<?= $class ?>">
+											<td nowrap class="<?= $class ?>"><?php echo get_field("Referencia", "Numero", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", $valor['IDPuntoVentaReferencia'])) ?></td>
+											<?php
+											$TIngreso = 0;
+												foreach (($array_tallas[$valor['IDPuntoVentaReferencia']] ?? array()) as $preferencia => $datos) {
+											?>
+												<td nowrap class="<?= $class ?>">
 												<?php //echo number_format($datos[CantidadPendiente]); 
 												?><br>
-												<input type="hidden" name="IDPuntoVentaReferencia[<?= $datos[IDPuntoVentaReferencia] ?>]" value="<?= $datos[IDPuntoVentaReferencia] ?>">
-												<input type="hidden" name="IDTalla[<?= $datos[IDPuntoVentaReferencia] ?>][<?= $datos[IDTalla] ?>]" value="<?= $datos[IDTalla] ?>">
-												<?php
-												$pend = $datos[IDPendientes];
-												$Ingr = $_POST[Ingreso];
-												$TIngreso += $frm["Ingreso"][$datos[IDPuntoVentaReferencia]][$datos[IDTalla]];
-												$ingresotalla = $frm["Ingreso"][$datos[IDPuntoVentaReferencia]][$datos[IDTalla]];
-												$TPares += $Ingr[$pend];
-												?>
-												<input type="text" size="5" name="Ingreso[<?= $datos[IDPuntoVentaReferencia] ?>][<?= $datos[IDTalla] ?>]" value="<?php echo $ingresotalla ?>">
-												<input type="hidden" name="IDPendientes[<?= $datos[IDPendientes] ?>]" value="<?= $datos[IDPendientes] ?>">
-											</td>
+													<input type="hidden" name="IDPuntoVentaReferencia[<?= $datos['IDPuntoVentaReferencia'] ?>]" value="<?= $datos['IDPuntoVentaReferencia'] ?>">
+													<input type="hidden" name="IDTalla[<?= $datos['IDPuntoVentaReferencia'] ?>][<?= $datos['IDTalla'] ?>]" value="<?= $datos['IDTalla'] ?>">
+													<?php
+													$pend = $datos['IDPendientes'];
+														$Ingr = (isset($_POST['Ingreso']) && is_array($_POST['Ingreso'])) ? $_POST['Ingreso'] : array();
+														$TIngreso += (int)($frm["Ingreso"][$datos['IDPuntoVentaReferencia']][$datos['IDTalla']] ?? 0);
+														$ingresotalla = (int)($frm["Ingreso"][$datos['IDPuntoVentaReferencia']][$datos['IDTalla']] ?? 0);
+														$TPares += (int)($Ingr[$pend] ?? 0);
+													?>
+													<input type="text" size="5" name="Ingreso[<?= $datos['IDPuntoVentaReferencia'] ?>][<?= $datos['IDTalla'] ?>]" value="<?php echo $ingresotalla ?>">
+													<input type="hidden" name="IDPendientes[<?= $datos['IDPendientes'] ?>]" value="<?= $datos['IDPendientes'] ?>">
+												</td>
 
 										<?php
 										}

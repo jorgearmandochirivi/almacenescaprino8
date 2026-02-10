@@ -155,14 +155,14 @@ if( !empty( $referencia ) )
 	
 	$sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta WHERE Publicar = 'S' ";
 	$qry_puntos = db_query( $sql_puntos );
-	while( $r_puntos = db_fetch_array( $qry_puntos ) )
-		$array_puntos[$r_puntos[IDPuntoVenta]] = $r_puntos[Nombre];
+		while( $r_puntos = db_fetch_array( $qry_puntos ) )
+			$array_puntos[$r_puntos["IDPuntoVenta"]] = $r_puntos["Nombre"];
  	
  	//Tallas
 	$sql_tallas = " SELECT IDTalla, Descripcion FROM Talla ";
 	$qry_tallas = db_query( $sql_tallas );
-	while( $r_tallas = db_fetch_array( $qry_tallas ) )
-		$array_tallas[$r_tallas[IDTalla]] = $r_tallas[Descripcion];
+		while( $r_tallas = db_fetch_array( $qry_tallas ) )
+			$array_tallas[$r_tallas["IDTalla"]] = $r_tallas["Descripcion"];
 	 	
 	 	 $sql = " SELECT F.IDPuntoVenta as IDPuntoFactura,DF.Cantidad, DF.IDPuntoVenta, R.Numero, CE.IDTalla FROM $Table CE, Referencia R, PuntoVentaReferencia PR, Factura F, DetalleFactura DF
 	 				WHERE R.Numero LIKE '%$referencia%' 
@@ -186,9 +186,9 @@ if( !empty( $referencia ) )
 						$r = array( );
 						while($r_codificacionesp = db_fetch_array($query_codificacion))
 						{	
-							if($r_codificacionesp[IDPuntoFactura]==$r_codificacionesp[IDPuntoVenta]):
-								$array_ventas[ $r_codificacionesp[IDPuntoVenta] ][ $r_codificacionesp[IDTalla] ] += $r_codificacionesp[Cantidad];
-								$array_tallas_mostrar[ $r_codificacionesp[IDTalla] ] = $array_tallas[ $r_codificacionesp[IDTalla] ];
+							if($r_codificacionesp["IDPuntoFactura"]==$r_codificacionesp["IDPuntoVenta"]):
+								$array_ventas[ $r_codificacionesp["IDPuntoVenta"] ][ $r_codificacionesp["IDTalla"] ] += $r_codificacionesp["Cantidad"];
+								$array_tallas_mostrar[ $r_codificacionesp["IDTalla"] ] = $array_tallas[ $r_codificacionesp["IDTalla"] ];
 							endif;	
 						} //end while($r[$i] = db_fetch_array($query_codificacion))
 						//print_r($r);

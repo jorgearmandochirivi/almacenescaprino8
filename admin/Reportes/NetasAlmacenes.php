@@ -57,6 +57,8 @@ function print_from($Mes="", $Ano=""){
 
 
  $IVABD=$IVA;
+ $Fechas = array();
+ $tarray_facturas = array();
 
   if(strtotime($Fecha)<=strtotime("2017-01-31")):
  	$IVA = 0.16;
@@ -132,13 +134,13 @@ function print_from($Mes="", $Ano=""){
 				while( $r_puntos = db_fetch_array( $qry_puntos ) )
 				{
 
-					$array_puntos[ $r_puntos[IDPuntoVenta] ] = $r_puntos[Nombre];
+					$array_puntos[ $r_puntos["IDPuntoVenta"] ] = $r_puntos["Nombre"];
 					$array_factura_con_comision=array();
 
 					$sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, R.Numero, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura ,
 					DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 										FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P
-										WHERE F.IDPuntoVenta = '$r_puntos[IDPuntoVenta]'
+										WHERE F.IDPuntoVenta = '".$r_puntos["IDPuntoVenta"]."'
 										AND DATE_FORMAT( F.FechaFactura,'%c' ) = '$Mes' AND DATE_FORMAT( F.FechaFactura,'%Y' ) = '$Ano'
 										AND F.IDFactura = DF.IDFactura
 										AND F.IDPuntoVenta = DF.IDPuntoVenta
@@ -150,7 +152,7 @@ function print_from($Mes="", $Ano=""){
 					$sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, F.IDCliente, R.Numero, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura, F.ValorBono as ValorBono,
 										DF.IVA, DF.IDDetalleFactura, DF.ReteIVA, DF.ReteICA, F.IDFactura, F.IDPuntoVenta, DATE_FORMAT( F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 										FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P
-										WHERE F.IDPuntoVenta = '$r_puntos[IDPuntoVenta]'
+										WHERE F.IDPuntoVenta = '".$r_puntos["IDPuntoVenta"]."'
 										AND DATE_FORMAT( F.FechaFactura,'%c' ) = '$Mes' AND DATE_FORMAT( F.FechaFactura,'%Y' ) = '$Ano'
 										AND F.IDFactura = DF.IDFactura
 										AND F.IDPuntoVenta = DF.IDPuntoVenta
@@ -162,7 +164,7 @@ function print_from($Mes="", $Ano=""){
 					$sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, F.IDCliente, R.Numero, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura, F.ValorBono as ValorBono,
 										DF.IVA, DF.IDDetalleFactura, DF.ReteIVA, DF.ReteICA, F.IDFactura, F.IDPuntoVenta, DATE_FORMAT( F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 										FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P
-										WHERE F.IDPuntoVenta = '$r_puntos[IDPuntoVenta]'
+										WHERE F.IDPuntoVenta = '".$r_puntos["IDPuntoVenta"]."'
 										AND DATE_FORMAT( F.FechaFactura,'%c' ) = '$Mes' AND DATE_FORMAT( F.FechaFactura,'%Y' ) = '$Ano'
 										AND F.IDFactura = DF.IDFactura
 										AND F.IDPuntoVenta = DF.IDPuntoVenta
@@ -173,7 +175,7 @@ function print_from($Mes="", $Ano=""){
 					$sql_facturasant = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, F.ValorBono, DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF,F.Descuento as DescuentoFactura,DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoPar
 
 										FROM Factura F, DetalleFactura DF
-										WHERE F.IDPuntoVenta = '$r_puntos[IDPuntoVenta]'
+										WHERE F.IDPuntoVenta = '".$r_puntos["IDPuntoVenta"]."'
 										AND DATE_FORMAT( F.FechaFactura,'%c' ) = '$Mes' AND DATE_FORMAT( F.FechaFactura,'%Y' ) = '$Ano'
 
 										AND F.IDFactura = DF.IDFactura
@@ -276,7 +278,7 @@ function print_from($Mes="", $Ano=""){
 								$numero_factura_ant = $valor['NumeroFactura'];
 
 
-							$TotalFactura = $valor[ValorTotal] ;
+								$TotalFactura = $valor["ValorTotal"] ;
 
 							
 
@@ -303,7 +305,7 @@ function print_from($Mes="", $Ano=""){
 
 
 												//consultar forma de pago pa saber si se le resta
-												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '".$r_puntos["IDPuntoVenta"]."' ";
+													$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '".$r_puntos["IDPuntoVenta"]."' ";
 												$qry_formasdepago = db_query( $sql_formasdepago );
 												$saldo = 0;
 												while( $r_formasdepago = db_fetch_object( $qry_formasdepago ) ){
@@ -379,14 +381,14 @@ function print_from($Mes="", $Ano=""){
 												//Traer Comision
 												$pcomision = 0;
 												$comision = 0;
-												if($array_factura_con_comision[$valor[IDFactura]]["Calculada"]=="S"){
-													$array_forma_pago[ $valor[IDFactura] ][ValorComision]=0;
-												}
-												else{
-													$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$valor[IDPuntoVenta]' ";
-													$qry_comisiones = db_Query( $sql_comisiones );
-													$array_forma_pago = array();
-													$k = 0;
+													if($array_factura_con_comision[$valor["IDFactura"]]["Calculada"]=="S"){
+														$array_forma_pago[ $valor["IDFactura"] ]["ValorComision"]=0;
+													}
+													else{
+														$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '".$valor["IDPuntoVenta"]."' ";
+														$qry_comisiones = db_Query( $sql_comisiones );
+														$array_forma_pago = array();
+														$k = 0;
 													while( $r_comisiones = db_fetch_object( $qry_comisiones ) )
 													{
 														$pcomision = $r_comisiones->Comision / 100;
@@ -395,11 +397,11 @@ function print_from($Mes="", $Ano=""){
 														$comisioncalculo=( $r_comisiones->Valor / (1 + $IVA) ) * $pcomision;
 														$comision +=  ( $valorparcial / (1 + $IVABD) ) * $pcomision;
 														$k++;
-														$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][IDFormaPago] = $r_comisiones->IDFormaPago;
-														$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][Valor] = $r_comisiones->Valor;
-														$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][Comision] = $r_comisiones->Comision;
-														$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][IDBanco] = $r_comisiones->IDBanco;
-														$array_forma_pago[ $valor[IDFactura] ][ValorComision] += $comisioncalculo;
+															$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["IDFormaPago"] = $r_comisiones->IDFormaPago;
+															$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["Valor"] = $r_comisiones->Valor;
+															$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["Comision"] = $r_comisiones->Comision;
+															$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["IDBanco"] = $r_comisiones->IDBanco;
+															$array_forma_pago[ $valor["IDFactura"] ]["ValorComision"] += $comisioncalculo;
 
 														
 
@@ -408,13 +410,13 @@ function print_from($Mes="", $Ano=""){
 
 													
 
-													$array_factura_con_comision[$valor[IDFactura]]["Calculada"]="S";
+														$array_factura_con_comision[$valor["IDFactura"]]["Calculada"]="S";
 
 												}
 
 												$ComisionBancos += $comisioncalculo;
 
-												$valorbruto = $valorparcial - ($array_forma_pago[ $valor[IDFactura] ][ValorComision]) ;
+													$valorbruto = $valorparcial - ($array_forma_pago[ $valor["IDFactura"] ]["ValorComision"]) ;
 												//$valorbruto = $valorparcial;
 
 											if($valorbruto<0 || $valor["ValorTotal"]==0):
@@ -459,7 +461,7 @@ function print_from($Mes="", $Ano=""){
 						$array_facturas[ $valor['FechaFacturaF'] ][ $r_puntos["IDPuntoVenta"] ] += $valorbruto;
 
 						//Totales Array
-						$tarray_facturas[ $r_puntos[IDPuntoVenta] ] += $valorbruto;
+							$tarray_facturas[ $r_puntos["IDPuntoVenta"] ] += $valorbruto;
 
 						//Totales Array
 						$tarray_facturasfecha[ $valor['FechaFacturaF'] ] += $valorbruto;
@@ -482,7 +484,9 @@ function print_from($Mes="", $Ano=""){
 
 				}//end while puntos
 
-				asort( $Fechas );
+				if (!empty($Fechas)) {
+					asort($Fechas);
+				}
 
 				?>
 
@@ -561,7 +565,7 @@ function print_from($Mes="", $Ano=""){
 							<?php
 							}
 							?>
-							<td class="titlemedium" align="right" nowrap><?php echo number_format( array_sum( $tarray_facturas ) , 2)?></td>
+							<td class="titlemedium" align="right" nowrap><?php echo number_format(is_array($tarray_facturas) ? array_sum($tarray_facturas) : 0, 2)?></td>
 							<td class="titlemedium" align="right" nowrap><?php echo number_format( $GranTotalAddi, 2)?></td>
 							<td class="titlemedium" align="right" nowrap><?php echo number_format( $GranTotalBold, 2)?></td>
 							

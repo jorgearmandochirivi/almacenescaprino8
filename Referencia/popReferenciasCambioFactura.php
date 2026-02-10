@@ -60,7 +60,7 @@ function make_qry_string_repuestos($frm){
 	$select = "Select * From $Table ";
 	
 		if(!empty($frm['field']))
-			$where = " Where $frm[field] LIKE '%$frm[QryString]%' AND Publicar = 'S' ORDER BY Numero ASC ";
+			$where = " Where {$frm['field']} LIKE '%{$frm['QryString']}%' AND Publicar = 'S' ORDER BY Numero ASC ";
         else
 			$where = " Where Publicar = 'S' ORDER BY Numero ASC ";
 	
@@ -167,7 +167,7 @@ $array_tallas = array();
 							<td class="titulodetablas">Nombre</td>
 							<?php 							foreach( $array_tallas as $key => $tallas )
 							{
-								$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
+								$talla = get_field( "Talla","Descripcion","IDTalla",$tallas['IDTalla'] );
 							?>
 							<td width="50" class="titulodetablas" align="center"><?php echo $talla; ?></td>
 							<?php 							}//end foreach
@@ -182,9 +182,7 @@ $array_tallas = array();
 							?>
 							<td class="<?=$class?>" align="left"><?php 											
 
-										$talla = get_field( "Talla","Descripcion","IDTalla",$tallas[IDTalla] );
-										
-										/**********Consulta de Valor de la Referencia***********/
+									$talla = get_field( "Talla","Descripcion","IDTalla",$tallas['IDTalla'] );
 										
 										$Precio = get_field("Precio","ValorVenta","IDPrecio",$r->IDPrecio);
 										$Descuento = get_field("Precio","Descuento","IDPrecio",$r->IDPrecio);
@@ -196,7 +194,7 @@ $array_tallas = array();
 										
 										/********Fin Consulta de Valor de la Referencia*********/
 										
-											echo "<a href=\"javascript:window.opener.selreferenciac('".$r->Numero."','".$r->Nombre."','".$talla."','".$tallas[IDCodificacionEspecifica]."','".$cont."','".$tallas[Existencias]."','".$ValorUnitario."','".$Descuento."');javascript:window.close()\">";
+											echo "<a href=\"javascript:window.opener.selreferenciac('".$r->Numero."','".$r->Nombre."','".$talla."','{$tallas['IDCodificacionEspecifica']}','".$cont."','{$tallas['Existencias']}','".$ValorUnitario."','".$Descuento."');javascript:window.close()\">";
 										
 											
 										echo "Sel";

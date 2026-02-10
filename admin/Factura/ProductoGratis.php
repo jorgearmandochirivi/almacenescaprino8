@@ -19,7 +19,7 @@ if($permisos[0] >= 2)
 				
 				$frm= vars_LOG($_POST);
 				
-				$sql_verifica = " SELECT * FROM Referencia WHERE Numero = '$frm[Numero]' ";
+				$sql_verifica = " SELECT * FROM Referencia WHERE Numero = '".$frm["Numero"]."' ";
 				$qry_verifica = db_query( $sql_verifica );
 				if( db_num_rows( $qry_verifica ) > 0 )
 				{
@@ -91,7 +91,7 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$_GET[action]="";
+				$_GET["action"]="";
 				delete($ID);
 			break;
 			case "list" :	
@@ -322,10 +322,11 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 		Global $TitleMod,$MOD,$Table,$Key,$listar;
 
 				// selecciono las facturas que contienen la promocion	
-			$sql_referencia_promocion=db_query("SELECT IDFactura FROM Factura where ObservacionDescuento = 'pague 2 lleva 3'");
-			while($result_referencia=db_fetch_array($sql_referencia_promocion)){
-				$array_referencia[]=$result_referencia[IDFactura];
-			}
+				$array_referencia = array();
+				$sql_referencia_promocion=db_query("SELECT IDFactura FROM Factura where ObservacionDescuento = 'pague 2 lleva 3'");
+				while($result_referencia=db_fetch_array($sql_referencia_promocion)){
+					$array_referencia[]=$result_referencia["IDFactura"];
+				}
 			
 			$id_factura=implode(",",$array_referencia);
 			if(empty($id_factura))

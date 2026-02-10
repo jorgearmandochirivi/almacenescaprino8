@@ -359,20 +359,24 @@ function ventacambio( $frm )
 
 		$ValorU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$ValorU]);
 		$PrecioU = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/","",$frm[$PrecioU]).".00";
+		$DescuentoRef = $frm[$DescuentoRef];
 
-
-		db_query( $str_insert_detalle );
-
-		$str_insert_detalle = "";
-
-		//descargar de inventario
-		if( $i >= 10 )
+		if( !empty( $frm[$Cantidad] ) )
 		{
-			$str_actualiza_inventario  = "UPDATE CodificacionEspecifica SET Existencias = Existencias - '$frm[$Cantidad]' WHERE IDCodificacionEspecifica = '$frm[$IDCodificacion]'";
-			db_query( $str_actualiza_inventario );
-		}
+			$str_insert_detalle  = "INSERT INTO DetalleCambio ( IDDetalleCambio,IDCambio,IDPuntoVenta,IDCodificacionEspecificaCambio,IDCodificacionEspecifica,Cantidad,ValorU,PrecioU,DescuentoRef,UsuarioTrCr,FechaTrCr ) ";
+			$str_insert_detalle .= "VALUES ( '$iddetalle','".$frm["IDCambio"]."','".$frm["IDPuntoVenta"]."','".$frm[$IDCodificacionCambio]."','".$frm[$IDCodificacion]."','".$frm[$Cantidad]."','$ValorU','$PrecioU','$DescuentoRef','".$frm["UsuarioTrCr"]."','".$frm["FechaTrCr"]."' )";
+			db_query( $str_insert_detalle );
+
+			//descargar de inventario
+			if( $i >= 10 )
+			{
+				$str_actualiza_inventario  = "UPDATE CodificacionEspecifica SET Existencias = Existencias - '$frm[$Cantidad]' WHERE IDCodificacionEspecifica = '$frm[$IDCodificacion]'";
+				db_query( $str_actualiza_inventario );
+			}
 			//insertar el log
 			insertlog($ID_Usuario,"DetalleCambio",$iddetalle,"Insertar",$str_insert_detalle);
+			$str_insert_detalle = "";
+		}
 		
 	}//end for($i = 1; $i < $Items; $i++)
 	//exit;

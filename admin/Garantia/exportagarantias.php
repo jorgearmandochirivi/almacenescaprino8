@@ -7,7 +7,7 @@
         return preg_replace( '/[\n\r\t]+/', '', $str);
     }
 
-  $sql_garantias = $_GET[sql];
+  $sql_garantias = $_GET["sql"];
 	$sql_garantias=str_replace("ORDER BY"," ORDER BY ",$sql_garantias);
 	$sql_garantias=str_replace("Group By"," Group By ",$sql_garantias);
 
@@ -114,9 +114,9 @@
 			echo $row["CantidadVeces"] . $sep;
 			echo substr($row["FechaTrCr"],0,10) . $sep;
 			echo $row["FechaEstimadaEntrega"] . $sep;
-			$id_cliente=$r_factura[IDCliente];
-			if($row[Mayorista]=="S"){
-				echo sanitizeTabReturn($row[NombreMayorista]) . $sep;
+			$id_cliente=$r_factura["IDCliente"];
+			if($row["Mayorista"]=="S"){
+				echo sanitizeTabReturn($row["NombreMayorista"]) . $sep;
 				//echo $row[IdentificacionMayorista	] . $sep;
 				//echo $row[Telefono] . $sep;
 				//echo $row[Celular] . $sep;
@@ -133,8 +133,8 @@
 
 			echo sanitizeTabReturn(get_field("Cliente","ClubSuavidad","IDCliente",$id_cliente)) . $sep;
 			echo sanitizeTabReturn(get_field("PuntoVenta","Nombre","IDPuntoVenta",$row["IDPuntoVenta"])) . $sep;
-			if($row[Mayorista]=="S")
-				echo $row[IngresadoPor] . $sep;
+			if($row["Mayorista"]=="S")
+				echo $row["IngresadoPor"] . $sep;
 			else
 				echo sanitizeTabReturn(get_field("Empleado","Nombre","IDEmpleado",$row["IDEmpleado"]) . " " . get_field("Empleado","Apellidos","IDEmpleado",$row["IDEmpleado"])) . $sep;
 			//Producto
@@ -149,18 +149,18 @@
 
 			//REFERENCIA DEL PRODUCTO TALLA TIPO
 
-					if($row[Mayorista]=="S"){
-						echo sanitizeTabReturn($row[ColorMayorista]) . $sep;
+					if($row["Mayorista"]=="S"){
+						echo sanitizeTabReturn($row["ColorMayorista"]) . $sep;
 					}
-					elseif ($row[TipoRegistro]=="Reproceso"){
-						echo sanitizeTabReturn(get_field("Referencia","Numero","IDReferencia",$row[IDReferencia])) . $sep;
-						$id_proveedor_ref = get_field("Referencia","IDProveedor","IDReferencia",$row[IDReferencia]);
-						$tallap=get_field("Talla","Descripcion","IDTalla",$row[IDTalla]);
-						$id_tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$row[IDReferencia]);
+					elseif ($row["TipoRegistro"]=="Reproceso"){
+						echo sanitizeTabReturn(get_field("Referencia","Numero","IDReferencia",$row["IDReferencia"])) . $sep;
+						$id_proveedor_ref = get_field("Referencia","IDProveedor","IDReferencia",$row["IDReferencia"]);
+						$tallap=get_field("Talla","Descripcion","IDTalla",$row["IDTalla"]);
+						$id_tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$row["IDReferencia"]);
 						$tipop= get_field("TipoReferencia","Descripcion","IDTipoReferencia",$id_tipo_ref);
 					}
-					elseif(!empty($row[IDDetalleFacturaBono])){
-						$array_bono_detalle=explode("|",$row[IDDetalleFacturaBono]);
+					elseif(!empty($row["IDDetalleFacturaBono"])){
+						$array_bono_detalle=explode("|",$row["IDDetalleFacturaBono"]);
 						if (count($array_bono_detalle)>0):
 							$sql_bono=db_query("Select * From DetalleFacturaBono Where IDDetalleFacturaBono	 = '".$array_bono_detalle[1]."' and IDFacturaBono = '".$array_bono_detalle[0]."'");
 							$r_bono=db_fetch_array($sql_bono);
@@ -178,14 +178,14 @@
 					}
 
 
-					elseif(empty($row[IDDetalleCambio])){
+					elseif(empty($row["IDDetalleCambio"])){
 						  $id_referencia_item="";
-						  $id_punto_venta=$row[IDPuntoVentaFactura];
+						  $id_punto_venta=$row["IDPuntoVentaFactura"];
 
 						  if ($row["TipoFactura"]=="facturabono"):
-							$sql_producto="select * from DetalleFacturaBono Where IDDetalleFacturaBono='".$row[IDDetalleFactura]."' and IDFacturaBono = '".$row["IDFactura"]."' and IDPuntoVenta = '".$id_punto_venta."'";
+							$sql_producto="select * from DetalleFacturaBono Where IDDetalleFacturaBono='".$row["IDDetalleFactura"]."' and IDFacturaBono = '".$row["IDFactura"]."' and IDPuntoVenta = '".$id_punto_venta."'";
 						  else:
-							$sql_producto="select * from DetalleFactura Where IDDetalleFactura='".$row[IDDetalleFactura]."' and IDFactura = '".$row[IDFactura]."' and IDPuntoVenta = '".$id_punto_venta."'";
+							$sql_producto="select * from DetalleFactura Where IDDetalleFactura='".$row["IDDetalleFactura"]."' and IDFactura = '".$row["IDFactura"]."' and IDPuntoVenta = '".$id_punto_venta."'";
 						  endif;
 
 						  //$sql_producto="select * from DetalleFactura Where IDDetalleFactura='".$row[IDDetalleFactura]."' and IDFactura = '".$row[IDFactura]."' and IDPuntoVenta = '".$id_punto_venta."'";
@@ -196,10 +196,10 @@
 
 
 						if ($id_referencia_item==160){ // Cuando son excedentes consulto la referencia de la compra
-							$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$row[IDFactura]."' and IDPuntoVenta = '".$row[IDPuntoVentaFactura]."'");
-							$r_facturabono=db_fetch_array($sql_facturabono);
-							if (!empty($r_facturabono[IDFacturaBono])){
-								$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono[IDFacturaBono]."'");
+								$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$row["IDFactura"]."' and IDPuntoVenta = '".$row["IDPuntoVentaFactura"]."'");
+								$r_facturabono=db_fetch_array($sql_facturabono);
+								if (!empty($r_facturabono["IDFacturaBono"])){
+									$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono["IDFacturaBono"]."'");
 								$r_detallefacturabono=db_fetch_array($sql_detallefacturabono);
 								$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
 								$tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"]));
@@ -214,7 +214,7 @@
 						  $tipop=get_field("TipoReferencia","Descripcion","IDTipoReferencia",$id_tipo_ref);
 					}
 					else{
-						$array_cambio_detalle=explode("|",$row[IDDetalleCambio]);
+						$array_cambio_detalle=explode("|",$row["IDDetalleCambio"]);
 						if (count($array_cambio_detalle)>0):
 							$sql_cambio=db_query("Select * From DetalleCambio Where IDDetalleCambio = '".$array_cambio_detalle[1]."' and IDCambio = '".$array_cambio_detalle[0]."'");
 							$r_cambio=db_fetch_array($sql_cambio);
@@ -230,8 +230,8 @@
 					}
 
 
-					if($row[Mayorista]=="S"){
-						echo $tallap=get_field("Talla","Descripcion","IDTalla",$row[IDTalla]) . $sep;
+					if($row["Mayorista"]=="S"){
+						echo $tallap=get_field("Talla","Descripcion","IDTalla",$row["IDTalla"]) . $sep;
 					}
 					else{
 						if ($tallap!="")
@@ -241,8 +241,8 @@
 
 					}
 
-					if($row[Mayorista]=="S"){
-						echo sanitizeTabReturn($row[TipoProductoMayorista]) . $sep;
+					if($row["Mayorista"]=="S"){
+						echo sanitizeTabReturn($row["TipoProductoMayorista"]) . $sep;
 					}
 					else{
 						echo $tipop . $sep;
@@ -289,7 +289,7 @@
 			else{
 				echo " " . $sep;
 			}
-			echo sanitizeTabReturn(eregi_replace("[\n|\r|\n\r]", " ", $row["TipoOtro"])) . $sep;
+			echo sanitizeTabReturn(preg_replace("[\n|\r|\n\r]", " ", $row["TipoOtro"])) . $sep;
 
 			echo $row["FechaSalidaAlmacen"] . $sep;
 			//Fecha Enviada Reparacion
@@ -310,12 +310,12 @@
 			$r_fechaaut=db_fetch_object($qry_fechaaut);
 			echo substr($r_fechaaut->FechaComentario,0,10) . $sep;
 			//Descripcion autorizacion Especial
-			//echo eregi_replace("[\n|\r|\n\r]", " ", $r_fechaaut->Descripcion) . $sep;
+			//echo preg_replace("[\n|\r|\n\r]", " ", $r_fechaaut->Descripcion) . $sep;
 			echo get_field("TipoFinalizacionGarantia","Nombre","IDTipoFinalizacionGarantia",$row["IDTipoFinalizacionGarantia"]) . $sep;
 
 			echo $row["FechaEntradaAlmacen"] . $sep;
 			echo $row["FechaEntregaCliente"] . $sep;
-			echo sanitizeTabReturn(eregi_replace("[\n|\r|\n\r]", " ", $row["Descripcion"])) . $sep;
+			echo sanitizeTabReturn(preg_replace("[\n|\r|\n\r]", " ", $row["Descripcion"])) . $sep;
 
 			print "\n";
 

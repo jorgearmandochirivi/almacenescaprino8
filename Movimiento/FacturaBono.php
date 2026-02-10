@@ -1387,83 +1387,54 @@ function print_form($id, $newmode, $title, $submit_caption)
 
 		} //end function
 
-		<
-		/script> <
-		br >
-			<
-			table border = "0"
+		</script> 
+		<br >
+			<table border = "0"
 		cellpadding = "0"
 		cellspacing = "0"
 		class = "tbt"
 		align = "center"
 		width = "595" >
 
-			<
-			tr >
-			<
-			td class = "tbtl" > < img src = "images/spacer.gif"
+			<tr>
+			<td class = "tbtl" > <img src = "images/spacer.gif"
 		alt = ""
 		width = "22"
 		height = "22" / >
-			<
-			/td> <
-		td class = "tbtbot" > < b > < /b> <
-		span class = "gen" >
-		<?= $title ?> <
-			/span> < /
-		td > <
-			td class = "tbtr" >
-			<
-			img src = "images/spacer.gif"
+			</td> <td class = "tbtbot" > <b> </b> <span class = "gen" >
+		<?= $title ?> </span> </td > <td class = "tbtr" >
+			<img src = "images/spacer.gif"
 		alt = ""
 		width = "124"
-		height = "22" / >
-			<
-			/td> < /
-		tr > <
-			/table> <
-		FORM name = "frm"
+		height = "22" />
+			</td> </tr > </table> 
+			<FORM name = "frm"
 		method = "post"
 		enctype = "multipart/form-data"
 		action = "<?= $PHP_SELF ?>"
 		<?php if ($newmode != "delete") { ?>onsubmit = "disable(this);return EvaluarFunciones(this , Check);"
 		<?php } ?> >
-			<
-			table class = "forumline"
+			<table class = "forumline"
 		width = "580"
 		cellspacing = "1"
 		border = "0"
 		align = "center" >
-			<
-			tr >
-			<
-			td width = "100%" >
-			<
-			table width = "100%"
+			<tr >
+			<td width = "100%" >
+			<table width = "100%"
 		border = 0 cellspacing = 0 cellpadding = 0 class = texto bgcolor = "#ffffff" >
 
-			<
-			tr >
-			<
-			td colspan = "2"
+			<tr >
+			<td colspan = "2"
 		width = "100%" >
 
-			<
-			div align = "center" >
-			<
-			table width = "100%"
-		border = 0 align = "center" >
-			<
-			tr >
-			<
-			td colspan = "4" >
-			<
-			table class = rowtable width = "100%" >
-			<
-			tr >
-			<
-			td class = col1 > No.FacturaBono < /td> <
-		td class = col2 colspan = "3" >
+			<div align = "center" >
+			<table width = "100%" border = 0 align = "center" >
+			<tr>
+			<td colspan = "4" >
+			<table class = rowtable width = "100%" >
+			<tr >
+			<td class = col1 > No.FacturaBono </td> <td class = col2 colspan = "3" >
 			<?php
 			//$sql_facturas = "Select IDFacturaBono From FacturaBono WHERE IDPuntoVenta = '$IDPuntoVenta' and FechaFacturaBono >='2018-11-02 00:00:00' Limit 1";
 			$sql_facturas = "Select IDFacturaBono From FacturaBono WHERE IDPuntoVenta = '$IDPuntoVenta' and FechaFacturaBono >='2021-12-01 09:00:00' Limit 1";
@@ -1478,8 +1449,7 @@ function print_form($id, $newmode, $title, $submit_caption)
 			?>
 
 
-			<
-			input type = "hidden"
+			<input type = "hidden"
 		class = "tbox"
 		name = "NumeroFacturaBono"
 		id = "Numero FacturaBono"
@@ -1487,22 +1457,14 @@ function print_form($id, $newmode, $title, $submit_caption)
 		value = "<?= $consecutivosig ?>" >
 			<?= $consecutivosig ?>
 
-			<
-			/td> < /
-		tr > <
-			tr >
-			<
-			td class = col1 > Fecha FacturaBono < /td> <
-		td class = col2 colspan = "3" > < input type = "text"
-		class = "tbox"
-		name = "FechaFacturaBono"
+			</td> </tr > <tr >
+			<td class = col1 > Fecha FacturaBono < /td> <td class = col2 colspan = "3" > <input type = "text"
+		class = "tbox"	name = "FechaFacturaBono"
 		size = "19"
 		value = '<?= fecha() . " " . hora() ?>'
 		readonly >
-			<
-			script language = "JavaScript1.2" >
-			<
-			!--
+			<script language = "JavaScript1.2" >
+			<!--
 		if (!document.layers)
 			document.write("<img src=admin/jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.FechaFacturaBono,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 		//

@@ -40,14 +40,14 @@ if($permisos[0] >= 2)
 			break;
 
 			case "creargarantia":
-					if ($_POST[tipo_factura]=="cambio"){
-					  $datos_producto = explode("|",$_POST[IDProductoGarantia]);
+					if ($_POST["tipo_factura"]=="cambio"){
+					  $datos_producto = explode("|",$_POST["IDProductoGarantia"]);
 					  $IDDetalleFactura = $datos_producto[0];
 					  $IDFactura=$datos_producto[1];
 					  $IDPuntoVenta=$datos_producto[2];
-					  $id_producto=$_POST[IDProductoGarantia];
+					  $id_producto=$_POST["IDProductoGarantia"];
 
-						print_formcrear_garantia($_POST[IDCambio],$id_producto,$IDPuntoVenta,"guardargarantia","Guardar Garantia","Guardar Garantia","cambio");
+						print_formcrear_garantia($_POST["IDCambio"],$id_producto,$IDPuntoVenta,"guardargarantia","Guardar Garantia","Guardar Garantia","cambio");
 
 					}
 					else{
@@ -55,7 +55,7 @@ if($permisos[0] >= 2)
 					$id_factura=$_POST["IDFactura"];
 
 					// verifo que no exista una garantia ya creada con este producto de esta factura
-					  $datos_producto = explode("|",$_POST[IDProductoGarantia]);
+					  $datos_producto = explode("|",$_POST["IDProductoGarantia"]);
 					  $IDDetalleFactura = $datos_producto[0];
 					  $IDFactura=$datos_producto[1];
 					  $IDPuntoVenta=$datos_producto[2];
@@ -66,7 +66,7 @@ if($permisos[0] >= 2)
 							$msg="Ya esta registrada una garantia con este producto/factura, por favor verifique";
 							mostrarfactura("mostrar","Buscar",$msg);
 					  }else{
-						$id_producto=$_POST[IDProductoGarantia];
+						$id_producto=$_POST["IDProductoGarantia"];
 						print_formcrear_garantia($id_factura,$id_producto,$IDPuntoVenta,"guardargarantia","Guardar Garantia","Guardar Garantia");
 					  }
 					}
@@ -141,7 +141,7 @@ if($permisos[0] >= 2)
 							print_formcrear_garantia("0",$id_producto,$id_punto_venta,"guardargarantia","Guardar Garantia","Guardar Garantia");
 						}
 						elseif(!empty($_GET["numero_cambio"])){
-							$sql_cambio = "SELECT * FROM Cambio WHERE IDCambio = '$_GET[numero_cambio]' and IDPuntoVenta = '".$id_punto_venta."'";
+							$sql_cambio = "SELECT * FROM Cambio WHERE IDCambio = '" . $_GET["numero_cambio"] . "' and IDPuntoVenta = '".$id_punto_venta."'";
 							$query_cambio = db_query($sql_cambio);
 							if( db_num_rows( $query_cambio ) == 0 )
 							{
@@ -531,9 +531,9 @@ function print_formgarantia($id="",$newmode,$title,$submit_caption,$tipo_garanti
 				} ?>
 
                 <?php
-					if (!empty($_GET[numero_cambio])){
-					//Si es de un cambio consulto las referncias del cambio
-					$sql_detalle_cambio = "SELECT * FROM DetalleCambio WHERE IDCambio = '".$_GET[numero_cambio]."' and IDPuntoVenta = '".$punto_consulta."'";
+					if (!empty($_GET["numero_cambio"])){
+						//Si es de un cambio consulto las referncias del cambio
+						$sql_detalle_cambio = "SELECT * FROM DetalleCambio WHERE IDCambio = '".$_GET["numero_cambio"]."' and IDPuntoVenta = '".$punto_consulta."'";
 					$query_detalle_cambio = db_query($sql_detalle_cambio);
 					$i = 1;
 					while( $r_detalle_cambio = db_fetch_object( $query_detalle_cambio ) ){
@@ -572,7 +572,7 @@ function print_formgarantia($id="",$newmode,$title,$submit_caption,$tipo_garanti
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
                 <input type=hidden name=tipo_factura value=<?=$tipo_garantia?>>
-                <input type=hidden name=IDCambio value=<?=$_GET[numero_cambio]?>>
+	                <input type=hidden name=IDCambio value='<?=$_GET["numero_cambio"]?>'>
 
 
 				<input type=submit name=submit value="<?php echo $submit_caption ?>" id="boton_enviar_producto" class=submit >
@@ -892,35 +892,35 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 
 					}
 
-					  echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r_factura[IDPuntoVenta]);
+					  echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r_factura["IDPuntoVenta"]);
 					  ?>
                       </td>
                       <td>Tel&eacute;fono Almacen</td>
                       <td class="row2"><?php
-					  echo get_field("PuntoVenta","Telefono","IDPuntoVenta",$r_factura[IDPuntoVenta]);
+					  echo get_field("PuntoVenta","Telefono","IDPuntoVenta",$r_factura["IDPuntoVenta"]);
 					  ?></td>
                     </tr>
                     <tr>
                       <td>Cliente</td>
                       <td class="row2"><?php
-					  $id_cliente=$r_factura[IDCliente];
+					  $id_cliente=$r_factura["IDCliente"];
 					  echo get_field("Cliente","Nombre","IDCliente",$id_cliente) ." ". get_field("Cliente","Apellido","IDCliente",$id_cliente); ?></td>
                       <td>Tel&eacute;fono Cliente</td>
                       <td class="row2">&nbsp;<?php echo get_field("Cliente","Telefono","IDCliente",$id_cliente); ?></td>
                     </tr>
 
 
-                    <?php if($_GET[numero_factura]=="mayorista" || $_GET[numero_factura]=="dotacion"): ?>
+                    <?php if($_GET["numero_factura"]=="mayorista" || $_GET["numero_factura"]=="dotacion"): ?>
                         <tr>
-                          <td>Nombre <?php if($_GET[numero_factura]=="mayorista") echo "Mayorista"; else echo "Trabajador";  ?></td>
+                          <td>Nombre <?php if($_GET["numero_factura"]=="mayorista") echo "Mayorista"; else echo "Trabajador";  ?></td>
                           <td class="row2"><input type="text" class="input" name="NombreMayorista" id="NombreMayorista" value="" /></td>
-                          <td>Identificacion <?php if($_GET[numero_factura]=="mayorista") echo "Mayorista"; else echo "Trabajador";  ?></td>
+                          <td>Identificacion <?php if($_GET["numero_factura"]=="mayorista") echo "Mayorista"; else echo "Trabajador";  ?></td>
                           <td class="row2"><input type="text" class="input" name="IdentificacionMayorista" id="IdentificacionMayorista" value="" /></td>
                         </tr>
                         <tr>
-                          <td>Ciudad <?php if($_GET[numero_factura]=="mayorista") echo "Mayorista"; else echo "Trabajador";  ?></td>
+                          <td>Ciudad <?php if($_GET["numero_factura"]=="mayorista") echo "Mayorista"; else echo "Trabajador";  ?></td>
                           <td  class="row2"><input type="text" class="input" name="CiudadMayorista" id="CiudadMayorista" value="" /></td>
-						  <td>Direccion <?php if($_GET[numero_factura]=="mayorista") echo "Mayorista"; else echo "Trabajador";  ?></td>
+						  <td>Direccion <?php if($_GET["numero_factura"]=="mayorista") echo "Mayorista"; else echo "Trabajador";  ?></td>
                           <td class="row2"><input type="text" class="input" name="DireccionMayorista" id="DireccionMayorista" value="" /></td>
                         </tr>
                     <?php endif; ?>
@@ -936,17 +936,17 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
                     </tr>
                     <tr>
                       <td>Factura de Venta N&ordm;</td>
-                      <td class="row2"><?php echo $r_factura[NumeroFactura]; ?></td>
+	                      <td class="row2"><?php echo $r_factura["NumeroFactura"]; ?></td>
                       <td>Fecha Compra</td>
-                      <td class="row2"><?php echo substr($r_factura[FechaFactura],0,10); ?></td>
+	                      <td class="row2"><?php echo substr($r_factura["FechaFactura"],0,10); ?></td>
                     </tr>
 
 										<tr>
                       <td>Cambio N&ordm;</td>
-                      <td class="row2"><?php echo $_GET[numero_cambio]; ?></td>
+	                      <td class="row2"><?php echo $_GET["numero_cambio"]; ?></td>
                       <td>Fecha Cambio</td>
                       <td class="row2"><?php
-											$fecha_cambio=substr(get_field("Cambio","FechaCambio","IDCambio",$_GET[numero_cambio]),0,10);
+											$fecha_cambio=substr(get_field("Cambio","FechaCambio","IDCambio",$_GET["numero_cambio"]),0,10);
 											echo $fecha_cambio; ?></td>
                     </tr>
 
@@ -1006,7 +1006,7 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
                           <td align="left" class="<?=$class?>">
                           <?php
 
-						if($_GET[numero_factura]!="mayorista" && $_GET[numero_factura]!="dotacion"):
+						if($_GET["numero_factura"]!="mayorista" && $_GET["numero_factura"]!="dotacion"):
 
 						  if($tipo_factura=="cambio"){
 							$id_referencia_item=160;
@@ -1020,17 +1020,17 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 
 							$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$id."' and IDPuntoVenta = '".$IDPuntoVenta."'");
 							$r_facturabono=db_fetch_array($sql_facturabono);
-							if (!empty($r_facturabono[IDFacturaBono])){
-								$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono[IDFacturaBono]."'");
+							if (!empty($r_facturabono["IDFacturaBono"])){
+								$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono["IDFacturaBono"]."'");
 								while($r_detallefacturabono=db_fetch_array($sql_detallefacturabono)){
-									$id_referncia_bono=$r_detallefacturabono[IDCodificacionEspecifica];
+									$id_referncia_bono=$r_detallefacturabono["IDCodificacionEspecifica"];
 									$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
 									$id_tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$id_referencia_item);
 										$array_bonos[]=$id_tipo_ref;
 										$array_bono_especifico[]=$id_referncia_bono;
 
 									?>
-                                    <input type="radio" name="IDDetalleFacturaBono" value="<?php echo $r_detallefacturabono[IDFacturaBono] ."|" . $r_detallefacturabono[IDDetalleFacturaBono] ?>">
+	                                    <input type="radio" name="IDDetalleFacturaBono" value="<?php echo $r_detallefacturabono["IDFacturaBono"] ."|" . $r_detallefacturabono["IDDetalleFacturaBono"] ?>">
                                     <?php
 									echo get_field("Referencia","Nombre","IDReferencia",$id_referencia_item) . "<br>";
 
@@ -1046,18 +1046,18 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 									$sql_cambio=db_query("Select C.* from Cambio C, DetalleCambio DC Where C.IDCambio = DC.IDCambio and C.IDCambio = '".$r_detalle->IDCambio."' and IDCliente = '".$id_cliente."' order by IDCambio Desc  limit 1");
 								endif;
 								$r_cambio=db_fetch_array($sql_cambio);
-								if (!empty($r_cambio[IDCambio])):
-									$cambio="S";
-									//$sql_detalle_cambio=db_query("Select * from DetalleCambio Where IDCambio = '".$r_cambio[IDCambio]."'");
-									$sql_detalle_cambio=db_query("Select * from DetalleCambio Where IDCambio = '".$r_cambio[IDCambio]."' and IDDetalleCambio='".$IDDetalleCambio."'");
-									while($r_detalle_cambio=db_fetch_array($sql_detalle_cambio)):
-										$id_referncia_cambio=$r_detalle_cambio[IDCodificacionEspecifica];
-										$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle_cambio[IDCodificacionEspecifica])));
+									if (!empty($r_cambio["IDCambio"])):
+										$cambio="S";
+										//$sql_detalle_cambio=db_query("Select * from DetalleCambio Where IDCambio = '".$r_cambio["IDCambio"]."'");
+										$sql_detalle_cambio=db_query("Select * from DetalleCambio Where IDCambio = '".$r_cambio["IDCambio"]."' and IDDetalleCambio='".$IDDetalleCambio."'");
+										while($r_detalle_cambio=db_fetch_array($sql_detalle_cambio)):
+											$id_referncia_cambio=$r_detalle_cambio["IDCodificacionEspecifica"];
+											$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle_cambio["IDCodificacionEspecifica"])));
 										$id_tipo_ref=get_field("Referencia","IDTipoReferencia","IDReferencia",$id_referencia_item);
 										$array_cambios[]=$id_tipo_ref;
 										$array_especifica[]=$id_referncia_cambio;
 										?>
-                                        <input type="radio" name="IDDetalleCambio" value="<?php echo $r_detalle_cambio[IDCambio] ."|" . $r_detalle_cambio[IDDetalleCambio] ?>">
+	                                        <input type="radio" name="IDDetalleCambio" value="<?php echo $r_detalle_cambio["IDCambio"] ."|" . $r_detalle_cambio["IDDetalleCambio"] ?>">
                                         <?php
 									    echo get_field("Referencia","Nombre","IDReferencia",$id_referencia_item) . "<br>";
 
@@ -1080,11 +1080,11 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 					  ?>
 
 
-						<?php  if ($_GET[numero_factura]=="reproceso" || $_GET[numero_factura]=="mayorista" || $_GET[numero_factura]=="dotacion"){
+						<?php  if ($_GET["numero_factura"]=="reproceso" || $_GET["numero_factura"]=="mayorista" || $_GET["numero_factura"]=="dotacion"){
 
 							$sql_referencias = "SELECT R.IDReferencia, R.Numero, PVR.IDPuntoVentaReferencia
 													FROM Referencia R, PuntoVentaReferencia PVR
-													WHERE PVR.IDPuntoVenta = '".$datos[IDPuntoVenta]."'
+													WHERE PVR.IDPuntoVenta = '".$datos["IDPuntoVenta"]."'
 													AND PVR.IDReferencia = R.IDReferencia
 													AND R.Publicar <> 'N'
 													ORDER BY R.Numero";
@@ -1112,12 +1112,12 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
         	<option value=""></option>
 			<?php
                 foreach( $array_referencias as $key=>$valor ){
-						if(in_array($valor[IDReferencia],$array_referencia_guardados))
+						if(in_array($valor["IDReferencia"],$array_referencia_guardados))
 							$opcion_selecc=" selected ";
 						else
 							$opcion_selecc="";
 
-                    echo "<option value='$valor[IDReferencia]' $opcion_selecc >$valor[Numero]</option>";
+                    echo "<option value='" . $valor["IDReferencia"] . "' $opcion_selecc >" . $valor["Numero"] . "</option>";
 				}
             ?>
           </select>
@@ -1137,11 +1137,11 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 
 
                           <?php
-							if (count($array_especifica)>0):
+							if (count((array)$array_especifica)>0):
 								foreach($array_especifica as $id_especifica):
 									echo  get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$id_especifica)) . "<br>";
 								endforeach;
-						  elseif (count($array_bonos)>0):
+						  elseif (count((array)$array_bonos)>0):
 								foreach($array_bonos as $id_especifica):
 									echo  get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$id_especifica)) . "<br>";
 								endforeach;
@@ -1151,14 +1151,14 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 						  endif;
 						  ?>
 
-						<?php  if ($_GET[numero_factura]=="reproceso" || $_GET[numero_factura]=="mayorista" || $_GET[numero_factura]=="dotacion"){ ?>
+						<?php  if ($_GET["numero_factura"]=="reproceso" || $_GET["numero_factura"]=="mayorista" || $_GET["numero_factura"]=="dotacion"){ ?>
                                 <select name="IDTalla" id="IDTalla" data-placeholder="Talla" class="" style="width:60px;" tabindex="5">
                                 <option value=""></option>
                                     <?php
                                         $sql_tallas="Select IDTalla, Descripcion, Nombre From Talla Where Publicar = 'S' Group by Nombre Order by Descripcion";
                                         $qry_tallas = db_query( $sql_tallas );
                                         while( $r_tallas = db_fetch_array( $qry_tallas ) ){
-                                            echo "<option value='$r_tallas[IDTalla]'>$r_tallas[Descripcion]</option>";
+                                            echo "<option value='" . $r_tallas["IDTalla"] . "'>" . $r_tallas["Descripcion"] . "</option>";
                                         }
                                     ?>
                                   </select>
@@ -1169,23 +1169,23 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 
                           </td>
                           <td align="left" class="<?=$class?>">
-                          <?php if($_GET[numero_factura]=="mayorista" || $_GET[numero_factura]=="dotacion"): ?>
+                          <?php if($_GET["numero_factura"]=="mayorista" || $_GET["numero_factura"]=="dotacion"): ?>
                           	<input type="text" name="TipoProductoMayorista" id="TipoProductoMayorista" value="">
                           <?php endif; ?>
 
 
 
-                          <?php  if ($_GET[numero_factura]=="reproceso" || $_GET[Tipo]=="restauracion"){
+                          <?php  if ($_GET["numero_factura"]=="reproceso" || $_GET["Tipo"]=="restauracion"){
 						  	echo "&nbsp;";
 						  }
 						  else{ ?>
 
                           <?php
-						  if (count($array_cambios)>0):
+						  if (count((array)$array_cambios)>0):
 							foreach($array_cambios as $id_especifica):
 								echo  get_field("TipoReferencia","Descripcion","IDTipoReferencia",$id_especifica) . "<br>";
 							endforeach;
-						  elseif (count($array_bonos)>0):
+						  elseif (count((array)$array_bonos)>0):
 							foreach($array_bonos as $id_especifica):
 								echo  get_field("TipoReferencia","Descripcion","IDTipoReferencia",$id_especifica) . "<br>";
 							endforeach;
@@ -1238,9 +1238,9 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
                   <td align="left" class=rowform>Clasificacion</td>
                   <td align="left" class="row2">
                   <?php $id_proveedor=get_field("Referencia","IDProveedor","IDReferencia",$id_referencia_item); ?>			     
-                  <input type="radio" class="" name="TipoProducto" id="TipoProducto1"  value="C"  <?php if ($_GET[numero_factura]=="mayorista" || $_GET[numero_factura]=="dotacion") echo "checked";?> <?php if($id_proveedor==19) echo "checked"; elseif($_GET[numero_factura]!="mayorista" && $_GET[numero_factura]!="reproceso" && $_GET[Tipo]!="restauracion" && $_GET[numero_factura]!="dotacion" ) echo "disabled"; ?>  />
+                  <input type="radio" class="" name="TipoProducto" id="TipoProducto1"  value="C"  <?php if ($_GET["numero_factura"]=="mayorista" || $_GET["numero_factura"]=="dotacion") echo "checked";?> <?php if($id_proveedor==19) echo "checked"; elseif($_GET["numero_factura"]!="mayorista" && $_GET["numero_factura"]!="reproceso" && $_GET["Tipo"]!="restauracion" && $_GET["numero_factura"]!="dotacion" ) echo "disabled"; ?>  />
 				  <label for="TipoProducto1" class="css-label radGroup2">Es producto de Caprino</label>
-  				  <input type="radio" class="" name="TipoProducto" id="TipoProducto2" value="T" <?php if ($_GET[numero_factura]=="mayorista") echo "disabled='disabled'";?> <?php if($id_proveedor==19) echo "disabled"; elseif($_GET[numero_factura]!="mayorista" && $_GET[numero_factura]!="dotacion" && $_GET[numero_factura]!="reproceso") echo "checked"; ?> />
+  				  <input type="radio" class="" name="TipoProducto" id="TipoProducto2" value="T" <?php if ($_GET["numero_factura"]=="mayorista") echo "disabled='disabled'";?> <?php if($id_proveedor==19) echo "disabled"; elseif($_GET["numero_factura"]!="mayorista" && $_GET["numero_factura"]!="dotacion" && $_GET["numero_factura"]!="reproceso") echo "checked"; ?> />
   				  <label for="TipoProducto2" class="css-label radGroup2">Es producto de tercero</label>
 				</td>
                 </tr>
@@ -1256,7 +1256,7 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
                   <td width="82%" align="left" class="row2">
                   <?php
                   		$fecha_i = date("Y-m-d");
-												$fecha_f = substr($r_factura[FechaFactura],0,10);
+												$fecha_f = substr($r_factura["FechaFactura"],0,10);
 												if(empty($fecha_f) && !empty($fecha_cambio))
 													$fecha_f=$fecha_cambio;
 
@@ -1272,14 +1272,14 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
               <?php endif;   ?>
 
 
-                  		<input type="radio" name="TipoRegistro" id="TipoRegistro1" class="TipoRegistroGarantia " value="Garantia"  <?php if ( ($_GET[numero_factura]=="reproceso" && $_GET[numero_factura]!="mayorista" && $_GET[numero_factura]!="dotacion") || $solo_servicio=="S" || $_GET[Tipo]=="restauracion") echo "disabled='disabled'";?> <?php if ($_GET[numero_factura]=="mayorista" || $_GET[numero_factura]=="dotacion") echo "checked='checked'";?>  />
+                  		<input type="radio" name="TipoRegistro" id="TipoRegistro1" class="TipoRegistroGarantia " value="Garantia"  <?php if ( ($_GET["numero_factura"]=="reproceso" && $_GET["numero_factura"]!="mayorista" && $_GET["numero_factura"]!="dotacion") || $solo_servicio=="S" || $_GET["Tipo"]=="restauracion") echo "disabled='disabled'";?> <?php if ($_GET["numero_factura"]=="mayorista" || $_GET["numero_factura"]=="dotacion") echo "checked='checked'";?>  />
                         <label for="TipoRegistro1" class="css-label radGroup2">Garant&iacute;a</label>
 
 
-                    <!--<input type="radio" name="TipoRegistro" id="TipoRegistro2" class="TipoRegistroGarantia " value="Servicio" <?php if ($_GET[numero_factura]=="reproceso") echo "disabled='disabled'";?>  />-->
-										<input type="radio" name="TipoRegistro" id="TipoRegistro2" class="TipoRegistroGarantia " value="Restauracion" <?php if ($_GET[numero_factura]=="reproceso" || ( (int)$_GET["numero_factura"]>0 && $_GET["Tipo"]!="restauracion" && $_GET["Tipo"]!="" ) ) echo "disabled='disabled'";?>  <?php if ($_GET[Tipo]=="restauracion") echo "checked='checked'";?> />
+                    <!--<input type="radio" name="TipoRegistro" id="TipoRegistro2" class="TipoRegistroGarantia " value="Servicio" <?php if ($_GET["numero_factura"]=="reproceso") echo "disabled='disabled'";?>  />-->
+										<input type="radio" name="TipoRegistro" id="TipoRegistro2" class="TipoRegistroGarantia " value="Restauracion" <?php if ($_GET["numero_factura"]=="reproceso" || ( (int)$_GET["numero_factura"]>0 && $_GET["Tipo"]!="restauracion" && $_GET["Tipo"]!="" ) ) echo "disabled='disabled'";?>  <?php if ($_GET["Tipo"]=="restauracion") echo "checked='checked'";?> />
                     <label for="TipoRegistro2" class="css-label radGroup2">Restauracion</label>
-                    <input type="radio" name="TipoRegistro" id="TipoRegistro3" class="TipoRegistroGarantia " value="Reproceso" <?php if ($_GET[numero_factura]=="reproceso" ) echo "checked='checked'";?> <?php  if($solo_servicio=="S" || $_GET[Tipo]=="restauracion" || ( (int)$_GET["numero_factura"]>0 && $_GET["Tipo"]!="restauracion" )) echo "disabled='disabled'" ?>   />
+                    <input type="radio" name="TipoRegistro" id="TipoRegistro3" class="TipoRegistroGarantia " value="Reproceso" <?php if ($_GET["numero_factura"]=="reproceso" ) echo "checked='checked'";?> <?php  if($solo_servicio=="S" || $_GET["Tipo"]=="restauracion" || ( (int)$_GET["numero_factura"]>0 && $_GET["Tipo"]!="restauracion" )) echo "disabled='disabled'" ?>   />
 					<label for="TipoRegistro3" class="css-label radGroup2">Reprocesos</label>
 
 
@@ -1469,10 +1469,10 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
                 <tr bgcolor="#dfe3e7">
                   <td align="left" class=rowform>Atendido por:</td>
                   <td align="left" class="row2"><span class="col2">
-                  <?php if($_GET[numero_factura]=="mayorista" || $_GET[numero_factura]=="dotacion"): ?>
+                  <?php if($_GET["numero_factura"]=="mayorista" || $_GET["numero_factura"]=="dotacion"): ?>
                   	<input type="text" name="IngresadoPor" id="IngresadoPor" value="" required>
                   <?php else: ?>
-					  <?php echo formpopup("Empleado WHERE Publicar = 'S' and IDPuntoVenta = '".$datos[IDPuntoVenta]."' ","Nombre","Apellidos","IDEmpleado",$r->IDEmpleado,"input\" id=\"Empleado"); ?></span>
+					  <?php echo formpopup("Empleado WHERE Publicar = 'S' and IDPuntoVenta = '".$datos["IDPuntoVenta"]."' ","Nombre","Apellidos","IDEmpleado",$r->IDEmpleado,"input\" id=\"Empleado"); ?></span>
                   <?php endif; ?>
 
 
@@ -1484,18 +1484,18 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 			<td colspan=2 align=center class="col2list">
             	<input type=hidden name=IDFactura id=IDFactura value="<?=$id ?>">
                 <input type=hidden name=IDDetalleFactura id=IDDetalleFactura value="<?=$IDDetalleFactura ?>">
-                <input type=hidden name=IDPuntoVenta id=IDPuntoVenta value="<?=$datos[IDPuntoVenta] ?>">
-                <input type=hidden name=IDPuntoVentaFactura id=IDPuntoVentaFactura value="<?=$IDPuntoVenta; ?>">
-                <input type=hidden name=Mayorista id=Mayorista value="<?php if($_GET[numero_factura]=="mayorista") echo "S"; ?>">
-				<input type=hidden name=Dotacion id=Dotacion value="<?php if($_GET[numero_factura]=="dotacion") echo "S"; ?>">
-                <input type=hidden name=TipoFactura id=TipoFactura value="<?php echo $_GET[tipofactura]; ?>">
+	                <input type=hidden name=IDPuntoVenta id=IDPuntoVenta value="<?=$datos["IDPuntoVenta"] ?>">
+	                <input type=hidden name=IDPuntoVentaFactura id=IDPuntoVentaFactura value="<?=$IDPuntoVenta; ?>">
+	                <input type=hidden name=Mayorista id=Mayorista value="<?php if($_GET["numero_factura"]=="mayorista") echo "S"; ?>">
+					<input type=hidden name=Dotacion id=Dotacion value="<?php if($_GET["numero_factura"]=="dotacion") echo "S"; ?>">
+	                <input type=hidden name=TipoFactura id=TipoFactura value="<?php echo $_GET["tipofactura"]; ?>">
                 <input type=hidden name=UsuarioTrCr value="<?=$r->UsuarioTrCr ?>">
 				<input type=hidden name=FechaTrCr value="<?=$r->FechaTrCr ?>">
 				<input type=hidden name=UsuarioTrEd value="<?=$r->UsuarioTrEd ?>">
 				<input type=hidden name=FechaTrEd value="<?=$r->FechaTrEd ?>">
 				<input type=hidden name=action value=<?=$newmode?>>
-                <input type="hidden" name="Cambios" id="Cambios" value="<?php echo count($array_cambios); ?>">
-                <input type="hidden" name="Bonos" id="Bonos" value="<?php echo count($array_bonos); ?>">
+                <input type="hidden" name="Cambios" id="Cambios" value="<?php echo count((array)$array_cambios); ?>">
+                <input type="hidden" name="Bonos" id="Bonos" value="<?php echo count((array)$array_bonos); ?>">
 				<?php //if ($dias_transcurridos<=90): ?>
                 <input type=submit name=submit value="<?php echo $submit_caption ?>" class=submit >
                 <?php //endif; ?>

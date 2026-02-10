@@ -157,9 +157,9 @@ $sql_tallas = " SELECT * FROM Talla WHERE Publicar = 'S' AND IDTalla not in (19,
 $qry_tallas = db_query( $sql_tallas );
 while( $r_tallas = db_fetch_array( $qry_tallas ) )
 {
-	//$array_tallas[$r_tallas[IDTalla]] = $r_tallas;
+	//$array_tallas[$r_tallas["IDTalla"]] = $r_tallas;
 	//con descripcion
-	$array_tallas[$r_tallas[Descripcion]] = $r_tallas;
+	$array_tallas[$r_tallas["Descripcion"]] = $r_tallas;
 }//end while
 ?>
 	<tr>
@@ -174,7 +174,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					foreach( $array_tallas as $idtalla => $datostallas )
 					{
 					?>
-						<td class="navpic"><?php echo  $datostallas[Descripcion] ?></td>
+						<td class="navpic"><?php echo  $datostallas["Descripcion"] ?></td>
 					<?php
 					}//end for
 					?>
@@ -205,9 +205,9 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					$array_codificacion = array( );
 					while($r_codificacionesp = db_fetch_array($query_codificacion))
 					{
-						$array_total_codificacion[ $ref ][ $r_codificacionesp[Talla] ] += $r_codificacionesp[Existencias];
+						$array_total_codificacion[ $ref ][ $r_codificacionesp["Talla"] ] += $r_codificacionesp["Existencias"];
 						$numero_ref=$r_referencia->Numero;
-						//$array_codificacion[ $ref ][ $r_codificacionesp[Talla] ] = array( "Numero"=>$r_referencia->Numero,"Existencia"=>$r_codificacionesp[Existencias] );
+						//$array_codificacion[ $ref ][ $r_codificacionesp["Talla"] ] = array( "Numero"=>$r_referencia->Numero,"Existencia"=>$r_codificacionesp["Existencias"] );
 					}//end while
 
 					foreach( $array_total_codificacion as $ref => $arraydatos )
@@ -221,8 +221,8 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 
 					while($r_codificacionesp = db_fetch_array($query_codificacion))
 					{
-						$array_total_codificacion[ $ref ][ $r_codificacionesp[Talla] ] += $r_codificacionesp[Existencias];
-						$array_codificacion[ $ref ][ $r_codificacionesp[Talla] ] = array( "Numero"=>$r_referencia->Numero,"Existencia"=>$r_codificacionesp[Existencias] );
+						$array_total_codificacion[ $ref ][ $r_codificacionesp["Talla"] ] += $r_codificacionesp["Existencias"];
+						$array_codificacion[ $ref ][ $r_codificacionesp["Talla"] ] = array( "Numero"=>$r_referencia->Numero,"Existencia"=>$r_codificacionesp["Existencias"] );
 					}//end while
 
 					$totalreferencia = 0;
@@ -267,7 +267,7 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 						$mostrar = 0;
 						foreach( $array_tallas as $idtalla => $datostallas )
 						{
-							if( $arraydatos[$idtalla][Existencia] > 0 )
+							if( $arraydatos[$idtalla]["Existencia"] > 0 )
 								$mostrar = 1;
 						}//end for
 						if( $mostrar == 1 )
@@ -293,13 +293,10 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 							?>
 								<td class="row1" align="right">
 									<?php
-										echo  $arraydatos[$idtalla][Existencia];
-										$array_linea[ $linea ][ $idtalla ] += 	$arraydatos[$idtalla][Existencia];
-										$totales[ $idtalla ] += $arraydatos[$idtalla][Existencia];
-										$totalreferencia +=  $arraydatos[$idtalla][Existencia];
-									?>
-								</td>
-							<?php
+								echo  $arraydatos[$idtalla]["Existencia"];
+								$array_linea[ $linea ][ $idtalla ] += 	$arraydatos[$idtalla]["Existencia"];
+								$totales[ $idtalla ] += $arraydatos[$idtalla]["Existencia"];
+								$totalreferencia +=  $arraydatos[$idtalla]["Existencia"];
 								//print_r( $arraydatos );
 
 							}//end for

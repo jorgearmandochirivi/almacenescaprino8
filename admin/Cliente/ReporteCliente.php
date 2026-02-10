@@ -27,18 +27,18 @@ if($permisos[0] >= 2)
 
 			case "list" :
 
-				if(!empty($_GET[IDPuntoVenta]))
-					$condiciones.=" and F.IDPuntoVenta = '".$_GET[IDPuntoVenta]."'";
+				if(!empty($_GET["IDPuntoVenta"]))
+					$condiciones.=" and F.IDPuntoVenta = '".$_GET["IDPuntoVenta"]."'";
 
-				if(!empty($_GET[IDCiudad])){
+				if(!empty($_GET["IDCiudad"])){
 					$TablaJoin2=", PuntoVenta PV, Ciudad CIUD";
-					$condiciones.=" and PV.IDCiudad = CIUD.IDCiudad and PV.IDCiudad = '".$_GET[IDCiudad]."' ";
+					$condiciones.=" and PV.IDCiudad = CIUD.IDCiudad and PV.IDCiudad = '".$_GET["IDCiudad"]."' ";
 				}
 
 
-				if (!empty($_GET[limit1]) && !empty($_GET[limit2]) ){
-					$condiciones.=" and F.FechaFactura between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
-					$condicion_fecha=" and F.FechaFactura between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+				if (!empty($_GET["limit1"]) && !empty($_GET["limit2"]) ){
+					$condiciones.=" and F.FechaFactura between '".$_GET["limit1"]."' and '".$_GET["limit2"]."'";
+					$condicion_fecha=" and F.FechaFactura between '".$_GET["limit1"]."' and '".$_GET["limit2"]."'";
 				}
 
 
@@ -66,10 +66,10 @@ else
 		Global $TitleMod,$MOD,$Table,$Key,$listar;
 
 
-		if (empty($_GET[limit1]) && empty($_GET[limit2]) ){
-			$_GET[limit1]=date("Y-m-01");
-			$_GET[limit2]=date("Y-m-30");
-			$condiciones.=" and F.FechaFactura between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+		if (empty($_GET["limit1"]) && empty($_GET["limit2"]) ){
+			$_GET["limit1"]=date("Y-m-01");
+			$_GET["limit2"]=date("Y-m-30");
+			$condiciones.=" and F.FechaFactura between '".$_GET["limit1"]."' and '".$_GET["limit2"]."'";
 		}
 
 
@@ -204,13 +204,13 @@ else
 										 <td>Fecha Inicio</td>
 										 <td>
 											 <?php
-											 if (empty($_GET[limit1]) && empty($_GET[limit2]) ){
-									 			$_GET[limit1]=date("Y-m-01");
-									 			$_GET[limit2]=date("Y-m-30");
-									 			$condiciones.=" and F.FechaFactura between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
-									 		}
-											?>
-										 <input type=text readonly size=10 class=input name=limit1 value="<?php echo $_GET[limit1];?>">
+											 if (empty($_GET["limit1"]) && empty($_GET["limit2"]) ){
+									 			$_GET["limit1"]=date("Y-m-01");
+									 			$_GET["limit2"]=date("Y-m-30");
+									 			$condiciones.=" and F.FechaFactura between '".$_GET["limit1"]."' and '".$_GET["limit2"]."'";
+											}
+										 ?>
+										 <input type=text readonly size=10 class=input name=limit1 value="<?php echo $_GET["limit1"];?>">
 					 <script language='JavaScript1.2'>
 							 <!--
 							 if (!document.layers)
@@ -220,7 +220,7 @@ else
 										 </td>
 										 <td>Fecha Fin</td>
 										 <td>
-										 <input type=text size=10 readonly class=input name=limit2 value="<?php echo $_GET[limit2];?>">
+										 <input type=text size=10 readonly class=input name=limit2 value="<?php echo $_GET["limit2"];?>">
 					 <script language='JavaScript1.2'>
 							 <!--
 							 if (!document.layers)

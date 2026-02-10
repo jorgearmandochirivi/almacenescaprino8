@@ -10,17 +10,24 @@ $m="TarjetaPunto";
 
 		switch (nvl($action)) {
 			
-			case "TarjetaPunto" :
-				GLOBAL $main_types,$tamano_archivo;
-				$files = $_FILES;
-				
-				
-				//print_r( $HTTP_POST_VARS );
-				$dirroot = dirname(__FILE__)."/";
+				case "TarjetaPunto" :
+					GLOBAL $main_types,$tamano_archivo;
+					$files = $_FILES;
+					$FileName = "";
+					
+					
+					//print_r( $HTTP_POST_VARS );
+					$dirroot = dirname(__FILE__)."/";
 
-				$filedir  = $dirroot."filexls/";
-				foreach($files AS $key => $file){
-					$ext = $main_types[ $file['type'] ];
+					$filedir  = $dirroot."filexls/";
+					if (!is_dir($filedir)) {
+						@mkdir($filedir, 0775, true);
+					}
+					foreach($files AS $key => $file){
+						if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+							continue;
+						}
+						$ext = $main_types[ $file['type'] ];
 					/*
 					if(copy($file['tmp_name'], "$filedir/DatosTarj.xls")){
 						$FileName = "DatosTarj.xls";
@@ -32,14 +39,20 @@ $m="TarjetaPunto";
 					if(copy($file['tmp_name'], "$filedir/DatosTarj.txt")){
 						$FileName = "DatosTarj.txt";
 					}
-					else{ 
-						echo "Error al cargar archivo verifique!!! ".$filedir.$file['name'];
+						else{ 
+							echo "Error al cargar archivo verifique!!! ".$filedir.$file['name'];
+						}
+						
+					}
+
+					if (empty($FileName)) {
+						echo "Debe seleccionar un archivo valido para importar.";
+						print_form("","Importar Archivos","submit");
+						break;
 					}
 					
-				}
-				
-				db_query( "BEGIN" );
-				insert_codigo_tarjeta($filedir.$FileName);
+					db_query( "BEGIN" );
+					insert_codigo_tarjeta($filedir.$FileName);
 				db_query( "COMMIT" );
 				unlink("$filedir$FileName");
 				print_form("","Refeencia","Importar Archivos","submit");

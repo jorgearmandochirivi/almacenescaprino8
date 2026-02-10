@@ -135,7 +135,7 @@
 				<SELECT name=Referencias style="width:180px; " size="20" class="inputSelect" multiple>
 					<?php
 						foreach( $array_referencias as $key=>$valor )
-							echo "<option value=$valor[IDPuntoVentaReferencia]>$valor[Numero]</option>";
+							echo "<option value={$valor['IDPuntoVentaReferencia']}>{$valor['Numero']}</option>";
 					?>
 				</SELECT><br>
 				<br>

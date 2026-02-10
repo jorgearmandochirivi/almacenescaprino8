@@ -111,19 +111,25 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					$query = db_query($sql);
 					$row_referencia = db_fetch_object($query);
 						
-					$sql_pto_ref = "SELECT IDPuntoVentaReferencia  FROM PuntoVentaReferencia WHERE IDReferencia = '".$row_referencia->IDReferencia."' ";
-					$qry_pto_ref = db_query( $sql_pto_ref );
-					while( $r_pto_ref =  db_fetch_array( $qry_pto_ref ) )
-						$array_pto_ref[] = $r_pto_ref["IDPuntoVentaReferencia"];
+						$array_pto_ref = array();
+						$array_cod_esp = array();
+						$cod_esp = "";
+
+						$sql_pto_ref = "SELECT IDPuntoVentaReferencia  FROM PuntoVentaReferencia WHERE IDReferencia = '".$row_referencia->IDReferencia."' ";
+						$qry_pto_ref = db_query( $sql_pto_ref );
+						while( $r_pto_ref =  db_fetch_array( $qry_pto_ref ) )
+							$array_pto_ref[] = $r_pto_ref["IDPuntoVentaReferencia"];
 						
 					if(count($array_pto_ref)>0){						
 						$pto_vet_ref = implode(",",$array_pto_ref);
 					}
 
-					$sql_cod_esp = "SELECT IDCodificacionEspecifica  FROM CodificacionEspecifica WHERE IDPuntoVentaReferencia in (".$pto_vet_ref.")";
-					$qry_cod_esp = db_query( $sql_cod_esp );
-					while( $r_cod_esp =  db_fetch_array( $qry_cod_esp ) )
-						$array_cod_esp[ ] = $r_cod_esp["IDCodificacionEspecifica"];
+						if (!empty($pto_vet_ref)) {
+							$sql_cod_esp = "SELECT IDCodificacionEspecifica  FROM CodificacionEspecifica WHERE IDPuntoVentaReferencia in (".$pto_vet_ref.")";
+							$qry_cod_esp = db_query( $sql_cod_esp );
+							while( $r_cod_esp =  db_fetch_array( $qry_cod_esp ) )
+								$array_cod_esp[ ] = $r_cod_esp["IDCodificacionEspecifica"];
+						}
 
 					if(count($array_cod_esp)>0){						
 						$cod_esp = implode(",",$array_cod_esp);

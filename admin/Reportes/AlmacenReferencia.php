@@ -149,20 +149,20 @@ function print_from($frm = ""){
 											WHERE PVR.IDPuntoVenta = '$IDPuntoVenta' 
 											AND PVR.IDReferencia = R.IDReferencia ";
 											
-					if( !empty( $frm['Referencia'] ))
-						$sql_referencias .= " AND R.Numero = '$frm[Referencia]' ";
+						if( !empty( $frm['Referencia'] ))
+							$sql_referencias .= " AND R.Numero = '".$frm["Referencia"]."' ";
 						
-					if( !empty( $frm['Sexo'] ))
-						$sql_referencias .= " AND FIND_IN_SET('$frm[Sexo]',Sexo) > 0 ";
+						if( !empty( $frm['Sexo'] ))
+							$sql_referencias .= " AND FIND_IN_SET('".$frm["Sexo"]."',Sexo) > 0 ";
 						
-					if( !empty( $frm['IDLinea'] ))
-						$sql_referencias .= " AND R.IDLinea = '$frm[IDLinea]' ";
+						if( !empty( $frm['IDLinea'] ))
+							$sql_referencias .= " AND R.IDLinea = '".$frm["IDLinea"]."' ";
 						
-					if( !empty( $frm['IDCuero'] ))
-						$sql_referencias .= " AND R.IDCuero = '$frm[IDCuero]' ";
+						if( !empty( $frm['IDCuero'] ))
+							$sql_referencias .= " AND R.IDCuero = '".$frm["IDCuero"]."' ";
 						
-					if( !empty( $frm['IDProveedor'] ))
-						$sql_referencias .= " AND R.IDProveedor = '$frm[IDProveedor]' ";
+						if( !empty( $frm['IDProveedor'] ))
+							$sql_referencias .= " AND R.IDProveedor = '".$frm["IDProveedor"]."' ";
 					
 					$sql_referencias .= " ORDER BY R.Numero ";
 						
@@ -190,19 +190,19 @@ function print_from($frm = ""){
 						//QUERY TALLAS DE LA REFERENCIA
 						$sql_tallas = "SELECT T.Descripcion, T.IDTalla, C.IDCodificacionEspecifica 
 										FROM Talla T, CodificacionEspecifica C
-										WHERE C.IDPuntoVentaReferencia = '$r_referencias[IDPuntoVentaReferencia]' 
+										WHERE C.IDPuntoVentaReferencia = '".$r_referencias["IDPuntoVentaReferencia"]."' 
 										AND C.IDTalla = T.IDTalla ";
 						$qry_tallas = db_query( $sql_tallas );
 						while( $r_tallas = db_fetch_array( $qry_tallas ) )
 						{
 						
-							$array_tallas[$r_referencias[IDPuntoVentaReferencia]][$j] = $r_tallas;
+							$array_tallas[$r_referencias["IDPuntoVentaReferencia"]][$j] = $r_tallas;
 							$j++;
 							
 							//QUERY TOTAL VENDIDO DE LA REFERENCIA
 							$Mes = $Mes * 1;
 							$sql_facturas = " SELECT SUM( ( DF.ValorU ) * DF.Cantidad ) as ValorVentas FROM Factura F, DetalleFactura DF WHERE F.IDPuntoVenta = '$IDPuntoVenta' AND DATE_FORMAT( F.FechaFactura,'%c' ) = '$Mes'
-										AND F.IDFactura = DF.IDFactura AND F.IDPuntoVenta = DF.IDPuntoVenta AND DF.IDCodificacionEspecifica = '$r_tallas[IDCodificacionEspecifica]' GROUP BY DF.IDDetalleFactura";
+										AND F.IDFactura = DF.IDFactura AND F.IDPuntoVenta = DF.IDPuntoVenta AND DF.IDCodificacionEspecifica = '".$r_tallas["IDCodificacionEspecifica"]."' GROUP BY DF.IDDetalleFactura";
 							$qry_facturas = db_query( $sql_facturas );
 							
 while( $r_facturas = db_fetch_object( $qry_facturas ) )

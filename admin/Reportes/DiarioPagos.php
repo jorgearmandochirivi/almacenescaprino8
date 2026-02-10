@@ -64,7 +64,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 							$bancos = array();
 							while( $array_banco = db_fetch_array( $qry_bancos ) )
-								$bancos[$array_banco[IDBanco]] = $array_banco[Nombre];
+								$bancos[$array_banco["IDBanco"]] = $array_banco["Nombre"];
 
 				?>
 						<tr>
@@ -97,7 +97,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										AND F.IDPuntoVenta = DF.IDPuntoVenta
 										AND F.IDFactura = FPF.IDFactura
 										AND FPF.IDPuntoVenta = F.IDPuntoVenta
-										AND FPF.IDFormaPago = $valor[IDFormaPago]
+									AND FPF.IDFormaPago = ".$valor["IDFormaPago"]."
 										GROUP BY F.IDFactura";
 
 										$qry_facturas = db_query( $sql_facturas );
@@ -109,7 +109,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										{
 										?>
 											<tr>
-												<td class="rowform" colspan="9" align="left" nowrap><?php echo $valor['Descripcion']?> <br><?php echo $bancos[$valor[IDBanco]]?></td>
+											<td class="rowform" colspan="9" align="left" nowrap><?php echo $valor['Descripcion']?> <br><?php echo $bancos[$valor["IDBanco"]]?></td>
 											</tr>
 											<?php
 											$valorfactura = 0;
@@ -124,7 +124,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 											{
 												$class = repetition()?"row2":"row1";
 
-												if( $valor[IDFormaPago] <> 1 ){
+											if( $valor["IDFormaPago"] <> 1 ){
 													$ValorReteICA = ( $r_factura->Valor / (1 + $IVA ) ) * $ReteICA;
 													$ValorReteIVA = ( $r_factura->Valor - ( $r_factura->Valor / (1 + $IVA ) ) ) * $ReteIVA;
 												}
@@ -143,7 +143,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( ($r_factura->Valor - $comision ), 2 ); $valorneto += $r_factura->Valor - $comision; ?></td>
 												<td class="<?php echo $class?>" align="right" nowrap>
 													<?php
-														if( $valor[IDFormaPago] <> 1 )
+													if( $valor["IDFormaPago"] <> 1 )
 														{
 															echo number_format( $ValorReteFuente = ( $r_factura->Valor/ ( 1 + $IVA ) )  * $ReteFuente , 2 );
 															$valorretefuente += $ValorReteFuente;
@@ -152,7 +152,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												</td>
 										<td class="<?php echo $class?>" align="right" nowrap>
 											<?php
-												if( $valor[IDFormaPago] <> 1 )
+											if( $valor["IDFormaPago"] <> 1 )
 												{
 													echo number_format($ValorReteIVA , 2) ;
 													$valorreteiva += $ValorReteIVA;
@@ -161,7 +161,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										</td>
 										<td class="<?php echo $class?>" align="right" nowrap>
 											<?php
-												if( $valor[IDFormaPago] <> 1 )
+											if( $valor["IDFormaPago"] <> 1 )
 												{
 													echo number_format($ValorReteICA , 2) ;
 													$valorreteica += $ValorReteICA ;

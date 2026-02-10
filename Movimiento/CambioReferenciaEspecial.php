@@ -17,7 +17,7 @@ if($permisos[0] >= 2)
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 				
-				$HTTP_POST_VARS['Excedente'] = ereg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$HTTP_POST_VARS['Excedente']);
+				$HTTP_POST_VARS['Excedente'] = preg_replace("[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]","",$HTTP_POST_VARS['Excedente']);
 				
 				$frm= vars_LOG($HTTP_POST_VARS);
 				

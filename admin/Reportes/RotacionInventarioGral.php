@@ -252,13 +252,13 @@ if( !empty( $IDCiudad ) )
 $sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta Where Publicar = 'S' " . $condi_ciu . " ORDER BY IDCiudad, Nombre ";
 $qry_puntos = db_query( $sql_puntos );
 while( $r_puntos = db_fetch_array( $qry_puntos ) )
-	$array_puntos[$r_puntos[IDPuntoVenta]] = $r_puntos[Nombre];
+	$array_puntos[$r_puntos["IDPuntoVenta"]] = $r_puntos["Nombre"];
 
 //Tallas
 	$sql_tallas = " SELECT IDTalla, Descripcion FROM Talla ORDER BY Descripcion ";
 	$qry_tallas = db_query( $sql_tallas );
 	while( $r_tallas = db_fetch_array( $qry_tallas ) )
-		$array_tallas[$r_tallas[IDTalla]] = $r_tallas[Descripcion];
+		$array_tallas[$r_tallas["IDTalla"]] = $r_tallas["Descripcion"];
 
 if( !empty( $referencia ) )	
 {
@@ -287,7 +287,7 @@ if( !empty( $IDTipoReferencia ) )
 						$r = array( );
 						while($r_codificacionesp = db_fetch_array($query_codificacion))
 						{
-							$array_ventas[ $r_codificacionesp[Numero] ][ $array_tallas[ $r_codificacionesp[IDTalla] ] ] += $r_codificacionesp[Cantidad];
+							$array_ventas[ $r_codificacionesp["Numero"] ][ $array_tallas[ $r_codificacionesp["IDTalla"] ] ] += $r_codificacionesp["Cantidad"];
 						} //end while($r[$i] = db_fetch_array($query_codificacion))
 						//print_r($r);
 						
@@ -302,8 +302,8 @@ if( !empty( $IDTipoReferencia ) )
 						$r = array( );
 						while($r_codificacionesp = db_fetch_array($query_codificacion_inv))
 						{
-							$array_existencias[ $r_codificacionesp[Numero] ][ $array_tallas[ $r_codificacionesp[IDTalla] ] ] += $r_codificacionesp[Existencias];
-							$array_tallas_mostrar[ $array_tallas[ $r_codificacionesp[IDTalla] ] ] = $array_tallas[ $r_codificacionesp[IDTalla] ];
+							$array_existencias[ $r_codificacionesp["Numero"] ][ $array_tallas[ $r_codificacionesp["IDTalla"] ] ] += $r_codificacionesp["Existencias"];
+							$array_tallas_mostrar[ $array_tallas[ $r_codificacionesp["IDTalla"] ] ] = $array_tallas[ $r_codificacionesp["IDTalla"] ];
 						}
 						
 						ksort( $array_tallas_mostrar );
@@ -355,7 +355,7 @@ if( !empty( $IDTipoReferencia ) )
 							$qry_rotacion = db_query( $sql_rotacion );
 							
 							while( $r_rotacion = db_fetch_array( $qry_rotacion ) )
-								$array_rotacion[ $r_rotacion[NumeroReferencia] ][ $r_rotacion[IDTalla] ] = $r_rotacion;
+								$array_rotacion[ $r_rotacion["NumeroReferencia"] ][ $r_rotacion["IDTalla"] ] = $r_rotacion;
 							
 							
 							foreach( $array_rotacion as $numeroReferencia => $datostalla )
@@ -392,16 +392,16 @@ if( !empty( $IDTipoReferencia ) )
 								{
 									
 									echo "<td class=".$class." align=right nowrap>";
-									echo $datostalla[ $idtalla ][Vendido]."</br>";
-									echo $datostalla[ $idtalla ][Inventario]."</br>";
-									echo number_format( $Rotacion = ( $datostalla[ $idtalla ][Vendido] / ( $datostalla[ $idtalla ][Vendido] + $datostalla[ $idtalla ][Inventario] ) * 100 ) , 1 )." % ";
+									echo $datostalla[ $idtalla ]["Vendido"]."</br>";
+									echo $datostalla[ $idtalla ]["Inventario"]."</br>";
+									echo number_format( $Rotacion = ( $datostalla[ $idtalla ]["Vendido"] / ( $datostalla[ $idtalla ]["Vendido"] + $datostalla[ $idtalla ]["Inventario"] ) * 100 ) , 1 )." % ";
 									echo "</td>";
 									
-									$TotalVentasTalla[ $idtalla ] += $datostalla[ $idtalla ][Vendido];
-									$TotalExistenciasTalla[ $idtalla ] += $datostalla[ $idtalla ][Inventario];
+									$TotalVentasTalla[ $idtalla ] += $datostalla[ $idtalla ]["Vendido"];
+									$TotalExistenciasTalla[ $idtalla ] += $datostalla[ $idtalla ]["Inventario"];
 									
-									$TotalVentasPunto[ $numeroReferencia ] += $datostalla[ $idtalla ][Vendido];
-									$TotalExistenciasPunto[ $numeroReferencia ] += $datostalla[ $idtalla ][Inventario];
+									$TotalVentasPunto[ $numeroReferencia ] += $datostalla[ $idtalla ]["Vendido"];
+									$TotalExistenciasPunto[ $numeroReferencia ] += $datostalla[ $idtalla ]["Inventario"];
 									
 									$totaltalla[ $idtalla ] += $Rotacion;
 									$totalpunto[ $numeroReferencia ] += $Rotacion;

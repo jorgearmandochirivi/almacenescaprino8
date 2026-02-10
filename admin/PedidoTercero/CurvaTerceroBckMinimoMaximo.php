@@ -41,7 +41,7 @@ function insert_curva($filename,$id_curva_tercero){
 						foreach ($cellIterator as $cell) {
 							if($fila!=1){ // Encabezados
 								$valor = $cell->getValue();
-								$valor = ereg_replace("[^0-9]", "", $valor); 
+								$valor = preg_replace("[^0-9]", "", $valor); 
 								if($columna==1){
 									$codigo_almacen=$valor;	
 								}

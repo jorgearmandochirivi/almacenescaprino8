@@ -1656,7 +1656,7 @@ class Date_Calc
         $month = strtolower($month);
         $months = Date_Calc::getMonthNames();
         while(list($id, $name) = each($months)){
-            if(ereg($month, strtolower($name))){
+            if(preg_match("/" . preg_quote($month, "\/" ) . "/", strtolower($name))){
                 return($id);
             }
         }
@@ -1734,7 +1734,7 @@ class Date_Calc
     
     function setDate($date)
     {
-          if (ereg( "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})", $_GET['date'], $regs ))
+          if (preg_match("/([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})/", $_GET['date'], $regs))
           {
             $fecha[1]=$regs[1];
             $fecha[2]=$regs[2];

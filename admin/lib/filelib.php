@@ -147,7 +147,7 @@ function copy_files($frm,$files,$SubDirFiles) {
 				make_dir($filedir.$SubDirFiles);
 				
 			$file['name'] = rename_file_if_exists($filedir.$SubDirFiles,$file['name']);
-			$file['name'] = ereg_replace("[^[a-zA-Z0-9]]","",$file['name']);
+			$file['name'] = preg_replace("[^[a-zA-Z0-9]]","",$file['name']);
 			if(copy($file['tmp_name'], $filedir.$SubDirFiles.$file['name'])){
 		
 				$frm[$key]= $file['name'];
@@ -265,7 +265,7 @@ function make_dir($dir_name){
 			$cad: Si cumple con el formato retorna la misma cadena sino le elimina los caracteres no permitidos
 *******************************************************************************************/
 function no_special_char($cad){
-	$cad = ereg_replace("[^a-zA-Z0-9\.\_]","",$cad);
+	$cad = preg_replace("[^a-zA-Z0-9\.\_]","",$cad);
 	return $cad;
 }
 /*******************************************************************************************

@@ -1,0 +1,116 @@
+
+	<br><br><br><br>
+	<table cellspacing='0' cellpadding='2' border='0' align='center' class="forumline" width="700" class="bordertable">
+		<form name="frm" action="" method="post" onSubmit="return EvaluaReg(this,Check);">
+			<tr>
+				<td class=maintitle colspan="2">
+					
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="117">Puntos de Venta::	</td>
+							<td><select name="IDPuntoVenta" onChange="document.frmPuntoVenta.submit();" >
+									<option value="">Seleccione Un Punto de Venta</option><option value=10 >&nbsp;&nbsp;Calle 60</option><option value=25 >&nbsp;&nbsp;Chia</option><option value=6 >&nbsp;&nbsp;Galerias</option><option value=22 >&nbsp;&nbsp;Gran Estacion</option><option value=14 >&nbsp;&nbsp;Granahorrar</option><option value=27 >&nbsp;&nbsp;Santafé</option><option value=29 >&nbsp;&nbsp;Titan</option><option value=1 >&nbsp;&nbsp;Unicentro</option><option value=16 >&nbsp;&nbsp;Vta. Fca.</option><option value=21 >&nbsp;&nbsp;ZFca</option><option value=20 >&nbsp;&nbsp;Junin</option><option value=24 >&nbsp;&nbsp;San Diego</option><option value=19 >&nbsp;&nbsp;Unillin</option>								</select>
+								</td>
+							<td>
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td width="130">Tipo de Referencia</td>
+										<td><select name="IDTipoReferencia"  >
+												<option value="">Seleccione Un Tipo de Referencia</option><option value=16 >&nbsp;&nbsp;Accesorios</option><option value=11 >&nbsp;&nbsp;Billetera</option><option value=3 >&nbsp;&nbsp;Bota</option><option value=9 >&nbsp;&nbsp;Bota 3/4</option><option value=4 >&nbsp;&nbsp;Bota Caña Alta</option><option value=2 >&nbsp;&nbsp;Botin</option><option value=10 >&nbsp;&nbsp;Carteras</option><option value=15 >&nbsp;&nbsp;Cinturones</option><option value=14 >&nbsp;&nbsp;Correas</option><option value=13 >&nbsp;&nbsp;Cosmetiqueras</option><option value=17 >&nbsp;&nbsp;Cremas</option><option value=24 >&nbsp;&nbsp;Excedente</option><option value=19 >&nbsp;&nbsp;Maletines</option><option value=21 >&nbsp;&nbsp;Manos Libres</option><option value=1 >&nbsp;&nbsp;Mocacin</option><option value=23 >&nbsp;&nbsp;Otro</option><option value=20 >&nbsp;&nbsp;Pequeña Marroq.</option><option value=12 >&nbsp;&nbsp;Portacelulares</option><option value=8 >&nbsp;&nbsp;Sandalia</option><option value=22 >&nbsp;&nbsp;Servicio</option><option value=5 >&nbsp;&nbsp;Sueco</option><option value=18 >&nbsp;&nbsp;Tapas</option><option value=6 >&nbsp;&nbsp;Zapatilla</option><option value=7 >&nbsp;&nbsp;Zapato Amarrar</option>											</select></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						
+						<tr>
+							<td width="117">Saldo</td>
+							<td><input type="radio" name="Saldo" value="S"> S<input type="radio" name="Saldo" value="N"> N&nbsp;&nbsp;&nbsp;Exportar&nbsp;<input type="radio" name="Exportar" value="S"> S<input type="radio" name="Exportar" value="N"> N</td>
+							<td><select name="campo" class="input">
+									<option value="Numero">Numero</option>
+									<option value="Nombre">Nombre</option>
+								</select><input type=text class=tbox name=referencia>
+				<input type="submit" class="button" name="enviar" value="Consultar">
+
+				<input type=hidden name=action value=list><input type=hidden name=mod value="InventarioCon"></td>
+						</tr>
+							
+					</table>
+							
+				</td>
+			</tr>
+		</form>
+	</table>
+	
+		<table border="0" cellpadding="0" cellspacing="0" class="tbt" align="center" width="700">
+		<tr>
+			<td class="titlemedium"><b></b><span class="gen"> Consultar Inventario   - 2026-02-09</span></td>
+		</tr>
+	</table>
+	<table width=700 cellpadding=0 cellspacing=0 align=center class=bordertable>
+
+
+	<tr>
+		<td>
+			<table width="100%">
+				<tr>
+					<td class="titlemedium">Referencia</td>
+					<td class="titlemedium">Tipologia</td>
+          <td class="titlemedium">Dto.</td>
+											<td class="titlemedium">1</td>
+											<td class="titlemedium">34</td>
+											<td class="titlemedium">35</td>
+											<td class="titlemedium">36</td>
+											<td class="titlemedium">37</td>
+											<td class="titlemedium">38</td>
+											<td class="titlemedium">39</td>
+											<td class="titlemedium">40</td>
+											<td class="titlemedium">41</td>
+											<td class="titlemedium">42</td>
+											<td class="titlemedium">43</td>
+											<td class="titlemedium">44</td>
+										<td class="titlemedium">Total</td>
+												<td class="titlemedium">Proveedor</td>
+							<td class="titlemedium">Talla</td>
+							<td class="titlemedium">Tipo Ref</td>
+							<td class="titlemedium">Saldo</td>
+							<td class="titlemedium">Precio</td>
+					
+				</tr>
+				
+				<tr>
+					<td class="maintitle">Total</td>
+					<td class="maintitle">&nbsp;</td>
+                    <td class="maintitle">&nbsp;</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+											<td class="maintitle">
+													</td>
+										<td class="maintitle">0</td>
+				</tr>
+
+
+
+
+
+</table>
+

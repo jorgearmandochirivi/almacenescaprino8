@@ -61,7 +61,7 @@ function make_qry_string_repuestos($frm){
 	$select = "Select * From $Table ";
 	
 		if(!empty($frm['field']))
-			$where = " Where $frm[field] LIKE '$frm[QryString]%' ORDER BY Numero ASC ";
+			$where = " Where {$frm['field']} LIKE '{$frm['QryString']}%' ORDER BY Numero ASC ";
 	
 	$qry_string = $select.$where;
 

@@ -30,66 +30,66 @@ if($permisos[0] >= 2)
 				$frm= vars_LOG($HTTP_POST_VARS);
 
 
-				if ($frm[FechaSalidaAlmacen]!="0000-00-00" && $frm[FechaSalidaAlmacen]!="" && $frm[FechaSalidaAlmacen] != $frm[FechaSalidaAlmacenAnt])
-					$txt_cambio_fecha.=" Cambi&oacute; fecha Salida Almacen por: " . $frm[FechaSalidaAlmacen];
-				if ($frm[FechaEntradaAlmacen]!="0000-00-00" && $frm[FechaEntradaAlmacen]!="" && $frm[FechaEntradaAlmacen] != $frm[FechaEntradaAlmacenAnt])
-					$txt_cambio_fecha.=" Cambi&oacute; fecha Entrada Almacen por: " . $frm[FechaSalidaAlmacen];
-				if ($frm[FechaEntregaCliente]!="0000-00-00" && $frm[FechaEntregaCliente]!="" && $frm[FechaEntregaCliente] != $frm[FechaEntregaClienteAnt])
-					$txt_cambio_fecha.=" Cambi&oacute; fecha Entrega Cliente por: " . $frm[FechaSalidaAlmacen];
+				if ($frm['FechaSalidaAlmacen']!="0000-00-00" && $frm['FechaSalidaAlmacen']!="" && $frm['FechaSalidaAlmacen'] != $frm['FechaSalidaAlmacenAnt'])
+					$txt_cambio_fecha.=" Cambi&oacute; fecha Salida Almacen por: " . $frm['FechaSalidaAlmacen'];
+				if ($frm['FechaEntradaAlmacen']!="0000-00-00" && $frm['FechaEntradaAlmacen']!="" && $frm['FechaEntradaAlmacen'] != $frm['FechaEntradaAlmacenAnt'])
+					$txt_cambio_fecha.=" Cambi&oacute; fecha Entrada Almacen por: " . $frm['FechaSalidaAlmacen'];
+				if ($frm['FechaEntregaCliente']!="0000-00-00" && $frm['FechaEntregaCliente']!="" && $frm['FechaEntregaCliente'] != $frm['FechaEntregaClienteAnt'])
+					$txt_cambio_fecha.=" Cambi&oacute; fecha Entrega Cliente por: " . $frm['FechaSalidaAlmacen'];
 
-				if (!empty($frm[Descripcion])  || !empty($txt_cambio_fecha) ){
-					$sql_inserta_comentario="INSERT INTO ComentarioGarantia (IDGarantia, IDEmpleado, IDEstadoGarantia, Descripcion, FechaComentario, UsuarioTrCr, FechaTrCr) Values ('".$frm[IDGarantia]."','".$ID_Usuario."','".$frm[IDEstadoGarantia]."','".$frm[Descripcion] . "\r" .$txt_cambio_fecha ."',NOW(),'".$ID_Usuario."',NOW())";
+				if (!empty($frm['Descripcion'])  || !empty($txt_cambio_fecha) ){
+					$sql_inserta_comentario="INSERT INTO ComentarioGarantia (IDGarantia, IDEmpleado, IDEstadoGarantia, Descripcion, FechaComentario, UsuarioTrCr, FechaTrCr) Values ('".$frm['IDGarantia']."','".$ID_Usuario."','".$frm['IDEstadoGarantia']."','".$frm['Descripcion'] . "\r" .$txt_cambio_fecha ."',NOW(),'".$ID_Usuario."',NOW())";
 					$qry_inserta_comentario=db_query($sql_inserta_comentario);
 					//actualizo el estado de la garantia
 
-					if ($frm[IDEstadoGarantia] == "2" || $frm[IDEstadoGarantia] == "3" || $frm[IDEstadoGarantia] == "4")
-						$frm[FechaSalidaAlmacen]=date("Y-m-d");
+					if ($frm['IDEstadoGarantia'] == "2" || $frm['IDEstadoGarantia'] == "3" || $frm['IDEstadoGarantia'] == "4")
+						$frm['FechaSalidaAlmacen']=date("Y-m-d");
 
-					if ($frm[IDEstadoGarantia] == "6" || $frm[IDEstadoGarantia] == "8")
-						$frm[FechaEntradaAlmacen]=date("Y-m-d");
+					if ($frm['IDEstadoGarantia'] == "6" || $frm['IDEstadoGarantia'] == "8")
+						$frm['FechaEntradaAlmacen']=date("Y-m-d");
 
-					if ($frm[IDEstadoGarantia] == "9"){
-						$frm[FechaEntregaCliente]=date("Y-m-d");
+					if ($frm['IDEstadoGarantia'] == "9"){
+						$frm['FechaEntregaCliente']=date("Y-m-d");
 					}
 
 
 
-					if ($frm[TipoProductoGarantia]=="T"):
+					if ($frm['TipoProductoGarantia']=="T"):
 								  $sql_actualiza_tipo="Update Garantia
-											SET TipoContrafuerte = '".$frm[TipoContrafuerte]."',
-											TipoCuero = '".$frm[TipoCuero]."',
-											TipoPlantilla = '".$frm[TipoPlantilla]."',
-											TipoCremallera = '".$frm[TipoCremallera]."',
-											TipoDespegue = '".$frm[TipoDespegue]."',
-											TipoCambrion = '".$frm[TipoCambrion]."',
-											TipoTacon = '".$frm[TipoTacon]."',
-											TipoCerco = '".$frm[TipoCerco]."',
-											TipoCardado = '".$frm[TipoCardado]."',
-											TipoSuela = '".$frm[TipoSuela]."',
-											TipoGuarnicion = '".$frm[TipoGuarnicion]."',
-											TipoPuntera = '".$frm[TipoPuntera]."',
-											TipoHerraje = '".$frm[TipoHerraje]."',
-											TipoOtro = '".$frm[TipoOtro]."'
-											Where IDGarantia = '".$frm[IDGarantia]."' ";
+											SET TipoContrafuerte = '".$frm['TipoContrafuerte']."',
+											TipoCuero = '".$frm['TipoCuero']."',
+											TipoPlantilla = '".$frm['TipoPlantilla']."',
+											TipoCremallera = '".$frm['TipoCremallera']."',
+											TipoDespegue = '".$frm['TipoDespegue']."',
+											TipoCambrion = '".$frm['TipoCambrion']."',
+											TipoTacon = '".$frm['TipoTacon']."',
+											TipoCerco = '".$frm['TipoCerco']."',
+											TipoCardado = '".$frm['TipoCardado']."',
+											TipoSuela = '".$frm['TipoSuela']."',
+											TipoGuarnicion = '".$frm['TipoGuarnicion']."',
+											TipoPuntera = '".$frm['TipoPuntera']."',
+											TipoHerraje = '".$frm['TipoHerraje']."',
+											TipoOtro = '".$frm['TipoOtro']."'
+											Where IDGarantia = '".$frm['IDGarantia']."' ";
 							db_query($sql_actualiza_tipo);
 
 
 
 					endif;
 
-					$sql_actualiza_estado="UPDATE Garantia SET IDEstadoGarantia = '".$frm[IDEstadoGarantia]."', FechaSalidaAlmacen = '".$frm[FechaSalidaAlmacen]."' , FechaEntradaAlmacen = '".$frm[FechaEntradaAlmacen]."', FechaEntregaCliente = '".$frm[FechaEntregaCliente]."', NumeroGuia = '".$frm[NumeroGuia]."', NumeroFacturaRestauracion= '".$frm[NumeroFacturaRestauracion]."' Where IDGarantia = '".$frm[IDGarantia]."'";
+					$sql_actualiza_estado="UPDATE Garantia SET IDEstadoGarantia = '".$frm['IDEstadoGarantia']."', FechaSalidaAlmacen = '".$frm['FechaSalidaAlmacen']."' , FechaEntradaAlmacen = '".$frm['FechaEntradaAlmacen']."', FechaEntregaCliente = '".$frm['FechaEntregaCliente']."', NumeroGuia = '".$frm['NumeroGuia']."', NumeroFacturaRestauracion= '".$frm['NumeroFacturaRestauracion']."' Where IDGarantia = '".$frm['IDGarantia']."'";
 					$qry_actualiza_estado=db_query($sql_actualiza_estado);
 					// Envio notificacion
 					envia_comentario_garantia($id,$frm,$ID_Usuario);
 					/*
-					if ($frm[IDEstadoGarantia]=="3" || $frm[IDEstadoGarantia]=="4"){
+					if ($frm['IDEstadoGarantia']=="3" || $frm['IDEstadoGarantia']=="4"){
 						envia_comentario_tercero($id,$frm,$ID_Usuario);
 					}
 					*/
 					window_alert("Comentario agregado con exito ");
-					if ($frm[IDEstadoGarantia] == "9"){
+					if ($frm['IDEstadoGarantia'] == "9"){
 					// Abro ventana con recibo
-					echo "<script>window.open('Garantia/popBoucherGarantia.php?id=".$frm[IDGarantia]."&idpunto=".$frm[IDPuntoVenta]."','','width=550, height=350, scrollbars=yes');
+					echo "<script>window.open('Garantia/popBoucherGarantia.php?id=".$frm['IDGarantia']."&idpunto=".$frm['IDPuntoVenta']."','','width=550, height=350, scrollbars=yes');
 						  location.href='?mod=Garantia&action=edit&id=".$id."';</script>";
 
 					}
@@ -114,8 +114,8 @@ if($permisos[0] >= 2)
 				elseif($field == "EstadoNombre")
 					$condiciones=" and EG.Nombre LIKE '%$QryString%'";
 
-				if (!empty($_GET[limit1]) && !empty($_GET[limit2]) )
-					$condiciones=" and G.FechaTrCr between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+				if (!empty($_GET['limit1']) && !empty($_GET['limit2']) )
+					$condiciones=" and G.FechaTrCr between '".$_GET['limit1']."' and '".$_GET['limit2']."'";
 
 
 
@@ -280,7 +280,7 @@ function Comprobar(formulario)
 										echo $r->NombreMayorista;
 									}
 									else{
-										  $id_cliente=$r_factura_compra[IDCliente];
+										  $id_cliente=$r_factura_compra['IDCliente'];
 										  echo get_field("Cliente","Nombre","IDCliente",$id_cliente) ." ". get_field("Cliente","Apellido","IDCliente",$id_cliente) .  " - " . get_field("Cliente","Cedula","IDCliente",$id_cliente);
 									}
 
@@ -305,11 +305,11 @@ function Comprobar(formulario)
                     <tr>
                       <td>Factura de Venta N&ordm;</td>
                       <td class="row2"><?php
-					  if ($r->TipoFactura=="facturabono"):
-						  echo $r_factura_compra[NumeroFacturaBono] . " (bono) ";
-					  else:
-					  	  echo $r_factura_compra[NumeroFactura];
-					  endif;
+						  if ($r->TipoFactura=="facturabono"):
+							  echo $r_factura_compra['NumeroFacturaBono'] . " (bono) ";
+						  else:
+						  	  echo $r_factura_compra['NumeroFactura'];
+						  endif;
 					?>
 
                       </td>
@@ -378,8 +378,8 @@ function Comprobar(formulario)
 
 										$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
 										$r_facturabono=db_fetch_array($sql_facturabono);
-										if (!empty($r_facturabono[IDFacturaBono])){
-											$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono[IDFacturaBono]."'");
+									if (!empty($r_facturabono['IDFacturaBono'])){
+										$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono['IDFacturaBono']."'");
 											$r_detallefacturabono=db_fetch_array($sql_detallefacturabono);
 											$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
 											$nombre_talla=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"]));
@@ -998,7 +998,7 @@ function Comprobar(formulario)
 										echo $r->NombreMayorista;
 									}
 									else{
-										$id_cliente= $r_factura[IDCliente];
+										$id_cliente= $r_factura['IDCliente'];
 										echo get_field("Cliente","Nombre","IDCliente",$id_cliente)." ".get_field("Cliente","Apellido","IDCliente",$id_cliente);
 									}
 
@@ -1048,15 +1048,15 @@ function Comprobar(formulario)
 										  $id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica)));
 										  $tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detalle->IDCodificacionEspecifica));
 
-										if ($id_referencia_item==160){ // Cuando son excedentes consulto la referencia de la compra
-											$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
-											$r_facturabono=db_fetch_array($sql_facturabono);
-											if (!empty($r_facturabono[IDFacturaBono])){
-												$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono[IDFacturaBono]."'");
-												$r_detallefacturabono=db_fetch_array($sql_detallefacturabono);
-												$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
-												$tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"]));
-											}
+											if ($id_referencia_item==160){ // Cuando son excedentes consulto la referencia de la compra
+												$sql_facturabono=db_query("Select * from FacturaBono Where IDFactura = '".$r->IDFactura."' and IDPuntoVenta = '".$r->IDPuntoVentaFactura."'");
+												$r_facturabono=db_fetch_array($sql_facturabono);
+												if (!empty($r_facturabono['IDFacturaBono'])){
+													$sql_detallefacturabono=db_query("Select * from DetalleFacturaBono Where IDFacturaBono = '".$r_facturabono['IDFacturaBono']."'");
+													$r_detallefacturabono=db_fetch_array($sql_detallefacturabono);
+													$id_referencia_item=get_field("Referencia","IDReferencia","IDReferencia",get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"])));
+													$tallap=get_field("Talla","Descripcion","IDTalla",get_field("CodificacionEspecifica","IDTalla","IDCodificacionEspecifica",$r_detallefacturabono["IDCodificacionEspecifica"]));
+												}
 										  }
 
 
@@ -1104,9 +1104,9 @@ function Comprobar(formulario)
 							endif;	 ?></td>
 									<td nowrap class="<?=$class?>"><?php
 									if ($r->TipoFactura=="facturabono"):
-										echo $r_factura[NumeroFacturaBono]  . "(bono)";
+										echo $r_factura['NumeroFacturaBono']  . "(bono)";
 									else:
-										echo $r_factura[NumeroFactura];
+										echo $r_factura['NumeroFactura'];
 									endif;
 
 									?></td>

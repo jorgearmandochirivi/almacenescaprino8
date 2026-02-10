@@ -449,7 +449,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 	 } // END if(!empty($IDEmpresa))
 	?>
 	</table>
-	<?php PHP
+		<?php
 }// Enf function print()
 
 ?>

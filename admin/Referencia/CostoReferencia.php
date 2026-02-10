@@ -28,7 +28,7 @@ if($permisos[0] >= 2)
 			break ;
 			case "update" :
 				$frm= vars_LOG($HTTP_POST_VARS);
-				$sql_actualiza = db_query("Update CostoReferencia Set Costo = '".$frm[Costo]."', Fecha = '".$frm[Fecha]."', Observacion = '".$frm[Observacion]."', UsuarioTrEd = '".$ID_Usuario."', FechaTrEd = NOW() Where IDCostoReferencia = '".$frm[IDCostoReferencia]."'");
+				$sql_actualiza = db_query("Update CostoReferencia Set Costo = '".$frm["Costo"]."', Fecha = '".$frm["Fecha"]."', Observacion = '".$frm["Observacion"]."', UsuarioTrEd = '".$ID_Usuario."', FechaTrEd = NOW() Where IDCostoReferencia = '".$frm["IDCostoReferencia"]."'");
 				?>
                 <script>
 					alert("Costo actualizado");
@@ -42,7 +42,7 @@ if($permisos[0] >= 2)
 			case "delete" :
 				//$HTTP_GET_VARS[action]="";
 				$frm= vars_LOG($HTTP_POST_VARS);
-				$sql_actualiza = db_query("Delete From  CostoReferencia  Where IDCostoReferencia = '".$frm[IDCostoReferencia]."'");
+				$sql_actualiza = db_query("Delete From  CostoReferencia  Where IDCostoReferencia = '".$frm["IDCostoReferencia"]."'");
 				?>
 				<script>
 					alert("Costo actualizado");
@@ -124,8 +124,8 @@ else
 	<tr>
 	<td>
     <?php
-    if (!empty($_GET[IDCostoReferencia])):
-		$sql_costo = db_query("Select * From " .$Table." Where IDCostoReferencia = '".$_GET[IDCostoReferencia]."'");
+    if (!empty($_GET["IDCostoReferencia"])):
+		$sql_costo = db_query("Select * From " .$Table." Where IDCostoReferencia = '".$_GET["IDCostoReferencia"]."'");
 		$row_costo = db_fetch_array($sql_costo);
 	endif;
 	?>
@@ -136,7 +136,7 @@ else
             		Costo 
              	</td>
                 <td>
-                	 <input type=text size=25 class=input   name=Costo id=costo value="<?php echo (int)$row_costo[Costo] ?>">
+	                	 <input type=text size=25 class=input   name=Costo id=costo value="<?php echo (int)$row_costo["Costo"] ?>">
                 </td>
             </tr>
             
@@ -145,7 +145,7 @@ else
             		fecha
              	</td>
                 <td>
-                	 <input type=text size=25 class=input   name=Fecha id=Fecha value="<?php echo $row_costo[Fecha] ?>">
+	                	 <input type=text size=25 class=input   name=Fecha id=Fecha value="<?php echo $row_costo["Fecha"] ?>">
                 	 <script language="JavaScript1.2">
 						<!--
 							if (!document.layers)
@@ -160,13 +160,13 @@ else
             		Observaciones
              	</td>
                 <td>
-              		<textarea name="Observacion" id="Observacion" rows="5" cols="30" class="input" ><?php echo $row_costo[Observacion] ?></textarea>
+	              		<textarea name="Observacion" id="Observacion" rows="5" cols="30" class="input" ><?php echo $row_costo["Observacion"] ?></textarea>
                 </td>
             </tr> 
             <tr>
 				<td colspan=3 align=center class=row2>
                     <input type=hidden name=IDReferencia id=IDReferencia value="<?php echo $idReferencia ?>">
-                    <input type=hidden name=IDCostoReferencia id=IDCostoReferencia value="<?php echo $_GET[IDCostoReferencia] ?>">
+                    <input type=hidden name=IDCostoReferencia id=IDCostoReferencia value="<?php echo $_GET["IDCostoReferencia"] ?>">
                     <input type=hidden name=action value="<?php echo $accion; ?>">
                     <input type=hidden name=mod value="CostoReferencia">
                     <input type=submit name=submit value="<?php echo $Titulo ?>" class="submit">
@@ -211,12 +211,12 @@ else
 ?>
   	
 <tr>
-  <td nowrap class=row1><a href='<?php echo "?mod=$MOD&action=edit&IDCostoReferencia="; echo $r->$Key; ?>&idReferencia=<?php echo $_GET[idReferencia]?>'><img src='images/edit.gif' border='0'></a></td>
+  <td nowrap class=row1><a href='<?php echo "?mod=$MOD&action=edit&IDCostoReferencia="; echo $r->$Key; ?>&idReferencia=<?php echo $_GET["idReferencia"]?>'><img src='images/edit.gif' border='0'></a></td>
 						<td nowrap class=row1><?php echo number_format( $r->Costo, 2 ) ?></td>
 						<td nowrap class=row1><?php echo $r->Fecha ?></td>
 						<td nowrap class=row1><?php echo $r->Observacion ?></td>
                         <td nowrap class=row1>
-                        <a href='<?php echo "?mod=CostoReferencia&action=del&IDCostoReferencia="; echo $r->$Key; ?>&idReferencia=<?php echo $_GET[idReferencia]?>'><img src='images/trash.gif' border='0'></a>	
+                        <a href='<?php echo "?mod=CostoReferencia&action=del&IDCostoReferencia="; echo $r->$Key; ?>&idReferencia=<?php echo $_GET["idReferencia"]?>'><img src='images/trash.gif' border='0'></a>	
                         </td>
 					</tr>
 <?php } // END for

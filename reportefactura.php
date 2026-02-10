@@ -56,7 +56,7 @@ while ($row_factura = db_fetch_array($qry_factura)):
 	$array_precio_vendido=array();
 	$array_tallas= array();
 			
-	$sql_detalle_factura = "SELECT IDCodificacionEspecifica From DetalleFactura Where IDFactura = '".$row_factura[IDFactura]."' and IDPuntoVenta = '".$row_factura[IDPuntoVenta]."'";
+	$sql_detalle_factura = "SELECT IDCodificacionEspecifica From DetalleFactura Where IDFactura = '".$row_factura["IDFactura"]."' and IDPuntoVenta = '".$row_factura["IDPuntoVenta"]."'";
 	$qry_factura_detalle = db_query($sql_detalle_factura);
 	while ($row_det= db_fetch_array($qry_factura_detalle)){
 		$pto_vta_ref = get_field("CodificacionEspecifica","IDPuntoVentaReferencia","IDCodificacionEspecifica",$row_det["IDCodificacionEspecifica"]);

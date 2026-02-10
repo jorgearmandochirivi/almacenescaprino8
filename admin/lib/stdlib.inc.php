@@ -438,10 +438,19 @@ function vars_LOG($frm){
 *******************************************************************************************/
 function formatofecha($fecha) {
 	Global $Mes_array;
-	$anio = substr($fecha,0,4);
-	$mes = substr($fecha,5,-3);
-	$dia = substr($fecha,8);
-	return $formato = $Mes_array[$mes-1]." ".$dia." de ".$anio;
+	if (empty($fecha) || !is_string($fecha)) {
+		return "";
+	}
+	if (!preg_match('/^([0-9]{4})-([0-9]{2})-([0-9]{2})/', $fecha, $m)) {
+		return "";
+	}
+	$anio = $m[1];
+	$mes = (int)$m[2];
+	$dia = $m[3];
+	if ($mes < 1 || $mes > 12) {
+		return "";
+	}
+	return $Mes_array[$mes-1]." ".$dia." de ".$anio;
 
 } // End function
 
@@ -459,7 +468,7 @@ function formatofecha($fecha) {
 			$frm: Array con los datos del formulario y los n uevos datos de usuario hora y fecha de modificacion o creacion
 *******************************************************************************************/
 function view_max_words($texto,$max) {
-	$words = split(" ",$texto);
+	$words = explode(" ", $texto);
 	for($i=0;$i < $max; $i++){
 		$short_text .= $words[$i]." ";
 	}//end for

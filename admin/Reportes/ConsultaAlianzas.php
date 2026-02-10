@@ -126,13 +126,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					$sql_formapago = "SELECT IDFormaPago, Descripcion FROM FormaPago ";
 					$qry_formaPago = db_query( $sql_formapago );
 					while( $r_formapago =  db_fetch_array( $qry_formaPago ) )
-						$array_formapago[ $r_formapago[IDFormaPago] ] = $r_formapago;
+						$array_formapago[ $r_formapago["IDFormaPago"] ] = $r_formapago;
 
 					//Seleccionar Banco
 					$sql_banco = "SELECT * FROM Banco ";
 					$qry_banco = db_query( $sql_banco );
 					while( $r_banco =  db_fetch_array( $qry_banco ) )
-						$array_banco[ $r_banco[IDBanco] ] = $r_banco;
+						$array_banco[ $r_banco["IDBanco"] ] = $r_banco;
 
 					//print_r( $array_banco );
 					//Seleccionar Bancos
@@ -294,7 +294,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['DescuentoPar']?></td>
 										<td class="<?php echo $class?>" align="center" nowrap>
 											<?php
-												$TotalFactura = $valor[ValorTotal] ;
+												$TotalFactura = $valor["ValorTotal"] ;
 												if( $valor['DescuentoPar'] > 0 )
 													$valordescuentopar = ( $valor['PrecioU'] * $valor['Cantidad'] ) *   ( $valor['DescuentoPar'] / 100 );
 												else
@@ -302,7 +302,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 
 												//consultar forma de pago pa saber si se le resta
-												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$IDPuntoVenta' ";
+												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '" . $valor["IDFactura"] . "' AND IDPuntoVenta = '$IDPuntoVenta' ";
 												$qry_formasdepago = db_query( $sql_formasdepago );
 												$saldo = 0;
 												while( $r_formasdepago = db_fetch_object( $qry_formasdepago ) )
@@ -348,7 +348,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												//Traer Comision
 												$pcomision = 0;
 												$comision = 0;
-												$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$valor[IDPuntoVenta]' ";
+												$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '" . $valor["IDFactura"] . "' AND IDPuntoVenta = '" . $valor["IDPuntoVenta"] . "' ";
 												$qry_comisiones = db_Query( $sql_comisiones );
 												$array_forma_pago = array();
 												$k = 0;
@@ -357,10 +357,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 													$pcomision = $r_comisiones->Comision / 100;
 													$comision +=  ( $valorparcial / (1 + $IVA) ) * $pcomision;
 													$k++;
-													$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][IDFormaPago] = $r_comisiones->IDFormaPago;
-													$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][Valor] = $r_comisiones->Valor;
-													$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][Comision] = $r_comisiones->Comision;
-													$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][IDBanco] = $r_comisiones->IDBanco;
+													$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["IDFormaPago"] = $r_comisiones->IDFormaPago;
+													$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["Valor"] = $r_comisiones->Valor;
+													$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["Comision"] = $r_comisiones->Comision;
+													$array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ][$k]["IDBanco"] = $r_comisiones->IDBanco;
 												}
 
 											?>

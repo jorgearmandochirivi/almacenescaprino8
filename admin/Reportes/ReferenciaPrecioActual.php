@@ -170,7 +170,7 @@
 									$sql_costo = "Select * From CostoReferencia Where IDReferencia = '" . $r_referencia->IDReferencia . "' order by Fecha Desc limit 1 ";
 									$result_costo = db_query($sql_costo);
 									$row_costo = db_fetch_array($result_costo);
-									echo  number_format($row_costo[Costo], 0, '', '.');
+									echo  number_format($row_costo["Costo"], 0, '', '.');
 
 									?>
 								</td>

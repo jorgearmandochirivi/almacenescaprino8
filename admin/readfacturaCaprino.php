@@ -293,8 +293,8 @@ foreach($files As $filename){
 	$strNumfac = str_replace(".html","",$filename);
 	$strNumfac = str_replace("Factura","",$strNumfac);
 	
-	$codPunto = ereg_replace("[^A-Z]", "", $strNumfac)."\t"; 
-	$Numfac = ereg_replace("[^0-9]", "", $strNumfac)."\t"; 
+	$codPunto = preg_replace("[^A-Z]", "", $strNumfac)."\t"; 
+	$Numfac = preg_replace("[^0-9]", "", $strNumfac)."\t"; 
 
 	$codPunto = trim($codPunto);
 	$Numfac = trim($Numfac);

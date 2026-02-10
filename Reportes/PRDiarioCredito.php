@@ -39,6 +39,10 @@
 	$file = "$filedir$name";
 	$filepdf = "$filedir$namePDF";
 
+	if (!is_dir($filedir)) {
+		@mkdir($filedir, 0775, true);
+	}
+
 	
 //	ob_end_clean();
 	
@@ -112,7 +116,7 @@ table{
 				Almacen <?=$r_puntoventa->Nombre ?><br>
 				No equipo computo <?=$r_puntoventa->EquipoComputo ?><br>
 				Fecha Generacion: <?=date( "Y-m-d" );?><br>
-                Fecha Reporte: <?php echo $_GET[Fecha] ?>
+                Fecha Reporte: <?php echo $_GET["Fecha"] ?>
 			</td>
 		</tr>
 		<tr>
@@ -136,23 +140,23 @@ table{
 					?>
 					<tr>
 						<td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
-						<td class="<?=$class?>" align="center" nowrap><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$valor[IDPuntoVenta]) ?> </td>
-						<td class="<?=$class?>" align="center" nowrap><?=$numero_cuota=$valor[IDCuota]?></td>
+						<td class="<?=$class?>" align="center" nowrap><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$valor["IDPuntoVenta"]) ?> </td>
+						<td class="<?=$class?>" align="center" nowrap><?=$numero_cuota=$valor["IDCuota"]?></td>
 						<td class="<?=$class?>" align="center" nowrap>
                         
                         <?php
-									//$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '".$valor[IDFactura]."' AND IDPuntoVenta = '$valor[IDPuntoVenta]' AND FechaPago = '0000-00-00 00:00:00' ";
+									//$sql_cuotas = " SELECT count(*) as numero FROM CreditoCuota WHERE IDFactura = '{$valor['IDFactura']}' AND IDPuntoVenta = '{$valor['IDPuntoVenta']}' AND FechaPago = '0000-00-00 00:00:00' ";
 									//$qry_cuotas = db_query( $sql_cuotas );
 									//$r_cuotas = db_fetch_object( $qry_cuotas );
 									echo $pendiente_cuota=5 - $numero_cuota;
 									?>
                       </td>
 									<td class="<?=$class?>" align="right" nowrap>
-                                    <?=number_format( $valor[ValorTotal] , 0); $Pago+=$valor[ValorTotal];  ?>
+                                    <?=number_format( $valor["ValorTotal"] , 0); $Pago+=$valor["ValorTotal"];  ?>
                                     </td>
 						<td class="<?=$class?>" align="right" nowrap>
                         <?php
-						$saldo = (int)$pendiente_cuota * (int)$valor[ValorTotal];
+						$saldo = (int)$pendiente_cuota * (int)$valor["ValorTotal"];
 						echo number_format($saldo,0);
 						?>			
                         </td>
@@ -187,10 +191,14 @@ table{
 </html>
 <?php
 
-$page = ob_get_contents();
-$fw = fopen($file, "w");
-fputs($fw,$page,strlen($page));
-fclose($fw);
+	$page = ob_get_contents();
+	$fw = fopen($file, "w");
+	if ($fw === false) {
+		ob_end_clean();
+		die("No se pudo abrir el archivo de salida: " . $file);
+	}
+	fwrite($fw, $page);
+	fclose($fw);
 
 ob_end_clean();
 

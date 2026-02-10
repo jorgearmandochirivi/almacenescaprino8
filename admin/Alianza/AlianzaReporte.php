@@ -34,20 +34,20 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$_GET[action]="";
+				$_GET["action"]="";
 				delete($ID);
 			break;
 			case "list" :	
 				
 				
-				if (!empty($_GET[IDAlianza]))
-					$condicion[] = "IDAlianza  = '".$_GET[IDAlianza]."'";
+				if (!empty($_GET["IDAlianza"]))
+					$condicion[] = "IDAlianza  = '".$_GET["IDAlianza"]."'";
 					
-				if (!empty($_GET[IDPuntoVenta]))
-					$condicion[] = "IDPuntoVenta  = '".$_GET[IDPuntoVenta]."'";
+				if (!empty($_GET["IDPuntoVenta"]))
+					$condicion[] = "IDPuntoVenta  = '".$_GET["IDPuntoVenta"]."'";
 					
-				if (!empty($_GET[limit1]) && !empty($_GET[limit2]))
-					$condicion[] = "FechaFactura Between  '".$_GET[limit1]."' and '".$_GET[limit2]."' ";
+				if (!empty($_GET["limit1"]) && !empty($_GET["limit2"]))
+					$condicion[] = "FechaFactura Between  '".$_GET["limit1"]."' and '".$_GET["limit2"]."' ";
 					
 				if (count($condicion)>0):
 					$condicion_busqueda = implode(" and " , $condicion);
@@ -184,9 +184,9 @@ function eliminafactura( IDFactura, IDPuntoVenta )
         $query_resumen=db_query($sql_resumen);
         while($r_resumen = db_fetch_array($query_resumen)):?>
         <tr>
-          <td class=row2><?php echo get_field("Alianza","Nombre","IDAlianza",$r_resumen[IDAlianza]); ?></td>
-          <td class=row2><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r_resumen[IDPuntoVenta]); ?></td>
-          <td class=row2><?php echo $r_resumen[TotalFactura]; ?></td>
+          <td class=row2><?php echo get_field("Alianza","Nombre","IDAlianza",$r_resumen["IDAlianza"]); ?></td>
+          <td class=row2><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r_resumen["IDPuntoVenta"]); ?></td>
+          <td class=row2><?php echo $r_resumen["TotalFactura"]; ?></td>
       </tr>
       <?php endwhile; ?>
     </table><br>
@@ -271,7 +271,7 @@ else
 				$sql_alianza = "Select * From Alianza  Where 1";
 				$qry_alianza = db_query($sql_alianza);
 				while($r_alianza = db_fetch_array($qry_alianza)): ?>
-				<option class="<?php echo (int)$r_alianza[Descuento]; ?>"  value="<?php echo $r_alianza[IDAlianza] ?>"><?php echo $r_alianza[Nombre] . " - " . $r_alianza[Descuento] . "%";  ?></option>
+				<option class="<?php echo (int)$r_alianza["Descuento"]; ?>"  value="<?php echo $r_alianza["IDAlianza"] ?>"><?php echo $r_alianza["Nombre"] . " - " . $r_alianza["Descuento"] . "%";  ?></option>
 			  <?php endwhile; ?>
 			  </select>
 				 Punto Venta <?php echo formpopup("PuntoVenta","Nombre","Nombre","IDPuntoVenta",$r->IDPuntoVenta,"input\" id=\"PuntoVenta"); ?><br>

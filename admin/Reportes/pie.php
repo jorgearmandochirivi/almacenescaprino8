@@ -3,8 +3,8 @@ include ("../lib/jpgraph/src/jpgraph.php");
 include ("../lib/jpgraph/src/jpgraph_pie.php");
 include ("../lib/jpgraph/src/jpgraph_pie3d.php");
 
-$data = split(",",$_GET['datos']);
-$leyenda=split(",",$_GET['leyenda']);
+$data = explode(", ",$_GET['datos']);
+$leyenda=explode(", ",$_GET['leyenda']);
 $graph = new PieGraph(500,300,"auto");
 $graph->SetShadow();
 

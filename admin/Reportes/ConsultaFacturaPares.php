@@ -98,9 +98,9 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						  <td valign="middle">&nbsp;</td>
 						  <td colspan="2"  align='left' valign='middle' class="nav">Solo facturas con tarjeta de regalo</td>
 						  <td colspan="2"  align='left' valign='middle' class="nav">
-                          <input type="radio" name="TarjetaRegalo" value="S" <?php if($_POST[TarjetaRegalo]=="S") echo "checked"; ?> >
+                          <input type="radio" name="TarjetaRegalo" value="S" <?php if($_POST["TarjetaRegalo"]=="S") echo "checked"; ?> >
 						    Si
-                              <input type="radio" name="TarjetaRegalo" value="N" <?php if($_POST[TarjetaRegalo]=="N" || $_POST[TarjetaRegalo]=="") echo "checked"; ?> >
+                              <input type="radio" name="TarjetaRegalo" value="N" <?php if($_POST["TarjetaRegalo"]=="N" || $_POST["TarjetaRegalo"]=="") echo "checked"; ?> >
                           No </td>
 						  <td  align='left' valign='middle' class="nav">Proveedor</td>
 						  <td align="left" valign="middle" class="nav"><select name="IDProveedor" id="IDProveedor"  >

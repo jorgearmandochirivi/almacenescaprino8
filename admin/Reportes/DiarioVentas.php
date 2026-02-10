@@ -33,6 +33,14 @@ else
 
 function print_from($IDPuntoVenta="", $Fecha=""){
  Global $dblink,$total_records,$row,$numtoshow,$Nivel,$IVA, $ReteIVA, $ReteICA;
+ 
+ // Normalizar fecha para evitar consultas con Fecha vacia
+ if (empty($Fecha) && !empty($_REQUEST["Fecha"])) {
+ 	$Fecha = $_REQUEST["Fecha"];
+ }
+ if (empty($Fecha) || !preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $Fecha)) {
+ 	$Fecha = date("Y-m-d");
+ }
  // Fecha de cambio de iva
  
 
@@ -119,13 +127,13 @@ endif;
 					$sql_formapago = "SELECT IDFormaPago, Descripcion FROM FormaPago ";
 					$qry_formaPago = db_query( $sql_formapago );
 					while( $r_formapago =  db_fetch_array( $qry_formaPago ) )
-						$array_formapago[ $r_formapago[IDFormaPago] ] = $r_formapago;
+						$array_formapago[ $r_formapago["IDFormaPago"] ] = $r_formapago;
 
 					//Seleccionar Banco
 					$sql_banco = "SELECT * FROM Banco ";
 					$qry_banco = db_query( $sql_banco );
 					while( $r_banco =  db_fetch_array( $qry_banco ) )
-						$array_banco[ $r_banco[IDBanco] ] = $r_banco;
+						$array_banco[ $r_banco["IDBanco"] ] = $r_banco;
 
 					//print_r( $array_banco );
 					//Seleccionar Bancos

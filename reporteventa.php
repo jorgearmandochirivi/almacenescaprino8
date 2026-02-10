@@ -38,7 +38,7 @@ while ($row_factura = db_fetch_array($qry_factura)):
 	$cantidad_producto=0;
 
 	//Detalle Factura
-			$sql_detalle_factura = "SELECT * From DetalleFactura Where IDFactura = '".$row_factura[IDFactura]."' and IDPuntoVenta = '".$row_factura[IDPuntoVenta]."'";
+			$sql_detalle_factura = "SELECT * From DetalleFacttura Where IDFactura = '".$row_factura["IDFactura"]."' and IDPuntoVenta = '".$row_factura["IDPuntoVenta"]."'";
 			$qry_factura_detalle = db_query($sql_detalle_factura);
 			while ($row_factura_detalle = db_fetch_array($qry_factura_detalle)){
 				$cantidad_producto++;

@@ -188,8 +188,8 @@ if( !empty( $referencia ) )
 							<?php
 							foreach($r as $talla)
 							{
-								if(!empty($talla[IDTalla]))
-									echo "<td class=navpic align=center>".get_field("Talla","Descripcion","IDTalla",$talla[IDTalla])."</td>";
+								if(!empty($talla["IDTalla"]))
+									echo "<td class=navpic align=center>".get_field("Talla","Descripcion","IDTalla",$talla["IDTalla"])."</td>";
 							}
 							?>	
 							</tr>
@@ -203,8 +203,8 @@ if( !empty( $referencia ) )
 							<?php
 							foreach($r as $talla)
 							{
-								if(!empty($talla[IDTalla]))
-									echo "<td class=row1 align=center>$talla[Existencias]</td>";
+								if(!empty($talla["IDTalla"]))
+									echo "<td class=row1 align=center>{$talla["Existencias"]}</td>";
 							}
 							?>	
 							</tr>

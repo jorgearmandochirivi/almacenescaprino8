@@ -28,31 +28,31 @@ else{
 
 
 
-			if (empty($_GET[Referencia]) &&   empty($_GET[IDProveedor]) &&
-				empty($_GET[IDPuntoVenta]) && empty($_GET[Sexo]) ):
-				$_GET[IDPuntoVenta]=1;
+			if (empty($_GET["Referencia"]) &&   empty($_GET["IDProveedor"]) &&
+				empty($_GET["IDPuntoVenta"]) && empty($_GET["Sexo"]) ):
+				$_GET["IDPuntoVenta"]=1;
 
 			endif;
 
 
-			if (!empty($_GET[Referencia]))
-				$where = " and R.Numero like '%".$_GET[Referencia]."%' ";
+			if (!empty($_GET["Referencia"]))
+				$where = " and R.Numero like '%".$_GET["Referencia"]."%' ";
 
-			if (!empty($_GET[IDProveedor]))
-				$where .= " and R.IDProveedor = '".$_GET[IDProveedor]."' ";
+			if (!empty($_GET["IDProveedor"]))
+				$where .= " and R.IDProveedor = '".$_GET["IDProveedor"]."' ";
 
-			if (!empty($_GET[IDPuntoVenta]))
-				$where .= " and P.IDPuntoVenta = '".$_GET[IDPuntoVenta]."' ";
+			if (!empty($_GET["IDPuntoVenta"]))
+				$where .= " and P.IDPuntoVenta = '".$_GET["IDPuntoVenta"]."' ";
 
-			if (!empty($_GET[Sexo]))
-				$where .= " and R.Sexo = '".$_GET[Sexo]."' ";
+			if (!empty($_GET["Sexo"]))
+				$where .= " and R.Sexo = '".$_GET["Sexo"]."' ";
 
-			if (!empty($_GET[IDTipoReferencia]))
-				$where .= " and R.IDTipoReferencia = '".$_GET[IDTipoReferencia]."' ";
+			if (!empty($_GET["IDTipoReferencia"]))
+				$where .= " and R.IDTipoReferencia = '".$_GET["IDTipoReferencia"]."' ";
 
 
-				if (!empty($_GET[Referencia]) ||   !empty($_GET[IDProveedor]) ||
-					!empty($_GET[IDPuntoVenta]) || !empty($_GET[Sexo]) ){
+				if (!empty($_GET["Referencia"]) ||   !empty($_GET["IDProveedor"]) ||
+					!empty($_GET["IDPuntoVenta"]) || !empty($_GET["Sexo"]) ){
 
 			$año_actual=date("Y")."-01-01";
 			$sql = "SELECT CR.*, PROV.IDProveedor, PROV.Nombre as NombreProveedor, R.IDTipoReferencia, R.Sexo, P.Nombre as NombrePuntoVenta, P.IDPuntoVenta
@@ -206,7 +206,7 @@ var Check = new Array('Descripcion','Publicar');
 						  	$sql_tallas .= "AND C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia GROUP BY C.IDCodificacionEspecifica";
 							$result_tallas=db_query($sql_tallas);
 							while($row_tallas=db_fetch_array($result_tallas)):
-								$existencias_referencia+=$row_tallas[Existencias];
+								$existencias_referencia+=$row_tallas["Existencias"];
 							endwhile;
 
 	//FIN CANTIDAD INVENTARIO
@@ -437,7 +437,7 @@ endif; //if((int)$cantidad_referencia>0):
 				$sql_punto_venta = "Select * From PuntoVenta Where 1 order by Nombre asc";
 				$result_punto_venta = db_query($sql_punto_venta);
 				while($row_punto_venta = db_fetch_array($result_punto_venta)): ?>
-                	<option value="<?php echo $row_punto_venta[IDPuntoVenta]; ?>"><?php echo $row_punto_venta[Nombre]; ?></option>
+	                	<option value="<?php echo $row_punto_venta["IDPuntoVenta"]; ?>"><?php echo $row_punto_venta["Nombre"]; ?></option>
 				<?php endwhile; ?>
                 </select>
                 <br>Proveedor:
@@ -447,7 +447,7 @@ endif; //if((int)$cantidad_referencia>0):
 				$sql_proveedor = "Select * From Proveedor Where 1 order by Nombre asc";
 				$result_proveedor = db_query($sql_proveedor);
 				while($row_proveedor = db_fetch_array($result_proveedor)): ?>
-                	<option value="<?php echo $row_proveedor[IDProveedor]; ?>"><?php echo $row_proveedor[Nombre]; ?></option>
+	                	<option value="<?php echo $row_proveedor["IDProveedor"]; ?>"><?php echo $row_proveedor["Nombre"]; ?></option>
 				<?php endwhile; ?>
                 </select>
 
@@ -465,7 +465,7 @@ endif; //if((int)$cantidad_referencia>0):
 				$sql_tiporef = "Select * From TipoReferencia Where 1 order by Descripcion asc";
 				$result_tiporef = db_query($sql_tiporef);
 				while($row_tiporef = db_fetch_array($result_tiporef)): ?>
-                	<option value="<?php echo $row_tiporef[IDTipoReferencia]; ?>"><?php echo $row_tiporef[Descripcion]; ?></option>
+	                	<option value="<?php echo $row_tiporef["IDTipoReferencia"]; ?>"><?php echo $row_tiporef["Descripcion"]; ?></option>
 				<?php endwhile; ?>
                 </select>
                 <br>

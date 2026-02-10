@@ -187,7 +187,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					$qry_bancos = db_query( $sql_bancos = "SELECT IDBanco, Nombre FROM Banco");
 					while( $r_bancos = db_fetch_array( $qry_bancos ) )
 					{
-						$array_bancos[$r_bancos[IDBanco]] = $r_bancos[Nombre];
+						$array_bancos[$r_bancos["IDBanco"]] = $r_bancos["Nombre"];
 					}//en while bancos
 									
 				?>
@@ -260,7 +260,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										//echo "<br>";
 
 
-										$CBanco = $array_bancos[$dato[IDBanco]];
+										$CBanco = $array_bancos[$dato["IDBanco"]];
 										
 										$array_valores[$key][$dato['IDFormaPago']]['IDBanco'] =  $CBanco;
 										$array_valores[$key][$dato['IDFormaPago']]['NombrePago'] =  $dato["NombrePago"];
@@ -287,15 +287,15 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						?>
 								<tr>
 									<td class="<?php echo $class?>" align="center" nowrap><?php echo $Fecha?></td>
-									<td class="<?php echo $class?>" align="center" nowrap><?php echo $datos[IDBanco]?></td>
-									<td class="<?php echo $class?>" align="center" nowrap><?php echo $datos[NombrePago]?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorTotal = $datos[Venta],2 ); $tValorTotal += $ValorTotal;?> </td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Comision = $datos[Comision] ,2); $tComision += $Comision?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRetefuente = $datos[ValorRetefuente],2 ); $tValorRetefuente += $ValorRetefuente;?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Neto = $datos[Neto] ,2 ); $tNeto += $Neto; ?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRIVA = $datos[ValorRIVA] ,2 ); $tValorRIVA += $ValorRIVA; ?> </td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
+									<td class="<?php echo $class?>" align="center" nowrap><?php echo $datos["IDBanco"]?></td>
+									<td class="<?php echo $class?>" align="center" nowrap><?php echo $datos["NombrePago"]?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorTotal = $datos["Venta"],2 ); $tValorTotal += $ValorTotal;?> </td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Comision = $datos["Comision"] ,2); $tComision += $Comision?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRetefuente = $datos["ValorRetefuente"],2 ); $tValorRetefuente += $ValorRetefuente;?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Neto = $datos["Neto"] ,2 ); $tNeto += $Neto; ?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRIVA = $datos["ValorRIVA"] ,2 ); $tValorRIVA += $ValorRIVA; ?> </td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRICA = $datos["ValorRICA"],2); $tValorRICA += $ValorRICA; ?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Ingreso = $datos["Ingreso"] ,2 ); $tIngreso += $Ingreso; ?></td>
 								</tr>
 						<?php
 							}//end for
@@ -328,7 +328,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										$Ingreso = $dato['ValorFP']  -  ($ValorRICA + $ValorRIVA + $ValorRetefuente + $ValorIVA + $Comision); 
 										
 
-										$CBanco = $array_bancos[$dato[IDBanco]];
+										$CBanco = $array_bancos[$dato["IDBanco"]];
 										
 										$array_valoresef[$key]['IDBanco'] =  $CBanco;
 										$array_valoresef[$key]['NombrePago'] =  $dato["NombrePago"];
@@ -350,15 +350,15 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						?>
 								<tr>
 									<td class="<?php echo $class?>" align="center" nowrap><?php echo $Fecha?></td>
-									<td class="<?php echo $class?>" align="center" nowrap><?php echo $datos[IDBanco]?></td>
-									<td class="<?php echo $class?>" align="center" nowrap><?php echo $datos[NombrePago]?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorTotal = $datos[Venta],2 ); $tValorTotal += $ValorTotal;?> </td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Comision = $datos[Comision] ,2); $tComision += $Comision?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRetefuente = $datos[ValorRetefuente],2 ); $tValorRetefuente += $ValorRetefuente;?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Neto = $datos[Neto] ,2 ); $tNeto += $Neto; ?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRIVA = $datos[ValorRIVA] ,2 ); $tValorRIVA += $ValorRIVA; ?> </td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRICA = $datos[ValorRICA],2); $tValorRICA += $ValorRICA; ?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Ingreso = $datos[Ingreso] ,2 ); $tIngreso += $Ingreso; ?></td>
+									<td class="<?php echo $class?>" align="center" nowrap><?php echo $datos["IDBanco"]?></td>
+									<td class="<?php echo $class?>" align="center" nowrap><?php echo $datos["NombrePago"]?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorTotal = $datos["Venta"],2 ); $tValorTotal += $ValorTotal;?> </td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Comision = $datos["Comision"] ,2); $tComision += $Comision?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRetefuente = $datos["ValorRetefuente"],2 ); $tValorRetefuente += $ValorRetefuente;?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Neto = $datos["Neto"] ,2 ); $tNeto += $Neto; ?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRIVA = $datos["ValorRIVA"] ,2 ); $tValorRIVA += $ValorRIVA; ?> </td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $ValorRICA = $datos["ValorRICA"],2); $tValorRICA += $ValorRICA; ?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $Ingreso = $datos["Ingreso"] ,2 ); $tIngreso += $Ingreso; ?></td>
 								</tr>
 						<?php
 						}//end for

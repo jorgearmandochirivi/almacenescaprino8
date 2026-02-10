@@ -23,6 +23,9 @@
 					$error_devuelto = 0;
 					$error_entrada = 0;
 
+					$array_sql_devueltos = [];
+					$array_sql_devueltos_id = [];
+
 					for ($i = 0; $i <= $frm["ItemsDevolucion"]; $i++):
 						//echo "<br>" . $frm["IDReferencia".$i] . " Talla " . $frm["IDTalla".$i] . " Devuelto " . $frm["Devuelto".$i] . " " . $frm["Observacion".$i];
 						// Valido que vengas los datos minimos para hacer una devolucion
@@ -35,7 +38,7 @@
 								// verifico que la cantidad de devuelto no sea mayor a la cantidad pedida
 								if ((int)$frm["Devuelto" . $i] <= (int)$row_detale_pedido["Cantidad"]):
 									//echo "<br>Inserto";
-									$array_sql_devueltos[] = "Update DetallePedidoTerceroReferencia Set Estado = 'Devuelto', CantidadDevuelto = '" . $frm["Devuelto" . $i] . "', Observacion = '" . $frm["Observacion" . $i] . "', FechaDevuelto = NOW(), NumeroFactura = '" . $frm[NumeroFactura] . "' Where IDDetallePedidoTerceroReferencia = '" . $row_detale_pedido["IDDetallePedidoTerceroReferencia"] . "'";
+									$array_sql_devueltos[] = "Update DetallePedidoTerceroReferencia Set Estado = 'Devuelto', CantidadDevuelto = '" . $frm["Devuelto" . $i] . "', Observacion = '" . $frm["Observacion" . $i] . "', FechaDevuelto = NOW(), NumeroFactura = '" . $frm["NumeroFactura"] . "' Where IDDetallePedidoTerceroReferencia = '" . $row_detale_pedido["IDDetallePedidoTerceroReferencia"] . "'";
 									$array_sql_devueltos_id[] = $row_detale_pedido["IDDetallePedidoTerceroReferencia"];
 								else:
 									echo Mensaje_Info("Error la cantidad devuelta es mayor a la cantidad pedida, por favor verifique ", "col2");
@@ -73,23 +76,19 @@
 
 
 					$idpuntoref = "";
-					unset($update_tercero);
-					unset($sql_entrada);
-					unset($sql_actualizacod);
-
-
+					$update_tercero = [];
+					$sql_entrada = [];
+					$sql_actualizacod = [];
 					foreach ($frm["Recibido"] as $idpuntoref => $tallas) {
 						foreach ($tallas as $idtalla => $detallepedidotercero) {
 							foreach ($detallepedidotercero as $IDDetalleTercero => $valor) {
 								//Actualizar Existencias
-								unset($array_tallas_rel);
-								$id_tallas_rel = "";
-
+							$array_tallas_rel = [];
 								//Consulto las otra tallas posibles ya que una talla esta creada mas de una vez
 								$nombre_talla = get_field("Talla", "Descripcion", "IDTalla", $idtalla);
 								$sql_tallas_rel = db_query("Select * From Talla Where Descripcion = '" . $nombre_talla . "'");
 								while ($row_talla = db_fetch_array($sql_tallas_rel)):
-									$array_tallas_rel[] = $row_talla[IDTalla];
+									$array_tallas_rel[] = $row_talla["IDTalla"];
 								endwhile;
 
 								if (count($array_tallas_rel) > 0):
@@ -144,11 +143,11 @@
 
 
 									// Actualizo el registro del pedido de tercero con la entrada
-									$update_tercero[] = "Update DetallePedidoTerceroReferencia Set Estado = 'Recibido', CantidadRecibido = CantidadRecibido + '" . $valor . "', Remision = '" . $frm[Remision] . "', NumeroFactura = '" . $frm[NumeroFactura] . "', FechaRecibido = NOW() Where IDDetallePedidoTerceroReferencia = '" . $IDDetalleTercero . "'";
+									$update_tercero[] = "Update DetallePedidoTerceroReferencia Set Estado = 'Recibido', CantidadRecibido = CantidadRecibido + '" . $valor . "', Remision = '" . $frm["Remision"] . "', NumeroFactura = '" . $frm["NumeroFactura"] . "', FechaRecibido = NOW() Where IDDetallePedidoTerceroReferencia = '" . $IDDetalleTercero . "'";
 									//db_query($update_tercero);
 									//insertar entrada
 									//$identrada = get_maxID("Entrada","IDEntrada");
-									$consulta_sql_entrada = "INSERT INTO Entrada VALUES('consecutivoentrada','$frm[Remision]','$frm[NumeroFactura]','$frm[Fecha]','$idpuntoref','$idtalla','$valor',NOW(),'$IDPuntoVenta')";
+									$consulta_sql_entrada = "INSERT INTO Entrada VALUES('consecutivoentrada','{$frm['Remision']}','{$frm['NumeroFactura']}','{$frm['Fecha']}','$idpuntoref','$idtalla','$valor',NOW(),'$IDPuntoVenta')";
 									if (in_array($consulta_sql_entrada, $sql_entrada)) {
 										echo Mensaje_Info("Se repite la referencia y talla mas de una vez, por favor verifique " . $consulta_sql_entrada, "col2");
 										$msg  = 1;
@@ -234,31 +233,31 @@
 
 
 
-					if (!empty($_GET[NumeroFactura])):
-						$condiciones .= " and DPTR.Numerofactura LIKE '%" . $_GET[NumeroFactura] . "%'";
+					if (!empty($_GET["NumeroFactura"])):
+						$condiciones .= " and DPTR.Numerofactura LIKE '%" . $_GET["NumeroFactura"] . "%'";
 					endif;
 
-					if (!empty($_GET[NumeroOrdenCompra]))
-						$condiciones .= " and PT.NumeroOrdenCompra LIKE '%" . $_GET[NumeroOrdenCompra] . "%'";
+					if (!empty($_GET["NumeroOrdenCompra"]))
+						$condiciones .= " and PT.NumeroOrdenCompra LIKE '%" . $_GET["NumeroOrdenCompra"] . "%'";
 
-					if (!empty($_GET[IDProveedor]))
-						$condiciones .= " and PT.IDProveedor = '" . $_GET[IDProveedor] . "'";
+					if (!empty($_GET["IDProveedor"]))
+						$condiciones .= " and PT.IDProveedor = '" . $_GET["IDProveedor"] . "'";
 
-					if (!empty($_GET[IDEstadoPedidoTercero]))
-						$condiciones .= " and PT.IDEstadoPedidoTercero = '" . $_GET[IDEstadoPedidoTercero] . "'";
+					if (!empty($_GET["IDEstadoPedidoTercero"]))
+						$condiciones .= " and PT.IDEstadoPedidoTercero = '" . $_GET["IDEstadoPedidoTercero"] . "'";
 
-					if (!empty($_GET[ReferenciaCaprino]))
-						$condiciones .= " and DPT.ReferenciaCaprino  like '%" . $_GET[ReferenciaCaprino] . "%'";
+					if (!empty($_GET["ReferenciaCaprino"]))
+						$condiciones .= " and DPT.ReferenciaCaprino  like '%" . $_GET["ReferenciaCaprino"] . "%'";
 
-					if (!empty($_GET[FechaDesde])  && !empty($_GET[FechaHasta]))
-						$condiciones .= " and PT.FechaPedido >= '" . $_GET[FechaDesde] . "' and PT.FechaPedido <= '" . $_GET[FechaHasta] . "'";
+					if (!empty($_GET["FechaDesde"])  && !empty($_GET["FechaHasta"]))
+						$condiciones .= " and PT.FechaPedido >= '" . $_GET["FechaDesde"] . "' and PT.FechaPedido <= '" . $_GET["FechaHasta"] . "'";
 
-					if (!empty($_GET[Tipologia]))
-						$condiciones .= " and DPT.Producto  like '%" . $_GET[Tipologia] . "%'";
+					if (!empty($_GET["Tipologia"]))
+						$condiciones .= " and DPT.Producto  like '%" . $_GET["Tipologia"] . "%'";
 
 
-					if (!empty($_GET[limit1]) && !empty($_GET[limit2]))
-						$condiciones .= " and G.FechaTrCr between '" . $_GET[limit1] . "' and '" . $_GET[limit2] . "'";
+if (!empty($_GET["limit1"]) && !empty($_GET["limit2"]))
+							$condiciones .= " and G.FechaTrCr between '" . $_GET["limit1"] . "' and '" . $_GET["limit2"] . "'";
 
 					$sql = "Select PT.*
 					  From PedidoTercero PT, DetallePedidoTercero DPT, DetallePedidoTerceroReferencia DPTR
@@ -376,6 +375,7 @@
 																$sql_fac_pedido = db_query($qry_fac_pedido);
 																if (db_num_rows($sql_fac_pedido) > 0): ?>
 																	<br>Facturas Recibidas:<br> <?php
+																								$array_facturas = [];
 																								while ($row_fac_pedido = db_fetch_array($sql_fac_pedido)):
 																									if (!empty($row_fac_pedido["NumeroFactura"])) {
 																										//Averiguo el total de ingresados en la factura
@@ -429,26 +429,26 @@
 																							if (!empty($r->IDProveedor)) {
 																								$sql_datos_proveedor = db_query("Select * From Proveedor Where IDProveedor = '" . $r->IDProveedor . "'");
 																								$datos_proveedor = db_fetch_array($sql_datos_proveedor);
-																								$datos_proveedor[Ciudad] = get_field("Ciudad", "Descripcion", "IDCiudad", $datos_proveedor[IDCiudad]);
+																								$datos_proveedor["Ciudad"] = get_field("Ciudad", "Descripcion", "IDCiudad", $datos_proveedor["IDCiudad"]);
 																							}
 																							?>
 																						</td>
 																					</tr>
 																					<tr>
 																						<td width="16%"><strong>Nombre</strong></td>
-																						<td width="31%"><span id="NombreProveedor"><?php echo $datos_proveedor[Nombre] ?></span></td>
+																						<td width="31%"><span id="NombreProveedor"><?php echo $datos_proveedor["Nombre"] ?></span></td>
 																						<td width="19%"><strong>Direccion</strong></td>
-																						<td width="34%"><span id="DireccionProveedor"><?php echo $datos_proveedor[Direccion] ?></span></td>
+																						<td width="34%"><span id="DireccionProveedor"><?php echo $datos_proveedor["Direccion"] ?></span></td>
 																					</tr>
 																					<tr>
 																						<td><strong>Telefono</strong></td>
-																						<td><span id="TelefonoProveedor"><?php echo $datos_proveedor[Telefono] ?></span></td>
+																						<td><span id="TelefonoProveedor"><?php echo $datos_proveedor["Telefono"] ?></span></td>
 																						<td><strong>Ciudad</strong></td>
-																						<td><span id="CiudadProveedor"><?php echo $datos_proveedor[Ciudad] ?></span></td>
+																						<td><span id="CiudadProveedor"><?php echo $datos_proveedor["Ciudad"] ?></span></td>
 																					</tr>
 																					<tr>
 																						<td><strong>Email</strong></td>
-																						<td colspan="3"><span id="EmailProveedor"><?php echo $datos_proveedor[Email] ?></span></td>
+																						<td colspan="3"><span id="EmailProveedor"><?php echo $datos_proveedor["Email"] ?></span></td>
 																					</tr>
 																				</tbody>
 																			</table>
@@ -555,11 +555,11 @@
 																					<td class="titlemedium">Talla:</td>
 																					<?php
 																					if (count($array_talla) > 0):
-																						unset($suma_item_pedir_talla);
+																						$suma_item_pedir_talla = [];
 																						$total_tienda = "0";
 																						foreach ($array_talla as $id_talla => $datos_talla):
 																					?>
-																							<td class="titlemedium" nowrap align="center"><?php echo $datos_talla[Nombre]; ?></td>
+																							<td class="titlemedium" nowrap align="center"><?php echo $datos_talla["Nombre"]; ?></td>
 
 																					<?php endforeach;
 																					endif;
@@ -569,10 +569,10 @@
 
 
 																				<?php for ($i = 1; $i <= $detalle_inicial; $i++):
-																					unset($array_datos_curva);
-																					unset($minimo_item);
-																					unset($maximo_item);
-																					unset($existencias_item);
+																					$array_datos_curva = [];
+																					$minimo_item = [];
+																					$maximo_item = [];
+																					$existencias_item = [];
 																					$suma_item_pedir = 0;
 
 																					if (!empty($array_detalle_orden[$i]["IDCurvaTercero"])) {
@@ -599,28 +599,25 @@
 															  From DetallePedidoTerceroReferencia
 															  Where IDPedidoTercero= '" . $r->IDPedidoTercero . "' and 
 															  IDDetallePedidoTercero = '" . $array_detalle_orden[$i]["IDDetallePedidoTercero"] . "' and
-															  IDPuntoVenta = '" . $datos_punto_venta[IDPuntoVenta] . "' and 
-															  IDTalla = '" . $datos_talla[IDTalla] . "'";
-																								$result_detalle_pedido_ref = db_query($sql_detalle_pedido_ref);
-																								$row_detalle_pedido_ref = db_fetch_array($result_detalle_pedido_ref);
+																							  IDPuntoVenta = '" . $datos_punto_venta["IDPuntoVenta"] . "' and 
+																							  IDTalla = '" . $datos_talla["IDTalla"] . "'";
+																													$result_detalle_pedido_ref = db_query($sql_detalle_pedido_ref);
+																													$row_detalle_pedido_ref = db_fetch_array($result_detalle_pedido_ref);
 
-																								if (is_numeric($row_detalle_pedido_ref["Cantidad"]))
-																									$valor_pedir_item = (int)$row_detalle_pedido_ref["Cantidad"];
-																								else {
-																									$valor_pedir_item = (int)$maximo_item[$id_talla] - (int)$existencias_item[$id_talla];
-																									if ($valor_pedir_item < 0 && is_numeric($valor_pedir_item))
-																										$valor_pedir_item = "";
-																								}
+																													if (is_numeric($row_detalle_pedido_ref["Cantidad"]))
+																														$valor_pedir_item = (int)$row_detalle_pedido_ref["Cantidad"];
+																													else {
+																														$valor_pedir_item = (int)$maximo_item[$id_talla] - (int)$existencias_item[$id_talla];
+																														if ($valor_pedir_item < 0 && is_numeric($valor_pedir_item))
+																															$valor_pedir_item = "";
+																													}
 
-																								$suma_item_pedir += $valor_pedir_item;
-																								$suma_item_pedir_talla[$datos_talla[IDTalla]] +=  $valor_pedir_item;
+																													$suma_item_pedir += $valor_pedir_item;
+																													$suma_item_pedir_talla[$datos_talla["IDTalla"]] +=  $valor_pedir_item;
 
-																								$super_total_talla[$datos_talla[IDTalla]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] += $valor_pedir_item;
+																													$super_total_talla[$datos_talla["IDTalla"]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] += $valor_pedir_item;
 
-																						?>
-																								<td class=row1 align=center>
-
-																									<?php
+																									
 																									if (is_numeric($valor_pedir_item) && $valor_pedir_item > 0):
 																										echo (int)$valor_pedir_item;
 																									endif;
@@ -679,12 +676,9 @@
 																					?>
 																					<td bgcolor="#F1CFCF" align="center" style="font-weight:bold">
 																						<?php
-																						$total_ciudad[$datos_punto_venta[IDCiudad]] += $total_tienda;
-																						echo number_format($total_tienda, 0, ",", "."); ?>
-																					</td>
-																				</tr>
+																									$total_ciudad[$datos_punto_venta["IDCiudad"]] += $total_tienda;
 
-
+																					?>
 																			</tbody>
 																		</table>
 																		<br />
@@ -710,21 +704,21 @@
 																			<td class="titlemedium">Talla:</td>
 																			<?php
 																			if (count($array_talla) > 0):
-																				unset($suma_item_pedir_talla);
+																				$suma_item_pedir_talla = [];
 																				$total_tienda = "0";
 																				foreach ($array_talla as $id_talla => $datos_talla):
 																			?>
-																					<td class="titlemedium" nowrap align="center"><?php echo $datos_talla[Nombre]; ?></td>
+																					<td class="titlemedium" nowrap align="center"><?php echo $datos_talla["Nombre"]; ?></td>
 																			<?php endforeach;
 																			endif;
 																			?>
 																			<td class="titlemedium" nowrap align="center">TOTAL</td>
 																		</tr>
 																		<?php for ($i = 1; $i <= $detalle_inicial; $i++):
-																			unset($array_datos_curva);
-																			unset($minimo_item);
-																			unset($maximo_item);
-																			unset($existencias_item);
+																			$array_datos_curva = [];
+																			$minimo_item = [];
+																			$maximo_item = [];
+																			$existencias_item = [];
 																			$suma_item_pedir = 0;
 
 																			if (!empty($array_detalle_orden[$i]["IDCurvaTercero"])) {
@@ -750,8 +744,8 @@
 															  From DetallePedidoTerceroReferencia
 															  Where IDPedidoTercero= '" . $r->IDPedidoTercero . "' and 
 															  IDDetallePedidoTercero = '" . $array_detalle_orden[$i]["IDDetallePedidoTercero"] . "' and
-															  IDPuntoVenta = '" . $datos_punto_venta[IDPuntoVenta] . "' and 
-															  IDTalla = '" . $datos_talla[IDTalla] . "'";
+															  IDPuntoVenta = '" . $datos_punto_venta["IDPuntoVenta"] . "' and 
+															  IDTalla = '" . $datos_talla["IDTalla"] . "'";
 																						$result_detalle_pedido_ref = db_query($sql_detalle_pedido_ref);
 																						$row_detalle_pedido_ref = db_fetch_array($result_detalle_pedido_ref);
 
@@ -764,9 +758,9 @@
 																						}
 
 																						//$suma_item_pedir+=$valor_pedir_item;
-																						//$suma_item_pedir_talla[$datos_talla[IDTalla]] +=  $valor_pedir_item;
+																						//$suma_item_pedir_talla[$datos_talla["IDTalla"]] +=  $valor_pedir_item;
 
-																						$super_total_talla[$datos_talla[IDTalla]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] += $valor_pedir_item;
+																						$super_total_talla[$datos_talla["IDTalla"]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] += $valor_pedir_item;
 																				?>
 																						<td class=row1 align=center><?php
 																													if (is_numeric($valor_pedir_item) && $valor_pedir_item > 0):
@@ -808,18 +802,18 @@
 																													?>
 
 																								<?php
-																														if (!empty($IDPuntoVentaReferencia) && ($row_detalle_pedido_ref[Cantidad] != $row_detalle_pedido_ref[CantidadRecibido]  &&  $row_detalle_pedido_ref[Cantidad] >= $row_detalle_pedido_ref[CantidadRecibido])): ?>
-																									<?php if ((int)$row_detalle_pedido_ref[CantidadRecibido] > 0):
-																																echo "(" . $row_detalle_pedido_ref[CantidadRecibido] . ")";
+																														if (!empty($IDPuntoVentaReferencia) && ($row_detalle_pedido_ref["Cantidad"] != $row_detalle_pedido_ref["CantidadRecibido"]  &&  $row_detalle_pedido_ref["Cantidad"] >= $row_detalle_pedido_ref["CantidadRecibido"])): ?>
+																									<?php if ((int)$row_detalle_pedido_ref["CantidadRecibido"] > 0):
+																																echo "(" . $row_detalle_pedido_ref["CantidadRecibido"] . ")";
 																															endif;
 																									?>
 																									<input type="hidden" name="maximo<?php echo $contador_items; ?>" id="maximo<?php echo $contador_items; ?>" value="<?php echo $valor_pedir_item; ?>">
-																									<input type="text" name="Recibido[<?php echo $IDPuntoVentaReferencia ?>][<?php echo $datos_talla[IDTalla]; ?>][<?php echo $row_detalle_pedido_ref["IDDetallePedidoTerceroReferencia"]; ?>]" id="Recibido<?php echo $contador_items; ?>" value="" size="2">
+																									<input type="text" name="Recibido[<?php echo $IDPuntoVentaReferencia ?>][<?php echo $datos_talla["IDTalla"]; ?>][<?php echo $row_detalle_pedido_ref["IDDetallePedidoTerceroReferencia"]; ?>]" id="Recibido<?php echo $contador_items; ?>" value="" size="2">
 																								<?php else:
-																															echo $row_detalle_pedido_ref[CantidadRecibido];
+																															echo $row_detalle_pedido_ref["CantidadRecibido"];
 																														endif;
-																														$suma_item_pedir_talla[$id_talla] += (int)$row_detalle_pedido_ref[CantidadRecibido];
-																														$suma_item_pedir += (int)$row_detalle_pedido_ref[CantidadRecibido];
+																														$suma_item_pedir_talla[$id_talla] += (int)$row_detalle_pedido_ref["CantidadRecibido"];
+																														$suma_item_pedir += (int)$row_detalle_pedido_ref["CantidadRecibido"];
 																								?>
 
 																							<?php
@@ -865,7 +859,7 @@
 																			endif;
 																			?>
 																			<td bgcolor="#F1CFCF" align="center" style="font-weight:bold"><?php
-																																			$total_ciudad[$datos_punto_venta[IDCiudad]] += $total_tienda;
+																																			$total_ciudad[$datos_punto_venta["IDCiudad"]] += $total_tienda;
 																																			echo number_format($total_tienda, 0, ",", "."); ?></td>
 																		</tr>
 																	</tbody>

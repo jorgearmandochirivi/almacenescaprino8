@@ -140,8 +140,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 					//Puntos de Venta
 					$sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta ";
 					$qry_puntos = db_query( $sql_puntos );
-					while( $r_puntos = db_fetch_array( $qry_puntos ) )
-						$array_puntos[ $r_puntos[ IDPuntoVenta ] ] = $r_puntos[ Nombre ];
+						while( $r_puntos = db_fetch_array( $qry_puntos ) )
+							$array_puntos[ $r_puntos["IDPuntoVenta"] ] = $r_puntos["Nombre"];
 					
 										
 				?>
@@ -178,25 +178,25 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							$fechaproximo = "";
 							$pendientes = 0;
 							//SELECT CLIENTE
-							$sql_cliente = "SELECT IDCliente, Cedula, Nombre, Apellido FROM Cliente WHERE IDCliente = '$r_facturas[IDCliente]'";
+							$sql_cliente = "SELECT IDCliente, Cedula, Nombre, Apellido FROM Cliente WHERE IDCliente = '" . $r_facturas["IDCliente"] . "'";
 							$qry_cliente = db_query( $sql_cliente );
 							$cliente = db_fetch_array( $qry_cliente );
 						?>
 								<tr>
-										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas[FechaFacturaF]?></td>
-										<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_facturas[NumeroDocumento]?></td>
-										<td class="<?php echo $class?>" align="center" nowrap><?php echo $cliente[Cedula] ?></td>
-										<td class="<?php echo $class?>" align="center" nowrap><?php echo $cliente[Nombre]." ".$cliente[Apellido] ?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo $array_puntos[$r_facturas[IDPuntoVenta]]?> </td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_facturas[NumeroFactura]?></td>
-									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $r_facturas[ValorTotal],2 ); $tValorTotal += $r_facturas[ValorTotal];?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $r_facturas["FechaFacturaF"]?></td>
+										<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_facturas["NumeroDocumento"]?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $cliente["Cedula"] ?></td>
+										<td class="<?php echo $class?>" align="center" nowrap><?php echo $cliente["Nombre"]." ".$cliente["Apellido"] ?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo $array_puntos[$r_facturas["IDPuntoVenta"]]?> </td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo $r_facturas["NumeroFactura"]?></td>
+									<td class="<?php echo $class?>" align="right" nowrap><?php echo number_format( $r_facturas["ValorTotal"],2 ); $tValorTotal += $r_facturas["ValorTotal"];?></td>
 										<td class="<?php echo $class?>" align="right" nowrap>
 										<?php	
-											echo $r_facturas[FechaCuota];
+											echo $r_facturas["FechaCuota"];
 										?>
 									 </td>
 										<td class="<?php echo $class?>" align="right" nowrap><?php	
-											echo $r_facturas[FechaPago];
+											echo $r_facturas["FechaPago"];
 											
 										?></td>
 									</tr>

@@ -2,7 +2,7 @@
 	include("../admin/config.inc.php");
 	Encabezado();
 	
-    $sql_fac = $_GET[sql];
+    $sql_fac = $_GET["sql"];
 	$now_date = date('m-d-Y H:i');
 	$result = db_query($sql_fac);
 	$title = "Datos Reporte Cambios Fecha $now_date";
