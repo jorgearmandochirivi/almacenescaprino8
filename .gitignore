@@ -5,7 +5,7 @@ error_log
 Datos_Mysql/*
 src/*
 file/*
-plataform/config.inc.php
+admin/config.inc.php
 *config.inc.php*
 plataform/assets/*
 plataform/Lib/PHPMailer-master/*
