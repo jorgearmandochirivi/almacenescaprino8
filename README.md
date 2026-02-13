@@ -20,3 +20,16 @@ docker-compose build
 //para correr el contenedor
 
 docker-compose up -d
+
+
+# Para subir a produccion
+Siempre trabajar sobre rama develop
+
+Despues enviar el push de esa rama
+
+git push origin develop 
+
+Despues hacer el PR desde github de devlop a main para que se ejcute el action
+
+
+
