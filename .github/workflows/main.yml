@@ -1,0 +1,48 @@
+name: Deploy via Plesk webhook
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    # Corre si:
+    # - fue ejecutado manualmente (workflow_dispatch)
+    # - o es un PR mergeado y la rama destino del PR es main
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main')
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso informativo. Solo aplica cuando viene de un pull_request.
+      - name: Mostrar info de ramas del PR
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Rama destino (base): ${{ github.event.pull_request.base.ref }}"
+          echo "Rama origen (head):  ${{ github.event.pull_request.head.ref }}"
+          echo "Merged:              ${{ github.event.pull_request.merged }}"
+          if [ "${{ github.event.pull_request.base.ref }}" = "main" ]; then
+            echo "Destino es main. Despliegue de producción."
+          else
+            echo "Destino NO es main. (No debería estar corriendo en prod)"
+          fi
+
+      - name: Mostrar si la variable está presente
+        run: |
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "❌ Variable WEBHOOK_URL vacía o no definida"
+            exit 1
+          else
+            echo "✅ Variable WEBHOOK_URL cargada correctamente"
+            echo "Longitud: ${#WEBHOOK_URL}"
+          fi
+        env:
+          WEBHOOK_URL: ${{ secrets.PLESK_WEBHOOK_URL }}
+
+      - name: Trigger Plesk webhook
+        run: |
+          set -e
+          curl -iSsf -X POST "$WEBHOOK_URL"
+        env:
+          WEBHOOK_URL: ${{ secrets.PLESK_WEBHOOK_URL }}
