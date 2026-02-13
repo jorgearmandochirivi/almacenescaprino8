@@ -34,11 +34,11 @@ while($row_ref = db_fetch_array($result_ref)){
 
 
 
-//Crear la codf Especifica
-$sql_inv=" SELECT CE.*, PR.IDReferencia
-	   FROM CodificacionEspecifica CE, PuntoVentaReferencia PR 
-	   WHERE PR.IDPuntoVenta = '17' AND 
-	   PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia
+//Crear la codf Especifica - Optimizado con LIMIT para evitar consumo excesivo de memoria
+$sql_inv=" SELECT CE.IDCodificacionEspecifica, CE.IDPuntoVentaReferencia, CE.IDTalla, CE.Existencias, CE.Maximo, CE.Minimo, CE.Publicar, PR.IDReferencia
+	   FROM CodificacionEspecifica CE 
+	   INNER JOIN PuntoVentaReferencia PR ON PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia
+	   WHERE PR.IDPuntoVenta = '17'
 	   ";
 $query_inv = db_query( $sql_inv );
 while($row_inv = db_fetch_array($query_inv)):

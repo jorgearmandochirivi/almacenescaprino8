@@ -267,13 +267,18 @@ if( !empty( $referencia ) )
 if( !empty( $IDTipoReferencia ) )
 	$condiciont = " AND R.IDTipoReferencia = '".$IDTipoReferencia."%' ";
 
-	 	 $sql = " SELECT DF.Cantidad, DF.IDPuntoVenta, R.Numero, CE.IDTalla FROM $Table CE, Referencia R, PuntoVentaReferencia PR, Factura F, DetalleFactura DF $from_ciudad_ventas
-	 				WHERE $condicion R.IDReferencia = PR.IDReferencia $condiciont
-	 				AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia
-	 				AND CE.IDCodificacionEspecifica = DF.IDCodificacionEspecifica
-	 				AND DF.IDFactura = F.IDFactura
+		// Consulta optimizada: agregar ventas directamente en SQL
+	 	 $sql = " SELECT R.Numero, CE.IDTalla, SUM(DF.Cantidad) as TotalCantidad 
+	 				FROM $Table CE 
+	 				INNER JOIN PuntoVentaReferencia PR ON PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia
+	 				INNER JOIN Referencia R ON R.IDReferencia = PR.IDReferencia $condiciont
+	 				INNER JOIN DetalleFactura DF ON CE.IDCodificacionEspecifica = DF.IDCodificacionEspecifica
+	 				INNER JOIN Factura F ON DF.IDFactura = F.IDFactura AND DF.IDPuntoVenta = F.IDPuntoVenta
+					$from_ciudad_ventas
+	 				WHERE $condicion F.FechaFactura >= '$FechaDesde' AND F.FechaFactura <= '$FechaHasta' 
 					$condicion_ciudad_ventas
-	 				AND F.FechaFactura >= '$FechaDesde' AND F.FechaFactura <= '$FechaHasta' ORDER BY  R.Numero, CE.IDTalla";
+					GROUP BY R.Numero, CE.IDTalla
+					ORDER BY R.Numero, CE.IDTalla";
 		
 		$query_codificacion = db_query($sql);
 		$rows = db_num_rows($query_codificacion);
@@ -283,26 +288,30 @@ if( !empty( $IDTipoReferencia ) )
 			<tr>
 				<td class="row1">
 					<?php 
-						$i = 0;
-						$r = array( );
+						// Procesar ventas agregadas
 						while($r_codificacionesp = db_fetch_array($query_codificacion))
 						{
-							$array_ventas[ $r_codificacionesp["Numero"] ][ $array_tallas[ $r_codificacionesp["IDTalla"] ] ] += $r_codificacionesp["Cantidad"];
-						} //end while($r[$i] = db_fetch_array($query_codificacion))
-						//print_r($r);
+							$array_ventas[ $r_codificacionesp["Numero"] ][ $array_tallas[ $r_codificacionesp["IDTalla"] ] ] = $r_codificacionesp["TotalCantidad"];
+						}
 						
-						//INVENTARIO
-						$sql_inv =  "SELECT CE.*, PR.IDPuntoVenta, R.Numero FROM $Table CE, Referencia R, PuntoVentaReferencia PR $from_ciudad_inv WHERE $condicion R.IDReferencia = PR.IDReferencia $condiciont";
-					 	 $sql_inv .= "AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia $condicion_ciudad_inv ORDER BY R.Sexo, R.Numero ";
+						// INVENTARIO - Consulta optimizada: agregar existencias directamente en SQL
+						$sql_inv = "SELECT R.Numero, CE.IDTalla, SUM(CE.Existencias) as TotalExistencias 
+									FROM $Table CE 
+									INNER JOIN PuntoVentaReferencia PR ON PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia
+									INNER JOIN Referencia R ON R.IDReferencia = PR.IDReferencia $condiciont
+									$from_ciudad_inv 
+									WHERE $condicion 1=1 
+									$condicion_ciudad_inv 
+									GROUP BY R.Numero, CE.IDTalla
+									ORDER BY R.Sexo, R.Numero, CE.IDTalla";
 					 
 						$query_codificacion_inv = db_query($sql_inv);
 						$rows_inv = db_num_rows($query_codificacion_inv);
 						
-						$i = 0;
-						$r = array( );
+						// Procesar inventario agregado
 						while($r_codificacionesp = db_fetch_array($query_codificacion_inv))
 						{
-							$array_existencias[ $r_codificacionesp["Numero"] ][ $array_tallas[ $r_codificacionesp["IDTalla"] ] ] += $r_codificacionesp["Existencias"];
+							$array_existencias[ $r_codificacionesp["Numero"] ][ $array_tallas[ $r_codificacionesp["IDTalla"] ] ] = $r_codificacionesp["TotalExistencias"];
 							$array_tallas_mostrar[ $array_tallas[ $r_codificacionesp["IDTalla"] ] ] = $array_tallas[ $r_codificacionesp["IDTalla"] ];
 						}
 						

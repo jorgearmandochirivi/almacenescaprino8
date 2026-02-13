@@ -247,31 +247,42 @@ function crear_referencia($fields){
 	
 	
 
-//Cargo los puntos de venta de las referencias	
-$sql_ref=db_query("Select * from Referencia Where IDReferencia >= 8506");
-while ($row_referencia = db_fetch_array($sql_ref)){
-	// consulto los puntos de venta
-	$sql_punto=db_query("Select * from PuntoVenta Where 1");
-	while ($row_punto=db_fetch_array($sql_punto)){
-		// consulto que no este creado
-		$sql_punto_ref=db_query("Select * from PuntoVentaReferencia Where IDReferencia = '".$row_referencia[IDReferencia]."' and IDPuntoVenta = '".$row_punto[IDPuntoVenta]."'");
-		if (db_num_rows($sql_punto_ref)<=0){
-			$idpuntoventareferencia = get_maxID("PuntoVentaReferencia","IDPuntoVentaReferencia");			
-			$sql_insertapunto=db_query("INSERT INTO  PuntoVentaReferencia (IDPuntoVentaReferencia, IDReferencia, IDPuntoVenta) VALUES('".$idpuntoventareferencia."','".$row_referencia[IDReferencia]."','".$row_punto[IDPuntoVenta]."');");			
+//Cargo los puntos de venta de las referencias - Procesamiento por lotes
+$batch_size = 100;
+$offset = 0;
+do {
+	$sql_ref=db_query("Select * from Referencia Where IDReferencia >= 8506 LIMIT $batch_size OFFSET $offset");
+	$num_rows = db_num_rows($sql_ref);
+	
+	while ($row_referencia = db_fetch_array($sql_ref)){
+		// consulto los puntos de venta
+		$sql_punto=db_query("Select * from PuntoVenta Where 1");
+		while ($row_punto=db_fetch_array($sql_punto)){
+			// consulto que no este creado
+			$sql_punto_ref=db_query("Select * from PuntoVentaReferencia Where IDReferencia = '".$row_referencia[IDReferencia]."' and IDPuntoVenta = '".$row_punto[IDPuntoVenta]."'");
+			if (db_num_rows($sql_punto_ref)<=0){
+				$idpuntoventareferencia = get_maxID("PuntoVentaReferencia","IDPuntoVentaReferencia");			
+				$sql_insertapunto=db_query("INSERT INTO  PuntoVentaReferencia (IDPuntoVentaReferencia, IDReferencia, IDPuntoVenta) VALUES('".$idpuntoventareferencia."','".$row_referencia[IDReferencia]."','".$row_punto[IDPuntoVenta]."');");			
+			}
 		}
-		
 	}
-}
+	$offset += $batch_size;
+} while ($num_rows == $batch_size);
 
 
-//Cargo los maximos
-$sql_ref=db_query("Select * from Referencia Where IDReferencia >= 8506000");
-while ($row_referencia = db_fetch_array($sql_ref)){
+//Cargo los maximos - Procesamiento por lotes
+$batch_size = 100;
+$offset = 0;
+do {
+	$sql_ref=db_query("Select * from Referencia Where IDReferencia >= 8506000 LIMIT $batch_size OFFSET $offset");
+	$num_rows = db_num_rows($sql_ref);
 	
-	$row_referencia[IDReferencia];
-	insert_codEspecifica_plano($row_referencia[IDReferencia]);
-	
-}
+	while ($row_referencia = db_fetch_array($sql_ref)){
+		$row_referencia[IDReferencia];
+		insert_codEspecifica_plano($row_referencia[IDReferencia]);
+	}
+	$offset += $batch_size;
+} while ($num_rows == $batch_size);
 
 	
 	
