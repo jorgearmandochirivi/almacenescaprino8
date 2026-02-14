@@ -369,9 +369,9 @@
 						?>
 					</td>
 					<?php
-					foreach ($r_detalle as $talla) {
-						if (!empty($talla[IDTalla]))
-							echo "<td class=navpic align=center>" . get_field("Talla", "Descripcion", "IDTalla", $talla[IDTalla]) . "</td>";
+						foreach ($r_detalle as $talla) {
+							if (!empty($talla["IDTalla"]))
+								echo "<td class=navpic align=center>" . get_field("Talla", "Descripcion", "IDTalla", $talla["IDTalla"]) . "</td>";
 					} //end foreach($r_detalle as $talla)
 					?>
 				</tr>
@@ -382,9 +382,9 @@
 					</td>
 					<?php
 					foreach ($r_detalle as $talladetalle) {
-						foreach ($r_codificacion as $talla) {
-							if (!empty($talla[IDTalla]) && ($talla[IDTalla] == $talladetalle[IDTalla]))
-								echo "<td class=row1 align=center>" . $talla[Existencias] . "</td>";
+							foreach ($r_codificacion as $talla) {
+								if (!empty($talla["IDTalla"]) && ($talla["IDTalla"] == $talladetalle["IDTalla"]))
+									echo "<td class=row1 align=center>" . $talla["Existencias"] . "</td>";
 						} //end foreach($r_detalle as $talla)
 					} //end foreach($r_detalle as $talla)
 					?>
@@ -396,9 +396,9 @@
 					</td>
 					<?php
 					foreach ($r_detalle as $talladetalle) {
-						foreach ($r_codificacion as $talla) {
-							if (!empty($talla[IDTalla]) && ($talla[IDTalla] == $talladetalle[IDTalla]))
-								echo "<td class=row1 align=center>" . $talla[Maximo] . "</td>";
+							foreach ($r_codificacion as $talla) {
+								if (!empty($talla["IDTalla"]) && ($talla["IDTalla"] == $talladetalle["IDTalla"]))
+									echo "<td class=row1 align=center>" . $talla["Maximo"] . "</td>";
 						} //end foreach($r_detalle as $talla)
 					} //end foreach($r_detalle as $talla)
 					?>
@@ -410,9 +410,9 @@
 					</td>
 					<?php
 					foreach ($r_detalle as $talladetalle) {
-						foreach ($r_codificacion as $talla) {
-							if (!empty($talla[IDTalla]) && ($talla[IDTalla] == $talladetalle[IDTalla]))
-								echo "<td class=row1 align=center>" . $talla[Minimo] . "</td>";
+							foreach ($r_codificacion as $talla) {
+								if (!empty($talla["IDTalla"]) && ($talla["IDTalla"] == $talladetalle["IDTalla"]))
+									echo "<td class=row1 align=center>" . $talla["Minimo"] . "</td>";
 						} //end foreach($r_detalle as $talla)
 					} //end foreach($r_detalle as $talla)
 					?>
@@ -425,9 +425,9 @@
 						PEDIDO
 					</td>
 					<?php
-					foreach ($r_detalle as $talla) {
-						if (!empty($talla[IDTalla])) {
-							echo "<td class=row1 align=center><input readonly type=text size=5 value=" . $talla[Cantidad] . " name=" . get_field("Referencia", "Numero", "IDReferencia", $r_referencias->IDReferencia) . "[$talla[IDTalla]]>";
+						foreach ($r_detalle as $talla) {
+							if (!empty($talla["IDTalla"])) {
+								echo "<td class=row1 align=center><input readonly type=text size=5 value=" . $talla["Cantidad"] . " name=" . get_field("Referencia", "Numero", "IDReferencia", $r_referencias->IDReferencia) . "[".$talla["IDTalla"]."]>";
 							//SE IMPRIME UN HIDDEN CON EL ID DE LAS TALLA
 							//echo "<input readonly type=hidden value=".$talla[IDTalla]." name=Talla".get_field("Referencia","Numero","IDReferencia",$r_referencias->IDReferencia)."[$talla[IDTalla]]></td>";
 						}

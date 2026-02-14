@@ -131,7 +131,7 @@ table{
 				Almacen <?=$r_puntoventa->Nombre ?><br>
 				No. De Serial <?=$r_puntoventa->EquipoComputo ?><br>
 				Fecha Generacion: <?=date( "Y-m-d" );?><br>
-                Fecha Reporte: <?php echo $_GET[Fecha] ?>
+                Fecha Reporte: <?php echo $_GET["Fecha"] ?>
 			</td>
 		</tr>
 		<tr>
@@ -174,7 +174,7 @@ table{
 
 
 												//consultar forma de pago pa saber si se le resta
-												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$IDPuntoVenta' ";
+												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '$IDPuntoVenta' ";
 												$qry_formasdepago = db_query( $sql_formasdepago );
 												$saldo = 0;
 												while( $r_formasdepago = db_fetch_object( $qry_formasdepago ) )
@@ -315,7 +315,7 @@ table{
 			//print_r($valor);
 			//print_r($bancos);
 
-			$sql_facturas = "SELECT  COUNT(*) as cantidad, SUM( FPF.Valor ) as valor FROM Factura F,  FormaPagoFactura FPF WHERE F.IDPuntoVenta = '$IDPuntoVenta' AND DATE_FORMAT( F.FechaFactura,'%Y-%c-%d' ) = DATE_FORMAT( '$Fecha','%Y-%c-%d' )  AND  F.IDFactura = FPF.IDFactura AND FPF.IDPuntoVenta = F.IDPuntoVenta AND FPF.IDFormaPago = $valor[IDFormaPago] AND FPF.IDPuntoVenta = '$IDPuntoVenta' ";
+			$sql_facturas = "SELECT  COUNT(*) as cantidad, SUM( FPF.Valor ) as valor FROM Factura F,  FormaPagoFactura FPF WHERE F.IDPuntoVenta = '$IDPuntoVenta' AND DATE_FORMAT( F.FechaFactura,'%Y-%c-%d' ) = DATE_FORMAT( '$Fecha','%Y-%c-%d' )  AND  F.IDFactura = FPF.IDFactura AND FPF.IDPuntoVenta = F.IDPuntoVenta AND FPF.IDFormaPago = ".$valor["IDFormaPago"]." AND FPF.IDPuntoVenta = '$IDPuntoVenta' ";
 
 			$qry_facturas = db_query( $sql_facturas );
 			$r_factura = db_fetch_object( $qry_facturas );
@@ -385,8 +385,8 @@ table{
 					?>
 					<tr>
 						<td class="<?=$class?>" align="center" nowrap><?=$valor['NumeroFactura']?></td>
-						<td class="<?=$class?>" align="center" nowrap><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$valor[IDPuntoVenta]) ?> </td>
-						<td class="<?=$class?>" align="center" nowrap><?=$numero_cuota=$valor[IDCuota]?></td>
+						<td class="<?=$class?>" align="center" nowrap><?=get_field("PuntoVenta","Nombre","IDPuntoVenta",$valor["IDPuntoVenta"]) ?> </td>
+						<td class="<?=$class?>" align="center" nowrap><?=$numero_cuota=$valor["IDCuota"]?></td>
 						<td class="<?=$class?>" align="center" nowrap>
 
                         <?php
@@ -397,11 +397,11 @@ table{
 									?>
                       </td>
 									<td class="<?=$class?>" align="right" nowrap>
-                                    <?=number_format( $valor[ValorTotal] , 0); $PagoAbono+=$valor[ValorTotal];  ?>
+                                    <?=number_format( $valor["ValorTotal"] , 0); $PagoAbono+=$valor["ValorTotal"];  ?>
                                     </td>
 						<td class="<?=$class?>" align="right" nowrap>
                         <?php
-						$saldo = (int)$pendiente_cuota * (int)$valor[ValorTotal];
+						$saldo = (int)$pendiente_cuota * (int)$valor["ValorTotal"];
 						echo number_format($saldo,0);
 						?>
                         </td>
@@ -449,9 +449,7 @@ table{
 <?php
 
 $page = ob_get_contents();
-$fw = fopen($file, "w");
-fputs($fw,$page,strlen($page));
-fclose($fw);
+file_put_contents($file, $page);
 
 ob_end_clean();
 

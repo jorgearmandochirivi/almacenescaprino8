@@ -171,16 +171,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 		$name = "DiarioVentas$fecha.xls";
 		$file = $filedir.$name;
 		
-		$fw = fopen($file, "w");
-		fputs($fw,$page,strlen($page));
-		fclose($fw);
+		file_put_contents($file, $page);
 
 		$name = "DiarioVentas$fecha.sxc";
 		$file = $filedir.$name;
 		
-		$fw = fopen($file, "w");
-		fputs($fw,$page,strlen($page));
-		fclose($fw);
+		file_put_contents($file, $page);
 		ob_end_clean();
 		
 		//header_export($file);
@@ -197,4 +193,3 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 ?>
 </body>
-
