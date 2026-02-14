@@ -306,7 +306,7 @@ endif;
 
 
 
-										$TotalFactura = $valor[ValorTotal] ;
+									$TotalFactura = $valor['ValorTotal'] ;
 												if( $valor['DescuentoPar'] > 0 )
 													$valordescuentopar = ( $valor['PrecioU'] * $valor['Cantidad'] ) *   ( $valor['DescuentoPar'] / 100 );
 												else
@@ -384,8 +384,8 @@ endif;
 												//Traer Comision
 												$pcomision = 0;
 												$comision = 0;
-												if($array_factura_con_comision[$valor[IDFactura]]["Calculada"]=="S"){
-													$array_forma_pago[ $valor[IDFactura] ][ValorComision]=0;
+												if($array_factura_con_comision[$valor['IDFactura']]["Calculada"]=="S"){
+													$array_forma_pago[ $valor['IDFactura'] ]['ValorComision']=0;
 												}
 												else{
 													$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$valor[IDPuntoVenta]' ";
@@ -400,18 +400,18 @@ endif;
 														$comisioncalculo=( $r_comisiones->Valor / (1 + $IVA) ) * $pcomision;
 														$comision +=  ( $valorparcial / (1 + $IVA) ) * $pcomision;
 														$k++;
-														$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][IDFormaPago] = $r_comisiones->IDFormaPago;
-														$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][Valor] = $r_comisiones->Valor;
-														$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][Comision] = $r_comisiones->Comision;
-														$array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ][$k][IDBanco] = $r_comisiones->IDBanco;
-														$array_forma_pago[ $valor[IDFactura] ][ValorComision] += $comisioncalculo;
+													$array_forma_pago[ $valor['IDFactura'] ][ $valor['IDDetalleFactura'] ][$k]['IDFormaPago'] = $r_comisiones->IDFormaPago;
+													$array_forma_pago[ $valor['IDFactura'] ][ $valor['IDDetalleFactura'] ][$k]['Valor'] = $r_comisiones->Valor;
+													$array_forma_pago[ $valor['IDFactura'] ][ $valor['IDDetalleFactura'] ][$k]['Comision'] = $r_comisiones->Comision;
+													$array_forma_pago[ $valor['IDFactura'] ][ $valor['IDDetalleFactura'] ][$k]['IDBanco'] = $r_comisiones->IDBanco;
+													$array_forma_pago[ $valor['IDFactura'] ]['ValorComision'] += $comisioncalculo;
 													}
 
 
 													
 
 
-													$array_factura_con_comision[$valor[IDFactura]]["Calculada"]="S";
+													$array_factura_con_comision[$valor['IDFactura']]["Calculada"]="S";
 
 												}
 
@@ -474,7 +474,7 @@ endif;
 						 			<!-- COMISION BANCOS --> 
 						  			<?php 
 									
-										$comision=$array_forma_pago[ $valor[IDFactura] ][ValorComision];										
+										$comision=$array_forma_pago[ $valor['IDFactura'] ]['ValorComision'];										
 										echo number_format( $comision  ,2 );
 										$ComisionBancos += $comision;?></td>
 				          <td class="<?php echo $class?>" align="right" nowrap><?php
@@ -530,11 +530,11 @@ endif;
 							?></td>
 				          <td class="<?php echo $class?>" align="right" nowrap><table width=100;?>
 				            <?php
-									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
+									foreach(  $array_forma_pago[ $valor['IDFactura'] ][ $valor['IDDetalleFactura'] ] as $keyfp => $valuefp )
 									{
 									?>
-				            <tr>
-				              <td align="right"><?php echo $array_formapago[  $valuefp[IDFormaPago] ][Descripcion] ?></td>
+			            <tr>
+			              <td align="right"><?php echo $array_formapago[  $valuefp['IDFormaPago'] ]['Descripcion'] ?></td>
 			                </tr>
 				            <?php
 									}//end for
