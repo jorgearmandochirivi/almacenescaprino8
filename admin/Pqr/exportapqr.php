@@ -2,7 +2,7 @@
 	include("../config.inc.php");
 	Encabezado();
 
-    $sql_garantias = $_GET[sql];
+    $sql_garantias = $_GET["sql"];
 	$now_date = date('m-d-Y H:i');
 	$result = db_query($sql_garantias);
 	$title = "Datos Reporte Pqr Fecha $now_date";
@@ -52,7 +52,7 @@
 			echo get_field("MotivoPqr","Nombre","IDMotivoPqr",$row["IDMotivoPqr"]) . $sep;
 			echo get_field("FuentePqr","Nombre","IDFuentePqr",$row["IDFuentePqr"]) . $sep;
 			echo get_field("Empleado","Nombre","IDEmpleado",$row["IDEmpleado"]). $sep;
-			$id_pto_vta = get_field("Empleado","IDPuntoVenta","IDEmpleado",$r->IDEmpleado);
+			$id_pto_vta = get_field("Empleado","IDPuntoVenta","IDEmpleado",$row["IDEmpleado"]);
 			echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$id_pto_vta) . $sep;
 			$id_cliente = $row["IDCliente"];
 			echo get_field("Cliente","Nombre","IDCliente",$id_cliente) . " " .get_field("Cliente","Apellido","IDCliente",$id_cliente) . $sep;
