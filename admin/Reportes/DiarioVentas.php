@@ -315,7 +315,7 @@ endif;
 												//echo "DESCUU " . $valor['DescuentoPar'];	
 
 												//consultar forma de pago pa saber si se le resta
-												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$IDPuntoVenta' ";
+												$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '$IDPuntoVenta' ";
 												$qry_formasdepago = db_query( $sql_formasdepago );
 												$saldo = 0;
 												while( $r_formasdepago = db_fetch_object( $qry_formasdepago ) )
@@ -388,7 +388,7 @@ endif;
 													$array_forma_pago[ $valor['IDFactura'] ]['ValorComision']=0;
 												}
 												else{
-													$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$valor[IDPuntoVenta]' ";
+													$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '".$valor["IDPuntoVenta"]."' ";
 													$qry_comisiones = db_Query( $sql_comisiones );
 													$array_forma_pago = array();
 													$k = 0;
@@ -550,11 +550,11 @@ endif;
 								?></td>
 				          <td class="<?php echo $class?>" align="right" nowrap><table width=100;?>
 				            <?php
-									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
+									foreach(  $array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ] as $keyfp => $valuefp )
 									{
 									?>
 				            <tr>
-				              <td align="right"><?php echo $array_banco[   $valuefp[IDBanco] ][Nombre] ?></td>
+					              <td align="right"><?php echo $array_banco[   $valuefp["IDBanco"] ]["Nombre"] ?></td>
 			                </tr>
 				            <?php
 									}//end for
@@ -569,7 +569,7 @@ endif;
 									$TotRteIca=0;
 									$TotRteIva=0;
 									$TotRteFte=0;
-									foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
+									foreach(  $array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ] as $keyfp => $valuefp )
 									{
 										$AgregaValorRteFte="S";
 										$ValorReteICA = 0;
@@ -577,9 +577,9 @@ endif;
 										$ValorReteFuente=0;
 										$ReteFuente=0.015;
 
-										if( $valuefp[IDFormaPago] <> 1 )
+										if( $valuefp["IDFormaPago"] <> 1 )
 										{
-											$Valor = $valuefp[Valor];
+											$Valor = $valuefp["Valor"];
 
 											$ValorReteICA = ( $Valor / (1 + $IVA ) ) * $ReteICA;
 											$ValorReteIVA = ( $Valor - ( $Valor / (1 + $IVA ) ) ) * $ReteIVA;
@@ -631,12 +631,12 @@ endif;
 				          <td class="<?php echo $class?>" align="right" nowrap><?php
 	 						$AgregaValorRteIva="N";
 							
-							foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
+							foreach(  $array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ] as $keyfp => $valuefp )
 							{
 
-								if( $valuefp[IDFormaPago] <> 1 )
+								if( $valuefp["IDFormaPago"] <> 1 )
 								{
-									$Valor = $valuefp[Valor];
+									$Valor = $valuefp["Valor"];
 									$ValorReteIVA = ( $Valor - ( $Valor / (1 + $IVA ) ) ) * $ReteIVA;
 									//echo "FORMULAIV" . "(" . $Valor ."- ( " . $Valor ."/ (1 + " . $IVA. " ) ) ) * " . $ReteIVA;									
 									$TotRteIva+=$ValorReteIVA;
@@ -645,7 +645,7 @@ endif;
 											
  								$AgregaValorRteIva="S";
 								$IvaTotal+=$ValorReteIVA;
-								if( $valuefp[IDFormaPago] <> 1 )
+								if( $valuefp["IDFormaPago"] <> 1 )
 									echo number_format( $ValorReteIVA, 2 )."<br>";
 							}	
 							if($AgregaValorRteIva=="N")
@@ -654,12 +654,12 @@ endif;
 							?></td>
 				          <td class="<?php echo $class?>" align="right" nowrap><?php
 						  $AgregaValorIca="N";
-						  foreach(  $array_forma_pago[ $valor[IDFactura] ][ $valor[IDDetalleFactura] ] as $keyfp => $valuefp )
+						  foreach(  $array_forma_pago[ $valor["IDFactura"] ][ $valor["IDDetalleFactura"] ] as $keyfp => $valuefp )
 						  {
 
-							if( $valuefp[IDFormaPago] <> 1 )
+							if( $valuefp["IDFormaPago"] <> 1 )
 								{
-									$Valor = $valuefp[Valor];
+									$Valor = $valuefp["Valor"];
 									$ValorReteICA = ( $Valor / (1 + $IVA ) ) * $ReteICA;
 									$TotRteIca+=$ValorReteICA;
 								}	
@@ -667,7 +667,7 @@ endif;
 
 							$AgregaValorIca="S";
 							$IcaTotal+=$ValorReteICA;
-								if( $valuefp[IDFormaPago] <> 1 )
+								if( $valuefp["IDFormaPago"] <> 1 )
 									echo number_format( $ValorReteICA, 2 )."<br>";									
 						  }
 						  if($AgregaValorIca=="N")
