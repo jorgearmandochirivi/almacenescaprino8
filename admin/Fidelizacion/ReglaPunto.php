@@ -71,7 +71,7 @@ if($permisos[0] >= 2)
 					for($i=0; $i < count($seleccionados_genero); $i++){
 						$genero[]=$seleccionados_genero[$i];
 					}	
-					$_POST[Genero]	= implode("|",$genero);
+					$_POST["Genero"]	= implode("|",$genero);
 				}
 			
 				//Color				
@@ -157,7 +157,7 @@ if($permisos[0] >= 2)
 					for($i=0; $i < count($seleccionados_genero); $i++){
 						$genero[]=$seleccionados_genero[$i];
 					}	
-					$_POST[Genero]	= implode("|",$genero);
+					$_POST["Genero"]	= implode("|",$genero);
 				}
 			
 				//Color				
@@ -209,7 +209,7 @@ if($permisos[0] >= 2)
 							$nombre_archivo=date("Y-m-d_H:s:i").$file['name'];				
 							if(copy($file['tmp_name'], $filedir.$nombre_archivo )){
 								$_POST['ArchivoCliente'] = $nombre_archivo;								
-								insert_cedula_regla($filedir.$nombre_archivo,$_POST[IDReglaPunto]);								
+								insert_cedula_regla($filedir.$nombre_archivo,$_POST["IDReglaPunto"]);								
 								unlink($filedir.$nombre_archivo);			
 							}
 							else{ 
@@ -234,12 +234,12 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$_GET[action]="";
+				$_GET["action"]="";
 				delete($ID);
 			break;
 
 			case "delcedulas" :
-				$sql_elimina="Delete from ReglaCedula where IDRegla = '".$_GET[id]."'";
+				$sql_elimina="Delete from ReglaCedula where IDRegla = '".$_GET["id"]."'";
 				db_query($sql_elimina);	
 				window_alert("Cedulas eliminadas con exito ");
 				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
@@ -409,12 +409,12 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
           <select name="IDReferencia[]" id="IDReferencia" data-placeholder="Seleccione Referencias..." class="chosen-select" multiple style="width:350px;" tabindex="4">
 			<?php
                 foreach( $array_referencias as $key=>$valor ){
-						if(in_array($valor[IDReferencia],$array_referencia_guardados))
+						if(in_array($valor["IDReferencia"],$array_referencia_guardados))
 							$opcion_selecc=" selected ";	
 						else
 							$opcion_selecc="";
-												
-                    echo "<option value='$valor[IDReferencia]' $opcion_selecc >$valor[Numero]</option>";
+													
+	                    echo "<option value='".$valor["IDReferencia"]."' $opcion_selecc >".$valor["Numero"]."</option>";
 				}
             ?>                      
           </select></td>
@@ -445,16 +445,16 @@ var Check = new Array('Nombre','Descripcion','Puntos','FechaInicio','FechaFin');
 						  <td><input type="file" name="ArchivoCliente" id="ArchivoCliente">
                           
                           <?php
-                            $sql_cedula=db_query("Select * from ReglaCedula where IDRegla = '". $_GET[id] ."' Order By Cedula");
+                            $sql_cedula=db_query("Select * from ReglaCedula where IDRegla = '". $_GET["id"] ."' Order By Cedula");
 						    while($row_cedula=db_fetch_array($sql_cedula)){ ?>
-								<?php $datos.="\r".$row_cedula[Cedula]; ?>
+								<?php $datos.="\r".$row_cedula["Cedula"]; ?>
                             <?php		
 							}
 							
 							if(!empty($datos)){?>
                               <b>Cedulas a las que aplica la regla Asociadas</b><br>	
                               <textarea name="Cedula" id="Cedula" cols="10" rows="4"><?php echo $datos; ?></textarea>
-                              <a href="?mod=Fidelizacion&action=delcedulas&id=<?php echo $_GET[id] ?>">Eliminar cedulas</a>
+                              <a href="?mod=Fidelizacion&action=delcedulas&id=<?php echo $_GET["id"] ?>">Eliminar cedulas</a>
                           <?php } ?>
                           </td>
 		  </tr>

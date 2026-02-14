@@ -19,10 +19,10 @@ if($permisos[0] >= 2)
 			case "insert" :
 				$frm= vars_LOG($HTTP_POST_VARS);
 
-				$id_cliente=$frm[IDCliente];
+				$id_cliente=$frm["IDCliente"];
 
 				// verico el numero de la tarjeta
-				$sql_tarjeta = " Select * From TarjetaFidelizacion Where Codigo = '" . $frm[NumeroTarjeta] . "' AND (Estado = 'A' or Estado = 'E') LIMIT 1 ";
+				$sql_tarjeta = " Select * From TarjetaFidelizacion Where Codigo = '" . $frm["NumeroTarjeta"] . "' AND (Estado = 'A' or Estado = 'E') LIMIT 1 ";
 				$qry_tarjeta = db_query( $sql_tarjeta );
 				//$r_tarjeta = db_fetch_array( $qry_tarjeta );
 				if (db_num_rows($qry_tarjeta)<=0){
@@ -41,7 +41,7 @@ if($permisos[0] >= 2)
 						$condicion=" and Estado = 'A'";
 					}
 
-					$sql_tarjeta_cliente = " Select * From TarjetaFidelizacion Where Codigo = '" . $frm[NumeroTarjeta] . "'  $condicion";
+					$sql_tarjeta_cliente = " Select * From TarjetaFidelizacion Where Codigo = '" . $frm["NumeroTarjeta"] . "'  $condicion";
 					$qry_tarjeta_cliente = db_query( $sql_tarjeta_cliente );
 
 
@@ -54,7 +54,7 @@ if($permisos[0] >= 2)
 					}
 					else{
 						$id = insert($frm);
-						$sql_tarjeta="Update TarjetaFidelizacion Set IDCliente = '".$id. "', Estado = 'E',FechaTrEd = NOW(), UsuarioTrEd = 'Administrador' Where Codigo = '".$frm[NumeroTarjeta]."' ";
+						$sql_tarjeta="Update TarjetaFidelizacion Set IDCliente = '".$id. "', Estado = 'E',FechaTrEd = NOW(), UsuarioTrEd = 'Administrador' Where Codigo = '".$frm["NumeroTarjeta"]."' ";
 						db_query($sql_tarjeta);
 						$id_tarjeta_fidelizacion=get_field("TarjetaFidelizacion","IDTarjetaFidelizacion","IDCliente",$id);
 						$sql_actualizo_tarjeta="Update Cliente Set IDTarjetaFidelizacion = '".$id_tarjeta_fidelizacion. "' Where IDCliente = '".$id."' ";
@@ -70,17 +70,17 @@ if($permisos[0] >= 2)
 			case "update" :
 				$frm= vars_LOG($HTTP_POST_VARS);
 
-				if ($frm[ClubSuavidad]=="N"){
-					$sql_baja_club="Update Cliente set ClubSuavidad = 'N'  Where IDCliente = '".$frm[IDCliente]."'";
+				if ($frm["ClubSuavidad"]=="N"){
+					$sql_baja_club="Update Cliente set ClubSuavidad = 'N'  Where IDCliente = '".$frm["IDCliente"]."'";
 					db_query($sql_baja_club);
 					window_alert("El cliente ya no pertenece al club de la suavidad, recuerde desvincular la tarjeta ");
-					print_form($frm[IDCliente],"update","Actualizar $TitleMod","Realizar Cambios");
+					print_form($frm["IDCliente"],"update","Actualizar $TitleMod","Realizar Cambios");
 
 
 				}
 				else{
 
-						$id_cliente=$frm[IDCliente];
+						$id_cliente=$frm["IDCliente"];
 
 						// verico el numero de la tarjeta
 						//$sql_tarjeta = " Select * From TarjetaFidelizacion Where Codigo = '" . $frm[NumeroTarjeta] . "' AND (Estado = 'A' or Estado = 'E') LIMIT 1 ";
@@ -123,7 +123,7 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS["action"]="";
 				delete($ID);
 			break;
 			case "list" :
@@ -296,7 +296,7 @@ if($newmode <> "insert")
 								$qry_puntos_venta=db_query($sql_puntos_venta);
 								while($row_puntos_venta=db_fetch_array($qry_puntos_venta)){
 							?>
-								<option value="<?php echo $row_puntos_venta[IDPuntoVenta]?>" <?php if($row_puntos_venta[IDPuntoVenta]==$r->IDPuntoVentaFideliza) echo "selected"; ?> ><?php echo $row_puntos_venta[Nombre]?></option>
+								<option value="<?php echo $row_puntos_venta["IDPuntoVenta"]?>" <?php if($row_puntos_venta["IDPuntoVenta"]==$r->IDPuntoVentaFideliza) echo "selected"; ?> ><?php echo $row_puntos_venta["Nombre"]?></option>
 
                              <?php
 								}
@@ -312,7 +312,7 @@ if($newmode <> "insert")
 								$qry_empleados_venta=db_query($sql_empleados_venta);
 								while($row_empleado=db_fetch_array($qry_empleados_venta)){
 							?>
-								<option value="<?php echo $row_empleado[IDEmpleado]?>" <?php if($row_empleado[IDEmpleado]==$r->IDUsuarioFideliza) echo "selected"; ?> ><?php echo $row_empleado[Nombre] . " " .$row_empleado[Apellidos] ?></option>
+								<option value="<?php echo $row_empleado["IDEmpleado"]?>" <?php if($row_empleado["IDEmpleado"]==$r->IDUsuarioFideliza) echo "selected"; ?> ><?php echo $row_empleado["Nombre"] . " " .$row_empleado["Apellidos"] ?></option>
 
                              <?php
 								}
@@ -352,10 +352,10 @@ if($newmode <> "insert")
 
                             <?php while($row_historial=db_fetch_array($qry_historial)){ ?>
                           	<tr>
-                          	  <td><?php echo $row_historial[Codigo]; ?></td>
-                          	  <td><?php echo $row_historial[Observacion]; ?></td>
-                          	  <td><?php echo $row_historial[FechaTrCr]; ?></td>
-                          	  <td><?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$row_historial[IDPuntoVenta] );; ?></td>
+                          	  <td><?php echo $row_historial["Codigo"]; ?></td>
+                          	  <td><?php echo $row_historial["Observacion"]; ?></td>
+                          	  <td><?php echo $row_historial["FechaTrCr"]; ?></td>
+                          	  <td><?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$row_historial["IDPuntoVenta"] );; ?></td>
                        	    </tr>
                            <?php } ?>
                           </table>
