@@ -95,7 +95,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							/*
 							$sql_ventasadmin = " SELECT VE.Venta as ValorTotal, VE.IDPuntoVenta, VE.Cargo , F.*, DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 												FROM VentasEmpleadoBck VE, Factura F
-												WHERE VE.IDEmpleado = '$r_empleado[IDEmpleado]' 
+												WHERE VE.IDEmpleado = '".$r_empleado["IDEmpleado"]."' 
 												AND FIND_IN_SET( 'Administrador', VE.Cargo) > 0 
 												AND VE.IDFactura = F.IDFactura
 												AND F.IDPuntoVenta = '$IDPuntoVenta' 
@@ -106,7 +106,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												
 							 $sql_ventasadmin = " SELECT VE.Venta as ValorTotal, VE.IDPuntoVenta, VE.Cargo , F.*, DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 										FROM VentasEmpleadoBck VE, Factura F
-										WHERE VE.IDEmpleado = '$r_empleado[IDEmpleado]' 
+										WHERE VE.IDEmpleado = '".$r_empleado["IDEmpleado"]."' 
 										AND FIND_IN_SET( 'Administrador', VE.Cargo) > 0 
 										AND VE.IDFactura = F.IDFactura
 										AND F.IDPuntoVenta = VE.IDPuntoVenta 
@@ -126,8 +126,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 								
 									
-								$array_ventasadmin[$r_empleado[IDEmpleado]][$r_ventasadmin[IDPuntoVenta]][ValorTotal] += $r_ventasadmin[ValorTotal];
-								$array_ventasadmin[$r_empleado[IDEmpleado]][$r_ventasadmin[IDPuntoVenta]][Cargo] = $r_ventasadmin[Cargo];
+								$array_ventasadmin[$r_empleado["IDEmpleado"]][$r_ventasadmin["IDPuntoVenta"]]["ValorTotal"] += $r_ventasadmin["ValorTotal"];
+								$array_ventasadmin[$r_empleado["IDEmpleado"]][$r_ventasadmin["IDPuntoVenta"]]["Cargo"] = $r_ventasadmin["Cargo"];
 								$j++;
 								
 								
@@ -136,8 +136,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									$sql_detalle = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.IDPuntoVenta, F.ValorTotal, R.Numero, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, 
 									P.Descuento, F.Descuento as DescuentoFactura ,DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 										FROM FacturaBck F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P 
-										WHERE F.IDFactura = '$r_ventasadmin[IDFactura]' 
-										AND F.IDPuntoVenta = '$r_ventasadmin[IDPuntoVenta]' 
+											WHERE F.IDFactura = '".$r_ventasadmin["IDFactura"]."' 
+											AND F.IDPuntoVenta = '".$r_ventasadmin["IDPuntoVenta"]."' 
 										AND F.IDFactura = DF.IDFactura 
 										AND F.IDPuntoVenta = DF.IDPuntoVenta
 										AND DF.IDCodificacionEspecifica = C.IDCodificacionEspecifica 
@@ -165,7 +165,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										
 										
 										//consultar forma de pago pa saber si se le resta
-										$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$IDPuntoVenta' ";
+											$sql_formasdepago = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '$IDPuntoVenta' ";
 										$qry_formasdepago = db_query( $sql_formasdepago );
 										$saldo = 0;
 										while( $r_formasdepago = db_fetch_object( $qry_formasdepago ) )
@@ -195,7 +195,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										//Traer Comision
 										$pcomision = 0;
 										$comision = 0;
-										$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$valor[IDPuntoVenta]' ";
+										$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '".$valor["IDPuntoVenta"]."' ";
 										
 										//if( $r_empleado[IDEmpleado] == 23 )
 										//	echo $sql_comisiones;
@@ -215,11 +215,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										$valorbruto = $valorparcial - $valoriva;
 										//echo $comision."<br>";
 										
-										$ValorParcial[ $r_empleado[IDEmpleado] ][ $valor[IDPuntoVenta] ]['admin'] += $valorparcial  - $comision;
-										$Comision[ $r_empleado[IDEmpleado] ] += $comision;
-										$ValorIVA[ $r_empleado[IDEmpleado] ]  += $valoriva;
-										$ValorBruto[ $r_empleado[IDEmpleado] ] += $valorbruto;
-										$Pago[ $r_empleado[IDEmpleado] ] += $pago;
+										$ValorParcial[ $r_empleado["IDEmpleado"] ][ $valor["IDPuntoVenta"] ]['admin'] += $valorparcial  - $comision;
+										$Comision[ $r_empleado["IDEmpleado"] ] += $comision;
+										$ValorIVA[ $r_empleado["IDEmpleado"] ]  += $valoriva;
+										$ValorBruto[ $r_empleado["IDEmpleado"] ] += $valorbruto;
+										$Pago[ $r_empleado["IDEmpleado"] ] += $pago;
 										
 										
 										/*
@@ -247,7 +247,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 												
 							 $sql_ventasvendedor = " SELECT VE.Venta as ValorTotal, VE.IDPuntoVenta, VE.Cargo , F.*, DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 												FROM VentasEmpleadoBck VE, Factura F
-												WHERE VE.IDEmpleado = '$r_empleado[IDEmpleado]' 
+												WHERE VE.IDEmpleado = '".$r_empleado["IDEmpleado"]."' 
 												AND FIND_IN_SET( 'Empleado', VE.Cargo) > 0 
 												AND VE.IDFactura = F.IDFactura
 												AND F.IDPuntoVenta = VE.IDPuntoVenta 
@@ -260,16 +260,16 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							while( $r_ventasvendedor = db_fetch_array( $qry_ventasvendedor ) )
 							{
 								//$array_ventasvendedor[$r_empleado[IDEmpleado]][$j] = $r_ventasvendedor;
-								$array_ventasvendedor[$r_empleado[IDEmpleado]][$r_ventasvendedor[IDPuntoVenta]][ValorTotal] += $r_ventasvendedor[ValorTotal];
-								$array_ventasvendedor[$r_empleado[IDEmpleado]][$r_ventasvendedor[IDPuntoVenta]][Cargo] = $r_ventasvendedor[Cargo];
+								$array_ventasvendedor[$r_empleado["IDEmpleado"]][$r_ventasvendedor["IDPuntoVenta"]]["ValorTotal"] += $r_ventasvendedor["ValorTotal"];
+								$array_ventasvendedor[$r_empleado["IDEmpleado"]][$r_ventasvendedor["IDPuntoVenta"]]["Cargo"] = $r_ventasvendedor["Cargo"];
 								$j++;
 								
 								
 									//DETALLE FACTURA
 									$sql_detalle = "SELECT F.NumeroFactura,F.IDFactura, F.IDPuntoVenta, F.FechaFactura, F.ValorTotal, R.Numero, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura ,DATE_FORMAT(F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 										FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P 
-										WHERE F.IDFactura = '$r_ventasvendedor[IDFactura]' 
-										AND F.IDPuntoVenta = '$r_ventasvendedor[IDPuntoVenta]' 
+											WHERE F.IDFactura = '".$r_ventasvendedor["IDFactura"]."' 
+											AND F.IDPuntoVenta = '".$r_ventasvendedor["IDPuntoVenta"]."' 
 										AND F.IDFactura = DF.IDFactura 
 										AND F.IDPuntoVenta = DF.IDPuntoVenta
 										AND DF.IDCodificacionEspecifica = C.IDCodificacionEspecifica 
@@ -299,7 +299,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										//Traer Comision
 										$pcomision = 0;
 										$comision = 0;
-										$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '$valor[IDFactura]' AND IDPuntoVenta = '$valor[IDPuntoVenta]' ";
+										$sql_comisiones = " SELECT * FROM FormaPagoFactura WHERE IDFactura = '".$valor["IDFactura"]."' AND IDPuntoVenta = '".$valor["IDPuntoVenta"]."' ";
 										$qry_comisiones = db_query( $sql_comisiones );
 										while( $r_comisiones = db_fetch_object( $qry_comisiones ) )
 										{
@@ -314,10 +314,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										$valorbruto = $valorparcial - $valoriva;
 										
 										
-										$ValorParcial[ $r_empleado[IDEmpleado] ][ $valor[IDPuntoVenta] ]['empleado'] += $valorparcial - $comision;
-										$Comision[ $r_empleado[IDEmpleado] ] += $comision;
-										$ValorIVA[ $r_empleado[IDEmpleado] ]  += $valoriva;
-										$ValorBruto[ $r_empleado[IDEmpleado] ] += $valorbruto;
+										$ValorParcial[ $r_empleado["IDEmpleado"] ][ $valor["IDPuntoVenta"] ]['empleado'] += $valorparcial - $comision;
+										$Comision[ $r_empleado["IDEmpleado"] ] += $comision;
+										$ValorIVA[ $r_empleado["IDEmpleado"] ]  += $valoriva;
+										$ValorBruto[ $r_empleado["IDEmpleado"] ] += $valorbruto;
 										
 										$valorparcial = 0;
 										$pago = 0;
@@ -357,8 +357,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						/*
 						foreach( $array_facturas as $fecha => $valor )
 						{
-							echo $fecha." ".$valor[ValorBruto]."<br>";
-							$totalbruto += $valor[ValorBruto];
+							echo $fecha." ".$valor["ValorBruto"]."<br>";
+							$totalbruto += $valor["ValorBruto"];
 							
 						}
 						echo $totalbruto." TOTAL ";

@@ -29,7 +29,7 @@ function genera_bonos($idcliente, $frm)
 	$qry_puntos_total = db_query($sql_puntos_total);
 	while ($r_puntos_total = db_fetch_array($qry_puntos_total)) {
 		$puntos_total_cliente += (int)$r_puntos_total["Puntos"];
-		$id_puntos_utilizados[] = $r_puntos_total[IDPuntosClienteFidelizacion];
+			$id_puntos_utilizados[] = $r_puntos_total["IDPuntosClienteFidelizacion"];
 	}
 
 	$total_puntos_disponibles = (int)$puntos_total_cliente;
@@ -634,7 +634,7 @@ function fid_notificaciones($datos_cliente)
 	while ($row_plan_contacto = db_fetch_array($qry_plan_contacto)) {
 		$aplica_plan = 0;
 		$lineas_promocion = "";
-		if (!empty($row_plan_contacto[ArchivoCliente])) {
+		if (!empty($row_plan_contacto["ArchivoCliente"])) {
 			//verifico si aploica para el cliente actual
 			$sql_plan_cedula = "Select * from PlanCedula Where IDCliente = '" . $datos_cliente->IDCliente . "'";
 			$qry_plan_cedula = db_query($sql_plan_cedula);
@@ -646,20 +646,20 @@ function fid_notificaciones($datos_cliente)
 		}
 
 		if ($aplica_plan == 1) {
-			if (!empty($row_plan_contacto[IDLinea])) {
-				$array_linea_guardados = explode("|", $row_plan_contacto[IDLinea]);
+			if (!empty($row_plan_contacto["IDLinea"])) {
+				$array_linea_guardados = explode("|", $row_plan_contacto["IDLinea"]);
 				foreach ($array_linea_guardados as $valor_linea) {
 					$lineas_promocion .= " Linea: " . get_field("Linea", "Nombre", "IDLinea", $valor_linea);
 				}
 			}
 
-			if (!empty($row_plan_contacto[CompraMinima])) {
-				$compra_minima = " Compra Minima de : $" . number_format($row_plan_contacto[CompraMinima], 0);
+			if (!empty($row_plan_contacto["CompraMinima"])) {
+				$compra_minima = " Compra Minima de : $" . number_format($row_plan_contacto["CompraMinima"], 0);
 			}
 
 
 
-			$notificacion[] = "<li>*" . $row_plan_contacto[Descuento] . "% de descuento " . $row_plan_contacto[Nombre] . $lineas_promocion . $compra_minima . "</li>";
+			$notificacion[] = "<li>*" . $row_plan_contacto["Descuento"] . "% de descuento " . $row_plan_contacto["Nombre"] . $lineas_promocion . $compra_minima . "</li>";
 		}
 	}
 
