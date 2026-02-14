@@ -67,9 +67,7 @@ if($permisos[0] >= 0)
 					$fecha = date( "Y-m-d" );
 					$name = "Inventario".get_field( "PuntoVenta","Nombre","IDPuntoVenta",$_POST["IDPuntoVenta"] ).$fecha.".html";
 					$file = $filedir.$name;
-					$fw = fopen($file, "w");
-					fputs($fw,$page,strlen($page));
-					fclose($fw);
+					file_put_contents($file, $page);
 					ob_end_clean();
 					header_export($file);
 					echo $page;
@@ -89,9 +87,7 @@ if($permisos[0] >= 0)
 				$name = "Inventario$fecha.xls";
 				$file = $filedir.$name;
 
-				$fw = fopen($file, "w");
-				fputs($fw,$page,strlen($page));
-				fclose($fw);
+				file_put_contents($file, $page);
 				ob_end_clean();
 				header_export($file);
 				echo $page;
