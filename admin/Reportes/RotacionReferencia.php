@@ -312,13 +312,13 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 													$array_referencias[]= $referencia;
 												endwhile;
 
-												if(count($array_referencias)>0):
+												if(count(is_array($array_referencias ?? null) ? $array_referencias : array())>0):
 													echo implode("<br>",$array_referencias);
 												endif;
 
 											endif;
 
-												if(count($array_referencias)<=0):
+													if(count(is_array($array_referencias ?? null) ? $array_referencias : array())<=0):
 													echo "tarjeta";
 												endif;
 
@@ -700,7 +700,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								$parametro_get[]= $id_parametro . "=".$valor_parametro;
 							}
 						endforeach;
-						if(count($parametro_get)>0):
+						if(count(is_array($parametro_get ?? null) ? $parametro_get : array())>0):
 							$getparametro = "&".implode("&",$parametro_get);
 						endif;
 						?>
