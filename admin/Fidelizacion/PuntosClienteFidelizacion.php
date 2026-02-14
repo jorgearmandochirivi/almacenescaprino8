@@ -24,7 +24,7 @@ if($permisos[0] >= 2)
 					$qry_factura=db_query($sql_verifica_factura);
 					if(db_num_rows($qry_factura)>0){
 						$row_factura=db_fetch_array($qry_factura);
-						$frm["IDFactura"] = $row_factura[IDFactura];
+						$frm["IDFactura"] = $row_factura["IDFactura"];
 						$frm["FechaTrCr"] = date("Y-m-d");
 						$frm["UsuarioTrCr"] = $datos["IDUsuario"];
 						$sql_insert = " INSERT INTO PuntosClienteFidelizacion (IDCliente, IDPuntoVenta, IDFactura, IDEmpleado, Puntos, FechaVencimiento, Observaciones, FechaTrCr, UsuarioTrCr) VALUES ('" . $frm["IDCliente"] . "','" . $frm["IDPuntoVenta"] . "','" . $frm["IDFactura"] . "','". $frm["IDEmpleado"] ."','" . $frm["Puntos"] . "','" . $frm["FechaVencimiento"] . "','" . $frm["Observaciones"] . "','" . $frm["FechaTrCr"] . "','" . $frm["UsuarioTrCr"] . "')  ";				
@@ -37,14 +37,14 @@ if($permisos[0] >= 2)
 						echo "<script>location.href='?mod=PuntosClienteFidelizacion&idCliente=" . $frm["IDCliente"] . "';</script>";
 					}
 					else{
-						echo "<script>alert('El numero de factura no existe o no pertenece al punto de venta. Verifique por favor');location.href='?mod=PuntosClienteFidelizacion&idCliente=$frm[IDCliente]';</script>";
+						echo "<script>alert('El numero de factura no existe o no pertenece al punto de venta. Verifique por favor');location.href='?mod=PuntosClienteFidelizacion&idCliente=".$frm["IDCliente"]."';</script>";
 					}
 				}
 			break;
 			case "modificafecha":
-				$sql_cambia_fecha="Update PuntosClienteFidelizacion Set FechaVencimiento = '".$_POST[FechaVencimientoPunto]."' Where IDPuntosClienteFidelizacion = '".$_POST[IDPuntosClienteFidelizacion]."' and IDCliente = '".$_POST[IDCliente]."'";
+				$sql_cambia_fecha="Update PuntosClienteFidelizacion Set FechaVencimiento = '".$_POST["FechaVencimientoPunto"]."' Where IDPuntosClienteFidelizacion = '".$_POST["IDPuntosClienteFidelizacion"]."' and IDCliente = '".$_POST["IDCliente"]."'";
 				db_query($sql_cambia_fecha);
-				echo "<script>alert('Fecha Modificada con exito');location.href='?mod=PuntosClienteFidelizacion&idCliente=$_POST[IDCliente]';</script>";				
+				echo "<script>alert('Fecha Modificada con exito');location.href='?mod=PuntosClienteFidelizacion&idCliente=".$_POST["IDCliente"]."';</script>";				
 			break;
 			
 			
@@ -152,7 +152,7 @@ else
             </tr>
             <tr class="row2">
               <td>Empleado que asigna</td>
-              <td><span class="col2"><?php echo formpopup("Empleado WHERE IDPuntoVenta >0 ","Nombre","Nombre","IDEmpleado",$frm[IDEmpleado],"input\" id=\"Empleado"); ?></span></td>
+              <td><span class="col2"><?php echo formpopup("Empleado WHERE IDPuntoVenta >0 ","Nombre","Nombre","IDEmpleado",$frm["IDEmpleado"],"input\" id=\"Empleado"); ?></span></td>
             </tr>
             <tr class=row2>
 				<td width="200"> 
@@ -201,9 +201,9 @@ else
  
  
  
- <?php if ($_GET[accion]=="edit_fecha_vencimiento"){ 
+ <?php if ($_GET["accion"]=="edit_fecha_vencimiento"){ 
  // consulto los datos de los puntos
- $sql_puntos="Select * From PuntosClienteFidelizacion Where IDPuntosClienteFidelizacion = '".$_GET[IDPuntosClienteFidelizacion]."'";
+ $sql_puntos="Select * From PuntosClienteFidelizacion Where IDPuntosClienteFidelizacion = '".$_GET["IDPuntosClienteFidelizacion"]."'";
  $qry_puntos=db_query($sql_puntos);
  $row_puntos=db_fetch_array($qry_puntos);
  ?>
@@ -242,7 +242,7 @@ else
             <tr>
 				<td colspan=3 align=center class=row2>
                     <input type=hidden name=IDCliente id=IDCliente value="<?php echo $idCliente ?>">
-                    <input type=hidden name=IDPuntosClienteFidelizacion id=IDPuntosClienteFidelizacion value="<?php echo $_GET[IDPuntosClienteFidelizacion] ?>">
+                    <input type=hidden name=IDPuntosClienteFidelizacion id=IDPuntosClienteFidelizacion value="<?php echo $_GET["IDPuntosClienteFidelizacion"] ?>">
                     <input type=hidden name=action value="modificafecha">
                     <input type=hidden name=mod value="PuntosClienteFidelizacion">
                     <input type=submit name=submit value="Modificar fecha" class="submit">
