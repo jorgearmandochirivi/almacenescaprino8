@@ -3,7 +3,8 @@
     "description": "Proyecto PHP con comprobaciones de calidad de código",
     "type": "project",
     "require": {
-        "php": ">=8.5"
+        "php": ">=8.5",
+        "dompdf/dompdf": "^3.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",
