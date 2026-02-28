@@ -1,259 +1,135 @@
 <?php
 include("../admin/config.inc.php");
-//Encabezado();
 $datos = Verifica_SesionCliente();
-
-//print_r($datos);
 $Nombre_Usuario = usr_datos($datos["IDUsuario"]);
 $ID_Usuario = $datos["IDUsuario"];
 $Nivel =  $datos["Nivel"];
 $IVA = $datos["IVA"];
 $IDPuntoVenta = $datos["IDPuntoVenta"];
-//include("admin/jscripts/tabs.php");
 
 $TitleMod = "Cliente";
-
 $Table = "Cliente";
-$TableJoin = "Cliente";
 $Key = "IDCliente";
 
-
 $qid = db_query(" SELECT * FROM Cliente WHERE IDCliente = '$id'  ");
-
 $r = db_fetch_object($qid);
-
 
 $sql_puntoVenta = "SELECT * from PuntoVenta WHERE IDPuntoVenta = '$r->IDPuntoVenta' ";
 $qry_puntoventa = db_query($sql_puntoVenta);
 $r_puntoventa = db_fetch_object($qry_puntoventa);
 
 $filedir = $dirroot . "/files/facturas/";
-
 $name = "Cliente" . $r->IDCliente . ".html";
 $namePDF = "Cliente" . $r->IDCliente . ".pdf";
 $file = "$filedir$name";
 $filepdf = "$filedir$namePDF";
 
-
-//	ob_end_clean();
-
 ob_start();
-
 ?>
-
+<!DOCTYPE html>
 <html>
 
 <head>
-</head>
-<style>
-    body {
-        font-size: 6.5px;
-        margin: 0;
-    }
-
-    table {
-        font-size: 6.5px;
-    }
-
-    @page {
-        size: 6cm 12cm;
-        margin-left: 0;
-    }
-
-    @media print {
-        * {
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: 60mm 150mm;
             margin: 0;
-            padding: 0;
         }
 
         body {
-            font-size: 7px;
+            font-family: Arial, sans-serif;
+            font-size: 8pt;
             margin: 0;
-            padding: 0;
+            padding: 5mm;
+            width: 50mm;
         }
 
         .texto {
-            font-family: Verdana, Arial, Helvetica, sans-serif;
-            font-size: 6.5px;
-            color: #000000;
-        }
-
-        .mensajefooter {
-            font-size: 6px;
-        }
-
-
-        .bordertable {
-            border: dotted 1px;
-            color: #c3c3c3
-        }
-
-        #content {
-            margin-left: 0;
-            float: none;
-            width: auto;
-
-            color: black;
+            font-size: 7.5pt;
+            line-height: 1.2;
         }
 
         table {
-            font-size: 6.5px;
-            margin: 0;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 5px;
         }
-    }
-</style>
 
-<body>..
+        .center {
+            text-align: center;
+        }
 
+        .bold {
+            font-weight: bold;
+        }
 
+        .border-top {
+            border-top: 1px dotted #000;
+            margin-top: 5px;
+            padding-top: 5px;
+        }
 
-    <?php ob_start(); ?>
+        .label {
+            width: 40%;
+            font-weight: bold;
+        }
+    </style>
+</head>
 
+<body>
+    <div class="center bold texto">
+        IMACAL SAS<br>
+        NIT <?= get_field("NIT", "NIT", "IDNIT", 1); ?><br>
+        Régimen común
+    </div>
 
+    <div class="texto border-top" style="margin-top: 10px;">
+        <strong>Fecha Registro:</strong> <?= date("Y-m-d") ?><br>
+        <?php if (!empty($r->FechaTrEd) && $r->FechaTrEd != "0000-00-00 00:00:00"): ?>
+            <strong>Fecha Act:</strong> <?= substr($r->FechaTrEd, 0, 10) ?><br>
+        <?php endif; ?>
+        <strong>Vendedor:</strong> <?= get_field("Empleado", "Nombre", "IDEmpleado", $r->IDEmpleado) . " " . get_field("Empleado", "Apellidos", "IDEmpleado", $r->IDEmpleado) ?><br>
+    </div>
 
+    <div class="texto border-top" style="margin-top: 10px;">
+        <strong>Nombre:</strong> <?= $r->Nombre . " " . $r->Apellido; ?><br>
+        <strong>Cédula:</strong> <?= $r->Cedula ?><br>
+        <strong>Nacimiento:</strong> <?= $r->Ano . "-" . $r->Mes . "-" . $r->Dia  ?><br>
+        <strong>Email:</strong> <?= $r->EMail  ?><br>
+        <strong>Tel/Cel:</strong> <?= $r->Telefono  ?> / <?= $r->Celular  ?><br>
+        <strong>Dir:</strong> <?= str_replace(" ", "_", $r->Direccion) . "(" . get_field("Ciudad", "Descripcion", "IDCiudad", $r->IDCiudad) . ")"; ?>
+    </div>
 
-    <table width="215" cellspacing="1" border="0" align="center" id="#content">
+    <div class="texto border-top" style="margin-top: 10px;">
+        <strong>SMS:</strong> <?= $r->AceptaSMS  ?><br>
+        <strong>Email Mkt:</strong> <?= $r->AutorizaMail  ?><br>
+        <strong>Términos:</strong> <?= $r->AceptaTerminos  ?><br>
+        <strong>Habeas Data:</strong> <?= $r->AceptaHabeas  ?><br>
+        <strong>Tarjeta:</strong> <?= $r->NumeroTarjeta  ?>
+    </div>
 
+    <div class="texto" style="margin-top: 15px; text-align: justify; font-size: 6.5pt;">
+        Acepto, permito y autorizo, a calzado caprino que la información suministrada sea utilizada con fines administrativos, mercadeo y de ventas. Por favor verifique sus datos.
+    </div>
 
+    <div class="center" style="margin-top: 30px; border-top: 1px solid #000; padding-top: 5px;">
+        Firma y Cédula
+    </div>
 
-        <tr>
-            <td class=texto colspan="2">
-                Imacal <?php echo $tipo_emp = ($r->FechaTrEd >= "2019-07-19 00:00:00") ? "SAS" : "SAS"; ?>
-                NIT <?= get_field("NIT", "NIT", "IDNIT", 1); ?>&nbsp;&nbsp;&nbsp;&nbsp;
-                R&eacute;gimen com&uacute;n
-            </td>
-        </tr>
+    <div class="center" style="margin-top: 20px;">
+        <a href="/admin/files/facturas/Cliente<?= $r->IDCliente ?>.pdf">DESCARGAR PDF</a>
+    </div>
 
-        <tr>
-            <td class=texto width="91">Fecha Registro</td>
-            <td width="112" colspan="2" nowrap class=texto><?= date("Y-m-d") ?></td>
-        </tr>
-        <?php
-        if (!empty($r->FechaTrEd) && $r->FechaTrEd != "0000-00-00 00:00:00") {
-        ?>
-            <tr>
-                <td class=texto width="91">Fecha ctualizaci&oacute;n</td>
-                <td class=texto colspan="2" nowrap><?= substr($r->FechaTrEd, 0, 10) ?></td>
-            </tr>
-        <?php
-        } //end if
-        ?>
-        <tr>
-            <td class=texto width="91">Vendedor</td>
-            <td class=texto colspan="2" nowrap><?= get_field("Empleado", "Nombre", "IDEmpleado", $r->IDEmpleado) . " " . get_field("Empleado", "Apellidos", "IDEmpleado", $r->IDEmpleado) ?></td>
-        </tr>
-
-        <tr>
-            <td class=texto nowrap>Nombre Cliente</td>
-            <td class=texto colspan="2" nowrap><?= $r->Nombre . " " . $r->Apellido; ?></td>
-        </tr>
-        <tr>
-            <td class=texto nowrap>Cedula</td>
-            <td class=texto colspan="2" nowrap><?= $r->Cedula ?></td>
-        </tr>
-        <tr>
-            <td class=texto nowrap>Fecha de Nac.</td>
-            <td class=texto colspan="2" nowrap><?= $r->Ano . "-" . $r->Mes . "-" . $r->Dia  ?></td>
-        </tr>
-        <tr>
-            <td class=texto nowrap>Email</td>
-            <td class=texto colspan="2" nowrap><?= $r->EMail  ?></td>
-        </tr>
-        <tr>
-            <td class=texto nowrap>Tel&eacute;fono</td>
-            <td class=texto colspan="2" nowrap><?= $r->Telefono  ?></td>
-        </tr>
-        <tr>
-            <td class=texto nowrap>Celular</td>
-            <td class=texto colspan="2" nowrap><?= $r->Celular  ?></td>
-        </tr>
-        <tr>
-            <td class=texto>Direcci&oacute;n</td>
-            <td class=texto colspan="2"><?= str_replace(" ", "_", $r->Direccion) . "(" . get_field("Ciudad", "Descripcion", "IDCiudad", $r->IDCiudad) . ")"; ?></td>
-        </tr>
-        <tr>
-            <td class=texto nowrap>Autorizo <br>Envio de SMS</td>
-            <td class=texto colspan="2" nowrap><?= $r->AceptaSMS  ?></td>
-        </tr>
-        <tr>
-            <td class=texto nowrap>Autorizo <br>envio a correo</td>
-            <td class=texto colspan="2" nowrap><?= $r->AutorizaMail  ?></td>
-        </tr>
-
-        <tr>
-            <td class=texto nowrap>Acepto t&eacute;rminos<br> y condiciones</td>
-            <td class=texto colspan="2" nowrap><?= $r->AceptaTerminos  ?></td>
-        </tr>
-
-        <tr>
-            <td class=texto nowrap>Acepta Habeas Data</td>
-            <td class=texto colspan="2" nowrap><?= $r->AceptaHabeas  ?></td>
-        </tr>
-
-        <tr>
-            <td class=texto nowrap>Numero de Tarjeta<br> entregada </td>
-            <td class=texto colspan="2" nowrap><?= $r->NumeroTarjeta  ?></td>
-        </tr>
-
-        <tr>
-            <td class=texto nowrap>VERIFICADO </td>
-            <td class=texto colspan="2" nowrap>
-
-                <table width="10px" height="10px" border="1px" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td>
-                        </td>
-                    </tr>
-                </table>
-
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan=2>
-                Acepto, permito y autorizo, a calzado caprino que la informaci&oacute;n <br>
-                suministrada sea utilizada con fines administrativos, mercadeo y de ventas
-                <br>Por favor verifique sus datos
-            </td>
-        </tr>
-
-
-    </table>
-
-    <table width="215" cellspacing="1" border="0" align="center" id="#content">
-        <tr>
-            <td colspan="4" align="center" class=texto><br><br><br>
-                Firma</td>
-        </tr>
-        <tr>
-            <td colspan="4" align="center" class=texto>
-                <br>
-                C&eacute;dula
-
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" align="center" class=texto>
-                <a href="/admin/files/facturas/Cliente<?= $r->IDCliente ?>.pdf">pdf</a>
-            </td>
-        </tr>
-
-
-
-
-    </table>
-
-
-    <?php
-
-    $page = ob_get_contents();
-    $fw = fopen($file, "w");
-    fputs($fw, $page, strlen($page));
-    fclose($fw);
-    ob_end_clean();
-    echo $page;
-    PdfModern::generate($page, $filepdf, [60, 120]);
-    ?>
 </body>
 
 </html>
+<?php
+$html = ob_get_clean();
+$fw = fopen($file, "w");
+fputs($fw, $html);
+fclose($fw);
+
+echo $html;
+PdfModern::generate($html, $filepdf, [60, 150]);
+?>
