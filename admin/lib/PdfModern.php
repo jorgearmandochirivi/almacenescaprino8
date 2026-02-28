@@ -16,11 +16,15 @@ class PdfModern
     public static function generate($html, $outputFile, $paperSize = [60, 120])
     {
         // Asegurarse de que el autoloader esté cargado si se usa independientemente
-        $autoload = dirname(__FILE__) . '/../../vendor/autoload.php';
-        if (file_exists($autoload)) {
-            require_once $autoload;
+        $autoload_root = dirname(__FILE__) . '/../../vendor/autoload.php';
+        $autoload_local = dirname(__FILE__) . '/dompdf/autoload.inc.php';
+
+        if (file_exists($autoload_local)) {
+            require_once $autoload_local;
+        } elseif (file_exists($autoload_root)) {
+            require_once $autoload_root;
         } else {
-            error_log("PdfModern Error: No se encontró el autoloader en " . $autoload . ". Por favor ejecute 'composer install'.");
+            error_log("PdfModern Error: No se encontró el autoloader en " . $autoload_local . " ni en " . $autoload_root);
             return false;
         }
 

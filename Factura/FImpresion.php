@@ -466,8 +466,6 @@ ob_start();
 	ob_end_clean();
 	echo $page;
 	PdfModern::generate($page, $filepdf, [60, 120]);
-
-	//passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
 	echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
 
 	?>
