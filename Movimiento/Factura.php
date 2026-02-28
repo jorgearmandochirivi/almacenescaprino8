@@ -362,7 +362,7 @@ if ($permisos[0] >= 2) {
 			list_r($sql);
 			break;
 		case "mostrar":
-			$sql_cliente = "SELECT * FROM Cliente WHERE Cedula = '$cedula' or NumeroTarjeta = '$cedula'	";
+			$sql_cliente = "SELECT * FROM Cliente WHERE Cedula = '$cedula' ";
 			$query_cliente = db_query($sql_cliente);
 			if (db_num_rows($query_cliente) == 0) {
 				mostrarcedula("mostrar", "Buscar Cliente", $IDPuntoVenta);

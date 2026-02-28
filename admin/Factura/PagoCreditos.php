@@ -607,8 +607,8 @@ function print_form($id,$idp,$newmode,$title,$submit_caption){
 		funcion Listar
 *******************************************************************************************/
 	function list_r($sql=""){
-		Global $TitleMod,$MOD,$Table,$Key,$listar,$IDPuntoVenta;
-
+		Global $TitleMod,$MOD,$Table,$Key,$listar,$IDPuntoVenta;		
+		
 	if( !empty($sql) )
 	{
 
