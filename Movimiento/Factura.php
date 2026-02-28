@@ -44,7 +44,7 @@ if ((int)$row_dia_sin_iva->IDDiaSinIva > 0) {
 
 
 if ($permisos[0] >= 2) {
-	//echo $action;
+	//echo $action;exit;
 	switch (nvl($action)) {
 		case "insert":
 
@@ -74,10 +74,10 @@ if ($permisos[0] >= 2) {
 				$_POST['ValorIVA'] = $_POST['ValorIvaMenosBono'];
 				$_POST['ValorTotal'] = $_POST['ValorTotalFactura'];
 
-				
-				$frm = vars_LOG($_POST);				
+
+				$frm = vars_LOG($_POST);
 				$frm['IDFactura'] = insert($frm);
-				
+
 				$frm['ValorTotalSinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorTotalSinBono']);
 				$frm['ValorIVASinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorIVASinBono']);
 				$frm['ValorBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorBono']);
@@ -237,7 +237,6 @@ if ($permisos[0] >= 2) {
 
 		case "updatecliente":
 
-
 			if ($_POST['ClubSuavidad'] == "N") {
 				$_POST['Cedula'] = $_POST['cedula_no_club'];
 			}
@@ -345,7 +344,7 @@ if ($permisos[0] >= 2) {
 
 			//actualiza_fidelizacion( $frm['IDCliente'], $frm["Opcion"], $frm["Respuesta"] );
 
-			print_form($r_cliente->IDCliente, "insertar", "Confirmar Factura", "Confirmar Factura", $_POST);
+			//print_form($r_cliente->IDCliente, "insertar", "Confirmar Factura", "Confirmar Factura", $_POST);
 
 			$Table = "Factura";
 			$Key = "IDFactura";
