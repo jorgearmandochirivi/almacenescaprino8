@@ -1292,6 +1292,15 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 		$frm = array();
 	}
 
+	// Normalizar campos multiseleccion para evitar TypeError en in_array() cuando no llegan en POST.
+	if (!isset($frm['IDBonoFidelizacion']) || !is_array($frm['IDBonoFidelizacion'])) {
+		$frm['IDBonoFidelizacion'] = array();
+	}
+
+	if (!isset($frm['IDBonoIva']) || !is_array($frm['IDBonoIva'])) {
+		$frm['IDBonoIva'] = array();
+	}
+
 	$IDPuntoVenta = SIMReg::get("IDPuntoVenta");
 
 
