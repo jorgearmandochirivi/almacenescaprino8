@@ -282,8 +282,21 @@ function ventabono( $frm )
 		//INSERTAR DETALLE FACTURA
 		//se agrega el excedente como una referencia - el id de la referencia excedente esta guardada en la tabla parametros IDParametro = 1
 
-		$IDExcedente = get_field( "Parametros","Parametro","IDParametro",1 );
-		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '".$frm['IDPuntoVenta']."' " ) );
+		$IDExcedente = (int)get_field("Parametros", "Parametro", "IDParametro", 1);
+		$IDCod = 0;
+		if ($IDExcedente > 0) {
+			$sql_cod_excedente = "SELECT C.IDCodificacionEspecifica
+				FROM CodificacionEspecifica C
+				INNER JOIN PuntoVentaReferencia PVR ON C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia
+				WHERE PVR.IDReferencia = '" . $IDExcedente . "'
+				AND PVR.IDPuntoVenta = '" . (int)$frm['IDPuntoVenta'] . "'
+				LIMIT 1";
+			$qry_cod_excedente = db_query($sql_cod_excedente, false, true, true);
+			if ($qry_cod_excedente && db_num_rows($qry_cod_excedente) > 0) {
+				$row_cod_excedente = db_fetch_array($qry_cod_excedente);
+				$IDCod = (int)$row_cod_excedente["IDCodificacionEspecifica"];
+			}
+		}
 		$ValorU = $frm['Excedente'] / ( 1 + $IVA );
 		$sql_detalle = " INSERT INTO DetalleFactura (IDDetalleFactura, IDFactura,IDPuntoVenta, IDCodificacionEspecifica, Cantidad, ValorU, PrecioU, DescuentoPar)
 							VALUES ( '1','$idfactura','".$frm['IDPuntoVenta']."','$IDCod','1','$ValorU','".$frm['Excedente']."','".$frm[$DescuentoRef]."' ) ";
@@ -465,8 +478,21 @@ function ventacambio( $frm )
 		//INSERTAR DETALLE FACTURA
 		//se agrega el excedente como una referencia - el id de la referencia excedente esta guardada en la tabla parametros IDParametro = 1
 
-		$IDExcedente = get_field( "Parametros","Parametro","IDParametro",1 );
-		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '".$frm["IDPuntoVenta"]."' " ) );
+		$IDExcedente = (int)get_field("Parametros", "Parametro", "IDParametro", 1);
+		$IDCod = 0;
+		if ($IDExcedente > 0) {
+			$sql_cod_excedente = "SELECT C.IDCodificacionEspecifica
+				FROM CodificacionEspecifica C
+				INNER JOIN PuntoVentaReferencia PVR ON C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia
+				WHERE PVR.IDReferencia = '" . $IDExcedente . "'
+				AND PVR.IDPuntoVenta = '" . (int)$frm["IDPuntoVenta"] . "'
+				LIMIT 1";
+			$qry_cod_excedente = db_query($sql_cod_excedente, false, true, true);
+			if ($qry_cod_excedente && db_num_rows($qry_cod_excedente) > 0) {
+				$row_cod_excedente = db_fetch_array($qry_cod_excedente);
+				$IDCod = (int)$row_cod_excedente["IDCodificacionEspecifica"];
+			}
+		}
 		$ValorU = $frm['Excedente'] / ( 1 + $IVA );
 		$sql_detalle = " INSERT INTO DetalleFactura (IDDetalleFactura, IDFactura,IDPuntoVenta, IDCodificacionEspecifica, Cantidad, ValorU, PrecioU)
 							VALUES ( '1','$idfactura','".$frm["IDPuntoVenta"]."','$IDCod','1','$ValorU','".$frm["Excedente"]."' ) ";
@@ -627,8 +653,21 @@ function ventacambioant( $frm )
 		//INSERTAR DETALLE FACTURA
 		//se agrega el excedente como una referencia - el id de la referencia excedente esta guardada en la tabla parametros IDParametro = 1
 
-		$IDExcedente = get_field( "Parametros","Parametro","IDParametro",1 );
-		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '".$frm["IDPuntoVenta"]."' " ) );
+		$IDExcedente = (int)get_field("Parametros", "Parametro", "IDParametro", 1);
+		$IDCod = 0;
+		if ($IDExcedente > 0) {
+			$sql_cod_excedente = "SELECT C.IDCodificacionEspecifica
+				FROM CodificacionEspecifica C
+				INNER JOIN PuntoVentaReferencia PVR ON C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia
+				WHERE PVR.IDReferencia = '" . $IDExcedente . "'
+				AND PVR.IDPuntoVenta = '" . (int)$frm["IDPuntoVenta"] . "'
+				LIMIT 1";
+			$qry_cod_excedente = db_query($sql_cod_excedente, false, true, true);
+			if ($qry_cod_excedente && db_num_rows($qry_cod_excedente) > 0) {
+				$row_cod_excedente = db_fetch_array($qry_cod_excedente);
+				$IDCod = (int)$row_cod_excedente["IDCodificacionEspecifica"];
+			}
+		}
 		$ValorU = $frm['Excedente'] / ( 1 + $IVA );
 		$sql_detalle = " INSERT INTO DetalleFactura (IDDetalleFactura, IDFactura,IDPuntoVenta, IDCodificacionEspecifica, Cantidad, ValorU, PrecioU)
 							VALUES ( '1','$idfactura','".$frm["IDPuntoVenta"]."','$IDCod','1','$ValorU','".$frm["Excedente"]."' ) ";
@@ -794,8 +833,21 @@ function ventacambiofactura( $frm )
 		//INSERTAR DETALLE FACTURA
 		//se agrega el excedente como una referencia - el id de la referencia excedente esta guardada en la tabla parametros IDParametro = 1
 
-		$IDExcedente = get_field( "Parametros","Parametro","IDParametro",1 );
-		$IDCod = get_field( "CodificacionEspecifica","IDCodificacionEspecifica","IDPuntoVentaReferencia",get_field( "PuntoVentaReferencia","IDPuntoVentaReferencia","IDReferencia",$IDExcedente."' AND IDPuntoVenta = '".$frm['IDPuntoVenta']."' " ) );
+		$IDExcedente = (int)get_field("Parametros", "Parametro", "IDParametro", 1);
+		$IDCod = 0;
+		if ($IDExcedente > 0) {
+			$sql_cod_excedente = "SELECT C.IDCodificacionEspecifica
+				FROM CodificacionEspecifica C
+				INNER JOIN PuntoVentaReferencia PVR ON C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia
+				WHERE PVR.IDReferencia = '" . $IDExcedente . "'
+				AND PVR.IDPuntoVenta = '" . (int)$frm['IDPuntoVenta'] . "'
+				LIMIT 1";
+			$qry_cod_excedente = db_query($sql_cod_excedente, false, true, true);
+			if ($qry_cod_excedente && db_num_rows($qry_cod_excedente) > 0) {
+				$row_cod_excedente = db_fetch_array($qry_cod_excedente);
+				$IDCod = (int)$row_cod_excedente["IDCodificacionEspecifica"];
+			}
+		}
 		$ValorU = $frm['Excedente'] / ( 1 + $IVA );
 		$sql_detalle = " INSERT INTO DetalleFactura (IDDetalleFactura, IDFactura,IDPuntoVenta, IDCodificacionEspecifica, Cantidad, ValorU, PrecioU)
 							VALUES ( '1','$idfactura','".$frm['IDPuntoVenta']."','$IDCod','1','$ValorU','".$frm['Excedente']."' ) ";
