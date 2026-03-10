@@ -86,8 +86,9 @@ function venta( $frm )
 		$IDCodificacion = "IDCodificacion".$i;
 		$Cantidad = "Cantidad".$i;
 		$existencias = get_field( "CodificacionEspecifica","Existencias","IDCodificacionEspecifica", $frm[$IDCodificacion]);
-
-		$existencias = $existencias - $frm[$Cantidad];
+		$existencias = is_numeric($existencias) ? (float)$existencias : 0;
+		$cantidad_valor = isset($frm[$Cantidad]) && is_numeric($frm[$Cantidad]) ? (float)$frm[$Cantidad] : 0;
+		$existencias = $existencias - $cantidad_valor;
 
 		$str_actualiza_inventario  = "UPDATE CodificacionEspecifica SET Existencias = '$existencias' WHERE IDCodificacionEspecifica = '$frm[$IDCodificacion]'";
 		//echo $str_actualiza_inventario .= "<br>";
@@ -894,8 +895,9 @@ function salidamercancia( $frm )
 		$IDCodificacion = "IDCodificacion".$i;
 		$Cantidad = "Cantidad".$i;
 		$existencias = get_field( "CodificacionEspecifica","Existencias","IDCodificacionEspecifica", $frm[$IDCodificacion]);
-
-		$existencias = $existencias - $frm[$Cantidad];
+		$existencias = is_numeric($existencias) ? (float)$existencias : 0;
+		$cantidad_valor = isset($frm[$Cantidad]) && is_numeric($frm[$Cantidad]) ? (float)$frm[$Cantidad] : 0;
+		$existencias = $existencias - $cantidad_valor;
 
 		$str_actualiza_inventario  = "UPDATE CodificacionEspecifica SET Existencias = '$existencias' WHERE IDCodificacionEspecifica = '".$frm[$IDCodificacion]."'";
 		//echo $str_actualiza_inventario .= "<br>";
