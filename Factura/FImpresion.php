@@ -1,5 +1,8 @@
 <?php
 include("../admin/config.inc.php");
+if (!class_exists('PdfModern')) {
+	require_once(__DIR__ . "/../admin/lib/PdfModern.php");
+}
 $datos = Verifica_SesionCliente();
 $Nombre_Usuario = usr_datos($datos["IDUsuario"]);
 $ID_Usuario = $datos["IDUsuario"];

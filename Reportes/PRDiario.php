@@ -1,5 +1,8 @@
 <?php
 include("../admin/config.inc.php");
+if (!class_exists('PdfModern')) {
+	require_once(__DIR__ . "/../admin/lib/PdfModern.php");
+}
 //Encabezado();
 $datos = Verifica_SesionCliente();
 //print_r($datos);
