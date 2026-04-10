@@ -40,29 +40,26 @@ ob_start();
 	<style>
 		@page {
 			size: 60mm 200mm;
-			/* Aumentar altura para evitar saltos de página prematuros */
 			margin: 0;
 		}
 
 		body {
 			font-family: Arial, sans-serif;
-			font-size: 8pt;
+			font-size: 7pt;
 			margin: 0;
-			padding: 5mm;
-			/* Margen interno para que no pegue al borde */
-			width: 50mm;
-			/* Deja 10mm de margen total (5mm cada lado) */
+			padding: 2mm;
+			width: 56mm;
 		}
 
 		.texto {
-			font-size: 7.5pt;
-			line-height: 1.2;
+			font-size: 6.2pt;
+			line-height: 1.05;
 		}
 
 		table {
 			width: 100%;
 			border-collapse: collapse;
-			margin-bottom: 5px;
+			margin-bottom: 3px;
 		}
 
 		.center {
@@ -79,18 +76,25 @@ ob_start();
 
 		.border-top {
 			border-top: 1px dotted #000;
-			margin-top: 5px;
-			padding-top: 5px;
+			margin-top: 3px;
+			padding-top: 3px;
 		}
 
 		.item-table td {
-			font-size: 7pt;
-			padding: 2px 0;
+			font-size: 5.2pt;
+			padding: 1px 0;
+			vertical-align: top;
 		}
 
 		.footer-text {
-			font-size: 6.5pt;
+			font-size: 5.8pt;
 			text-align: justify;
+		}
+
+		.item-table .head td {
+			font-size: 4.9pt;
+			line-height: 1.05;
+			padding-bottom: 2px;
 		}
 	</style>
 </head>
@@ -128,10 +132,14 @@ ob_start();
 		<strong>Documento:</strong> <?php echo get_field("Cliente", "Cedula", "IDCliente", $r->IDCliente); ?>
 	</div>
 
-	<table class="item-table border-top" style="margin-top: 10px;">
-		<tr class="bold">
+	<table class="item-table border-top" style="margin-top: 4px;">
+		<tr class="bold head">
 			<td>Ref</td>
+			<td class="right">Vr U</td>
 			<td class="right">Cant</td>
+			<td class="right">Dcto</td>
+			<td class="right">Vr Dcto</td>
+			<td class="right">Dcto2</td>
 			<td class="right">Total</td>
 		</tr>
 		<?php
@@ -140,11 +148,19 @@ ob_start();
 		$segunda = 0;
 		while ($r_detalle = db_fetch_object($query_detalle)) {
 			$ref = get_field("Referencia", "Numero", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)));
+			$precio_consultado = get_field("Precio", "ValorVenta", "IDPrecio", get_field("Referencia", "IDPrecio", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica))));
+			if (!$precio_consultado) {
+				$precio_consultado = $r_detalle->PrecioU;
+			}
 			$valorsin = ($r_detalle->ValorU * (1 - ($r_detalle->DescuentoPar / 100))) * $r_detalle->Cantidad;
 		?>
 			<tr>
 				<td><?= $ref ?><br><small><?= get_field("Talla", "Descripcion", "IDTalla", get_field("CodificacionEspecifica", "IDTalla", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)); ?></small></td>
+				<td class="right"><?= number_format($precio_consultado) ?></td>
 				<td class="right"><?= $r_detalle->Cantidad ?></td>
+				<td class="right"><?= number_format($r_detalle->DescuentoRef) ?>%</td>
+				<td class="right"><?= number_format($r_detalle->PrecioU) ?></td>
+				<td class="right"><?= number_format($r_detalle->DescuentoPar) ?>%</td>
 				<td class="right"><?= number_format($valorsin) ?></td>
 			</tr>
 		<?php
