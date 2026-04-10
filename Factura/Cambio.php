@@ -558,16 +558,17 @@
 			fputs($fw, $page, strlen($page));
 			fclose($fw);
 
-			ob_end_clean();
-			//echo $page;
-			//passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
-			passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
-			?>
-		</div>
+				ob_end_clean();
+				//echo $page;
+				//passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
+				passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
+				$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Cambio/" . $namePDF : "/admin/filesotros/Cambio/" . $name;
+				?>
+			</div>
 
-		<div align="center">
-			<a href="/admin/filesotros/Cambio/Cambio<?= $id . "_" . $IDPuntoVenta ?>.pdf">Imprimir Cambio</a>
-		</div>
+			<div align="center">
+				<a href="<?= $ruta_impresion ?>" target="_blank">Imprimir Cambio</a>
+			</div>
 
 
 
