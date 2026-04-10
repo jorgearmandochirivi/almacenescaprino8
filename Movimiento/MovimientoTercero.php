@@ -617,14 +617,13 @@ if (!empty($_GET["limit1"]) && !empty($_GET["limit2"]))
 
 																													$super_total_talla[$datos_talla["IDTalla"]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] += $valor_pedir_item;
 
-																									
+																						?>
+																								<td class="row1" align="center">
+																									<?php
 																									if (is_numeric($valor_pedir_item) && $valor_pedir_item > 0):
 																										echo (int)$valor_pedir_item;
 																									endif;
 																									?>
-
-
-
 																								</td>
 
 																						<?php endforeach;
@@ -673,12 +672,14 @@ if (!empty($_GET["limit1"]) && !empty($_GET["limit2"]))
 
 																					<?php endforeach;
 																					endif;
-																					?>
-																					<td bgcolor="#F1CFCF" align="center" style="font-weight:bold">
-																						<?php
-																									$total_ciudad[$datos_punto_venta["IDCiudad"]] += $total_tienda;
-
-																					?>
+																						?>
+																						<td bgcolor="#F1CFCF" align="center" style="font-weight:bold">
+																							<?php
+																							$total_ciudad[$datos_punto_venta["IDCiudad"]] += $total_tienda;
+																							echo number_format($total_tienda, 0, ",", ".");
+																							?>
+																						</td>
+																					</tr>
 																			</tbody>
 																		</table>
 																		<br />
