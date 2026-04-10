@@ -28,6 +28,10 @@ $namePDF = "Traslado" . $r_puntoventa->Codigo . $r->IDTraslado . ".pdf";
 $file = "$filedir$name";
 $filepdf = "$filedir$namePDF";
 
+if (!is_dir($filedir)) {
+	mkdir($filedir, 0775, true);
+}
+
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -151,8 +155,10 @@ ob_start();
 <?php
 $html = ob_get_clean();
 $fw = fopen($file, "w");
-fputs($fw, $html);
-fclose($fw);
+if ($fw !== false) {
+	fputs($fw, $html);
+	fclose($fw);
+}
 
 PdfModern::generate($html, $filepdf, [76, 180]);
 echo "<script>window.location.href='/admin/files/Traslados/" . $namePDF . "';</script>";

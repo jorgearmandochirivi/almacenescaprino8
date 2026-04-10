@@ -282,7 +282,7 @@ function print_from($frm = ""){
 													<?php
 														
 														
-														foreach( $array_tallas[$valor['IDPuntoVentaReferencia']] as $llave => $talla )
+														foreach( (is_array($array_tallas[$valor['IDPuntoVentaReferencia']] ?? null) ? $array_tallas[$valor['IDPuntoVentaReferencia']] : array()) as $llave => $talla )
 														{
 															//print_r($talla);
 															if( $talla['Descripcion'] == $i  )
@@ -303,7 +303,7 @@ function print_from($frm = ""){
 											<td class="navpic" align="center" nowrap>
 												
 												<?php
-												echo array_sum( $array_linea[$linea] );
+												echo array_sum( is_array($array_linea[$linea] ?? null) ? $array_linea[$linea] : array() );
 												?>
 											</td>
 													<td class="navpic" align="center" nowrap>

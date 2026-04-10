@@ -152,8 +152,8 @@ include("admin/jscripts/tabs.php");
 					</div>
 					<div id="Inventario" class="tabcontent">
 
+						<a href="?mod=Inventario" class="copyright"> Consultar Inventario </a> !
 						<a href="?mod=InventarioCon" class="copyright"> Consultar Inventario Consolidado </a> !
-						<a href="?mod=InventarioConalm" class="copyright"> Consultar Inventario Consolidado Otros Almacenes </a> !
 						<a href="?mod=BuscReferencia" class="copyright"> Inventario x Referencia </a> !
 					</div>
 
