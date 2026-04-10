@@ -78,8 +78,6 @@ return $qry_string;
 		Global $dblink,$TitleMod,$MOD,$Table,$Key,$campo,$form,$IDPuntoVenta, $cont;
 
 
-
-
     if(!empty($sql)){
 
 		$nav = new buildNav;
@@ -141,7 +139,7 @@ return $qry_string;
 
 						  	$sql_tallas  = "SELECT C.* FROM PuntoVentaReferencia PVR, CodificacionEspecifica C, Referencia R ";
 						  	$sql_tallas .= "WHERE PVR.IDReferencia = '$r->IDReferencia' AND PVR.IDPuntoVenta = '$IDPuntoVenta' ";
-						  	$sql_tallas .= "AND C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia and C.Publicar = 'S' GROUP BY C.IDCodificacionEspecifica";
+						  	$sql_tallas .= "AND C.IDPuntoVentaReferencia = PVR.IDPuntoVentaReferencia and C.Publicar = 'S' GROUP BY C.IDCodificacionEspecifica ORDER BY C.IDTalla ASC";
 
 						  	$query_tallas = db_query( $sql_tallas );
 
@@ -180,8 +178,8 @@ $array_tallas = array();
 						<tr>
 							<td class="<?=$class?>" nowrap><?php echo $r->Numero ?></td>
 							<td class="<?=$class?>"><?php echo $r->Nombre; if(!empty($r->NombreAnterior)) echo " (".$r->NombreAnterior.")"; ?></td>
-							<?php 							$numcols = 100;
-							$contador = 1;
+							<?php
+							$disponibles = "";
 							foreach( $array_tallas as $key => $tallas )
 							{
 							?>
@@ -234,16 +232,11 @@ $array_tallas = array();
 
 									echo $tallas['Existencias'];
 									if( $tallas['Existencias'] > 0 )
-										{
-
-											echo "</tr><tr>";
-											$contador = 0;
-
-										}//end if( $contador % $numcols == 0 )
-
-										$contador++;
+									{
+										echo "</a>";
 
 										$disponibles = "SI";
+									}
 
 									}//end if( $r_tallas->Existencias > 0 )
 

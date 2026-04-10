@@ -72,7 +72,7 @@ Where User = '$login' AND Password ='$pass' AND Autorizado = 'S' ";
 								if( empty( $r_punto_ip["Nombre"] ) )
 									$r_punto_ip["Nombre"] = " Almacen no encontrado ";
 
-								$cabeceras .= 'From: SIM Colombia <info@simcolombia.com>' . "\r\n";
+								$cabeceras .= 'From: Caprino <ventas@calzadocaprino.com>' . "\r\n";
 								$subject = "Alguien desde la IP " . $IP . " que es del almacen: " . $r_punto_ip["Nombre"] . ", esta entrando a " . $r_punto_usuario["Nombre"] . " sin estar alli ";
 
 
