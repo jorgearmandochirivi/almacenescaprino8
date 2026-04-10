@@ -1739,7 +1739,7 @@ function print_form($id, $newmode, $title, $submit_caption)
                                                         	<tr>
                                                         	  <td>
 
-                                                              <input type="checkbox" class="IDBonoFidelizacion" name="IDBonoFidelizacion[]" id="IDBonoFidelizacion<?php echo $r_bono['IDBonoFidelizacion'] ?>" value="<?php echo $r_bono['IDBonoFidelizacion'] ?>"   <?php if (in_array($r_bono['IDBonoFidelizacion'], $frm['IDBonoFidelizacion'])):  echo "onclick='this.checked=true'";
+                                                              <input type="checkbox" class="IDBonoFidelizacion" name="IDBonoFidelizacion[]" id="IDBonoFidelizacion<?php echo $r_bono['IDBonoFidelizacion'] ?>" value="<?php echo $r_bono['IDBonoFidelizacion'] ?>"   <?php if (in_array($r_bono['IDBonoFidelizacion'], (array)$frm['IDBonoFidelizacion'])):  echo "onclick='this.checked=true'";
 																																																																			echo "checked";
 																																																																		else: if ($submit_caption == "Confirmar Factura"): echo "onclick='this.checked=false'";
 																																																																			endif;
@@ -1881,7 +1881,7 @@ function print_form($id, $newmode, $title, $submit_caption)
 					<tr>
 						<td>
 
-							<input type="checkbox" class="IDBonoFidelizacion" name="IDBonoFidelizacion[]" id="IDBonoFidelizacion<?php echo $r_bono['IDBonoFidelizacion'] ?>" value="<?php echo $r_bono['IDBonoFidelizacion'] ?>" <?php if (in_array($r_bono['IDBonoFidelizacion'], $frm['IDBonoFidelizacion'])):  echo "onclick='this.checked=true'";
+							<input type="checkbox" class="IDBonoFidelizacion" name="IDBonoFidelizacion[]" id="IDBonoFidelizacion<?php echo $r_bono['IDBonoFidelizacion'] ?>" value="<?php echo $r_bono['IDBonoFidelizacion'] ?>" <?php if (in_array($r_bono['IDBonoFidelizacion'], (array)$frm['IDBonoFidelizacion'])):  echo "onclick='this.checked=true'";
 																																																										echo "checked";
 																																																									else: if ($submit_caption == "Confirmar Factura"): echo "onclick='this.checked=false'";
 																																																										endif;
