@@ -1817,12 +1817,12 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 															$ivaitem= (int)$ValorItem*$IVA;
 															$ValorItem+=$ivaitem;
 
-															$row_factura_padre["DescuentoAlianza"];
+																$descuento_alianza = (float)$row_factura_padre["DescuentoAlianza"];
 
-															switch($row_factura_padre["DescuentoAlianza"]):
-																case "15":
-																	$sumar_porcentaje=1.176;
-																break;
+																switch((string)(int)$descuento_alianza):
+																	case "15":
+																		$sumar_porcentaje=1.176;
+																	break;
 																case "10":
 																	$sumar_porcentaje=1.1;
 																break;
@@ -1835,24 +1835,24 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 
 
 
-															$ivaitem= (int)$ValorItem*($row_factura_padre["DescuentoAlianza"]+$sumar_porcentaje)/100;
-															$ValorItem+=$ivaitem;
+																$ivaitem= (int)$ValorItem*($descuento_alianza + $sumar_porcentaje)/100;
+																$ValorItem+=$ivaitem;
 
 															//echo $ValorItem;
 														endif;
 
 
-															if((int)$row_factura_padre["DescuentoAlianza"]>0):
-																$ValorItem=$r_detalle->PrecioU;
-															endif;
+																if($descuento_alianza > 0):
+																	$ValorItem=$r_detalle->PrecioU;
+																endif;
 
 
 															
-													if( ((int)$r_detalle->DescuentoPar>0 && (int)$row_factura_padre["DescuentoAlianza"]<=0)):
-															$ValorItem=$r_detalle->PrecioU;															
-													endif;
+														if( ((int)$r_detalle->DescuentoPar>0 && $descuento_alianza <= 0)):
+																$ValorItem=$r_detalle->PrecioU;															
+														endif;
 
-													echo $mystring = $row_factura_padre["ObservacionDescuento"];
+														$mystring = $row_factura_padre["ObservacionDescuento"];
 													$findme   = 'estar en semana de cumplea';
 													$pos = strpos($mystring, $findme);
 													if ($pos === false) {

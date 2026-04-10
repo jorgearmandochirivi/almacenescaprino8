@@ -154,13 +154,14 @@ function seleccionareferencia( $newmode)
 
 //seleccionar tallas
 $sql_tallas = " SELECT * FROM Talla WHERE Publicar = 'S' AND IDTalla not in (19,26,25,24,27) ORDER BY Descripcion ";
-$qry_tallas = db_query( $sql_tallas );
-while( $r_tallas = db_fetch_array( $qry_tallas ) )
-{
-	//$array_tallas[$r_tallas["IDTalla"]] = $r_tallas;
-	//con descripcion
-	$array_tallas[$r_tallas["Descripcion"]] = $r_tallas;
-}//end while
+	$qry_tallas = db_query( $sql_tallas );
+	while( $r_tallas = db_fetch_array( $qry_tallas ) )
+	{
+		// Consolidar tallas con la misma descripcion para no duplicar columnas.
+		$descripcion_talla = trim($r_tallas["Descripcion"]);
+		$r_tallas["Descripcion"] = $descripcion_talla;
+		$array_tallas[$descripcion_talla] = $r_tallas;
+	}//end while
 ?>
 	<tr>
 		<td>
@@ -203,12 +204,13 @@ while( $r_tallas = db_fetch_array( $qry_tallas ) )
 					$query_codificacion = db_query($sql);
 					$rows = db_num_rows($query_codificacion);
 					$array_codificacion = array( );
-					while($r_codificacionesp = db_fetch_array($query_codificacion))
-					{
-						$array_total_codificacion[ $ref ][ $r_codificacionesp["Talla"] ] += $r_codificacionesp["Existencias"];
-						$numero_ref=$r_referencia->Numero;
-						//$array_codificacion[ $ref ][ $r_codificacionesp["Talla"] ] = array( "Numero"=>$r_referencia->Numero,"Existencia"=>$r_codificacionesp["Existencias"] );
-					}//end while
+						while($r_codificacionesp = db_fetch_array($query_codificacion))
+						{
+							$nombre_talla = trim($r_codificacionesp["Talla"]);
+							$array_total_codificacion[ $ref ][ $nombre_talla ] += $r_codificacionesp["Existencias"];
+							$numero_ref=$r_referencia->Numero;
+							//$array_codificacion[ $ref ][ $r_codificacionesp["Talla"] ] = array( "Numero"=>$r_referencia->Numero,"Existencia"=>$r_codificacionesp["Existencias"] );
+						}//end while
 
 					foreach( $array_total_codificacion as $ref => $arraydatos )
 					{
