@@ -249,7 +249,7 @@
 			ob_end_clean();
 			//echo $page;
 			//passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
-			passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldocs.sh $file $filepdf");
+				passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
 			?>
 		</div>
 

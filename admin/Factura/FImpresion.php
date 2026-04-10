@@ -52,12 +52,13 @@
 body{
 	font-size:6.5px;
 	margin:0;
+	padding:0;
 }
 table{
 	font-size:6.5px;
 }
-@page { size 6cm 12cm;
-	margin-left: 0;
+@page { size 7.6cm 20cm;
+	margin: 0;
 	}
 
 @media print{
@@ -102,10 +103,9 @@ table{
 
 
 <?php ob_start(); ?>
-<table  width="215" cellspacing="1" border="0" align="center" id="#content">
+<table width="100%" cellspacing="1" border="0" align="left" id="content" style="width:100%;">
 		<tr>
-		  <td valign="top">.</td>
-		  <td valign="top" align="left"><table width="98%" border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff">
+		  <td valign="top" align="left"><table width="100%" border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff">
 				<tr>
 						<td colspan="2">
 							<div align="center">

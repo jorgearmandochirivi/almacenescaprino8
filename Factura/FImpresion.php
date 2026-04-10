@@ -39,7 +39,7 @@ ob_start();
 	<meta charset="UTF-8">
 	<style>
 		@page {
-			size: 60mm 200mm;
+			size: 76mm 200mm;
 			margin: 0;
 		}
 
@@ -48,7 +48,8 @@ ob_start();
 			font-size: 7pt;
 			margin: 0;
 			padding: 2mm;
-			width: 56mm;
+			width: 72mm;
+			box-sizing: border-box;
 		}
 
 		.texto {
@@ -246,6 +247,6 @@ fclose($fw);
 
 echo $html;
 
-PdfModern::generate($html, $filepdf, [60, 200]);
+PdfModern::generate($html, $filepdf, [76, 200]);
 echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
 ?>

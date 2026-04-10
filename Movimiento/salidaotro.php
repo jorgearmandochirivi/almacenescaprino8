@@ -354,9 +354,8 @@ function CalculaSubtotal(  )
 											
 										</td>
 									</tr>
-									<td class=col2 colspan="4">Si la Salida es una segunda ingrese el c&oacute;digo de la referencia con la que se ingresar&aacute; en el campo Segunda.</td>
-									<tr>
-										<td class=navpic width="77%">Detalle Movimiento</td>
+										<tr>
+											<td class=navpic width="77%">Detalle Movimiento</td>
 										<td class=navpic colspan="3">
 											<div align="right">
 												</div>
