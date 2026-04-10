@@ -1988,7 +1988,7 @@ function envia_comentario_garantia($id_garantia,$frm,$IDEmpleado){
 										<b>Respuesta de:</b> ". get_field("Empleado","Nombre","IDEmpleado",$IDEmpleado)."
 									</td>
 									<td>
-										".$frm[Descripcion]."
+										".$frm["Descripcion"]."
 									</td>
 								</tr>
 							</table>
@@ -2171,7 +2171,7 @@ function envia_comentario_garantia_almacen($id_garantia,$frm,$IDEmpleado){
 										<b>Respuesta de:</b> ". get_field("Empleado","Nombre","IDEmpleado",$IDEmpleado)."
 									</td>
 									<td>
-										".$frm[Descripcion]." " . $tipo_fidelizacion . "
+										".$frm["Descripcion"]." " . $tipo_fidelizacion . "
 									</td>
 								</tr>
 							</table>
@@ -2452,7 +2452,7 @@ function envia_comentario_tercero($id_garantia,$frm,$IDEmpleado){
 										<b>Respuesta de:</b> ". get_field("Empleado","Nombre","IDEmpleado",$IDEmpleado)."
 									</td>
 									<td>
-										".$frm[Descripcion]."
+										".$frm["Descripcion"]."
 									</td>
 								</tr>
 							</table>
