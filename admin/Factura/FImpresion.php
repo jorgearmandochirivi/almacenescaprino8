@@ -52,10 +52,13 @@
 body{
 	font-size:6.5px;
 	margin:0;
-	padding:0;
+	padding:2mm 4mm 2mm 4mm;
+	width:76mm;
+	box-sizing:border-box;
 }
 table{
 	font-size:6.5px;
+	box-sizing:border-box;
 }
 @page { size 7.6cm 20cm;
 	margin: 0;
@@ -69,7 +72,9 @@ table{
 body{
 	font-size:7px;
 	margin:0;
-	padding:0;
+	padding:2mm 4mm 2mm 4mm;
+	width:76mm;
+	box-sizing:border-box;
 }
 
 .texto {
@@ -85,13 +90,14 @@ body{
 .bordertable {border: dotted 1px; color:#c3c3c3}
 #content { margin-left:0;
      float:none;
-     width:auto;
+     width:68mm;
 
      color:black;
 	 }
 table{
 	font-size:6.5px;
 	margin:0;
+	box-sizing:border-box;
 }
 
 
@@ -103,7 +109,7 @@ table{
 
 
 <?php ob_start(); ?>
-<table width="100%" cellspacing="1" border="0" align="left" id="content" style="width:100%;">
+<table width="100%" cellspacing="1" border="0" align="left" id="content" style="width:68mm;">
 		<tr>
 		  <td valign="top" align="left"><table width="100%" border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff">
 				<tr>

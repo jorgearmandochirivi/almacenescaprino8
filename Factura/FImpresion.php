@@ -47,8 +47,8 @@ ob_start();
 			font-family: Arial, sans-serif;
 			font-size: 7pt;
 			margin: 0;
-			padding: 2mm;
-			width: 72mm;
+			padding: 3mm 4mm;
+			width: 76mm;
 			box-sizing: border-box;
 		}
 

@@ -46,12 +46,16 @@
 body{
 	font-size:6.5px;
 	margin:0;
+	padding:2mm 3mm;
+	width:60mm;
+	box-sizing:border-box;
 }
 table{
 	font-size:6.5px;
+	box-sizing:border-box;
 }
 @page { size 6cm 12cm;
-	margin-left: 0;
+	margin: 0;
 	}
 
 @media print{
@@ -62,7 +66,9 @@ table{
 body{
 	font-size:7px;
 	margin:0;
-	padding:0;
+	padding:2mm 3mm;
+	width:60mm;
+	box-sizing:border-box;
 }
 
 .texto {
@@ -78,13 +84,14 @@ body{
 .bordertable {border: dotted 1px; color:#c3c3c3}
 #content { margin-left:0;
      float:none;
-     width:auto;
+     width:54mm;
      height : 300px;
      color:black;
 	 }
 table{
 	font-size:6.5px;
 	margin:0;
+	box-sizing:border-box;
 }
 
 
@@ -99,7 +106,7 @@ table{
 <body>
 
 
-			<table  width="315" cellspacing="1" border="0" align="left"  id="#content">
+			<table  width="54mm" cellspacing="1" border="0" align="center"  id="content">
 		<tr>
 			<td valign="top">
 				<table width="100%" border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff">
@@ -108,8 +115,7 @@ table{
 							<div align="center">
 								<table width=100% border=0>
 									<tr>
-									  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</td>
-										<td colspan="4">
+											<td colspan="4">
 
 
                                         <table width=100% border=0 cellspacing=1 cellpadding=1 class="texto forumline"  >
