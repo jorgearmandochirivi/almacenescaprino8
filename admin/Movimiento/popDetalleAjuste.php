@@ -22,8 +22,8 @@ $Table = "Ajuste";
 $TableJoin = "";
 $Key = "IDAjuste";
 
-$IDAjuste = $_GET[IDAjuste];
-$IDPuntoVenta = $_GET[IDPuntoVenta];
+$IDAjuste = $_GET['IDAjuste'];
+$IDPuntoVenta = $_GET['IDPuntoVenta'];
 
 
 		switch (nvl($action)) {
@@ -40,12 +40,15 @@ $IDPuntoVenta = $_GET[IDPuntoVenta];
 function print_form($IDAjuste,$IDPuntoVenta) {
 
 	GLOBAL $TitleMod,$Table,$Key,$id, $idpunto;
+	$array_tallas = array();
+	$array_referencias = array();
+	$TPares = 0;
 	
 	//TALLAS
 	$sql_tallas = "SELECT IDTalla, Descripcion FROM Talla";
 	$qry_tallas = db_query( $sql_tallas );
 	while( $r_tallas = db_fetch_array( $qry_tallas ) )
-		$array_tallas[ $r_tallas[IDTalla] ] = $r_tallas[Descripcion];
+		$array_tallas[ $r_tallas['IDTalla'] ] = $r_tallas['Descripcion'];
 	
 	//Cabecera
 	$sql = " SELECT * FROM Ajuste WHERE IDAjuste = '$IDAjuste' AND IDPuntoVenta = '$IDPuntoVenta'  ";	
@@ -57,7 +60,7 @@ function print_form($IDAjuste,$IDPuntoVenta) {
 	$qry_detalle = db_query( $sql_detalle );
 	while( $r_detalle = db_fetch_array( $qry_detalle ) )
 	{
-		$array_referencias[ $r_detalle[Numero] ][ $r_detalle[Talla] ] = $r_detalle;
+		$array_referencias[ $r_detalle['Numero'] ][ $r_detalle['Talla'] ] = $r_detalle;
 	}//end while
 
 ?>
@@ -73,20 +76,20 @@ var Check = new Array('Nombre','Publicar');
 						<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 							<tr>
 								<td class="col1" nowrap>Numero de Ajuste</td>
-								<td class="col2"><input type="input" name="IDAjuste" readonly value="<?php echo $r[IDAjuste]?>" class="tbox" id="Remision"></td>
+								<td class="col2"><input type="input" name="IDAjuste" readonly value="<?php echo $r['IDAjuste']?>" class="tbox" id="Remision"></td>
 								<td class="col1" nowrap>Fecha</td>
-								<td class="col2" nowrap><input type="input" name="Fecha" readonly value="<?php echo $r[FechaAjuste]?>" id="Fecha" class="tbox"></td>
+								<td class="col2" nowrap><input type="input" name="Fecha" readonly value="<?php echo $r['FechaAjuste']?>" id="Fecha" class="tbox"></td>
 							</tr>
 							<tr>
 								<td class="col1" nowrap>Usuario</td>
-								<td class="col2" nowrap><input type="input" name="Usuario" readonly value="<?php echo $r[UsuarioTrCr]?>" id="Fecha" class="tbox"></td>
+								<td class="col2" nowrap><input type="input" name="Usuario" readonly value="<?php echo $r['UsuarioTrCr']?>" id="Fecha" class="tbox"></td>
 								<td class="col1" nowrap>Punto Venta</td>
-								<td class="col2" nowrap><input type="input" name="IDPuntoVenta" readonly value='<?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r[IDPuntoVenta] );?>' id="Fecha" class="tbox"></td>
+								<td class="col2" nowrap><input type="input" name="IDPuntoVenta" readonly value='<?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r['IDPuntoVenta'] );?>' id="Fecha" class="tbox"></td>
 							</tr>
 							<tr>
 								<td class="col1" nowrap>Observaciones</td>
 								<td class="col2" colspan="3" nowrap>
-									<textarea name="Observaciones" rows="10" cols="50"><?php echo $r[Observaciones]?></textarea>
+									<textarea name="Observaciones" rows="10" cols="50"><?php echo $r['Observaciones']?></textarea>
 								</td>
 							</tr>
 						</table>
@@ -119,8 +122,8 @@ var Check = new Array('Nombre','Publicar');
 											<tr>
 												<td>
 													<?php 
-														echo $datos[Cantidad];
-														$TPares += $datos[Cantidad];
+														echo $datos['Cantidad'];
+														$TPares += $datos['Cantidad'];
 													?>
 												</td>
 											</tr>

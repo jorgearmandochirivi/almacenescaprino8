@@ -506,7 +506,7 @@ else
                                                             <?php
 																$sql_forma_bono=db_query("Select * From FormaPagoBono Where IDFormaPagoBono not in (1, 3) ");
 																while ($r_forma_bono=db_fetch_array($sql_forma_bono)): ?>
-																	<option value="<?php echo $r_forma_bono[IDFormaPagoBono]; ?>"><?php echo $r_forma_bono[Descripcion]; ?></option>
+																	<option value="<?php echo $r_forma_bono['IDFormaPagoBono']; ?>"><?php echo $r_forma_bono['Descripcion']; ?></option>
 																<?php endwhile; ?>
                                                         </select>
 				<br>
