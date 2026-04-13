@@ -1,4 +1,8 @@
 <?php
+	if (!class_exists('PdfModern')) {
+		require_once(__DIR__ . "/../lib/PdfModern.php");
+	}
+
 	include("../admin/config.inc.php");
 	Encabezado();
 	$datos = Verifica_SesionCliente();
@@ -42,6 +46,7 @@
 	$namePDF = "FCreditos" . $r_puntoventa->Codigo.$r->NumeroFactura . $idcuota . ".pdf";
 	$file = "$filedir$name";
 	$filepdf = "$filedir$namePDF";
+	$ruta_redireccion = "/admin/files/facturas/" . $namePDF;
 
 	ob_start();
 ?>
@@ -253,10 +258,10 @@ table{
 									?>
 
 
-                                    <tr>
-                                    	<td class="texto" colspan="4" align="center">
-                                        	<a href="/admin/files/facturas/FCreditos<?php echo $r_puntoventa->Codigo.$r->NumeroFactura . $idcuota ?>.pdf">pdf</a>
-                                        </td>
+	                                    <tr>
+	                                    	<td class="texto" colspan="4" align="center">
+	                                        	<a href="<?php echo $ruta_redireccion; ?>">pdf</a>
+	                                        </td>
 
                                     </tr>
 
@@ -278,9 +283,12 @@ fputs($fw,$page,strlen($page));
 fclose($fw);
 ob_end_clean();
 echo $page;
-//passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
-//echo "/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf";
-passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
+$pdf_generado = PdfModern::generate($page, $filepdf, [76, 200]);
+if ($pdf_generado && file_exists($filepdf)) {
+	echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
+} else {
+	echo "<br>No fue posible generar el PDF del recibo de credito.";
+}
 ?>
 </body>
 </html>
