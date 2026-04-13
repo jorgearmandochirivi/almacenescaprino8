@@ -11,6 +11,9 @@
 	$TableJoin = "";
 	$Key = "IDEntrada";	
 	$Remision = $_GET["Remision"];
+	$array_tallas = array();
+	$array_referencias = array();
+	$array_total = array();
 
 	ob_start();
 
@@ -200,7 +203,8 @@ table{
 require_once("../jscripts/dompdf/dompdf_config.inc.php");
 $dompdf = new DOMPDF();
 //$dompdf->set_paper( array(0,0, 5 * 72, 5 * 72), "portrait" ); // 12" x 12"
-$dompdf->set_paper( array(0,0, 5 * 72, 12 * 72), "portrait" ); // 12" x 12"
+$alto_papel = max(4.25, 2.9 + (count($array_referencias) * 0.35));
+$dompdf->set_paper( array(0,0, 5 * 72, $alto_papel * 72), "portrait" );
 $dompdf->load_html(ob_get_clean());
 $dompdf->render();
 //$pdf = $dompdf->output();

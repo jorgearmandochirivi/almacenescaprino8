@@ -339,23 +339,47 @@
 
 
 
-		<div id="areaimprimir">
-			<?php
-			$filedir = $dirroot . "/filesotros/Cambio/";
+			<div id="areaimprimir">
+				<?php
+				$filedir = $dirroot . "/filesotros/Cambio/";
 			$name = "Cambio" . $id . "_" . $IDPuntoVenta . ".html";
 			$namePDF = "Cambio" .  $id . "_" . $IDPuntoVenta . ".pdf";
 			$file = "$filedir$name";
 			$filepdf = "$filedir$namePDF";
-			ob_start();
-			?>
+				ob_start();
+				?>
+				<style>
+					body {
+						margin: 0;
+						padding: 2mm 3mm;
+						width: 76mm;
+						box-sizing: border-box;
+						font-size: 8px;
+					}
+					.cambio-ticket {
+						width: 70mm;
+						margin: 0;
+					}
+					.cambio-ticket table {
+						width: 100%;
+						table-layout: fixed;
+						border-collapse: collapse;
+						font-size: 8px;
+					}
+					.cambio-ticket td {
+						white-space: normal;
+						overflow-wrap: break-word;
+						padding: 1px;
+						vertical-align: top;
+					}
+				</style>
 
 
 
 
-			<table class="forumline" width="550" cellspacing="1" border="0" align="center">
-				<tr>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</td>
-					<td>
+				<table class="forumline cambio-ticket" width="100%" cellspacing="1" border="0" align="left">
+					<tr>
+						<td>
 						<table width=100% border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff">
 
 							<tr>
@@ -426,14 +450,13 @@
 														</tr>
 														<tr>
 															<td colspan="4">
-																<table class="texto" width="70%" border="0" cellspacing="1" cellpadding="0" id=table1 align="center">
-																	<tr>
-																		<td align="center"><b>Referencia</b></td>
-																		<td align="center"><b>Talla</b></td>
-																		<td align="center"><b>Nombre</b></td>
-																		<td align="center" width="100%"><b>Cantidad</b></td>
-																		<td align="center" nowrap><b>Ver Factura</b></td>
-																	</tr>
+																	<table class="texto" width="100%" border="0" cellspacing="1" cellpadding="0" id=table1 align="center">
+																		<tr>
+																			<td align="center"><b>Referencia</b></td>
+																			<td align="center"><b>Talla</b></td>
+																			<td align="center"><b>Nombre</b></td>
+																			<td align="center"><b>Cant.</b></td>
+																		</tr>
 																	<?php
 																	do {
 																		$sql_referenciacambio = " SELECT R.*, T.Descripcion as Talla FROM CodificacionEspecifica C, PuntoVentaReferencia P, Referencia R, Talla T 
@@ -452,10 +475,9 @@
 																			</td>
 																			<td align="left" class="col1list">
 																				<?php echo $r_referenciacambio->Talla; ?>
-																			</td>
-																			<td class="col1list" align="left"><?php echo $r_referenciacambio->Nombre; ?></td>
-																			<td class="col1list" align="center" width="100%"><?php echo $r_detalle->Cantidad ?></td>
-																			<td class="col1list" align="center"><a href="?mod=Factura&action=edit&id=<?= $r->IDFacturaCambio ?>" title="VerFactura"><img src="images/magnifier.png" border="0"></a></td>
+																				</td>
+																				<td class="col1list" align="left"><?php echo $r_referenciacambio->Nombre; ?></td>
+																				<td class="col1list" align="center"><?php echo $r_detalle->Cantidad ?></td>
 																		</tr>
 																	<?php
 																	} while ($r_detalle = db_fetch_object($query_detalle));
@@ -490,14 +512,14 @@
 											</tr>
 											<tr>
 												<td colspan="4">
-													<table class="texto" border="0" cellspacing="1" cellpadding="0" id=table1 width="100%">
-														<tr>
-															<td align="center"><b>Referencia</b></td>
-															<td align="center"><b>Talla</b></td>
-															<td align="center"><b>Nombre</b></td>
-															<td align="center"><b>Cantidad</b></td>
-															<td align="center"><b>Valor U.</b></td>
-															<td align="center"><b>Total</b></td>
+														<table class="texto" border="0" cellspacing="1" cellpadding="0" id=table1 width="100%">
+															<tr>
+																<td align="center"><b>Ref.</b></td>
+																<td align="center"><b>Talla</b></td>
+																<td align="center"><b>Nombre</b></td>
+																<td align="center"><b>Cant.</b></td>
+																<td align="center"><b>Valor U.</b></td>
+																<td align="center"><b>Total</b></td>
 														</tr>
 														<?php
 														do {
