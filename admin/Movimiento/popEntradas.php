@@ -22,8 +22,8 @@ $Table = "Entrada";
 $TableJoin = "";
 $Key = "IDEntrada";
 
-$Remision = $_GET[Remision];
-$IDPuntoVenta = $_GET[IDPuntoVenta];
+$Remision = $_GET['Remision'];
+$IDPuntoVenta = $_GET['IDPuntoVenta'];
 
 
 		switch (nvl($action)) {
@@ -40,12 +40,15 @@ $IDPuntoVenta = $_GET[IDPuntoVenta];
 function print_form($Remision,$IDPuntoVenta) {
 
 	GLOBAL $TitleMod,$Table,$Key,$id, $idpunto;
+	$array_tallas = array();
+	$array_referencias = array();
+	$TPares = 0;
 	
 	//TALLAS
 	$sql_tallas = "SELECT IDTalla, Descripcion FROM Talla";
 	$qry_tallas = db_query( $sql_tallas );
 	while( $r_tallas = db_fetch_array( $qry_tallas ) )
-		$array_tallas[ $r_tallas[IDTalla] ] = $r_tallas[Descripcion];
+		$array_tallas[ $r_tallas['IDTalla'] ] = $r_tallas['Descripcion'];
 	
 	   //Consulta original
 	   $sql_remision = " SELECT E.*, R.Numero FROM Entrada E, PuntoVentaReferencia P, Referencia R WHERE E.Remision = '$Remision' AND E.IDPuntoVenta = '$IDPuntoVenta'
@@ -62,7 +65,7 @@ function print_form($Remision,$IDPuntoVenta) {
 	$qry_remision = db_query( $sql_remision );
 	while( $r_remision = db_fetch_array( $qry_remision ) )
 	{
-		$array_referencias[ $r_remision[Numero] ][ $r_remision[IDTalla] ] = $r_remision;
+		$array_referencias[ $r_remision['Numero'] ][ $r_remision['IDTalla'] ] = $r_remision;
 		if( empty( $r_laremision ) )
 			$r_laremision = $r_remision;
 	}//end while
@@ -80,18 +83,18 @@ var Check = new Array('Nombre','Publicar');
 		<table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 				<tr>
 					<td class="col1" nowrap>Numero de Remisi&oacute;n</td>
-					<td class="col2"><input type="input" name="Remision" readonly value="<?php echo $r_laremision[Remision]?>" class="tbox" id="Remision"></td>
+					<td class="col2"><input type="input" name="Remision" readonly value="<?php echo $r_laremision['Remision']?>" class="tbox" id="Remision"></td>
 				</tr>
 				<tr>
 					<td class="col1" nowrap>Fecha</td>
 					<td class="col2" nowrap>
-						<input type="input" name="Fecha" readonly value="<?php echo $r_laremision[Fecha]?>" id="Fecha" class="tbox">
+						<input type="input" name="Fecha" readonly value="<?php echo $r_laremision['Fecha']?>" id="Fecha" class="tbox">
 					</td>
 				</tr>
 				<tr>
 					<td class="col1" nowrap>Punto Venta</td>
 					<td class="col2" nowrap>
-						<input type="input" name="Fecha" readonly value="<?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_laremision[IDPuntoVenta] );?>" id="Fecha" class="tbox">
+						<input type="input" name="Fecha" readonly value="<?php echo get_field( "PuntoVenta","Nombre","IDPuntoVenta",$r_laremision['IDPuntoVenta'] );?>" id="Fecha" class="tbox">
 					</td>
 				</tr>
 
@@ -125,8 +128,8 @@ var Check = new Array('Nombre','Publicar');
 											<tr>
 												<td>
 													<?php 
-														echo $datos[Total];
-														$TPares += $datos[Total];
+														echo $datos['Total'];
+														$TPares += $datos['Total'];
 													?>
 												</td>
 											</tr>
