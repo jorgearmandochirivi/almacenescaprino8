@@ -45,7 +45,7 @@
 		/*******************************************************************************************
 		funtcion Print_form
 		 *******************************************************************************************/
-		function print_form($id = "", $newmode, $title, $submit_caption)
+		function print_form($id = "", $newmode = "", $title = "", $submit_caption = "")
 		{
 			global $TitleMod, $Table, $MOD, $Key, $ID_Usuario, $IDPuntoVenta, $dirroot, $cantidad_total;
 
@@ -163,6 +163,12 @@
 
 			<?php
 			$filedir = $dirroot . "/filesotros/Salida/";
+			if (!is_dir($filedir)) {
+				$filedir = $dirroot . "/../filesotros/Salida/";
+			}
+			if (!is_dir($filedir)) {
+				mkdir($filedir, 0775, true);
+			}
 			$name = "Salida" . $r->IDMovimiento . "_" . $IDPuntoVenta . ".html";
 			$namePDF = "Salida" .  $r->IDMovimiento . "_" . $IDPuntoVenta . ".pdf";
 			$file = "$filedir$name";
@@ -249,12 +255,13 @@
 			ob_end_clean();
 			//echo $page;
 			//passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
-				passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
+			PdfModern::generate($page, $filepdf, "letter");
+			$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Salida/" . $namePDF : "/admin/filesotros/Salida/" . $name;
 			?>
 		</div>
 
 		<div align="center">
-			<a style="font-size:16px" target="_blank" href="/admin/filesotros/Salida/Salida<?= $r->IDMovimiento . "_" . $IDPuntoVenta ?>.pdf">Imprimir Salida</a>
+			<a style="font-size:16px" target="_blank" href="<?= $ruta_impresion ?>">Imprimir Salida</a>
 		</div>
 
 
