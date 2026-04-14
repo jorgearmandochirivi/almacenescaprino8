@@ -39,7 +39,7 @@ ob_start();
 	<meta charset="UTF-8">
 	<style>
 		@page {
-			size: 60mm 200mm;
+			size: 60mm 150mm;
 			margin: 0;
 		}
 
@@ -47,7 +47,7 @@ ob_start();
 			font-family: DejaVu Sans Condensed, DejaVu Sans, Arial, sans-serif;
 			font-size: 7pt;
 			margin: 0 0 0 4mm;
-			padding: 2mm 0.5mm 2mm 1mm;
+			padding: 0.5mm 0.5mm 2mm 1mm;
 			width: 55mm;
 			box-sizing: border-box;
 		}
@@ -88,7 +88,8 @@ ob_start();
 		}
 
 		.item-table td {
-			font-size: 4.9pt;
+			font-size: 5.25pt;
+			font-weight: bold;
 			padding: 1px 0;
 			vertical-align: top;
 		}
@@ -96,11 +97,12 @@ ob_start();
 		.footer-text {
 			font-size: 6pt;
 			line-height: 1.12;
-			text-align: left;
+			text-align: justify;
+			text-align-last: left;
 		}
 
 		.item-table .head td {
-			font-size: 4.5pt;
+			font-size: 5pt;
 			line-height: 1.05;
 			padding-bottom: 2px;
 		}
@@ -227,12 +229,12 @@ ob_start();
 		<?php
 		$sql_mensje = "SELECT Mensaje FROM Mensaje WHERE Publicar = 'S' AND Segunda = 'N' AND FechaInicio <= CURDATE() AND FechaFin >= CURDATE() ORDER BY RAND() LIMIT 1";
 		$qry_mensaje = db_query($sql_mensje);
-		if ($r_mensaje = db_fetch_object($qry_mensaje)) echo nl2br($r_mensaje->Mensaje) . "<br>";
+		if ($r_mensaje = db_fetch_object($qry_mensaje)) echo preg_replace('/\s+/', ' ', trim($r_mensaje->Mensaje)) . "<br>";
 
 		if ($segunda == 1) {
 			$sql_mensje = "SELECT Mensaje FROM Mensaje WHERE Publicar = 'S' AND Segunda = 'S' LIMIT 1";
 			$qry_mensaje = db_query($sql_mensje);
-			if ($r_mensaje = db_fetch_object($qry_mensaje)) echo nl2br($r_mensaje->Mensaje) . "<br>";
+			if ($r_mensaje = db_fetch_object($qry_mensaje)) echo preg_replace('/\s+/', ' ', trim($r_mensaje->Mensaje)) . "<br>";
 		}
 		?>
 	</div>
@@ -260,6 +262,6 @@ fclose($fw);
 
 echo $html;
 
-PdfModern::generate($html, $filepdf, [60, 200]);
+PdfModern::generate($html, $filepdf, [60, 150]);
 echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
 ?>
