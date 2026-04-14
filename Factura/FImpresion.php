@@ -39,8 +39,13 @@ ob_start();
 	<meta charset="UTF-8">
 	<style>
 		@page {
-			size: 60mm 220mm;
+			size: 60mm 190mm;
 			margin: 0;
+		}
+
+		html {
+			margin: 0;
+			padding: 0;
 		}
 
 		body {
@@ -264,6 +269,6 @@ fclose($fw);
 
 echo $html;
 
-PdfModern::generate($html, $filepdf, [60, 220]);
+PdfModern::generate($html, $filepdf, [60, 190]);
 echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
 ?>
