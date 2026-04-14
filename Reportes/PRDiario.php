@@ -139,7 +139,10 @@ foreach ($r_facturas as $key => $valor) {
 	<tr>
 		<td class="<?= $class ?>" align="center" nowrap><?= $valor['NumeroFactura'] ?></td>
 		<td class="<?= $class ?>" align="center" nowrap><?= $valor['Numero'] ?> </td>
-		<td class="<?= $class ?>" align="right" nowrap><?= number_format($valor['PrecioU'] / (1 - ($valor['DescuentoRef'] / 100)), 0) ?></td>
+		<td class="<?= $class ?>" align="right" nowrap><?php
+			$factor_descuento_ref = 1 - ($valor['DescuentoRef'] / 100);
+			echo number_format($factor_descuento_ref != 0 ? $valor['PrecioU'] / $factor_descuento_ref : $valor['PrecioU'], 0);
+		?></td>
 		<td class="<?= $class ?>" align="center" nowrap><?php echo $valor['Cantidad'];
 														$Pares += $valor['Cantidad']; ?></td>
 		<!--<td class="<?= $class ?>" align="center" nowrap><?= $valor['DescuentoRef'] ?></td>-->
@@ -199,8 +202,9 @@ foreach ($r_facturas as $key => $valor) {
 					$valorparcial =  (($Precio * $valor['Cantidad']) + (($Precio * $valor['Cantidad']) *   ($valor['DescuentoFactura'] / 100)));
 
 					/* Se agrega pa las mayores */
+					$TotalFactura = (float)$valor["ValorTotal"];
 					$mayortotal = $TotalFactura - $valorparcial;
-					if ($mayortotal <> 0) {
+					if ($mayortotal <> 0 && $TotalFactura != 0) {
 						$saldo = ($valorparcial / $TotalFactura) * $saldo; //Que porcentaje del item es para el total
 						$pago = $valorparcial - $saldo;
 					} //end if
