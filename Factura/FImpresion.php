@@ -39,21 +39,21 @@ ob_start();
 	<meta charset="UTF-8">
 	<style>
 		@page {
-			size: 76mm 200mm;
+			size: 60mm 200mm;
 			margin: 0;
 		}
 
 		body {
-			font-family: DejaVu Sans, Arial, sans-serif;
-			font-size: 7.2pt;
+			font-family: DejaVu Sans Condensed, DejaVu Sans, Arial, sans-serif;
+			font-size: 7pt;
 			margin: 0 auto;
-			padding: 3mm 2.5mm;
-			width: 70mm;
+			padding: 2mm 1.5mm;
+			width: 56mm;
 			box-sizing: border-box;
 		}
 
 		.texto {
-			font-size: 6.3pt;
+			font-size: 6.2pt;
 			line-height: 1.1;
 		}
 
@@ -88,25 +88,27 @@ ob_start();
 		}
 
 		.item-table td {
-			font-size: 5.5pt;
+			font-size: 4.9pt;
 			padding: 1px 0;
 			vertical-align: top;
 		}
 
 		.footer-text {
-			font-size: 5.8pt;
-			text-align: justify;
+			font-size: 6pt;
+			line-height: 1.12;
+			text-align: left;
 		}
 
 		.item-table .head td {
-			font-size: 5pt;
+			font-size: 4.5pt;
 			line-height: 1.05;
 			padding-bottom: 2px;
 		}
 
 		.num {
-			font-family: DejaVu Sans Mono, Courier, monospace;
+			font-family: DejaVu Sans Condensed, DejaVu Sans, Arial, sans-serif;
 			font-weight: bold;
+			white-space: nowrap;
 		}
 	</style>
 </head>
@@ -146,13 +148,13 @@ ob_start();
 
 	<table class="item-table border-top" style="margin-top: 4px;">
 		<tr class="bold head">
-			<td style="width: 24%;">Ref</td>
+			<td style="width: 23%;">Ref</td>
 			<td class="right num" style="width: 14%;">Vr U</td>
-			<td class="right num" style="width: 9%;">Cant</td>
-			<td class="right num" style="width: 11%;">Dcto</td>
-			<td class="right num" style="width: 15%;">Vr Dcto</td>
-			<td class="right num" style="width: 11%;">Dcto2</td>
-			<td class="right num" style="width: 16%;">Total</td>
+			<td class="right num" style="width: 8%;">Can</td>
+			<td class="right num" style="width: 9%;">Dto</td>
+			<td class="right num" style="width: 15%;">Vr D</td>
+			<td class="right num" style="width: 9%;">D2</td>
+			<td class="right num" style="width: 22%;">Total</td>
 		</tr>
 		<?php
 		$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
@@ -258,6 +260,6 @@ fclose($fw);
 
 echo $html;
 
-PdfModern::generate($html, $filepdf, [76, 200]);
+PdfModern::generate($html, $filepdf, [60, 200]);
 echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
 ?>
