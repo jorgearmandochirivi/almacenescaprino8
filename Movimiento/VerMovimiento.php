@@ -255,6 +255,9 @@
 			ob_end_clean();
 			//echo $page;
 			//passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
+			if (!class_exists('PdfModern')) {
+				require_once(__DIR__ . "/../admin/lib/PdfModern.php");
+			}
 			PdfModern::generate($page, $filepdf, "letter");
 			$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Salida/" . $namePDF : "/admin/filesotros/Salida/" . $name;
 			?>
