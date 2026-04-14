@@ -79,13 +79,13 @@ if($permisos[0] >= 2)
 				
 				
 					$notificar_cliente=$_POST["NotificarCliente"];
-					if (!empty($_POST[Cuerpo])){	
+					if (!empty($_POST["Cuerpo"])){
 						if ($notificar_cliente=="S"):
-							envia_respuesta_cliente($frm[IDPqr],$_POST[Cuerpo]);	
+							envia_respuesta_cliente($frm["IDPqr"],$_POST["Cuerpo"]);
 						endif;	
 						
 						$sql_inserta_respuesta="INSERT INTO Detalle_Pqr (IDPqr, IDEmpleado, IDPqrEstado, Fecha, Respuesta,UsuarioTrCr, FechaTrCr)
-												VALUES ('".$frm[IDPqr]."','".$frm[IDEmpleado]."','".$frm[IDPqrEstado]."','".date("Y-m-d")."','".$_POST[Cuerpo]."','Admin',NOW())";
+												VALUES ('".$frm["IDPqr"]."','".$frm["IDEmpleado"]."','".$frm["IDPqrEstado"]."','".date("Y-m-d")."','".$_POST["Cuerpo"]."','Admin',NOW())";
 						db_query($sql_inserta_respuesta);
 					}
 					
@@ -98,7 +98,7 @@ if($permisos[0] >= 2)
 					if($frm["IDAreaPqrAnt"]!=$frm["IDAreaPqr"]){
 						$nombre_area = get_field("AreaPqr","Nombre","IDAreaPqr",$_POST["IDAreaPqr"]);	
 						$sql_inserta_respuesta="INSERT INTO Detalle_Pqr (IDPqr, IDEmpleado, IDPqrEstado, Fecha, Respuesta,UsuarioTrCr, FechaTrCr)
-												VALUES ('".$frm[IDPqr]."','".$frm[IDEmpleado]."','".$frm[IDPqrEstado]."','".date("Y-m-d")."','Se notifico al area ".$nombre_area."','Admin',NOW())";
+												VALUES ('".$frm["IDPqr"]."','".$frm["IDEmpleado"]."','".$frm["IDPqrEstado"]."','".date("Y-m-d")."','Se notifico al area ".$nombre_area."','Admin',NOW())";
 						db_query($sql_inserta_respuesta);						
 					}
 					
@@ -113,39 +113,39 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS["action"]="";
 				delete($ID);
 			break;
 			case "list" :	
-				if(!empty($_GET[NumeroDocumento])):
-					$condiciones .=" and C.Cedula LIKE '%".$_GET[NumeroDocumento]."%'";
+				if(!empty($_GET["NumeroDocumento"])):
+					$condiciones .=" and C.Cedula LIKE '%".$_GET["NumeroDocumento"]."%'";
 					$tabla_join = ",Cliente C";
 					$condicion_join = " and C.IDCliente = Pqr.IDCliente";
 				endif;	
 				
-				if(!empty($_GET[Nombre])):
-					$condiciones .=" and ( C.Nombre LIKE '%".$_GET[Nombre]."%' or C.Apellido LIKE '%".$_GET[Nombre]."%')";
+				if(!empty($_GET["Nombre"])):
+					$condiciones .=" and ( C.Nombre LIKE '%".$_GET["Nombre"]."%' or C.Apellido LIKE '%".$_GET["Nombre"]."%')";
 					$tabla_join = ",Cliente C";
 					$condicion_join = " and C.IDCliente = Pqr.IDCliente";
 				endif;	
 					
-				if(!empty($_GET[Numero]))
-					$condiciones.=" and Pqr.Numero = '".$_GET[Numero]."'";
+				if(!empty($_GET["Numero"]))
+					$condiciones.=" and Pqr.Numero = '".$_GET["Numero"]."'";
 	
-				if(!empty($_GET[IDTipoPqr]))
-					$condiciones.=" and Pqr.IDTipoPqr = '".$_GET[IDTipoPqr]."'";
+				if(!empty($_GET["IDTipoPqr"]))
+					$condiciones.=" and Pqr.IDTipoPqr = '".$_GET["IDTipoPqr"]."'";
 					
-				if(!empty($_GET[IDMotivoPqr]))
-					$condiciones.=" and Pqr.IDMotivoPqr = '".$_GET[IDMotivoPqr]."'";
+				if(!empty($_GET["IDMotivoPqr"]))
+					$condiciones.=" and Pqr.IDMotivoPqr = '".$_GET["IDMotivoPqr"]."'";
 					
-				if(!empty($_GET[IDFuentePqr]))
-					$condiciones.=" and Pqr.IDFuentePqr = '".$_GET[IDFuentePqr]."'";
+				if(!empty($_GET["IDFuentePqr"]))
+					$condiciones.=" and Pqr.IDFuentePqr = '".$_GET["IDFuentePqr"]."'";
 					
-				if(!empty($_GET[IDPqrEstado]))
-					$condiciones.=" and Pqr.IDPqrEstado = '".$_GET[IDPqrEstado]."'";
+				if(!empty($_GET["IDPqrEstado"]))
+					$condiciones.=" and Pqr.IDPqrEstado = '".$_GET["IDPqrEstado"]."'";
 					
-				if(!empty($_GET[TipoProducto]))
-					$condiciones.=" and G.TipoProducto = '".$_GET[TipoProducto]."'";
+				if(!empty($_GET["TipoProducto"]))
+					$condiciones.=" and G.TipoProducto = '".$_GET["TipoProducto"]."'";
 					
 				
 				$sql = " SELECT Pqr.*
@@ -172,7 +172,7 @@ else
 /*******************************************************************************************
 		funtcion Print_form
 *******************************************************************************************/
-function print_form($id="",$newmode,$title,$submit_caption) {
+function print_form($id="",$newmode="",$title="",$submit_caption="") {
 
 	GLOBAL $TitleMod,$Table,$MOD,$Key,$ID_Usuario;
 	$qid = db_query(" SELECT * FROM $Table WHERE $Key = '$id' ");
