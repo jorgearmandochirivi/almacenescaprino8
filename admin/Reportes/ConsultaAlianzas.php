@@ -226,7 +226,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor['FechaFacturaF']?></td>
 										<td class="<?php echo $class?>" align="center" nowrap>
 										<?php
-										unset($array_referencias);
+											$array_referencias = array();
                                         if($valor['Numero']=="Excedente"):
 											// consulto cliente
 											$sql_cambio = db_query("SELECT * FROM Cambio WHERE IDCliente in (".$valor['IDCliente'].") and IDFactura = 0 and Excedente = '".($valor['PrecioU'] / ( 1 - ( $valor['DescuentoRef'] / 100 ) ))."'  Order By IDCambio DESC");
@@ -240,15 +240,15 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 													$array_referencias[]= $referencia;
 												endwhile;
 
-												if(count($array_referencias)>0):
-													echo implode("<br>",$array_referencias);
-												endif;
+													if(!empty($array_referencias)):
+														echo implode("<br>",$array_referencias);
+													endif;
 
 											endif;
 
-												if(count($array_referencias)<=0):
-													echo "tarjeta";
-												endif;
+													if(empty($array_referencias)):
+														echo "tarjeta";
+													endif;
 
 
 											echo "<br>Excedente";

@@ -39,7 +39,7 @@ ob_start();
 	<meta charset="UTF-8">
 	<style>
 		@page {
-			size: 60mm 150mm;
+			size: 60mm 220mm;
 			margin: 0;
 		}
 
@@ -47,7 +47,7 @@ ob_start();
 			font-family: DejaVu Sans Condensed, DejaVu Sans, Arial, sans-serif;
 			font-size: 7pt;
 			margin: 0 0 0 4mm;
-			padding: 0.5mm 0.5mm 2mm 1mm;
+			padding: 0 0.5mm 1mm 1mm;
 			width: 55mm;
 			box-sizing: border-box;
 		}
@@ -88,9 +88,10 @@ ob_start();
 		}
 
 		.item-table td {
-			font-size: 5.25pt;
+			font-size: 5pt;
 			font-weight: bold;
-			padding: 1px 0;
+			padding: 1px 0.3mm;
+			text-align: center;
 			vertical-align: top;
 		}
 
@@ -99,10 +100,11 @@ ob_start();
 			line-height: 1.12;
 			text-align: justify;
 			text-align-last: left;
+			page-break-inside: auto;
 		}
 
 		.item-table .head td {
-			font-size: 5pt;
+			font-size: 4.7pt;
 			line-height: 1.05;
 			padding-bottom: 2px;
 		}
@@ -150,13 +152,13 @@ ob_start();
 
 	<table class="item-table border-top" style="margin-top: 4px;">
 		<tr class="bold head">
-			<td style="width: 23%;">Ref</td>
-			<td class="right num" style="width: 14%;">Vr U</td>
-			<td class="right num" style="width: 8%;">Can</td>
-			<td class="right num" style="width: 9%;">Dto</td>
-			<td class="right num" style="width: 15%;">Vr D</td>
-			<td class="right num" style="width: 9%;">D2</td>
-			<td class="right num" style="width: 22%;">Total</td>
+			<td style="width: 21%;">Ref</td>
+			<td class="num" style="width: 15%;">Vr U</td>
+			<td class="num" style="width: 7%;">Can</td>
+			<td class="num" style="width: 9%;">Dto</td>
+			<td class="num" style="width: 16%;">Vr D</td>
+			<td class="num" style="width: 8%;">D2</td>
+			<td class="num" style="width: 24%;">Total</td>
 		</tr>
 		<?php
 		$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
@@ -172,12 +174,12 @@ ob_start();
 		?>
 			<tr>
 				<td><?= $ref ?><br><small><?= get_field("Talla", "Descripcion", "IDTalla", get_field("CodificacionEspecifica", "IDTalla", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)); ?></small></td>
-				<td class="right num"><?= number_format($precio_consultado) ?></td>
-				<td class="right num"><?= $r_detalle->Cantidad ?></td>
-				<td class="right num"><?= number_format($r_detalle->DescuentoRef) ?>%</td>
-				<td class="right num"><?= number_format($r_detalle->PrecioU) ?></td>
-				<td class="right num"><?= number_format($r_detalle->DescuentoPar) ?>%</td>
-				<td class="right num"><?= number_format($valorsin) ?></td>
+				<td class="num"><?= number_format($precio_consultado) ?></td>
+				<td class="num"><?= $r_detalle->Cantidad ?></td>
+				<td class="num"><?= number_format($r_detalle->DescuentoRef) ?>%</td>
+				<td class="num"><?= number_format($r_detalle->PrecioU) ?></td>
+				<td class="num"><?= number_format($r_detalle->DescuentoPar) ?>%</td>
+				<td class="num"><?= number_format($valorsin) ?></td>
 			</tr>
 		<?php
 			$Movimiento = get_field("Referencia", "IDMovimiento", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)));
@@ -246,7 +248,7 @@ ob_start();
 		</div>
 	<?php endif; ?>
 
-	<div class="center" style="margin-top: 20px;">
+	<div class="center" style="margin-top: 6px;">
 		<?php $ruta_redireccion = "/admin/files/facturas/Factura" . $r_puntoventa->Codigo . $r->NumeroFactura . ".pdf"; ?>
 		<a href="<?= $ruta_redireccion ?>">DESCARGAR PDF</a>
 	</div>
@@ -262,6 +264,6 @@ fclose($fw);
 
 echo $html;
 
-PdfModern::generate($html, $filepdf, [60, 150]);
+PdfModern::generate($html, $filepdf, [60, 220]);
 echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
 ?>
