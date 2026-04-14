@@ -324,7 +324,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="<?php echo $class?>" align="center" ><?php echo $cliente["Nombre"]." ".$cliente["Apellido"] ?></td>
 									<td class="<?php echo $class?>" align="center" nowrap><?php echo $array_puntos[$r_facturas["IDPuntoVenta"]]?> </td>
 									<td class="<?php echo $class?>" align="center" nowrap>
-											<a target="_blank" href="?mod=Factura&action=edit&id=<?php echo $r_facturas["IDFactura"]?>&idpunto=<?php echo $IDPuntoVenta?>">
+											<a target="_blank" href="?mod=Factura&action=edit&id=<?php echo $r_facturas["IDFactura"]?>&idpunto=<?php echo $r_facturas["IDPuntoVenta"]; ?>">
 													<?php echo $r_facturas["NumeroFactura"]?>
 											</a>
 									</td>
