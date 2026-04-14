@@ -44,23 +44,29 @@ ob_start();
 		}
 
 		body {
-			font-family: Arial, sans-serif;
-			font-size: 7pt;
-			margin: 0;
-			padding: 3mm 4mm;
-			width: 76mm;
+			font-family: DejaVu Sans, Arial, sans-serif;
+			font-size: 7.2pt;
+			margin: 0 auto;
+			padding: 3mm 2.5mm;
+			width: 70mm;
 			box-sizing: border-box;
 		}
 
 		.texto {
-			font-size: 6.2pt;
-			line-height: 1.05;
+			font-size: 6.3pt;
+			line-height: 1.1;
 		}
 
 		table {
 			width: 100%;
 			border-collapse: collapse;
 			margin-bottom: 3px;
+			table-layout: fixed;
+		}
+
+		td {
+			overflow-wrap: break-word;
+			word-wrap: break-word;
 		}
 
 		.center {
@@ -82,7 +88,7 @@ ob_start();
 		}
 
 		.item-table td {
-			font-size: 5.2pt;
+			font-size: 5.5pt;
 			padding: 1px 0;
 			vertical-align: top;
 		}
@@ -93,17 +99,22 @@ ob_start();
 		}
 
 		.item-table .head td {
-			font-size: 4.9pt;
+			font-size: 5pt;
 			line-height: 1.05;
 			padding-bottom: 2px;
+		}
+
+		.num {
+			font-family: DejaVu Sans Mono, Courier, monospace;
+			font-weight: bold;
 		}
 	</style>
 </head>
 
 <body>
 	<div class="center bold">
-		IMACAL<br>
-		<?php echo ($r->FechaFactura >= "2019-07-19 00:00:00") ? "SAS En Reorganizacion" : "LTDA En Reorganizacion"; ?><br>
+		IMACAL SAS<br>
+		<?php echo ($r->FechaFactura >= "2019-07-19 00:00:00") ? "En Reorganizacion" : "LTDA En Reorganizacion"; ?><br>
 		NIT <?= get_field("NIT", "NIT", "IDNIT", 1); ?><br>
 		Régimen común
 	</div>
@@ -135,13 +146,13 @@ ob_start();
 
 	<table class="item-table border-top" style="margin-top: 4px;">
 		<tr class="bold head">
-			<td>Ref</td>
-			<td class="right">Vr U</td>
-			<td class="right">Cant</td>
-			<td class="right">Dcto</td>
-			<td class="right">Vr Dcto</td>
-			<td class="right">Dcto2</td>
-			<td class="right">Total</td>
+			<td style="width: 24%;">Ref</td>
+			<td class="right num" style="width: 14%;">Vr U</td>
+			<td class="right num" style="width: 9%;">Cant</td>
+			<td class="right num" style="width: 11%;">Dcto</td>
+			<td class="right num" style="width: 15%;">Vr Dcto</td>
+			<td class="right num" style="width: 11%;">Dcto2</td>
+			<td class="right num" style="width: 16%;">Total</td>
 		</tr>
 		<?php
 		$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
@@ -157,12 +168,12 @@ ob_start();
 		?>
 			<tr>
 				<td><?= $ref ?><br><small><?= get_field("Talla", "Descripcion", "IDTalla", get_field("CodificacionEspecifica", "IDTalla", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)); ?></small></td>
-				<td class="right"><?= number_format($precio_consultado) ?></td>
-				<td class="right"><?= $r_detalle->Cantidad ?></td>
-				<td class="right"><?= number_format($r_detalle->DescuentoRef) ?>%</td>
-				<td class="right"><?= number_format($r_detalle->PrecioU) ?></td>
-				<td class="right"><?= number_format($r_detalle->DescuentoPar) ?>%</td>
-				<td class="right"><?= number_format($valorsin) ?></td>
+				<td class="right num"><?= number_format($precio_consultado) ?></td>
+				<td class="right num"><?= $r_detalle->Cantidad ?></td>
+				<td class="right num"><?= number_format($r_detalle->DescuentoRef) ?>%</td>
+				<td class="right num"><?= number_format($r_detalle->PrecioU) ?></td>
+				<td class="right num"><?= number_format($r_detalle->DescuentoPar) ?>%</td>
+				<td class="right num"><?= number_format($valorsin) ?></td>
 			</tr>
 		<?php
 			$Movimiento = get_field("Referencia", "IDMovimiento", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)));
@@ -177,20 +188,20 @@ ob_start();
 		<?php if ($r->ValorBono != "0"): ?>
 			<tr>
 				<td>Total Factura</td>
-				<td class="right"><?= number_format($r->ValorTotalSinBono) ?></td>
+				<td class="right num"><?= number_format($r->ValorTotalSinBono) ?></td>
 			</tr>
 			<tr>
 				<td>Bono</td>
-				<td class="right">-<?= number_format($r->ValorBono) ?></td>
+				<td class="right num">-<?= number_format($r->ValorBono) ?></td>
 			</tr>
 		<?php endif; ?>
 		<tr>
 			<td>IVA</td>
-			<td class="right"><?= number_format($r->ValorIVA) ?></td>
+			<td class="right num"><?= number_format($r->ValorIVA) ?></td>
 		</tr>
 		<tr class="bold">
 			<td>Valor Neto</td>
-			<td class="right"><?= number_format($r->ValorTotal) ?></td>
+			<td class="right num"><?= number_format($r->ValorTotal) ?></td>
 		</tr>
 	</table>
 
@@ -204,7 +215,7 @@ ob_start();
 		?>
 				<tr>
 					<td><?php echo get_field("FormaPago", "Descripcion", "IDFormaPago", $r_formapago->IDFormaPago) ?></td>
-					<td class="right"><?= number_format($r_formapago->Valor) ?></td>
+					<td class="right num"><?= number_format($r_formapago->Valor) ?></td>
 				</tr>
 		<?php }
 		} ?>
