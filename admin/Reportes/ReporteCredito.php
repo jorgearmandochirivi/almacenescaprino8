@@ -235,24 +235,24 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							{
 								$ValorCuotaPago = $r_cuotas[ "ValorTotal" ];
 								$cuotas[ $r_cuotas["IDCuota"] ] = $r_cuotas;
-								if( $r_cuotas[ FechaPago ] <> "0000-00-00 00:00:00" )
+								if( $r_cuotas["FechaPago"] <> "0000-00-00 00:00:00" )
 								{
 									$candeladas++;
-									$TotalCuotaPagada += $r_cuotas[ ValorTotal ];
-									$FechasAbono.="<br>".substr($r_cuotas[ FechaPago ],0,10);
+									$TotalCuotaPagada += $r_cuotas["ValorTotal"];
+									$FechasAbono.="<br>".substr($r_cuotas["FechaPago"],0,10);
 								}//end if
 								elseif( $mostrar == 0 )
 								{
-									$fechaproximo = $r_cuotas[ FechaCuota ];
+									$fechaproximo = $r_cuotas["FechaCuota"];
 									$mostrar = 1;
 								}//end end else
 
 								//Calcular Cartera
-								if( !empty($r_cuotas[ Estado ])  )
+								if( !empty($r_cuotas["Estado"])  )
 								{
 									$cartera_castigada++;
 
-									$valor_cartera += $r_cuotas[ ValorTotal ];
+									$valor_cartera += $r_cuotas["ValorTotal"];
 									$mostrar_cartera = 1;
 								}//end if
 
