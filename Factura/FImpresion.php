@@ -49,7 +49,7 @@ ob_start();
 		}
 
 		body {
-			font-family: Arial, Helvetica, DejaVu Sans, sans-serif;
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
 			font-size: 7pt;
 			margin: 0 0 0 6mm;
 			padding: 0 2mm 1mm 1mm;
@@ -93,7 +93,9 @@ ob_start();
 		}
 
 		.item-table td {
-			font-size: 5.2pt;
+			font-family: DejaVu Sans Mono, Courier New, monospace;
+			font-size: 5pt;
+			font-weight: normal;
 			padding: 1px 0.3mm;
 			text-align: center;
 			vertical-align: top;
@@ -109,13 +111,14 @@ ob_start();
 
 		.item-table .head td {
 			font-size: 4.8pt;
-			font-weight: bold;
+			font-weight: normal;
 			line-height: 1.05;
 			padding-bottom: 2px;
 		}
 
 		.num {
-			font-family: Arial, Helvetica, DejaVu Sans, sans-serif;
+			font-family: DejaVu Sans Mono, Courier New, monospace;
+			font-weight: normal;
 			white-space: nowrap;
 		}
 	</style>
