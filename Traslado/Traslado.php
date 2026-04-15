@@ -6,6 +6,8 @@
 <body>
 
 	<?php	
+
+	
 	$TitleMod = "Traslados2";
 	$Table = "Traslado";
 	$TableJoin = "DetalleTraslado";
@@ -20,6 +22,8 @@
 				//print_r($HTTP_POST_VARS);
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
+
+				
 
 				$frm = vars_LOG($HTTP_POST_VARS);
 
@@ -466,7 +470,7 @@
 															<td align="center"><b></b></td>
 														</tr>
 														<?php
-														for ($i = 1; $i <= 200; $i++) {
+														for ($i = 1; $i <= 100; $i++) {
 															if ($i == 20 || $i == 40 || $i == 60 || $i == 80  || $i == 100 || $i == 120 || $i == 140 || $i == 160 || $i == 180):
 																$mostrar = 1;
 															endif;
