@@ -39,7 +39,7 @@ ob_start();
 	<meta charset="UTF-8">
 	<style>
 		@page {
-			size: 60mm 190mm;
+			size: 74mm 190mm;
 			margin: 0;
 		}
 
@@ -51,9 +51,9 @@ ob_start();
 		body {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, Arial, sans-serif;
 			font-size: 7pt;
-			margin: 0 0 0 4mm;
-			padding: 0 0.5mm 1mm 1mm;
-			width: 55mm;
+			margin: 0 0 0 6mm;
+			padding: 0 2mm 1mm 1mm;
+			width: 62mm;
 			box-sizing: border-box;
 		}
 
@@ -269,6 +269,6 @@ fclose($fw);
 
 echo $html;
 
-PdfModern::generate($html, $filepdf, [60, 190]);
+PdfModern::generate($html, $filepdf, [74, 190]);
 echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
 ?>
