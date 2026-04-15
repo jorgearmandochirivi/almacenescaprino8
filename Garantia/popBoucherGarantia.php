@@ -1,5 +1,8 @@
 <?php
 	include("../admin/config.inc.php");
+	if (!class_exists('PdfModern')) {
+		require_once(__DIR__ . "/../admin/lib/PdfModern.php");
+	}
 	//Encabezado();
 	$datos = Verifica_SesionCliente();
 	//print_r($datos);
@@ -40,65 +43,83 @@
 ?>
 <html>
 <head>
+<meta charset="UTF-8">
 
 <style>
-<!--
-body{
-	font-size:6.5px;
-	margin:0;
-	padding:2mm 3mm;
-	width:60mm;
-	box-sizing:border-box;
-}
-table{
-	font-size:6.5px;
-	box-sizing:border-box;
-}
-@page { size 6cm 12cm;
+@page {
+	size: 74mm 260mm;
 	margin: 0;
-	}
-
-@media print{
-*{
-	margin:0;
-	padding:0;
-}
-body{
-	font-size:7px;
-	margin:0;
-	padding:2mm 3mm;
-	width:60mm;
-	box-sizing:border-box;
 }
 
-.texto {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 6.5px;
-	color: #000000;
-}
-.mensajefooter{
-	font-size:6px;
+html {
+	margin: 0;
+	padding: 0;
 }
 
-
-.bordertable {border: dotted 1px; color:#c3c3c3}
-#content { margin-left:0;
-     float:none;
-     width:54mm;
-     height : 300px;
-     color:black;
-	 }
-table{
-	font-size:6.5px;
-	margin:0;
-	box-sizing:border-box;
+body {
+	font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+	font-size: 7pt;
+	margin: 0 0 0 6mm;
+	padding: 0 2mm 1mm 1mm;
+	width: 62mm;
+	box-sizing: border-box;
+	color: #000;
 }
 
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+	font-size: 6.2pt;
+	line-height: 1.1;
+	box-sizing: border-box;
+	table-layout: fixed;
+}
 
--->
+td {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	vertical-align: top;
+}
+
+.texto,
+.rowform,
+.row2 {
+	font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+	font-size: 6.2pt;
+	line-height: 1.1;
+	color: #000;
+}
+
+font {
+	font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+}
+
+font[style*="font-size:10px"] {
+	font-size: 6.2pt !important;
+}
+
+font[style*="font-size:12px"] {
+	font-size: 7pt !important;
+}
+
+font[style*="font-size:14px"],
+font[style*="font-size:16px"] {
+	font-size: 8pt !important;
+}
+
+.bordertable {
+	border: dotted 1px;
+	color: #c3c3c3;
+}
+
+#content {
+	margin-left: 0;
+	float: none;
+	width: 100%;
+	color: black;
 }
 </style>
-
 </head>
 
 
@@ -106,7 +127,7 @@ table{
 <body>
 
 
-			<table  width="54mm" cellspacing="1" border="0" align="center"  id="content">
+			<table cellspacing="1" border="0" align="center" id="content">
 		<tr>
 			<td valign="top">
 				<table width="100%" border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff">
@@ -491,6 +512,7 @@ table{
                 <tr>
                   <td align="left" class=rowform>
                   <font style="font-size:10px">
+                  <?php $array_recibe = array(); ?>
                   <?php if( $r->CueroPelado=="S" ) $array_recibe[]="Cuero Pelado"; ?>
                   <?php if( $r->SuelaDesgastada=="S" ) $array_recibe[]= "Suela Desgastada"; ?>
                   <?php if( $r->Ojete=="S" ) $array_recibe[] = "Ojetes cedidos";  ?>
@@ -609,6 +631,6 @@ echo $page;
 
 //passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
 //echo "/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf";
-passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
+PdfModern::generate($page, $filepdf, [74, 260]);
 
 ?>
