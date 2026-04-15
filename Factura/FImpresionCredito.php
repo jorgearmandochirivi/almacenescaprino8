@@ -111,7 +111,6 @@ ob_start();
 
 		.num {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, Arial, sans-serif;
-			font-weight: bold;
 			white-space: nowrap;
 		}
 	</style>
