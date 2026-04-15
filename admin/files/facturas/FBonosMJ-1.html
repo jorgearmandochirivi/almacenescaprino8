@@ -1,0 +1,188 @@
+<html>
+<head>
+<title>Imprimir Recibo</title>
+</head>
+
+<style>
+<!--
+body{
+	font-size:6.5px;
+	margin:0;
+}
+table{
+	font-size:6.5px;
+}
+@page { size 6cm 12cm; 
+	margin-left: 0;
+	}
+
+@media print{
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	font-size:7px;
+	margin:0;
+	padding:0;
+}
+
+.texto {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 6.5px;
+	color: #000000;
+}
+.mensajefooter{
+	font-size:6px;
+}
+
+
+.bordertable {border: dotted 1px; color:#c3c3c3}
+#content { margin-left:0; 
+     float:none; 
+     width:auto;
+     height : 300px; 
+     color:black;
+	 }
+table{
+	font-size:6.5px;
+	margin:0;
+}
+
+
+-->
+}
+</style>
+
+<script>
+<!--
+function printWindow() {
+  if (window.print)
+    window.print();
+  else
+    alert("Lo siento, pero a tu navegador no se le puede ordenar imprimir" +
+      " desde la web. Actualizate o hazlo desde los menœs");
+}
+-->
+</script>
+
+<body>
+	
+	<table  width="215" cellspacing="1" border="0" align="left" height="100" id="#content">
+		<tr>
+			<td valign="top">
+				<table width="100%" border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff">
+					<tr>
+						<td colspan="2">
+							<div align="center">
+								<table width=100% border=0>
+									<tr>
+										<td colspan="4">
+											<table class=rowtable>
+												<tr>
+															<td class=texto colspan="4" align="right" nowrap>Documento transaccion bono. 1</td>
+														</tr>
+												
+												
+												<tr>
+													<td class=texto>Alamac&eacute;n</td>
+													<td class="texto" colspan="3">CALZADO CAPRINO Junin </td>
+													
+												</tr>
+												<tr>
+													<td class=texto nowrap>NIT </td>
+													<td class="texto" colspan="3">
+														 R&eacute;gimen com&uacute;n</td>
+												</tr>
+														<tr>
+													<td class=texto>Direcci&oacute;n</td>
+															<td class=texto colspan="3">Cra 49 Nro. 52-181 (Calle Comercial Junin)</td>
+															
+														</tr>
+													<tr>
+														<td class=texto nowrap>Tel&eacute;fono: </td>
+														<td class="texto" colspan="3">(4) 4796955</td>
+													</tr>
+														<tr>
+													<td class=texto nowrap>Fecha Factura</td>
+													<td class=texto colspan="3"></td>
+												</tr>
+														<tr>
+													<td class=texto>Cliente</td>
+													<td class=texto colspan="3">Jorge Chirivi Castellanos</td>
+													
+												</tr>
+												<tr>
+													<td class=texto>Vendedor</td>
+													<td class="texto" colspan="3"> </td>
+												</tr>
+												<tr>
+													<td class=texto nowrap>No. Documento</td>
+													<td class=texto colspan="3">80160</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4">
+											<table class="bordertable" border="0" cellspacing="1" cellpadding="0" id=table1 width="100%">
+												<tr >
+													<td align="center" class="texto"><b>Referencia</b></td>
+													<td align="center" class="texto"><b>Talla</b></td>
+													<td align="center" class="texto"><b>Cantidad</b></td>
+													<td align="center" class="texto" nowrap><b>Vr. U.</b></td>
+													<td align="center" class="texto"><b>Descuento U.</b></td>
+													<td align="center" class="texto" nowrap><b>Vr.</b></td>
+												</tr>
+																								<tr >
+													<td align="center" class="texto">MDTP****</td>
+													<td align="center" class="texto">36</td>
+													<td align="center" class="texto">1</td>
+													<td align="right" class="texto">254,340</td>
+													<td align="center" class="texto">0</td>
+													<td align="right" class="texto">254,340</td>
+												</tr>
+																							</table>
+										</td>
+									</tr>
+									<tr>
+										<td class=texto></td>
+										<td class=texto width="171"></td>
+										<td class=texto colspan="2">
+											<div align="left"></div>
+										</td>
+									</tr>
+									
+									<tr>
+										<td class=texto></td>
+										<td class=texto width="171"></td>
+										<td class=texto nowrap>
+											<div align="right">Total</div>
+										</td>
+										<td class=texto align="right">254,340</td>
+									</tr>
+									
+									
+									<tr>
+										<td class="texto" colspan="4" align="center">Este es un documento de transacc&oacute;n con bonos.<br>
+										</td>
+									</tr>
+									<tr>
+                                    	<td class="texto" colspan="4" align="center">
+                                        	<a href="/admin/files/facturas/FBonosMJ-1.pdf">pdf</a>
+                                        </td>
+                                    	
+                                    </tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+<script>
+//printWindow();
+</script>
+</body>
+</html>
