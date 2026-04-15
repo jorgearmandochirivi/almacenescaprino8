@@ -64,7 +64,7 @@ ob_start();
 			font-size: 7pt;
 			margin: 0 0 0 6mm;
 			padding: 0 0.5mm 1mm 1mm;
-			width: 53mm;
+			width: 55mm;
 			box-sizing: border-box;
 		}
 
