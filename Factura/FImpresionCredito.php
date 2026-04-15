@@ -63,7 +63,7 @@ ob_start();
 			font-family: DejaVu Sans Condensed, DejaVu Sans, Arial, sans-serif;
 			font-size: 7pt;
 			margin: 0 0 0 6mm;
-			padding: 0 0.5mm 1mm 1mm;
+			padding: 0 2mm 1mm 1mm;
 			width: 54mm;
 			box-sizing: border-box;
 		}
