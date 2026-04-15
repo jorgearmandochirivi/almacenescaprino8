@@ -63,72 +63,95 @@ ob_start();
 <html>
 
 <head>
+	<meta charset="UTF-8">
 </head>
 <style>
-	<!--
-	body {
-		font-size: 6.5px;
+	@page {
+		size: 74mm 260mm;
 		margin: 0;
 	}
 
+	html {
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+		font-size: 7pt;
+		margin: 0 0 0 6mm;
+		padding: 0 2mm 1mm 1mm;
+		width: 62mm;
+		box-sizing: border-box;
+		color: #000;
+	}
+
 	table {
-		font-size: 6.5px;
+		width: 100%;
+		border-collapse: collapse;
+		table-layout: fixed;
+		margin: 0 0 4px 0;
 	}
 
-	@page {
-		size: 6cm 12cm;
-		margin-left: 0;
+	td {
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		vertical-align: top;
 	}
 
-	@media print {
-		* {
-			margin: 0;
-			padding: 0;
-		}
-
-		body {
-			font-size: 7px;
-			margin: 0;
-			padding: 0;
-		}
-
-		.texto {
-			font-family: Verdana, Arial, Helvetica, sans-serif;
-			font-size: 6.5px;
-			color: #000000;
-		}
-
-		.mensajefooter {
-			font-size: 6px;
-		}
-
-
-		.bordertable {
-			border: dotted 1px;
-			color: #c3c3c3
-		}
-
-		#content {
-			margin-left: 0;
-			float: none;
-			width: auto;
-			height: 300px;
-			color: black;
-		}
-
-		table {
-			font-size: 6.5px;
-			margin: 0;
-		}
+	.texto,
+	.navpic,
+	.rowform,
+	table {
+		font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+		font-size: 5.8pt;
+		line-height: 1.08;
+		color: #000;
 	}
 
-	</style><body><table width="80%" align="center" id="#content"><tr><td align="center">IMACAL <?php
+	.navpic {
+		font-weight: normal;
+		padding: 1px 0.25mm;
+	}
+
+	.rowform {
+		padding: 1px 0.25mm;
+	}
+
+	.report-header {
+		font-size: 6.4pt;
+		line-height: 1.12;
+		text-align: center;
+	}
+
+	.report-table td {
+		font-size: 5.3pt;
+		line-height: 1.05;
+		padding: 1px 0.2mm;
+	}
+
+	.report-table .head td {
+		font-size: 5pt;
+		font-weight: normal;
+	}
+
+	.num {
+		white-space: nowrap;
+	}
+
+	.border-top {
+		border-top: 1px dotted #000;
+		margin-top: 3px;
+		padding-top: 3px;
+	}
+</style>
+
+<body><table id="#content"><tr><td class="report-header">IMACAL <?php
 																								$fecha_gen = date("Y-m-d H:i:s");
 																								echo $tipo_emp = ($fecha_gen >= "2019-07-19 00:00:00") ? "SAS" : "LTDA";
-																								?><br>Nit 860033182-4<br>Almacen <?= $r_puntoventa->Nombre ?><br>No. De Serial <?= $r_puntoventa->EquipoComputo ?><br>Fecha Generacion: <?= date("Y-m-d"); ?><br>Fecha Reporte: <?php echo $_GET["Fecha"] ?></td></tr><tr><td class='mainbg'><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td class="navpic" nowrap>No.</td><td class="navpic" align="center" nowrap>Ref </td><td class="navpic" align="center" nowrap>Vr. Unit.</td><td class="navpic" align="center" nowrap>Pares</td>< !--<td class="navpic" align="center" nowrap>Dto.</td>
-	-->
-<td class="navpic" align="center" nowrap>Pago</td>
-<td class="navpic" align="center" nowrap>IVA</td>
+																								?><br>Nit 860033182-4<br>Almacen <?= $r_puntoventa->Nombre ?><br>No. De Serial <?= $r_puntoventa->EquipoComputo ?><br>Fecha Generacion: <?= date("Y-m-d"); ?><br>Fecha Reporte: <?php echo $_GET["Fecha"] ?></td></tr><tr><td class='mainbg'><table class="report-table border-top" border="0" cellspacing="0" cellpadding="0"><tr class="head"><td class="navpic" style="width: 13%;" nowrap>No.</td><td class="navpic" style="width: 20%;" align="center" nowrap>Ref</td><td class="navpic" style="width: 20%;" align="center" nowrap>Vr. Unit.</td><td class="navpic" style="width: 10%;" align="center" nowrap>Pares</td>
+<td class="navpic" style="width: 20%;" align="center" nowrap>Pago</td>
+<td class="navpic" style="width: 17%;" align="center" nowrap>IVA</td>
 </tr>
 <?php
 foreach ($r_facturas as $key => $valor) {
@@ -245,7 +268,7 @@ foreach ($r_facturas as $key => $valor) {
 </tr>
 </table>
 
-<table width="80%" align="center">
+<table class="border-top">
 	<tr>
 		<td align="center">Primera Fact d&iacute;a</td>
 		<td align="center">&Uacute;ltima Fact d&iacute;a</td>
@@ -285,7 +308,7 @@ while ($array_formapago = db_fetch_array($qry_formapago)) {
 
 ?>
 
-<table width="80%" align="center" id="#content">
+<table class="border-top" id="#content">
 	<tr>
 		<td class="rowform" align="left" nowrap>Forma de Pago </td>
 		<td class="rowform" align="right" nowrap>Registros</td>
@@ -347,7 +370,7 @@ while ($array_credito = db_fetch_array($qry_credito)) {
 } //end while( $r_facturas = db_fetch_array( $qry_facturas ) )
 
 ?>
-<table width="80%" align="center">
+<table class="report-table border-top">
 	<tr>
 		<td class="navpic" nowrap>No.</td>
 		<td class="navpic" align="center" nowrap>Almac</td>
@@ -436,7 +459,7 @@ file_put_contents($file, $page);
 ob_end_clean();
 
 echo $page;
-PdfModern::generate($page, $filepdf, [60, 120]);
+PdfModern::generate($page, $filepdf, [74, 260]);
 
 //passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
 ?>
