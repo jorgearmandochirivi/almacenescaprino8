@@ -181,7 +181,8 @@ function insert($frm){
 					else
 						$frm[$Key] = 1;
 					
-		$sql_insert=(str_qry_insert($Table,$frm));
+		echo $sql_insert=(str_qry_insert($Table,$frm));
+		
 		$qry_insert = db_query($sql_insert);
 		//log de transaccion
 		insertlog($ID_Usuario,$Table,$frm[$Key],"Crear",$sql_insert);
@@ -193,15 +194,16 @@ function insert($frm){
 		//para llevar el inventario
 
 		if($MOD == "Traslado2"){
+			/*
 			echo "
 				<script>
 					location.href='?mod=vertraslado&action=edit&id=".$frm[$Key]."&idpuntoorigen=".$frm["IDPuntoVentaOrigen"]."'
 				</script>
 			";
-
+			*/
 		}
 
-		if( $MOD <> "GenerarFactura" && $MOD <> "GenerarFacturaBono" && $MOD <> "cambiar" && $MOD <> "SalidaMerca" && $MOD <> "CostoReferencia" )
+		if( $MOD <> "GenerarFactura" && $MOD <> "GenerarFacturaBono" && $MOD <> "cambiar" && $MOD <> "SalidaMerca" && $MOD <> "CostoReferencia" && $MOD <> "Traslado2" )			
 			echo "
 				<script>
 					location.href='?mod=".$MOD."&action=edit&id=".$frm[$Key].(isset($idnot) ? "&idnot=".$idnot : '')."'
