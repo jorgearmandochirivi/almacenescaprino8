@@ -93,11 +93,12 @@ ob_start();
 		}
 
 		.item-table td {
-			font-family: DejaVu Sans Mono, Courier New, monospace;
-			font-size: 5pt;
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+			font-size: 5.8pt;
 			font-weight: normal;
-			padding: 1px 0.3mm;
-			text-align: center;
+			line-height: 1.08;
+			padding: 1px 0.4mm;
+			text-align: left;
 			vertical-align: top;
 		}
 
@@ -109,15 +110,24 @@ ob_start();
 			page-break-inside: auto;
 		}
 
-		.item-table .head td {
-			font-size: 4.8pt;
+		.item-table .prod-head td {
+			font-size: 5.3pt;
 			font-weight: normal;
 			line-height: 1.05;
+			padding-top: 2px;
+		}
+
+		.item-table .prod-values td {
+			font-size: 5.9pt;
+		}
+
+		.item-table .detail-line td {
+			font-size: 5.6pt;
 			padding-bottom: 2px;
 		}
 
 		.num {
-			font-family: DejaVu Sans Mono, Courier New, monospace;
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
 			font-weight: normal;
 			white-space: nowrap;
 		}
@@ -158,15 +168,6 @@ ob_start();
 	</div>
 
 	<table class="item-table border-top" style="margin-top: 4px;">
-		<tr class="bold head">
-			<td style="width: 21%;">Ref</td>
-			<td class="num" style="width: 15%;">Vr U</td>
-			<td class="num" style="width: 7%;">Can</td>
-			<td class="num" style="width: 9%;">Dto</td>
-			<td class="num" style="width: 16%;">Vr D</td>
-			<td class="num" style="width: 8%;">D2</td>
-			<td class="num" style="width: 24%;">Total</td>
-		</tr>
 		<?php
 		$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
 		$query_detalle = db_query($sql_detalle);
@@ -179,14 +180,23 @@ ob_start();
 			}
 			$valorsin = ($r_detalle->ValorU * (1 - ($r_detalle->DescuentoPar / 100))) * $r_detalle->Cantidad;
 		?>
-			<tr>
+			<tr class="prod-head">
+				<td style="width: 45%;">Ref</td>
+				<td class="center" style="width: 15%;">Can</td>
+				<td class="right" style="width: 40%;">Total</td>
+			</tr>
+			<tr class="prod-values">
 				<td><?= $ref ?><br><small><?= get_field("Talla", "Descripcion", "IDTalla", get_field("CodificacionEspecifica", "IDTalla", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)); ?></small></td>
-				<td class="num"><?= number_format($precio_consultado) ?></td>
-				<td class="num"><?= $r_detalle->Cantidad ?></td>
-				<td class="num"><?= number_format($r_detalle->DescuentoRef) ?>%</td>
-				<td class="num"><?= number_format($r_detalle->PrecioU) ?></td>
-				<td class="num"><?= number_format($r_detalle->DescuentoPar) ?>%</td>
-				<td class="num"><?= number_format($valorsin) ?></td>
+				<td class="center num"><?= $r_detalle->Cantidad ?></td>
+				<td class="right num"><?= number_format($valorsin) ?></td>
+			</tr>
+			<tr class="detail-line">
+				<td colspan="3">
+					Vr U: <span class="num"><?= number_format($precio_consultado) ?></span>
+					&nbsp; Dto: <span class="num"><?= number_format($r_detalle->DescuentoRef) ?>%</span>
+					&nbsp; Vr D: <span class="num"><?= number_format($r_detalle->PrecioU) ?></span>
+					&nbsp; D2: <span class="num"><?= number_format($r_detalle->DescuentoPar) ?>%</span>
+				</td>
 			</tr>
 		<?php
 			$Movimiento = get_field("Referencia", "IDMovimiento", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)));
