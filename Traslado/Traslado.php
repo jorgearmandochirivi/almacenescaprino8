@@ -176,13 +176,21 @@
 			function calculagrantotal() {
 				var total = 0;
 				for (var i = 1; i <= 200; i++) {
-					var ctexto = document.getElementById("Cantidad" + i).value;
-					if (ctexto != "") {
+					var campoCantidad = document.getElementById("Cantidad" + i);
+					if (!campoCantidad) {
+						continue;
+					}
+					var ctexto = campoCantidad.value;
+					if (ctexto != "" && !isNaN(ctexto)) {
 						total = parseInt(total) + parseInt(ctexto);
 					}
 
 				}
 				document.getElementById('TotalCantidad').value = total;
+			}
+
+			function calculatotal(value, cont) {
+				calculagrantotal();
 			}
 
 
@@ -335,6 +343,7 @@
 
 				document.frm.elements["Maximo" + CONT].value = MAXIMO;
 				document.frm.elements["ITEM"].value = CONT;
+				calculagrantotal();
 			}
 
 
@@ -497,7 +506,7 @@
 
 
 																<td align="center">
-																	<input type=number id="Cantidad<?= $i ?>" name=Cantidad<?= $i ?> value="<?php echo $frm[$cantidad] ?>" class="tbox" size=3 min="1" max="100000" onBlur="calculagrantotal(); if(!compruebamaximo(this.value,<?= $i ?>)){ this.value = ''; } else{ habilita_tarjeta(this.value,<?= $i ?>);calculatotal(this.value,<?= $i ?>);}">
+																	<input type=number id="Cantidad<?= $i ?>" name=Cantidad<?= $i ?> value="<?php echo $frm[$cantidad] ?>" class="tbox" size=3 min="1" max="100000" onInput="calculagrantotal();" onBlur="calculagrantotal(); if(!compruebamaximo(this.value,<?= $i ?>)){ this.value = ''; calculagrantotal(); } else{ habilita_tarjeta(this.value,<?= $i ?>);calculatotal(this.value,<?= $i ?>);}">
 																	<div id="div_tarjeta" style="display:none">
 																		<textarea name="NumeroTarjeta<?= $i ?>" id="NumeroTarjeta<?= $i ?>"></textarea>
 																	</div>
