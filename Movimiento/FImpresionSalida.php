@@ -33,7 +33,7 @@ ob_start();
 	<title>Imprimir Salida</title>
 	<style>
 		@page {
-			size: 74mm 190mm;
+			size: 74mm 95mm;
 			margin: 0;
 		}
 
@@ -44,10 +44,10 @@ ob_start();
 
 		body {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-			font-size: 7pt;
-			margin: 0 0 0 6mm;
+			font-size: 8pt;
+			margin: 0 0 0 4mm;
 			padding: 0 2mm 1mm 1mm;
-			width: 62mm;
+			width: 68mm;
 			box-sizing: border-box;
 		}
 
@@ -78,8 +78,8 @@ ob_start();
 		}
 
 		.texto {
-			font-size: 6.2pt;
-			line-height: 1.1;
+			font-size: 7pt;
+			line-height: 1.12;
 		}
 
 		.border-top {
@@ -89,8 +89,8 @@ ob_start();
 		}
 
 		.item-table td {
-			font-size: 5.4pt;
-			line-height: 1.05;
+			font-size: 6.2pt;
+			line-height: 1.08;
 			padding: 1px 0.25mm;
 			text-align: center;
 		}
@@ -188,6 +188,6 @@ $fw = fopen($file, "w");
 fputs($fw, $html);
 fclose($fw);
 
-PdfModern::generate($html, $filepdf, [74, 190]);
+PdfModern::generate($html, $filepdf, [74, 95]);
 echo $html;
 ?>
