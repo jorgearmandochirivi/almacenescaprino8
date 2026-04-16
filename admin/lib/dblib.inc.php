@@ -181,7 +181,7 @@ function insert($frm){
 					else
 						$frm[$Key] = 1;
 					
-		echo $sql_insert=(str_qry_insert($Table,$frm));
+		$sql_insert=(str_qry_insert($Table,$frm));
 		
 		$qry_insert = db_query($sql_insert);
 		//log de transaccion

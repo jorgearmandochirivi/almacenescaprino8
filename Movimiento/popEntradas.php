@@ -187,7 +187,10 @@ var Check = new Array('Nombre','Publicar');
 			$TPares = 0;
 			
 				
-            $filedir = $dirroot . "/filesotros/Entrada/";	
+            $filedir = $dirroot . "/filesotros/Entrada/";
+			if (!is_dir($filedir)) {
+				mkdir($filedir, 0775, true);
+			}
 			$name = "Entrada" . $Remision . ".html";
 			$namePDF = "Entrada" . $Remision . ".pdf";
 			$file = "$filedir$name";
@@ -303,14 +306,13 @@ var Check = new Array('Nombre','Publicar');
                 fclose($fw);
                 
                 ob_end_clean();
-                //echo $page;
-                //passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
-                passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
+                PdfModern::generate($page, $filepdf, [74, 190]);
+				$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Entrada/" . $namePDF : "/admin/filesotros/Entrada/" . $name;
 				?>      
     	</div>
     
     	<div align="center">	
-  		 <a href="/admin/filesotros/Entrada/Entrada<?=$Remision?>.pdf">Imprimir Entrada</a>         
+  		 <a href="<?=$ruta_impresion?>">Imprimir Entrada</a>         
         </div>
                 
                 
