@@ -176,73 +176,113 @@
 			ob_start();
 			?>
 
-			<table width=80% border=0 cellspacing=1 cellpadding=1 class="texto forumline" align="center">
-				<tr>
-					<td class="row1" nowrap>
-						<table width="500px" cellspacing="1" cellpadding="1" bgcolor=#ffffff align="center">
-							<tr>
-								<td class=col1><span style="font-size:30px; !important">Consecutivo:</span></td>
-								<td class=col2><?= $r->IDMovimiento ?></td>
-							</tr>
-							<!--
-                                                <tr>
-                                                  <td class=col1>Documento</td>
-                                                  <td class=col2><?= $r->Remision ?></td>
-                                                </tr>
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<meta charset="UTF-8">
+				<style>
+					@page {
+						size: 74mm 190mm;
+						margin: 0;
+					}
 
-																							<tr>
-                                                  <td class=col1>Numero.Orden</td>
-                                                  <td class=col2><?= $r->NumeroOrden ?></td>
-                                                </tr>
-																							-->
-							<tr>
-								<td class=col1>Fecha Remisi&oacute;n</td>
-								<td class=col2><?= fecha() . " " . hora() ?></td>
-							</tr>
-							<tr>
-								<td class=col1>Tipo de Movimiento</td>
-								<td class=col2><?php echo get_field("TipoMovimiento", "NombreMovimiento", "IDTipoMovimiento", $r->IDTipoMovimiento) ?></td>
-							</tr>
-							<tr>
-								<td class=col1>Empleado</td>
-								<td class=col2>
-									<?php echo get_field("Empleado", "Nombre", "IDEmpleado", $r->IDEmpleado); ?>
+					html {
+						margin: 0;
+						padding: 0;
+					}
 
+					body {
+						font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+						font-size: 7pt;
+						margin: 0 0 0 6mm;
+						padding: 0 2mm 1mm 1mm;
+						width: 62mm;
+						box-sizing: border-box;
+					}
 
-								</td>
-							</tr>
-							<tr>
-								<td class=col1>Punto de Venta</td>
-								<td class=col2><?php
-												echo get_field("PuntoVenta", "Nombre", "IDPuntoVenta", $IDPuntoVenta);
-												?></td>
-							</tr>
-						</table>
-						<br><br>
-						<table width="500px" cellspacing="1" cellpadding="1" bgcolor=#ffffff align="center">
-							<tr>
-								<td colspan="2" class=col1>Observaciones:</td>
-							</tr>
-							<tr>
-								<td colspan="2" class=col1 nowrap width="200"><?= $r->Observaciones ?>
-									<br><br>
+					table {
+						width: 100%;
+						border-collapse: collapse;
+						margin-bottom: 3px;
+						table-layout: fixed;
+					}
 
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2" class=col1 nowrap width="200">Detalle Movimiento</td>
-							</tr>
-							<tr>
-								<td colspan="2" class=col1 nowrap width="200"><?php verdetallemovimiento_texto($r->IDMovimiento); ?></td>
-							</tr>
-						</table>
-						<br><br>
+					td {
+						overflow-wrap: break-word;
+						word-wrap: break-word;
+						vertical-align: top;
+						padding: 1px 0;
+					}
 
+					.center {
+						text-align: center;
+					}
 
-					</td>
-				</tr>
+					.right {
+						text-align: right;
+					}
 
-			</table>
+					.bold {
+						font-weight: bold;
+					}
+
+					.texto {
+						font-size: 6.2pt;
+						line-height: 1.1;
+					}
+
+					.border-top {
+						border-top: 1px dotted #000;
+						margin-top: 3px;
+						padding-top: 3px;
+					}
+
+					.detalle table {
+						width: 100%;
+					}
+
+					.detalle td {
+						font-size: 5.4pt;
+						line-height: 1.05;
+						text-align: center;
+					}
+				</style>
+			</head>
+			<body>
+				<div class="center bold">
+					SALIDA No. <?= $r->IDMovimiento ?>
+				</div>
+
+				<table class="texto border-top">
+					<tr>
+						<td class="bold">Fecha</td>
+						<td><?= fecha() . " " . hora() ?></td>
+					</tr>
+					<tr>
+						<td class="bold">Movimiento</td>
+						<td><?php echo get_field("TipoMovimiento", "NombreMovimiento", "IDTipoMovimiento", $r->IDTipoMovimiento) ?></td>
+					</tr>
+					<tr>
+						<td class="bold">Empleado</td>
+						<td><?php echo get_field("Empleado", "Nombre", "IDEmpleado", $r->IDEmpleado); ?></td>
+					</tr>
+					<tr>
+						<td class="bold">Punto Venta</td>
+						<td><?php echo get_field("PuntoVenta", "Nombre", "IDPuntoVenta", $IDPuntoVenta); ?></td>
+					</tr>
+				</table>
+
+				<div class="texto border-top">
+					<span class="bold">Observaciones:</span><br>
+					<?= $r->Observaciones ?>
+				</div>
+
+				<div class="texto bold border-top">Detalle Movimiento</div>
+				<div class="detalle">
+					<?php verdetallemovimiento_texto($r->IDMovimiento); ?>
+				</div>
+			</body>
+			</html>
 
 			<?php
 
@@ -253,14 +293,13 @@
 			fclose($fw);
 
 			ob_end_clean();
-			//echo $page;
-			//passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
-			$ruta_impresion = "/admin/filesotros/Salida/" . $name;
+			PdfModern::generate($page, $filepdf, [74, 190]);
+			$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Salida/" . $namePDF : "/admin/filesotros/Salida/" . $name;
 			?>
 		</div>
 
 		<div align="center">
-			<a style="font-size:16px" target="_blank" href="<?= $ruta_impresion ?>">Imprimir Salida</a>
+			<a style="font-size:16px" href="<?= $ruta_impresion ?>">Imprimir Salida</a>
 		</div>
 
 
