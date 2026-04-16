@@ -84,7 +84,7 @@
 				echo "<script>alert('Traslado Realizado. Esperando repuesta del punto de venta de destino...');</script>";
 
 				//Imprimir la factura
-				echo "<script>location.href='?mod=GenerarFactura';</script>";
+				echo "<script>location.href='?mod=vertraslado&action=edit&id={$frm['IDTraslado']}&idpuntoorigen={$frm['IDPuntoVentaOrigen']}';</script>";
 
 				//print_form($id,"update","Actualizar $TitleMod","Realizar Movimiento");
 				break;
