@@ -299,7 +299,8 @@
 		</div>
 
 		<div align="center">
-			<a style="font-size:16px" href="<?= $ruta_impresion ?>">Imprimir Salida</a>
+			<?php $ruta_impresion_popup = "Movimiento/FImpresionSalida.php?id=" . $r->IDMovimiento . "&idpunto=" . $r->IDPuntoVenta; ?>
+			<a style="font-size:16px" href="<?= $ruta_impresion_popup ?>" onclick="window.open('<?= $ruta_impresion_popup ?>','','width=426,height=350,scrollbars=yes,resizable=yes'); return false;">Imprimir Salida</a>
 		</div>
 
 
