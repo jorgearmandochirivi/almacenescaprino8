@@ -40,28 +40,40 @@ ob_start();
 	<meta charset="UTF-8">
 	<style>
 		@page {
-			size: 76mm 180mm;
+			size: 74mm 190mm;
 			margin: 0;
 		}
 
-		body {
-			font-family: Arial, sans-serif;
-			font-size: 8pt;
+		html {
 			margin: 0;
-			padding: 4mm;
-			width: 72mm;
+			padding: 0;
+		}
+
+		body {
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+			font-size: 7pt;
+			margin: 0 0 0 6mm;
+			padding: 0 2mm 1mm 1mm;
+			width: 62mm;
 			box-sizing: border-box;
 		}
 
 		table {
 			width: 100%;
 			border-collapse: collapse;
-			margin-bottom: 4px;
+			margin-bottom: 3px;
+			table-layout: fixed;
+		}
+
+		td,
+		th {
+			overflow-wrap: break-word;
+			word-wrap: break-word;
 		}
 
 		.texto {
-			font-size: 7pt;
-			line-height: 1.15;
+			font-size: 6.2pt;
+			line-height: 1.1;
 		}
 
 		.center {
@@ -78,19 +90,23 @@ ob_start();
 
 		.border-top {
 			border-top: 1px dotted #000;
-			margin-top: 5px;
-			padding-top: 5px;
+			margin-top: 3px;
+			padding-top: 3px;
 		}
 
 		.item-table th,
 		.item-table td {
-			font-size: 6.5pt;
-			padding: 2px 0;
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+			font-size: 5.4pt;
+			font-weight: normal;
+			line-height: 1.05;
+			padding: 1px 0.25mm;
 			vertical-align: top;
 		}
 
 		.item-table th {
-			text-align: left;
+			font-size: 4.8pt;
+			line-height: 1.05;
 			border-bottom: 1px solid #000;
 		}
 
@@ -123,10 +139,10 @@ ob_start();
 
 	<table class="item-table border-top">
 		<tr>
-			<th>Referencia</th>
-			<th class="talla">Talla</th>
-			<th class="cantidad">Cant</th>
-			<th class="tarjeta">Tarjeta</th>
+			<th style="width: 33%;">Referencia</th>
+			<th class="talla" style="width: 15%;">Talla</th>
+			<th class="cantidad" style="width: 12%;">Cant</th>
+			<th class="tarjeta" style="width: 40%;">Tarjeta</th>
 		</tr>
 		<?php
 		$sql_detalle = " SELECT * FROM DetalleTraslado WHERE $Key = '$r->IDTraslado' AND IDPuntoVentaOrigen = '$r->IDPuntoVentaOrigen' ";
@@ -160,6 +176,6 @@ if ($fw !== false) {
 	fclose($fw);
 }
 
-PdfModern::generate($html, $filepdf, [76, 180]);
+PdfModern::generate($html, $filepdf, [74, 190]);
 echo "<script>window.location.href='/admin/files/Traslados/" . $namePDF . "';</script>";
 ?>
