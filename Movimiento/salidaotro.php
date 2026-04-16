@@ -34,7 +34,7 @@ if($permisos[0] >= 2)
 				db_query("COMMIT");
 				
 				
-				echo "<script>window.open('?mod=VerMovimiento&action=add&id={$frm['IDMovimiento']}','','width=426,height=350,scrollbars=yes,resizable=yes');location.href='?mod=VerMovimiento';</script>";
+				echo "<script>window.open('Movimiento/FImpresionSalida.php?id={$frm['IDMovimiento']}&idpunto={$frm['IDPuntoVenta']}','','width=426,height=350,scrollbars=yes,resizable=yes');location.href='?mod=VerMovimiento';</script>";
 				
 				print_form($id,"update","Actualizar $TitleMod","Realizar Movimiento");
 				
