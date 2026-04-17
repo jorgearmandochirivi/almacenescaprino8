@@ -126,10 +126,10 @@ if($permisos[0] >= 2)
 
 					$frm= vars_LOG($_POST);
 
-					$sql_tarjeta="UPDATE TarjetaPunto set Estado = '".$frm["Estado"]."', Descripcion= '".$frm["Descripcion"]."' Where CodigoTarjeta = '".$frm[CodigoTarjeta]."' Limit 1 ";
+					$sql_tarjeta="UPDATE TarjetaPunto set Estado = '".$frm["Estado"]."', Descripcion= '".$frm["Descripcion"]."' Where CodigoTarjeta = '".$frm['CodigoTarjeta']."' Limit 1 ";
 					$qry_libera_tarjeta=db_query($sql_tarjeta);
 					window_alert("Modificacion realizada con exito ");
-					print_form($frm[CodigoTarjeta],"update","Actualizar $TitleMod","Realizar Cambios");
+					print_form($frm['CodigoTarjeta'],"update","Actualizar $TitleMod","Realizar Cambios");
 
 			break;
 			case "del":
@@ -144,13 +144,13 @@ if($permisos[0] >= 2)
 			case "list" :
 
 
-			if ($_GET[field]=="PuntoVenta"){
-				$sql="Select TP.* FROM TarjetaPunto TP, PuntoVenta PV Where TP.IDPuntoVenta = PV.IDPuntoVenta and PV.Nombre like '%".$_GET[QryString]."%' ";
+				if ($_GET['field']=="PuntoVenta"){
+					$sql="Select TP.* FROM TarjetaPunto TP, PuntoVenta PV Where TP.IDPuntoVenta = PV.IDPuntoVenta and PV.Nombre like '%".$_GET['QryString']."%' ";
 
-			}
-			if ($_GET[field]=="CodigoTarjeta"){
-				$sql="Select TP.* FROM TarjetaPunto TP Where TP.CodigoTarjeta = '".$_GET[QryString]."' ";
-			}
+				}
+				if ($_GET['field']=="CodigoTarjeta"){
+					$sql="Select TP.* FROM TarjetaPunto TP Where TP.CodigoTarjeta = '".$_GET['QryString']."' ";
+				}
 
 			//$sql = make_qry_string($_GET);
 			list_r($sql);
