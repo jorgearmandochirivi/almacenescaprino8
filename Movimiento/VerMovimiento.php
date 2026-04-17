@@ -182,7 +182,7 @@
 				<meta charset="UTF-8">
 				<style>
 					@page {
-						size: 74mm 95mm;
+						size: 74mm 190mm;
 						margin: 0;
 					}
 
@@ -193,10 +193,10 @@
 
 					body {
 						font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-						font-size: 8pt;
-						margin: 0 0 0 4mm;
+						font-size: 7pt;
+						margin: 0 0 0 6mm;
 						padding: 0 2mm 1mm 1mm;
-						width: 68mm;
+						width: 62mm;
 						box-sizing: border-box;
 					}
 
@@ -227,8 +227,8 @@
 					}
 
 					.texto {
-						font-size: 7pt;
-						line-height: 1.12;
+						font-size: 6.2pt;
+						line-height: 1.1;
 					}
 
 					.border-top {
@@ -242,8 +242,8 @@
 					}
 
 					.detalle td {
-						font-size: 6.2pt;
-						line-height: 1.08;
+						font-size: 5.4pt;
+						line-height: 1.05;
 						text-align: center;
 					}
 				</style>
@@ -293,7 +293,7 @@
 			fclose($fw);
 
 			ob_end_clean();
-			PdfModern::generate($page, $filepdf, [74, 95]);
+			PdfModern::generate($page, $filepdf, [74, 190]);
 			$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Salida/" . $namePDF : "/admin/filesotros/Salida/" . $name;
 			?>
 		</div>

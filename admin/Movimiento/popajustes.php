@@ -70,6 +70,7 @@
 										
 				$qry_referencias = db_query( $sql_referencias );
 				$i = 0;
+				$array_referencias = array();
 				while( $r_referencias = db_fetch_array( $qry_referencias ) )
 				{
 					$array_referencias[$i] = $r_referencias; 
@@ -80,7 +81,7 @@
 				<SELECT name=Referencias style="width:180px; " size="20" class="inputSelect" multiple>
 					<?php
 						foreach( $array_referencias as $key=>$valor )
-							echo "<option value=$valor[IDPuntoVentaReferencia]>$valor[Numero] :   $". number_format($valor[ValorVenta],0,',','.') . " $valor[Descuento]% </option>";
+							echo "<option value=".$valor['IDPuntoVentaReferencia'].">".$valor['Numero']." :   $". number_format($valor['ValorVenta'],0,',','.') . " ".$valor['Descuento']."% </option>";
 					?>
 				</SELECT><br>
 				<br>
