@@ -1,4 +1,5 @@
 <script>showhide('ContentReportes');</script>
+<?php $mostrarVentasXTalla = false; ?>
 <body>
 	<table cellspacing="0" cellpadding="2" border="0" align="center" width="100%" bgcolor="#FFFFFF">
 		<tr>
@@ -13,7 +14,7 @@
 				<a href="./?mod=InventarioCon">Inventario</a> |
 				<a href="./?mod=InventarioCon&analisis=1">Inventario Analisis</a> |
 				<a href="./?mod=InventarioConAlmacen">Inventario x Referencia</a> |
-                <a href="./?mod=ReporteTalla">Ventas x Talla</a> |
+				<?php if($mostrarVentasXTalla){ ?><a href="./?mod=ReporteTalla">Ventas x Talla</a> |<?php } ?>
 				<a href="./?mod=ConsolidadoVentas">Ventas x Referencia</a> |
                 <a href="./?mod=ConsolidadoVentasTercero">Ventas Terceros x Referencia</a> |
 				<!--
