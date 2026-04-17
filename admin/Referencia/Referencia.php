@@ -21,8 +21,11 @@ function table_check_list_desc($Table,$Key,$key_value,$table_option,$key_option,
 	
 	$option_checked = array();
 	
-	while($option = db_fetch_object($qry_option))
-		$option_checked[] = $option->$key_option;
+	if($newmode <> "insert" && $qry_option)
+	{
+		while($option = db_fetch_object($qry_option))
+			$option_checked[] = $option->$key_option;
+	}
 	
 		
 	$qry = db_query("SELECT * FROM $table_option WHERE 1 ".$condicion);
@@ -51,7 +54,7 @@ if($permisos[0] >= 2)
 
 				$frm= vars_LOG($_POST);
 
-				$sql_verifica = " SELECT * FROM Referencia WHERE Numero = '$frm[Numero]' ";
+				$sql_verifica = " SELECT * FROM Referencia WHERE Numero = '".$frm['Numero']."' ";
 				$qry_verifica = db_query( $sql_verifica );
 				if( db_num_rows( $qry_verifica ) > 0 )
 				{
@@ -176,13 +179,13 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$_GET[action]="";
+				$_GET['action']="";
 				delete($ID);
 			break;
 
 			case "delfoto" :
-				$sql_actualiza=db_query("Update Referencia Set " . $_GET[campo] . "='' Where IDReferencia = '".$_GET[id]."'");
-				print_form($_GET[id],"update","Actualizar $TitleMod","Realizar Cambios");
+				$sql_actualiza=db_query("Update Referencia Set " . $_GET['campo'] . "='' Where IDReferencia = '".$_GET['id']."'");
+				print_form($_GET['id'],"update","Actualizar $TitleMod","Realizar Cambios");
 			break;
 			case "list" :
 			$sql = make_qry_string($_GET);

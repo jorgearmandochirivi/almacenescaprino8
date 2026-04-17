@@ -21,7 +21,7 @@ if($permisos[0] >= 2)
 				print_form($id,"update","Actualizar $TitleMod","Realizar Cambios");
 				*/
 
-				$valido = validar_existe_usuario($HTTP_POST_VARS[User]);
+				$valido = validar_existe_usuario($HTTP_POST_VARS['User']);
 				if($valido){
 					$frm= vars_LOG($HTTP_POST_VARS);
 					$frm['Password']=encode_passwd($frm['Password'],$strcript);
@@ -53,7 +53,7 @@ if($permisos[0] >= 2)
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS['action']="";
 				delete($ID);
 			break;
 			case "list" :
