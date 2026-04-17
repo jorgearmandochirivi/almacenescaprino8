@@ -40,8 +40,8 @@ else
 function load_permisos($frm){
 	Global $Nombre_Usuario,$idnot,$id;
 	$now=fecha()." ".hora();
-	foreach($frm[Permiso] AS $key=>$val){
-		if($frm[IDSeccionSite]!=-1)
+	foreach($frm['Permiso'] AS $key=>$val){
+		if($frm['IDSeccionSite']!=-1)
 			$qry_existe = db_query("SELECT IDPermisos FROM Permisos WHERE IDGrupoUsuarios='$idnot' AND IDModuloSite = '$id' AND IDSeccionSite = '$key'");
 		else
 			$qry_existe = db_query("SELECT IDPermisos FROM Permisos WHERE IDGrupoUsuarios='$idnot' AND IDModuloSite = '$id' AND IDSeccionSite = '0'");
@@ -66,7 +66,7 @@ function load_permisos($frm){
 			$IDPermiso = get_maxID("Permisos","IDPermisos");		
 			$sql_perm = "
 				INSERT INTO Permisos (IDPermisos, IDGrupoUsuarios, IDModuloSite, IDSeccionSite, SeccionSite_name,Permiso,  UsuarioTrCr,  FechaTrCr) 
-						  VALUES('$IDPermiso','$idnot','$id','$key','$frm[SeccionSite_name]','$val','$Nombre_Usuario','$now')
+				  VALUES('$IDPermiso','$idnot','$id','$key','".$frm['SeccionSite_name']."','$val','$Nombre_Usuario','$now')
 			";
 			db_query($sql_perm);
 		}
