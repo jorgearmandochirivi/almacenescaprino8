@@ -30,11 +30,20 @@ if($permisos[0] >= 2)
 		} // End switch
 
 }//end if(permisos[0] > 2)
-else
-	echo Mensaje_Info("No tiene Permisos Suficientes","row2");
+	else
+		echo Mensaje_Info("No tiene Permisos Suficientes","row2");
 
-/*******************************************************************************************
-	seleccionareferencia: formulario de busqueda para la referencia
+	function calcular_rotacion_gral($vendido, $inventario)
+	{
+		$total = $vendido + $inventario;
+		if($total == 0)
+			return 0;
+
+		return ($vendido / $total) * 100;
+	}
+	
+	/*******************************************************************************************
+		seleccionareferencia: formulario de busqueda para la referencia
 	Parametros:
 			$newmode : nieva accion a tomar con el submit
 	Retorna:	
@@ -400,11 +409,12 @@ if( !empty( $IDTipoReferencia ) )
 								foreach($array_tallas_mostrar as $idtalla => $nombre)
 								{
 									
-									echo "<td class=".$class." align=right nowrap>";
-									echo $datostalla[ $idtalla ]["Vendido"]."</br>";
-									echo $datostalla[ $idtalla ]["Inventario"]."</br>";
-									echo number_format( $Rotacion = ( $datostalla[ $idtalla ]["Vendido"] / ( $datostalla[ $idtalla ]["Vendido"] + $datostalla[ $idtalla ]["Inventario"] ) * 100 ) , 1 )." % ";
-									echo "</td>";
+										echo "<td class=".$class." align=right nowrap>";
+										echo $datostalla[ $idtalla ]["Vendido"]."</br>";
+										echo $datostalla[ $idtalla ]["Inventario"]."</br>";
+										$Rotacion = calcular_rotacion_gral($datostalla[ $idtalla ]["Vendido"], $datostalla[ $idtalla ]["Inventario"]);
+										echo number_format( $Rotacion , 1 )." % ";
+										echo "</td>";
 									
 									$TotalVentasTalla[ $idtalla ] += $datostalla[ $idtalla ]["Vendido"];
 									$TotalExistenciasTalla[ $idtalla ] += $datostalla[ $idtalla ]["Inventario"];
@@ -419,7 +429,7 @@ if( !empty( $IDTipoReferencia ) )
 								
 								
 								?>	
-								<td class="rowform"  align="right" ><?php echo $TotalVentasPunto[ $numeroReferencia ]."<br>".$TotalExistenciasPunto[ $numeroReferencia ]."<br>";echo number_format( $Rotacion = ( $TotalVentasPunto[ $numeroReferencia ] / ( $TotalVentasPunto[ $numeroReferencia ] + $TotalExistenciasPunto[ $numeroReferencia ] ) * 100 ), 2 ); ?></td>
+								<td class="rowform"  align="right" ><?php echo $TotalVentasPunto[ $numeroReferencia ]."<br>".$TotalExistenciasPunto[ $numeroReferencia ]."<br>";echo number_format( $Rotacion = calcular_rotacion_gral($TotalVentasPunto[ $numeroReferencia ], $TotalExistenciasPunto[ $numeroReferencia ]), 2 ); ?></td>
 							</tr>
 							<?php
 							}//end while
