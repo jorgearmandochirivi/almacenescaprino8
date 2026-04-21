@@ -104,6 +104,7 @@ if($permisos[0] >= 2)
 				///La descripcion larga se arma automaticamente
 				$Capellada=get_field("Capellada","Nombre","IDCapellada",$frm["IDCapellada"]);
 				$Forro=get_field("Forro","Nombre","IDForro",$frm["IDForro"]);
+				$ForroMarroq=get_field("Forro","Nombre","IDForro",$frm["IDForroMarr"]);
 				$Plantilla=get_field("Plantilla","Nombre","IDPlantilla",$frm["IDPlantilla"]);
 				$Suela=get_field("Suela","Nombre","IDSuela",$frm["IDSuela"]);
 				$Altura=get_field("Altura","Nombre","IDAltura",$frm["IDAltura"]);
@@ -436,8 +437,22 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 								<?php echo formpopup("Altura","Nombre","Nombre","IDAltura",$r->IDAltura,"input\" id=\"Altura"," Publicar = 'S' "); ?>
 										</td>
 										<td class=row1 width="40%">
-										Forro marroq<br>
-							<?php echo formpopup("Forro","Nombre","Nombre","IDForro",$r->IDForro,"input\", id=\"Forro"," Publicar = 'S' "); ?><br>
+										Forro marroq<br>							
+										<select name="IDForroMarr"  id="IDForroMarr">
+											<?php
+											$sql_forro_marroq = "SELECT * FROM Forro WHERE Publicar = 'S' ORDER BY Nombre";
+											$qry_forro_marroq = db_query( $sql_forro_marroq );
+											echo "<option value=''>[ Seleccione ]</option>";
+											while( $r_forro_marroq = db_fetch_object( $qry_forro_marroq ) )
+											{
+												echo "<option value='".$r_forro_marroq->IDForro."'";
+												if( $r->IDForroMarr == $r_forro_marroq->IDForro )
+													echo " selected ";
+												echo ">".$r_forro_marroq->Nombre."</option>";
+											}
+											?>
+										</select>
+						
 										</td>
 									</tr>
 									
