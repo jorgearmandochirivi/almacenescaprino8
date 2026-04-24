@@ -67,7 +67,7 @@ ob_start();
 </head>
 <style>
 	@page {
-		size: 74mm 260mm;
+		size: 74mm 290mm;
 		margin: 0;
 	}
 
@@ -78,7 +78,7 @@ ob_start();
 
 	body {
 		font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-		font-size: 7pt;
+		font-size: 9pt;
 		margin: 0 0 0 6mm;
 		padding: 0 2mm 1mm 1mm;
 		width: 62mm;
@@ -104,35 +104,35 @@ ob_start();
 	.rowform,
 	table {
 		font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-		font-size: 5.8pt;
-		line-height: 1.08;
+		font-size: 7.8pt;
+		line-height: 1.12;
 		color: #000;
 	}
 
 	.navpic {
 		font-weight: normal;
-		padding: 1px 0.25mm;
+		padding: 1px 0.5mm;
 	}
 
 	.rowform {
-		padding: 1px 0.25mm;
+		padding: 1px 0.5mm;
 	}
 
 	.report-header {
-		font-size: 6.4pt;
-		line-height: 1.12;
+		font-size: 8.4pt;
+		line-height: 1.15;
 		text-align: center;
 	}
 
 	.report-table td {
-		font-size: 5.3pt;
-		line-height: 1.05;
-		padding: 1px 0.2mm;
+		font-size: 7.3pt;
+		line-height: 1.1;
+		padding: 1px 0.4mm;
 	}
 
 	.report-table .head td {
-		font-size: 5pt;
-		font-weight: normal;
+		font-size: 7pt;
+		font-weight: bold;
 	}
 
 	.num {
@@ -459,7 +459,7 @@ file_put_contents($file, $page);
 ob_end_clean();
 
 echo $page;
-PdfModern::generate($page, $filepdf, [74, 260]);
+PdfModern::generate($page, $filepdf, [74, 290]);
 
 //passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
 ?>

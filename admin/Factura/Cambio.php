@@ -349,22 +349,28 @@ function print_form($id,$newmode,$title,$submit_caption){
 			ob_start();
 			?>
 <style>
-	body {
+	@page {
+		size: 74mm 220mm;
 		margin: 0;
-		padding: 2mm 3mm;
-		width: 76mm;
+	}
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+		margin: 0 0 0 6mm;
+		padding: 0 2mm 1mm 1mm;
+		width: 62mm;
 		box-sizing: border-box;
-		font-size: 8px;
+		font-size: 10px;
 	}
 	.cambio-ticket {
-		width: 70mm;
+		width: 100%;
 		margin: 0;
 	}
 	.cambio-ticket table {
 		width: 100%;
 		table-layout: fixed;
 		border-collapse: collapse;
-		font-size: 8px;
+		font-size: 10px;
+		font-family: Arial, Helvetica, sans-serif;
 	}
 	.cambio-ticket td {
 		white-space: normal;
