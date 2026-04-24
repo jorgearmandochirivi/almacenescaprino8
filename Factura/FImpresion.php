@@ -39,7 +39,7 @@ ob_start();
 	<meta charset="UTF-8">
 	<style>
 		@page {
-			size: 74mm 190mm;
+			size: 74mm 220mm;
 			margin: 0;
 		}
 
@@ -50,16 +50,16 @@ ob_start();
 
 		body {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-			font-size: 7pt;
-			margin: 0 0 0 6mm;
+			font-size: 8pt;
+			margin: 0 0 0 5mm;
 			padding: 0 2mm 1mm 1mm;
-			width: 62mm;
+			width: 63mm;
 			box-sizing: border-box;
 		}
 
 		.texto {
-			font-size: 6.2pt;
-			line-height: 1.1;
+			font-size: 7pt;
+			line-height: 1.15;
 		}
 
 		table {
@@ -94,31 +94,31 @@ ob_start();
 
 		.item-table td {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-			font-size: 5.4pt;
+			font-size: 6.8pt;
 			font-weight: normal;
-			line-height: 1.05;
-			padding: 1px 0.25mm;
+			line-height: 1.1;
+			padding: 1px 0.5mm;
 			text-align: center;
 			vertical-align: top;
 		}
 
 		.footer-text {
-			font-size: 6pt;
-			line-height: 1.12;
+			font-size: 7pt;
+			line-height: 1.15;
 			text-align: justify;
 			text-align-last: left;
 			page-break-inside: auto;
 		}
 
 		.item-table .head td {
-			font-size: 4.8pt;
-			font-weight: normal;
-			line-height: 1.05;
+			font-size: 6pt;
+			font-weight: bold;
+			line-height: 1.1;
 			padding-bottom: 2px;
 		}
 
 		.ref-cell {
-			line-height: 1.02;
+			line-height: 1.05;
 			word-break: break-word;
 		}
 
@@ -204,7 +204,7 @@ ob_start();
 		?>
 	</table>
 
-	<table class="texto border-top">
+	<table class="border-top" style="font-size: 7.5pt; line-height: 1.2;">
 		<?php if ($r->ValorBono != "0"): ?>
 			<tr>
 				<td>Total Factura</td>
@@ -219,14 +219,14 @@ ob_start();
 			<td>IVA</td>
 			<td class="right num"><?= number_format($r->ValorIVA) ?></td>
 		</tr>
-		<tr class="bold">
+		<tr class="bold" style="font-size: 8pt;">
 			<td>Valor Neto</td>
 			<td class="right num"><?= number_format($r->ValorTotal) ?></td>
 		</tr>
 	</table>
 
-	<div class="texto bold" style="margin-top: 5px;">FORMA DE PAGO</div>
-	<table class="texto">
+	<div class="bold" style="font-size: 8pt; margin-top: 5px;">FORMA DE PAGO</div>
+	<table style="font-size: 7.5pt; line-height: 1.2;">
 		<?php
 		$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 		$query_formapago = db_query($sql_formapago);
