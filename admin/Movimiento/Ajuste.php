@@ -228,6 +228,8 @@ else
 						</tr>
 
 				<?php 
+				$TPares = 0;
+				$Ingr = ( !empty($_POST['Ingreso']) && is_array($_POST['Ingreso']) ) ? $_POST['Ingreso'] : array();
 				foreach( $array_referencias as $key => $valor ){
 
 					$class = repetition()?"row1list":"row2list";
@@ -272,11 +274,11 @@ else
 							<input type="hidden" name="IDCodificacionEspecifica[<?php echo $datos['IDCodificacionEspecifica']?>]" value="<?php echo $datos['IDCodificacionEspecifica']?>">
 								<?php 
 									$pend = $datos['IDCodificacionEspecifica'];
-									$Ingr = $_POST['Ingreso'];
-									$TIngreso += $Ingr[$pend];
-									$TPares += $Ingr[$pend];
+									$cantidadIngresada = (int)( isset($Ingr[$pend]) ? $Ingr[$pend] : 0 );
+									$TIngreso += $cantidadIngresada;
+									$TPares += $cantidadIngresada;
 								?>
-							<input type="text" size="5" name="Ingreso[<?php echo $datos['IDCodificacionEspecifica']?>]"  value="<?php echo $Ingr[$pend] ?>">
+							<input type="text" size="5" name="Ingreso[<?php echo $datos['IDCodificacionEspecifica']?>]"  value="<?php echo isset($Ingr[$pend]) ? $Ingr[$pend] : '' ?>">
 							<input type="hidden" name="IDCodificacionEspecifica[<?php echo $datos['IDCodificacionEspecifica']?>]" value="<?php echo $datos['IDCodificacionEspecifica']?>">
 							<input type="hidden" name="Referencia[<?php echo $datos['IDCodificacionEspecifica']?>]" value="<?php echo $LaReferencia?>">
 								<input type="hidden" name="Tallas[<?php echo $datos['IDCodificacionEspecifica']?>]" value="<?php echo $datos['IDTalla']?>">
