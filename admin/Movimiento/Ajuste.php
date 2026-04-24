@@ -33,6 +33,8 @@ if($permisos[0] >= 2 || $ID_Usuario == "229")
 				db_query( $sql_cabecera );
 
 				foreach( $Ingreso as $Codificacion => $Cantidad )
+				{
+					$Cantidad = is_numeric($Cantidad) ? (int)$Cantidad : 0;
 					if( $Cantidad <> 0 )
 					{
 						$Numero = $Referencia[$Codificacion];
@@ -51,7 +53,8 @@ if($permisos[0] >= 2 || $ID_Usuario == "229")
 											'$Codificacion','$Cantidad','$Nombre_Usuario',NOW(), '$Numero', '$Talla' )";
 						db_query( $sql_detalle );
 
-					}//end for
+					}
+				}//end for
 
 				//db_query( "tales" );
 
