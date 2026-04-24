@@ -3605,6 +3605,45 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 
+			var observacionPromoCremare = "CREMARE gratis por compras mayores a $350.000";
+			var totalFacturaSinCremare = 0;
+			var itemsCremare = new Array();
+
+			for (i = 1; i <= document.frm.ITEM.value; i++) {
+				if (document.frm.elements["Precio" + i].value != '' && document.frm.elements["Cantidad" + i].value != '') {
+					var referenciaPromoCremare = document.frm.elements["Numero" + i].value;
+					var descuentoPromoCremare = document.frm.elements["DescuentoLin" + i].value != '' ? getNum(document.frm.elements["DescuentoLin" + i].value) : 0;
+					var totalItemPromoCremare = getNum(document.frm.elements["Precio" + i].value) * getNum(document.frm.elements["Cantidad" + i].value) * (1 - (descuentoPromoCremare / 100));
+
+					if (referenciaPromoCremare.substr(0, 7) == "CREMARE") {
+						itemsCremare.push(i);
+					} else {
+						totalFacturaSinCremare = totalFacturaSinCremare + totalItemPromoCremare;
+					}
+				}
+			}
+
+			var aplicaPromoCremare = totalFacturaSinCremare > 350000 && itemsCremare.length > 0;
+			itemsCremare.forEach((itemCremare) => {
+				if (aplicaPromoCremare) {
+					document.frm.elements["DescuentoLin" + itemCremare].value = 100;
+					document.frm.elements["DescuentoLin" + itemCremare].style.background = "#CCFFCC";
+				} else {
+					document.frm.elements["DescuentoLin" + itemCremare].value = document.frm.elements["PrimerDescuentoLin" + itemCremare].value;
+					document.frm.elements["DescuentoLin" + itemCremare].style.background = document.frm.elements["PrimerDescuentoLin" + itemCremare].value != "" ? "#CCFFCC" : "#FFFFFF";
+				}
+			});
+
+			if (aplicaPromoCremare) {
+				if (document.frm.elements["ObservacionDescuento"].value == "" || document.frm.elements["ObservacionDescuento"].value == observacionPromoCremare) {
+					document.frm.elements["ObservacionDescuento"].value = observacionPromoCremare;
+				}
+			} else {
+				if (document.frm.elements["ObservacionDescuento"].value == observacionPromoCremare) {
+					document.frm.elements["ObservacionDescuento"].value = "";
+				}
+			}
+
 
 
 		}
