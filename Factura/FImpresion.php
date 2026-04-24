@@ -139,8 +139,7 @@ ob_start();
 	</div>
 
 	<div class="center texto" style="margin-top: 10px;">
-		ESTE DOCUMENTO NO ES FACTURA DE VENTA,<br>
-		NOTA CREDITO O DOCUMENTO EQUIVALENTE
+		ESTE DOCUMENTO NO ES FACTURA DE VENTA, NOTA CREDITO O DOCUMENTO EQUIVALENTE
 	</div>
 
 	<div class="center bold" style="margin-top: 10px;">
