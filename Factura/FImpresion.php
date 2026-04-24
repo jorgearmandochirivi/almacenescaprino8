@@ -50,15 +50,15 @@ ob_start();
 
 		body {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-			font-size: 8pt;
-			margin: 0 0 0 5mm;
-			padding: 0 2mm 1mm 1mm;
-			width: 63mm;
+			font-size: 9pt;
+			margin: 0 0 0 5.5mm;
+			padding: 0 1.5mm 1mm 0;
+			width: 55mm;
 			box-sizing: border-box;
 		}
 
 		.texto {
-			font-size: 7pt;
+			font-size: 8pt;
 			line-height: 1.15;
 		}
 
@@ -94,7 +94,7 @@ ob_start();
 
 		.item-table td {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-			font-size: 6.8pt;
+			font-size: 7.8pt;
 			font-weight: normal;
 			line-height: 1.1;
 			padding: 1px 0.5mm;
@@ -103,7 +103,7 @@ ob_start();
 		}
 
 		.footer-text {
-			font-size: 7pt;
+			font-size: 8pt;
 			line-height: 1.15;
 			text-align: justify;
 			text-align-last: left;
@@ -111,7 +111,7 @@ ob_start();
 		}
 
 		.item-table .head td {
-			font-size: 6pt;
+			font-size: 7pt;
 			font-weight: bold;
 			line-height: 1.1;
 			padding-bottom: 2px;
@@ -204,7 +204,7 @@ ob_start();
 		?>
 	</table>
 
-	<table class="border-top" style="font-size: 7.5pt; line-height: 1.2;">
+	<table class="border-top" style="font-size: 8.5pt; line-height: 1.2;">
 		<?php if ($r->ValorBono != "0"): ?>
 			<tr>
 				<td>Total Factura</td>
@@ -219,14 +219,14 @@ ob_start();
 			<td>IVA</td>
 			<td class="right num"><?= number_format($r->ValorIVA) ?></td>
 		</tr>
-		<tr class="bold" style="font-size: 8pt;">
+		<tr class="bold" style="font-size: 9pt;">
 			<td>Valor Neto</td>
 			<td class="right num"><?= number_format($r->ValorTotal) ?></td>
 		</tr>
 	</table>
 
-	<div class="bold" style="font-size: 8pt; margin-top: 5px;">FORMA DE PAGO</div>
-	<table style="font-size: 7.5pt; line-height: 1.2;">
+	<div class="bold" style="font-size: 9pt; margin-top: 5px;">FORMA DE PAGO</div>
+	<table style="font-size: 8.5pt; line-height: 1.2;">
 		<?php
 		$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 		$query_formapago = db_query($sql_formapago);
