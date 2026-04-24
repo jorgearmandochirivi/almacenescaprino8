@@ -19,6 +19,7 @@ if($permisos[0] >= 2 || $ID_Usuario == "229")
 
 			case "insert" :
 				$frm= vars_LOG($_POST);
+				$msg = 0;
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
@@ -61,7 +62,7 @@ if($permisos[0] >= 2 || $ID_Usuario == "229")
 				db_query("COMMIT");
 
 				if( $msg <> 1 )
-					echo "<script>location.href='?mod=verentrada';</script>";
+					echo "<script>location.href='?mod=Ajuste';</script>";
 			break;
 			case "edit":
 				print_form($id,"update","Actualizar $TitleMod","Realizar Movimiento");
