@@ -58,7 +58,7 @@ html {
 
 body {
 	font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-	font-size: 7pt;
+	font-size: 9pt;
 	margin: 0 0 0 6mm;
 	padding: 0 2mm 1mm 1mm;
 	width: 62mm;
@@ -70,8 +70,8 @@ table {
 	width: 100%;
 	border-collapse: collapse;
 	font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-	font-size: 6.2pt;
-	line-height: 1.1;
+	font-size: 8pt;
+	line-height: 1.15;
 	box-sizing: border-box;
 	table-layout: fixed;
 }
@@ -86,8 +86,8 @@ td {
 .rowform,
 .row2 {
 	font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-	font-size: 6.2pt;
-	line-height: 1.1;
+	font-size: 8pt;
+	line-height: 1.15;
 	color: #000;
 }
 
@@ -96,16 +96,16 @@ font {
 }
 
 font[style*="font-size:10px"] {
-	font-size: 6.2pt !important;
+	font-size: 8pt !important;
 }
 
 font[style*="font-size:12px"] {
-	font-size: 7pt !important;
+	font-size: 9pt !important;
 }
 
 font[style*="font-size:14px"],
 font[style*="font-size:16px"] {
-	font-size: 8pt !important;
+	font-size: 10pt !important;
 }
 
 .bordertable {

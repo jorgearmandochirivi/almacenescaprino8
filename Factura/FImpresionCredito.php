@@ -50,7 +50,7 @@ ob_start();
 	<title>Imprimir Recibo</title>
 	<style>
 		@page {
-			size: 74mm 130mm;
+			size: 74mm 165mm;
 			margin: 0;
 		}
 
@@ -61,7 +61,7 @@ ob_start();
 
 		body {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, Arial, sans-serif;
-			font-size: 7pt;
+			font-size: 9pt;
 			margin: 0 0 0 6mm;
 			padding: 0 2mm 1mm 1mm;
 			width: 62mm;
@@ -204,6 +204,6 @@ fclose($fw);
 
 echo $html;
 
-PdfModern::generate($html, $filepdf, [74, 130]);
+PdfModern::generate($html, $filepdf, [74, 165]);
 echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
 ?>

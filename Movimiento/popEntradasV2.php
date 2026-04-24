@@ -24,19 +24,18 @@
 <style>
 <!--
 body{
-	font-size:11px;
+	font-size:13px;
 	margin:0;
-	font-family: "Arial Black";
+	font-family: Arial, Helvetica, sans-serif;
 }
 table{
-	font-size:12px;
-	font-family: "Arial Black";
+	font-size:13px;
+	font-family: Arial, Helvetica, sans-serif;
 }
-@page { 
+@page {
 
-	size 6cm 12cm; 
+	size 6cm 12cm;
 	margin-left: 0;
-	font-family: "Arial Black";
 	}
 
 </style>
