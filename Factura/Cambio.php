@@ -357,7 +357,7 @@
 						<meta charset="UTF-8">
 						<style>
 							@page {
-								size: 74mm 190mm;
+								size: 74mm 220mm;
 								margin: 0;
 							}
 
@@ -375,242 +375,183 @@
 								box-sizing: border-box;
 							}
 
-							.texto {
+							.center {
+								text-align: center;
+							}
+
+							.right {
+								text-align: right;
+							}
+
+							.bold {
+								font-weight: bold;
+							}
+
+							.section {
+								border-top: 1px dotted #000;
+								margin-top: 5px;
+								padding-top: 4px;
+							}
+
+							.kv {
+								width: 100%;
+								border-collapse: collapse;
+								table-layout: fixed;
+							}
+
+							.kv td {
+								padding: 1px 0;
+								vertical-align: top;
+								overflow-wrap: break-word;
+							}
+
+							.kv .label {
+								width: 34%;
+								font-weight: bold;
+							}
+
+							.kv .value {
+								width: 66%;
+							}
+
+							.item {
+								margin-top: 4px;
+								padding-bottom: 4px;
+								border-bottom: 1px dotted #000;
+							}
+
+							.item-title {
+								font-size: 8pt;
+								font-weight: bold;
+								margin-bottom: 2px;
+							}
+
+							.item-line {
 								font-size: 8pt;
 								line-height: 1.15;
-							}
-
-							table {
-								width: 100%;
-								border-collapse: collapse;
-								margin-bottom: 3px;
-								table-layout: fixed;
-							}
-
-							td {
-								white-space: normal;
 								overflow-wrap: break-word;
-								word-wrap: break-word;
-								padding: 1px 0.5mm;
-								vertical-align: top;
 							}
 
-							.cambio-ticket {
-								width: 100%;
-								margin: 0;
-							}
-
-							.cambio-ticket table {
-								width: 100%;
-								table-layout: fixed;
-								border-collapse: collapse;
+							.summary {
+								margin-top: 5px;
+								font-size: 9pt;
 							}
 						</style>
 					</head>
 					<body>
-
-
-
-
-				<table class="forumline cambio-ticket" width="100%" cellspacing="1" border="0" align="left">
-					<tr>
-						<td>
-						<table width=100% border=0 cellspacing=0 cellpadding=0 class=texto bgcolor="#ffffff">
-
+						<div class="center bold">CAMBIO No. <?= $r->IDCambio ?></div>
+						<table class="kv">
 							<tr>
-								<td colspan="2">
-
-									<div align="center">
-										<table width=100% border=0>
-											<tr>
-												<td colspan="4">
-													<table class=rowtable width="100%">
-														<tr>
-															<td class=col1>No. Regisro</td>
-															<td class=col2>
-																<?= $r->IDCambio ?></td>
-															<td class=col2><span class="col1">Factura del Cambio</span></td>
-															<td class=col2><?= $r->IDFacturaCambio ?></td>
-														</tr>
-														<tr>
-															<td class=col1>Punto de Venta</td>
-															<td class=col2>
-																<?php echo get_field("PuntoVenta", "Nombre", "IDPuntoVenta", $r->IDPuntoVenta); ?>
-
-															</td>
-															<td class=col2><span class="col1">Fecha</span></td>
-															<td class=col2><?= $r->FechaCambio ?></td>
-														</tr>
-														<tr>
-															<td class=col1>Observaciones</td>
-															<td class=col2 colspan="3"><?= $r->Observaciones ?></td>
-														</tr>
-														<tr>
-															<td class=col1>
-															</td>
-															<td class=col1></td>
-															<td class=col1></td>
-															<td class=col1></td>
-														</tr>
-														<tr>
-															<td class=col1>C&eacute;dula Cliente</td>
-															<td class=col2><?php echo get_field("Cliente", "Cedula", "IDCliente", $r->IDCliente); ?></td>
-															<td class=col1>Nombre Cliente</td>
-															<td class=col2><?php echo get_field("Cliente", "CONCAT(Nombre,' ',Apellido)", "IDCliente", $r->IDCliente); ?></td>
-														</tr>
-														<tr>
-															<td class=col1 nowrap>Telefono Cliente</td>
-															<td class=col2><?php echo get_field("Cliente", "Telefono", "IDCliente", $r->IDCliente); ?></td>
-															<td class=col1></td>
-															<td class=col1></td>
-														</tr>
-														<tr>
-															<td class=col1 nowrap><br>
-															</td>
-															<td class=col1></td>
-															<td class=col1></td>
-															<td class=col1></td>
-														</tr>
-														<tr>
-															<td class=col1>C&eacute;dula Empleado</td>
-															<td class=col2><?php echo get_field("Empleado", "Cedula", "IDEmpleado", $r->IDEmpleado); ?> </td>
-															<td class=col1>Nombre Empleado</td>
-															<td class=col2><?php echo get_field("Empleado", "Nombre", "IDEmpleado", $r->IDEmpleado) . " " . get_field("Empleado", "Apellidos", "IDEmpleado", $r->IDEmpleado); ?></td>
-														</tr>
-														<tr>
-															<td class=col1><br></td>
-															<td class=col1></td>
-															<td class=col1></td>
-															<td class=col1></td>
-														</tr>
-														<tr>
-															<td colspan="4">
-																	<table class="texto" width="100%" border="0" cellspacing="1" cellpadding="0" id=table1 align="center">
-																		<tr>
-																			<td align="center"><b>Referencia</b></td>
-																			<td align="center"><b>Talla</b></td>
-																			<td align="center"><b>Nombre</b></td>
-																			<td align="center"><b>Cant.</b></td>
-																		</tr>
-																	<?php
-																	do {
-																		$sql_referenciacambio = " SELECT R.*, T.Descripcion as Talla FROM CodificacionEspecifica C, PuntoVentaReferencia P, Referencia R, Talla T 
-																						WHERE C.IDCodificacionEspecifica = '$r_detalle->IDCodificacionEspecificaCambio' 
-																						AND C.IDPuntoVentaReferencia = P.IDPuntoVentaReferencia 
-																						AND P.IDReferencia = R.IDReferencia 
-																						AND C.IDTalla = T.IDTalla";
-																		$qry_referenciacambio = db_query($sql_referenciacambio);
-
-																		$r_referenciacambio = db_fetch_object($qry_referenciacambio);
-
-																	?>
-																		<tr>
-																			<td align="left" class="col1list">
-																				<?php echo $r_referenciacambio->Numero; ?>
-																			</td>
-																			<td align="left" class="col1list">
-																				<?php echo $r_referenciacambio->Talla; ?>
-																				</td>
-																				<td class="col1list" align="left"><?php echo $r_referenciacambio->Nombre; ?></td>
-																				<td class="col1list" align="center"><?php echo $r_detalle->Cantidad ?></td>
-																		</tr>
-																	<?php
-																	} while ($r_detalle = db_fetch_object($query_detalle));
-																	$sql_detalle = "SELECT * FROM DetalleCambio WHERE IDCambio = '$r->IDCambio' AND IDPuntoVenta = '$IDPuntoVenta'";
-																	$query_detalle = db_query($sql_detalle);
-																	$r_detalle = db_fetch_object($query_detalle);															?>
-																</table>
-															</td>
-														</tr>
-														<tr>
-															<td class=col1 nowrap></td>
-															<td class=col1>Excedente</td>
-															<td class=col2 colspan="2"><?php echo number_format($r->Excedente, 2) ?></td>
-														</tr>
-														<tr>
-															<td class=col1 nowrap></td>
-															<td class=col1>Factura Excedente</td>
-															<td class=col2 colspan="2"><?php echo $r->IDFactura ?>
-															</td>
-														</tr>
-														<tr>
-															<td class=col1 nowrap></td>
-															<td class=col2></td>
-															<td class=col1></td>
-															<td class=col2></td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td class=navpic colspan="4"><b>Detalle Cambio</b></td>
-											</tr>
-											<tr>
-												<td colspan="4">
-														<table class="texto" border="0" cellspacing="1" cellpadding="0" id=table1 width="100%">
-															<tr>
-																<td align="center"><b>Ref.</b></td>
-																<td align="center"><b>Talla</b></td>
-																<td align="center"><b>Nombre</b></td>
-																<td align="center"><b>Cant.</b></td>
-																<td align="center"><b>Valor U.</b></td>
-																<td align="center"><b>Total</b></td>
-														</tr>
-														<?php
-														do {
-															$sql_referencia = " SELECT R.*, T.Descripcion as Talla FROM CodificacionEspecifica C, PuntoVentaReferencia P, Referencia R, Talla T 
-																						WHERE C.IDCodificacionEspecifica = '$r_detalle->IDCodificacionEspecifica' 
-																						AND C.IDPuntoVentaReferencia = P.IDPuntoVentaReferencia 
-																						AND P.IDReferencia = R.IDReferencia 
-																						AND C.IDTalla = T.IDTalla";
-															$qry_referencia = db_query($sql_referencia);
-
-															$r_referencia = db_fetch_object($qry_referencia);
-															$class = repetition() ? "col1list" : "col2list";
-
-														?>
-																<tr>
-																<td align="left" class="<?= $class ?>"><?php echo $r_referencia->Numero ?></td>
-																<td align="left" class="<?= $class ?>"><?php echo $r_referencia->Talla ?></td>
-																<td align="left" class="<?= $class ?>"><?php echo $r_referencia->Nombre ?></td>
-																<td align="left" class="<?= $class ?>"><?php echo $r_detalle->Cantidad ?></td>
-																<td align="left" class="<?= $class ?>"><?php echo number_format($r_detalle->ValorU); ?></td>
-																<td align="left" class="<?= $class ?>"><?php echo number_format($r_detalle->ValorU * $r_detalle->Cantidad); ?></td>
-											</tr>
-										<?php
-														} while ($r_detalle = db_fetch_object($query_detalle));
-										?>
-										</table>
-								</td>
+								<td class="label">Factura cambio</td>
+								<td class="value"><?= $r->IDFacturaCambio ?></td>
 							</tr>
 							<tr>
-								<td class=col1></td>
-								<td class=col1 width="250"></td>
-								<td class=navpic colspan="2">
-									<div align="left"><b>RESUMEN REGISTRO...</b></div>
-								</td>
+								<td class="label">Punto venta</td>
+								<td class="value"><?php echo get_field("PuntoVenta", "Nombre", "IDPuntoVenta", $r->IDPuntoVenta); ?></td>
 							</tr>
 							<tr>
-								<td class=col1></td>
-								<td class=col1 width="250"></td>
-								<td class=col2>
-									<div align="right">
-										Total</div>
-								</td>
-								<td class=col2><?= number_format($r->Excedente) ?></td>
+								<td class="label">Fecha</td>
+								<td class="value"><?= $r->FechaCambio ?></td>
 							</tr>
-
+							<tr>
+								<td class="label">Observaciones</td>
+								<td class="value"><?= $r->Observaciones ?></td>
+							</tr>
 						</table>
-					</td>
-				</tr>
-			</table>
-			</td>
-			</tr>
 
-			</table>
+						<div class="section bold">CLIENTE</div>
+						<table class="kv">
+							<tr>
+								<td class="label">Cedula</td>
+								<td class="value"><?php echo get_field("Cliente", "Cedula", "IDCliente", $r->IDCliente); ?></td>
+							</tr>
+							<tr>
+								<td class="label">Nombre</td>
+								<td class="value"><?php echo get_field("Cliente", "CONCAT(Nombre,' ',Apellido)", "IDCliente", $r->IDCliente); ?></td>
+							</tr>
+							<tr>
+								<td class="label">Telefono</td>
+								<td class="value"><?php echo get_field("Cliente", "Telefono", "IDCliente", $r->IDCliente); ?></td>
+							</tr>
+						</table>
 
-				</body>
-				</html>
+						<div class="section bold">EMPLEADO</div>
+						<table class="kv">
+							<tr>
+								<td class="label">Cedula</td>
+								<td class="value"><?php echo get_field("Empleado", "Cedula", "IDEmpleado", $r->IDEmpleado); ?></td>
+							</tr>
+							<tr>
+								<td class="label">Nombre</td>
+								<td class="value"><?php echo get_field("Empleado", "Nombre", "IDEmpleado", $r->IDEmpleado) . " " . get_field("Empleado", "Apellidos", "IDEmpleado", $r->IDEmpleado); ?></td>
+							</tr>
+						</table>
+
+						<div class="section bold">ITEMS QUE ENTRAN</div>
+						<?php
+						$query_detalle_entrada = db_query("Select * From DetalleProductoCambio Where IDCambio = '$id' AND IDPuntoVenta = '$IDPuntoVenta' ");
+						if (db_num_rows($query_detalle_entrada) <= 0):
+							$query_detalle_entrada = db_query("SELECT * FROM DetalleCambio WHERE IDCambio = '$r->IDCambio' AND IDPuntoVenta = '$IDPuntoVenta' LIMIT 1 ");
+						endif;
+
+						while ($r_detalle_entrada = db_fetch_object($query_detalle_entrada)) {
+							$sql_referenciacambio = " SELECT R.*, T.Descripcion as Talla FROM CodificacionEspecifica C, PuntoVentaReferencia P, Referencia R, Talla T
+														WHERE C.IDCodificacionEspecifica = '$r_detalle_entrada->IDCodificacionEspecificaCambio'
+														AND C.IDPuntoVentaReferencia = P.IDPuntoVentaReferencia
+														AND P.IDReferencia = R.IDReferencia
+														AND C.IDTalla = T.IDTalla";
+							$qry_referenciacambio = db_query($sql_referenciacambio);
+							$r_referenciacambio = db_fetch_object($qry_referenciacambio);
+							$valor_entrada = ($r_detalle_entrada->ValorU == 0) ? get_field("Precio", "ValorVenta", "IDPrecio", $r_referenciacambio->IDPrecio) : $r_detalle_entrada->ValorU;
+						?>
+							<div class="item">
+								<div class="item-title"><?php echo $r_referenciacambio->Numero; ?> - <?php echo $r_referenciacambio->Nombre; ?></div>
+								<div class="item-line">Talla: <?php echo $r_referenciacambio->Talla; ?> | Cantidad: <?php echo $r_detalle_entrada->Cantidad; ?></div>
+								<div class="item-line">Valor U.: <?php echo number_format($valor_entrada, 2); ?></div>
+							</div>
+						<?php
+						}
+						?>
+
+						<div class="section">
+							<table class="kv">
+								<tr>
+									<td class="label">Excedente</td>
+									<td class="value right"><?php echo number_format($r->Excedente, 2); ?></td>
+								</tr>
+								<tr>
+									<td class="label">Factura excedente</td>
+									<td class="value right"><?php echo $r->IDFactura; ?></td>
+								</tr>
+							</table>
+						</div>
+
+						<div class="section bold">ITEMS QUE SALEN</div>
+						<?php
+						$query_detalle_salida = db_query("SELECT * FROM DetalleCambio WHERE IDCambio = '$r->IDCambio' AND IDPuntoVenta = '$IDPuntoVenta'");
+						while ($r_detalle_salida = db_fetch_object($query_detalle_salida)) {
+							$sql_referencia = " SELECT R.*, T.Descripcion as Talla FROM CodificacionEspecifica C, PuntoVentaReferencia P, Referencia R, Talla T
+												WHERE C.IDCodificacionEspecifica = '$r_detalle_salida->IDCodificacionEspecifica'
+												AND C.IDPuntoVentaReferencia = P.IDPuntoVentaReferencia
+												AND P.IDReferencia = R.IDReferencia
+												AND C.IDTalla = T.IDTalla";
+							$qry_referencia = db_query($sql_referencia);
+							$r_referencia = db_fetch_object($qry_referencia);
+							$total_salida = $r_detalle_salida->ValorU * $r_detalle_salida->Cantidad;
+						?>
+							<div class="item">
+								<div class="item-title"><?php echo $r_referencia->Numero; ?> - <?php echo $r_referencia->Nombre; ?></div>
+								<div class="item-line">Talla: <?php echo $r_referencia->Talla; ?> | Cantidad: <?php echo $r_detalle_salida->Cantidad; ?></div>
+								<div class="item-line">Valor U.: <?php echo number_format($r_detalle_salida->ValorU, 2); ?></div>
+								<div class="item-line">Total: <?php echo number_format($total_salida, 2); ?></div>
+							</div>
+						<?php
+						}
+						?>
+
+						<div class="summary right bold">TOTAL: <?= number_format($r->Excedente, 2) ?></div>
+					</body>
+					</html>
 
 				<?php
 				$page = ob_get_contents();
@@ -619,7 +560,7 @@
 				fclose($fw);
 
 					ob_end_clean();
-					PdfModern::generate($page, $filepdf, [74, 190]);
+					PdfModern::generate($page, $filepdf, [74, 220]);
 					$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Cambio/" . $namePDF : "/admin/filesotros/Cambio/" . $name;
 					?>
 			</div>
