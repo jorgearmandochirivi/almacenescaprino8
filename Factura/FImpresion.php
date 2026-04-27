@@ -50,7 +50,7 @@ ob_start();
 
 		body {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-			font-size: 9pt;
+			font-size: 8pt;
 			margin: 0 0 0 6mm;
 			padding: 0 2mm 1mm 1mm;
 			width: 62mm;
@@ -58,14 +58,14 @@ ob_start();
 		}
 
 		.texto {
-			font-size: 8pt;
-			line-height: 1.15;
+			font-size: 7pt;
+			line-height: 1.08;
 		}
 
 		table {
 			width: 100%;
 			border-collapse: collapse;
-			margin-bottom: 3px;
+			margin-bottom: 2px;
 			table-layout: fixed;
 		}
 
@@ -88,33 +88,33 @@ ob_start();
 
 		.border-top {
 			border-top: 1px dotted #000;
-			margin-top: 3px;
-			padding-top: 3px;
+			margin-top: 2px;
+			padding-top: 2px;
 		}
 
 		.item-table td {
 			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
-			font-size: 7.8pt;
+			font-size: 6.8pt;
 			font-weight: normal;
-			line-height: 1.1;
-			padding: 1px 0.5mm;
+			line-height: 1.05;
+			padding: 0.5px 0.35mm;
 			text-align: center;
 			vertical-align: top;
 		}
 
 		.footer-text {
-			font-size: 8pt;
-			line-height: 1.15;
+			font-size: 6.8pt;
+			line-height: 1.05;
 			text-align: justify;
 			text-align-last: left;
 			page-break-inside: auto;
 		}
 
 		.item-table .head td {
-			font-size: 7pt;
+			font-size: 6.4pt;
 			font-weight: bold;
-			line-height: 1.1;
-			padding-bottom: 2px;
+			line-height: 1.05;
+			padding-bottom: 1px;
 		}
 
 		.ref-cell {
@@ -138,11 +138,11 @@ ob_start();
 		Régimen común
 	</div>
 
-	<div class="center texto" style="margin-top: 10px;">
+	<div class="center texto" style="margin-top: 6px;">
 		ESTE DOCUMENTO NO ES FACTURA DE VENTA, NOTA CREDITO O DOCUMENTO EQUIVALENTE
 	</div>
 
-	<div class="center bold" style="margin-top: 10px;">
+	<div class="center bold" style="margin-top: 6px;">
 		APRECIADO CLIENTE:<br>
 		LA FACTURA O NOTA CREDITO ELECTRONICA<br>
 		SERA ENVIADA POR CORREO
@@ -162,7 +162,7 @@ ob_start();
 		<strong>Documento:</strong> <?php echo get_field("Cliente", "Cedula", "IDCliente", $r->IDCliente); ?>
 	</div>
 
-	<table class="item-table border-top" style="margin-top: 4px;">
+	<table class="item-table border-top" style="margin-top: 2px;">
 		<tr class="head">
 			<td style="width: 19%;">Ref</td>
 			<td class="num" style="width: 16%;">Vr U</td>
@@ -203,7 +203,7 @@ ob_start();
 		?>
 	</table>
 
-	<table class="border-top" style="font-size: 8.5pt; line-height: 1.2;">
+	<table class="border-top" style="font-size: 7.4pt; line-height: 1.08;">
 		<?php if ($r->ValorBono != "0"): ?>
 			<tr>
 				<td>Total Factura</td>
@@ -218,14 +218,14 @@ ob_start();
 			<td>IVA</td>
 			<td class="right num"><?= number_format($r->ValorIVA) ?></td>
 		</tr>
-		<tr class="bold" style="font-size: 9pt;">
+		<tr class="bold" style="font-size: 8pt;">
 			<td>Valor Neto</td>
 			<td class="right num"><?= number_format($r->ValorTotal) ?></td>
 		</tr>
 	</table>
 
-	<div class="bold" style="font-size: 9pt; margin-top: 5px;">FORMA DE PAGO</div>
-	<table style="font-size: 8.5pt; line-height: 1.2;">
+	<div class="bold" style="font-size: 8pt; margin-top: 3px;">FORMA DE PAGO</div>
+	<table style="font-size: 7.4pt; line-height: 1.08;">
 		<?php
 		$sql_formapago = "SELECT * FROM FormaPagoFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta'";
 		$query_formapago = db_query($sql_formapago);
@@ -240,7 +240,7 @@ ob_start();
 		} ?>
 	</table>
 
-	<div class="footer-text border-top" style="margin-top: 10px;">
+	<div class="footer-text border-top" style="margin-top: 5px;">
 		<?php
 		$sql_mensje = "SELECT Mensaje FROM Mensaje WHERE Publicar = 'S' AND Segunda = 'N' AND FechaInicio <= CURDATE() AND FechaFin >= CURDATE() ORDER BY RAND() LIMIT 1";
 		$qry_mensaje = db_query($sql_mensje);
