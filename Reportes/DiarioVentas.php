@@ -371,7 +371,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						  $ventadia=$pago+$saldo;
 						  //echo "FORMU " . "ventadia=" . $pago."+".$saldo."<br>";
 							if((int)$ventadia<=0){
-									$ventadia = $ElValorUnitarioExc;
+									if($valor['DescuentoPar']=="100"):
+										$ventadia = 0;
+									else:
+										$ventadia = $ElValorUnitarioExc;
+									endif;
 							}
 
 						  echo number_format( $ventadia ,2);
@@ -389,8 +393,12 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 				          <td class="<?=$class?>" align="right" nowrap>
 	                          <?php
 							  							if((int)$pago<=0){
+															if($valor['DescuentoPar']=="100"):
+																$pago = 0;
+															else:
 																$pago = $ElValorUnitarioExc;
 																//$Pago += $ElValorUnitarioExc;
+															endif;
 														}
 														else{
 															//$pago -= (int)$descuento_bono;
@@ -431,7 +439,11 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
 
 											if((int)$valorbruto<=0){
+												if($valor['DescuentoPar']=="100"):
+													$valorbruto = 0;
+												else:
 													$valorbruto = $ElValorUnitarioExc;
+												endif;	
 											}
 
 											
