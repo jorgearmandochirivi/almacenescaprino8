@@ -699,7 +699,8 @@
 											<td class=navpic nowrap bgcolor=#DBEAF5> ValorTotal&nbsp; </td>
 										</tr>
 
-										<? while ($r = db_fetch_object($result)) {
+										<? $array_id_factura_ant = array();
+										while ($r = db_fetch_object($result)) {
 											$class = repetition() ? "col1list" : "col2list";
 											$i++;
 											//$contador=0;
