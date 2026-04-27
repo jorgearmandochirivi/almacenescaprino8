@@ -1,4 +1,7 @@
 <body> <?php
+			if (!class_exists('PdfModern')) {
+				require_once(__DIR__ . "/../admin/lib/PdfModern.php");
+			}
 
 		$TitleMod = "Cambios";
 
@@ -347,32 +350,64 @@
 			$file = "$filedir$name";
 			$filepdf = "$filedir$namePDF";
 				ob_start();
-				?>
-				<style>
-					body {
-						margin: 0;
-						padding: 2mm 3mm;
-						width: 76mm;
-						box-sizing: border-box;
-						font-size: 8px;
-					}
-					.cambio-ticket {
-						width: 70mm;
-						margin: 0;
-					}
-					.cambio-ticket table {
-						width: 100%;
-						table-layout: fixed;
-						border-collapse: collapse;
-						font-size: 8px;
-					}
-					.cambio-ticket td {
-						white-space: normal;
-						overflow-wrap: break-word;
-						padding: 1px;
-						vertical-align: top;
-					}
-				</style>
+					?>
+					<!DOCTYPE html>
+					<html>
+					<head>
+						<meta charset="UTF-8">
+						<style>
+							@page {
+								size: 74mm 190mm;
+								margin: 0;
+							}
+
+							html {
+								margin: 0;
+								padding: 0;
+							}
+
+							body {
+								font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+								font-size: 9pt;
+								margin: 0 0 0 6mm;
+								padding: 0 2mm 1mm 1mm;
+								width: 62mm;
+								box-sizing: border-box;
+							}
+
+							.texto {
+								font-size: 8pt;
+								line-height: 1.15;
+							}
+
+							table {
+								width: 100%;
+								border-collapse: collapse;
+								margin-bottom: 3px;
+								table-layout: fixed;
+							}
+
+							td {
+								white-space: normal;
+								overflow-wrap: break-word;
+								word-wrap: break-word;
+								padding: 1px 0.5mm;
+								vertical-align: top;
+							}
+
+							.cambio-ticket {
+								width: 100%;
+								margin: 0;
+							}
+
+							.cambio-ticket table {
+								width: 100%;
+								table-layout: fixed;
+								border-collapse: collapse;
+							}
+						</style>
+					</head>
+					<body>
 
 
 
@@ -534,7 +569,7 @@
 															$class = repetition() ? "col1list" : "col2list";
 
 														?>
-															<trGarantia>
+																<tr>
 																<td align="left" class="<?= $class ?>"><?php echo $r_referencia->Numero ?></td>
 																<td align="left" class="<?= $class ?>"><?php echo $r_referencia->Talla ?></td>
 																<td align="left" class="<?= $class ?>"><?php echo $r_referencia->Nombre ?></td>
@@ -574,18 +609,19 @@
 
 			</table>
 
-			<?php
-			$page = ob_get_contents();
-			$fw = fopen($file, "w");
-			fputs($fw, $page, strlen($page));
-			fclose($fw);
+				</body>
+				</html>
 
-				ob_end_clean();
-				//echo $page;
-				//passthru("htmldoc --format pdf --size 'Universal' --textfont Arial --title 'Acta' --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7 --webpage $file -f $filedir/$namePDF");
-				passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
-				$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Cambio/" . $namePDF : "/admin/filesotros/Cambio/" . $name;
-				?>
+				<?php
+				$page = ob_get_contents();
+				$fw = fopen($file, "w");
+				fputs($fw, $page, strlen($page));
+				fclose($fw);
+
+					ob_end_clean();
+					PdfModern::generate($page, $filepdf, [74, 190]);
+					$ruta_impresion = file_exists($filepdf) ? "/admin/filesotros/Cambio/" . $namePDF : "/admin/filesotros/Cambio/" . $name;
+					?>
 			</div>
 
 			<div align="center">
