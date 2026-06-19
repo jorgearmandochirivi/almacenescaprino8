@@ -195,7 +195,7 @@ var Check = new Array('IDMotivoPqr','IDFuentePqr','NumeroDocumento','IDTipoPqr',
 	
 <table cellpadding=1 cellspacing=0 class=bordertable align=center >
 	<tr>
-		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->$Key ?></td>
+		<td class=maintitle bgcolor=#9daac6>&nbsp;<?php echo $TitleMod ?> <?php echo $r->Numero ?></td>
 	</tr>
 	<tr>
 	<td>
