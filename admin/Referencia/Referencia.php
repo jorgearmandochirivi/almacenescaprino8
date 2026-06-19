@@ -116,8 +116,14 @@ if($permisos[0] >= 2)
 				$ProfundidadMarroq=$frm["ProfundidadMarroq"];
 				$MaterialesMarroq=$frm["MaterialesMarroq"];
 
+				if(!empty($MaterialesMarroq))
+					$DatosDecrip.="Materiales:".$MaterialesMarroq."\r";				
 				if(!empty($Capellada))
-					$DatosDecrip.="Capellada:".$Capellada."\r";				
+					$DatosDecrip.="Capellada:".$Capellada."\r";	
+				if(!empty($Forro))
+					$DatosDecrip.="Forro:".$Forro."\r";	
+				if(!empty($ForroMarroq))
+					$DatosDecrip.="Forro Marroquinería:  ".$ForroMarroq."\r";
 				if(!empty($Plantilla))
 					$DatosDecrip.="Plantilla:".$Plantilla."\r";
 				if(!empty($Suela))
@@ -135,11 +141,7 @@ if($permisos[0] >= 2)
 					$DatosDecrip.="Ancho:".$AnchoMarroq."\r";
 				if(!empty($ProfundidadMarroq))
 					$DatosDecrip.="Profundidad:".$ProfundidadMarroq."\r";
-				if(!empty($MaterialesMarroq))
-					$DatosDecrip.="Materiales:".$MaterialesMarroq."\r";
-				if(!empty($Forro))
-					$DatosDecrip.="Forro:".$Forro."\r";	
-
+				
 
 				if(!empty($Pais))
 					$DatosDecrip.="\rPais origen:".$Pais."\r";
