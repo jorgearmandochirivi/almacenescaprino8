@@ -449,6 +449,10 @@ $TotalVentaDia += $ventadia;
 
 														}
 
+														if($valor['DescuentoPar']>99){
+															$pago=0;
+														}
+
 																$PagoVerdadero+=$pago;
 
 															echo number_format( $pago ,2);
@@ -478,6 +482,10 @@ $TotalVentaDia += $ventadia;
 
 											if((int)$valorbruto<=0){
 													$valorbruto = $ElValorUnitarioExc;
+											}
+
+											if($valor['DescuentoPar']>99){
+												$valorbruto=0;
 											}
 
 											echo number_format( $valorbruto,2 );
