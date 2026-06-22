@@ -3623,7 +3623,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 				}
 			}
 
-			var aplicaPromoCremare = totalFacturaSinCremare > 350000 && itemsCremare.length > 0;
+			var aplicaPromoCremare = totalFacturaSinCremare > 300000 && itemsCremare.length > 0;
 			itemsCremare.forEach((itemCremare) => {
 				if (aplicaPromoCremare) {
 					document.frm.elements["DescuentoLin" + itemCremare].value = 99.99;
