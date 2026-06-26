@@ -3605,7 +3605,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 
-			var observacionPromoCremare = "CREMARE gratis por compras mayores a $350.000";
+			var observacionPromoCremare = "Pulsera gratis por compras mayores a $350.000";
 			var totalFacturaSinCremare = 0;
 			var itemsCremare = new Array();
 
@@ -3615,7 +3615,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 					var descuentoPromoCremare = document.frm.elements["DescuentoLin" + i].value != '' ? getNum(document.frm.elements["DescuentoLin" + i].value) : 0;
 					var totalItemPromoCremare = getNum(document.frm.elements["Precio" + i].value) * getNum(document.frm.elements["Cantidad" + i].value) * (1 - (descuentoPromoCremare / 100));
 
-					if (referenciaPromoCremare.substr(0, 7) == "CREMARE") {
+					if (referenciaPromoCremare.substr(0, 6) == "CREPUL") {
 						itemsCremare.push(i);
 					} else {
 						totalFacturaSinCremare = totalFacturaSinCremare + totalItemPromoCremare;
@@ -3623,10 +3623,10 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 				}
 			}
 
-			var aplicaPromoCremare = totalFacturaSinCremare > 350000 && itemsCremare.length > 0;
+			var aplicaPromoCremare = totalFacturaSinCremare > 300000 && itemsCremare.length > 0;
 			itemsCremare.forEach((itemCremare) => {
 				if (aplicaPromoCremare) {
-					document.frm.elements["DescuentoLin" + itemCremare].value = 99.9;
+					document.frm.elements["DescuentoLin" + itemCremare].value = 99.99;
 					document.frm.elements["DescuentoLin" + itemCremare].style.background = "#CCFFCC";
 				} else {
 					document.frm.elements["DescuentoLin" + itemCremare].value = document.frm.elements["PrimerDescuentoLin" + itemCremare].value;
