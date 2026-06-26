@@ -433,8 +433,8 @@ if ($_GET["tab"]=="verificacion" && !empty($id)){
                                 </td>
 	                            <?php
 								if (count($array_talla)>0):
-									$cantidad_recibida_item ="";
-									$cantidad_devuelto_item ="";
+									$cantidad_recibida_item = 0;
+									$cantidad_devuelto_item = 0;
 									unset($array_remision);
 									unset($array_factura);
 									unset($array_fecha_recibida);
@@ -488,8 +488,8 @@ if ($_GET["tab"]=="verificacion" && !empty($id)){
 											endif;
 
 
-											$cantidad_recibida_item += $row_detalle_pedido_ref['CantidadRecibido'];
-											$cantidad_devuelto_item += $row_detalle_pedido_ref['CantidadDevuelto'];
+											$cantidad_recibida_item += (int)$row_detalle_pedido_ref['CantidadRecibido'];
+											$cantidad_devuelto_item += (int)$row_detalle_pedido_ref['CantidadDevuelto'];
 										endif;
 
 									$refe=$array_detalle_orden[$i]["ReferenciaCaprino"].$array_detalle_orden[$i]["CodigoColor"];
