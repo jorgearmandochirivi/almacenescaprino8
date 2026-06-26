@@ -19,7 +19,7 @@
 							<a href="?mod=VerMovimiento">Movimientos</a> |
 							<a href="?mod=Ajuste">Ajustes de Inventario</a> |
 							<a href="?mod=Entrada">Entradas</a> |
-							<a href="?mod=TarjetaPunto">Tarjetas Puntos de Venta</a> |
+							<a href="?mod=TarjetaPunto">Tarjetas Puntos de Venta.</a> |
 						</td>
 						<td class=nav>
 							<form action="?mod=Movimiento" method="Post" name="formularioOrden">
