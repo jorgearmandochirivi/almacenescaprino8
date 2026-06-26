@@ -41,11 +41,12 @@ else{
 //$sql_fact="SELECT F.*, E.Nombre, E.Apellidos FROM Factura F, Empleado E WHERE F.IDEmpleado=E.IDEmpleado and FacturaElectronica = '' and F.IDFactura='814636' and F.IDPuntoVenta = 24 and F.Estado <> 'ANULADA' ORDER BY F.IDFactura DESC  LIMIT 30";
 
 $r_fac=db_query($sql_fact);
+$facturaElectronica = new FacturaElectronica();
 while($row_fact=db_fetch_array($r_fac)){
 	$NumeroResolucion=$array_resolucion_pto_vta[$row_fact["IDPuntoVenta"]]["Resolucion"];
 	$CodigoAlmacen=$array_resolucion_pto_vta[$row_fact["IDPuntoVenta"]]["Codigo"];
 	$IDCiudad=$array_resolucion_pto_vta[$row_fact["IDPuntoVenta"]]["IDCiudad"];
-	FacturaElectronica::factura($row_fact,$NumeroResolucion,$CodigoAlmacen,$IVA,$IDCiudad,$DiaSinIva);
+	$facturaElectronica->factura($row_fact,$NumeroResolucion,$CodigoAlmacen,$IVA,$IDCiudad,$DiaSinIva);
 }
 
 ?>
