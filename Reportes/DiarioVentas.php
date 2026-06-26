@@ -378,6 +378,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 									endif;
 							}
 
+							if($valor['DescuentoPar']>99){
+								$ventadia=0;
+							}
+
 						  echo number_format( $ventadia ,2);
 						  $TotalVentaDia += $ventadia;
 						  ?></td>
@@ -408,6 +412,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 														if($IVA==0){
 															//$pago=$pago/($IVANormal+1);
 															
+														}
+
+														if($valor['DescuentoPar']>99){
+															$pago=0;
 														}
 
 																$PagoVerdadero+=$pago;
