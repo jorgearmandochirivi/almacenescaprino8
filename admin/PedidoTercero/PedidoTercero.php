@@ -257,7 +257,7 @@ if($permisos[0] >= 2)
     	        	alert("Pedido Generado con exito");
 	            </script>
                 <?php
-				print_form($_GET[id],"update","Actualizar $TitleMod","Realizar Cambios");
+				print_form($_GET["id"],"update","Actualizar $TitleMod","Realizar Cambios");
 			break ;
 
 			case "del":
@@ -265,13 +265,13 @@ if($permisos[0] >= 2)
 			break ;
 
 			case "delfoto" :
-				$sql_actualiza=db_query("Update ".$Table." Set " . $_GET[campo] . "='' Where ".$Key." = '".$_GET[id]."'");
-				print_form($_GET[id],"update","Actualizar $TitleMod","Realizar Cambios");
+				$sql_actualiza=db_query("Update ".$Table." Set " . $_GET["campo"] . "='' Where ".$Key." = '".$_GET["id"]."'");
+				print_form($_GET["id"],"update","Actualizar $TitleMod","Realizar Cambios");
 			break;
 
 			case "delitem" :
-				$sql_borra_item = "Delete From DetallePedidoTercero Where 	IDDetallePedidoTercero = '".$_GET[iditem]."'";
-				$sql_borra_detalle_item = "Delete From DetallePedidoTerceroReferencia Where IDDetallePedidoTercero = '".$_GET[iditem]."'";
+				$sql_borra_item = "Delete From DetallePedidoTercero Where 	IDDetallePedidoTercero = '".$_GET["iditem"]."'";
+				$sql_borra_detalle_item = "Delete From DetallePedidoTerceroReferencia Where IDDetallePedidoTercero = '".$_GET["iditem"]."'";
 				$sql_actualiza_item=db_query($sql_borra_item);
 				$sql_actualiza_itemdetalle=db_query($sql_borra_detalle_item);
 				?>
@@ -282,50 +282,50 @@ if($permisos[0] >= 2)
     	        	alert("Item borrado con exito");
 	            </script>
                 <?php
-				print_form($_GET[id],"update","Actualizar $TitleMod","Realizar Cambios");
+				print_form($_GET["id"],"update","Actualizar $TitleMod","Realizar Cambios");
 			break;
 
 			case "activarpedido" :
-				$update_estado = "Update PedidoTercero Set IDEstadoPedidoTercero = 1 Where IDPedidoTercero  = '".$_GET[id]."'";
+				$update_estado = "Update PedidoTercero Set IDEstadoPedidoTercero = 1 Where IDPedidoTercero  = '".$_GET["id"]."'";
 				$sql_actualiza_estado=db_query($update_estado);
 				?>
 <script>
     	        	alert("Estado actualizado con exito");
 	            </script>
                 <?php
-				print_form($_GET[id],"update","Actualizar $TitleMod","Realizar Cambios");
+				print_form($_GET["id"],"update","Actualizar $TitleMod","Realizar Cambios");
 			break;
 
 			case "delete" :
-				$HTTP_GET_VARS[action]="";
+				$HTTP_GET_VARS["action"]="";
 				delete($ID);
 			break;
 			case "list" :
-			if(!empty($_GET[NumeroFactura])):
-					$condiciones .=" and DPTR.Numerofactura LIKE '%".$_GET[NumeroFactura]."%'";
+			if(!empty($_GET["NumeroFactura"])):
+					$condiciones .=" and DPTR.Numerofactura LIKE '%".$_GET["NumeroFactura"]."%'";
 				endif;
 
-				if(!empty($_GET[NumeroOrdenCompra]))
-					$condiciones.=" and PT.NumeroOrdenCompra LIKE '%".$_GET[NumeroOrdenCompra]."%'";
+				if(!empty($_GET["NumeroOrdenCompra"]))
+					$condiciones.=" and PT.NumeroOrdenCompra LIKE '%".$_GET["NumeroOrdenCompra"]."%'";
 
-				if(!empty($_GET[IDProveedor]))
-					$condiciones.=" and PT.IDProveedor = '".$_GET[IDProveedor]."'";
+				if(!empty($_GET["IDProveedor"]))
+					$condiciones.=" and PT.IDProveedor = '".$_GET["IDProveedor"]."'";
 
-				if(!empty($_GET[IDEstadoPedidoTercero]))
-					$condiciones.=" and PT.IDEstadoPedidoTercero = '".$_GET[IDEstadoPedidoTercero]."'";
+				if(!empty($_GET["IDEstadoPedidoTercero"]))
+					$condiciones.=" and PT.IDEstadoPedidoTercero = '".$_GET["IDEstadoPedidoTercero"]."'";
 
-				if(!empty($_GET[ReferenciaCaprino]))
-					$condiciones.=" and DPT.ReferenciaCaprino  like '%".$_GET[ReferenciaCaprino]."%'";
+				if(!empty($_GET["ReferenciaCaprino"]))
+					$condiciones.=" and DPT.ReferenciaCaprino  like '%".$_GET["ReferenciaCaprino"]."%'";
 
-				if(!empty($_GET[FechaDesde])  && !empty($_GET[FechaHasta]))
-					$condiciones.=" and PT.FechaPedido >= '".$_GET[FechaDesde]."' and PT.FechaPedido <= '".$_GET[FechaHasta]."'";
+				if(!empty($_GET["FechaDesde"])  && !empty($_GET["FechaHasta"]))
+					$condiciones.=" and PT.FechaPedido >= '".$_GET["FechaDesde"]."' and PT.FechaPedido <= '".$_GET["FechaHasta"]."'";
 
-				if(!empty($_GET[Tipologia]))
-					$condiciones.=" and DPT.Producto  like '%".$_GET[Tipologia]."%'";
+				if(!empty($_GET["Tipologia"]))
+					$condiciones.=" and DPT.Producto  like '%".$_GET["Tipologia"]."%'";
 
 
-				if (!empty($_GET[limit1]) && !empty($_GET[limit2]) )
-					$condiciones.=" and G.FechaTrCr between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+				if (!empty($_GET["limit1"]) && !empty($_GET["limit2"]) )
+					$condiciones.=" and G.FechaTrCr between '".$_GET["limit1"]."' and '".$_GET["limit2"]."'";
 
 				$sql = "Select PT.*
 					  From PedidoTercero PT, DetallePedidoTercero DPT, DetallePedidoTerceroReferencia DPTR
