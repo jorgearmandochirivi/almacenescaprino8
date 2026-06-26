@@ -83,14 +83,14 @@ class FacturaElectronica
 
             $array_customer_information["Identification"] = $NumeroDoc;
             $array_customer_information["DV"] = $DV;
-            $array_customer_information["RegistrationName"] = utf8_encode($datos_cliente["Nombre"] . " " .$datos_cliente["Apellido"]);
+            $array_customer_information["RegistrationName"] = $datos_cliente["Nombre"] . " " .$datos_cliente["Apellido"];
             $array_customer_information["CountryCode"] = "CO";
             $array_customer_information["CountryName"] = "Colombia";
             $array_customer_information["SubdivisionCode"] = $SubdivisionCode;
             $array_customer_information["SubdivisionName"] = $SubdivisionName;
             $array_customer_information["CityCode"] = $CityCode;
             $array_customer_information["CityName"] = $CityName;
-            $array_customer_information["AddressLine"] =utf8_encode($datos_cliente["Direccion"]); 
+            $array_customer_information["AddressLine"] = $datos_cliente["Direccion"]; 
 
              if(!empty($datos_cliente["Celular"]))
               $Telefono=trim($datos_cliente["Celular"]);
