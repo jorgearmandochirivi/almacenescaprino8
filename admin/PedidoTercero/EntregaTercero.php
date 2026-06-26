@@ -470,7 +470,13 @@ if ($_GET["tab"]=="verificacion" && !empty($id)){
 											$array_talla_devuelta[$row_detalle_pedido_ref['IDTalla']]=$row_detalle_pedido_ref['IDTalla'];
 										endif;
 
-										if ($row_detalle_pedido_ref['CantidadRecibida']>0):
+										$valor_pedir_item = 0;
+										if (is_numeric($row_detalle_pedido_ref["Cantidad"]))
+											$valor_pedir_item = (int)$row_detalle_pedido_ref["Cantidad"];
+										elseif (isset($maximo_item[$id_talla]) || isset($existencias_item[$id_talla]))
+											$valor_pedir_item = (int)$maximo_item[$id_talla] - (int)$existencias_item[$id_talla];
+
+										if ($row_detalle_pedido_ref['CantidadRecibido']>0):
 											$array_fecha_recibida[substr($row_detalle_pedido_ref['FechaRecibido'],0,10)]=substr($row_detalle_pedido_ref['FechaRecibido'],0,10);
 
 											if (!empty($row_detalle_pedido_ref['Observacion'])):
@@ -484,35 +490,28 @@ if ($_GET["tab"]=="verificacion" && !empty($id)){
 
 											$cantidad_recibida_item += $row_detalle_pedido_ref['CantidadRecibido'];
 											$cantidad_devuelto_item += $row_detalle_pedido_ref['CantidadDevuelto'];
-
-											$refe=$array_detalle_orden[$i]["ReferenciaCaprino"].$array_detalle_orden[$i]["CodigoColor"];
-										
-											if (is_numeric($row_detalle_pedido_ref["Cantidad"]))
-												$valor_pedir_item = (int)$row_detalle_pedido_ref["Cantidad"];
-											else
-												$valor_pedir_item = (int)$maximo_item[$id_talla] - (int)$existencias_item[$id_talla];
-
-											$suma_item_pedir+=$valor_pedir_item;
-											$suma_item_pedir_talla[$datos_talla['IDTalla']] +=  $valor_pedir_item;
-
-											$super_total_talla[$datos_talla['IDTalla']][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]+=$valor_pedir_item;
-
-											?>
-											<td class=row1 align=center>
-
-												<?php if($r->IDEstadoPedidoTercero == 1): ?>
-															<input type="text" name="Pedido[<?php echo $datos_talla['IDTalla']; ?>][<?php echo $datos_punto_venta['IDPuntoVenta'] ?>][<?php echo $array_detalle_orden[$i]["IDDetallePedidoTercero"] ?>]"  size="5" value="<?php if (is_numeric($valor_pedir_item)) echo (int)$valor_pedir_item; ?>" style="text-align:center">
-															<?php
-													  else:
-															if (is_numeric($valor_pedir_item) && $valor_pedir_item!="0") echo (int)$valor_pedir_item;
-													endif; ?>
-
-
-
-											</td>
-
-										<?php 
 										endif;
+
+									$refe=$array_detalle_orden[$i]["ReferenciaCaprino"].$array_detalle_orden[$i]["CodigoColor"];
+
+									$suma_item_pedir+=$valor_pedir_item;
+									$suma_item_pedir_talla[$datos_talla['IDTalla']] +=  $valor_pedir_item;
+
+									$super_total_talla[$datos_talla['IDTalla']][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]+=$valor_pedir_item;
+
+									?>
+									<td class=row1 align=center>
+
+										<?php if($r->IDEstadoPedidoTercero == 1): ?>
+												<input type="text" name="Pedido[<?php echo $datos_talla['IDTalla']; ?>][<?php echo $datos_punto_venta['IDPuntoVenta'] ?>][<?php echo $array_detalle_orden[$i]["IDDetallePedidoTercero"] ?>]"  size="5" value="<?php if (is_numeric($valor_pedir_item)) echo (int)$valor_pedir_item; ?>" style="text-align:center">
+												<?php
+										  else:
+												if (is_numeric($valor_pedir_item) && $valor_pedir_item!="0") echo (int)$valor_pedir_item;
+											endif; ?>
+
+									</td>
+
+								<?php
 								   endforeach;
 								endif;
 								?>
