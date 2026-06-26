@@ -348,33 +348,33 @@ if($permisos[0] >= 2)
 
 
 				$sql_actualiza_remonta="Update Garantia
-										Set ValorRemonta = '".$frm[ValorRemonta]."',
-											NumeroFacturaRemonta = '".$frm[NumeroFacturaRemonta]."',
-											NumeroNotaCredito = '".$frm[NumeroNotaCredito]."',
-											FechaNotaCreditoContabilidad = '".$frm[FechaNotaCreditoContabilidad]."',
-											NotaCreditoAplicada = '".$frm[NotaCreditoAplicada]."',
-											TipoContrafuerte = '".$frm[TipoContrafuerte]."',
-											TipoCuero = '".$frm[TipoCuero]."',
-											TipoPlantilla = '".$frm[TipoPlantilla]."',
-											TipoCremallera = '".$frm[TipoCremallera]."',
-											TipoDespegue = '".$frm[TipoDespegue]."',
-											TipoCambrion = '".$frm[TipoCambrion]."',
-											TipoTacon = '".$frm[TipoTacon]."',
-											TipoCerco = '".$frm[TipoCerco]."',
-											TipoCardado = '".$frm[TipoCardado]."',
-											TipoSuela = '".$frm[TipoSuela]."',
-											TipoGuarnicion = '".$frm[TipoGuarnicion]."',
-											TipoPuntera = '".$frm[TipoPuntera]."',
-											TipoHerraje = '".$frm[TipoHerraje]."',
-											TipoOtro = '".$frm[TipoOtro]."',
-											FechaSalidaAlmacen ='".$frm[FechaSalidaAlmacen]."',
-											FechaEntradaAlmacen ='".$frm[FechaEntradaAlmacen]."',
-											NumeroFacturaRestauracion ='".$frm[NumeroFacturaRestauracion]."',
-											FechaEntregaCliente ='".$frm[FechaEntregaCliente]."',
+										Set ValorRemonta = '".$frm["ValorRemonta"]."',
+											NumeroFacturaRemonta = '".$frm["NumeroFacturaRemonta"]."',
+											NumeroNotaCredito = '".$frm["NumeroNotaCredito"]."',
+											FechaNotaCreditoContabilidad = '".$frm["FechaNotaCreditoContabilidad"]."',
+											NotaCreditoAplicada = '".$frm["NotaCreditoAplicada"]."',
+											TipoContrafuerte = '".$frm["TipoContrafuerte"]."',
+											TipoCuero = '".$frm["TipoCuero"]."',
+											TipoPlantilla = '".$frm["TipoPlantilla"]."',
+											TipoCremallera = '".$frm["TipoCremallera"]."',
+											TipoDespegue = '".$frm["TipoDespegue"]."',
+											TipoCambrion = '".$frm["TipoCambrion"]."',
+											TipoTacon = '".$frm["TipoTacon"]."',
+											TipoCerco = '".$frm["TipoCerco"]."',
+											TipoCardado = '".$frm["TipoCardado"]."',
+											TipoSuela = '".$frm["TipoSuela"]."',
+											TipoGuarnicion = '".$frm["TipoGuarnicion"]."',
+											TipoPuntera = '".$frm["TipoPuntera"]."',
+											TipoHerraje = '".$frm["TipoHerraje"]."',
+											TipoOtro = '".$frm["TipoOtro"]."',
+											FechaSalidaAlmacen ='".$frm["FechaSalidaAlmacen"]."',
+											FechaEntradaAlmacen ='".$frm["FechaEntradaAlmacen"]."',
+											NumeroFacturaRestauracion ='".$frm["NumeroFacturaRestauracion"]."',
+											FechaEntregaCliente ='".$frm["FechaEntregaCliente"]."',
 											Referencia = '".$frm["NombreReferencia"]."'
-											Where IDGarantia = '".$frm[ID]."' ";
+											Where IDGarantia = '".$frm["ID"]."' ";
 				db_query($sql_actualiza_remonta);
-				print_form($frm[ID],"update","Actualizar $TitleMod","Realizar Cambios");
+				print_form($frm["ID"],"update","Actualizar $TitleMod","Realizar Cambios");
 				//update($frm);
 			break;
 			case "del":
@@ -385,22 +385,22 @@ if($permisos[0] >= 2)
 				$frm= vars_LOG($HTTP_POST_VARS);
 
 
-				if (!empty($frm[Descripcion])  || !empty($txt_cambio_fecha) ){
+				if (!empty($frm["Descripcion"])  || !empty($txt_cambio_fecha) ){
 
-					if(!empty($frm[MetodoEnvio])):
-						$frm[Descripcion] .= " Metodo Envio: " . $frm[MetodoEnvio];
+					if(!empty($frm["MetodoEnvio"])):
+						$frm["Descripcion"] .= " Metodo Envio: " . $frm["MetodoEnvio"];
 					endif;
 
-					if(!empty($frm[EmpleadoEnvio])):
-						$frm[Descripcion] .= " Empleado Envio: " . $frm[EmpleadoEnvio];
+					if(!empty($frm["EmpleadoEnvio"])):
+						$frm["Descripcion"] .= " Empleado Envio: " . $frm["EmpleadoEnvio"];
 					endif;
 
 
-					$sql_inserta_comentario="INSERT INTO ComentarioGarantia (IDGarantia, IDEmpleado, IDEstadoGarantia, IDTipoFinalizacionGarantia, Descripcion, FechaComentario, UsuarioTrCr, FechaTrCr) Values ('".$frm[IDGarantia]."','".$ID_Usuario."','".$frm[IDEstadoGarantia]."', '".$frm[IDTipoFinalizacionGarantia]."','".$frm[Descripcion] . "\r" .$txt_cambio_fecha ."',NOW(),'".$ID_Usuario."',NOW())";
+					$sql_inserta_comentario="INSERT INTO ComentarioGarantia (IDGarantia, IDEmpleado, IDEstadoGarantia, IDTipoFinalizacionGarantia, Descripcion, FechaComentario, UsuarioTrCr, FechaTrCr) Values ('".$frm["IDGarantia"]."','".$ID_Usuario."','".$frm["IDEstadoGarantia"]."', '".$frm["IDTipoFinalizacionGarantia"]."','".$frm["Descripcion"] . "\r" .$txt_cambio_fecha ."',NOW(),'".$ID_Usuario."',NOW())";
 					$qry_inserta_comentario=db_query($sql_inserta_comentario);
 
 					//actualizo el estado de la garantia
-					$sql_actualiza_estado="UPDATE Garantia SET IDEstadoGarantia = '".$frm[IDEstadoGarantia]."', IDTipoFinalizacionGarantia = '".$frm[IDTipoFinalizacionGarantia]."', RequiereDevolucion = '".$frm[RequiereDevolucion]."', RequiereNotaCredito = '".$frm[RequiereNotaCredito]."', NumeroNotaCredito = '".$frm[NumeroNotaCredito]."'  Where IDGarantia = '".$frm[IDGarantia]."'";
+					$sql_actualiza_estado="UPDATE Garantia SET IDEstadoGarantia = '".$frm["IDEstadoGarantia"]."', IDTipoFinalizacionGarantia = '".$frm["IDTipoFinalizacionGarantia"]."', RequiereDevolucion = '".$frm["RequiereDevolucion"]."', RequiereNotaCredito = '".$frm["RequiereNotaCredito"]."', NumeroNotaCredito = '".$frm["NumeroNotaCredito"]."'  Where IDGarantia = '".$frm["IDGarantia"]."'";
 					$qry_actualiza_estado=db_query($sql_actualiza_estado);
 
 					// Envio notificacion
@@ -414,7 +414,7 @@ if($permisos[0] >= 2)
 
 					//Si se requiere nota credito envio correo de notificacion
 					if ($frm["IDTipoFinalizacionGarantia"]==1 || $frm["IDTipoFinalizacionGarantia"]==2 || $frm["IDTipoFinalizacionGarantia"]==5):
-						envia_nota_credito ($frm[IDGarantia]);
+						envia_nota_credito ($frm["IDGarantia"]);
 					endif;
 
 					window_alert("Comentario agregado con exito ");
