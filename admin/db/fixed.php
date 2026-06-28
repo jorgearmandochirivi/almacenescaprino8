@@ -6,6 +6,19 @@ $TableJoin = "CodificacionEspecifica";
 $Key = "IDReferencia";
 $MOD = "Referencia";
 $m="db";
+$FechaFormaPago = isset($_POST['FechaFormaPago']) ? $_POST['FechaFormaPago'] : "";
+$FechaFactura = isset($_POST['FechaFactura']) ? $_POST['FechaFactura'] : "";
+$PostIDPuntoVenta = isset($_POST['IDPuntoVenta']) ? $_POST['IDPuntoVenta'] : "";
+$PostNumeroFactura = isset($_POST['NumeroFactura']) ? $_POST['NumeroFactura'] : "";
+$PostIDFormaPago = isset($_POST['IDFormaPago']) ? $_POST['IDFormaPago'] : "";
+$PostValor = isset($_POST['Valor']) ? $_POST['Valor'] : "";
+$PostFecha = isset($_POST['Fecha']) ? $_POST['Fecha'] : "";
+$PostNumeroFacturaElectronica = isset($_POST['NumeroFacturaElectronica']) ? $_POST['NumeroFacturaElectronica'] : "";
+$PostIDCambio = isset($_POST['IDCambio']) ? $_POST['IDCambio'] : "";
+$PostIDFacturaBono = isset($_POST['IDFacturaBono']) ? $_POST['IDFacturaBono'] : "";
+$GetIDFormaPagoFactura = isset($_GET['IDFormaPagoFactura']) ? $_GET['IDFormaPagoFactura'] : "";
+$GetIDFactura = isset($_GET['IDFactura']) ? $_GET['IDFactura'] : "";
+$GetIDPuntoVenta = isset($_GET['IDPuntoVenta']) ? $_GET['IDPuntoVenta'] : "";
 
 		switch (nvl($action)) {
 			case "formapago" :
@@ -15,22 +28,22 @@ $m="db";
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
-				$sql_factura = " select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]'
-									AND NumeroFactura = '$_POST[NumeroFactura]'  and DATE_FORMAT(FechaFactura,'%Y-%m-%d') =  '".$FechaFormaPago."' ";
+				$sql_factura = " select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$PostIDPuntoVenta'
+									AND NumeroFactura = '$PostNumeroFactura'  and DATE_FORMAT(FechaFactura,'%Y-%m-%d') =  '".$FechaFormaPago."' ";
 				$qry_factura = db_query( $sql_factura );
 				
 				$r_factura = db_fetch_object( $qry_factura );
 
 				if( $r_factura->IDFactura > 0 )
 				{
-					$sql_formapago = " select * FROM PuntoVentaBanco WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFormaPago = '$_POST[IDFormaPago]'  ";
+					$sql_formapago = " select * FROM PuntoVentaBanco WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFormaPago = '$PostIDFormaPago'  ";
 					$qry_formapago = db_query( $sql_formapago );
 					if( db_num_rows( $qry_formapago ) > 0 )
 					{
 						$r_formapago = db_fetch_object( $qry_formapago );
 						$IDFormaPagoFactura = get_maxID( "FormaPagoFactura","IDFormaPagoFactura" );
 						$sql_insert = "INSERT INTO FormaPagoFactura ( IDFormaPagoFactura, IDFormaPago, IDFactura, IDPuntoVenta, Valor, Comision  )
-										VALUES ( '$IDFormaPagoFactura','$_POST[IDFormaPago]','$r_factura->IDFactura','$_POST[IDPuntoVenta]','$_POST[Valor]',
+										VALUES ( '$IDFormaPagoFactura','$PostIDFormaPago','$r_factura->IDFactura','$PostIDPuntoVenta','$PostValor',
 										'$r_formapago->Comision' ) ";
 						$qry_insert = db_query( $sql_insert );
 						echo " FACTURA ACTUALIZADA CORRECTAMENTE ";
@@ -51,7 +64,7 @@ $m="db";
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
-				echo $sql_update = "UPDATE Factura SET FechaFactura = '$_POST[Fecha]' WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND NumeroFactura = '$_POST[NumeroFactura]' and FechaFactura >= '2022-11-15 00:00:00' LIMIT 1";
+				echo $sql_update = "UPDATE Factura SET FechaFactura = '$PostFecha' WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND NumeroFactura = '$PostNumeroFactura' and FechaFactura >= '2022-11-15 00:00:00' LIMIT 1";
 				db_query( $sql_update );
 				echo " FACTURA ACTUALIZADA CORRECTAMENTE ";
 
@@ -68,15 +81,15 @@ $m="db";
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
-				$sql_factura = " select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]'
-									AND NumeroFactura = '$_POST[NumeroFactura]' and DATE_FORMAT(FechaFactura,'%Y-%m-%d') =  '".$FechaFormaPago."' ";
+				$sql_factura = " select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$PostIDPuntoVenta'
+									AND NumeroFactura = '$PostNumeroFactura' and DATE_FORMAT(FechaFactura,'%Y-%m-%d') =  '".$FechaFormaPago."' ";
 				$qry_factura = db_query( $sql_factura );
 				$r_factura = db_fetch_object( $qry_factura );
 
 
 				db_query("COMMIT");
 
-				VerificaFormas($r_factura->IDFactura,$_POST[IDPuntoVenta]);
+				VerificaFormas($r_factura->IDFactura,$PostIDPuntoVenta);
 			break;
 
 
@@ -85,14 +98,14 @@ $m="db";
 				db_query("BEGIN");
 
 
-				$sql_factura = "select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND NumeroFactura = '$_POST[NumeroFactura]' and DATE_FORMAT(FechaFactura,'%Y-%m-%d') =  '".$FechaFactura."'";
+				$sql_factura = "select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND NumeroFactura = '$PostNumeroFactura' and DATE_FORMAT(FechaFactura,'%Y-%m-%d') =  '".$FechaFactura."'";
 				$qry_factura = db_query( $sql_factura );
 				$r_factura = db_fetch_object( $qry_factura );
 
 
 
 
-				$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r_factura->IDFactura' AND IDPuntoVenta = '$_POST[IDPuntoVenta]'";
+				$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r_factura->IDFactura' AND IDPuntoVenta = '$PostIDPuntoVenta'";
 				$qry_detalle = db_query(  $sql_detalle );
 				while( $r_detalle = db_fetch_object( $qry_detalle ) )
 				{
@@ -110,7 +123,7 @@ $m="db";
 				}//end while
 
 
-				$sql_forma = "DELETE FROM FormaPagoFactura WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura'";
+				$sql_forma = "DELETE FROM FormaPagoFactura WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFactura = '$r_factura->IDFactura'";
 				$qry_forma = db_query( $sql_forma );
 
 				//$sql_bdetalle = "DELETE FROM DetalleFactura WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura'";
@@ -118,51 +131,51 @@ $m="db";
 
 
 				// cambiar el detalle de la factura por la referencia anulada
-				$sql_pto_vta_ref = db_query("Select * From PuntoVentaReferencia Where IDReferencia = '4759' and IDPuntoVenta = '".$_POST[IDPuntoVenta]."'");
+				$sql_pto_vta_ref = db_query("Select * From PuntoVentaReferencia Where IDReferencia = '4759' and IDPuntoVenta = '".$PostIDPuntoVenta."'");
 				$row_pto_vta_ref = db_fetch_array($sql_pto_vta_ref);
-				$sql_codif_esp = db_query("Select * From CodificacionEspecifica Where IDPuntoVentaReferencia = '".$row_pto_vta_ref[IDPuntoVentaReferencia]."'");
+				$sql_codif_esp = db_query("Select * From CodificacionEspecifica Where IDPuntoVentaReferencia = '".$row_pto_vta_ref['IDPuntoVentaReferencia']."'");
 				$row_codif_esp = db_fetch_array($sql_codif_esp);
 
 
-				$sql_bdetalle_anulada = "UPDATE DetalleFactura SET IDCodificacionEspecifica = '".$row_codif_esp[IDCodificacionEspecifica]."', ValorU = 0, PrecioU = 0, Cantidad = 0, DescuentoRef= 0,ReteICA = 0, ReteIVA = 0, DescuentoPar = 0, CodigoTarjeta = ''  WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura'";
+				$sql_bdetalle_anulada = "UPDATE DetalleFactura SET IDCodificacionEspecifica = '".$row_codif_esp['IDCodificacionEspecifica']."', ValorU = 0, PrecioU = 0, Cantidad = 0, DescuentoRef= 0,ReteICA = 0, ReteIVA = 0, DescuentoPar = 0, CodigoTarjeta = ''  WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFactura = '$r_factura->IDFactura'";
 				$qry_bdetalle_anulada = db_query( $sql_bdetalle_anulada );
 
 
-				$sql_bvendedor = "DELETE FROM VentasEmpleado WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura'";
+				$sql_bvendedor = "DELETE FROM VentasEmpleado WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFactura = '$r_factura->IDFactura'";
 				$qry_bvendedor = db_query( $sql_bvendedor );
 
 				//$sql_bfactura = "DELETE FROM Factura WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura'";
 				//$qry_bfactura = db_query( $sql_bfactura );
 
-				$sql_bfactura_anular = "UPDATE Factura Set  Estado = 'ANULADA', ValorTotal = 0, SobranteBono=0, ValorIVASinBono=0, ValorIVA = 0  WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura'";
+				$sql_bfactura_anular = "UPDATE Factura Set  Estado = 'ANULADA', ValorTotal = 0, SobranteBono=0, ValorIVASinBono=0, ValorIVA = 0  WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFactura = '$r_factura->IDFactura'";
 				$qry_bfactura_anular = db_query( $sql_bfactura_anular );
 
 				//Si la Factura tiene credito borro las cuotas pendientes solamente
-				$sql_bcuotas = "DELETE FROM CreditoCuota WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura' and Consecutivo = 0 and IDPuntoVentaPago = 0";
+				$sql_bcuotas = "DELETE FROM CreditoCuota WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFactura = '$r_factura->IDFactura' and Consecutivo = 0 and IDPuntoVentaPago = 0";
 				$qry_bcuotas = db_query( $sql_bcuotas );
 
 
-				$sql_bpuntos = "DELETE FROM PuntosClienteFidelizacion WHERE (IDPuntoVenta = '$_POST[IDPuntoVenta]' OR IDPuntoVenta = '0' ) AND IDFactura = '$r_factura->IDFactura'";
+				$sql_bpuntos = "DELETE FROM PuntosClienteFidelizacion WHERE (IDPuntoVenta = '$PostIDPuntoVenta' OR IDPuntoVenta = '0' ) AND IDFactura = '$r_factura->IDFactura'";
 				$qry_bpuntos = db_query( $sql_bpuntos );
 
 				//Consulto los bonos que se generaron con la factura para habilitar los puntos anteriores
-				$sql_bono_generado="Select * From BonoFidelizacion Where IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFacturaPadre = '$r_factura->IDFactura'";
+				$sql_bono_generado="Select * From BonoFidelizacion Where IDPuntoVenta = '$PostIDPuntoVenta' AND IDFacturaPadre = '$r_factura->IDFactura'";
 				$qry_bono=db_query($sql_bono_generado);
 				while($row_bono=db_fetch_array($qry_bono)){
-					$sql_log_puntos=db_query("Select * From LogPuntosFidelizacion Where IDBonoFidelizacion = '".$row_bono[IDBonoFidelizacion]."'");
+					$sql_log_puntos=db_query("Select * From LogPuntosFidelizacion Where IDBonoFidelizacion = '".$row_bono['IDBonoFidelizacion']."'");
 					while($row_log_punto=db_fetch_array($sql_log_puntos)){
 						//libero nuevamente los puntos utilizados para utilizarlos en futuras compras
-						$sql_actualiza_puntos="Update PuntosClienteFidelizacion Set Redimido = 'N', PuntosRedimidos = '' Where IDPuntosClienteFidelizacion = '".$row_log_punto[IDPuntosClienteFidelizacion]."'";
+						$sql_actualiza_puntos="Update PuntosClienteFidelizacion Set Redimido = 'N', PuntosRedimidos = '' Where IDPuntosClienteFidelizacion = '".$row_log_punto['IDPuntosClienteFidelizacion']."'";
 						db_query($sql_actualiza_puntos);
 					}
 				}
 
 				//$sql_bono_fif = "UPDATE BonoFidelizacion SET ESTADO = 'C' WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFacturaPadre = '$r_factura->IDFactura'";
-				$sql_bono_fif = "UPDATE BonoFidelizacion SET ESTADO = 'C', IDFactura = '', IDPuntoVentaRedimido = '0', IDClienteRedimioBono = '', FechaRedimido = ''  WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFacturaPadre = '$r_factura->IDFactura'";
+				$sql_bono_fif = "UPDATE BonoFidelizacion SET ESTADO = 'C', IDFactura = '', IDPuntoVentaRedimido = '0', IDClienteRedimioBono = '', FechaRedimido = ''  WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFacturaPadre = '$r_factura->IDFactura'";
 				//mail("jorgechirivi@gmail.com","Borrado factura",$sql_bono_fif);
 				$qry_bono_fif = db_query( $sql_bono_fif );
 
-				$sql_excedente = "DELETE FROM ClienteSobrante WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura'";
+				$sql_excedente = "DELETE FROM ClienteSobrante WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFactura = '$r_factura->IDFactura'";
 				$qry_excedente = db_query( $sql_excedente );
 
 				echo " FACTURA BORRADA CORRECTAMENTE ";
@@ -178,14 +191,14 @@ $m="db";
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
-				$sql_factura = "select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND NumeroFactura = '$_POST[NumeroFactura]' and FechaFactura >='2019-11-15 00:00:00'";
+				$sql_factura = "select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND NumeroFactura = '$PostNumeroFactura' and FechaFactura >='2019-11-15 00:00:00'";
 				$qry_factura = db_query( $sql_factura );
 				$r_factura = db_fetch_object( $qry_factura );
 
-				$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r_factura->IDFactura' AND IDPuntoVenta = '$_POST[IDPuntoVenta]'";
+				$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r_factura->IDFactura' AND IDPuntoVenta = '$PostIDPuntoVenta'";
 				$qry_detalle = db_query(  $sql_detalle );
 
-				$sql_bfactura_anular = "UPDATE Factura Set  Estado = 'ELECTRONICA', NumeroFacturaElectronica= '".$_POST[NumeroFacturaElectronica]."' WHERE IDPuntoVenta = '$_POST[IDPuntoVenta]' AND IDFactura = '$r_factura->IDFactura'";
+				$sql_bfactura_anular = "UPDATE Factura Set  Estado = 'ELECTRONICA', NumeroFacturaElectronica= '".$PostNumeroFacturaElectronica."' WHERE IDPuntoVenta = '$PostIDPuntoVenta' AND IDFactura = '$r_factura->IDFactura'";
 				$qry_bfactura_anular = db_query( $sql_bfactura_anular );
 
 				echo " FACTURA CAMBIADA CORRECTAMENTE ";
@@ -202,7 +215,7 @@ $m="db";
 				db_query("BEGIN");
 
 
-				echo $sql_factura = "delete FROM FormaPagoFactura WHERE IDFormaPagoFactura = '$_GET[IDFormaPagoFactura]' AND IDFactura = '$_GET[IDFactura]' AND IDPuntoVenta = '$_GET[IDPuntoVenta]' ";
+				echo $sql_factura = "delete FROM FormaPagoFactura WHERE IDFormaPagoFactura = '$GetIDFormaPagoFactura' AND IDFactura = '$GetIDFactura' AND IDPuntoVenta = '$GetIDPuntoVenta' ";
 				$qry_factura = db_query( $sql_factura );
 
 
@@ -220,26 +233,26 @@ $m="db";
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
-				$sql_detalle = "SELECT * fROM DetalleCambio WHERE IDCambio = '$_POST[IDCambio]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' ";
+				$sql_detalle = "SELECT * fROM DetalleCambio WHERE IDCambio = '$PostIDCambio' AND IDPuntoVenta = '$PostIDPuntoVenta' ";
 				$qry_detalle = db_query( $sql_detalle );
 				$temp = 0;
 				while( $r_detalle = db_fetch_array( $qry_detalle ) )
 				{
-					$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias - $r_detalle[Cantidad] WHERE IDCodificacionEspecifica = '$r_detalle[IDCodificacionEspecificaCambio]'";
+					$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias - {$r_detalle['Cantidad']} WHERE IDCodificacionEspecifica = '{$r_detalle['IDCodificacionEspecificaCambio']}'";
 					$qry_cod = db_query( $sql_cod );
 					if( $temp <> 1 )
 					{
-						$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias + $r_detalle[Cantidad] WHERE IDCodificacionEspecifica = '$r_detalle[IDCodificacionEspecifica]'";
+						$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias + {$r_detalle['Cantidad']} WHERE IDCodificacionEspecifica = '{$r_detalle['IDCodificacionEspecifica']}'";
 						$qry_cod = db_query( $sql_cod );
 					}//end if
 					$temp = 1;
 				}//end while
 
-				$sql_detalle = "DELETE FROM DetalleCambio WHERE IDCambio = '$_POST[IDCambio]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' ";
+				$sql_detalle = "DELETE FROM DetalleCambio WHERE IDCambio = '$PostIDCambio' AND IDPuntoVenta = '$PostIDPuntoVenta' ";
 				$qry_detalle= db_query( $sql_detalle );
 
 
-				$sql_factura = "DELETE FROM Cambio WHERE IDCambio = '$_POST[IDCambio]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' ";
+				$sql_factura = "DELETE FROM Cambio WHERE IDCambio = '$PostIDCambio' AND IDPuntoVenta = '$PostIDPuntoVenta' ";
 				$qry_factura = db_query( $sql_factura );
 
 
@@ -261,20 +274,20 @@ $m="db";
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
-				$sql_detalle = "SELECT * fROM DetalleFacturaBono WHERE IDFacturaBono = '$_POST[IDFacturaBono]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' ";
+				$sql_detalle = "SELECT * fROM DetalleFacturaBono WHERE IDFacturaBono = '$PostIDFacturaBono' AND IDPuntoVenta = '$PostIDPuntoVenta' ";
 				$qry_detalle = db_query( $sql_detalle );
 				$temp = 0;
 				while( $r_detalle = db_fetch_array( $qry_detalle ) )
 				{
-						$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias + $r_detalle[Cantidad] WHERE IDCodificacionEspecifica = '$r_detalle[IDCodificacionEspecifica]'";
+						$sql_cod = "UPDATE CodificacionEspecifica SET Existencias = Existencias + {$r_detalle['Cantidad']} WHERE IDCodificacionEspecifica = '{$r_detalle['IDCodificacionEspecifica']}'";
 						$qry_cod = db_query( $sql_cod );
 				}//end while
 
-				$sql_detalle = "DELETE FROM DetalleFacturaBono WHERE IDFacturaBono = '$_POST[IDFacturaBono]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' ";
+				$sql_detalle = "DELETE FROM DetalleFacturaBono WHERE IDFacturaBono = '$PostIDFacturaBono' AND IDPuntoVenta = '$PostIDPuntoVenta' ";
 				$qry_detalle= db_query( $sql_detalle );
 
 
-				$sql_factura = "DELETE FROM FacturaBono WHERE IDFacturaBono = '$_POST[IDFacturaBono]' AND IDPuntoVenta = '$_POST[IDPuntoVenta]' ";
+				$sql_factura = "DELETE FROM FacturaBono WHERE IDFacturaBono = '$PostIDFacturaBono' AND IDPuntoVenta = '$PostIDPuntoVenta' ";
 				$qry_factura = db_query( $sql_factura );
 
 
@@ -302,7 +315,7 @@ $m="db";
 /*******************************************************************************************
 		funtcion Print_form
 *******************************************************************************************/
-function print_form($id="",$newmode,$title,$submit_caption) {
+function print_form($id = "", $newmode = "", $title = "", $submit_caption = "") {
 
 	GLOBAL $TitleMod,$Table,$MOD,$Key;
 	$qid = db_query(" SELECT * FROM $Table WHERE $Key = '$id' ");
@@ -321,7 +334,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 					<script>
 				var Check2 = new Array("Importar");
 				</script>
-					<form name="frmInv" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
+					<form name="frmInv" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Agregar Forma de Pago");?></td>
 						</tr>
@@ -381,7 +394,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							<td><input type=submit name=submit value="enviar" class=submit></td>
 						</tr>
 					</form>
-					<form name="frmPr" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmPr" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Cambiar Fecha");?></td>
 						</tr>
@@ -422,7 +435,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 							<td><input type=submit name=submit value="enviar" class=submit></td>
 						</tr>
 					</form>
-					<form name="frmfactura" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmfactura" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2><td colspan=2><?php echo Mensaje_Info("Eliminar Factura");?></td>
 						</tr>
 						<tr class=row2>
@@ -463,7 +476,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 					</form>
 
 					<!--
-					<form name="frmfacturaelectronica" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmfacturaelectronica" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2><td colspan=2><?php echo Mensaje_Info("Cambiar a Factura Electr&oacute;nica");?></td>
 						</tr>
 						<tr class=row2>
@@ -501,7 +514,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 					</form>
 					-->
 
-					<form name="frmVerificaFormas" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaFormas" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Verificar Formas de Pago");?></td>
 						</tr>
@@ -542,7 +555,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						</tr>
 					</form>
 
-					<form name="frmVerificaCambios" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaCambios" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Borrar Cambios / Recuerde Borrar Primero el excedente generado");?></td>
 						</tr>
@@ -571,7 +584,7 @@ function print_form($id="",$newmode,$title,$submit_caption) {
 						</tr>
 					</form>
 
-					<form name="frmVerificaFacturaBonos" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaFacturaBonos" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Borrar Redimir Bonos / Recuerde Borrar Primero el excedente generado");?></td>
 						</tr>
@@ -620,8 +633,9 @@ function VerificaFormas($IDFactura,$IDPuntoVenta) {
 
 $sql_formapago = " SELECT * FROM FormaPago ";
 $qry_formapago = db_query( $sql_formapago );
+$array_formapago = array();
 while( $r_formapago = db_fetch_array( $qry_formapago ) )
-	$array_formapago[$r_formapago[IDFormaPago]] = $r_formapago[Descripcion];
+	$array_formapago[$r_formapago['IDFormaPago']] = $r_formapago['Descripcion'];
 ?>
 <br>
 
@@ -635,7 +649,7 @@ while( $r_formapago = db_fetch_array( $qry_formapago ) )
 					<script>
 				var Check2 = new Array("Importar");
 				</script>
-					<form name="frmInv" action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
+					<form name="frmInv" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
 							<td colspan="4"><?php echo Mensaje_Info("Formas de Pago de la Factura");?></td>
 						</tr>
