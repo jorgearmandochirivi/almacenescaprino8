@@ -1930,7 +1930,14 @@ function print_form($id, $newmode, $title, $submit_caption)
 				<span id="notificacion_alianza"></span>
 				<?php
 				$valores_descuento = fid_notificaciones($r);
-				$item_notificaciones = implode("", $valores_descuento["Mensaje"]);
+				$mensajes_notificacion = array();
+				if (is_array($valores_descuento) && isset($valores_descuento["Mensaje"])) {
+					$mensajes_notificacion = $valores_descuento["Mensaje"];
+				}
+				if (!is_array($mensajes_notificacion)) {
+					$mensajes_notificacion = array($mensajes_notificacion);
+				}
+				$item_notificaciones = implode("", $mensajes_notificacion);
 				echo $item_notificaciones;
 				?>
 			</ul>

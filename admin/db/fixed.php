@@ -1,6 +1,7 @@
 <body> <?php
 $TitleMod ="Referencia";
 
+
 $Table = "Referencia";
 $TableJoin = "CodificacionEspecifica";
 $Key = "IDReferencia";
@@ -81,10 +82,31 @@ $GetIDPuntoVenta = isset($_GET['IDPuntoVenta']) ? $_GET['IDPuntoVenta'] : "";
 				db_query("SET AUTOCOMMIT=0");
 				db_query("BEGIN");
 
+				$FechaFormaPago = trim($FechaFormaPago);
 				$sql_factura = " select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$PostIDPuntoVenta'
-									AND NumeroFactura = '$PostNumeroFactura' and DATE_FORMAT(FechaFactura,'%Y-%m-%d') =  '".$FechaFormaPago."' ";
+									AND NumeroFactura = '$PostNumeroFactura' ";
+				if ($FechaFormaPago !== "") {
+					$sql_factura .= " and DATE_FORMAT(FechaFactura,'%Y-%m-%d') =  '".$FechaFormaPago."' ";
+				}
 				$qry_factura = db_query( $sql_factura );
+				if ($qry_factura && db_num_rows($qry_factura) <= 0 && $FechaFormaPago !== "") {
+					$sql_factura = " select FechaFactura, IDFactura, IDPuntoVenta, NumeroFactura, ValorTotal FROM Factura WHERE IDPuntoVenta = '$PostIDPuntoVenta'
+									AND NumeroFactura = '$PostNumeroFactura' ";
+					$qry_factura = db_query( $sql_factura );
+				}
+				if (! $qry_factura || db_num_rows($qry_factura) <= 0) {
+					db_query("COMMIT");
+					echo Mensaje_Info("No se encontro la factura con los datos ingresados. Verifique numero, punto de venta y fecha.");
+					print_form("","Refeencia","Importar Archivos","submit");
+					break;
+				}
 				$r_factura = db_fetch_object( $qry_factura );
+				if (! $r_factura || empty($r_factura->IDFactura)) {
+					db_query("COMMIT");
+					echo Mensaje_Info("No se encontro la factura con los datos ingresados. Verifique numero, punto de venta y fecha.");
+					print_form("","Refeencia","Importar Archivos","submit");
+					break;
+				}
 
 
 				db_query("COMMIT");
@@ -215,7 +237,7 @@ $GetIDPuntoVenta = isset($_GET['IDPuntoVenta']) ? $_GET['IDPuntoVenta'] : "";
 				db_query("BEGIN");
 
 
-				echo $sql_factura = "delete FROM FormaPagoFactura WHERE IDFormaPagoFactura = '$GetIDFormaPagoFactura' AND IDFactura = '$GetIDFactura' AND IDPuntoVenta = '$GetIDPuntoVenta' ";
+				$sql_factura = "delete FROM FormaPagoFactura WHERE IDFormaPagoFactura = '$GetIDFormaPagoFactura' AND IDFactura = '$GetIDFactura' AND IDPuntoVenta = '$GetIDPuntoVenta' ";
 				$qry_factura = db_query( $sql_factura );
 
 
@@ -334,7 +356,7 @@ function print_form($id = "", $newmode = "", $title = "", $submit_caption = "") 
 					<script>
 				var Check2 = new Array("Importar");
 				</script>
-					<form name="frmInv" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
+					<form name="frmInv" action="?mod=fixed" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Agregar Forma de Pago");?></td>
 						</tr>
@@ -394,7 +416,7 @@ function print_form($id = "", $newmode = "", $title = "", $submit_caption = "") 
 							<td><input type=submit name=submit value="enviar" class=submit></td>
 						</tr>
 					</form>
-					<form name="frmPr" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmPr" action="?mod=fixed" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Cambiar Fecha");?></td>
 						</tr>
@@ -435,7 +457,7 @@ function print_form($id = "", $newmode = "", $title = "", $submit_caption = "") 
 							<td><input type=submit name=submit value="enviar" class=submit></td>
 						</tr>
 					</form>
-					<form name="frmfactura" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmfactura" action="?mod=fixed" method="post" enctype="multipart/form-data" >
 						<tr class=row2><td colspan=2><?php echo Mensaje_Info("Eliminar Factura");?></td>
 						</tr>
 						<tr class=row2>
@@ -476,7 +498,7 @@ function print_form($id = "", $newmode = "", $title = "", $submit_caption = "") 
 					</form>
 
 					<!--
-					<form name="frmfacturaelectronica" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmfacturaelectronica" action="?mod=fixed" method="post" enctype="multipart/form-data" >
 						<tr class=row2><td colspan=2><?php echo Mensaje_Info("Cambiar a Factura Electr&oacute;nica");?></td>
 						</tr>
 						<tr class=row2>
@@ -514,7 +536,7 @@ function print_form($id = "", $newmode = "", $title = "", $submit_caption = "") 
 					</form>
 					-->
 
-					<form name="frmVerificaFormas" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaFormas" action="?mod=fixed" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Verificar Formas de Pago");?></td>
 						</tr>
@@ -555,7 +577,7 @@ function print_form($id = "", $newmode = "", $title = "", $submit_caption = "") 
 						</tr>
 					</form>
 
-					<form name="frmVerificaCambios" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaCambios" action="?mod=fixed" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Borrar Cambios / Recuerde Borrar Primero el excedente generado");?></td>
 						</tr>
@@ -584,7 +606,7 @@ function print_form($id = "", $newmode = "", $title = "", $submit_caption = "") 
 						</tr>
 					</form>
 
-					<form name="frmVerificaFacturaBonos" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+					<form name="frmVerificaFacturaBonos" action="?mod=fixed" method="post" enctype="multipart/form-data" >
 						<tr class=row2>
 							<td colspan="2"><?php echo Mensaje_Info("Borrar Redimir Bonos / Recuerde Borrar Primero el excedente generado");?></td>
 						</tr>
@@ -649,7 +671,7 @@ while( $r_formapago = db_fetch_array( $qry_formapago ) )
 					<script>
 				var Check2 = new Array("Importar");
 				</script>
-					<form name="frmInv" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
+					<form name="frmInv" action="?mod=fixed" method="post" enctype="multipart/form-data" onSubmit="return EvaluaReg(this,Check2)">
 						<tr class=row2>
 							<td colspan="4"><?php echo Mensaje_Info("Formas de Pago de la Factura");?></td>
 						</tr>
