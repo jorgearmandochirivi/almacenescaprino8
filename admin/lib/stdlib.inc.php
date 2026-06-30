@@ -3725,15 +3725,15 @@ td { padding: 3px 5px; vertical-align: top; }
 #table1 { table-layout: fixed; font-size: 11px; }
 #table1 td { word-break: break-word; overflow-wrap: anywhere; }
 #table1 tr:first-child td { font-weight: bold; font-size: 12px; text-align: center; }
-#table1 td:nth-child(1) { width: 10%; }
+#table1 td:nth-child(1) { width: 12%; white-space: nowrap; }
 #table1 td:nth-child(2) { width: 10%; }
 #table1 td:nth-child(3) { width: 6%; }
-#table1 td:nth-child(4) { width: 18%; }
+#table1 td:nth-child(4) { width: 16%; }
 #table1 td:nth-child(5) { width: 14%; }
 #table1 td:nth-child(6) { width: 10%; }
 #table1 td:nth-child(7) { width: 8%; }
 #table1 td:nth-child(8) { width: 9%; }
-#table1 td:nth-child(9) { width: 7%; text-align: right; }
+#table1 td:nth-child(9) { width: 9%; text-align: right; white-space: nowrap; }
 #table1 td:nth-child(10) { width: 16%; }
 hr { border: 0; border-top: 1px solid #777; margin: 2px 0; }
 </style></head><body>" . $page . "</body></html>";
