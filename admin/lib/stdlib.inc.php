@@ -3308,7 +3308,13 @@ function crear_pdf_pedido($id_pedido_tercero){
 
 <table width="90%" align="center" border="1" cellpadding="0" cellspacing="0">
 	<tr>
-    	<td ><span class="texto"><?php echo $row_pedido["Nota1"]; ?></span></td>
+	    <td ><span class="texto"><?php
+			$nota1_pdf = str_replace(array("\r\n", "\r"), "\n", (string)$row_pedido["Nota1"]);
+			$nota1_pdf = preg_replace('/:\s*1\./', ":<br>1.", $nota1_pdf);
+			$nota1_pdf = preg_replace('/\s+2\./', "<br>2.", $nota1_pdf);
+			$nota1_pdf = preg_replace('/\s+3\./', "<br>3.", $nota1_pdf);
+			echo nl2br($nota1_pdf);
+		?></span></td>
     </tr>
 	<tr>
     	<td style="color:#EF0206"><font color="#FF383B"><?php echo $row_pedido["Nota2"]; ?></font></td>
