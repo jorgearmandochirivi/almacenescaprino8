@@ -3651,20 +3651,30 @@ $filepdf = "$filedir$namePDF";
 $page = ob_get_contents();
 ob_end_clean();
 
+$html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>" . $page . "</body></html>";
+
 if (!is_dir($filedir) && !mkdir($filedir, 0775, true)) {
 	error_log("No se pudo crear el directorio de pedidos: " . $filedir);
 	return false;
 }
 
-$bytes_written = file_put_contents($file, $page);
+$bytes_written = file_put_contents($file, $html);
 if ($bytes_written === false) {
 	error_log("No se pudo escribir el archivo de pedido: " . $file);
 	return false;
 }
-//echo $page;
-//passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh  --size 'Universal' --textfont Arial  --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7  $file $filepdf ");
-//echo "/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf";
-passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldocpedido.sh $file $filepdf");
+
+if (!class_exists('PdfModern')) {
+	require_once(dirname(__FILE__) . '/PdfModern.php');
+}
+
+$pdf_generado = PdfModern::generate($html, $filepdf, 'letter');
+if (!$pdf_generado || !file_exists($filepdf)) {
+	error_log("No fue posible generar el PDF del pedido: " . $filepdf);
+	return false;
+}
+
+return true;
 
 
 
