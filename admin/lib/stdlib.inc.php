@@ -3091,6 +3091,57 @@ function crear_pdf_pedido($id_pedido_tercero){
 		}
 	}
 
+	$logo_src = "https://www.calzadocaprino.com/2017/img/LogoCaprino2022.jpeg";
+	$logo_data = @file_get_contents($logo_src);
+	if ($logo_data === false && function_exists('curl_init')) {
+		$ch = curl_init($logo_src);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+		$logo_data = curl_exec($ch);
+		curl_close($ch);
+	}
+	if ($logo_data !== false && !empty($logo_data)) {
+		$logo_src = 'data:image/jpeg;base64,' . base64_encode($logo_data);
+	}
+
+	$to_data_uri = function ($src, $mime = 'image/jpeg') {
+		if (empty($src)) {
+			return $src;
+		}
+
+		$data = @file_get_contents($src);
+		if ($data === false && function_exists('curl_init')) {
+			$ch = curl_init($src);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+			$data = curl_exec($ch);
+			curl_close($ch);
+		}
+
+		if ($data === false || empty($data)) {
+			return $src;
+		}
+
+		return 'data:' . $mime . ';base64,' . base64_encode($data);
+	};
+
+	$foto_src = array();
+	for ($i_foto = 1; $i_foto <= 8; $i_foto++) {
+		$foto_key = 'Foto' . $i_foto;
+		if (!empty($row_pedido[$foto_key])) {
+			$foto_local = $dirroot . 'imagenes/' . $row_pedido[$foto_key];
+			if (file_exists($foto_local)) {
+				$foto_src[$foto_key] = $to_data_uri($foto_local);
+			} else {
+				$foto_src[$foto_key] = $to_data_uri($url . 'admin/imagenes/' . $row_pedido[$foto_key]);
+			}
+		}
+	}
+
 
 	
 	ob_start();
@@ -3098,7 +3149,7 @@ function crear_pdf_pedido($id_pedido_tercero){
 ?>
 <table align="center" width="90%" >
   <tr>
-    <td ><img src="https://calzadocaprino.com//2017/img/LogoCaprino2022.jpeg" width="120" height="80"></td>
+	<td ><img src="<?php echo $logo_src; ?>" width="120" height="80"></td>
     <td valign="top" align="center" >RA72.13<br>V3</td>
   </tr>
   </table>
@@ -3198,44 +3249,44 @@ function crear_pdf_pedido($id_pedido_tercero){
 
     			<?php if (!empty($row_pedido["Foto1"])): ?>
                 <td>				
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto1"]; ?>" width="150" height="150" style="float:left;clear:none;">
+					<img src="<?php echo $foto_src["Foto1"] ?? ($url."admin/imagenes/". $row_pedido["Foto1"]); ?>" width="150" height="150" style="float:left;clear:none;">
                 </td>
                 <?php endif;?>
                 <?php if (!empty($row_pedido["Foto2"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto2"]; ?>" width="150" height="150" style="float:left;clear:none;">
+					<img src="<?php echo $foto_src["Foto2"] ?? ($url."admin/imagenes/". $row_pedido["Foto2"]); ?>" width="150" height="150" style="float:left;clear:none;">
                 </td>
 				<?php endif;?>
                 <?php if (!empty($row_pedido["Foto3"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto3"]; ?>" width="150" height="150" style="float:left;clear:none;">
+					<img src="<?php echo $foto_src["Foto3"] ?? ($url."admin/imagenes/". $row_pedido["Foto3"]); ?>" width="150" height="150" style="float:left;clear:none;">
                 </td>
 				<?php endif;?>
                 <?php if (!empty($row_pedido["Foto4"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto4"]; ?>" width="150" height="150">
+					<img src="<?php echo $foto_src["Foto4"] ?? ($url."admin/imagenes/". $row_pedido["Foto4"]); ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
                 <?php if (!empty($row_pedido["Foto5"])): ?>
                 </tr>
                 <tr>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto5"]; ?>" width="150" height="150">
+					<img src="<?php echo $foto_src["Foto5"] ?? ($url."admin/imagenes/". $row_pedido["Foto5"]); ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
 	            <?php if (!empty($row_pedido["Foto6"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto6"]; ?>" width="150" height="150">
+					<img src="<?php echo $foto_src["Foto6"] ?? ($url."admin/imagenes/". $row_pedido["Foto6"]); ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
                 <?php if (!empty($row_pedido["Foto7"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto7"]; ?>" width="150" height="150">
+					<img src="<?php echo $foto_src["Foto7"] ?? ($url."admin/imagenes/". $row_pedido["Foto7"]); ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
                 <?php if (!empty($row_pedido["Foto8"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto8"]; ?>" width="150" height="150">
+					<img src="<?php echo $foto_src["Foto8"] ?? ($url."admin/imagenes/". $row_pedido["Foto8"]); ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
 
