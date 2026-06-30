@@ -248,13 +248,13 @@ $IVABD=$IVA;
 													$array_referencias[]= $referencia;
 												endwhile;
 
-												if(count($array_referencias)>0):
+												if(count(is_array($array_referencias ?? null) ? $array_referencias : array())>0):
 													echo implode("<br>",$array_referencias);
 												endif;
 
 											endif;
 
-												if(count($array_referencias)<=0):
+												if(count(is_array($array_referencias ?? null) ? $array_referencias : array())<=0):
 													echo "tarjeta";
 												endif;
 
