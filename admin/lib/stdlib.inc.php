@@ -2528,7 +2528,7 @@ function envia_pedido_tercero_original($id_pedido_tercero,$rel){
 	$correo=get_field("ParametroTercero","Valor","IDParametroTercero",3);
 	//endif;
 
-	$correo_proveedor=get_field("Proveedor","Email","IDProveedor",$row_pedido[IDProveedor]);
+	$correo_proveedor=get_field("Proveedor","Email","IDProveedor",$row_pedido["IDProveedor"]);
 	if (!empty($correo_proveedor)){
 		//if($rel!="reenvio"):
 			$correo .= ",".$correo_proveedor;
@@ -2602,12 +2602,12 @@ function envia_pedido_tercero_original($id_pedido_tercero,$rel){
 
 	//$mail->AddAddress("jorgechirivi@gmail.com");
 
-	$filename = $dirroot . "PedidoTercero/pedidos/Pedido".$row_pedido[NumeroOrdenCompra].'.pdf';
-	$nombre = "Pedidos_".$row_pedido[NumeroOrdenCompra].'.pdf';
+	$filename = $dirroot . "PedidoTercero/pedidos/Pedido".$row_pedido["NumeroOrdenCompra"].'.pdf';
+	$nombre = "Pedidos_".$row_pedido["NumeroOrdenCompra"].'.pdf';
 	$mail->AddAttachment($filename,$nombre);
 
 
-	$mail->Subject="Orden de Compra Numero " . $row_pedido[NumeroOrdenCompra];
+	$mail->Subject="Orden de Compra Numero " . $row_pedido["NumeroOrdenCompra"];
 	$mail->Body =$mensaje;
 	$mail->IsHTML(true);
 	$mail->Sender='ventas@calzadocaprino.com';
@@ -2639,7 +2639,7 @@ function envia_pedido_tercero($id_pedido_tercero,$rel){
 	$correo=get_field("ParametroTercero","Valor","IDParametroTercero",3);
 	//endif;
 
-	$correo_proveedor=get_field("Proveedor","Email","IDProveedor",$row_pedido[IDProveedor]);
+	$correo_proveedor=get_field("Proveedor","Email","IDProveedor",$row_pedido["IDProveedor"]);
 	if (!empty($correo_proveedor)){
 		//if($rel!="reenvio"):
 			$correo .= ",".$correo_proveedor;
@@ -2720,11 +2720,11 @@ function envia_pedido_tercero($id_pedido_tercero,$rel){
 		
 			//$mail->AddAddress("jorgechirivi@gmail.com");
 		
-			//$filename = $dirroot . "PedidoTercero/pedidos/Pedido".$row_pedido[NumeroOrdenCompra].'.pdf';
-			//$nombre = "Pedidos_".$row_pedido[NumeroOrdenCompra].'.pdf';
+			//$filename = $dirroot . "PedidoTercero/pedidos/Pedido".$row_pedido["NumeroOrdenCompra"].'.pdf';
+			//$nombre = "Pedidos_".$row_pedido["NumeroOrdenCompra"].'.pdf';
 			//$mail->AddAttachment($filename,$nombre);
 		
-			$mail->Subject="Orden de Compra Numero " . $row_pedido[NumeroOrdenCompra];
+			$mail->Subject="Orden de Compra Numero " . $row_pedido["NumeroOrdenCompra"];
 			$mail->Body =$mensaje;
 			$mail->IsHTML(true);
 			$mail->Sender='ventas@calzadocaprino.com';
@@ -2762,7 +2762,7 @@ function envia_pedido_mostrar($id_pedido_tercero,$correo){
   	db_query($sql_vista);
 	$sql_pedido = db_query("Select * From PedidoTercero Where IDPedidoTercero = '".$id_pedido_tercero."'");
 	$row_pedido = db_fetch_array($sql_pedido);	
-  	$filename = "<a href='".$url . "admin/PedidoTercero/pedidos/Pedido".$row_pedido[NumeroOrdenCompra].'.pdf'."'>Ver adjunto</a>";	
+  	$filename = "<a href='".$url . "admin/PedidoTercero/pedidos/Pedido".$row_pedido["NumeroOrdenCompra"].'.pdf'."'>Ver adjunto</a>";	
 	$mensaje="
 			<body>
 				<table border='0' cellpadding='0' cellspacing='0' width='800px' align='center'>
@@ -3110,17 +3110,17 @@ function crear_pdf_pedido($id_pedido_tercero){
 <table align="center" width="90%" bgcolor="#EEEEEE">
   <tr>
     <td ><strong>PROVEEDOR</strong></td>
-    <td ><font color="#FF383B"><?php echo strtoupper(get_field("Proveedor","Nombre","IDProveedor",$row_pedido[IDProveedor])); ?></font></td>
+    <td ><font color="#FF383B"><?php echo strtoupper(get_field("Proveedor","Nombre","IDProveedor",$row_pedido["IDProveedor"])); ?></font></td>
     <td ><strong>ORDEN DE COMPRA: No.</strong></td>
-    <td colspan="3" ><font color="#FF383B"><?php echo $row_pedido[NumeroOrdenCompra]; ?></font></td>
+    <td colspan="3" ><font color="#FF383B"><?php echo $row_pedido["NumeroOrdenCompra"]; ?></font></td>
   </tr>
   <tr>
     <td width="15%" ><strong>RAZON SOCIAL</strong></td>
     <td width="14%" >IMACAL SAS.</td>
     <td width="20%" ><strong>FECHA PEDIDO</strong></td>
-    <td width="16%" ><?php echo $row_pedido[FechaPedido]; ?></td>
+    <td width="16%" ><?php echo $row_pedido["FechaPedido"]; ?></td>
     <td width="15%" ><strong>FECHA ENTREGA</strong></td>
-    <td width="20%" ><?php echo $row_pedido[FechaEntrega]; ?></td>
+    <td width="20%" ><?php echo $row_pedido["FechaEntrega"]; ?></td>
   </tr>
   <tr>
     <td  nowrap><strong>NIT</strong></td>
@@ -3151,7 +3151,7 @@ function crear_pdf_pedido($id_pedido_tercero){
     <td align="center" nowrap bgcolor="#CAE2F5" class="texto"><b>Observaciones</b></td>
   </tr>
   <?php
-												$sql_detalle = "SELECT * FROM DetallePedidoTercero WHERE IDPedidoTercero = '".$row_pedido[IDPedidoTercero]."' ORDER BY IDDetallePedidoTercero ASC";
+												$sql_detalle = "SELECT * FROM DetallePedidoTercero WHERE IDPedidoTercero = '".$row_pedido["IDPedidoTercero"]."' ORDER BY IDDetallePedidoTercero ASC";
 												$query_detalle = db_query($sql_detalle);
 												$i = 0;
 												$segunda = 0;
@@ -3196,46 +3196,46 @@ function crear_pdf_pedido($id_pedido_tercero){
 <tr>
 
 
-    			<?php if (!empty($row_pedido[Foto1])): ?>
+    			<?php if (!empty($row_pedido["Foto1"])): ?>
                 <td>				
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido[Foto1]; ?>" width="150" height="150" style="float:left;clear:none;">
+                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto1"]; ?>" width="150" height="150" style="float:left;clear:none;">
                 </td>
                 <?php endif;?>
-                <?php if (!empty($row_pedido[Foto2])): ?>
+                <?php if (!empty($row_pedido["Foto2"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido[Foto2]; ?>" width="150" height="150" style="float:left;clear:none;">
+                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto2"]; ?>" width="150" height="150" style="float:left;clear:none;">
                 </td>
 				<?php endif;?>
-                <?php if (!empty($row_pedido[Foto3])): ?>
+                <?php if (!empty($row_pedido["Foto3"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido[Foto3]; ?>" width="150" height="150" style="float:left;clear:none;">
+                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto3"]; ?>" width="150" height="150" style="float:left;clear:none;">
                 </td>
 				<?php endif;?>
-                <?php if (!empty($row_pedido[Foto4])): ?>
+                <?php if (!empty($row_pedido["Foto4"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido[Foto4]; ?>" width="150" height="150">
+                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto4"]; ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
-                <?php if (!empty($row_pedido[Foto5])): ?>
+                <?php if (!empty($row_pedido["Foto5"])): ?>
                 </tr>
                 <tr>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido[Foto5]; ?>" width="150" height="150">
+                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto5"]; ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
-	            <?php if (!empty($row_pedido[Foto6])): ?>
+	            <?php if (!empty($row_pedido["Foto6"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido[Foto6]; ?>" width="150" height="150">
+                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto6"]; ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
-                <?php if (!empty($row_pedido[Foto7])): ?>
+                <?php if (!empty($row_pedido["Foto7"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido[Foto7]; ?>" width="150" height="150">
+                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto7"]; ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
-                <?php if (!empty($row_pedido[Foto8])): ?>
+                <?php if (!empty($row_pedido["Foto8"])): ?>
                 <td>
-                <img src="<?php echo $url."admin/imagenes/". $row_pedido[Foto8]; ?>" width="150" height="150">
+                <img src="<?php echo $url."admin/imagenes/". $row_pedido["Foto8"]; ?>" width="150" height="150">
                 </td>
 				<?php endif;?>
 
@@ -3245,13 +3245,13 @@ function crear_pdf_pedido($id_pedido_tercero){
 
 <table width="90%" align="center" border="1" cellpadding="0" cellspacing="0">
 	<tr>
-    	<td ><span class="texto"><?php echo $row_pedido[Nota1]; ?></span></td>
+    	<td ><span class="texto"><?php echo $row_pedido["Nota1"]; ?></span></td>
     </tr>
 	<tr>
-    	<td style="color:#EF0206"><font color="#FF383B"><?php echo $row_pedido[Nota2]; ?></font></td>
+    	<td style="color:#EF0206"><font color="#FF383B"><?php echo $row_pedido["Nota2"]; ?></font></td>
     </tr>
 	<tr>
-    	<td><span class="texto"><?php echo $row_pedido[Observaciones]; ?></span></td>
+    	<td><span class="texto"><?php echo $row_pedido["Observaciones"]; ?></span></td>
     </tr>
 
 </table>
@@ -3289,19 +3289,19 @@ function crear_pdf_pedido($id_pedido_tercero){
                           <td><?php
                           $sql_prioridad_alta=db_query("Select Nombre from PuntoVenta Where Publicar='S' and IDTipoPrioridad = 1 and IDCiudad = 1 Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_alta)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto["Nombre"] ."<br>";
 						  }
 						  ?></td>
                           <td><?php
                           $sql_prioridad_media=db_query("Select Nombre from PuntoVenta Where Publicar='S' and IDTipoPrioridad = 2 and IDCiudad = 1 Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_media)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto["Nombre"] ."<br>";
 						  }
 						  ?></td>
                           <td><?php
                           $sql_prioridad_baja=db_query("Select Nombre from PuntoVenta Where Publicar='S' and IDTipoPrioridad = 3 and IDCiudad = 1 Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_baja)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto["Nombre"] ."<br>";
 						  }
 						  ?></td>
                         </tr>
@@ -3322,19 +3322,19 @@ function crear_pdf_pedido($id_pedido_tercero){
                           <td><?php
                           $sql_prioridad_alta=db_query("Select Nombre from PuntoVenta Where Publicar = 'S' and IDTipoPrioridad = 1 and IDCiudad = 2 Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_alta)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto["Nombre"] ."<br>";
 						  }
 						  ?></td>
                           <td><?php
                           $sql_prioridad_media=db_query("Select Nombre from PuntoVenta Where Publicar = 'S' and IDTipoPrioridad = 2 and IDCiudad = 2 Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_media)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto["Nombre"] ."<br>";
 						  }
 						  ?></td>
                           <td><?php
                           $sql_prioridad_baja=db_query("Select Nombre from PuntoVenta Where Publicar='S' and IDTipoPrioridad = 3 and IDCiudad = 2 Order by OrdenPrioridadEntrega");
 						  while ($row_pto = db_fetch_array($sql_prioridad_baja)){
-							echo $row_pto[Nombre] ."<br>";
+							echo $row_pto["Nombre"] ."<br>";
 						}
 						  ?></td>
                         </tr>
@@ -3390,9 +3390,9 @@ function crear_pdf_pedido($id_pedido_tercero){
                           <table width="90%" border="0" cellspacing="1" cellpadding="0" align="center">
 						    <tbody>
 
-                            <?php if ($datos_punto_venta[IDCiudad]!=$id_ciudad_ant){
-									$id_ciudad_ant= $datos_punto_venta[IDCiudad];
-									if ($datos_punto_venta[IDCiudad]=="1")
+                            <?php if ($datos_punto_venta["IDCiudad"]!=$id_ciudad_ant){
+									$id_ciudad_ant= $datos_punto_venta["IDCiudad"];
+									if ($datos_punto_venta["IDCiudad"]=="1")
 										$color="#B1CFE6";
 									else
 										$color="#BDD9BF";
@@ -3400,12 +3400,12 @@ function crear_pdf_pedido($id_pedido_tercero){
 
 							?>
                             <tr>
-								  <td bgcolor="<?php echo $color; ?>"  colspan=10 align=center style="font-size:18px; color:#EB373A"><strong><?php echo get_field("Ciudad","Descripcion","IDCiudad",$datos_punto_venta[IDCiudad]); ?></strong><br>&nbsp;</td>
+								  <td bgcolor="<?php echo $color; ?>"  colspan=10 align=center style="font-size:18px; color:#EB373A"><strong><?php echo get_field("Ciudad","Descripcion","IDCiudad",$datos_punto_venta["IDCiudad"]); ?></strong><br>&nbsp;</td>
 						    </tr>
                             <?php } ?>
 
 						      <tr>
-						        <td class="maintitle" bgcolor="#9daac6" colspan="10" ><?php echo $datos_punto_venta[Nombre] . "<br>" .$datos_punto_venta[Direccion] ?></td>
+						        <td class="maintitle" bgcolor="#9daac6" colspan="10" ><?php echo $datos_punto_venta["Nombre"] . "<br>" .$datos_punto_venta["Direccion"] ?></td>
 					          </tr>
 						      <tr>
 						        <td class="titlemedium">Talla:</td>
@@ -3415,7 +3415,7 @@ function crear_pdf_pedido($id_pedido_tercero){
 									$total_tienda="0";
 									foreach($array_talla as $id_talla => $datos_talla):
 									?>
-							        <td class="titlemedium" nowrap align="center"><?php echo $datos_talla[Nombre]; ?></td>
+							        <td class="titlemedium" nowrap align="center"><?php echo $datos_talla["Nombre"]; ?></td>
 
                                     <?php endforeach;
 								endif;
@@ -3444,14 +3444,14 @@ function crear_pdf_pedido($id_pedido_tercero){
 
 								if (count($array_talla)>0):
 									foreach($array_talla as $id_talla => $datos_talla):
-									$valor_pedir_item="";
+									$valor_pedir_item=0;
 									// Verifico si ya existe algo guardado para no reemplazar
 									 $sql_detalle_pedido_ref = "Select Cantidad
 															  From DetallePedidoTerceroReferencia
-															  Where IDPedidoTercero= '".$row_pedido[IDPedidoTercero]."' and
+															  Where IDPedidoTercero= '".$row_pedido["IDPedidoTercero"]."' and
 															  IDDetallePedidoTercero = '".$array_detalle_orden[$i]["IDDetallePedidoTercero"]."' and
-															  IDPuntoVenta = '".$datos_punto_venta[IDPuntoVenta]."' and
-															  IDTalla = '".$datos_talla[IDTalla]."'";
+															  IDPuntoVenta = '".$datos_punto_venta["IDPuntoVenta"]."' and
+															  IDTalla = '".$datos_talla["IDTalla"]."'";
 									$result_detalle_pedido_ref = db_query($sql_detalle_pedido_ref);
 									$row_detalle_pedido_ref=db_fetch_array($result_detalle_pedido_ref);
 
@@ -3459,10 +3459,10 @@ function crear_pdf_pedido($id_pedido_tercero){
 										$valor_pedir_item = (int)$row_detalle_pedido_ref["Cantidad"];
 
 
-									 	$suma_item_pedir+=$valor_pedir_item;
-										$suma_item_pedir_talla[$datos_talla[IDTalla]] +=  $valor_pedir_item;
+								 	$suma_item_pedir = (int)$suma_item_pedir + (int)$valor_pedir_item;
+										$suma_item_pedir_talla[$datos_talla["IDTalla"]] = (int)($suma_item_pedir_talla[$datos_talla["IDTalla"]] ?? 0) + (int)$valor_pedir_item;
 
-										$super_total_talla[$datos_talla[IDTalla]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]+=$valor_pedir_item;
+										$super_total_talla[$datos_talla["IDTalla"]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] = (int)($super_total_talla[$datos_talla["IDTalla"]][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] ?? 0) + (int)$valor_pedir_item;
 
 									?>
 						           <td class=row1 align=center>
@@ -3518,7 +3518,7 @@ function crear_pdf_pedido($id_pedido_tercero){
 								?>
                                 <td bgcolor="#F1CFCF" align="center" style="font-weight:bold">
 								<?php
-								$total_ciudad[$datos_punto_venta[IDCiudad]] += $total_tienda;
+								$total_ciudad[$datos_punto_venta["IDCiudad"]] += $total_tienda;
 								echo number_format($total_tienda,0,",","."); ?>
                                 </td>
 					          </tr>
@@ -3561,7 +3561,7 @@ function crear_pdf_pedido($id_pedido_tercero){
 									foreach($array_talla as $id_talla => $datos_talla):
 									$suma_talla_resumen="0";
 									?>
-			        <td bgcolor="#FEFFBB" align="center" style="font-weight:bold"><?php echo $datos_talla[Nombre]; ?></td>
+			        <td bgcolor="#FEFFBB" align="center" style="font-weight:bold"><?php echo $datos_talla["Nombre"]; ?></td>
 			        <?php endforeach;
 								endif;
 								?>
@@ -3588,14 +3588,14 @@ function crear_pdf_pedido($id_pedido_tercero){
 								if (count($array_talla)>0):
 									foreach($array_talla as $id_talla => $datos_talla):
 
-									 	$suma_item_pedir+=$valor_pedir_item;
-										$suma_item_pedir_talla[$datos_talla[IDTalla]] +=  $valor_pedir_item;
+								 	$suma_item_pedir = (int)$suma_item_pedir + (int)$valor_pedir_item;
+										$suma_item_pedir_talla[$datos_talla["IDTalla"]] = (int)($suma_item_pedir_talla[$datos_talla["IDTalla"]] ?? 0) + (int)$valor_pedir_item;
 
 									?>
 			        <td class=row1 align=center>
-                    	<?php echo $super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]];
-							$suma_talla_resumen+=$super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]];
-							$suma_talla[$datos_talla[IDTalla]]+=$super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]];
+	                    	<?php echo (int)($super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] ?? 0);
+							$suma_talla_resumen = (int)$suma_talla_resumen + (int)($super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] ?? 0);
+							$suma_talla[$datos_talla["IDTalla"]] = (int)($suma_talla[$datos_talla["IDTalla"]] ?? 0) + (int)($super_total_talla[$id_talla][$array_detalle_orden[$i]["IDDetallePedidoTercero"]] ?? 0);
 
 						 ?>
                     </td>
@@ -3643,16 +3643,24 @@ function crear_pdf_pedido($id_pedido_tercero){
 
 <?php
 $filedir = $dirroot . "/PedidoTercero/pedidos/";
-$name = "Pedido" . $row_pedido[NumeroOrdenCompra] . ".html";
-$namePDF = "Pedido" . $row_pedido[NumeroOrdenCompra] . ".pdf";
+$name = "Pedido" . $row_pedido["NumeroOrdenCompra"] . ".html";
+$namePDF = "Pedido" . $row_pedido["NumeroOrdenCompra"] . ".pdf";
 $file = "$filedir$name";
 $filepdf = "$filedir$namePDF";
 
 $page = ob_get_contents();
-$fw = fopen($file, "w");
-fputs($fw,$page,strlen($page));
-fclose($fw);
 ob_end_clean();
+
+if (!is_dir($filedir) && !mkdir($filedir, 0775, true)) {
+	error_log("No se pudo crear el directorio de pedidos: " . $filedir);
+	return false;
+}
+
+$bytes_written = file_put_contents($file, $page);
+if ($bytes_written === false) {
+	error_log("No se pudo escribir el archivo de pedido: " . $file);
+	return false;
+}
 //echo $page;
 //passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh  --size 'Universal' --textfont Arial  --charset 8859-15 --left 0cm --right 0cm --top 0cm --bottom 0cm --fontsize 7  $file $filepdf ");
 //echo "/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf";
