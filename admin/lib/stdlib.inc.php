@@ -3329,7 +3329,7 @@ function crear_pdf_pedido($id_pedido_tercero){
 <table width="90%" align="center" border="1" cellpadding="0" cellspacing="0">
 	<tr>
     	<td>
-	       	 <img src="<?php echo $etiqueta_src; ?>" width="550" height="150">
+	       	 <img src="<?php echo $etiqueta_src; ?>" style="display:block; width:100%; height:auto;">
         </td>
     </tr>
 </table>
