@@ -3717,7 +3717,26 @@ $filepdf = "$filedir$namePDF";
 $page = ob_get_contents();
 ob_end_clean();
 
-$html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>" . $page . "</body></html>";
+$html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/><style>
+body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 12px; line-height: 1.25; color: #111; }
+table { border-collapse: collapse; width: 100%; }
+td { padding: 3px 5px; vertical-align: top; }
+.texto { font-size: 11px; }
+#table1 { table-layout: fixed; font-size: 11px; }
+#table1 td { word-break: break-word; overflow-wrap: anywhere; }
+#table1 tr:first-child td { font-weight: bold; font-size: 12px; text-align: center; }
+#table1 td:nth-child(1) { width: 10%; }
+#table1 td:nth-child(2) { width: 10%; }
+#table1 td:nth-child(3) { width: 6%; }
+#table1 td:nth-child(4) { width: 18%; }
+#table1 td:nth-child(5) { width: 14%; }
+#table1 td:nth-child(6) { width: 10%; }
+#table1 td:nth-child(7) { width: 8%; }
+#table1 td:nth-child(8) { width: 9%; }
+#table1 td:nth-child(9) { width: 7%; text-align: right; }
+#table1 td:nth-child(10) { width: 16%; }
+hr { border: 0; border-top: 1px solid #777; margin: 2px 0; }
+</style></head><body>" . $page . "</body></html>";
 
 if (!is_dir($filedir) && !mkdir($filedir, 0775, true)) {
 	error_log("No se pudo crear el directorio de pedidos: " . $filedir);
