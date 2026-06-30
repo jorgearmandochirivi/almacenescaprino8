@@ -3227,29 +3227,26 @@ function crear_pdf_pedido($id_pedido_tercero){
 													$i++;
 											?>
   <tr >
-    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
+		<td align="center" class="<?php echo $class?>"><?php
 															echo $r_detalle->ReferenciaProveedor;?></td>
-    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
+		<td align="center" class="<?php echo $class?>"><?php
 															echo $r_detalle->ReferenciaCaprino;?></td>
-    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
+		<td align="center" class="<?php echo $class?>" style="white-space:nowrap; word-break:normal; overflow-wrap:normal;"><?php
 															echo $r_detalle->CodigoColor;?></td>
-    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
+		<td align="center" class="<?php echo $class?>"><?php
 															echo $r_detalle->CueroColor;?></td>
-    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
+		<td align="center" class="<?php echo $class?>"><?php
 															echo $r_detalle->Suela;?></td>
-    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
+		<td align="center" class="<?php echo $class?>"><?php
 															echo $r_detalle->Tacon;?></td>
-    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
+		<td align="center" class="<?php echo $class?>"><?php
 															echo $r_detalle->Horma;?></td>
-    <td align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><?php
+		<td align="center" class="<?php echo $class?>"><?php
 															echo $r_detalle->Producto;?></td>
-    <td align="right" class="<?php echo $class?>" style="border-bottom:1px solid #000000">$<?php
+		<td align="right" class="<?php echo $class?>">$<?php
 															echo $r_detalle->Precio;?></td>
-    <td align="left" class="<?php echo $class?>" style="font-size:8px; border-bottom:1px solid #000000"><?php
+		<td align="left" class="<?php echo $class?>" style="font-size:8px;"><?php
 															echo $r_detalle->Observacion;?></td>
-  </tr>
-  <tr >
-    <td colspan="10" align="center" class="<?php echo $class?>" style="border-bottom:1px solid #000000"><hr></td>
   </tr>
   <?php
 												}
@@ -3727,13 +3724,13 @@ td { padding: 3px 5px; vertical-align: top; }
 #table1 tr:first-child td { font-weight: bold; font-size: 12px; text-align: center; }
 #table1 td:nth-child(1) { width: 12%; white-space: nowrap; }
 #table1 td:nth-child(2) { width: 10%; }
-#table1 td:nth-child(3) { width: 6%; }
-#table1 td:nth-child(4) { width: 16%; }
+#table1 td:nth-child(3) { width: 8%; white-space: nowrap; word-break: normal; overflow-wrap: normal; }
+#table1 td:nth-child(4) { width: 16%; word-break: normal; overflow-wrap: break-word; }
 #table1 td:nth-child(5) { width: 14%; }
 #table1 td:nth-child(6) { width: 10%; }
 #table1 td:nth-child(7) { width: 8%; }
-#table1 td:nth-child(8) { width: 9%; }
-#table1 td:nth-child(9) { width: 9%; text-align: right; white-space: nowrap; }
+#table1 td:nth-child(8) { width: 8%; }
+#table1 td:nth-child(9) { width: 8%; text-align: right; white-space: nowrap; }
 #table1 td:nth-child(10) { width: 16%; }
 hr { border: 0; border-top: 1px solid #777; margin: 2px 0; }
 </style></head><body>" . $page . "</body></html>";
@@ -3760,10 +3757,6 @@ if (!$pdf_generado || !file_exists($filepdf)) {
 }
 
 return true;
-
-
-
-
 
 }
 

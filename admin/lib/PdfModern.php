@@ -45,10 +45,13 @@ class PdfModern
                 $dompdf->setPaper($paperSize);
             }
 
-            // Detectar encoding y convertir a UTF-8 si es necesario
-            $encoding = mb_detect_encoding($html, mb_detect_order(), true);
-            if ($encoding != 'UTF-8') {
-                $html = mb_convert_encoding($html, 'UTF-8', $encoding ?: 'ISO-8859-1');
+            // Detectar encoding y convertir a UTF-8 si es necesario.
+            // Si mbstring no esta disponible, continuar sin conversion.
+            if (function_exists('mb_detect_encoding') && function_exists('mb_convert_encoding')) {
+                $encoding = mb_detect_encoding($html, mb_detect_order(), true);
+                if ($encoding != 'UTF-8') {
+                    $html = mb_convert_encoding($html, 'UTF-8', $encoding ?: 'ISO-8859-1');
+                }
             }
 
             // También podemos inyectar un meta tag de charset si no existe
@@ -66,7 +69,7 @@ class PdfModern
             file_put_contents($outputFile, $dompdf->output());
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             error_log("PdfModern Exception: " . $e->getMessage());
             return false;
         }
