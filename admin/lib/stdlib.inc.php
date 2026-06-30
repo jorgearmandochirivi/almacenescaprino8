@@ -3142,6 +3142,21 @@ function crear_pdf_pedido($id_pedido_tercero){
 		}
 	}
 
+	$etiqueta_src = 'https://www.almacenescaprino.com/images/etiquetacalzadof2022.png';
+	$etiqueta_data = @file_get_contents($etiqueta_src);
+	if ($etiqueta_data === false && function_exists('curl_init')) {
+		$ch = curl_init($etiqueta_src);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+		$etiqueta_data = curl_exec($ch);
+		curl_close($ch);
+	}
+	if ($etiqueta_data !== false && !empty($etiqueta_data)) {
+		$etiqueta_src = 'data:image/png;base64,' . base64_encode($etiqueta_data);
+	}
+
 
 	
 	ob_start();
@@ -3311,7 +3326,7 @@ function crear_pdf_pedido($id_pedido_tercero){
 <table width="90%" align="center" border="1" cellpadding="0" cellspacing="0">
 	<tr>
     	<td>
-       	 <img src="https://www.almacenescaprino.com/images/etiquetacalzadof2022.png" width="550" height="150">
+	       	 <img src="<?php echo $etiqueta_src; ?>" width="550" height="150">
         </td>
     </tr>
 </table>
