@@ -3078,6 +3078,10 @@ function crear_pdf_pedido($id_pedido_tercero){
 
 	global $dirroot, $url,$libdir;
 	$url=str_replace("http","https",$url);
+	$array_detalle_orden = array();
+	$array_talla = array();
+	$array_puntos_pedido = array();
+	$array_punto_venta = array();
 
 	$sql_pedido = db_query("Select * From PedidoTercero Where IDPedidoTercero = '".$id_pedido_tercero."'");
 	$row_pedido = db_fetch_array($sql_pedido);
