@@ -187,15 +187,39 @@ $(document).ready(function(){
 						"url" : "ajax/envia_pedido.php" ,
 						"dataType" : "json",
 						"success" : function( data ){
-							var respuesta_ok = (data == "ok" || (data && data["status"] == "ok"));
+							var status_respuesta = "";
+
+							if (typeof data === "string"){
+								status_respuesta = data;
+								try {
+									var parsed = JSON.parse(data);
+									if (parsed && (parsed["status"] || parsed["Status"] || parsed["estado"] || parsed["result"])){
+										status_respuesta = parsed["status"] || parsed["Status"] || parsed["estado"] || parsed["result"];
+									}
+								} catch(e){}
+							}
+							else if (data && typeof data === "object"){
+								status_respuesta = data["status"] || data["Status"] || data["estado"] || data["result"] || "";
+							}
+
+							var respuesta_ok = (String(status_respuesta).replace(/^\s+|\s+$/g, "").toLowerCase() == "ok");
 							if (respuesta_ok){
 								alert("Pedido reenvioado con exito");
 								document.location.href = "?mod=PedidoTercero";
 							}
 							else{
+								if (window.console){
+									console.log("Respuesta envia_pedido no reconocida:", data);
+								}
 								alert("Ocurrio un problema al tratar de generar el pedido");
 								return false;
 							}
+						},
+						"error" : function(xhr, textStatus, errorThrown){
+							if (window.console){
+								console.log("Error ajax envia_pedido:", textStatus, errorThrown, xhr && xhr.responseText);
+							}
+							alert("Ocurrio un problema al tratar de generar el pedido");
 						}
 				});
 				//document.location.href = "?mod=PedidoTercero&id=1&tab=detalle&action=genera_pedido";
@@ -215,14 +239,38 @@ $(document).ready(function(){
 						"url" : "ajax/cambiar_fecha_entrega.php" ,
 						"dataType" : "json",
 						"success" : function( data ){
-							var respuesta_ok = (data == "ok" || (data && data["status"] == "ok"));
+							var status_respuesta = "";
+
+							if (typeof data === "string"){
+								status_respuesta = data;
+								try {
+									var parsed = JSON.parse(data);
+									if (parsed && (parsed["status"] || parsed["Status"] || parsed["estado"] || parsed["result"])){
+										status_respuesta = parsed["status"] || parsed["Status"] || parsed["estado"] || parsed["result"];
+									}
+								} catch(e){}
+							}
+							else if (data && typeof data === "object"){
+								status_respuesta = data["status"] || data["Status"] || data["estado"] || data["result"] || "";
+							}
+
+							var respuesta_ok = (String(status_respuesta).replace(/^\s+|\s+$/g, "").toLowerCase() == "ok");
 							if (respuesta_ok){
 								alert("Fecha cambiada con exito");								
 							}
 							else{
+								if (window.console){
+									console.log("Respuesta cambiar_fecha_entrega no reconocida:", data);
+								}
 								alert("Ocurrio un problema al tratar de cambiar la fecha");
 								return false;
 							}
+						},
+						"error" : function(xhr, textStatus, errorThrown){
+							if (window.console){
+								console.log("Error ajax cambiar_fecha_entrega:", textStatus, errorThrown, xhr && xhr.responseText);
+							}
+							alert("Ocurrio un problema al tratar de cambiar la fecha");
 						}
 				});
 				//document.location.href = "?mod=PedidoTercero&id=1&tab=detalle&action=genera_pedido";
