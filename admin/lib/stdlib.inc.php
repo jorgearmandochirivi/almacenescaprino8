@@ -3313,6 +3313,8 @@ function crear_pdf_pedido($id_pedido_tercero){
 			$nota1_pdf = preg_replace('/:\s*1\./', ":<br>1.", $nota1_pdf);
 			$nota1_pdf = preg_replace('/\s+2\./', "<br>2.", $nota1_pdf);
 			$nota1_pdf = preg_replace('/\s+3\./', "<br>3.", $nota1_pdf);
+			$nota1_pdf = preg_replace('/\s*\/\s*-\s*/', "\n-", $nota1_pdf);
+			$nota1_pdf = preg_replace('/(?<!\n)\s-\s*(?=[A-ZÁÉÍÓÚÑ])/', "\n-", $nota1_pdf);
 			echo nl2br($nota1_pdf);
 		?></span></td>
     </tr>
