@@ -1111,8 +1111,10 @@ function print_formcrear_garantia($id="",$id_producto,$IDPuntoVenta,$newmode,$ti
 		<select name="IDReferencia" id="IDReferencia" data-placeholder="Seleccione Referencias..." class="" style="width:150px;" tabindex="4">
         	<option value=""></option>
 			<?php
+				$array_referencias = (array)$array_referencias;
+				$array_referencia_guardados = (array)$array_referencia_guardados;
                 foreach( $array_referencias as $key=>$valor ){
-						if(in_array($valor["IDReferencia"],$array_referencia_guardados))
+						if(in_array($valor["IDReferencia"], $array_referencia_guardados))
 							$opcion_selecc=" selected ";
 						else
 							$opcion_selecc="";
