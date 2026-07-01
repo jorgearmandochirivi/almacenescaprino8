@@ -187,7 +187,8 @@ $(document).ready(function(){
 						"url" : "ajax/envia_pedido.php" ,
 						"dataType" : "json",
 						"success" : function( data ){
-							if (data=="ok"){
+							var respuesta_ok = (data == "ok" || (data && data["status"] == "ok"));
+							if (respuesta_ok){
 								alert("Pedido reenvioado con exito");
 								document.location.href = "?mod=PedidoTercero";
 							}
@@ -214,7 +215,8 @@ $(document).ready(function(){
 						"url" : "ajax/cambiar_fecha_entrega.php" ,
 						"dataType" : "json",
 						"success" : function( data ){
-							if (data=="ok"){
+							var respuesta_ok = (data == "ok" || (data && data["status"] == "ok"));
+							if (respuesta_ok){
 								alert("Fecha cambiada con exito");								
 							}
 							else{
