@@ -67,22 +67,16 @@ if ($permisos[0] >= 2) {
 				db_query("BEGIN");
 
 				$_POST['ValorTotalSinBono'] = $_POST['ValorTotal'];
-
-				$_POST['ValorIVASinBono'] = $_POST['ValorIVA'];
-				$_POST['ValorBono'] = $_POST['SumaBono'];
-
-				$_POST['ValorIVA'] = $_POST['ValorIvaMenosBono'];
-				$_POST['ValorTotal'] = $_POST['ValorTotalFactura'];
-
-
+				$_POST['ValorIVASinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $_POST['ValorIVA']);
+				$_POST['ValorBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $_POST['SumaBono']);
+				$_POST['ValorIVA'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $_POST['ValorIvaMenosBono']);
+				$_POST['ValorTotal'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $_POST['ValorTotalFactura']);
 				$frm = vars_LOG($_POST);
-				$frm['IDFactura'] = insert($frm);
-
 				$frm['ValorTotalSinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorTotalSinBono']);
 				$frm['ValorIVASinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorIVASinBono']);
-				$frm['ValorBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorBono']);
+				$frm['ValorBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorBono']);										
 				$frm['IDClienteRedimioBono'] = $frm['IDCliente'];
-
+				$frm['IDFactura'] = insert($frm);
 				venta($frm);
 				agregarventaempleado($frm);
 
