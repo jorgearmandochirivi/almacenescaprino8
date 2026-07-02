@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<style>
+		@page {
+			size: 74mm 220mm;
+			margin: 0;
+		}
+
+		html {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+			font-size: 8pt;
+			margin: 0 0 0 6mm;
+			padding: 0 2mm 1mm 1mm;
+			width: 62mm;
+			box-sizing: border-box;
+		}
+
+		.texto {
+			font-size: 7pt;
+			line-height: 1.08;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 2px;
+			table-layout: fixed;
+		}
+
+		td {
+			overflow-wrap: break-word;
+			word-wrap: break-word;
+		}
+
+		.center {
+			text-align: center;
+		}
+
+		.right {
+			text-align: right;
+		}
+
+		.bold {
+			font-weight: bold;
+		}
+
+		.border-top {
+			border-top: 1px dotted #000;
+			margin-top: 2px;
+			padding-top: 2px;
+		}
+
+		.item-table td {
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+			font-size: 6.8pt;
+			font-weight: normal;
+			line-height: 1.05;
+			padding: 0.5px 0.35mm;
+			text-align: center;
+			vertical-align: top;
+		}
+
+		.footer-text {
+			font-size: 6.8pt;
+			line-height: 1.05;
+			text-align: justify;
+			text-align-last: left;
+			page-break-inside: auto;
+		}
+
+		.item-table .head td {
+			font-size: 6.4pt;
+			font-weight: bold;
+			line-height: 1.05;
+			padding-bottom: 1px;
+		}
+
+		.ref-cell {
+			line-height: 1.05;
+			word-break: break-word;
+		}
+
+		.num {
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+			font-weight: normal;
+			white-space: nowrap;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="center bold">
+		IMACAL SAS<br>
+		En Reorganizacion<br>
+		NIT <br>
+		Régimen común
+	</div>
+
+	<div class="center texto" style="margin-top: 6px;">
+		ESTE DOCUMENTO NO ES FACTURA DE VENTA, NOTA CREDITO O DOCUMENTO EQUIVALENTE
+	</div>
+
+	<div class="center bold" style="margin-top: 6px;">
+		APRECIADO CLIENTE:<br>
+		LA FACTURA O NOTA CREDITO ELECTRONICA<br>
+		SERA ENVIADA POR CORREO
+	</div>
+
+	<div class="texto border-top">
+		COMPROBANTE DE ENTREGA No. MJ-5004<br>
+		<strong>Almacén:</strong> Junin<br>
+		<strong>Dirección:</strong> Cra 49 Nro. 52-181 (Calle Comercial Junin)<br>
+		<strong>Teléfono:</strong> (4) 4796955<br>
+		<strong>Vendedor:</strong> Junin <br>
+		<strong>Fecha:</strong> 2026-07-01 21:01:04	</div>
+
+	<div class="texto border-top">
+		<strong>Cliente:</strong> Jorge Chirivi Castellanos<br>
+		<strong>Documento:</strong> 80160	</div>
+
+	<table class="item-table border-top" style="margin-top: 2px;">
+		<tr class="head">
+			<td style="width: 19%;">Ref</td>
+			<td class="num" style="width: 16%;">Vr U</td>
+			<td class="num" style="width: 7%;">Can</td>
+			<td class="num" style="width: 9%;">Dto</td>
+			<td class="num" style="width: 17%;">Vr D</td>
+			<td class="num" style="width: 8%;">D2</td>
+			<td class="num" style="width: 24%;">Total</td>
+		</tr>
+					<tr>
+				<td class="ref-cell">Z170<br>COMI<br><small>39</small></td>
+				<td class="num">242,500</td>
+				<td class="num">1</td>
+				<td class="num">0%</td>
+				<td class="num">242,500</td>
+				<td class="num">0%</td>
+				<td class="num">203,782</td>
+			</tr>
+			</table>
+
+	<table class="border-top" style="font-size: 7.4pt; line-height: 1.08;">
+				<tr>
+			<td>IVA</td>
+			<td class="right num">38,718</td>
+		</tr>
+		<tr class="bold" style="font-size: 8pt;">
+			<td>Valor Neto</td>
+			<td class="right num">242,500</td>
+		</tr>
+	</table>
+
+	<div class="bold" style="font-size: 8pt; margin-top: 3px;">FORMA DE PAGO</div>
+	<table style="font-size: 7.4pt; line-height: 1.08;">
+						<tr>
+					<td>Efectivo</td>
+					<td class="right num">242,500</td>
+				</tr>
+			</table>
+
+	<div class="footer-text border-top" style="margin-top: 5px;">
+			</div>
+
+			<div class="footer-text border-top">
+			Puntos Disponibles: <br>
+			Puntos Compra: 		</div>
+	
+	<div class="center" style="margin-top: 6px;">
+				<a href="/admin/files/facturas/FacturaMJ-5004.pdf">DESCARGAR PDF</a>
+	</div>
+
+</body>
+
+</html>
