@@ -125,14 +125,14 @@ ob_start();
 	}
 
 	.report-table td {
-		font-size: 7.1pt;
+		font-size: 6.9pt;
 		line-height: 1.1;
 		padding: 1px 0.4mm;
 		overflow: hidden;
 	}
 
 	.report-table .head td {
-		font-size: 7pt;
+		font-size: 6.8pt;
 		font-weight: bold;
 	}
 
@@ -141,10 +141,11 @@ ob_start();
 	}
 
 	.ref {
-		white-space: normal;
-		overflow-wrap: anywhere;
-		word-break: break-word;
+		white-space: nowrap;
+		overflow-wrap: normal;
+		word-break: normal;
 		text-align: left;
+		font-size: 6.3pt;
 	}
 
 	.border-top {
@@ -157,9 +158,9 @@ ob_start();
 <body><table id="#content"><tr><td class="report-header">IMACAL <?php
 																								$fecha_gen = date("Y-m-d H:i:s");
 																								echo $tipo_emp = ($fecha_gen >= "2019-07-19 00:00:00") ? "SAS" : "LTDA";
-																								?><br>Nit 860033182-4<br>Almacen <?= $r_puntoventa->Nombre ?><br>No. De Serial <?= $r_puntoventa->EquipoComputo ?><br>Fecha Generacion: <?= date("Y-m-d"); ?><br>Fecha Reporte: <?php echo $_GET["Fecha"] ?></td></tr><tr><td class='mainbg'><table class="report-table border-top" border="0" cellspacing="0" cellpadding="0"><tr class="head"><td class="navpic" style="width: 15%;" nowrap>No.</td><td class="navpic" style="width: 19%;" align="center">Ref</td><td class="navpic" style="width: 18%;" align="center" nowrap>Vr. Unit.</td><td class="navpic" style="width: 9%;" align="center" nowrap>Pares</td>
-	<td class="navpic" style="width: 21%;" align="center" nowrap>Pago</td>
-	<td class="navpic" style="width: 18%;" align="center" nowrap>IVA</td>
+																						?><br>Nit 860033182-4<br>Almacen <?= $r_puntoventa->Nombre ?><br>No. De Serial <?= $r_puntoventa->EquipoComputo ?><br>Fecha Generacion: <?= date("Y-m-d"); ?><br>Fecha Reporte: <?php echo $_GET["Fecha"] ?></td></tr><tr><td class='mainbg'><table class="report-table border-top" border="0" cellspacing="0" cellpadding="0"><tr class="head"><td class="navpic" style="width: 13%;" nowrap>No.</td><td class="navpic" style="width: 25%;" align="center">Ref</td><td class="navpic" style="width: 17%;" align="center" nowrap>Vr. Unit.</td><td class="navpic" style="width: 8%;" align="center" nowrap>Pares</td>
+	<td class="navpic" style="width: 20%;" align="center" nowrap>Pago</td>
+	<td class="navpic" style="width: 16%;" align="center" nowrap>IVA</td>
 </tr>
 <?php
 foreach ($r_facturas as $key => $valor) {
