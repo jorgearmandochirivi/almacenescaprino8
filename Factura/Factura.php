@@ -524,7 +524,7 @@
 				<tr>
                     	<td style="color:#EE080C;">
                         	<?php if ($IDPuntoVenta == 19) { ?>
-                            <a href="#" onClick="window.open( 'Factura/FImpresion.php?id=<?php echo $r->IDFactura ?>&idpunto=<?= $IDPuntoVenta ?>','','width=426, height=350' )">
+							<a href="#" onClick="window.open('Factura/FImpresion.php?id=<?php echo $r->IDFactura ?>&idpunto=<?= $IDPuntoVenta ?>','_blank','width=900,height=700,scrollbars=yes,resizable=yes')">
                             Reimprimir
                             </a>
 							<?php } ?>
