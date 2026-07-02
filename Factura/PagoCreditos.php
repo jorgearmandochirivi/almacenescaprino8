@@ -572,7 +572,7 @@
 										<?php if ($r->Estado == "ANULADA"): ?>
 											FACTURA ANULADA
 										<?php else: ?>
-											<input value="Imprimir Factura" type="button" class="submit" onClick="window.open( 'Factura/FImpresion.php?id=<?= $r->IDFactura ?>&idpunto=<?= $r->IDPuntoVenta ?>','','width=426, height=350' )">
+											<input value="Imprimir Factura" type="button" class="submit" onClick="window.open('Factura/FImpresion.php?id=<?= $r->IDFactura ?>&idpunto=<?= $r->IDPuntoVenta ?>','_blank','width=900,height=700,scrollbars=yes,resizable=yes')">
 										<?php endif; ?>
 
 										<input type="hidden" name="IDPuntoVentaPago" id="IDPuntoVentaPago" value="<?php echo $IDPuntoVenta; ?>">
