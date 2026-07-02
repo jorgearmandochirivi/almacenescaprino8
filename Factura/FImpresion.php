@@ -119,7 +119,9 @@ ob_start();
 
 		.ref-cell {
 			line-height: 1.05;
-			word-break: break-word;
+			white-space: nowrap;
+			overflow-wrap: normal;
+			word-break: normal;
 		}
 
 		.num {
@@ -178,7 +180,6 @@ ob_start();
 		$segunda = 0;
 		while ($r_detalle = db_fetch_object($query_detalle)) {
 			$ref = get_field("Referencia", "Numero", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)));
-			$ref_partida = trim(substr($ref, 0, 4) . "<br>" . substr($ref, 4));
 			$precio_consultado = get_field("Precio", "ValorVenta", "IDPrecio", get_field("Referencia", "IDPrecio", "IDReferencia", get_field("PuntoVentaReferencia", "IDReferencia", "IDPuntoVentaReferencia", get_field("CodificacionEspecifica", "IDPuntoVentaReferencia", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica))));
 			if (!$precio_consultado) {
 				$precio_consultado = $r_detalle->PrecioU;
@@ -186,7 +187,7 @@ ob_start();
 			$valorsin = ($r_detalle->ValorU * (1 - ($r_detalle->DescuentoPar / 100))) * $r_detalle->Cantidad;
 		?>
 			<tr>
-				<td class="ref-cell"><?= $ref_partida ?><br><small><?= get_field("Talla", "Descripcion", "IDTalla", get_field("CodificacionEspecifica", "IDTalla", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)); ?></small></td>
+				<td class="ref-cell"><?= $ref ?><?= !empty($r_detalle->CodigoTarjeta) ? "-" . $r_detalle->CodigoTarjeta : "" ?> <?= get_field("Talla", "Descripcion", "IDTalla", get_field("CodificacionEspecifica", "IDTalla", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)); ?></td>
 				<td class="num"><?= number_format($precio_consultado) ?></td>
 				<td class="num"><?= $r_detalle->Cantidad ?></td>
 				<td class="num"><?= number_format($r_detalle->DescuentoRef) ?>%</td>
