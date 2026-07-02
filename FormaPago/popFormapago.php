@@ -31,7 +31,7 @@ $Key = "IDPuntoVentaBanco";
 		switch (nvl($action)) {
 			case "insert" :
 				if(insertarformapago($_POST))
-					echo "<script>window.open( '../Factura/FImpresion.php?id=".$id."&idpunto=".$idpunto."','','width=426, height=350' );opener.location.reload(true);window.close();</script>";
+					echo "<script>window.open('../Factura/FImpresion.php?id=".$id."&idpunto=".$idpunto."','_blank','width=900,height=700,scrollbars=yes,resizable=yes');opener.location.reload(true);window.close();</script>";
 			break;
 
 			case "buscarbono" :
