@@ -26,7 +26,7 @@ $Key = "IDPuntoVentaBanco";
 		switch (nvl($action)) {
 			case "insert" :
 				if(insertarformapago($_POST))
-					echo "<script>window.open( '../Factura/FImpresion.php?id=".$id."&idpunto=".$idpunto."','','width=426, height=350' );opener.location.reload(true);window.close();</script>";
+					echo "<script>window.open('../Factura/FImpresion.php?id=".$id."&idpunto=".$idpunto."','_blank','width=900,height=700,scrollbars=yes,resizable=yes');opener.location.reload(true);window.close();</script>";
 			break;
 			default : 
 				print_form("insert","Realizar Pago");
@@ -55,7 +55,7 @@ function insertarformapago($frm)
 	
 	}//end foreach( $frm['IDFormaPago'] as $FormaPago )
 	
-	//Verificar si vienen puntos de fidelización y cumple con el valor
+	//Verificar si vienen puntos de fidelizaciï¿½n y cumple con el valor
 	foreach( $frm[ValorFidelizacion] as $key_fid => $valor_fid )
 	{
 		$Valor = $Valor + $valor_fid;
@@ -246,10 +246,10 @@ class Fecha {
 function suma_fechas($fecha,$ndias)
 {
       if (preg_match("/[0-9]{1,2}\/[0-9]{1,2}\/([0-9][0-9]){1,2}/",$fecha))
-              list($dia,$mes,$año)=explode("/", $fecha);
+              list($dia,$mes,$aï¿½o)=explode("/", $fecha);
       if (preg_match("/[0-9]{1,2}-[0-9]{1,2}-([0-9][0-9]){1,2}/",$fecha))
-              list($dia,$mes,$año)=explode("-", $fecha);
-        $nueva = mktime(0,0,0, $mes,$dia,$año) + $ndias * 24 * 60 * 60;
+              list($dia,$mes,$aï¿½o)=explode("-", $fecha);
+        $nueva = mktime(0,0,0, $mes,$dia,$aï¿½o) + $ndias * 24 * 60 * 60;
         $nuevafecha=date("d-m-Y",$nueva);
       return ($nuevafecha);  
 }
