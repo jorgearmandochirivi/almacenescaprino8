@@ -13,7 +13,12 @@
 				case "list":
 					if ($field == 'Talla.Descripcion') {
 						$sql = "SELECT Entrada.* FROM Entrada, Talla WHERE Talla.Descripcion LIKE '%$QryString%' AND Talla.IDTalla = Entrada.IDTalla AND IDPuntoVenta = '$IDPuntoVenta' GROUP BY IDEntrada ORDER BY Fecha DESC	 ";
-					} else {
+					} 
+					elseif( $field == 'Referencia.Numero') {
+						$sql = "SELECT Entrada.* FROM Entrada, PuntoVentaReferencia, Referencia WHERE Referencia.Numero LIKE '%$QryString%' AND Referencia.IDReferencia = PuntoVentaReferencia.IDReferencia AND PuntoVentaReferencia.IDPuntoVentaReferencia = Entrada.IDPuntoVentaReferencia AND IDPuntoVenta = '$IDPuntoVenta' GROUP BY IDEntrada ORDER BY Fecha DESC	 ";
+					}
+					
+					else {
 						$sql = make_qry_string($HTTP_GET_VARS);
 					}
 					list_r($sql);
