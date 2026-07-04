@@ -550,10 +550,20 @@ function make_qry_string($frm){
 
 		if($var[1] != "" ){
 			if($var[0]!=$frm['tjoin'] && $var[0] != $frm['tlevel']){
-				$IDJoinKey2 = db_fetch_object(db_query("SHOW KEYS FROM $var[0]"));
-				$select .= ", ".$var[0].".".$IDJoinKey2->Column_name;
-				$from .=", ".$var[0];
-				$where .=" AND ".$var[0].".".$IDJoinKey2->Column_name." = ".$frm['tjoin'].".".$IDJoinKey2->Column_name;
+				// Special case: Referencia joined with PuntoVentaReferencia
+				if($var[0] == "Referencia" && $frm['tjoin'] == "PuntoVentaReferencia"){
+					$select .= ", Referencia.IDReferencia";
+					$from .= ", Referencia";
+					$where .= " AND Referencia.IDReferencia = PuntoVentaReferencia.IDReferencia";
+				}
+				else {
+					$IDJoinKey2 = db_fetch_object(db_query("SHOW KEYS FROM $var[0]"));
+					if($IDJoinKey2 && !empty($IDJoinKey2->Column_name)){
+						$select .= ", ".$var[0].".".$IDJoinKey2->Column_name;
+						$from .=", ".$var[0];
+						$where .=" AND ".$var[0].".".$IDJoinKey2->Column_name." = ".$frm['tjoin'].".".$IDJoinKey2->Column_name;
+					}
+				}
 			}
 		}
 		else
@@ -561,21 +571,27 @@ function make_qry_string($frm){
 
 		$IDJoinKey = db_fetch_object(db_query("SHOW KEYS FROM $frm[tjoin]"));
 
-		$select .= ", ".$frm['tjoin'].".".$IDJoinKey->Column_name;
-		$from .=", ".$frm['tjoin'];
-		$where .=" AND ".$Table.".".$IDJoinKey->Column_name." = ".$frm['tjoin'].".".$IDJoinKey->Column_name;
+		if($IDJoinKey && !empty($IDJoinKey->Column_name)){
+			$select .= ", ".$frm['tjoin'].".".$IDJoinKey->Column_name;
+			$from .=", ".$frm['tjoin'];
+			$where .=" AND ".$Table.".".$IDJoinKey->Column_name." = ".$frm['tjoin'].".".$IDJoinKey->Column_name;
+		}
 		if($Join_Table && $frm['tjoin']!=$Join_Table && (!empty($frm['tlevel']) && $frm['tlevel'] != $Join_Table) && $Join_Table!=$var[0]){
 			$IDJoinKey3 = db_fetch_object(db_query("SHOW KEYS FROM $Join_Table"));
-			$select .= ", ".$Join_Table.".".$IDJoinKey3->Column_name;
-			$from .=", ".$Join_Table;
-			$where .= " AND ".$Join_Table.".".$IDJoinKey3->Column_name." = ".$frm['tjoin'].".".$IDJoinKey3->Column_name;
+			if($IDJoinKey3 && !empty($IDJoinKey3->Column_name)){
+				$select .= ", ".$Join_Table.".".$IDJoinKey3->Column_name;
+				$from .=", ".$Join_Table;
+				$where .= " AND ".$Join_Table.".".$IDJoinKey3->Column_name." = ".$frm['tjoin'].".".$IDJoinKey3->Column_name;
+			}
 		}
 
 		if(!empty($frm['tlevel'])){ //la tabla join tiene el mismo nivel con $frm['tlevel']
 			$IDJoinKey4 = db_fetch_object(db_query("SHOW KEYS FROM {$frm['tlevel']}"));
-			$select .= ", ".$frm['tlevel'].".".$IDJoinKey4->Column_name;
-			$from .=", ".$frm['tlevel'];
-			$where .= " AND ".$frm['tlevel'].".".$IDJoinKey4->Column_name." = ".$Table.".".$IDJoinKey4->Column_name;
+			if($IDJoinKey4 && !empty($IDJoinKey4->Column_name)){
+				$select .= ", ".$frm['tlevel'].".".$IDJoinKey4->Column_name;
+				$from .=", ".$frm['tlevel'];
+				$where .= " AND ".$frm['tlevel'].".".$IDJoinKey4->Column_name." = ".$Table.".".$IDJoinKey4->Column_name;
+			}
 		}
 		if($idnot)
 			$where .=" AND $Table.$joinKey = '$idnot'";
