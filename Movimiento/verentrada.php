@@ -15,7 +15,7 @@
 						$sql = "SELECT Entrada.* FROM Entrada, Talla WHERE Talla.Descripcion LIKE '%$QryString%' AND Talla.IDTalla = Entrada.IDTalla AND IDPuntoVenta = '$IDPuntoVenta' GROUP BY IDEntrada ORDER BY Fecha DESC	 ";
 					} 
 					elseif( $field == 'Referencia.Numero') {
-						$sql = "SELECT Entrada.* FROM Entrada, PuntoVentaReferencia, Referencia WHERE Referencia.Numero LIKE '%$QryString%' AND Referencia.IDReferencia = PuntoVentaReferencia.IDReferencia AND PuntoVentaReferencia.IDPuntoVentaReferencia = Entrada.IDPuntoVentaReferencia AND IDPuntoVenta = '$IDPuntoVenta' GROUP BY IDEntrada ORDER BY Fecha DESC	 ";
+						$sql = "SELECT Entrada.* FROM Entrada, PuntoVentaReferencia, Referencia WHERE Referencia.Numero LIKE '%$QryString%' AND Referencia.IDReferencia = PuntoVentaReferencia.IDReferencia AND PuntoVentaReferencia.IDPuntoVentaReferencia = Entrada.IDPuntoVentaReferencia AND PuntoVentaReferencia.IDPuntoVenta = '$IDPuntoVenta' GROUP BY IDEntrada ORDER BY Fecha DESC	 ";
 					}
 					
 					else {
