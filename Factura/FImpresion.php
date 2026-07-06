@@ -119,9 +119,23 @@ ob_start();
 
 		.ref-cell {
 			line-height: 1.05;
-			white-space: nowrap;
-			overflow-wrap: normal;
-			word-break: normal;
+			white-space: normal;
+			overflow-wrap: anywhere;
+			word-break: break-word;
+			text-align: left;
+		}
+
+		.ref-main {
+			display: block;
+			white-space: normal;
+			overflow-wrap: anywhere;
+			word-break: break-word;
+		}
+
+		.ref-size {
+			display: block;
+			font-size: 6.3pt;
+			margin-top: 0.2mm;
 		}
 
 		.num {
@@ -166,13 +180,13 @@ ob_start();
 
 	<table class="item-table border-top" style="margin-top: 2px;">
 		<tr class="head">
-			<td style="width: 19%;">Ref</td>
-			<td class="num" style="width: 16%;">Vr U</td>
+			<td style="width: 26%;">Ref</td>
+			<td class="num" style="width: 14%;">Vr U</td>
 			<td class="num" style="width: 7%;">Can</td>
-			<td class="num" style="width: 9%;">Dto</td>
-			<td class="num" style="width: 17%;">Vr D</td>
-			<td class="num" style="width: 8%;">D2</td>
-			<td class="num" style="width: 24%;">Total</td>
+			<td class="num" style="width: 8%;">Dto</td>
+			<td class="num" style="width: 15%;">Vr D</td>
+			<td class="num" style="width: 7%;">D2</td>
+			<td class="num" style="width: 23%;">Total</td>
 		</tr>
 		<?php
 		$sql_detalle = "SELECT * FROM DetalleFactura WHERE IDFactura = '$r->IDFactura' AND IDPuntoVenta = '$r->IDPuntoVenta' ";
@@ -187,7 +201,10 @@ ob_start();
 			$valorsin = ($r_detalle->ValorU * (1 - ($r_detalle->DescuentoPar / 100))) * $r_detalle->Cantidad;
 		?>
 			<tr>
-				<td class="ref-cell"><?= $ref ?><?= !empty($r_detalle->CodigoTarjeta) ? "-" . $r_detalle->CodigoTarjeta : "" ?> <?= get_field("Talla", "Descripcion", "IDTalla", get_field("CodificacionEspecifica", "IDTalla", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)); ?></td>
+				<td class="ref-cell">
+					<span class="ref-main"><?= $ref ?><?= !empty($r_detalle->CodigoTarjeta) ? "-" . $r_detalle->CodigoTarjeta : "" ?></span>
+					<span class="ref-size"><?= get_field("Talla", "Descripcion", "IDTalla", get_field("CodificacionEspecifica", "IDTalla", "IDCodificacionEspecifica", $r_detalle->IDCodificacionEspecifica)); ?></span>
+				</td>
 				<td class="num"><?= number_format($precio_consultado) ?></td>
 				<td class="num"><?= $r_detalle->Cantidad ?></td>
 				<td class="num"><?= number_format($r_detalle->DescuentoRef) ?>%</td>
