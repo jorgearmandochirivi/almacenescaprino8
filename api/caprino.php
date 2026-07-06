@@ -80,7 +80,7 @@ switch( $action ){
 		$FechaPedido=$_POST["FechaPedido"];
 		$Referencias = $_POST["Referencias"]; 
 		$Bonos = $_POST["Bonos"]; 
-		$respuesta = SIMWebService::set_pedido($NumeroPedido,$CedulaCliente,$NombreCliente,$Valor,$FechaPedido,$Referencias,$Bonos);
+		//$respuesta = SIMWebService::set_pedido($NumeroPedido,$CedulaCliente,$NombreCliente,$Valor,$FechaPedido,$Referencias,$Bonos);
 		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
 		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
 		exit;
