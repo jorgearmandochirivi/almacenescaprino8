@@ -22,14 +22,14 @@ switch( $action ){
 	case "gettoken":		
 		$Usuario = $_POST["Usuario"];
 		$Clave = $_POST["Clave"];		
-		$respuesta = SIMWebServiceToken::get_token($Usuario,$Clave);
+		//$respuesta = SIMWebServiceToken::get_token($Usuario,$Clave);
 		die( json_encode( array(  'success' => $respuesta["success"], 'message'=>$respuesta["message"], 'response' => $respuesta["response"], 'date' => $nowserver ) ) );
 		exit;
 	break;
 
 	case "gettalla":
 		require "lib/SIMWebService.inc.php";
-		$respuesta = SIMWebService::get_talla();
+		//$respuesta = SIMWebService::get_talla();
 		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
 		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
 		exit;
@@ -37,7 +37,7 @@ switch( $action ){
 
 	case "gettiporeferencia":
 		require "lib/SIMWebService.inc.php";
-		$respuesta = SIMWebService::get_tipo_referencia();
+		//$respuesta = SIMWebService::get_tipo_referencia();
 		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
 		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
 		exit;
@@ -45,7 +45,7 @@ switch( $action ){
 
 	case "getcolor":		
 		require "lib/SIMWebService.inc.php";
-		$respuesta = SIMWebService::get_color();
+		//$respuesta = SIMWebService::get_color();
 		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
 		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
 		exit;
@@ -54,7 +54,7 @@ switch( $action ){
 	case "getbono":		
 		require "lib/SIMWebService.inc.php";
 		$Documento = $_POST["Documento"];
-		$respuesta = SIMWebService::get_bono($Documento);
+		//$respuesta = SIMWebService::get_bono($Documento);
 		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
 		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
 		exit;
@@ -65,7 +65,7 @@ switch( $action ){
 		$Referencia = $_POST["Referencia"];
 		$Pagina = $_POST["Pagina"];
 		$CantidadPorPagina = $_POST["CantidadPorPagina"];
-		$respuesta = SIMWebService::get_producto($Referencia,$Pagina,$CantidadPorPagina);
+		//$respuesta = SIMWebService::get_producto($Referencia,$Pagina,$CantidadPorPagina);
 		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
 		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
 		exit;
