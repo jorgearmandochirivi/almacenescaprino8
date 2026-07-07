@@ -6,7 +6,6 @@
 	}
 </script>
 
-
 <?php
 
 //envia_bienvenida_club(316657);
@@ -1394,7 +1393,6 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 		function recalcular_valores_factura_con_alianza(descuento, tipo_producto, tipo_alianza, TipoReferencia = "", MinimoProductos) {
 
-
 			// borro todos los calculos de combos
 			var validar = 1;
 			var numero_producto = 0;
@@ -1405,7 +1403,6 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 			}
 
 			for (i = 1; i <= document.frm.ITEM.value; i++) {
-
 				if (tipo_alianza == "Referido") {
 					document.frm.elements["DescuentoLin" + i].value = "";
 				} else {
@@ -1506,6 +1503,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 			}
 
 
+			aplicar_descuento_pulsera_cremare();
 			recalcularvalores();
 
 		}
@@ -3599,6 +3597,14 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 
+			aplicar_descuento_pulsera_cremare();
+
+
+
+		}
+
+		function aplicar_descuento_pulsera_cremare() {
+
 			var observacionPromoCremare = "Pulsera gratis por compras mayores a $350.000";
 			var totalFacturaSinCremare = 0;
 			var itemsCremare = new Array();
@@ -3637,8 +3643,6 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 					document.frm.elements["ObservacionDescuento"].value = "";
 				}
 			}
-
-
 
 		}
 
