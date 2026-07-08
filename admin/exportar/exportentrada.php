@@ -2,7 +2,7 @@
 	include("../config.inc.php");
 	Encabezado();
 
-    $sql_garantias = $_GET[sql];
+	$sql_garantias = $_GET["sql"];
 	$now_date = date('m-d-Y H:i');
 
 	$Table = "Entrada";
@@ -41,7 +41,7 @@
 	$sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta ";
 	$qry_puntos = db_query( $sql_puntos );
 	while( $r_puntos = db_fetch_array( $qry_puntos ) )
-		$array_puntos[ $r_puntos[ IDPuntoVenta ] ] = $r_puntos[ Nombre ];
+		$array_puntos[ $r_puntos["IDPuntoVenta"] ] = $r_puntos["Nombre"];
 
 
 
