@@ -81,13 +81,20 @@
 	//start while loop to get data
 		while( $r_entrada = db_fetch_array( $qry_facturas ) )
 		{
-			$IDReferencia = get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_entrada["IDPuntoVentaReferencia"]);
-			
-			$sql_ref="SELECT * FROM Referencia WHERE IDReferencia = $IDReferencia LIMIT 1";
-			$r_sql=db_query($sql_ref);
-			$r_ref=db_fetch_array($r_sql);
+			$IDReferencia = (int)get_field("PuntoVentaReferencia","IDReferencia","IDPuntoVentaReferencia",$r_entrada["IDPuntoVentaReferencia"]);
+			$NombreProveedor = "";
 
-			$NombreProveedor=get_field("Proveedor","Nombre","IDProveedor",$r_ref["IDProveedor"]);
+			if($IDReferencia > 0){
+				$sql_ref = "SELECT IDProveedor FROM Referencia WHERE IDReferencia = $IDReferencia LIMIT 1";
+				$r_sql = db_query($sql_ref, false, true, true);
+				if($r_sql){
+					$r_ref = db_fetch_array($r_sql);
+					$IDProveedor = (int)($r_ref["IDProveedor"] ?? 0);
+					if($IDProveedor > 0){
+						$NombreProveedor = get_field("Proveedor","Nombre","IDProveedor",$IDProveedor);
+					}
+				}
+			}
 			echo $r_entrada["FechaRemision"] .$sep;
 			echo $array_puntos[$r_entrada["IDPuntoVenta"]] .$sep;
 			echo $NombreProveedor .$sep;
