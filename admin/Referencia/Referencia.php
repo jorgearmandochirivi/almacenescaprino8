@@ -41,6 +41,121 @@ function table_check_list_desc($Table,$Key,$key_value,$table_option,$key_option,
 	echo formcheckgroup($array_option,$option_checked,$check_name);
 	
 	}
+
+function construir_descripcion_larga($datos)
+{
+	$descripcion = "";
+
+	if(!empty($datos["MaterialesMarroq"]))
+		$descripcion .= "Materiales:".$datos["MaterialesMarroq"]."\r";
+	if(!empty($datos["Capellada"]))
+		$descripcion .= "Capellada:".$datos["Capellada"]."\r";
+	if(!empty($datos["Forro"]))
+		$descripcion .= "Forro:".$datos["Forro"]."\r";
+	if(!empty($datos["ForroMarroq"]))
+		$descripcion .= "Forro Marroquinería:  ".$datos["ForroMarroq"]."\r";
+	if(!empty($datos["Plantilla"]))
+		$descripcion .= "Plantilla:".$datos["Plantilla"]."\r";
+	if(!empty($datos["Suela"]))
+		$descripcion .= "Suela:".$datos["Suela"]."\r";
+	if(!empty($datos["Altura"]))
+		$descripcion .= "Altura:".$datos["Altura"]."\r\r(para mayor informacion consultar la guia de tallas)\r";
+
+	if(!empty($datos["AlturaMarroq"]) || !empty($datos["AnchoMarroq"]) || !empty($datos["ProfundidadMarroq"]))
+		$descripcion .= "Dimensiones:\r";
+
+	if(!empty($datos["AlturaMarroq"]))
+		$descripcion .= "Altura:".$datos["AlturaMarroq"]."\r";
+	if(!empty($datos["AnchoMarroq"]))
+		$descripcion .= "Ancho:".$datos["AnchoMarroq"]."\r";
+	if(!empty($datos["ProfundidadMarroq"]))
+		$descripcion .= "Profundidad:".$datos["ProfundidadMarroq"]."\r";
+
+	if(!empty($datos["Pais"]))
+		$descripcion .= "\rPais origen:".$datos["Pais"]."\r";
+	if(!empty($datos["Sic"]))
+		$descripcion .= "Codigo Sic:".$datos["Sic"]."\r";
+
+	return $descripcion;
+}
+
+function datos_descripcion_larga_formulario($frm)
+{
+	return array(
+		"MaterialesMarroq" => $frm["MaterialesMarroq"],
+		"Capellada" => get_field("Capellada","Nombre","IDCapellada",$frm["IDCapellada"]),
+		"Forro" => get_field("Forro","Nombre","IDForro",$frm["IDForro"]),
+		"ForroMarroq" => get_field("Forro","Nombre","IDForro",$frm["IDForroMarr"]),
+		"Plantilla" => get_field("Plantilla","Nombre","IDPlantilla",$frm["IDPlantilla"]),
+		"Suela" => get_field("Suela","Nombre","IDSuela",$frm["IDSuela"]),
+		"Altura" => get_field("Altura","Nombre","IDAltura",$frm["IDAltura"]),
+		"AlturaMarroq" => $frm["AlturaMarroq"],
+		"AnchoMarroq" => $frm["AnchoMarroq"],
+		"ProfundidadMarroq" => $frm["ProfundidadMarroq"],
+		"Pais" => get_field(
+			"Pais",
+			"Descripcion",
+			"IDPais",
+			get_field("Proveedor","IDPais","IDProveedor",$frm["IDProveedor"])
+		),
+		"Sic" => get_field("Proveedor","Nit","IDProveedor",$frm["IDProveedor"])
+	);
+}
+
+function procesar_lote_descripciones_largas($ultimo_id, $tamano_lote)
+{
+	Global $ID_Usuario, $Nombre_Usuario;
+
+	$ultimo_id = (int)$ultimo_id;
+	$tamano_lote = max(1, min(500, (int)$tamano_lote));
+
+	$sql = "SELECT R.IDReferencia, R.MaterialesMarroq, R.AlturaMarroq, R.AnchoMarroq, R.ProfundidadMarroq,
+				C.Nombre AS Capellada, F.Nombre AS Forro, FM.Nombre AS ForroMarroq,
+				PL.Nombre AS Plantilla, S.Nombre AS Suela, A.Nombre AS Altura,
+				PA.Descripcion AS Pais, P.Nit AS Sic
+			FROM Referencia R
+			LEFT JOIN Capellada C ON C.IDCapellada = R.IDCapellada
+			LEFT JOIN Forro F ON F.IDForro = R.IDForro
+			LEFT JOIN Forro FM ON FM.IDForro = R.IDForroMarr
+			LEFT JOIN Plantilla PL ON PL.IDPlantilla = R.IDPlantilla
+			LEFT JOIN Suela S ON S.IDSuela = R.IDSuela
+			LEFT JOIN Altura A ON A.IDAltura = R.IDAltura
+			LEFT JOIN Proveedor P ON P.IDProveedor = R.IDProveedor
+			LEFT JOIN Pais PA ON PA.IDPais = P.IDPais
+			WHERE R.IDReferencia > '$ultimo_id'
+				AND R.Publicar = 'S'
+			ORDER BY R.IDReferencia ASC
+			LIMIT $tamano_lote";
+	$qry = db_query($sql);
+	$procesados = 0;
+	$nuevo_ultimo_id = $ultimo_id;
+	$usuario = mysqli_real_escape_string($GLOBALS["DB_LINK"], (string)$Nombre_Usuario);
+
+	db_query("START TRANSACTION");
+	while($referencia = db_fetch_array($qry))
+	{
+		$descripcion = construir_descripcion_larga($referencia);
+		$descripcion_sql = mysqli_real_escape_string($GLOBALS["DB_LINK"], $descripcion);
+		$id_referencia = (int)$referencia["IDReferencia"];
+		$sql_update = "UPDATE Referencia
+						SET DescripcionLarga = '$descripcion_sql',
+							UsuarioTrEd = '$usuario',
+							FechaTrEd = NOW()
+						WHERE IDReferencia = '$id_referencia'";
+		db_query($sql_update);
+		insertlog($ID_Usuario, "Referencia", $id_referencia, "Actualizar lote", $sql_update);
+
+		$nuevo_ultimo_id = $id_referencia;
+		$procesados++;
+	}
+	db_query("COMMIT");
+
+	return array(
+		"procesados" => $procesados,
+		"ultimo_id" => $nuevo_ultimo_id,
+		"hay_mas" => ($procesados == $tamano_lote)
+	);
+}
 		
 
 if($permisos[0] >= 2)
@@ -102,55 +217,9 @@ if($permisos[0] >= 2)
 				}//end if(isset($IDTalla))
 
 				///La descripcion larga se arma automaticamente
-				$Capellada=get_field("Capellada","Nombre","IDCapellada",$frm["IDCapellada"]);
-				$Forro=get_field("Forro","Nombre","IDForro",$frm["IDForro"]);
-				$ForroMarroq=get_field("Forro","Nombre","IDForro",$frm["IDForroMarr"]);
-				$Plantilla=get_field("Plantilla","Nombre","IDPlantilla",$frm["IDPlantilla"]);
-				$Suela=get_field("Suela","Nombre","IDSuela",$frm["IDSuela"]);
-				$Altura=get_field("Altura","Nombre","IDAltura",$frm["IDAltura"]);
-				$IDPais=get_field("Proveedor","IDPais","IDProveedor",$frm["IDProveedor"]);
-				$Pais=get_field("Pais","Descripcion","IDPais",$IDPais);
-				$Sic=get_field("Proveedor","Nit","IDProveedor",$frm["IDProveedor"]);
-				$AlturaMarroq=$frm["AlturaMarroq"];
-				$AnchoMarroq=$frm["AnchoMarroq"];
-				$ProfundidadMarroq=$frm["ProfundidadMarroq"];
-				$MaterialesMarroq=$frm["MaterialesMarroq"];
-
-				if(!empty($MaterialesMarroq))
-					$DatosDecrip.="Materiales:".$MaterialesMarroq."\r";				
-				if(!empty($Capellada))
-					$DatosDecrip.="Capellada:".$Capellada."\r";	
-				if(!empty($Forro))
-					$DatosDecrip.="Forro:".$Forro."\r";	
-				if(!empty($ForroMarroq))
-					$DatosDecrip.="Forro Marroquinería:  ".$ForroMarroq."\r";
-				if(!empty($Plantilla))
-					$DatosDecrip.="Plantilla:".$Plantilla."\r";
-				if(!empty($Suela))
-					$DatosDecrip.="Suela:".$Suela."\r";
-				if(!empty($Altura))
-					$DatosDecrip.="Altura:".$Altura."\r\r(para mayor informacion consultar la guia de tallas)\r";
-
-
-				if(!empty($AlturaMarroq) || !empty($AnchoMarroq) || !empty($ProfundidadMarroq))
-					$DatosDecrip.="Dimensiones:"."\r";
-
-				if(!empty($AlturaMarroq))
-					$DatosDecrip.="Altura:".$AlturaMarroq."\r";
-				if(!empty($AnchoMarroq))
-					$DatosDecrip.="Ancho:".$AnchoMarroq."\r";
-				if(!empty($ProfundidadMarroq))
-					$DatosDecrip.="Profundidad:".$ProfundidadMarroq."\r";
-				
-
-				if(!empty($Pais))
-					$DatosDecrip.="\rPais origen:".$Pais."\r";
-				if(!empty($Sic))
-					$DatosDecrip.="Codigo Sic:".$Sic."\r";
-
-				
-
-				$frm["DescripcionLarga"]=$DatosDecrip;
+				$frm["DescripcionLarga"] = construir_descripcion_larga(
+					datos_descripcion_larga_formulario($frm)
+				);
 
 
 				//Subir imagenes
@@ -178,6 +247,34 @@ if($permisos[0] >= 2)
 				//en el POST. Si es diferente se actualiza la codificacion especifica de la referencia
 
 			break;
+			case "actualizar_descripciones_largas":
+				if($permisos[0] < 3)
+					echo Mensaje_Info("No tiene permisos para ejecutar esta actualizacion","row2");
+				else
+					confirmar_actualizacion_descripciones_largas();
+			break;
+			case "procesar_descripciones_largas":
+				if($permisos[0] < 3)
+				{
+					echo Mensaje_Info("No tiene permisos para ejecutar esta actualizacion","row2");
+					break;
+				}
+				if($_SERVER["REQUEST_METHOD"] !== "POST")
+				{
+					confirmar_actualizacion_descripciones_largas();
+					break;
+				}
+
+				$ultimo_id = isset($_POST["ultimo_id"]) ? (int)$_POST["ultimo_id"] : 0;
+				$total_procesados = isset($_POST["total_procesados"]) ? (int)$_POST["total_procesados"] : 0;
+				$resultado_lote = procesar_lote_descripciones_largas($ultimo_id, 100);
+				$total_procesados += $resultado_lote["procesados"];
+
+				if($resultado_lote["hay_mas"])
+					continuar_actualizacion_descripciones_largas($resultado_lote["ultimo_id"], $total_procesados);
+				else
+					finalizar_actualizacion_descripciones_largas($total_procesados);
+			break;
 			case "del":
 				print_form($id,"delete","Eliminar $TitleMod","Remover Registro");
 			break ;
@@ -203,6 +300,93 @@ if($permisos[0] >= 2)
 }//end if(permisos[0] > 2)
 else
 	echo Mensaje_Info("No tiene Permisos Suficientes","col2");
+
+function confirmar_actualizacion_descripciones_largas()
+{
+?>
+	<br>
+	<table width="600" cellpadding="4" cellspacing="0" align="center" class="bordertable">
+		<tr>
+			<td class="titlemedium" bgcolor="#9daac6"><b>Actualizar descripciones largas</b></td>
+		</tr>
+		<tr>
+			<td class="row2">
+				Este proceso reconstruirá la descripción larga únicamente de las referencias
+				con Publicar = 'S',
+				en lotes de 100 registros, usando la información actual de materiales,
+				forros, plantilla, suela, dimensiones, país y código SIC.
+			</td>
+		</tr>
+		<tr>
+			<td class="row2" align="center">
+				<form method="post" action="./">
+					<input type="hidden" name="mod" value="Referencia">
+					<input type="hidden" name="action" value="procesar_descripciones_largas">
+					<input type="hidden" name="ultimo_id" value="0">
+					<input type="hidden" name="total_procesados" value="0">
+					<input type="submit" class="submit" value="Iniciar actualización">
+					<a href="?mod=Referencia">Cancelar</a>
+				</form>
+			</td>
+		</tr>
+	</table>
+<?php
+}
+
+function continuar_actualizacion_descripciones_largas($ultimo_id, $total_procesados)
+{
+	$ultimo_id = (int)$ultimo_id;
+	$total_procesados = (int)$total_procesados;
+?>
+	<br>
+	<table width="600" cellpadding="4" cellspacing="0" align="center" class="bordertable">
+		<tr>
+			<td class="titlemedium" bgcolor="#9daac6"><b>Actualización en proceso</b></td>
+		</tr>
+		<tr>
+			<td class="row2">
+				Referencias actualizadas: <?php echo $total_procesados; ?>.
+				El siguiente lote comenzará automáticamente.
+			</td>
+		</tr>
+	</table>
+	<form id="continuar-descripciones" method="post" action="./">
+		<input type="hidden" name="mod" value="Referencia">
+		<input type="hidden" name="action" value="procesar_descripciones_largas">
+		<input type="hidden" name="ultimo_id" value="<?php echo $ultimo_id; ?>">
+		<input type="hidden" name="total_procesados" value="<?php echo $total_procesados; ?>">
+		<noscript>
+			<div align="center">
+				<input type="submit" class="submit" value="Procesar siguiente lote">
+			</div>
+		</noscript>
+	</form>
+	<script>
+		window.setTimeout(function () {
+			document.getElementById("continuar-descripciones").submit();
+		}, 250);
+	</script>
+<?php
+}
+
+function finalizar_actualizacion_descripciones_largas($total_procesados)
+{
+	$total_procesados = (int)$total_procesados;
+?>
+	<br>
+	<table width="600" cellpadding="4" cellspacing="0" align="center" class="bordertable">
+		<tr>
+			<td class="titlemedium" bgcolor="#9daac6"><b>Actualización terminada</b></td>
+		</tr>
+		<tr>
+			<td class="row2">
+				Se reconstruyó la descripción larga de <?php echo $total_procesados; ?> referencias publicadas.
+				<a href="?mod=Referencia">Volver a referencias</a>
+			</td>
+		</tr>
+	</table>
+<?php
+}
 
 /*******************************************************************************************
 		funtcion Print_form
@@ -767,7 +951,7 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 		funcion Listar
 *******************************************************************************************/
 	function list_r($sql=""){
-		Global $TitleMod,$MOD,$Table,$Key,$listar;
+		Global $TitleMod,$MOD,$Table,$Key,$listar,$permisos;
 
 	if($_GET["t"]=="todos"){
 		$where_publicar=" 1 ";
@@ -809,6 +993,11 @@ function selmovimiento( IDMOVIMIENTO, FECHA )
 	<tr>
 		<td class=nav width=76%>&nbsp;&nbsp;&nbsp;&nbsp;<img src=images/folderopen.gif border=0>
 		<a href="./?mod=<?php echo $MOD?>">Administrar <?php  echo $TitleMod?></a> </td>
+		<?php if($permisos[0] >= 3){ ?>
+		<td nowrap>
+			<a href="./?mod=<?php echo $MOD?>&action=actualizar_descripciones_largas">Actualizar descripciones largas</a>
+		</td>
+		<?php } ?>
 		<td><a href="./?mod=<?php echo $MOD?>&action=add"><img src='images/botNreg.gif' border='0'></a></td>
 	</tr>
 </table>
