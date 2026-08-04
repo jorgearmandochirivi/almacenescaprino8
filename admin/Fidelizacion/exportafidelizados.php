@@ -2,60 +2,6 @@
 	ini_set('max_execution_time', 0);
 	include("../config.inc.php");
 	Encabezado();
-	
-	
-	$year = 2016;
-	
-	$sql="SELECT IDCliente
-		FROM  `TarjetaFidelizacion` 
-		WHERE YEAR(  `FechaTrEd` ) =2016
-		AND IDCliente >0
-		Group by IDCliente
-		
-		";
-	$qry = db_query($sql);			
-	while ($row = db_fetch_array($qry )){	
-		$sql_cli = "SELECT SUM(ValorTotal)as Total
-				FROM  Factura
-				WHERE IDCliente =  '".$row["IDCliente"]."' and year(FechaFactura) = 2016";			
-		$qry_cli = db_query($sql_cli);			
-		$row_bono_year = db_fetch_array($qry_cli );
-		$valor_total+=$row_bono_year["Total"];
-	}
-	
-	echo $valor_total;
-	exit;
-			
-	
-	
-	
-	$sql_bono_year = "SELECT IDFactura, IDPuntoVenta
-				FROM  BonoFidelizacion
-				WHERE Estado =  'R'
-				AND YEAR(  `Fecha` ) ='".$year."'";
-	$qry_bono_year = db_query($sql_bono_year);			
-	while ($row_bono_year = db_fetch_array($qry_bono_year )){
-		//$row_bono_year["IDFactura"];
-		$sql_venta = "Select ValorTotal, FechaFactura, IDFactura From Factura Where IDfactura = '".$row_bono_year["IDFactura"]."' and IDPuntoVenta = '".$row_bono_year["IDPuntoVenta"]."'";
-		$qry_venta = db_query($sql_venta);
-		$row_venta = db_fetch_array($qry_venta);
-		$ventas_total_year += $row_venta["ValorTotal"];	
-		
-		//items
-		$sql_detalle_fac = "Select count(IDDetalleFactura) as Items From DetalleFactura Where IDFactura = '".$row_bono_year["IDFactura"]."' and IDPuntoVenta = '".$row_bono_year["IDPuntoVenta"]."'";
-		$qry_detalle_fac = db_query($sql_detalle_fac);
-		$row_detalle_factura = db_fetch_array($qry_detalle_fac);
-		$items_total_year += $row_detalle_factura["Items"];
-		
-	}
-	
-	echo "VALOR TOTAL " .$year . ": $" . number_format($ventas_total_year,0,',','.') . " ITEMS: " . $items_total_year;
-	exit;
-	
-				
-	
-	
-	
     $sql_clientes = "SELECT * FROM Cliente WHERE ClubSuavidad = 'S' Order By IDCLiente LIMIT 4000 OFFSET 40001";
 	//$sql_clientes = "SELECT * FROM Cliente WHERE ClubSuavidad = 'S' Order By IDCLiente LIMIT 20 OFFSET 0";
 	//$sql_clientes = "SELECT * FROM Cliente WHERE ClubSuavidad = 'S' Order By IDCLiente";
