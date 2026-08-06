@@ -63,10 +63,14 @@ if ($permisos[0] >= 2) {
 			//print_form($id,"update","Actualizar $TitleMod","Realizar Movimiento");
 			break;
 		case "insertcliente":
-			$_POST['Gustos'] = implode(",", $_POST['Gustos']);
-			$_POST['Hobbies'] = implode(",", $_POST['Hobbies']);
-			$_POST['Deportes'] = implode(",", $_POST['Deportes']);
-			$_POST['Musica'] = implode(",", $_POST['Musica']);
+			// Los campos de preferencias normalmente llegan como arreglos de checkboxes,
+			// pero pueden no enviarse o llegar como un valor único.
+			foreach (array('Gustos', 'Hobbies', 'Deportes', 'Musica') as $campo_preferencia) {
+				$preferencias = $_POST[$campo_preferencia] ?? array();
+				$_POST[$campo_preferencia] = is_array($preferencias)
+					? implode(',', $preferencias)
+					: trim((string) $preferencias);
+			}
 			$frm = vars_LOG($_POST);
 			$id = insert_width_table($frm, "Cliente", "IDCliente");
 			print_form($id, "insert", "Generar Factura", "Generar Factura");
