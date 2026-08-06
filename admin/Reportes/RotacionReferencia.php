@@ -669,7 +669,10 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 								$referencia = array();
 								$rotacion = array();
 								foreach((array)$array_referencia_resumen as $id => $valor ):
-									$Rotacion = number_format(  ( $valor["Pares"] / ( $valor["Pares"] + $valor["Inventario"] ) * 100 ) , 1 );
+									$baseRotacion = $valor["Pares"] + $valor["Inventario"];
+									$Rotacion = $baseRotacion > 0
+										? number_format(( $valor["Pares"] / $baseRotacion ) * 100, 1)
+										: number_format(0, 1);
 									$valor["Rotacion"] =  $Rotacion;
 									$datos[]= $valor;
 								endforeach;
