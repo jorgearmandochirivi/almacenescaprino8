@@ -644,8 +644,8 @@
 										<td class=navpic nowrap bgcolor=#DBEAF5>Estado</td>
 										<td class=navpic nowrap bgcolor=#DBEAF5>Factura Electr&oacute;nica</td>
 										<?php if ($IDPuntoVenta == 16) { ?>
-											<td class=navpic nowrap bgcolor=#DBEAF5>Nro Ped Payu</td>
-											<td class=navpic nowrap bgcolor=#DBEAF5>Payu</td>
+											<td class=navpic nowrap bgcolor=#DBEAF5>Nro Ped</td>
+											<td class=navpic nowrap bgcolor=#DBEAF5>Medio de pago</td>
 										<?php } ?>
 									</tr>
 
@@ -700,16 +700,9 @@
 												<td align=center valign=middle nowrap width=50 class="<?= $class ?>">
 													<?php echo $r->NumeroPayu;  ?>
 												</td>
-												<td align=center valign=middle nowrap width=50 class="<?= $class ?>">
-													<?php if (!empty($r->NumeroPayu) && $r->PagoPayu != "S") {  ?>
-														<input type="radio" class="btnpayu" name="pagopayu<?php echo $r->$Key . "-" . $r->IDPuntoVenta; ?>" idfactura='<?php echo $r->$Key ?>' idpuntoventa='<?php echo $r->IDPuntoVenta ?>' value="S" <?php if ($r->PagoPayu == "S") echo "checked"; ?>>Si
-														<input type="radio" class="btnpayu" name="pagopayu<?php echo $r->$Key . "-" . $r->IDPuntoVenta; ?>" idfactura='<?php echo $r->$Key ?>' idpuntoventa='<?php echo $r->IDPuntoVenta ?>' value="N" <?php if ($r->PagoPayu == "N" || $r->PagoPayu == "") echo "checked"; ?>>No
-														<div name='msgupdatepayu<?php echo $r->$Key ?>' id='msgupdatepayu<?php echo $r->$Key ?>'></div>
-													<?php } else {
-														echo $r->PagoPayu;
-													}
-													?>
-												</td>
+											<td align=center valign=middle nowrap width=50 class="<?= $class ?>">
+												<?php echo htmlspecialchars($r->MedioPagoPedido ?? '', ENT_QUOTES, 'UTF-8'); ?>
+											</td>
 											<?php } ?>
 
 										</tr>
