@@ -3891,8 +3891,22 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 														</td>
 													</tr>
 													<tr>
-														<td class=col1>Numero pedido payu</td>
+														<td class=col1>Nro Ped</td>
 														<td class=col2><input type="text" class="tbox" name="NumeroPayu" size="15" value='<?php echo $r->NumeroPayu; ?>'></td>
+														<td class=col1>Medio de pago</td>
+														<td class=col2>
+															<select class="tbox" name="MedioPagoPedido">
+																<option value="">Seleccione</option>
+																<option value="Addi"<?php if (($frm['MedioPagoPedido'] ?? '') == 'Addi') echo ' selected'; ?>>Addi</option>
+																<option value="PayU"<?php if (($frm['MedioPagoPedido'] ?? '') == 'PayU') echo ' selected'; ?>>PayU</option>
+																<option value="Wompi"<?php if (($frm['MedioPagoPedido'] ?? '') == 'Wompi') echo ' selected'; ?>>Wompi</option>
+																<option value="Transferencia"<?php if (($frm['MedioPagoPedido'] ?? '') == 'Transferencia') echo ' selected'; ?>>Transferencia</option>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td class=col1></td>
+														<td class=col2></td>
 														<td class=col1>N&uacute;mero registro</td>
 														<td class=col2><input type="number" class="tbox" name="NumeroRegistro" id="NumeroRegistro" class="NumeroRegistro" size="15" value='<?php echo $r->NumeroRegistro; ?>'></td>
 													</tr>
