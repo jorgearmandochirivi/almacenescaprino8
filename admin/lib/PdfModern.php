@@ -6,14 +6,13 @@ use Dompdf\Options;
 class PdfModern
 {
     /**
-     * Genera un PDF a partir de una cadena HTML.
-     * 
+     * Renderiza una cadena HTML como PDF sin escribirlo en disco.
+     *
      * @param string $html Contenido HTML completo.
-     * @param string $outputFile Ruta absoluta donde se guardará el PDF.
-     * @param array $paperSize [ancho_mm, alto_mm] o nombre del papel.
-     * @return bool
+     * @param array|string $paperSize [ancho_mm, alto_mm] o nombre del papel.
+     * @return string|false Contenido binario del PDF o false si falla.
      */
-    public static function generate($html, $outputFile, $paperSize = [60, 120])
+    public static function render($html, $paperSize = [60, 120])
     {
         // Asegurarse de que el autoloader esté cargado si se usa independientemente
         $autoload_root = dirname(__FILE__) . '/../../vendor/autoload.php';
@@ -65,13 +64,25 @@ class PdfModern
             // Renderizar
             $dompdf->render();
 
-            // Guardar en archivo
-            file_put_contents($outputFile, $dompdf->output());
-
-            return true;
+            return $dompdf->output();
         } catch (\Throwable $e) {
             error_log("PdfModern Exception: " . $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * Genera un PDF a partir de una cadena HTML y lo guarda en disco.
+     *
+     * @param string $html Contenido HTML completo.
+     * @param string $outputFile Ruta absoluta donde se guardará el PDF.
+     * @param array|string $paperSize [ancho_mm, alto_mm] o nombre del papel.
+     * @return bool
+     */
+    public static function generate($html, $outputFile, $paperSize = [60, 120])
+    {
+        $pdf = self::render($html, $paperSize);
+
+        return $pdf !== false && file_put_contents($outputFile, $pdf) !== false;
     }
 }

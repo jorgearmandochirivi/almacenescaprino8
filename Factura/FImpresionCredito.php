@@ -33,12 +33,7 @@ if (empty($almacen_pago)) {
 	$almacen_pago = $r_puntoventa->Nombre;
 }
 
-$filedir = $dirroot . "/files/facturas/";
-$name = "FCreditos" . $r_puntoventa->Codigo . $r->NumeroFactura . $idcuota . ".html";
 $namePDF = "FCreditos" . $r_puntoventa->Codigo . $r->NumeroFactura . $idcuota . ".pdf";
-$file = "$filedir$name";
-$filepdf = "$filedir$namePDF";
-$ruta_redireccion = "/admin/files/facturas/" . $namePDF;
 
 ob_start();
 ?>
@@ -190,20 +185,20 @@ ob_start();
 		</tr>
 	</table>
 
-	<div class="center" style="margin-top: 10px;">
-		<a href="<?php echo $ruta_redireccion; ?>">DESCARGAR PDF</a>
-	</div>
 </body>
 
 </html>
 <?php
 $html = ob_get_clean();
-$fw = fopen($file, "w");
-fputs($fw, $html);
-fclose($fw);
+$pdf = PdfModern::render($html, [74, 165]);
 
-echo $html;
+if ($pdf === false) {
+	http_response_code(500);
+	exit('No fue posible generar el PDF del recibo de credito.');
+}
 
-PdfModern::generate($html, $filepdf, [74, 165]);
-echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
+header('Content-Type: application/pdf');
+header('Content-Disposition: inline; filename="' . $namePDF . '"');
+header('Content-Length: ' . strlen($pdf));
+echo $pdf;
 ?>
