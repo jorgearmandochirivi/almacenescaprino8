@@ -22,12 +22,7 @@ $sql_puntoVenta = "SELECT * from PuntoVenta WHERE IDPuntoVenta = '$r->IDPuntoVen
 $qry_puntoventa = db_query($sql_puntoVenta);
 $r_puntoventa = db_fetch_object($qry_puntoventa);
 
-$filedir = $dirroot . "/files/facturas/";
-$name = "FBonos" . $r_puntoventa->Codigo . $r->IDFacturaBono . ".html";
 $namePDF = "FBonos" . $r_puntoventa->Codigo . $r->IDFacturaBono . ".pdf";
-$file = "$filedir$name";
-$filepdf = "$filedir$namePDF";
-$ruta_redireccion = "/admin/files/facturas/" . $namePDF;
 
 ob_start();
 ?>
@@ -181,20 +176,20 @@ ob_start();
 		Este es un documento de transaccion con bonos.
 	</div>
 
-	<div class="center" style="margin-top: 6px;">
-		<a href="<?php echo $ruta_redireccion; ?>">DESCARGAR PDF</a>
-	</div>
 </body>
 
 </html>
 <?php
 $html = ob_get_clean();
-$fw = fopen($file, "w");
-fputs($fw, $html);
-fclose($fw);
+$pdf = PdfModern::render($html, [74, 190]);
 
-echo $html;
+if ($pdf === false) {
+	http_response_code(500);
+	exit('No fue posible generar el PDF del recibo de bono.');
+}
 
-PdfModern::generate($html, $filepdf, [74, 190]);
-echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
+header('Content-Type: application/pdf');
+header('Content-Disposition: inline; filename="' . $namePDF . '"');
+header('Content-Length: ' . strlen($pdf));
+echo $pdf;
 ?>

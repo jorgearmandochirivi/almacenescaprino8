@@ -21,11 +21,7 @@ $sql_puntoVenta = "SELECT * from PuntoVenta WHERE IDPuntoVenta = '$r->IDPuntoVen
 $qry_puntoventa = db_query($sql_puntoVenta);
 $r_puntoventa = db_fetch_object($qry_puntoventa);
 
-$filedir = $dirroot . "/files/facturas/";
-$name = "Factura" . $r_puntoventa->Codigo . $r->NumeroFactura . ".html";
 $namePDF = "Factura" . $r_puntoventa->Codigo . $r->NumeroFactura . ".pdf";
-$file = "$filedir$name";
-$filepdf = "$filedir$namePDF";
 
 $club_suavidad = get_field("Cliente", "ClubSuavidad", "IDCliente", $r->IDCliente);
 $array_fidelizacion = fid_get_puntos($r->IDCliente, $id);
@@ -279,22 +275,20 @@ ob_start();
 		</div>
 	<?php endif; ?>
 
-	<div class="center" style="margin-top: 6px;">
-		<?php $ruta_redireccion = "/admin/files/facturas/Factura" . $r_puntoventa->Codigo . $r->NumeroFactura . ".pdf"; ?>
-		<a href="<?= $ruta_redireccion ?>">DESCARGAR PDF</a>
-	</div>
-
 </body>
 
 </html>
 <?php
 $html = ob_get_clean();
-$fw = fopen($file, "w");
-fputs($fw, $html);
-fclose($fw);
+$pdf = PdfModern::render($html, [74, 190]);
 
-echo $html;
+if ($pdf === false) {
+	http_response_code(500);
+	exit('No fue posible generar el PDF de la factura.');
+}
 
-PdfModern::generate($html, $filepdf, [74, 190]);
-echo "<script>window.location.href='" . $ruta_redireccion . "';</script>";
+header('Content-Type: application/pdf');
+header('Content-Disposition: inline; filename="' . $namePDF . '"');
+header('Content-Length: ' . strlen($pdf));
+echo $pdf;
 ?>
