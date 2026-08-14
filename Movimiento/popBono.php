@@ -1,159 +1,95 @@
 <?php
-
-
 include("../admin/config.inc.php");
-Encabezado();
-
-//$datos = Verifica_SesionCliente();
-
-$IDPuntoVenta = $datos['IDPuntoVenta'];
-
-
-if ($_GET['id']) {
-  $id_bonos = explode("|", $_GET['id']);
+if (!class_exists('PdfModern')) {
+	require_once(__DIR__ . "/../admin/lib/PdfModern.php");
 }
-
 require_once $libdir . 'codigobarras.php';
 
+$id_bonos = array_filter(array_map('intval', explode('|', $_GET['id'] ?? '')));
 
-
-?>
-<html>
-
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=ISO-8859-1">
-  <meta name="generator" content="Adobe GoLive 6">
-  <title>Caprino :: Entradas</title>
-  <link rel="stylesheet" href="../styles.css?1" type="text/css">
-  <style type="text/css">
-    .texto {
-      font-family: Verdana, Arial, Helvetica, sans-serif;
-      font-size: 6.5px;
-      color: #000000;
-    }
-  </style>
-</head>
-
-<body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
-
-  <?php
-
-
-  if (count($id_bonos) > 0) {
-
-    foreach ($id_bonos as $id_bono_value) {
-
-      //$parametros_codigo_barras=(int)$id_bono_value*21+133;
-      $valorNumericoBono = (int)$id_bono_value * 21 + 133;
-      $parametros_codigo_barras = "BonoCaprino-" . $valorNumericoBono;
-      $IDCliente = $r->IDCliente;
-      $alto_barras = '30';
-      $ImagenCodigo = generar_codigo_barras($parametros_codigo_barras, $IDCliente, $alto_barras, $libdir, $dirroot);
-
-      $url_barras = $url . "../files/codigobarras/" . $ImagenCodigo;
-
-
-
-
-      $filedir = $dirroot . "../files/bonos/";
-      $name = "Bono" . $id_bono_value . ".html";
-      $namePDF = "Bono" . $id_bono_value . ".pdf";
-      $file = "$filedir$name";
-      $filepdf = "$filedir$namePDF";
-      ob_start();
-
-      $qid = db_query("SELECT * FROM BonoFidelizacion WHERE IDBonoFidelizacion = '$id_bono_value' ");
-      $r = db_fetch_object($qid);
-  ?>
-
-      <table width="500" align="center">
-        <tr>
-          <td colspan="2"><img src="http://www.almacenescaprino.com/images/cabezote actual-01.png" alt="" width="215" height="107" /></td>
-        </tr>
-        <tr>
-          <td class=texto>Numero..</td>
-          <td class=texto><?php echo $r->IDBonoFidelizacion; ?></td>
-        </tr>
-        <tr>
-          <td class=texto>Fecha de Vencimiento: </td>
-          <td class=texto><?php echo $r->FechaVencimiento; ?><br>
-            ( <?php echo $vigencia_bonos = get_field("ParametroFidelizacion", "Valor", "IDParametroFidelizacion", 3); ?> meses a partir de hoy)
-          </td>
-        </tr>
-        <tr>
-          <td class=texto>Valor BONO</span></td>
-          <td class=texto><?php echo "$" . number_format($r->Valor, 2); ?></td>
-        </tr>
-        <tr>
-          <td class=texto>&nbsp;</td>
-          <td class=texto>&nbsp;</td>
-        </tr>
-        <tr>
-          <td colspan="2" class=texto>
-            Nombre Cliente: <?php echo get_field("Cliente", "Nombre", "IDCliente", $r->IDCliente) . " " . get_field("Cliente", "Apellido", "IDCliente", $r->IDCliente); ?><br>
-            Documento Cliente: <?php echo get_field("Cliente", "Cedula", "IDCliente", $r->IDCliente); ?><br><br><br>
-            Firma Cliente:______________
-            <br><br>
-            Vendedor Redime Bono:______________
-            <br><br>
-            Firma Vendedor:______________
-
-            <br>
-
-            <img src=<?php echo $url_barras ?> width="500">
-
-
-          </td>
-        </tr>
-
-        <tr>
-          <td colspan="2" class=texto>
-            <ul>
-              <li>Cada bono tiene un c&oacute;digo &uacute;nico que est&aacute; asociado a tu documento de identidad y s&oacute;lo podr&aacute; ser redimido una vez. </li>
-              <li>Puedes utilizar los bonos como medio de pago en cualquiera de nuestras tiendas Caprino o por compras en nuestra tienda virtual.</li>
-              <li>Debes llenar el bono con tus datos y firma para poderlo redimir y hacerlo v&aacute;lido. Este bono podr&aacute;s transferirlo a un tercero, siempre y cuando venga diligenciado con tus datos. </li>
-              <li>Si no usas el bono durante el periodo de vigencia, &eacute;ste se vencer&aacute; y no podr&aacute; ser utilizado.</li>
-              <li>Bono redimible hasta por el 50% del valor de la compra o compras superiores a $100.000.</li>
-              <li>No acumulable con otras promociones</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class=texto>
-
-            <?php
-
-            $page = ob_get_contents();
-            $fw = fopen($file, "w");
-            fputs($fw, $page, strlen($page));
-            fclose($fw);
-            ob_end_clean();
-            echo $page;
-            passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
-
-            $filedir_download = $url . "../files/bonos/";
-            $namePDF = "Bono" . $id_bono_value . ".pdf";
-            ?>
-            <a href="<?php echo $filedir_download . $namePDF ?>">Abrir pdf</a>
-
-          </td>
-        </tr>
-
-
-
-      </table>
-
-  <?php
-
-
-    }
-  } ?>
-</body>
-
-</html>
-
-<?php
-if (!empty($_GET['correo'])) {
-  envia_bono_cliente($_GET['id_cliente'], $id_bonos);
+if (empty($id_bonos)) {
+	http_response_code(400);
+	exit('Debe indicar al menos un bono.');
 }
+
+// El correo usa una URL dinámica del código de barras y ya no depende de archivos en disco.
+if (!empty($_GET['correo']) && !empty($_GET['id_cliente'])) {
+	envia_bono_cliente((int) $_GET['id_cliente'], $id_bonos);
+}
+
+ob_start();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<style>
+		body { font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #000; }
+		.bono { width: 500px; margin: 0 auto; }
+		.bono + .bono { page-break-before: always; }
+		.texto { font-size: 10px; }
+	</style>
+</head>
+<body>
+<?php foreach ($id_bonos as $id_bono): ?>
+	<?php
+	$qid = db_query("SELECT * FROM BonoFidelizacion WHERE IDBonoFidelizacion = '$id_bono'");
+	$r = db_fetch_object($qid);
+	if (!$r) {
+		continue;
+	}
+
+	$valor_numerico_bono = $r->IDBonoFidelizacion * 21 + 133;
+	$codigo_barras = generar_codigo_barras_base64('BonoCaprino-' . $valor_numerico_bono, $libdir, 30);
+	?>
+	<table class="bono">
+		<tr>
+			<td colspan="2"><img src="http://www.almacenescaprino.com/images/cabezote actual-01.png" alt="Caprino" width="215" height="107"></td>
+		</tr>
+		<tr><td class="texto">Número</td><td class="texto"><?php echo $r->IDBonoFidelizacion; ?></td></tr>
+		<tr>
+			<td class="texto">Fecha de vencimiento</td>
+			<td class="texto"><?php echo $r->FechaVencimiento; ?><br>(<?php echo get_field('ParametroFidelizacion', 'Valor', 'IDParametroFidelizacion', 3); ?> meses a partir de hoy)</td>
+		</tr>
+		<tr><td class="texto">Valor bono</td><td class="texto"><?php echo '$' . number_format($r->Valor, 2); ?></td></tr>
+		<tr><td colspan="2" class="texto">&nbsp;</td></tr>
+		<tr>
+			<td colspan="2" class="texto">
+				Nombre cliente: <?php echo get_field('Cliente', 'Nombre', 'IDCliente', $r->IDCliente) . ' ' . get_field('Cliente', 'Apellido', 'IDCliente', $r->IDCliente); ?><br>
+				Documento cliente: <?php echo get_field('Cliente', 'Cedula', 'IDCliente', $r->IDCliente); ?><br><br><br>
+				Firma cliente: ____________________<br><br>
+				Vendedor redime bono: ____________________<br><br>
+				Firma vendedor: ____________________<br><br>
+				<?php if ($codigo_barras !== false): ?><img src="<?php echo $codigo_barras; ?>" width="500"><?php endif; ?>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="texto">
+				<ul>
+					<li>Cada bono tiene un código único asociado a tu documento de identidad y solo podrá redimirse una vez.</li>
+					<li>Puedes utilizarlo como medio de pago en tiendas Caprino o en la tienda virtual.</li>
+					<li>Debes diligenciar el bono con tus datos y firma para hacerlo válido.</li>
+					<li>Si no lo usas durante su vigencia, se vencerá y no podrá utilizarse.</li>
+					<li>Redimible hasta por el 50% del valor de compras superiores a $100.000.</li>
+					<li>No acumulable con otras promociones.</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+<?php endforeach; ?>
+</body>
+</html>
+<?php
+$html = ob_get_clean();
+$pdf = PdfModern::render($html, 'A4');
+
+if ($pdf === false) {
+	http_response_code(500);
+	exit('No fue posible generar el PDF de los bonos.');
+}
+
+header('Content-Type: application/pdf');
+header('Content-Disposition: inline; filename="Bonos-' . implode('-', $id_bonos) . '.pdf"');
+header('Content-Length: ' . strlen($pdf));
+echo $pdf;
 ?>
