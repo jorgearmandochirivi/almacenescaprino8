@@ -6,6 +6,8 @@ if (!class_exists('PdfModern')) {
 require_once $libdir . 'codigobarras.php';
 
 $id_bonos = array_filter(array_map('intval', explode('|', $_GET['id'] ?? '')));
+$ruta_logo = __DIR__ . '/../images/cabezote actual-01.png';
+$logo = is_readable($ruta_logo) ? 'data:image/png;base64,' . base64_encode(file_get_contents($ruta_logo)) : '';
 
 if (empty($id_bonos)) {
 	http_response_code(400);
@@ -44,7 +46,7 @@ ob_start();
 	?>
 	<table class="bono">
 		<tr>
-			<td colspan="2"><img src="http://www.almacenescaprino.com/images/cabezote actual-01.png" alt="Caprino" width="215" height="107"></td>
+			<td colspan="2"><?php if ($logo !== ''): ?><img src="<?php echo $logo; ?>" alt="Caprino" width="215" height="107"><?php endif; ?></td>
 		</tr>
 		<tr><td class="texto">Número</td><td class="texto"><?php echo $r->IDBonoFidelizacion; ?></td></tr>
 		<tr>
