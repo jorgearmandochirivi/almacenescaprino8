@@ -2536,7 +2536,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 			var IDPuntoVenta = IDPuntoVenta = parseInt(document.frm.IDPuntoVenta.value);
-			if (IDPuntoVenta == 1000000000) {
+			if (IDPuntoVenta >= 1) {
 				var DESCUENTOREF = 0;
 				var Promo1 = document.frm.elements["Promo1"].value;
 				var semanacumple = "N";
