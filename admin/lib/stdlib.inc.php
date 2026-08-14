@@ -1207,42 +1207,18 @@ global $dirroot;
 			$cuerpo_bono=str_replace("[DocumentoCliente]",$cedula,$cuerpo_bono);
 			*/
 
-			$valorNumericoBono=(int)$id_bono_value*21+133;	  
-			
-        	$ImagenCodigo="BonoCaprino-".$valorNumericoBono.".png";
+			$url_codigo_barras = "https://www.almacenescaprino.com/Movimiento/codigoBono.php?id=" . (int)$id_bono_value;
+			$cuerpo_bono = str_replace(
+				array(
+					'http://www.almacenescaprino.com/files/codigobarras/[ImagenCodigoBarras]',
+					'https://www.almacenescaprino.com/files/codigobarras/[ImagenCodigoBarras]',
+					'/files/codigobarras/[ImagenCodigoBarras]',
+					'[ImagenCodigoBarras]'
+				),
+				$url_codigo_barras,
+				$cuerpo_bono
+			);
 
-			$url = "http://www.almacenescaprino.com/files/codigobarras/".$ImagenCodigo;        
-			
-			if(! @ file_get_contents($url)){
-				echo 'path doesnt exist';
-			}
-			else{         
-				$cuerpo_bono=str_replace("[ImagenCodigoBarras]",$ImagenCodigo,$cuerpo_bono);			   
-
-				/*
-				$filedir = $dirroot . "../files/bonos/";
-				$name = "Bono" . $id_bono_value . ".html";
-				$namePDF = "Bono" . $id_bono_value . ".pdf";
-				$file = "$filedir$name";
-				$filepdf = "$filedir$namePDF";
-
-				ob_start();
-				echo $cuerpo_bono;
-				$page = ob_get_contents();
-				$fw = fopen($file, "w");
-				fputs($fw,$page,strlen($page));
-				fclose($fw);
-				ob_end_clean();
-				echo $page;
-				passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
-				$msj_bonos.=$cuerpo_bono;
-				$mail->AddAttachment($filepdf,"Bono".$id_bono_value.".pdf");
-				*/
-			}
-				
-
-
-			
 		}
 	}
 
