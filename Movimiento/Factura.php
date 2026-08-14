@@ -2726,7 +2726,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 
-			//PROMOCION 1 Par 5% 2 Pares 10% y 3 Pares 15% solo de linea y saldos
+			// PROMOCION: 5% adicional por dos pares y 10% adicional por tres o mas pares, solo de linea y saldos
 
 			var ref_descuento = new Array();
 			for (i = 1; i <= document.frm.ITEM.value; i++) {
@@ -2770,31 +2770,23 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 			var contador_linea = ref_descuento.length;
 			switch (contador_linea) {
-				case 1:
+				case 2:
 					ref_descuento.forEach((element) => {
-						// Solo aplica si no tiene descuento
-						if (document.frm.elements["Descuento" + element].value == 0) {
-							porcentaje_descuento = 5;
-							document.frm.elements["DescuentoLin" + element].value = porcentaje_descuento;
-							document.frm.elements["DescuentoLin" + element].style.background = "#CCFFCC";
-							document.frm.elements["ObservacionDescuento"].value = "5% a todo lo de saldos";
-						}
+						porcentaje_descuento = 5;
+						document.frm.elements["DescuentoLin" + element].value = porcentaje_descuento;
+						document.frm.elements["DescuentoLin" + element].style.background = "#CCFFCC";
+						document.frm.elements["ObservacionDescuento"].value = "5% adicional por dos pares";
 					})
 					break;
-				case 2:
+				default:
+					if (contador_linea < 3) {
+						break;
+					}
 					ref_descuento.forEach((element) => {
 						porcentaje_descuento = 10;
 						document.frm.elements["DescuentoLin" + element].value = porcentaje_descuento;
 						document.frm.elements["DescuentoLin" + element].style.background = "#CCFFCC";
-						document.frm.elements["ObservacionDescuento"].value = "10% a todo lo de saldos/linea";
-					})
-					break;
-				case 3:
-					ref_descuento.forEach((element) => {
-						porcentaje_descuento = 15;
-						document.frm.elements["DescuentoLin" + element].value = porcentaje_descuento;
-						document.frm.elements["DescuentoLin" + element].style.background = "#CCFFCC";
-						document.frm.elements["ObservacionDescuento"].value = "15% a todo lo de saldos";
+						document.frm.elements["ObservacionDescuento"].value = "10% adicional por tres o mas pares";
 					})
 					break;
 			}
