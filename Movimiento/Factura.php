@@ -2729,6 +2729,8 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 			// PROMOCION: 5% adicional por dos pares y 10% adicional por tres o mas pares, solo de linea y saldos
 
 			var ref_descuento = new Array();
+			// Billetera, Portacelulares, Cosmetiqueras, Accesorios y Pequeña Marroq.
+			var tipos_referencia_no_aplican_promocion = [11, 12, 13, 16, 20];
 			for (i = 1; i <= document.frm.ITEM.value; i++) {
 
 				var referencia = document.frm.elements["Numero" + i].value;
@@ -2736,6 +2738,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 				var proveedor2 = referencia.substr(0, 3);
 				var proveedor3 = referencia.substr(0, 1);
 				var talla = document.frm.elements["Talla" + i].value;
+				var tipo_referencia = parseInt(document.frm.elements["TipoReferencia" + i].value, 10);
 
 				if (proveedor1 != "ZB" && proveedor1 != "zb" && proveedor1 != "ZM" && proveedor1 != "zm" && proveedor1 != "ZQ" && proveedor1 != "zq" && proveedor1 != "ZU" && proveedor1 != "zu" && proveedor1 != "ZC" && proveedor1 != "zc" && proveedor2 != "ZWP" && proveedor2 != "zwp" && proveedor1 != "un" && proveedor2 != "un" && proveedor1 != "o" && proveedor1 != "O" && proveedor2 != "zwl" && proveedor2 != "ZWL") {
 					if (document.frm.elements["ProductoNoAplica"].value == "S") {
@@ -2748,7 +2751,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 				if (document.frm.elements["Descuento" + i].value >= 0 && document.frm.elements["Precio" + i].value != '' && document.frm.elements["Precio" + i].value != '0') {
 
-					if (talla != "1" && semanacumple == "N" && document.frm.elements["DescuentoCumple"].value == "0" && proveedor1 != "ZC" && proveedor1 != "zc" && proveedor1 != "ZT" && proveedor1 != "zt" && proveedor1 != "ZV" && proveedor1 != "zv" && proveedor2 != "ZWP" && proveedor2 != "zwp" && proveedor2 != "ZFR" && proveedor2 != "zfr" && referencia != "COPL70CF" && referencia != "COPL70NE" && referencia != "CORE60CF" && referencia != "CORE60NE" && referencia != "CORE70CF" && referencia != "CORE70NE" && referencia != "CORE80CF" && referencia != "CORE80NE" && referencia != "CREMACM*" && referencia != "CREMACN*" && referencia != "OW28****" && referencia != "OW95****" && referencia != "RAPQ" && referencia != "TARJETA" && referencia != "ZSE1****" && referencia != "ZSE2****" && referencia != "ZSE3****" && referencia != "ZSP1COMI" && referencia != "ZSP1CONE") {
+					if (talla != "1" && semanacumple == "N" && document.frm.elements["DescuentoCumple"].value == "0" && tipos_referencia_no_aplican_promocion.indexOf(tipo_referencia) === -1 && proveedor1 != "ZC" && proveedor1 != "zc" && proveedor1 != "ZT" && proveedor1 != "zt" && proveedor1 != "ZV" && proveedor1 != "zv" && proveedor2 != "ZWP" && proveedor2 != "zwp" && proveedor2 != "ZFR" && proveedor2 != "zfr" && referencia != "COPL70CF" && referencia != "COPL70NE" && referencia != "CORE60CF" && referencia != "CORE60NE" && referencia != "CORE70CF" && referencia != "CORE70NE" && referencia != "CORE80CF" && referencia != "CORE80NE" && referencia != "CREMACM*" && referencia != "CREMACN*" && referencia != "OW28****" && referencia != "OW95****" && referencia != "RAPQ" && referencia != "TARJETA" && referencia != "ZSE1****" && referencia != "ZSE2****" && referencia != "ZSE3****" && referencia != "ZSP1COMI" && referencia != "ZSP1CONE") {
 
 						if (talla == "1") {
 							var marroquineria = "S";
