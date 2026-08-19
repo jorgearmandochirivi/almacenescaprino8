@@ -64,4 +64,48 @@
 
         return $nombre_archivo;
     }
+
+	/**
+	 * Genera el código de barras en memoria para usarlo en un PDF o respuesta HTTP.
+	 */
+	function generar_codigo_barras_base64($parametros_codigo_barras, $libdir, $alto_barras = '')
+	{
+		if (!function_exists('imagecreate')) {
+			error_log('No fue posible generar código de barras: la extensión GD no está disponible.');
+			return false;
+		}
+
+		require_once $libdir . 'barcodegen/class/BCGFontFile.php';
+		require_once $libdir . 'barcodegen/class/BCGColor.php';
+		require_once $libdir . 'barcodegen/class/BCGDrawing.php';
+		require_once $libdir . 'barcodegen/class/BCGcode128.barcode.php';
+
+		$font = new BCGFontFile($libdir . 'barcodegen/font/Arial.ttf', 18);
+		$color_black = new BCGColor(0, 0, 0);
+		$color_white = new BCGColor(255, 255, 255);
+		$alto_barras = $alto_barras === '' ? 30 : $alto_barras;
+
+		try {
+			$code = new BCGcode128();
+			$code->setScale(8);
+			$code->setThickness($alto_barras);
+			$code->setForegroundColor($color_black);
+			$code->setBackgroundColor($color_white);
+			$code->setFont($font);
+			$code->parse($parametros_codigo_barras);
+
+			$drawing = new BCGDrawing(null, $color_white);
+			$drawing->setBarcode($code);
+			$drawing->draw();
+
+			ob_start();
+			$drawing->finish(BCGDrawing::IMG_FORMAT_PNG);
+			$png = ob_get_clean();
+
+			return 'data:image/png;base64,' . base64_encode($png);
+		} catch (Throwable $exception) {
+			error_log('No fue posible generar código de barras: ' . $exception->getMessage());
+			return false;
+		}
+	}
 ?>
