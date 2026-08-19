@@ -71,6 +71,14 @@ if ($permisos[0] >= 2) {
 				$_POST['ValorIVA'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $_POST['ValorIvaMenosBono']);
 				$_POST['ValorTotal'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $_POST['ValorTotalFactura']);
 				$frm = vars_LOG($_POST);
+				// El campo no llega cuando la factura no utiliza bonos.
+				$bonos_redimidos = $frm['IDBonoFidelizacion'] ?? array();
+				if (!is_array($bonos_redimidos)) {
+					$bonos_redimidos = array($bonos_redimidos);
+				}
+				$frm['IDBonoFidelizacion'] = array_values(array_filter($bonos_redimidos, function ($id_bono) {
+					return $id_bono !== '' && $id_bono !== null;
+				}));
 				$frm['ValorTotalSinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorTotalSinBono']);
 				$frm['ValorIVASinBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorIVASinBono']);
 				$frm['ValorBono'] = preg_replace("/[\$\%\!\@\#\^\&\*\(\)\=\~\`\?\{\}\'\:\'\;\<\>\,]/", "", $frm['ValorBono']);										
