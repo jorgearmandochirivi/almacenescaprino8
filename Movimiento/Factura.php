@@ -85,9 +85,13 @@ if ($permisos[0] >= 2) {
 					envia_bono_redimido($frm["IDCliente"], $valor_fid, $frm['IDPuntoVenta']);
 					//redimir puntos
 					fid_redimir_bono($frm["IDCliente"], $valor_fid, $frm['IDFactura'], $frm['IDPuntoVenta'], $frm['IDClienteRedimioBono']);
-
-					echo "<script>window.open('Movimiento/popBono.php?id=" . $frm['IDBonoFidelizacion'] . "&idpunto=" . $IDPuntoVenta . "','','width=550, height=650, scrollbars=yes');</script>";
 				} //end for
+
+				// Imprimir los bonos redimidos. El formulario entrega este campo como arreglo.
+				$bonos_impresion = implode('|', array_map('intval', $frm['IDBonoFidelizacion']));
+				if ($bonos_impresion !== '') {
+					echo "<script>window.open('Movimiento/popBono.php?id=" . rawurlencode($bonos_impresion) . "&idpunto=" . (int)$IDPuntoVenta . "','','width=550, height=650, scrollbars=yes');</script>";
+				}
 
 				if ((int)$frm["BonoIva"] > 0) {
 					$sql_bono_iva_redimido = "Update BonoIva set  IDFacturaRedime = '" . $frm['IDFactura'] . "', IDPuntoVentaRedime = '" . $frm['IDPuntoVenta'] . "',Disponible = 'N', FechaRedimido=NOW(), FechaTrEd = NOW(), UsuarioTrEd = '" . $frm['IDPuntoVenta'] . "' Where IDBonoIva = '" . $frm["BonoIva"] . "'";
