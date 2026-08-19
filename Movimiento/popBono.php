@@ -26,10 +26,24 @@ ob_start();
 <head>
 	<meta charset="UTF-8">
 	<style>
-		body { font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #000; }
-		.bono { width: 500px; margin: 0 auto; }
+		@page { size: 74mm 190mm; margin: 0; }
+		html { margin: 0; padding: 0; }
+		body {
+			font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+			font-size: 7pt;
+			margin: 0 0 0 6mm;
+			padding: 0 2mm 1mm 1mm;
+			width: 62mm;
+			box-sizing: border-box;
+		}
+		.bono { width: 100%; margin: 0; border-collapse: collapse; }
 		.bono + .bono { page-break-before: always; }
-		.texto { font-size: 10px; }
+		.bono td { vertical-align: top; }
+		.texto { font-size: 7pt; line-height: 1.08; }
+		.logo { width: 52mm; height: auto; }
+		.barcode { display: block; width: 62mm; height: auto; margin-top: 2mm; }
+		ul { margin: 2mm 0 0 4mm; padding-left: 4mm; }
+		li { margin-bottom: 1mm; }
 	</style>
 </head>
 <body>
@@ -46,7 +60,7 @@ ob_start();
 	?>
 	<table class="bono">
 		<tr>
-			<td colspan="2"><?php if ($logo !== ''): ?><img src="<?php echo $logo; ?>" alt="Caprino" width="215" height="107"><?php endif; ?></td>
+			<td colspan="2"><?php if ($logo !== ''): ?><img class="logo" src="<?php echo $logo; ?>" alt="Caprino"><?php endif; ?></td>
 		</tr>
 		<tr><td class="texto">Número</td><td class="texto"><?php echo $r->IDBonoFidelizacion; ?></td></tr>
 		<tr>
@@ -62,7 +76,7 @@ ob_start();
 				Firma cliente: ____________________<br><br>
 				Vendedor redime bono: ____________________<br><br>
 				Firma vendedor: ____________________<br><br>
-				<?php if ($codigo_barras !== false): ?><img src="<?php echo $codigo_barras; ?>" width="500"><?php endif; ?>
+				<?php if ($codigo_barras !== false): ?><img class="barcode" src="<?php echo $codigo_barras; ?>" alt="Código de barras"><?php endif; ?>
 			</td>
 		</tr>
 		<tr>
@@ -83,7 +97,7 @@ ob_start();
 </html>
 <?php
 $html = ob_get_clean();
-$pdf = PdfModern::render($html, 'A4');
+$pdf = PdfModern::render($html, [74, 190]);
 
 if ($pdf === false) {
 	http_response_code(500);
