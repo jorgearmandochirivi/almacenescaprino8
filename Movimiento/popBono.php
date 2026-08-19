@@ -2,6 +2,9 @@
 
 
 include("../admin/config.inc.php");
+if (!class_exists('PdfModern')) {
+  require_once(__DIR__ . "/../admin/lib/PdfModern.php");
+}
 Encabezado();
 
 //$datos = Verifica_SesionCliente();
@@ -26,10 +29,60 @@ require_once $libdir . 'codigobarras.php';
   <title>Caprino :: Entradas</title>
   <link rel="stylesheet" href="../styles.css?1" type="text/css">
   <style type="text/css">
+    @page {
+      size: 74mm 190mm;
+      margin: 0;
+    }
+
+    html {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
+      font-size: 7pt;
+      margin: 0 0 0 6mm;
+      padding: 0 2mm 1mm 1mm;
+      width: 62mm;
+      box-sizing: border-box;
+    }
+
     .texto {
-      font-family: Verdana, Arial, Helvetica, sans-serif;
-      font-size: 6.5px;
+      font-size: 7pt;
+      line-height: 1.08;
       color: #000000;
+    }
+
+    .bono {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+    }
+
+    .bono td {
+      vertical-align: top;
+    }
+
+    .logo {
+      width: 52mm;
+      height: auto;
+    }
+
+    .barcode {
+      display: block;
+      width: 62mm;
+      height: auto;
+      margin-top: 2mm;
+    }
+
+    ul {
+      margin: 2mm 0 0 4mm;
+      padding-left: 4mm;
+    }
+
+    li {
+      margin-bottom: 1mm;
     }
   </style>
 </head>
@@ -42,6 +95,9 @@ require_once $libdir . 'codigobarras.php';
   if (count($id_bonos) > 0) {
 
     foreach ($id_bonos as $id_bono_value) {
+
+      $qid = db_query("SELECT * FROM BonoFidelizacion WHERE IDBonoFidelizacion = '$id_bono_value' ");
+      $r = db_fetch_object($qid);
 
       //$parametros_codigo_barras=(int)$id_bono_value*21+133;
       $valorNumericoBono = (int)$id_bono_value * 21 + 133;
@@ -61,14 +117,11 @@ require_once $libdir . 'codigobarras.php';
       $file = "$filedir$name";
       $filepdf = "$filedir$namePDF";
       ob_start();
-
-      $qid = db_query("SELECT * FROM BonoFidelizacion WHERE IDBonoFidelizacion = '$id_bono_value' ");
-      $r = db_fetch_object($qid);
   ?>
 
-      <table width="500" align="center">
+      <table class="bono">
         <tr>
-          <td colspan="2"><img src="http://www.almacenescaprino.com/images/cabezote actual-01.png" alt="" width="215" height="107" /></td>
+          <td colspan="2"><img class="logo" src="http://www.almacenescaprino.com/images/cabezote actual-01.png" alt="" /></td>
         </tr>
         <tr>
           <td class=texto>Numero..</td>
@@ -100,7 +153,7 @@ require_once $libdir . 'codigobarras.php';
 
             <br>
 
-            <img src=<?php echo $url_barras ?> width="500">
+            <img class="barcode" src="<?php echo $url_barras ?>" alt="Código de barras">
 
 
           </td>
@@ -124,12 +177,19 @@ require_once $libdir . 'codigobarras.php';
             <?php
 
             $page = ob_get_contents();
+            $pdf_page = '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>'
+              . '@page{size:74mm 190mm;margin:0;}'
+              . 'html,body{margin:0;padding:0;} body{font-family:DejaVu Sans Condensed,DejaVu Sans,sans-serif;font-size:7pt;margin:0 0 0 6mm;padding:0 2mm 1mm 1mm;width:62mm;box-sizing:border-box;}'
+              . '.texto{font-size:7pt;line-height:1.08;color:#000;}.bono{width:100%;border-collapse:collapse;margin:0;}.bono td{vertical-align:top;}'
+              . '.logo{width:52mm;height:auto;}.barcode{display:block;width:62mm;height:auto;margin-top:2mm;}ul{margin:2mm 0 0 4mm;padding-left:4mm;}li{margin-bottom:1mm;}'
+              . '</style></head><body>' . $page . '</body></html>';
+
             $fw = fopen($file, "w");
-            fputs($fw, $page, strlen($page));
+            fputs($fw, $pdf_page, strlen($pdf_page));
             fclose($fw);
             ob_end_clean();
             echo $page;
-            passthru("/var/www/vhosts/almacenescaprino.com/cgi-bin/htmldoc.sh $file $filepdf");
+            PdfModern::generate($pdf_page, $filepdf, [74, 190]);
 
             $filedir_download = $url . "../files/bonos/";
             $namePDF = "Bono" . $id_bono_value . ".pdf";
