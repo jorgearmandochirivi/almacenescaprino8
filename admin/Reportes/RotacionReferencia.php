@@ -215,7 +215,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 						$fecha_desde_q = !empty($FechaDesde) ? $FechaDesde : date("Y-m-d");
 						$fecha_hasta_q = !empty($FechaHasta) ? $FechaHasta : $fecha_desde_q;
 
-						$sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, F.IDCliente, R.Numero, R.IDTipologia, R.IDPrecio, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura, F.ValorBono as ValorBono,
+						$sql_facturas = " SELECT F.NumeroFactura,F.IDFactura, F.FechaFactura, F.ValorTotal, F.IDCliente, R.Numero, R.IDTipoReferencia, R.IDPrecio, DF.ValorU,DF.PrecioU, DF.Cantidad,DF.DescuentoRef,DF.DescuentoPar, P.Descuento, F.Descuento as DescuentoFactura, F.ValorBono as ValorBono,
 											DF.IVA, DF.IDDetalleFactura, DF.ReteIVA, DF.ReteICA, F.IDFactura, F.IDPuntoVenta, DATE_FORMAT( F.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF
 											FROM Factura F, DetalleFactura DF, CodificacionEspecifica C, PuntoVentaReferencia PVR, Referencia R, Precio P
 											WHERE
@@ -255,7 +255,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 										<td class="titlemedium" nowrap>Fecha</td>
                                         -->
 										<td class="titlemedium" align="center" nowrap>Referencia </td>
-                                        <td class="titlemedium" align="center" nowrap>Tipologia </td>
+	                                        <td class="titlemedium" align="center" nowrap>Tipo de Referencia </td>
                                         <td class="titlemedium" align="center" nowrap>Descuento </td>
 										<!--
                                         <td class="titlemedium" align="center" nowrap>Vr. Unitario</td>
@@ -344,8 +344,8 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 
                                         <td>
                                          <?php
-										$tipologia = get_field( "Tipologia","Nombre","IDTipologia",$valor['IDTipologia'] );
-                                        $array_referencia_resumen[$valor['Numero']]["Tipologia"] = $tipologia;
+										$tipo_referencia = get_field( "TipoReferencia","Descripcion","IDTipoReferencia",$valor['IDTipoReferencia'] );
+                                        $array_referencia_resumen[$valor['Numero']]["TipoReferencia"] = $tipo_referencia;
 										?>
                                         </td>
                                         <td>
@@ -716,7 +716,7 @@ function print_from($IDPuntoVenta="", $Fecha=""){
 							?>
                         	<tr>
                         	<td class="<?php echo $class?>" align="center" nowrap><?php echo $valor["Referencia"]; ?></td>
-                            <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor["Tipologia"]; ?></td>
+                            <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor["TipoReferencia"]; ?></td>
                             <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor["Descuento"]; ?></td>
                             <td class="<?php echo $class?>" align="center" nowrap><?php echo $valor["Pares"]; ?></td>
                             <td class="<?php echo $class?>" align="center" nowrap><?php $TotalInventario+=$valor["Inventario"]; echo $valor["Inventario"]; ?></td>
