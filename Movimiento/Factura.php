@@ -4543,8 +4543,8 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 											<td class="col2">
 												<select name="ValorEnvioFactura" id="ValorEnvioFactura" class="tbox" onchange="recalcular_valores_factura_con_bono()">
 													<option value="0">Seleccione</option>
-													<option value="7000">Envio Local</option>
-													<option value="10000">Envio Nacional</option>
+													<option value="18000">Envio Local</option>
+													<option value="18000">Envio Nacional</option>
 												</select>
 											</td>
 										</tr>
