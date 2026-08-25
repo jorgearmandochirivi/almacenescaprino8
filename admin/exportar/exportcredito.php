@@ -2,8 +2,10 @@
 	include("../config.inc.php");
 	Encabezado();
 
-    $sql_garantias = $_GET[sql];
+    $sql_garantias = $_GET['sql'] ?? '';
 	$now_date = date('m-d-Y H:i');
+	$condicion = "";
+	$otra_condicion = "";
 
 
 	/********************* TRAER DATOS DE VENTAS CON TARJETAS DE CREDITO Y DEBITO 'ID'S MAYOR QUE 2'*********************/
@@ -12,8 +14,8 @@
 			 $otra_condicion=" AND CL.Cedula = '".$_GET["Cedula"]."'";
 	}
 
-	if( !empty( $_GET[IDPuntoVenta] ) )
-		$condicion = " C.IDPuntoVenta = '$_GET[IDPuntoVenta]' AND F.IDPuntoVenta = '" . $_GET[IDPuntoVenta] . "' AND ";
+	if( !empty( $_GET['IDPuntoVenta'] ) )
+		$condicion = " C.IDPuntoVenta = '" . $_GET['IDPuntoVenta'] . "' AND F.IDPuntoVenta = '" . $_GET['IDPuntoVenta'] . "' AND ";
 
 		$sql_facturas = " SELECT C.*,  DATE_FORMAT( C.FechaFactura,'%Y-%m-%d' ) as FechaFacturaF, F.NumeroPagare, F.ComentarioCredito, F.FechaUltimaGestion, F.FechaCartaNotificacion, F.FechaReporteCredito, F.FechaUtimoComentario, F.IDFactura
 							FROM Credito C, Factura F, Cliente CL
@@ -26,7 +28,7 @@
 	$sql_puntos = " SELECT IDPuntoVenta, Nombre FROM PuntoVenta ";
 	$qry_puntos = db_query( $sql_puntos );
 	while( $r_puntos = db_fetch_array( $qry_puntos ) )
-		$array_puntos[ $r_puntos[ IDPuntoVenta ] ] = $r_puntos[ Nombre ];
+		$array_puntos[ $r_puntos['IDPuntoVenta'] ] = $r_puntos['Nombre'];
 
 
 
@@ -89,32 +91,32 @@
 			$valor_cartera = 0;
 
 			//SELECT CLIENTE
-			$sql_cliente = "SELECT IDCliente, Cedula, Nombre, Apellido FROM Cliente WHERE IDCliente = '$r_facturas[IDCliente]'";
+			$sql_cliente = "SELECT IDCliente, Cedula, Nombre, Apellido FROM Cliente WHERE IDCliente = '{$r_facturas['IDCliente']}'";
 			$qry_cliente = db_query( $sql_cliente );
 			$cliente = db_fetch_array( $qry_cliente );
 			//SELECT CUOTAS
-			$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '$r_facturas[IDFactura]' AND IDPuntoVenta = '$r_facturas[IDPuntoVenta]' and FechaPago <= '".$FechaHasta."'  ORDER BY FechaCuota ";			
+			$sql_cuotas = " SELECT * FROM CreditoCuota WHERE IDFactura = '{$r_facturas['IDFactura']}' AND IDPuntoVenta = '{$r_facturas['IDPuntoVenta']}' and FechaPago <= '".$FechaHasta."'  ORDER BY FechaCuota ";
 			$qry_cuotas = db_query( $sql_cuotas );
 			while( $r_cuotas = db_fetch_array($qry_cuotas) )
 			{
 				$ValorCuotaPago = $r_cuotas[ "ValorTotal" ];
-				$cuotas[ $r_cuotas[IDCuota] ] = $r_cuotas;
-				if( $r_cuotas[ FechaPago ] <> "0000-00-00 00:00:00" )
+				$cuotas[ $r_cuotas['IDCuota'] ] = $r_cuotas;
+				if( $r_cuotas['FechaPago'] <> "0000-00-00 00:00:00" )
 				{
 					$candeladas++;
 				}//end if
 				elseif( $mostrar == 0 )
 				{
-					$fechaproximo = $r_cuotas[ FechaCuota ];
+					$fechaproximo = $r_cuotas['FechaCuota'];
 					$mostrar = 1;
 				}//end end else
 
 				//Calcular Cartera
-				if( !empty($r_cuotas[ Estado ])  )
+				if( !empty($r_cuotas['Estado'])  )
 				{
 					$cartera_castigada++;
 
-					$valor_cartera += $r_cuotas[ ValorTotal ];
+					$valor_cartera += $r_cuotas['ValorTotal'];
 					$mostrar_cartera = 1;
 				}//end if
 
@@ -177,17 +179,17 @@
 
 			if($mostrar_fila=="S"){
 
-				echo $r_facturas[FechaFacturaF]. $sep;
-				echo $r_facturas[NumeroDocumento]. $sep;
-				echo $r_facturas[NumeroPagare]. $sep;
-				echo $cliente[Cedula]. $sep;
-				echo $cliente[Nombre]." ".$cliente[Apellido] . $sep;
-				echo $array_puntos[$r_facturas[IDPuntoVenta]]. $sep;
-				echo $r_facturas[NumeroFactura]. $sep;
+				echo $r_facturas['FechaFacturaF']. $sep;
+				echo $r_facturas['NumeroDocumento']. $sep;
+				echo $r_facturas['NumeroPagare']. $sep;
+				echo $cliente['Cedula']. $sep;
+				echo $cliente['Nombre']." ".$cliente['Apellido'] . $sep;
+				echo $array_puntos[$r_facturas['IDPuntoVenta']]. $sep;
+				echo $r_facturas['NumeroFactura']. $sep;
 
 
-				echo number_format($r_facturas[ValorTotal],'0',',','.'). $sep;
-				$tValorTotal += $r_facturas[ValorTotal];
+				echo number_format($r_facturas['ValorTotal'],'0',',','.'). $sep;
+				$tValorTotal += $r_facturas['ValorTotal'];
 				echo $candeladas. $sep;
 
 				echo $pendientes = db_num_rows( $qry_cuotas ) - $candeladas. $sep;
@@ -201,21 +203,21 @@
 							endif;
 							echo substr($fechaproximo,0,10). $sep;
 
-							echo $r_facturas[FechaUltimaGestion]. $sep;
+							echo $r_facturas['FechaUltimaGestion']. $sep;
 
-							echo $r_facturas[FechaCartaNotificacion]. $sep;
-							echo $r_facturas[FechaReporteCredito]. $sep;
+							echo $r_facturas['FechaCartaNotificacion']. $sep;
+							echo $r_facturas['FechaReporteCredito']. $sep;
 
 
 
 							if($mostrar_cartera == 1):
 								echo 'C Castigada'.$sep;
-								$valor_total_cartera += $r_facturas[ ValorTotal ];
+								$valor_total_cartera += $r_facturas['ValorTotal'];
 							elseif($pendientes==0):
 								echo "Pagado".$sep;
 							elseif($alerta_cuota_vencida==1):
 								echo 'Vencida'.$sep;
-								$valor_total_cartera += $r_facturas[ ValorTotal ];
+								$valor_total_cartera += $r_facturas['ValorTotal'];
 							else:
 								echo "Al dia".$sep;
 							endif;
@@ -230,14 +232,14 @@
 						echo number_format($valor_cartera,'0',',','.'). $sep;
 
 
-						$comentarios= strip_tags($r_facturas[ComentarioCredito]);
+						$comentarios= strip_tags($r_facturas['ComentarioCredito']);
 						$comentarios=str_replace("<br>"," ", $comentarios);
 						$comentarios = preg_replace("/[\r\n|\n|\r]+/", " ", $comentarios);
 						echo $comentarios . $sep;
 
 
-						if($r_facturas[FechaUtimoComentario]!="0000-00-00")
-							echo $r_facturas[FechaUtimoComentario];
+						if($r_facturas['FechaUtimoComentario']!="0000-00-00")
+							echo $r_facturas['FechaUtimoComentario'];
 
 
 
