@@ -4,7 +4,7 @@ require( "../config.inc.php" );
 $Referencia = db_query("Select * from DetallePedidoTercero Where ReferenciaCaprino = '".$_POST['numero_referencia']."' and CodigoColor = '".$_POST['Color']."' Order by IDDetallePedidoTercero Desc Limit 1");
 $RReferencia = db_fetch_array( $Referencia,$a );
 
-if (!empty($RReferencia[IDDetallePedidoTercero])):
+if (!empty($RReferencia["IDDetallePedidoTercero"])):
 	echo json_encode($RReferencia);
 else:
 	echo json_encode("no_existe");
