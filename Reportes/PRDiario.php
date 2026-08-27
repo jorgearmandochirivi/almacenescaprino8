@@ -79,9 +79,9 @@ ob_start();
 	body {
 		font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
 		font-size: 9pt;
-		margin: 0 0 0 6mm;
-		padding: 0 2mm 1mm 1mm;
-		width: 62mm;
+		margin: 0;
+		padding: 0 4mm 1mm 4mm;
+		width: 100%;
 		box-sizing: border-box;
 		color: #000;
 	}
@@ -94,8 +94,7 @@ ob_start();
 	}
 
 	td {
-		overflow-wrap: break-word;
-		word-wrap: break-word;
+		box-sizing: border-box;
 		vertical-align: top;
 	}
 
@@ -128,7 +127,7 @@ ob_start();
 		font-size: 6.9pt;
 		line-height: 1.1;
 		padding: 1px 0.4mm;
-		overflow: hidden;
+		white-space: nowrap;
 	}
 
 	.report-table .head td {
@@ -146,6 +145,23 @@ ob_start();
 		word-break: normal;
 		text-align: left;
 		font-size: 6.3pt;
+	}
+
+	.credit-table td:nth-child(1) { width: 15%; }
+	.credit-table td:nth-child(2) { width: 23%; }
+	.credit-table td:nth-child(3) { width: 13%; }
+	.credit-table td:nth-child(4) { width: 13%; }
+	.credit-table td:nth-child(5) { width: 18%; }
+	.credit-table td:nth-child(6) { width: 18%; }
+
+	.pdf-link {
+		text-align: center;
+	}
+
+	@media print {
+		.pdf-link {
+			display: none;
+		}
 	}
 
 	.border-top {
@@ -379,7 +395,7 @@ while ($array_credito = db_fetch_array($qry_credito)) {
 } //end while( $r_facturas = db_fetch_array( $qry_facturas ) )
 
 ?>
-<table class="report-table border-top">
+<table class="report-table credit-table border-top">
 	<tr>
 		<td class="navpic" nowrap>No.</td>
 		<td class="navpic" align="center" nowrap>Almac</td>
@@ -446,7 +462,7 @@ while ($array_credito = db_fetch_array($qry_credito)) {
 		</td>
 	</tr>
 	<tr>
-		<td class="navpic" colspan="6" align="center" nowrap>
+		<td class="navpic pdf-link" colspan="6" nowrap>
 			<a href="/admin/files/facturas/RDiario<?= $r_puntoventa->Codigo . $Fecha ?>.pdf">pdf</a>
 		</td>
 	</tr>
