@@ -79,10 +79,9 @@ ob_start();
 	body {
 		font-family: DejaVu Sans Condensed, DejaVu Sans, sans-serif;
 		font-size: 9pt;
-		margin: 0;
-		padding: 0 4mm 1mm 4mm;
-		width: 100%;
-		box-sizing: border-box;
+		margin: 0 5mm;
+		padding: 0 0 1mm 0;
+		width: 64mm;
 		color: #000;
 	}
 
@@ -124,7 +123,7 @@ ob_start();
 	}
 
 	.report-table td {
-		font-size: 6.9pt;
+		font-size: 6.5pt;
 		line-height: 1.1;
 		padding: 1px 0.4mm;
 		white-space: nowrap;
@@ -148,11 +147,15 @@ ob_start();
 	}
 
 	.credit-table td:nth-child(1) { width: 15%; }
-	.credit-table td:nth-child(2) { width: 23%; }
+	.credit-table td:nth-child(2) { width: 22%; }
 	.credit-table td:nth-child(3) { width: 13%; }
 	.credit-table td:nth-child(4) { width: 13%; }
-	.credit-table td:nth-child(5) { width: 18%; }
-	.credit-table td:nth-child(6) { width: 18%; }
+	.credit-table td:nth-child(5) { width: 19.5%; }
+	.credit-table td:nth-child(6) { width: 19.5%; }
+
+	.payment-table td:nth-child(1) { width: 45%; }
+	.payment-table td:nth-child(2) { width: 20%; }
+	.payment-table td:nth-child(3) { width: 35%; }
 
 	.pdf-link {
 		text-align: center;
@@ -174,9 +177,9 @@ ob_start();
 <body><table id="#content"><tr><td class="report-header">IMACAL <?php
 																								$fecha_gen = date("Y-m-d H:i:s");
 																								echo $tipo_emp = ($fecha_gen >= "2019-07-19 00:00:00") ? "SAS" : "LTDA";
-																						?><br>Nit 860033182-4<br>Almacen <?= $r_puntoventa->Nombre ?><br>No. De Serial <?= $r_puntoventa->EquipoComputo ?><br>Fecha Generacion: <?= date("Y-m-d"); ?><br>Fecha Reporte: <?php echo $_GET["Fecha"] ?></td></tr><tr><td class='mainbg'><table class="report-table border-top" border="0" cellspacing="0" cellpadding="0"><tr class="head"><td class="navpic" style="width: 13%;" nowrap>No.</td><td class="navpic" style="width: 25%;" align="center">Ref</td><td class="navpic" style="width: 17%;" align="center" nowrap>Vr. Unit.</td><td class="navpic" style="width: 8%;" align="center" nowrap>Pares</td>
+																						?><br>Nit 860033182-4<br>Almacen <?= $r_puntoventa->Nombre ?><br>No. De Serial <?= $r_puntoventa->EquipoComputo ?><br>Fecha Generacion: <?= date("Y-m-d"); ?><br>Fecha Reporte: <?php echo $_GET["Fecha"] ?></td></tr><tr><td class='mainbg'><table class="report-table border-top" border="0" cellspacing="0" cellpadding="0"><tr class="head"><td class="navpic" style="width: 13%;" nowrap>No.</td><td class="navpic" style="width: 22%;" align="center">Ref</td><td class="navpic" style="width: 17%;" align="center" nowrap>Vr. Unit.</td><td class="navpic" style="width: 8%;" align="center" nowrap>Pares</td>
 	<td class="navpic" style="width: 20%;" align="center" nowrap>Pago</td>
-	<td class="navpic" style="width: 16%;" align="center" nowrap>IVA</td>
+	<td class="navpic" style="width: 20%;" align="center" nowrap>IVA</td>
 </tr>
 <?php
 foreach ($r_facturas as $key => $valor) {
@@ -333,7 +336,7 @@ while ($array_formapago = db_fetch_array($qry_formapago)) {
 
 ?>
 
-<table class="border-top" id="#content">
+<table class="payment-table border-top" id="#content">
 	<tr>
 		<td class="rowform" align="left" nowrap>Forma de Pago </td>
 		<td class="rowform" align="right" nowrap>Registros</td>
