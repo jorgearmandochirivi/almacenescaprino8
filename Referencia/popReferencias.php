@@ -226,7 +226,10 @@ $array_tallas = array();
 												$jstarjeta = ";javascript:window.opener.setcodigotarjeta('".$tarjeta1."','".$tarjeta2."','".$tarjeta3."','".$tarjeta4."','".$cont."');";
 											}//end if
 
-										echo "<a href=\"javascript:window.opener.selreferencia('".$r->Numero."','".$r->Nombre."','".$talla."','{$tallas['IDCodificacionEspecifica']}','".$cont."','{$tallas['Existencias']}','".$ValorUnitario."','".$Descuento."','','".$r->Sexo."')" . $jstarjeta . ";javascript:window.close()\">";
+										$tipo_referencia = strtolower((string)get_field("TipoReferencia", "Descripcion", "IDTipoReferencia", $r->IDTipoReferencia));
+										$es_zapato = (strpos($tipo_referencia, "zapato") !== false || strpos($tipo_referencia, "calzado") !== false) ? "1" : "0";
+
+										echo "<a href=\"javascript:window.opener.selreferencia('".$r->Numero."','".$r->Nombre."','".$talla."','{$tallas['IDCodificacionEspecifica']}','".$cont."','{$tallas['Existencias']}','".$ValorUnitario."','".$Descuento."','','".$r->Sexo."','','".$r->IDTipoReferencia."','".$es_zapato."')" . $jstarjeta . ";javascript:window.close()\">";
 
 									}//end if( $r_tallas->Existencias > 0 )
 

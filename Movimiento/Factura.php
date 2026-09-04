@@ -1654,7 +1654,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 			}
 		}
 
-		function selreferencia(REFERENCIA, NOMBRE, TALLA, CODIFICACION, CONT, MAXIMO, VALORU, DESCUENTOREF, VALORBRUTO, SEXO, TIPOTALLA, TIPOREFERENCIA) {
+		function selreferencia(REFERENCIA, NOMBRE, TALLA, CODIFICACION, CONT, MAXIMO, VALORU, DESCUENTOREF, VALORBRUTO, SEXO, TIPOTALLA, TIPOREFERENCIA, ESZAPATO) {
 
 			var items_total = 0;
 			Borrar(CONT);
@@ -1663,6 +1663,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 			document.frm.elements["Sexo" + CONT].value = SEXO;
 			document.frm.elements["TipoTalla" + CONT].value = TIPOTALLA;
 			document.frm.elements["TipoReferencia" + CONT].value = TIPOREFERENCIA;
+			document.frm.elements["EsZapato" + CONT].value = ESZAPATO == "1" ? "1" : "0";
 			document.frm.elements["Numero" + CONT].value = REFERENCIA;
 			document.frm.elements["Nombre" + CONT].value = NOMBRE;
 			document.frm.elements["Talla" + CONT].value = TALLA;
@@ -1733,8 +1734,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 			}
 
 			document.frm.elements["ITEM"].value = items_total;
-
-
+			promo_sandiego_zapatos();
 
 		}
 
@@ -2333,6 +2333,49 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 			}
 		}
+
+		function promo_sandiego_zapatos() {
+			if (parseInt(document.frm.IDPuntoVenta.value, 10) !== 24) {
+				return;
+			}
+
+			var paresLinea = [];
+			for (var i = 1; i <= document.frm.ITEM.value; i++) {
+				var descuentoEspecial = getNum(document.frm.elements["Descuento" + i].value);
+				var esZapato = document.frm.elements["EsZapato" + i].value == "1";
+				var cantidad = parseInt(document.frm.elements["Cantidad" + i].value, 10) || 0;
+				if (esZapato && descuentoEspecial == 0 && cantidad > 0) {
+					paresLinea.push(i);
+				}
+			}
+
+			var totalParesLinea = 0;
+			paresLinea.forEach(function (i) {
+				totalParesLinea += parseInt(document.frm.elements["Cantidad" + i].value, 10) || 0;
+			});
+
+			// Retira únicamente esta promoción; PrimerDescuentoLin conserva la activa.
+			var observacion = document.frm.elements["ObservacionDescuento"].value;
+			if (observacion == "20% San Diego: 2 pares de zapatos" || observacion == "30% San Diego: 3 pares de zapatos") {
+				for (var j = 1; j <= document.frm.ITEM.value; j++) {
+					document.frm.elements["DescuentoLin" + j].value = document.frm.elements["PrimerDescuentoLin" + j].value;
+					document.frm.elements["DescuentoLin" + j].style.background = document.frm.elements["PrimerDescuentoLin" + j].value != "" ? "#CCFFCC" : "#FFFFFF";
+				}
+				document.frm.elements["ObservacionDescuento"].value = "";
+				// Recalcula la promoción vigente para los casos que ya no son exactos.
+				promo_segundo_par();
+			}
+
+			var porcentaje = totalParesLinea === 2 ? 20 : (totalParesLinea === 3 ? 30 : 0);
+			if (porcentaje > 0) {
+				paresLinea.forEach(function (i) {
+					document.frm.elements["DescuentoLin" + i].value = porcentaje;
+					document.frm.elements["DescuentoLin" + i].style.background = "#CCFFCC";
+				});
+				document.frm.elements["ObservacionDescuento"].value = porcentaje + "% San Diego: " + totalParesLinea + " pares de zapatos";
+			}
+		}
+
 
 		function promo_segundo_par_con_talla() {
 			var IDPuntoVenta = IDPuntoVenta = parseInt(document.frm.IDPuntoVenta.value);
@@ -3712,6 +3755,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 			pague_2_lleve_3();
 			promo_segundo_par();
 			promo_segundo_par_con_talla();
+			promo_sandiego_zapatos();
 			recalcularvalores();
 
 		} //end function
@@ -4448,7 +4492,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 															<td align="left"><input type=text readonly name=Nombre<?= $i ?> value="<?php echo $frm[$nombre] ?>" class="tbox" size=10 title="Nombre"></td>
 															<td align="left"><input type=hidden name=IDCodificacion<?= $i ?> id="IDCodificacion<?= $i ?>" value="<?php echo $frm[$idcodificacion] ?>"></td>
 															<!--<td align="center"><input type=text name=Cantidad<?= $i ?> id=Cantidad<?= $i ?> value="<?php echo $frm[$cantidad] ?>" class="tbox" size=5 onblur=" pague_2_lleve_3();promo_segundo_par();promo_segundo_par_con_talla(); if(!compruebamaximo(this.value,<?= $i ?>)) this.value = ''; else calculatotal(this.value,<?= $i ?>);"></td>-->
-															<td align="center"><input type=number name=Cantidad<?= $i ?> id=Cantidad<?= $i ?> value="<?php echo $frm[$cantidad] ?>" class="tbox" size=5 onblur="promo_segundo_par(); promo_segundo_par_con_talla(); pague_2_lleve_3(); if(!compruebamaximo(this.value,<?= $i ?>)) this.value = ''; else calculatotal(this.value,<?= $i ?>);" min="1" max="10" oninput="if(this.value > 10) this.value = 10; if(this.value < 1) this.value = 1;"></td>
+															<td align="center"><input type=number name=Cantidad<?= $i ?> id=Cantidad<?= $i ?> value="<?php echo $frm[$cantidad] ?>" class="tbox" size=5 onblur="promo_segundo_par(); promo_segundo_par_con_talla(); pague_2_lleve_3(); promo_sandiego_zapatos(); if(!compruebamaximo(this.value,<?= $i ?>)) this.value = ''; else calculatotal(this.value,<?= $i ?>);" min="1" max="10" oninput="if(this.value > 10) this.value = 10; if(this.value < 1) this.value = 1;"></td>
 															<td align="left"><input type=text readonly id="ValorU<?= $i ?>" name=ValorU<?= $i ?> value="<?php echo $frm[$valoru] ?>" class="tbox" size=10 onblur=" setvalor(this.value,<?= $i ?>);calculatotal(this.value,<?= $i ?>); "></td>
 															<td align="center">
 																<input type=text name="DescuentoLin<?= $i ?>" value="<?php echo $frm[$descuentolin] ?>" onblur="calculatotal(this.value,<?= $i ?>);" onblur="calculatotal(this.value,<?= $i ?>);" class="tbox descuento_linea" size=3 maxlength="3" <?php if ($habilita_descuento == "N") echo "readonly"; ?>>
@@ -4462,6 +4506,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 																<input type=hidden name=Sexo<?= $i ?> value="<?php echo $frm[$Sexo] ?>">
 																<input type=hidden name=TipoTalla<?= $i ?> value="<?php echo $frm[$TipoTalla] ?>">
 																<input type=hidden name=TipoReferencia<?= $i ?> value="<?php echo $frm[$TipoReferencia] ?>">
+																<input type=hidden name=EsZapato<?= $i ?> value="<?php echo $frm['EsZapato' . $i] ?? '' ?>">
 															</td>
 															<td align="left">
 																<input type=hidden name=Descuento<?= $i ?> value="<?php echo $frm[$descuento] ?>">
