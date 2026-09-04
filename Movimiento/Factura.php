@@ -2334,6 +2334,28 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 			}
 		}
 
+		function promo_sandiego_producto_elegible(i) {
+			var referencia = document.frm.elements["Numero" + i].value;
+			var proveedor1 = referencia.substr(0, 2);
+			var proveedor2 = referencia.substr(0, 3);
+			var tipoReferencia = parseInt(document.frm.elements["TipoReferencia" + i].value, 10);
+			var tiposNoPromocionables = [11, 12, 13, 16, 20];
+			var referenciasExcluidas = ["COPL70CF", "COPL70NE", "CORE60CF", "CORE60NE", "CORE70CF", "CORE70NE", "CORE80CF", "CORE80NE", "CREMACM*", "CREMACN*", "OW28****", "OW95****", "RAPQ", "TARJETA", "ZSE1****", "ZSE2****", "ZSE3****", "ZSP1COMI", "ZSP1CONE"];
+
+			return document.frm.elements["Precio" + i].value != "" &&
+				document.frm.elements["Precio" + i].value != "0" &&
+				document.frm.elements["DescuentoCumple"].value == "0" &&
+				document.frm.elements["Talla" + i].value != "1" &&
+				tiposNoPromocionables.indexOf(tipoReferencia) === -1 &&
+				proveedor1.toUpperCase() != "ZC" &&
+				proveedor1.toUpperCase() != "ZT" &&
+				proveedor1.toUpperCase() != "ZV" &&
+				proveedor2.toUpperCase() != "ZWP" &&
+				proveedor2.toUpperCase() != "ZFR" &&
+				referenciasExcluidas.indexOf(referencia) === -1;
+		}
+
+
 		function promo_sandiego_zapatos() {
 			if (parseInt(document.frm.IDPuntoVenta.value, 10) !== 24) {
 				return;
@@ -2345,7 +2367,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 				var esZapato = document.frm.elements["EsZapato" + i].value == "1";
 				var cantidad = parseInt(document.frm.elements["Cantidad" + i].value, 10) || 0;
 				// En San Diego, los zapatos con 10% de descuento de referencia también son línea.
-				if (esZapato && (descuentoEspecial == 0 || descuentoEspecial == 10) && cantidad > 0) {
+				if (esZapato && promo_sandiego_producto_elegible(i) && (descuentoEspecial == 0 || descuentoEspecial == 10) && cantidad > 0) {
 					paresLinea.push(i);
 				}
 			}
