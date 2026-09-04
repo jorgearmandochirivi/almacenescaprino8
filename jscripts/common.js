@@ -1369,7 +1369,7 @@ $.ajax( {
 		success : function( data ){
 			data = data.column;
 
-			selreferencia(data.referencia, data.nombre, data.talla, data.codificacion, rel, data.existencias, data.valor, data.descuento,'',data.sexo,data.tipotalla,data.tiporeferencia);
+			selreferencia(data.referencia, data.nombre, data.talla, data.codificacion, rel, data.existencias, data.valor, data.descuento,'',data.sexo,data.tipotalla,data.tiporeferencia,data.eszapato);
 			$("#Cantidad"+rel).val( 1 );
 			$("#Cantidad"+rel).focus();
 			$("#Cantidad"+rel).blur();

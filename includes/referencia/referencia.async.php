@@ -78,6 +78,7 @@
 			"\"sexo\":\"" . $r_referencia["Sexo"] . "\"",
 			"\"tipotalla\":\"" . $r_referencia["IDTipoTalla"] . "\"",
 			"\"tiporeferencia\":\"" . $r_referencia["IDTipoReferencia"] . "\"",
+			"\"eszapato\":\"" . ((stripos((string)get_field("TipoReferencia", "Descripcion", "IDTipoReferencia", $r_referencia["IDTipoReferencia"]), "zapato") !== false || stripos((string)get_field("TipoReferencia", "Descripcion", "IDTipoReferencia", $r_referencia["IDTipoReferencia"]), "calzado") !== false) ? "1" : "0") . "\"",
 			"\"descuento\":\"" . $Descuento. "\""
 		);
 
