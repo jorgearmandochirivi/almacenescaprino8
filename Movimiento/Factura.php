@@ -2344,7 +2344,8 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 				var descuentoEspecial = getNum(document.frm.elements["Descuento" + i].value);
 				var esZapato = document.frm.elements["EsZapato" + i].value == "1";
 				var cantidad = parseInt(document.frm.elements["Cantidad" + i].value, 10) || 0;
-				if (esZapato && descuentoEspecial == 0 && cantidad > 0) {
+				// En San Diego, los zapatos con 10% de descuento de referencia también son línea.
+				if (esZapato && (descuentoEspecial == 0 || descuentoEspecial == 10) && cantidad > 0) {
 					paresLinea.push(i);
 				}
 			}
