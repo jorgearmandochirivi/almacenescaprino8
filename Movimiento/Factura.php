@@ -2379,7 +2379,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 			// Retira únicamente esta promoción; PrimerDescuentoLin conserva la activa.
 			var observacion = document.frm.elements["ObservacionDescuento"].value;
-			if (observacion == "20% San Diego: 2 pares de zapatos" || observacion == "30% San Diego: 3 pares de zapatos") {
+			if (observacion == "20% San Diego: 2 pares de zapatos" || observacion == "30% San Diego: 3 pares de zapatos" || observacion == "20% San Diego: 2 pares de zapatos (10% adicional)" || observacion == "30% San Diego: 3 pares de zapatos (20% adicional)") {
 				for (var j = 1; j <= document.frm.ITEM.value; j++) {
 					document.frm.elements["DescuentoLin" + j].value = document.frm.elements["PrimerDescuentoLin" + j].value;
 					document.frm.elements["DescuentoLin" + j].style.background = document.frm.elements["PrimerDescuentoLin" + j].value != "" ? "#CCFFCC" : "#FFFFFF";
@@ -2389,13 +2389,16 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 				promo_segundo_par();
 			}
 
-			var porcentaje = totalParesLinea === 2 ? 20 : (totalParesLinea === 3 ? 30 : 0);
-			if (porcentaje > 0) {
+			var porcentajeObjetivo = totalParesLinea === 2 ? 20 : (totalParesLinea === 3 ? 30 : 0);
+			if (porcentajeObjetivo > 0) {
 				paresLinea.forEach(function (i) {
+					var descuentoBase = getNum(document.frm.elements["Descuento" + i].value);
+					var porcentaje = porcentajeObjetivo - (descuentoBase == 10 ? 10 : 0);
 					document.frm.elements["DescuentoLin" + i].value = porcentaje;
 					document.frm.elements["DescuentoLin" + i].style.background = "#CCFFCC";
 				});
-				document.frm.elements["ObservacionDescuento"].value = porcentaje + "% San Diego: " + totalParesLinea + " pares de zapatos";
+				var adicional = porcentajeObjetivo == 20 ? 10 : 20;
+				document.frm.elements["ObservacionDescuento"].value = porcentajeObjetivo + "% San Diego: " + totalParesLinea + " pares de zapatos (" + adicional + "% adicional)";
 			}
 		}
 
