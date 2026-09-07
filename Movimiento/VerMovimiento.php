@@ -1,5 +1,9 @@
 <body> <?php
 
+		if (!class_exists('PdfModern')) {
+			require_once(__DIR__ . "/../admin/lib/PdfModern.php");
+		}
+
 		$TitleMod = "Movimientos";
 
 		$Table = "Movimiento";
