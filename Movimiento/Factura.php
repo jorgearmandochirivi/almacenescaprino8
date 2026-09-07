@@ -2357,6 +2357,8 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 		function promo_sandiego_zapatos() {
+			// Promoción finalizada: conservar únicamente los descuentos habituales.
+			var promocionActiva = false;
 			if (parseInt(document.frm.IDPuntoVenta.value, 10) !== 24) {
 				return;
 			}
@@ -2387,6 +2389,10 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 				document.frm.elements["ObservacionDescuento"].value = "";
 				// Recalcula la promoción vigente para los casos que ya no son exactos.
 				promo_segundo_par();
+			}
+
+			if (!promocionActiva) {
+				return;
 			}
 
 			var porcentajeObjetivo = totalParesLinea === 2 ? 20 : (totalParesLinea === 3 ? 30 : 0);
