@@ -199,6 +199,15 @@ $sql_tallas = " SELECT * FROM Talla WHERE Publicar = 'S' AND IDTalla not in (19,
 				 	$sql .= "AND PR.IDPuntoVentaReferencia = CE.IDPuntoVentaReferencia ";
 				 	$sql .= "AND CE.IDTalla = T.IDTalla ";
 
+					// Las tarjetas se administran por codigo; el saldo de CE puede
+					// conservar unidades anuladas. Contar solo las disponibles.
+					if ((int) $ref === 7615) {
+						$sql = "SELECT T.Descripcion AS Talla, "
+							. "(SELECT COUNT(*) FROM TarjetaPunto "
+							. "WHERE IDPuntoVenta = '" . (int) $puntoventa . "' AND Estado = 'D') AS Existencias "
+							. "FROM Talla T WHERE T.IDTalla = 16";
+					}
+
 
 
 					$query_codificacion = db_query($sql);
