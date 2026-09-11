@@ -9,7 +9,7 @@ RUN apt-get update \
 		libonig-dev \
 		libxml2-dev \
 	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
-	&& docker-php-ext-install mysqli mbstring dom gd zip \
-	&& docker-php-ext-enable mysqli mbstring dom gd zip \
+	&& docker-php-ext-install mysqli pdo_mysql mbstring dom gd zip \
+	&& docker-php-ext-enable mysqli pdo_mysql mbstring dom gd zip \
 	&& rm -rf /var/lib/apt/lists/*
 WORKDIR /var/www/html

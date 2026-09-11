@@ -1,5 +1,5 @@
 <?php
-	require("../admin/config.inc.php");
-	require  "lib/SIMWebService.inc.php";
-	$respuesta = SIMWebService::actualiza_ref_existencia();
-?>
+// La consulta protegida reemplaza la antigua escritura pública sobre Referencia.
+$_GET['action'] = 'getinventario';
+$_POST['action'] = 'getinventario';
+require __DIR__ . '/caprino.php';

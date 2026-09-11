@@ -1,93 +1,73 @@
 <?php
-/**** SERVICIOS JSON PARA APPS MOVILES ******/
-/**** Creación: Jorge Chirivi ******/
-/**** Fecha de Creación: 24 de Junio de 2022 ******/
-/**** Scripts Iniciales ******/
-require("../admin/config.inc.php");
-require  "lib/SIMWebServiceToken.inc.php";
+declare(strict_types=1);
+require_once __DIR__ . '/shopify/bootstrap.php';
+require_once __DIR__ . '/shopify/Catalog.php';
+require_once __DIR__ . '/shopify/Client.php';
 
-define( "KEY_TOKEN" , "MiClubApp#001.Tok20" );
-header("Content-type: application/json; charset=utf-8");
-
-$nowserver = date("Y-m-d H:i:s");
-$action = $_POST["action"];
-SIMWebServiceToken::liberar_token();
-
-if($action!="gettoken"){
-	
-	$respuesta = SIMWebServiceToken::comprobar_token($_POST["Token"]);
+ini_set('display_errors', '0');
+header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store');
+header('X-Content-Type-Options: nosniff');
+$status = 200;
+try {
+    $config = integrationConfig();
+    integrationAuthorize($config, $_SERVER['HTTP_AUTHORIZATION'] ?? '');
+    $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+    if (!in_array($method, ['GET', 'POST'], true)) {
+        header('Allow: GET, POST');
+        throw new UnexpectedValueException('Método no permitido', 405);
+    }
+    $input = $method === 'POST' ? $_POST : $_GET;
+    if ($method === 'POST' && str_contains($_SERVER['CONTENT_TYPE'] ?? '', 'application/json')) {
+        $raw = file_get_contents('php://input', false, null, 0, 65537);
+        if (strlen($raw) > 65536) {
+            throw new InvalidArgumentException('Solicitud demasiado grande');
+        }
+        $input = json_decode($raw, true, 32, JSON_THROW_ON_ERROR);
+        if (!is_array($input)) {
+            throw new InvalidArgumentException('Se requiere un objeto JSON');
+        }
+    }
+    $action = $input['action'] ?? '';
+    switch ($action) {
+        case 'getproducto':
+        case 'getinventario':
+            $reference = $input['Referencia'] ?? '';
+            if (!is_string($reference) || strlen($reference) > 100) {
+                throw new InvalidArgumentException('Referencia inválida');
+            }
+            $page = integrationInteger($input['Pagina'] ?? 1, 1, 1000000, 'Pagina');
+            $limit = integrationInteger($input['CantidadPorPagina'] ?? 50, 1, 100, 'CantidadPorPagina');
+            $response = (new CaprinoCatalog(integrationDb($config), $config))->products($reference, $page, $limit);
+            break;
+        case 'shopify.status':
+            $response = (new ShopifyClient($config['shopify'] ?? []))->status();
+            break;
+        case 'shopify.locations':
+            $response = (new ShopifyClient($config['shopify'] ?? []))->locations();
+            break;
+        case 'shopify.variants':
+            $cursor = $input['cursor'] ?? null;
+            if ($cursor !== null && (!is_string($cursor) || strlen($cursor) > 2048)) {
+                throw new InvalidArgumentException('Cursor inválido');
+            }
+            $response = (new ShopifyClient($config['shopify'] ?? []))->variants($cursor);
+            break;
+        default:
+            throw new UnexpectedValueException('Acción no disponible', 404);
+    }
+    $result = ['success' => true, 'message' => 'OK', 'response' => $response];
+} catch (InvalidArgumentException | JsonException $e) {
+    $status = 400;
+    $result = ['success' => false, 'message' => 'Parámetros inválidos', 'response' => null];
+} catch (UnexpectedValueException $e) {
+    $status = in_array($e->getCode(), [401, 404, 405], true) ? $e->getCode() : 400;
+    $result = ['success' => false, 'message' => $e->getMessage(), 'response' => null];
+} catch (Throwable $e) {
+    $status = 503;
+    error_log('Caprino integration failure: ' . get_class($e));
+    $result = ['success' => false, 'message' => 'Integración no disponible; revisar configuración y conexión', 'response' => null];
 }
-
-switch( $action ){
-	case "gettoken":		
-		$Usuario = $_POST["Usuario"];
-		$Clave = $_POST["Clave"];		
-		//$respuesta = SIMWebServiceToken::get_token($Usuario,$Clave);
-		die( json_encode( array(  'success' => $respuesta["success"], 'message'=>$respuesta["message"], 'response' => $respuesta["response"], 'date' => $nowserver ) ) );
-		exit;
-	break;
-
-	case "gettalla":
-		require "lib/SIMWebService.inc.php";
-		//$respuesta = SIMWebService::get_talla();
-		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
-		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
-		exit;
-	break;
-
-	case "gettiporeferencia":
-		require "lib/SIMWebService.inc.php";
-		//$respuesta = SIMWebService::get_tipo_referencia();
-		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
-		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
-		exit;
-	break;
-
-	case "getcolor":		
-		require "lib/SIMWebService.inc.php";
-		//$respuesta = SIMWebService::get_color();
-		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
-		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
-		exit;
-	break;
-
-	case "getbono":		
-		require "lib/SIMWebService.inc.php";
-		$Documento = $_POST["Documento"];
-		//$respuesta = SIMWebService::get_bono($Documento);
-		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
-		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
-		exit;
-	break;
-
-	case "getproducto":		
-		require "lib/SIMWebService.inc.php";
-		$Referencia = $_POST["Referencia"];
-		$Pagina = $_POST["Pagina"];
-		$CantidadPorPagina = $_POST["CantidadPorPagina"];
-		//$respuesta = SIMWebService::get_producto($Referencia,$Pagina,$CantidadPorPagina);
-		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
-		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
-		exit;
-	break;
-
-	case "setpedido":		
-		require "lib/SIMWebService.inc.php";
-		$NumeroPedido = $_POST["NumeroPedido"];
-		$CedulaCliente = $_POST["CedulaCliente"];
-		$NombreCliente = $_POST["NombreCliente"];
-		$Valor=$_POST["Valor"];
-		$FechaPedido=$_POST["FechaPedido"];
-		$Referencias = $_POST["Referencias"]; 
-		$Bonos = $_POST["Bonos"]; 
-		//$respuesta = SIMWebService::set_pedido($NumeroPedido,$CedulaCliente,$NombreCliente,$Valor,$FechaPedido,$Referencias,$Bonos);
-		////$sql_log_servicio = $dbo->query("Insert Into LogServicioDiario (IDSocio,Servicio, Parametros, Respuesta) Values ('".$IDSocio."','getsubmodulo','".json_encode($_GET)."','".json_encode($respuesta)."')");
-		die( json_encode( array(  'success' => $respuesta[success], 'message'=>$respuesta[message], 'response' => $respuesta[response], 'date' => $nowserver ) ) );
-		exit;
-	break;
-
-}	
-
-
-
-?>
+http_response_code($status);
+$result['date'] = gmdate('c');
+echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
