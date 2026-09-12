@@ -6,9 +6,9 @@ El 11 de septiembre de 2026 se verificó acceso en navegador a la tienda `kwtj0h
 ## Configurar
 
 1. Copiar `config.example.php` fuera de la raíz servida por Nginx/Apache y del repositorio. Completar credenciales de base de datos (preferiblemente usuario de solo lectura), un `api_token` aleatorio de al menos 32 caracteres, puntos de venta y reserva de stock.
-2. Definir `CAPRINO_INTEGRATION_CONFIG` en el proceso PHP/FPM con la ruta absoluta del archivo. En Docker, montar ese archivo fuera de `/var/www/html`, pasar la variable al servicio PHP y verificar que FPM la recibe. No se cargan archivos `.env` automáticamente.
+2. En Plesk, guardar la copia como `private-config/caprino-shopify.php` al mismo nivel que `httpdocs`. La API la busca automáticamente fuera de la raíz del proyecto; en este servidor corresponde a `/var/www/vhosts/almacenescaprino.com/private-config/caprino-shopify.php`. No requiere cambiar la configuración PHP del panel. Opcionalmente, definir `CAPRINO_INTEGRATION_CONFIG` en PHP/FPM con otra ruta absoluta: esa variable tiene prioridad y, si apunta a un archivo inexistente, se devuelve un error sin usar la ruta automática. En Docker, montar ese archivo fuera de `/var/www/html`, pasar la variable al servicio PHP y verificar que FPM la recibe. No se cargan archivos `.env` automáticamente.
 3. PHP requiere PDO MySQL y cURL. Reconstruir la imagen del proyecto para incorporar `pdo_mysql`: `docker compose build php`.
-4. Configurar dominio canónico `*.myshopify.com`, token Admin API válido y versión `2026-07`. El identificador de la URL del administrador debe confirmarse contra el dominio canónico.
+4. Configurar dominio canónico `*.myshopify.com`, `client_id`, `client_secret` y versión `2026-07`. Con la app instalada en la misma organización, dejar `access_token` vacío: el cliente lo obtiene automáticamente. Como alternativa, se admite un token Admin API manual cuando no se configura el par de credenciales. El identificador de la URL del administrador debe confirmarse contra el dominio canónico.
 5. Servir la API por HTTPS y enviar `Authorization: Bearer <api_token>`. El token de Caprino es distinto del de Shopify y nunca se entrega al storefront.
 
 ## Operaciones
@@ -53,3 +53,15 @@ Después: implementar y probar las escrituras de productos e inventario con mape
 `php tests/shopify.php`: autenticación, límites, paginación sin saltos, separación de referencias, consolidación de puntos autorizados, ceros/negativos, inyección SQL y errores GraphQL/HTTP. Usa SQLite en memoria y transporte Shopify simulado. Falta validar esquema/datos en MySQL real y acceso Shopify autenticado.
 
 Documentación oficial: [autenticación](https://shopify.dev/docs/apps/build/authentication-authorization), [apps independientes](https://shopify.dev/docs/apps/build/authentication-authorization/authenticate-standalone-apps), [client credentials](https://shopify.dev/docs/apps/build/authentication-authorization/client-credentials-grant).
+
+`php tests/shopify-config.php`: carga automática en estructura Plesk, prioridad de la variable, configuración ausente e inválida.
+
+## Autenticación automática
+
+El cliente intercambia `client_id` y `client_secret` por un token usando `client_credentials` sobre HTTPS. Requiere que app y tienda pertenezcan a la misma organización y que la app esté instalada. No implementa OAuth para tiendas de otras organizaciones.
+
+El token se conserva únicamente en memoria durante la vida del cliente PHP; se renueva 60 segundos antes de su vencimiento. Cada nueva petición HTTP a Caprino crea un cliente y solicita su propio token (no hay caché persistente ni cron de renovación). Una respuesta 401 en consultas de lectura provoca una renovación y un solo reintento. No se guardan tokens en el repositorio ni se incluyen respuestas de autenticación en mensajes de error.
+
+Validar en el servidor con la acción `shopify.status` y el encabezado `Authorization: Bearer <api_token_de_caprino>`. Esa acción no requiere conexión MySQL. Un resultado exitoso devuelve la tienda y los permisos; guardar credenciales sin desplegar el cliente actualizado no activa esta funcionalidad.
+
+`php tests/shopify-auth.php`: obtención y reutilización del token, renovación antes de vencimiento, reintento 401 limitado y respuestas de autenticación inválidas. Las pruebas usan credenciales ficticias y transporte simulado.
