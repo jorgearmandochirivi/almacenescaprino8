@@ -1,0 +1,4 @@
+# Entregar Authorization a PHP-FPM únicamente en las entradas de la API.
+<FilesMatch "^(caprino|actualizaexistencia)\.php$">
+    CGIPassAuth On
+</FilesMatch>
