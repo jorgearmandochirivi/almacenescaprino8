@@ -72,9 +72,9 @@ Validar en el servidor con la acción `shopify.status` y el encabezado `Authoriz
 
 La API lee HTTP_AUTHORIZATION, sus variantes REDIRECT y getallheaders. Devuelve HTTP 401 con `No se recibió el encabezado Authorization` si no llegó, o `No autorizado` si llegó pero no es válido. Nunca expone tokens ni acepta credenciales en la URL. Pruebas: `php tests/shopify-header.php`.
 
-## Piloto de escritura: Unicentro → Shopify
+## Escritura manual por referencia: Unicentro → Shopify
 
-Implementado exclusivamente para `CG9NCRRO`, `point_of_sale_ids = [1]`, tienda `kwtj0h-qz.myshopify.com` y ubicación `gid://shopify/Location/84605075647`. Los límites están fijados en `InventorySync.php`; no acepta otras referencias ni destinos desde la petición. Requiere `write_inventory` y API `2026-07`. No modifica precios, descuentos, imágenes, productos ni otras referencias.
+Implementado para referencias completas alfanuméricas (2–30 caracteres), de 1 a 30 variantes por referencia, `point_of_sale_ids = [1]`, tienda `kwtj0h-qz.myshopify.com` y ubicación `gid://shopify/Location/84605075647`. La referencia se recibe en la petición; el punto de venta y destino siguen limitados en `InventorySync.php`. Requiere `write_inventory` y API `2026-07`. No modifica precios, descuentos, imágenes, productos ni referencias distintas de la solicitada.
 
 1. Con el Bearer token de Caprino, enviar GET:
    `/api/caprino.php?action=shopify.inventory.preview&Referencia=CG9NCRRO`
@@ -87,10 +87,16 @@ Implementado exclusivamente para `CG9NCRRO`, `point_of_sale_ids = [1]`, tienda `
 
 Conservar Authorization. El plan está firmado; no editarlo. `response.applied = true` confirma aceptación de Shopify. `response.verified = true` confirma lectura posterior coincidente. Si `verified` es falso, la escritura fue aceptada pero la verificación falló o el inventario cambió después; revisar Shopify antes de iniciar otro plan.
 
-Se validan siete SKU exactos y únicos, seguimiento de inventario y activación en el destino. Una talla ausente, un SKU duplicado o cambios de stock Caprino posteriores a la vista previa bloquean el envío. Shopify comprueba `changeFromQuantity` y rechaza datos obsoletos. La misma vista previa conserva la misma clave `@idempotent` al repetir el POST; no crea un ajuste nuevo por reintentar. Si hay timeout, repetir con el MISMO plan mientras siga vigente. Si vence con resultado incierto, comprobar primero inventario en Shopify.
+Se validan SKU exactos y únicos, seguimiento de inventario y activación en el destino. Una talla ausente, un SKU duplicado o cambios de stock Caprino posteriores a la vista previa bloquean el envío. Shopify comprueba `changeFromQuantity` y rechaza datos obsoletos. La misma vista previa conserva la misma clave `@idempotent` al repetir el POST; no crea un ajuste nuevo por reintentar. Si hay timeout, repetir con el MISMO plan mientras siga vigente. Si vence con resultado incierto, comprobar primero inventario en Shopify.
 
-Esta es una carga manual piloto, no una tarea periódica. Antes de automatizarla se deben integrar las ventas/pedidos Shopify con las existencias de Caprino: generar nuevos planes sin descontar ventas podría reponer unidades ya vendidas. No hay transacción distribuida entre MySQL y Shopify; el chequeo de Caprino ocurre inmediatamente antes del envío y Shopify protege su propia concurrencia.
+Esta es una carga manual por referencia, no una tarea periódica. Antes de automatizarla se deben integrar las ventas/pedidos Shopify con las existencias de Caprino: generar nuevos planes sin descontar ventas podría reponer unidades ya vendidas. No hay transacción distribuida entre MySQL y Shopify; el chequeo de Caprino ocurre inmediatamente antes del envío y Shopify protege su propia concurrencia.
 
 Pruebas: `php tests/shopify-sync.php`, con transporte simulado (vista previa sin escrituras, envío y verificación, repetición idempotente, planes alterados/vencidos, concurrencia, SKU duplicado, inventario sin seguimiento y límites del piloto). La prueba real requiere desplegar y ejecutar los pasos anteriores.
 
 Referencias oficiales: [cantidades y concurrencia](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/inventoryquantityinput), [idempotencia](https://shopify.dev/docs/api/usage/implementing-idempotency).
+
+## Ampliación y SKU pendientes
+
+Para preparar las otras referencias existentes, usar `shopify.inventory.preview&Referencia=BY49MINE`, `Referencia=ZO9BLIMI` o `Referencia=ZY38CODO`. Cada referencia genera su propio plan y POST de aplicación. No se ejecutan envíos masivos ni programados.
+
+La sandalia ZY38 marrón tiene siete SKU vacíos en Shopify. No asignar códigos por deducción del color. Consultar `/api/caprino.php?action=getreferencias&Prefijo=ZY38` con Bearer Token: devuelve referencia completa, nombre, color y publicación. Incluye referencias no publicadas para diagnóstico y hasta 100 resultados, con `has_more`. Una vez confirmada la referencia marrón, asignar sus códigos completos con talla a las variantes existentes (34–40); después validar con `shopify.variants` y generar la vista previa correspondiente. La corrección de esos siete SKU sigue pendiente de identificar el código real y aplicarlo en Shopify.

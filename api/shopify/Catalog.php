@@ -5,6 +5,20 @@ final class CaprinoCatalog
 {
     public function __construct(private PDO $db, private array $config) {}
 
+    public function references(string $prefix): array
+    {
+        if (!preg_match('/^[A-Z0-9]{2,30}$/D', $prefix)) {
+            throw new InvalidArgumentException('Prefijo inválido');
+        }
+        $query = $this->db->prepare("SELECT r.IDReferencia AS reference_id, r.Numero AS reference,
+            r.Nombre AS name, r.Publicar AS published, c.DescripcionLarga AS color
+            FROM Referencia r LEFT JOIN Color c ON c.IDColor = r.IDColor
+            WHERE r.Numero LIKE ? ORDER BY r.Numero, r.IDReferencia LIMIT 101");
+        $query->execute([$prefix . '%']);
+        $rows = $query->fetchAll();
+        return ['references' => array_slice($rows, 0, 100), 'has_more' => count($rows) > 100];
+    }
+
     public static function variant(array $row, int $reserve): array
     {
         return [
