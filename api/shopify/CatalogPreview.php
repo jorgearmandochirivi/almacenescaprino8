@@ -31,7 +31,7 @@ final class CaprinoCatalogPreview
 
     public function preview(): array
     {
-        $source = []; $errors = []; $warnings = []; $seenIds = [];
+        $source = []; $errors = []; $warnings = []; $seenIds = []; $duplicates = [];
         for ($page = 1; ; $page++) {
             if ($page > 1000) throw new ShopifyIntegrationException('Catálogo Caprino excede el límite de vista previa');
             $batch = ($this->source)($page);
@@ -42,10 +42,15 @@ final class CaprinoCatalogPreview
             foreach ($batch['products'] as $product) {
                 $ref = trim((string) ($product['reference'] ?? ''));
                 $id = $product['reference_id'] ?? null;
-                if (!$id || isset($seenIds[$id]) || isset($source[$ref])) {
+                if (!$id || isset($seenIds[$id])) {
                     throw new ShopifyIntegrationException('Referencias duplicadas o lectura inconsistente en Caprino');
                 }
                 $seenIds[$id] = true;
+                if (isset($source[$ref])) {
+                    $duplicates[$ref] ??= [$source[$ref]['reference_id']];
+                    $duplicates[$ref][] = $id;
+                    continue;
+                }
                 $source[$ref] = $product;
                 if (!preg_match('/^[A-Z0-9]{2,30}$/D', $ref) || empty($product['variants'])) {
                     $errors[] = ['reference' => $ref, 'reason' => 'Referencia inválida o sin tallas vendibles'];
@@ -66,6 +71,10 @@ final class CaprinoCatalogPreview
             }
             if (!$batch['has_more']) break;
         }
+        foreach ($duplicates as $ref => $ids) {
+            $errors[] = ['reference' => (string) $ref, 'reference_ids' => $ids,
+                'reason' => 'Varios registros Caprino comparten la referencia; corregir antes de sincronizar'];
+        }
         if (!$source) $errors[] = ['reason' => 'Catálogo Caprino vacío; archivado bloqueado'];
         $products = $this->remote('products', fn($cursor) => $this->client->query(
             'query($cursor: String) { products(first: 100, after: $cursor) { nodes { id title status } pageInfo { hasNextPage endCursor } } }',
@@ -80,6 +89,7 @@ final class CaprinoCatalogPreview
         }
         $create = []; $update = []; $used = [];
         foreach ($source as $ref => $product) {
+            if (isset($duplicates[$ref])) continue;
             $matches = [];
             foreach ($product['variants'] as $variant) {
                 $ids = $bySku[$variant['sku']] ?? [];

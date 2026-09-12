@@ -126,3 +126,9 @@ Los precios y descuentos se muestran como los entrega Caprino; no se aplica toda
 promocional ni se escriben imágenes. Antes de implementar la ejecución, revisar este reporte y los conflictos.
 Una ejecución futura debe volver a validar el catálogo: este reporte no es autorización para archivar después
 con datos obsoletos. La lectura remota no es una instantánea transaccional de Shopify.
+
+Si varios registros Caprino tienen el mismo número de referencia, el reporte identifica
+`reference` y todos sus `reference_ids` en `errors`. Esa referencia queda excluida de
+`create` y `update_candidates` (no se selecciona arbitrariamente un registro) y el archivado
+permanece bloqueado. El resto del catálogo sí se puede revisar. Un mismo ID leído dos veces
+sigue siendo un error de lectura inconsistente y aborta la consulta.

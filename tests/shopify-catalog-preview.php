@@ -38,8 +38,15 @@ $r=runPreview([$bad],$products,$variants);
 check($r['archive_blocked'], 'Precio inválido bloquea archivo');
 foreach ([false,true] as $broken) {
     try {
-        runPreview($broken ? [product('ABC',1)] : [product('ABC',1),product('ABC',2)],$products,$variants,$broken);
+        runPreview($broken ? [product('ABC',1)] : [product('ABC',1),product('DEF',1)],$products,$variants,$broken);
         throw new RuntimeException('Debió rechazar lectura');
     } catch (ShopifyIntegrationException $e) {}
 }
 echo "OK: catálogo paginado, coincidencias, archivo y bloqueos; solo consultas de lectura\n";
+
+$r=runPreview([product('ABC',1),product('ABC',2),product('ABC',3),product('DEF',4)],$products,$variants);
+check($r['archive_blocked'] && !$r['archive'], 'Duplicados bloquean archivo');
+check(!$r['update_candidates'] && count($r['create'])===1 && $r['create'][0]['reference']==='DEF', 'No elegir arbitrariamente un duplicado');
+$duplicateErrors=array_values(array_filter($r['errors'],fn($e)=>isset($e['reference_ids'])));
+check($duplicateErrors[0]['reference_ids']===[1,2,3] && $duplicateErrors[0]['reference']==='ABC', 'Identifica todos los IDs duplicados entre páginas');
+echo "OK: duplicados diagnosticados sin perder las referencias válidas\n";
