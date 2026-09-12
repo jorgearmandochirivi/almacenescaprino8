@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+// Solo mensajes controlados: nunca incluir cuerpos HTTP, tokens ni curl_error().
+final class ShopifyIntegrationException extends RuntimeException {}
+
 final class ShopifyClient
 {
     private string $endpoint;
@@ -17,6 +20,9 @@ final class ShopifyClient
         if ($this->transport) {
             return ($this->transport)($url, $payload, $headers);
         }
+        if (!function_exists('curl_init')) {
+            throw new ShopifyIntegrationException('La extensión cURL no está habilitada en PHP');
+        }
         $curl = curl_init($url);
         curl_setopt_array($curl, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $payload,
             CURLOPT_HTTPHEADER => $headers, CURLOPT_RETURNTRANSFER => true,
@@ -24,9 +30,10 @@ final class ShopifyClient
             CURLOPT_FOLLOWLOCATION => false, CURLOPT_SSL_VERIFYPEER => true, CURLOPT_SSL_VERIFYHOST => 2]);
         $body = curl_exec($curl);
         $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+        $curlCode = curl_errno($curl);
         curl_close($curl);
         if ($body === false) {
-            throw new RuntimeException('No se pudo conectar con Shopify');
+            throw new ShopifyIntegrationException("No se pudo conectar con Shopify (cURL $curlCode)");
         }
         return [$status, $body];
     }
@@ -47,18 +54,27 @@ final class ShopifyClient
             ['Content-Type: application/x-www-form-urlencoded']
         );
         if ($status !== 200) {
-            throw new RuntimeException("Shopify rechazó la autenticación HTTP $status; revisar app, instalación y organización");
+            $error = json_decode($body, true);
+            $code = is_array($error) ? ($error['error'] ?? '') : '';
+            $detail = match ($code) {
+                'invalid_client' => 'Client ID o Client Secret incorrectos',
+                'shop_not_permitted' => 'La tienda no está permitida para esta app; revisar organización',
+                'invalid_request' => 'Solicitud de autenticación rechazada',
+                'invalid_grant' => 'Credenciales o autorización de la app no válidas',
+                default => 'Revisar credenciales, instalación y organización',
+            };
+            throw new ShopifyIntegrationException("Autenticación Shopify HTTP $status: $detail");
         }
         try {
             $response = json_decode($body, true, 32, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new RuntimeException('Respuesta de autenticación Shopify inválida');
+            throw new ShopifyIntegrationException('Respuesta de autenticación Shopify inválida');
         }
         $token = $response['access_token'] ?? null;
         $expires = $response['expires_in'] ?? null;
         if (!is_string($token) || $token === '' || preg_match('/[\r\n]/', $token)
             || !is_int($expires) || $expires <= 0 || $expires > 86400 * 365) {
-            throw new RuntimeException('Respuesta de autenticación Shopify incompleta');
+            throw new ShopifyIntegrationException('Respuesta de autenticación Shopify incompleta');
         }
         $this->token = $token;
         $this->tokenExpiresAt = $startedAt + $expires;
@@ -69,10 +85,10 @@ final class ShopifyClient
         $shop = $config['shop'] ?? '';
         $version = $config['api_version'] ?? '2026-07';
         if (!preg_match('/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/D', $shop)) {
-            throw new RuntimeException('Configurar el dominio canónico myshopify.com');
+            throw new ShopifyIntegrationException('Configurar el dominio canónico myshopify.com');
         }
         if (!preg_match('/^20[0-9]{2}-(01|04|07|10)$/D', $version) || (!$this->usesClientCredentials() && empty($config['access_token']))) {
-            throw new RuntimeException('Configurar api_version y client_id/client_secret o access_token de Shopify');
+            throw new ShopifyIntegrationException('Configurar api_version y client_id/client_secret o access_token de Shopify');
         }
         $this->endpoint = "https://$shop/admin/api/$version/graphql.json";
     }
@@ -90,11 +106,15 @@ final class ShopifyClient
                 ['Content-Type: application/json', 'X-Shopify-Access-Token: ' . $this->accessToken()]);
         }
         if ($status !== 200) {
-            throw new RuntimeException("Shopify respondió HTTP $status");
+            throw new ShopifyIntegrationException("Shopify respondió HTTP $status");
         }
-        $response = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+        try {
+            $response = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new ShopifyIntegrationException('Shopify devolvió una respuesta GraphQL inválida');
+        }
         if (!empty($response['errors']) || !isset($response['data'])) {
-            throw new RuntimeException('Shopify rechazó la consulta GraphQL; revisar permisos y versión');
+            throw new ShopifyIntegrationException('Shopify rechazó la consulta GraphQL; revisar permisos y versión');
         }
         return $response['data'];
     }

@@ -58,3 +58,13 @@ $client = new ShopifyClient($config, function($url) use (&$attempts) {
 try { $client->status(); } catch (RuntimeException $e) {}
 verifyAuth($attempts === 2);
 echo "$count pruebas de autenticación OK\n";
+foreach ([['invalid_client', 'Client ID o Client Secret incorrectos'], ['shop_not_permitted', 'La tienda no está permitida'], ['SECRET_MUST_NOT_LEAK', 'Revisar credenciales']] as [$code, $expected]) {
+    try {
+        (new ShopifyClient($config, fn() => [400, json_encode(['error' => $code, 'error_description' => 'SECRET_MUST_NOT_LEAK'])]))->status();
+        throw new RuntimeException('Se esperaba error seguro');
+    } catch (ShopifyIntegrationException $e) {
+        verifyAuth(str_contains($e->getMessage(), $expected));
+        verifyAuth(!str_contains($e->getMessage(), 'SECRET_MUST_NOT_LEAK'));
+    }
+}
+echo "6 verificaciones de diagnóstico seguro OK\n";
