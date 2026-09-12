@@ -100,3 +100,29 @@ Referencias oficiales: [cantidades y concurrencia](https://shopify.dev/docs/api/
 Para preparar las otras referencias existentes, usar `shopify.inventory.preview&Referencia=BY49MINE`, `Referencia=ZO9BLIMI` o `Referencia=ZY38CODO`. Cada referencia genera su propio plan y POST de aplicación. No se ejecutan envíos masivos ni programados.
 
 La sandalia ZY38 marrón tiene siete SKU vacíos en Shopify. No asignar códigos por deducción del color. Consultar `/api/caprino.php?action=getreferencias&Prefijo=ZY38` con Bearer Token: devuelve referencia completa, nombre, color y publicación. Incluye referencias no publicadas para diagnóstico y hasta 100 resultados, con `has_more`. Una vez confirmada la referencia marrón, asignar sus códigos completos con talla a las variantes existentes (34–40); después validar con `shopify.variants` y generar la vista previa correspondiente. La corrección de esos siete SKU sigue pendiente de identificar el código real y aplicarlo en Shopify.
+
+### Vista previa del catálogo completo
+
+`GET /api/caprino.php?action=shopify.catalog.preview` con el mismo Bearer de Caprino.
+Es un reporte de lectura: no crea, publica, modifica ni archiva productos y no entrega un plan aplicable.
+Solo requiere el permiso `read_products` ya instalado. La futura escritura requerirá `write_products`.
+
+Recorre todas las páginas del catálogo autorizado por `Publicar = S` y los filtros existentes,
+con las tallas e inventario de `point_of_sale_ids`. Lee Caprino en una transacción REPEATABLE READ
+(tablas InnoDB) y pagina productos y variantes Shopify por separado. Si falla cualquier página,
+no entrega un reporte parcial. El límite es 1000 páginas por colección; un timeout también aborta el reporte.
+
+- `create`: referencias sin ningún SKU coincidente.
+- `update_candidates`: productos con SKU coincidentes y los datos fuente. Son candidatos a reconciliar,
+  no un conteo de diferencias campo por campo. No se deduce identidad por título o color.
+- `archive`: productos no archivados sin coincidencias, incluidos los de prueba.
+- `errors`: datos inválidos, referencias/SKU duplicados o productos con variantes mezcladas.
+  Cualquier error bloquea la lista de archivado; un catálogo vacío también la bloquea.
+- `warnings`: referencias sin fotos. Los nombres provienen de FotoWeb1–FotoWeb4;
+  el administrador legado las sirve desde `admin/imagenes/`. No se inventan fotos ni se comprueba
+  su accesibilidad pública en este reporte. Hay que completar esas fotos antes de publicar el catálogo.
+
+Los precios y descuentos se muestran como los entrega Caprino; no se aplica todavía una política de precio
+promocional ni se escriben imágenes. Antes de implementar la ejecución, revisar este reporte y los conflictos.
+Una ejecución futura debe volver a validar el catálogo: este reporte no es autorización para archivar después
+con datos obsoletos. La lectura remota no es una instantánea transaccional de Shopify.

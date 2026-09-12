@@ -4,6 +4,7 @@ require_once __DIR__ . '/shopify/bootstrap.php';
 require_once __DIR__ . '/shopify/Catalog.php';
 require_once __DIR__ . '/shopify/Client.php';
 require_once __DIR__ . '/shopify/InventorySync.php';
+require_once __DIR__ . '/shopify/CatalogPreview.php';
 
 ini_set('display_errors', '0');
 header('Content-Type: application/json; charset=utf-8');
@@ -63,6 +64,18 @@ try {
                 throw new InvalidArgumentException('Referencia o plan inválido');
             }
             $response = $action === 'shopify.inventory.apply' ? $sync->apply($value) : $sync->preview($value);
+            break;
+        case 'shopify.catalog.preview':
+            $db = integrationDb($config);
+            $db->exec('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
+            $db->beginTransaction();
+            try {
+                $catalog = new CaprinoCatalog($db, $config);
+                $response = (new CaprinoCatalogPreview(new ShopifyClient($config['shopify'] ?? []),
+                    fn($page) => $catalog->products('', $page, 100)))->preview();
+            } finally {
+                $db->rollBack();
+            }
             break;
         case 'shopify.status':
             $response = (new ShopifyClient($config['shopify'] ?? []))->status();
