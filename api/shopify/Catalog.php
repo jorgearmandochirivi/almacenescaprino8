@@ -57,7 +57,10 @@ final class CaprinoCatalog
                 GROUP BY r.IDReferencia, r.Numero, t.IDTalla, t.Nombre, c.DescripcionLarga, p.ValorVenta, p.Descuento
                 ORDER BY t.IDTalla');
             $query->execute([$product['IDReferencia']]);
-            $variants = array_map(fn($row) => self::variant($row, $reserve), $query->fetchAll());
+            // Las tallas vacías del sistema legado no identifican una variante vendible.
+            $rows = array_values(array_filter($query->fetchAll(),
+                fn($row) => trim((string) ($row['Talla'] ?? '')) !== ''));
+            $variants = array_map(fn($row) => self::variant($row, $reserve), $rows);
             $result[] = ['reference_id' => (int) $product['IDReferencia'], 'reference' => $product['Numero'],
                 'name' => $product['Nombre'], 'description' => $product['DescripcionLarga'],
                 'short_description' => $product['DescripcionCorta'],
