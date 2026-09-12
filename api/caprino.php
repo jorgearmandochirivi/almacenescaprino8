@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/shopify/bootstrap.php';
 require_once __DIR__ . '/shopify/Catalog.php';
 require_once __DIR__ . '/shopify/Client.php';
+require_once __DIR__ . '/shopify/InventorySync.php';
 
 ini_set('display_errors', '0');
 header('Content-Type: application/json; charset=utf-8');
@@ -41,6 +42,20 @@ try {
             $page = integrationInteger($input['Pagina'] ?? 1, 1, 1000000, 'Pagina');
             $limit = integrationInteger($input['CantidadPorPagina'] ?? 50, 1, 100, 'CantidadPorPagina');
             $response = (new CaprinoCatalog(integrationDb($config), $config))->products($reference, $page, $limit);
+            break;
+        case 'shopify.inventory.preview':
+        case 'shopify.inventory.apply':
+            if ($action === 'shopify.inventory.apply' && $method !== 'POST') {
+                header('Allow: POST');
+                throw new UnexpectedValueException('La escritura requiere POST', 405);
+            }
+            $sync = new CaprinoInventorySync(new ShopifyClient($config['shopify'] ?? []), $config,
+                fn($ref) => (new CaprinoCatalog(integrationDb($config), $config))->products($ref, 1, 2));
+            $value = $input[$action === 'shopify.inventory.apply' ? 'plan' : 'Referencia'] ?? '';
+            if (!is_string($value) || $value === '' || strlen($value) > 20000) {
+                throw new InvalidArgumentException('Referencia o plan inválido');
+            }
+            $response = $action === 'shopify.inventory.apply' ? $sync->apply($value) : $sync->preview($value);
             break;
         case 'shopify.status':
             $response = (new ShopifyClient($config['shopify'] ?? []))->status();
