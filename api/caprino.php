@@ -65,6 +65,9 @@ try {
 } catch (UnexpectedValueException $e) {
     $status = in_array($e->getCode(), [401, 404, 405], true) ? $e->getCode() : 400;
     $result = ['success' => false, 'message' => $e->getMessage(), 'response' => null];
+} catch (ShopifyIntegrationException $e) {
+    $status = 503;
+    $result = ['success' => false, 'message' => $e->getMessage(), 'response' => null];
 } catch (Throwable $e) {
     $status = 503;
     error_log('Caprino integration failure: ' . get_class($e));
