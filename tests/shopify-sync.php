@@ -68,3 +68,18 @@ $new = $sync->preview('CG9NCRRO'); $verifyFailure = true;
 $result = $sync->apply($new['plan']);
 syncCheck($result['applied'] && !$result['verified'] && $result['verification_pending']);
 echo "$checks verificaciones sincronización OK\n";
+
+$verifyFailure = false;
+foreach (['BY49MINE', 'ZO9BLIMI', 'ZY38CODO'] as $reference) {
+    $variants = [['sku' => $reference . '-34', 'available' => 2], ['sku' => $reference . '-35', 'available' => 0]];
+    $stock[$reference . '-34'] = 0; $stock[$reference . '-35'] = 0;
+    $result = $sync->preview($reference);
+    syncCheck(count($result['variants']) === 2);
+    syncCheck($result['variants'][0]['sku'] === $reference . '-34');
+}
+$variants = [['sku' => 'ZY38CODO-34', 'available' => 0], ['sku' => 'ZY38CODO-34', 'available' => 0]];
+syncFails(fn() => $sync->preview('ZY38CODO'));
+$variants = [];
+syncFails(fn() => $sync->preview('ZY38CODO'));
+syncFails(fn() => $sync->preview('ZY38*'));
+echo "9 verificaciones ampliación OK\n";

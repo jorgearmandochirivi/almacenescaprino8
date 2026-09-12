@@ -36,6 +36,9 @@ INSERT INTO Talla VALUES (1,"35","S"),(2,"36","S"),(30,"","S"),(31,"   ","S"),(3
 INSERT INTO Color VALUES (1,"Negro");
 INSERT INTO Precio VALUES (1,120000,10);');
 $catalog = new CaprinoCatalog($db, ['point_of_sale_ids' => [1,2], 'stock_reserve' => 1]);
+check(count($catalog->references('ABCD')['references']) === 2);
+check($catalog->references('ZZ')['references'] === []);
+fails(fn() => $catalog->references("AB%' OR 1=1"), InvalidArgumentException::class);
 $first = $catalog->products('', 1, 1);
 check($first['has_more'] === true);
 check(count($first['products'][0]['variants']) === 2);

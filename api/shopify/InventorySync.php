@@ -8,10 +8,10 @@ final class CaprinoInventorySync
 
     private function source(string $reference): array
     {
-        // Piloto acordado: únicamente esta tienda, referencia y punto de venta.
-        if ($reference !== 'CG9NCRRO' || ($this->config['shopify']['shop'] ?? '') !== 'kwtj0h-qz.myshopify.com'
+        // Sincronización manual por referencia, conservando tienda y punto acordados.
+        if (!preg_match('/^[A-Z0-9]{2,30}$/D', $reference) || ($this->config['shopify']['shop'] ?? '') !== 'kwtj0h-qz.myshopify.com'
             || array_map('intval', $this->config['point_of_sale_ids'] ?? []) !== [1]) {
-            throw new ShopifyIntegrationException('El piloto requiere CG9NCRRO, Unicentro (1) y la tienda kwtj0h-qz');
+            throw new ShopifyIntegrationException('Se requiere una referencia válida, Unicentro (1) y la tienda kwtj0h-qz');
         }
         $data = ($this->catalog)($reference);
         if (count($data['products'] ?? []) !== 1 || !empty($data['has_more'])) {
@@ -21,14 +21,14 @@ final class CaprinoInventorySync
         $source = [];
         foreach ($variants as $variant) {
             $sku = $variant['sku'];
-            if (isset($source[$sku]) || !preg_match('/^CG9NCRRO-(34|35|36|37|38|39|40)$/D', $sku)
+            if (isset($source[$sku]) || !preg_match('/^' . preg_quote($reference, '/') . '-[A-Za-z0-9.]{1,10}$/D', $sku)
                 || !is_int($variant['available']) || $variant['available'] < 0) {
                 throw new ShopifyIntegrationException('SKU o cantidad inválida en Caprino');
             }
             $source[$sku] = $variant['available'];
         }
-        if (count($source) !== 7) {
-            throw new ShopifyIntegrationException('El piloto requiere las siete tallas 34 a 40');
+        if (count($source) < 1 || count($source) > 30) {
+            throw new ShopifyIntegrationException('Se admiten entre 1 y 30 variantes por referencia');
         }
         ksort($source);
         return $source;

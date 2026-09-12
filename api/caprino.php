@@ -33,6 +33,13 @@ try {
     }
     $action = $input['action'] ?? '';
     switch ($action) {
+        case 'getreferencias':
+            $prefix = $input['Prefijo'] ?? '';
+            if (!is_string($prefix)) {
+                throw new InvalidArgumentException('Prefijo inválido');
+            }
+            $response = (new CaprinoCatalog(integrationDb($config), $config))->references($prefix);
+            break;
         case 'getproducto':
         case 'getinventario':
             $reference = $input['Referencia'] ?? '';
