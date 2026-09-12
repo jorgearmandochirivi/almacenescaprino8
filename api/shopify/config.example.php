@@ -1,5 +1,6 @@
 <?php
-// Copiar FUERA de la raíz pública; configurar CAPRINO_INTEGRATION_CONFIG con su ruta absoluta.
+// Copiar a ../private-config/caprino-shopify.php, fuera de la raíz pública del proyecto.
+// Opcional: CAPRINO_INTEGRATION_CONFIG permite indicar otra ruta absoluta.
 return [
     'api_token' => '', // Generar con bin2hex(random_bytes(32)).
     'database' => [
@@ -12,6 +13,8 @@ return [
     'shopify' => [
         'shop' => '', // Confirmar dominio canónico en Shopify; no usar admin.shopify.com.
         'api_version' => '2026-07',
-        'access_token' => '', // Token Admin API de la app instalada, no una cookie del navegador.
+        'client_id' => '', // App instalada en la misma organización de la tienda.
+        'client_secret' => '', // Guardar únicamente en la copia privada del servidor.
+        'access_token' => '', // Alternativa manual; dejar vacío usando client credentials.
     ],
 ];

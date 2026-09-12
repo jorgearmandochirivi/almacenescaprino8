@@ -4,7 +4,13 @@ declare(strict_types=1);
 function integrationConfig(): array
 {
     $path = getenv('CAPRINO_INTEGRATION_CONFIG');
-    $config = $path ? require $path : [];
+    if ($path === false || $path === '') {
+        $path = dirname(__DIR__, 3) . '/private-config/caprino-shopify.php';
+    }
+    if (!is_file($path) || !is_readable($path)) {
+        throw new RuntimeException('Archivo de configuración de integración no disponible');
+    }
+    $config = require $path;
     if (!is_array($config)) {
         throw new RuntimeException('Configuración de integración inválida');
     }
