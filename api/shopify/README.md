@@ -65,3 +65,9 @@ El token se conserva únicamente en memoria durante la vida del cliente PHP; se 
 Validar en el servidor con la acción `shopify.status` y el encabezado `Authorization: Bearer <api_token_de_caprino>`. Esa acción no requiere conexión MySQL. Un resultado exitoso devuelve la tienda y los permisos; guardar credenciales sin desplegar el cliente actualizado no activa esta funcionalidad.
 
 `php tests/shopify-auth.php`: obtención y reutilización del token, renovación antes de vencimiento, reintento 401 limitado y respuestas de autenticación inválidas. Las pruebas usan credenciales ficticias y transporte simulado.
+
+## Authorization en Apache/PHP-FPM
+
+`api/.htaccess` habilita `CGIPassAuth On` solo para las entradas `caprino.php` y `actualizaexistencia.php`. Requiere Apache 2.4.13+ y permiso AuthConfig en AllowOverride; si Plesk devuelve HTTP 500 por esa directiva, el administrador debe configurarla en el virtual host y retirar la directiva del archivo. Nginx no usa .htaccess.
+
+La API lee HTTP_AUTHORIZATION, sus variantes REDIRECT y getallheaders. Devuelve HTTP 401 con `No se recibió el encabezado Authorization` si no llegó, o `No autorizado` si llegó pero no es válido. Nunca expone tokens ni acepta credenciales en la URL. Pruebas: `php tests/shopify-header.php`.

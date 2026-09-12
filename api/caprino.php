@@ -11,7 +11,9 @@ header('X-Content-Type-Options: nosniff');
 $status = 200;
 try {
     $config = integrationConfig();
-    integrationAuthorize($config, $_SERVER['HTTP_AUTHORIZATION'] ?? '');
+    integrationAuthorize($config, integrationAuthorizationHeader(
+        $_SERVER, function_exists('getallheaders') ? getallheaders() : []
+    ));
     $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
     if (!in_array($method, ['GET', 'POST'], true)) {
         header('Allow: GET, POST');
