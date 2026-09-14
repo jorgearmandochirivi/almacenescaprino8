@@ -9,31 +9,13 @@
 	$TableJoin = "";
 	$Key = "IDEntrada";
 	$MOD = "Entrada";
-	$_GET["order_by"]="IDEntrada";
-
-	/********************* TRAER DATOS DE VENTAS CON TARJETAS DE CREDITO Y DEBITO 'ID'S MAYOR QUE 2'*********************/
-
-	if( $_GET["field"] == "NumeroReferencia" )
-	{
-
-		$sql = " SELECT * FROM Entrada E, PuntoVentaReferencia PR, Referencia R WHERE E.IDPuntoVentaReferencia = PR.IDPuntoVentaReferencia AND PR.IDReferencia = R.IDReferencia
-					AND R.Numero LIKE '%$QryString%' GROUP BY E.IDEntrada ORDER BY Fecha DESC " ;
-
-	}//end if
-	elseif((int)$_GET["IDProveedor"]>0){
-		if(!empty($_GET["limit1"]) && !empty($_GET["limit2"])){
-			$condicion_fecha = " AND Fecha BETWEEN '".$_GET["limit1"]."' AND '".$_GET["limit2"]."'  ";
-		}
-
-		$sql = " SELECT * FROM Entrada E, PuntoVentaReferencia PR, Referencia R WHERE E.IDPuntoVentaReferencia = PR.IDPuntoVentaReferencia AND PR.IDReferencia = R.IDReferencia
-					AND R.IDProveedor = '".$_GET["IDProveedor"]."' ".$condicion_fecha." GROUP BY E.IDEntrada ORDER BY Fecha DESC " ;
-
-	}
-	else
-	{
-		$_GET["rangofield"] = " Fecha ";
-		$sql = make_qry_string($_GET);
-	}
+    require_once __DIR__ . "/../lib/entrada_busqueda.php";
+    try {
+        $sql = entrada_busqueda_sql($_GET);
+    } catch (InvalidArgumentException $e) {
+        http_response_code(400);
+        exit(entrada_html($e->getMessage()));
+    }
 
 	$qry_facturas = db_query( $sql );
 
