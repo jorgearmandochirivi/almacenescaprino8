@@ -1,5 +1,7 @@
 <body> <?php 
 
+require_once __DIR__ . "/../lib/entrada_busqueda.php";
+
 $TitleMod ="Entradas";
 
 $Table = "Entrada";
@@ -13,25 +15,11 @@ if($permisos[0] >= 2)
 		switch (nvl($action)) {
 			case "list" :
 
-				if( $field == "NumeroReferencia" )
-				{
-
-					$sql = " SELECT * FROM Entrada E, PuntoVentaReferencia PR, Referencia R WHERE E.IDPuntoVentaReferencia = PR.IDPuntoVentaReferencia AND PR.IDReferencia = R.IDReferencia
-								AND R.Numero LIKE '%$QryString%' GROUP BY E.IDEntrada ORDER BY Fecha DESC " ;
-
-				}//end if
-				elseif((int)$_GET["IDProveedor"]>0){
-					if(!empty($_GET["limit1"]) && !empty($_GET["limit2"])){
-						$condicion_fecha = " AND Fecha BETWEEN '".$_GET["limit1"]."' AND '".$_GET["limit2"]."'  ";
-					}
-
-					$sql = " SELECT * FROM Entrada E, PuntoVentaReferencia PR, Referencia R WHERE E.IDPuntoVentaReferencia = PR.IDPuntoVentaReferencia AND PR.IDReferencia = R.IDReferencia
-								AND R.IDProveedor = '".$_GET["IDProveedor"]."' ".$condicion_fecha." GROUP BY E.IDEntrada ORDER BY Fecha DESC " ;
-
-				}
-				else
-				{					
-							$sql = make_qry_string($HTTP_GET_VARS);
+				try {
+					$sql = entrada_busqueda_sql($_GET);
+				} catch (InvalidArgumentException $e) {
+					echo "<p>" . entrada_html($e->getMessage()) . "</p>";
+					$sql = "SELECT * FROM Entrada WHERE 1=0";
 				}
 				list_r($sql);
 			break;
@@ -99,7 +87,7 @@ else
 		</tr>
 	<tr>
 	<td class=texto bgcolor=#DBEAF5 colspan=11 nowrap>
-		<a href="exportar/exportentrada.php?IDProveedor=<?php echo $_GET["IDProveedor"]?>&limit1=<?php echo $_GET["limit1"]?>&limit2=<?php echo $_GET["limit2"]?>&field=<?php echo $_GET["field"] ?>&QryString=<?php echo $_GET["QryString"] ?>&order_by=<?php echo $_GET["order_by"] ?>&in_order=<?php echo $_GET["in_order"] ?>">
+		<a href="<?php echo entrada_html(entrada_busqueda_url($_GET, array(), "exportar/exportentrada.php")); ?>">
 		 <img src="../images/excel_icon.gif" alt="" width="20" height="20" border="0" >
 		 Exportar Archivo
 		</a>
@@ -113,13 +101,13 @@ else
 
 <table width=100% border=0 cellspacing=1 cellpadding=1 class=texto class="forumline" >
 					<tr>
-						<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDPuntoVenta&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Punto de Venta</a></td>
-						<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Remision&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Remisi&oacute;n</a><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Remision&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php  if($_GET['order_by']=="Remision"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
-						<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Numero Factura</a><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=NumeroFactura&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php  if($_GET['order_by']=="NumeroFactura"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
-							<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&tjoin=PuntoVentaReferencia&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Referencia</a><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Referencia.Numero&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>&nbsp;<?php  if($_GET['order_by']=="Referencia.Numero"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
-							<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Talla</a><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=IDTalla&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php  if($_GET['order_by']=="IDTalla"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
-							<td class=titlemedium nowrap bgcolor=#DBEAF5>&nbsp;&nbsp;&nbsp;&nbsp;<a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Fecha</a><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Fecha&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php  if($_GET['order_by']=="Fecha"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
-					<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&IDPuntoVenta=".$IDPuntoVenta."&QryString=".$_GET['QryString']."&order_by=Cantidad&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'>Cantidad</a><a href='<?php  echo "?mod=$MOD&field=".$_GET['field']."&QryString=".$_GET['QryString']."&order_by=Cantidad&in_order=".$order."&listar=".$nav->limit."&action=list"; ?>'><?php  if($_GET['order_by']=="Cantidad"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+						<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "IDPuntoVenta", "in_order" => $order, "action" => "list"))); ?>'>Punto de Venta</a></td>
+						<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "Remision", "in_order" => $order, "action" => "list"))); ?>'>Remisi&oacute;n</a><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "Remision", "in_order" => $order, "action" => "list"))); ?>'>&nbsp;<?php  if($_GET['order_by']=="Remision"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+						<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "NumeroFactura", "in_order" => $order, "action" => "list"))); ?>'>Numero Factura</a><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "NumeroFactura", "in_order" => $order, "action" => "list"))); ?>'>&nbsp;<?php  if($_GET['order_by']=="NumeroFactura"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+							<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "Referencia.Numero", "in_order" => $order, "action" => "list"))); ?>'>Referencia</a><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "Referencia.Numero", "in_order" => $order, "action" => "list"))); ?>'>&nbsp;<?php  if($_GET['order_by']=="Referencia.Numero"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+							<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "IDTalla", "in_order" => $order, "action" => "list"))); ?>'>Talla</a><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "IDTalla", "in_order" => $order, "action" => "list"))); ?>'><?php  if($_GET['order_by']=="IDTalla"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+							<td class=titlemedium nowrap bgcolor=#DBEAF5>&nbsp;&nbsp;&nbsp;&nbsp;<a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "Fecha", "in_order" => $order, "action" => "list"))); ?>'>Fecha</a><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "Fecha", "in_order" => $order, "action" => "list"))); ?>'><?php  if($_GET['order_by']=="Fecha"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
+					<td class=titlemedium nowrap bgcolor=#DBEAF5><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "Cantidad", "in_order" => $order, "action" => "list"))); ?>'>Cantidad</a><a href='<?php  echo entrada_html(entrada_busqueda_url($_GET, array("order_by" => "Cantidad", "in_order" => $order, "action" => "list"))); ?>'><?php  if($_GET['order_by']=="Cantidad"){?><img src="images/<?php echo $img?>" border=0><?php }?></a></td>
 					</tr>
 
 				<?php 
@@ -221,8 +209,11 @@ else
 	</table>
 	<?php 
 }// End if$rows
-else
-	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
+else {
+	echo "<br><table align=center>";
+	filtrar();
+	echo "</table><p>No existen registros para los filtros seleccionados.</p>";
+}
 }// Enf function list()
 
 /*******************************************************************************************
@@ -231,19 +222,20 @@ else
 	function filtrar(){
 	Global $dblink,$total_records,$row,$numtoshow,$MOD;
 ?>
-	<form name="frm" action="./" method="get" onSubmit="return valbuscar(document.frm)">
+	<form name="frm" action="./" method="get" onSubmit="if (this.field.value === 'Fecha') { if (!this.limit1.value || !this.limit2.value) { alert('Seleccione la fecha inicial y final'); return false; } return true; } return valbuscar(this)">
 		<tr>
 			<td class="rowform" align="center" colspan=8>
 				<select name="field" id="Buscar por" class="popup">
 					<option value="">Buscar Por</option>
+                    <option value="Fecha">Fecha</option>
 					<option value="Remision">Remision</option>
                     <option value="NumeroFactura">Numero de Factura</option>
                     <option value="NumeroReferencia">Numero de Referencia</option>
 					<option value="PuntoVenta.Nombre">Nombre Punto</option>
 				</select>
-				<input type="text" size="20" name="QryString" id="Buscar por" class="post">
+				<input type="text" size="20" name="QryString" value="<?php echo entrada_html($_GET['QryString'] ?? ''); ?>" id="Buscar por" class="post">
 				<select name="IDProveedor"  id="IDProveedor" >
-					<option value="">Seleccione Un Punto de Venta</option><?php 
+					<option value="">Seleccione Un Proveedor</option><?php
 				$qry_provee = db_query("SELECT * FROM Proveedor Where Publicar = 'S' ORDER BY Nombre ");
 				while($proveedor = db_fetch_object($qry_provee)){
 					 echo "<option value=$proveedor->IDProveedor ";if($_GET["IDProveedor"] == $proveedor->IDProveedor ) echo "selected"; echo ">&nbsp;&nbsp;$proveedor->Nombre</option>";
@@ -252,14 +244,14 @@ else
 				</select>
 
 				<br>
-				Entre <input type=text readonly size=10 class=input name=limit1>
+				Entre <input type=text readonly size=10 class=input name=limit1 value="<?php echo entrada_html($_GET['limit1'] ?? ''); ?>">
 				<script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
 							document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit1,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 					//-->
 				</script>
-				 y <input type=text size=10 readonly class=input name=limit2>
+				 y <input type=text size=10 readonly class=input name=limit2 value="<?php echo entrada_html($_GET['limit2'] ?? ''); ?>">
 				<script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
@@ -295,6 +287,12 @@ else
 			</td>
 		</tr>
 	</form>
+    <script>
+    <?php foreach (array('field', 'order_by', 'in_order', 'listar') as $control) {
+        if (isset($_GET[$control]) && is_string($_GET[$control])) { ?>
+    document.frm.elements[<?php echo json_encode($control); ?>].value = <?php echo json_encode($_GET[$control], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+    <?php } } ?>
+    </script>
 <?php 
 	}//End function filtrar
 
