@@ -261,13 +261,13 @@ else {
 				<br>
 				ordenar por
 				<select name="order_by" class="popup">
-					<option value="Remision" selected>Remision</option>
-					<option value="Fecha">Fecha</option>
+					<option value="Remision">Remision</option>
+					<option value="Fecha" selected>Fecha</option>
 				</select>
 				de forma
 				<select name="in_order" class="popup">
-					<option value="ASC" selected>Ascendente</option>
-					<option value="DESC">Descendente</option>
+					<option value="ASC">Ascendente</option>
+					<option value="DESC" selected>Descendente</option>
 				</select>
 				Listar
 				<select name="listar" class="popup">
