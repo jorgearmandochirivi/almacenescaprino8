@@ -43,7 +43,6 @@ if($permisos[0] >= 2)
 					$frm["IDCliente"] = 	$id_cliente;	
 				endif;
 				
-				$sql_max_numero = string;
 				$sql_max_numero = "Select MAX(Numero) as NumeroMaximo From Pqr Where 1";
 				$result_numero = db_query($sql_max_numero);
 				$row_numero = db_fetch_array($result_numero);
