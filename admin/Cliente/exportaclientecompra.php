@@ -3,9 +3,9 @@
 	Encabezado();
 
 	if (empty($_GET["condicionfecha"]) ){
-		$_GET[limit1]=date("Y-m-01");
-		$_GET[limit2]=date("Y-m-30");
-		$_GET["condicionfecha"].=" and F.FechaFactura between '".$_GET[limit1]."' and '".$_GET[limit2]."'";
+		$_GET["limit1"]=date("Y-m-01");
+		$_GET["limit2"]=date("Y-m-30");
+		$_GET["condicionfecha"]=" and F.FechaFactura between '".$_GET["limit1"]."' and '".$_GET["limit2"]."'";
 	}
 
   $sql_clientes = $_GET["sql"];
