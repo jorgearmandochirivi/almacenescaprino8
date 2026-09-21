@@ -2858,28 +2858,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 
-			var contador_linea = ref_descuento.length;
-			switch (contador_linea) {
-				case 2:
-					ref_descuento.forEach((element) => {
-						porcentaje_descuento = 5;
-						document.frm.elements["DescuentoLin" + element].value = porcentaje_descuento;
-						document.frm.elements["DescuentoLin" + element].style.background = "#CCFFCC";
-						document.frm.elements["ObservacionDescuento"].value = "5% adicional por dos pares";
-					})
-					break;
-				default:
-					if (contador_linea < 3) {
-						break;
-					}
-					ref_descuento.forEach((element) => {
-						porcentaje_descuento = 10;
-						document.frm.elements["DescuentoLin" + element].value = porcentaje_descuento;
-						document.frm.elements["DescuentoLin" + element].style.background = "#CCFFCC";
-						document.frm.elements["ObservacionDescuento"].value = "10% adicional por tres o mas pares";
-					})
-					break;
-			}
+			// Promoción general por pares inactiva: conservar los descuentos habituales.
 
 
 
