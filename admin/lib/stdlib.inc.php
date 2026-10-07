@@ -3241,17 +3241,17 @@ function crear_pdf_pedido($id_pedido_tercero){
 
     			<?php if (!empty($row_pedido["Foto1"])): ?>
                 <td>				
-					<img src="<?php echo $foto_src["Foto1"] ?? ($url."admin/imagenes/". $row_pedido["Foto1"]); ?>" width="150" height="150" style="float:left;clear:none;">
+					<img src="<?php echo $foto_src["Foto1"] ?? ($url."admin/imagenes/". $row_pedido["Foto1"]); ?>" width="150" height="150" style="display:block;">
                 </td>
                 <?php endif;?>
                 <?php if (!empty($row_pedido["Foto2"])): ?>
                 <td>
-					<img src="<?php echo $foto_src["Foto2"] ?? ($url."admin/imagenes/". $row_pedido["Foto2"]); ?>" width="150" height="150" style="float:left;clear:none;">
+					<img src="<?php echo $foto_src["Foto2"] ?? ($url."admin/imagenes/". $row_pedido["Foto2"]); ?>" width="150" height="150" style="display:block;">
                 </td>
 				<?php endif;?>
                 <?php if (!empty($row_pedido["Foto3"])): ?>
                 <td>
-					<img src="<?php echo $foto_src["Foto3"] ?? ($url."admin/imagenes/". $row_pedido["Foto3"]); ?>" width="150" height="150" style="float:left;clear:none;">
+					<img src="<?php echo $foto_src["Foto3"] ?? ($url."admin/imagenes/". $row_pedido["Foto3"]); ?>" width="150" height="150" style="display:block;">
                 </td>
 				<?php endif;?>
                 <?php if (!empty($row_pedido["Foto4"])): ?>
