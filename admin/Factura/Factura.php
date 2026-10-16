@@ -76,10 +76,12 @@ if($permisos[0] >= 2)
 			break;
 			case "list" :
 
+				$cond_fecha = "";
+
 				if(!empty($_GET["limit1"]) && !empty($_GET["limit2"])){
-						$cond_fecha= " and FechaFactura>= '".$_GET["limit1"]." 00:00:00' and FechaFactura<= '".$_GET["limit2"]." 23:59:59'";
-						$_GET["limit1"]=$_GET["limit1"]." 00:00:00";
-						$_GET["limit2"]=$_GET["limit2"]." 23:59:59";
+						$cond_fecha= " and FechaFactura>= '".substr($_GET["limit1"], 0, 10)." 00:00:00' and FechaFactura<= '".substr($_GET["limit2"], 0, 10)." 23:59:59'";
+						$_GET["limit1"]=substr($_GET["limit1"], 0, 10)." 00:00:00";
+						$_GET["limit2"]=substr($_GET["limit2"], 0, 10)." 23:59:59";
 				}
 
 				if(!empty($_GET["FacturaElec"])){
@@ -94,7 +96,24 @@ if($permisos[0] >= 2)
 				}	
 				
 
-				if( $field == "NumeroReferencia" )
+				if( $field == "PuntoVenta.Nombre" )
+				{
+					// Combinar todos los filtros sobre la misma factura.
+					$texto_punto = mysqli_real_escape_string($GLOBALS['DB_LINK'], $_GET['QryString'] ?? '');
+					$sql = "SELECT F.* FROM Factura F
+						INNER JOIN PuntoVenta ON PuntoVenta.IDPuntoVenta = F.IDPuntoVenta
+						LEFT JOIN Cliente ON Cliente.IDCliente = F.IDCliente
+						WHERE PuntoVenta.Nombre LIKE '%".$texto_punto."%' ".$cond_fecha;
+					$ordenes = array('FechaFactura' => 'F.FechaFactura',
+						'Cliente.Nombre' => 'Cliente.Nombre', 'Cliente.Apellido' => 'Cliente.Apellido',
+						'Cliente.Cedula' => 'Cliente.Cedula', 'PuntoVenta.Nombre' => 'PuntoVenta.Nombre',
+						'IDCliente' => 'F.IDCliente', 'NumeroDocumento' => 'PuntoVenta.Nombre',
+						'NumeroFactura' => 'F.NumeroFactura', 'ValorTotal' => 'F.ValorTotal');
+					$orden_campo = $ordenes[$_GET['order_by'] ?? ''] ?? 'F.FechaFactura';
+					$orden_sentido = ($_GET['in_order'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
+					$sql .= " ORDER BY ".$orden_campo." ".$orden_sentido.", F.FechaFactura DESC, F.IDPuntoVenta DESC, F.IDFactura DESC";
+				}
+				elseif( $field == "NumeroReferencia" )
 				{
 
 
@@ -835,8 +854,16 @@ function eliminafactura( IDFactura, IDPuntoVenta )
 
 <?php 
 }// End if$rows
-else
-	echo "<br><br><span class=subtitle><b>No existen registros en  $TitleMod </b></span>";
+else {
+?>
+<br>
+<table width=750 cellpadding=0 cellspacing=0 align=center class=bordertable>
+	<tr><td class=titlemedium bgcolor=#9daac6><b>Listar <?php echo $TitleMod; ?></b></td></tr>
+	<?php filtrar(); ?>
+	<tr><td class=rowform>No existen facturas con los filtros seleccionados. Puedes modificar la b&uacute;squeda arriba.</td></tr>
+</table>
+<?php
+}
 }// Enf function list()
 
 /*******************************************************************************************
@@ -850,22 +877,22 @@ else
 			<td class="rowform" align="center" colspan=8>
 				<select name="field" id="Buscar por" class="popup">
 					<option value="">Buscar Por</option>
-					<option value="Cliente.Nombre">Nombre Cliente</option>
-					<option value="Cliente.Apellido">Apellido Cliente</option>
-					<option value="Cliente.Cedula">cedula Cliente</option>
-					<option value="PuntoVenta.Nombre">Punto de Venta</option>
-					<option selected value="NumeroFactura">Numero de Factura</option>
-					<option selected value="NumeroReferencia">Numero de Referencia</option>
+					<option value="Cliente.Nombre" <?php if (($_GET["field"] ?? "NumeroFactura") === "Cliente.Nombre") echo "selected"; ?>>Nombre Cliente</option>
+					<option value="Cliente.Apellido" <?php if (($_GET["field"] ?? "NumeroFactura") === "Cliente.Apellido") echo "selected"; ?>>Apellido Cliente</option>
+					<option value="Cliente.Cedula" <?php if (($_GET["field"] ?? "NumeroFactura") === "Cliente.Cedula") echo "selected"; ?>>cedula Cliente</option>
+					<option value="PuntoVenta.Nombre" <?php if (($_GET["field"] ?? "NumeroFactura") === "PuntoVenta.Nombre") echo "selected"; ?>>Punto de Venta</option>
+					<option value="NumeroFactura" <?php if (($_GET["field"] ?? "NumeroFactura") === "NumeroFactura") echo "selected"; ?>>Numero de Factura</option>
+					<option value="NumeroReferencia" <?php if (($_GET["field"] ?? "NumeroFactura") === "NumeroReferencia") echo "selected"; ?>>Numero de Referencia</option>
 				</select>
-				<input type="text" size="20" name="QryString" id="Buscar Por" class="post">
-				Entre <input type=text readonly size=10 class=input name=limit1>
+				<input type="text" size="20" name="QryString" id="Buscar Por" class="post" value="<?php echo htmlspecialchars($_GET['QryString'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+				Entre <input type=text readonly size=10 class=input name=limit1 value="<?php echo htmlspecialchars(substr($_GET['limit1'] ?? '', 0, 10), ENT_QUOTES, 'UTF-8'); ?>">
 				<script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
 							document.write("<img src=jscripts/imagescalendar/cal.gif onmouseover=this.style.cursor='hand' onclick='popUpCalendar(this, document.frm.limit1,\"yyyy-mm-dd\")' width=16 height=16 border=0>")
 					//-->
 				</script>
-				 y <input type=text size=10 readonly class=input name=limit2>
+				 y <input type=text size=10 readonly class=input name=limit2 value="<?php echo htmlspecialchars(substr($_GET['limit2'] ?? '', 0, 10), ENT_QUOTES, 'UTF-8'); ?>">
 				<script language='JavaScript1.2'>
 					<!--
 						if (!document.layers)
@@ -878,6 +905,7 @@ else
 				<br>
 				ordenar por
 				<select name="order_by" class="popup">
+					<option value="FechaFactura" selected>Fecha Factura</option>
 					<option value="Cliente.Nombre">Nombre Cliente</option>
 					<option value="Cliente.Apellido">Apellido Cliente</option>
 					<option value="Cliente.Cedula">cedula Cliente</option>
@@ -886,7 +914,7 @@ else
 				de forma
 				<select name="in_order" class="popup">
 					<option value="ASC">Ascendente</option>
-					<option value="DESC">Descendente</option>
+					<option value="DESC" selected>Descendente</option>
 				</select>
 				Listar
 				<select name="listar" class="popup">
