@@ -213,9 +213,19 @@ if($permisos[0] >= 2)
 			case "inserta_detalle_referencia";
 			$frm= vars_LOG($HTTP_POST_VARS);
 			//echo "Select * From DetallePedidoTerceroReferencia Where IDPedidoTercero = '".$frm["IDPedidoTercero"]."'";
+            if (!empty($_POST['RecalcularCurvas'])) {
+                $pedido_recalculo = (int)$frm['IDPedidoTercero'];
+                $estado_recalculo = get_field("PedidoTercero", "IDEstadoPedidoTercero", "IDPedidoTercero", $pedido_recalculo);
+                $recepciones = db_query("SELECT IDDetallePedidoTerceroReferencia FROM DetallePedidoTerceroReferencia WHERE IDPedidoTercero = '$pedido_recalculo' AND (COALESCE(CantidadRecibido, 0) <> 0 OR Estado = 'Recibido') LIMIT 1");
+                if ((int)$estado_recalculo !== 1 || !$recepciones || db_num_rows($recepciones) > 0) {
+                    alert("No se puede guardar el recalculo: el pedido debe estar Guardado y sin recepciones.");
+                    print_form($pedido_recalculo,"update","Actualizar $TitleMod","Realizar Cambios");
+                    break;
+                }
+            }
 			//ACTUALIZO LAS CANTIDADES DE PEDIDO POR PUNTO, TALLA y REFERENCIA
 				//$sql_borrar_anterior=db_query("Delete From DetallePedidoTerceroReferencia Where IDPedidoTercero = '".$frm["IDPedidoTercero"]."'");
-				foreach($frm as $id_dato => $datos1){
+				foreach(array('Pedido' => ($frm['Pedido'] ?? array())) as $id_dato => $datos1){
 						foreach($datos1 as $id_talla => $dato_talla)	{
 							foreach($dato_talla as $id_punto => $dato_punto)	{
 								foreach($dato_punto as $id_referencia => $cantidad)	{
@@ -247,6 +257,8 @@ if($permisos[0] >= 2)
             	alert("Pedido Guardado con exito");
             </script>
 			<?php 
+            $_GET['tab'] = 'detalle';
+            unset($_GET['recalcular_curvas']);
 			print_form($frm["IDPedidoTercero"],"update","Actualizar $TitleMod","Realizar Cambios");
 
 			break;
@@ -926,6 +938,21 @@ var Check = new Array('IDProveedor','FechaPedido','FechaEntrega');
 //SUBDETALLE PEDIDO
 if ($_GET["tab"]=="detalle" && !empty($id)){
 
+    // Recalcular es una vista previa: las cantidades se actualizan al guardar.
+    $recalcular_curvas = false;
+    $cantidades_anteriores = array();
+    if ((int)$r->IDEstadoPedidoTercero === 1) {
+        $pedido_recalculo = (int)$id;
+        $recepciones = db_query("SELECT IDDetallePedidoTerceroReferencia FROM DetallePedidoTerceroReferencia WHERE IDPedidoTercero = '$pedido_recalculo' AND (COALESCE(CantidadRecibido, 0) <> 0 OR Estado = 'Recibido') LIMIT 1");
+        $puede_recalcular = $recepciones && db_num_rows($recepciones) === 0;
+        $recalcular_curvas = $puede_recalcular && !empty($_GET['recalcular_curvas']);
+        if ($recalcular_curvas) {
+            $anteriores = db_query("SELECT IDTalla, IDPuntoVenta, IDDetallePedidoTercero FROM DetallePedidoTerceroReferencia WHERE IDPedidoTercero = '$pedido_recalculo'");
+            while ($anterior = db_fetch_array($anteriores)) {
+                $cantidades_anteriores[(int)$anterior['IDTalla']][(int)$anterior['IDPuntoVenta']][(int)$anterior['IDDetallePedidoTercero']] = 0;
+            }
+        }
+    }
     $sql_tallas = "Select * From Talla Where 1 Group By Descripcion Order By Nombre";
 	$result_talla = db_query($sql_tallas);
 	while ($row_talla = db_fetch_array($result_talla)){
@@ -969,6 +996,13 @@ if ($_GET["tab"]=="detalle" && !empty($id)){
 
 <div id="DetallePedido" style=" <?php if ($_GET['tab']!="detalle" && !empty($id)){ ?> display:none;  <?php } ?>">
 
+<?php if (!empty($puede_recalcular)): ?>
+<p style="text-align:center"><a href="?mod=PedidoTercero&amp;action=edit&amp;id=<?php echo (int)$id; ?>&amp;tab=detalle&amp;recalcular_curvas=1">Volver a calcular con las curvas actuales</a></p>
+<?php endif; ?>
+<?php if ($recalcular_curvas): ?>
+<p style="text-align:center">Vista previa recalculada con las curvas actuales, existencias y pendientes. Revise el total y pulse Realizar Cambios para guardar. Las cantidades manuales anteriores se reemplazaran.
+<a href="?mod=PedidoTercero&amp;action=edit&amp;id=<?php echo (int)$id; ?>&amp;tab=detalle">Cancelar</a></p>
+<?php endif; ?>
 <form name="frm" id="frmPedidoTercero" action="<?php echo $PHP_SELF?>" method="post" enctype="multipart/form-data" <?php if($newmode!="delete"){ ?> onSubmit="return EvaluaReg(this,Check)" <?php } ?>>
 
 <table cellpadding=1 cellspacing=0 class=bordertable align=center width="70%" >
@@ -1494,7 +1528,7 @@ $total_curva +=$array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_tal
 
 
 
-										if (is_numeric($row_detalle_pedido_ref["Cantidad"])){
+										if (!$recalcular_curvas && is_numeric($row_detalle_pedido_ref["Cantidad"])){
 											$entra_en = "AA";
 											$valor_pedir_item = (int)$row_detalle_pedido_ref["Cantidad"];
 										}
@@ -1546,7 +1580,8 @@ $total_curva +=$array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_tal
 													//$super_total_talla[$datos_talla['IDTalla']][$array_detalle_orden[$i]["IDDetallePedidoTercero"]]--;
 											endif;
 											?>
-	    	                                	<input type="text" name="Pedido[<?php echo $datos_talla['IDTalla']; ?>][<?php echo $datos_punto_venta['IDPuntoVenta'] ?>][<?php echo $array_detalle_orden[$i]["IDDetallePedidoTercero"] ?>]"  size="5" value="<?php if (is_numeric($valor_pedir_item)) echo (int)$valor_pedir_item; ?>" style="text-align:center">
+                                        <?php unset($cantidades_anteriores[(int)$datos_talla['IDTalla']][(int)$datos_punto_venta['IDPuntoVenta']][(int)$array_detalle_orden[$i]['IDDetallePedidoTercero']]); ?>
+                                        <input type="text" name="Pedido[<?php echo $datos_talla['IDTalla']; ?>][<?php echo $datos_punto_venta['IDPuntoVenta'] ?>][<?php echo $array_detalle_orden[$i]["IDDetallePedidoTercero"] ?>]"  size="5" value="<?php if (is_numeric($valor_pedir_item)) echo (int)$valor_pedir_item; ?>" style="text-align:center">
 
 											<?php 
 										 else:
@@ -1763,6 +1798,19 @@ $total_curva +=$array_datos_curva[$datos_punto_venta['IDPuntoVenta']][$datos_tal
               <input type=hidden name=UsuarioTrEd value="<?php echo $r->UsuarioTrEd ?>">
               <input type=hidden name=FechaTrEd value="<?php echo $r->FechaTrEd ?>">
               <input type=hidden name=ID value="<?php echo $r->$Key ?>">
+              <?php if ($recalcular_curvas): ?>
+              <input type="hidden" name="RecalcularCurvas" value="1">
+              <?php
+              // Puntos o tallas retirados de la curva tambien deben quedar en cero.
+              foreach ($cantidades_anteriores as $talla => $puntos) {
+                  foreach ($puntos as $punto => $referencias) {
+                      foreach ($referencias as $referencia => $cantidad) {
+                          echo '<input type="hidden" name="Pedido['.$talla.']['.$punto.']['.$referencia.']" value="0">';
+                      }
+                  }
+              }
+              endif;
+              ?>
               <input type=hidden name=action value="inserta_detalle_referencia">
               <input type=hidden name="IDEstadoPedidoTercero" id="IDEstadoPedidoTercero" value=<?php if($newmode=="insert") echo "1"; else echo $r->IDEstadoPedidoTercero ?>>
 
