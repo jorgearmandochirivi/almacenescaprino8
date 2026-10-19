@@ -63,7 +63,7 @@ if($permisos[0] >= 2)
 				
 				$frm['IDTraslado'] = insert($frm);
 				
-				$sql_pto_ref = "select * From PuntoVentaReferencia Where IDPuntoVenta = '".$frm[IDPuntoVentaOrigen]."' and IDReferencia = '7615' limit 1";
+				$sql_pto_ref = "select * From PuntoVentaReferencia Where IDPuntoVenta = '".$frm['IDPuntoVentaOrigen']."' and IDReferencia = '7615' limit 1";
 				$r_pto_ref = db_query($sql_pto_ref);
 				$row_pto_ref =  db_fetch_array($r_pto_ref);
 				$IDPuntoVentaReferencia = $row_pto_ref["IDPuntoVentaReferencia"];
