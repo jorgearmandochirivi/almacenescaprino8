@@ -90,7 +90,7 @@ function print_from($Mes="", $Ano=""){
 									<option value="">Seleccione un a&ntilde;o...</option>
 										<?php $year_actual=date("Y"); ?>
 										<?php
-										for($year=$year_actual;$year>=2006;$year--){ ?>
+										for($year=$year_actual;$year>=2020;$year--){ ?>
 												<option value="<?php echo $year; ?>"><?php echo $year; ?></option>
 										<?php }	?>
 								</select><input type="hidden" name="mod" value="NetasAlmacenes"><input type="hidden" name="action" value="view"></td>
