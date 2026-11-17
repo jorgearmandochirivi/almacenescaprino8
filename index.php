@@ -216,45 +216,52 @@ include("admin/jscripts/tabs.php");
 
 					</table>
 				<?php endif; ?>
-				<table>
-					<tr>
-						<td>
-							<?php
+				<?php
+				$avisosDian = [];
+				$fechaConfigurada = (string) ($r_punto->FechaFinResolucion ?? '');
+				$fechaFin = DateTimeImmutable::createFromFormat('!Y-m-d', $fechaConfigurada);
+				if ($fechaFin && $fechaFin->format('Y-m-d') === $fechaConfigurada) {
+					$hoy = new DateTimeImmutable('today');
+					$dias = (int) $hoy->diff($fechaFin)->format('%r%a');
+					if ($dias < 0) {
+						$avisosDian[] = 'La resoluci&oacute;n de facturaci&oacute;n venci&oacute; el ' . $fechaFin->format('d/m/Y') . '.';
+					} elseif ($dias === 0) {
+						$avisosDian[] = 'La resoluci&oacute;n de facturaci&oacute;n vence hoy.';
+					} elseif ($dias <= 10) {
+						$avisosDian[] = 'La resoluci&oacute;n de facturaci&oacute;n vence en ' . $dias . ($dias === 1 ? ' d&iacute;a.' : ' d&iacute;as.');
+					}
+				}
 
-							if (isset($r_punto->FechaFinResolucion) && $r_punto->FechaFinResolucion != "0000-00-00") {
-								$fechaFin = new DateTime($r_punto->FechaFinResolucion);
-								$hoy = new DateTime();
-								$interval = $hoy->diff($fechaFin);
-								if ($interval->days <= 10 && $interval->invert == 0) {
-									if ($interval->days == 0) {
-										$DiasVencimiento = 1;
-									}
-									echo "<br><span align=center style='color: green;  font-size: 14px; '>Facturacion DIAN Vence en " . $DiasVencimiento . " dias</span>";
-								}
-							}
+				$rangoFinal = trim((string) ($r_punto->RHasta ?? ''));
+				if (preg_match('/^(?:.+-)?([0-9]+)$/D', $rangoFinal, $coincidencias)) {
+					$numeroFinal = (int) $coincidencias[1];
+					$idPunto = (int) $r_punto->IDPuntoVenta;
+					$sqlFacturas = "SELECT MAX(NumeroFactura) AS UltimoNumero FROM Factura
+						WHERE IDPuntoVenta = $idPunto AND FechaFactura >= '2022-11-21 00:00:00'";
+					$facturas = db_fetch_object(db_query($sqlFacturas));
+					// Usar la misma base del consecutivo que usa Generar Factura.
+					$siguienteNumero = isset($facturas->UltimoNumero) ? (int) $facturas->UltimoNumero + 1 : 5001;
+					$disponibles = $numeroFinal - $siguienteNumero + 1;
+					if ($disponibles <= 0) {
+						$avisosDian[] = 'Se agot&oacute; el rango de numeraci&oacute;n autorizado.';
+					} elseif ($disponibles <= 10) {
+						$avisosDian[] = $disponibles === 1
+							? 'Queda 1 factura en el rango autorizado.'
+							: 'Quedan ' . $disponibles . ' facturas en el rango autorizado.';
+					}
+				}
 
-							$ArrayNumeroFinResolucion = explode("-", $r_punto->RHasta);
-							$NumeroFinResolucion =  $ArrayNumeroFinResolucion[1];
-
-							$sql_fact = "SELECT NumeroFactura FROM Factura WHERE IDPuntoVenta = '$r_punto->IDPuntoVenta' ORDER BY IDFactura DESC LIMIT 1";
-							$qry_fact = db_query($sql_fact);
-							$r_fact = db_fetch_object($qry_fact);
-							$NumerofacturaActual = $r_fact->NumeroFactura;
-
-
-							$Diferencia = $NumeroFinResolucion - $NumerofacturaActual;
-							if ($Diferencia <= 10)
-								echo "<br>Facturacion DIAN: <span style='color: green; size: 14px;'>Faltan " . $Diferencia . " facturas</span>";
-
-
-
-
-
-							?>
-
-						</td>
-					</tr>
-				</table>
+				if ($avisosDian):
+				?>
+					<div role="alert" style="color:#a40000; font-size:14px; font-weight:bold; margin:10px 0;">
+						Facturaci&oacute;n DIAN
+						<ul>
+							<?php foreach ($avisosDian as $aviso): ?>
+								<li><?= $aviso ?></li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+				<?php endif; ?>
 
 				<?php
 				$sql_fac_elec = "Select NumeroFactura From Factura Where FacturaElectronica = '' and IDPuntoVenta = '" . $IDPuntoVenta . "' and FechaFactura >= '2022-01-01' and Estado <> 'ANULADA' ";
