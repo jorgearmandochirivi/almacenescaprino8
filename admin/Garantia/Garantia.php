@@ -1666,7 +1666,8 @@ var Check = new Array('Nombre','Publicar');
 							?>
                         </td>
 						<td nowrap class="<?php echo $class?>"><?php echo formatofecha(substr($r->FechaTrCr,0,10)) ?></td>
-						<td nowrap class="<?php echo $class?>" style="color: #900; font-weight:bold">
+						<td class="<?php echo $class?>" style="color: #900; font-weight:bold; white-space: normal;">
+                            <div style="width: 240px; white-space: normal; overflow-wrap: anywhere; word-wrap: break-word;">
 							<?php
 							echo get_field("EstadoGarantia","Nombre","IDEstadoGarantia",$r->IDEstadoGarantia);
 
@@ -1679,6 +1680,7 @@ var Check = new Array('Nombre','Publicar');
 
 
 							?>
+                        </div>
                         </td>
 						<td nowrap class="<?php echo $class?>"><?php echo get_field("PuntoVenta","Nombre","IDPuntoVenta",$r->IDPuntoVenta); ?></td>
 						<td nowrap class="<?php echo $class?>">&nbsp;</td>
