@@ -1,7 +1,11 @@
 <script>
-function ver_datos(valor){
-	
-	document.getElementById('datos_cliente'+valor).style.display = 'block';
+function ver_datos(valor, enlace){
+	var datos = document.getElementById('datos_cliente'+valor);
+	var mostrar = datos.style.display === 'none';
+	datos.style.display = mostrar ? 'block' : 'none';
+	enlace.setAttribute('aria-expanded', mostrar ? 'true' : 'false');
+	enlace.querySelector('.indicador-datos').textContent = mostrar ? '[-]' : '[+]';
+	return false;
 }
 </script>
 
@@ -110,6 +114,7 @@ function mostrarcedula($newmode,$submit_caption){
 <?php
 $sql_bonos_prox_vence = "SELECT * FROM BonoFidelizacion WHERE FechaVencimiento >= CURDATE() AND  IDPuntoVenta = '". $IDPuntoVenta ."' AND Estado = 'D' AND FechaVencimiento <= DATE_ADD( CURDATE( ) , INTERVAL 1 MONTH ) ";
 $qry_bonos_prox_vence = db_query( $sql_bonos_prox_vence );
+$conta_bono = 0;
 while($r = db_fetch_object( $qry_bonos_prox_vence )){
 	$conta_bono++;
 ?>	
@@ -119,12 +124,9 @@ while($r = db_fetch_object( $qry_bonos_prox_vence )){
 		<!--<a href="Movimiento/popBono.php?id=<?php echo $r->IDBonoFidelizacion;  ?> " target="_blank"><?php echo $r->IDBonoFidelizacion ?></a>-->
 	</td>
 	  <td nowrap="nowrap" class="row1">
-      <!--
-	  <a href="#" onclick="ver_datos(<?php echo $conta_bono; ?>)">
-		-->
-		<a href="#"">
+		<a href="#datos_cliente<?php echo $conta_bono; ?>" onclick="return ver_datos(<?php echo $conta_bono; ?>, this);" aria-expanded="false" aria-controls="datos_cliente<?php echo $conta_bono; ?>">
 	  	<?php echo get_field("Cliente","Nombre","IDCliente",$r->IDCliente) . " " .get_field("Cliente","Apellido","IDCliente",$r->IDCliente) ?>
-        [+]
+        <span class="indicador-datos">[+]</span>
       </a>  
       
       <div id="datos_cliente<?php echo $conta_bono; ?>" style="display:none">
