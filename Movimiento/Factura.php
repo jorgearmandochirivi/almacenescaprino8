@@ -1918,6 +1918,47 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 		}
 
 
+		// Black Days: fechas inclusivas en la zona horaria de las tiendas.
+		function aplicar_black_days(fecha) {
+			fecha = fecha || new Intl.DateTimeFormat('sv-SE', {timeZone: 'America/Bogota', year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date());
+			// Prueba anticipada autorizada únicamente para el almacén 16.
+			var inicio = Number(document.frm.IDPuntoVenta.value) === 16 ? '2026-11-24' : '2026-11-26';
+			var activa = fecha >= inicio && fecha <= '2026-11-30';
+			var items = [];
+			var pares = 0;
+			for (var n = 1; n <= Number(document.frm.ITEM.value); n++) {
+				var campo = document.frm.elements['DescuentoLin' + n];
+				if (campo.blackDaysAnterior !== undefined) {
+					campo.value = campo.blackDaysAnterior;
+					campo.style.background = campo.blackDaysColor;
+					delete campo.blackDaysAnterior;
+				}
+				var ref = document.frm.elements['Numero' + n].value.trim().toUpperCase();
+				var talla = Number(document.frm.elements['Talla' + n].value);
+				var cantidad = Number(document.frm.elements['Cantidad' + n].value);
+				// En facturación, talla 1 identifica productos sin talla (marroquinería y accesorios).
+				var excluida = /^(ZC|ZV(?:11|12|13|14|60|61|62)|ZWP|ZFR|ZSE|ZSP|CRE|CO(?:PL|RE)|OW28|OW95|RAPQ|TARJETA)/.test(ref);
+				if (activa && ref && talla > 1 && !excluida && cantidad > 0 && Number(document.frm.elements['Precio' + n].value) > 0) {
+					items.push(n);
+					pares += cantidad;
+				}
+			}
+			var observacion = document.frm.elements['ObservacionDescuento'];
+			if (/^Black Days 2026:/.test(observacion.value)) observacion.value = '';
+			if (!activa) return false;
+			var porcentaje = pares >= 3 ? 20 : (pares >= 2 ? 15 : (pares >= 1 ? 10 : 0));
+			items.forEach(function(n) {
+				var campo = document.frm.elements['DescuentoLin' + n];
+				campo.blackDaysAnterior = campo.value;
+				campo.blackDaysColor = campo.style.background;
+				// Precio ya contiene la rebaja de la referencia; este es el adicional.
+				campo.value = porcentaje;
+				campo.style.background = '#CCFFCC';
+			});
+			if (porcentaje) observacion.value = 'Black Days 2026: ' + porcentaje + '% adicional en calzado';
+			return true;
+		}
+
 		function calculatotal(value, cont) {
 			//alert("este");
 			var TotalSinIva = 0;
@@ -1936,6 +1977,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 			//Verifico el total de la factura para descuento de alianza de referido
 			verifica_aplica_alianza_referido();
+			aplicar_black_days();
 
 			for (i = 1; i <= document.frm.ITEM.value; i++) {
 
@@ -2014,6 +2056,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 		// Funcion para promocion pague dos lleve 3
 		function pague_2_lleve_3() {
+			if (aplicar_black_days()) return;
 			var IDPuntoVenta = IDPuntoVenta = parseInt(document.frm.IDPuntoVenta.value);
 			if (IDPuntoVenta == 20000000) {
 				if (document.frm.elements["DescuentoSegundoPar"].value == 1) {
@@ -2165,6 +2208,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 		function promo_segundo_par() {
+			if (aplicar_black_days()) return;
 
 			var IDPuntoVenta = IDPuntoVenta = parseInt(document.frm.IDPuntoVenta.value);
 			if (IDPuntoVenta == 100000 || IDPuntoVenta == 2000000) {
@@ -2410,6 +2454,7 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 
 
 		function promo_segundo_par_con_talla() {
+			if (aplicar_black_days()) return;
 			var IDPuntoVenta = IDPuntoVenta = parseInt(document.frm.IDPuntoVenta.value);
 			for (i = 1; i <= document.frm.ITEM.value; i++) {
 				var referencia = document.frm.elements["Numero" + i].value;
