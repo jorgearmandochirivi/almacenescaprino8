@@ -1921,9 +1921,8 @@ function print_form($id, $newmode, $title, $submit_caption, $frm = "")
 		// Black Days: fechas inclusivas en la zona horaria de las tiendas.
 		function aplicar_black_days(fecha) {
 			fecha = fecha || new Intl.DateTimeFormat('sv-SE', {timeZone: 'America/Bogota', year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date());
-			// Prueba anticipada autorizada únicamente para el almacén 16.
-			var inicio = Number(document.frm.IDPuntoVenta.value) === 16 ? '2026-11-24' : '2026-11-26';
-			var activa = fecha >= inicio && fecha <= '2026-11-30';
+			// Venta Fábrica (16) no participa en Black Days.
+			var activa = Number(document.frm.IDPuntoVenta.value) !== 16 && fecha >= '2026-11-26' && fecha <= '2026-11-30';
 			var items = [];
 			var pares = 0;
 			for (var n = 1; n <= Number(document.frm.ITEM.value); n++) {
