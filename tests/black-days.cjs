@@ -48,9 +48,9 @@ console.log('Black Days: cantidades, fechas, exclusiones y recálculo correctos.
 for (const store of [6, '6', 16, '16', 5, 7, 15, 17, 60, 160, 24000]) {
   for (const date of ['2026-11-23', '2026-11-24', '2026-11-25', '2026-11-26', '2026-11-30', '2026-12-01']) {
     const c = cart([{}], store);
-    const active = ![6, 16].includes(Number(store)) && date >= '2026-11-26' && date <= '2026-11-30';
+    const active = Number(store) !== 16 && date >= '2026-11-26' && date <= '2026-11-30';
     assert.equal(c.run(date), active, `almacén ${store}, fecha ${date}`);
     assert.equal(c.elements.DescuentoLin1.value, active ? 10 : '');
   }
 }
-console.log('Black Days: almacenes 6 y 16 excluidos; demás activos del 26 al 30.');
+console.log('Black Days: Galerías (6) activo, almacén 16 excluido; vigencia del 26 al 30.');
